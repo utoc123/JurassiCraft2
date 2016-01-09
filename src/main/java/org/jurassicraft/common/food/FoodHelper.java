@@ -17,6 +17,9 @@ public class FoodHelper
     private static final Map<EnumFoodType, List<Item>> foods = new HashMap<EnumFoodType, List<Item>>();
     private static final List<Item> allFoods = new ArrayList<Item>();
 
+    // TODO:  Add food values for each.
+    // TODO:  Add blocks (like leaves/foliage) for herbivores.
+
     public static void init()
     {
         registerFood(Items.apple, EnumFoodType.PLANT);
