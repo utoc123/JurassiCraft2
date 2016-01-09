@@ -6,6 +6,8 @@ import net.minecraft.util.DamageSource;
 
 public class MetabolismContainer
 {
+    // Basically this is ticks of food and ticks of water.  Specia actions like mating/healing
+    // cause them to loose faster.
     public final int MAX_FOOD;
     public final int MAX_WATER;
 
@@ -18,6 +20,7 @@ public class MetabolismContainer
     {
         this.dinosaur = dinosaur;
 
+        // Each 24000 is one day!  So an adult dino (like an apatosaur) has like 8 days of food?
         MAX_FOOD = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
         MAX_WATER = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
 
