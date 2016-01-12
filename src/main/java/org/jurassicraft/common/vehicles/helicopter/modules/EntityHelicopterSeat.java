@@ -97,11 +97,11 @@ public class EntityHelicopterSeat extends Entity implements IEntityAdditionalSpa
     {
         float nx = -MathHelper.sin(parent.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(parent.rotationPitch / 180.0F * (float) Math.PI) * dist;
         float nz = MathHelper.cos(parent.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(parent.rotationPitch / 180.0F * (float) Math.PI) * dist;
-        float ny = MathHelper.sin((parent.rotationPitch)/ 180.0F * (float) Math.PI) * dist;
+        float ny = MathHelper.sin((parent.rotationPitch) / 180.0F * (float) Math.PI) * dist;
 
-        this.posX = parent.posX + nx - (parent.lastTickPosX-parent.posX);
-        this.posY = parent.posY + ny + 0.4f - (parent.lastTickPosY-parent.posY);
-        this.posZ = parent.posZ + nz - (parent.lastTickPosZ-parent.posZ);
+        this.posX = parent.posX + nx - (parent.lastTickPosX - parent.posX);
+        this.posY = parent.posY + ny + 0.4f - (parent.lastTickPosY - parent.posY);
+        this.posZ = parent.posZ + nz - (parent.lastTickPosZ - parent.posZ);
         if (Double.isNaN(posX) || Double.isNaN(posY) || Double.isNaN(posZ))
         {
             posX = lastTickPosX;

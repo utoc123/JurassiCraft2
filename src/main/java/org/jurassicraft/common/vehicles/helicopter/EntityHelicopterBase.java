@@ -1,7 +1,5 @@
 package org.jurassicraft.common.vehicles.helicopter;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -11,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -31,7 +27,6 @@ import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterDoor;
 import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterMinigun;
 import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModuleSpot;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -213,9 +208,9 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
     @Override
     public void onLivingUpdate()
     {
-        if(!modulesSynced && isServerWorld())
+        if (!modulesSynced && isServerWorld())
         {
-            for(HelicopterModuleSpot spot : moduleSpots)
+            for (HelicopterModuleSpot spot : moduleSpots)
             {
                 JurassiCraft.networkWrapper.sendToAll(new MessageHelicopterModules(getEntityId(), spot.getPosition(), spot));
             }
