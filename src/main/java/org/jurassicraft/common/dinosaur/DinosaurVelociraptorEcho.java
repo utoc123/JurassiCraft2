@@ -26,4 +26,10 @@ public class DinosaurVelociraptorEcho extends DinosaurVelociraptor implements IH
     {
         return new Class[] { DinosaurVelociraptor.class };
     }
+
+    @Override
+    public boolean useAllGrowthStages()
+    {
+        return false;
+    }
 }

@@ -26,4 +26,10 @@ public class DinosaurVelociraptorCharlie extends DinosaurVelociraptor implements
     {
         return new Class[] { DinosaurVelociraptor.class };
     }
+
+    @Override
+    public boolean useAllGrowthStages()
+    {
+        return false;
+    }
 }
