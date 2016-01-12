@@ -1,7 +1,7 @@
-package net.timeless.animationapi.client.dto;
+package org.jurassicraft.client.animation.dto;
 
 import com.google.gson.Gson;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 
 import java.util.Map;
 

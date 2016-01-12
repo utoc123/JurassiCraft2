@@ -2,8 +2,8 @@ package org.jurassicraft.common.entity.ai.animations;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.ilexiconn.llibrary.common.animation.IAnimated;
-import net.timeless.animationapi.AIAnimation;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.common.animation.AIAnimation;
+import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 
 /**

@@ -5,7 +5,7 @@ import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.AxisAlignedBB;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 
 import java.util.List;

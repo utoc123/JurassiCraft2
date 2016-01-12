@@ -2,7 +2,7 @@ package org.jurassicraft.common.entity.ai.animations;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.ilexiconn.llibrary.common.animation.IAnimated;
-import net.timeless.animationapi.AIAnimation;
+import org.jurassicraft.common.animation.AIAnimation;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 
 public class JCAutoAnimBase extends AIAnimation

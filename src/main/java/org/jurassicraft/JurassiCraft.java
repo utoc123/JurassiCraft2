@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import net.timeless.animationapi.client.CommandForceAnimation;
+import org.jurassicraft.client.animation.CommandForceAnimation;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.common.block.JCBlockRegistry;
 import org.jurassicraft.common.configuration.JCConfigurations;

@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import net.timeless.animationapi.TabulaModelHelper;
+import org.jurassicraft.common.animation.TabulaModelHelper;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.common.entity.item.EntityCageSmall;
 import org.lwjgl.opengl.GL11;

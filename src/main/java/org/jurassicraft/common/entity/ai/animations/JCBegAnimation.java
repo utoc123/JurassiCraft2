@@ -2,7 +2,7 @@ package org.jurassicraft.common.entity.ai.animations;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.ilexiconn.llibrary.common.animation.IAnimated;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 
 public class JCBegAnimation extends JCNonAutoAnimBase
 {
