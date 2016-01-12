@@ -20,12 +20,6 @@ public class DinosaurIndominus extends Dinosaur implements IHybrid
     {
         super();
 
-        this.texture = new ResourceLocation(getDinosaurTexture("camouflage"));
-        this.overlayTexture = new ResourceLocation(getDinosaurTexture(""));
-
-        this.baseGenes = new Class[] { DinosaurTyrannosaurus.class, DinosaurVelociraptor.class };
-        this.extraGenes = new Class[] { DinosaurGiganotosaurus.class, DinosaurRugops.class, DinosaurMajungasaurus.class, DinosaurCarnotaurus.class }; // TODO therizino
-
         this.setName("Indominus");
         this.setDinosaurClass(EntityIndominus.class);
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS); //TODO, it's a hybrid, what do you do here?
@@ -41,6 +35,12 @@ public class DinosaurIndominus extends Dinosaur implements IHybrid
         this.setStorage(54);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
+
+        this.texture = new ResourceLocation(getDinosaurTexture("camouflage"));
+        this.overlayTexture = new ResourceLocation(getDinosaurTexture(""));
+
+        this.baseGenes = new Class[] { DinosaurTyrannosaurus.class, DinosaurVelociraptor.class };
+        this.extraGenes = new Class[] { DinosaurGiganotosaurus.class, DinosaurRugops.class, DinosaurMajungasaurus.class, DinosaurCarnotaurus.class }; // TODO therizino
     }
 
     @Override
