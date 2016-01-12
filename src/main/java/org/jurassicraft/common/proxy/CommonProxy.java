@@ -105,8 +105,10 @@ public class CommonProxy
             Map.Entry<Class, String> entry = (Map.Entry<Class, String>) object;
 
             Class entityClass = entry.getKey();
-            if(entityClass == null)
+            if (entityClass == null)
+            {
                 continue; // Avoid potential NPE if entityClass is null
+            }
 
             String clazzName = entityClass.toString();
 

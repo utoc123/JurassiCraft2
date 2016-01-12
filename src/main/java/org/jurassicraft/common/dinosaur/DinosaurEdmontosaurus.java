@@ -1,5 +1,6 @@
 package org.jurassicraft.common.dinosaur;
 
+import org.jurassicraft.common.entity.EntityEdmontosaurus;
 import org.jurassicraft.common.entity.base.EnumDiet;
 import org.jurassicraft.common.period.EnumTimePeriod;
 
@@ -10,6 +11,7 @@ public class DinosaurEdmontosaurus extends Dinosaur
         super();
 
         this.setName("Edmontosaurus");
+        this.setDinosaurClass(EntityEdmontosaurus.class);
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0xB97840, 0x644329);
         this.setEggColorFemale(0x8F8039, 0x615A30);

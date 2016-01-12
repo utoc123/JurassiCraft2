@@ -68,7 +68,7 @@ public class HelicopterModuleSpot
 
     public void readFromNBT(NBTTagCompound compound)
     {
-        System.out.println(">> "+compound);
+        System.out.println(">> " + compound);
         modules.clear();
         NBTTagList list = compound.getTagList("modules", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < list.tagCount(); i++)

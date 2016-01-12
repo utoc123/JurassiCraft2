@@ -1,9 +1,7 @@
 package org.jurassicraft.common.dinosaur;
 
 import org.jurassicraft.common.entity.EntityGiganotosaurus;
-import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.base.EnumDiet;
-import org.jurassicraft.common.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.common.period.EnumTimePeriod;
 
 public class DinosaurGiganotosaurus extends Dinosaur

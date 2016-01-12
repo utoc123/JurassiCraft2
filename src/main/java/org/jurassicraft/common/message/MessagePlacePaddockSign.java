@@ -83,5 +83,6 @@ public class MessagePlacePaddockSign extends AbstractMessage<MessagePlacePaddock
         z = buffer.readInt();
         dino = buffer.readInt();
         facing = EnumFacing.getFront(buffer.readByte());
+        pos = new BlockPos(x, y, z);
     }
 }

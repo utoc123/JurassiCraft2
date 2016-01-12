@@ -1,160 +1,29 @@
 package org.jurassicraft.common.dinosaur;
 
 import org.jurassicraft.common.entity.EntityMoganopterus;
-import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.base.EnumDiet;
-import org.jurassicraft.common.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.common.period.EnumTimePeriod;
 
 public class DinosaurMoganopterus extends Dinosaur
 {
-    @Override
-    public String getName()
+    public DinosaurMoganopterus()
     {
-        return "Moganopterus";
-    }
+        super();
 
-    @Override
-    public Class<? extends EntityDinosaur> getDinosaurClass()
-    {
-        return EntityMoganopterus.class;
-    }
-
-    @Override
-    public EnumTimePeriod getPeriod()
-    {
-        return EnumTimePeriod.CRETACEOUS;
-    }
-
-    @Override
-    public int getEggPrimaryColorMale()
-    {
-        return 0xE6E2D8;
-    }
-
-    @Override
-    public int getEggSecondaryColorMale()
-    {
-        return 0xD67F5C;
-    }
-
-    @Override
-    public int getEggPrimaryColorFemale()
-    {
-        return 0xE0DED3;
-    }
-
-    @Override
-    public int getEggSecondaryColorFemale()
-    {
-        return 0xD37B58;
-    }
-
-    @Override
-    public double getBabyHealth()
-    {
-        return 16;
-    }
-
-    @Override
-    public double getAdultHealth()
-    {
-        return 55;
-    }
-
-    @Override
-    public double getBabySpeed()
-    {
-        return 0.46;
-    }
-
-    @Override
-    public double getAttackSpeed()
-    {
-        return 0.50;
-    }
-
-    @Override
-    public double getAdultSpeed()
-    {
-        return 0.40;
-    }
-
-    @Override
-    public double getBabyStrength()
-    {
-        return 6;
-    }
-
-    @Override
-    public double getAdultStrength()
-    {
-        return 36;
-    }
-
-    @Override
-    public int getMaximumAge()
-    {
-        return fromDays(40);
-    }
-
-    @Override
-    public float getBabyEyeHeight()
-    {
-        return 0.225F;
-    }
-
-    @Override
-    public float getAdultEyeHeight()
-    {
-        return 1.3F;
-    }
-
-    @Override
-    public float getBabySizeX()
-    {
-        return 0.3F;
-    }
-
-    @Override
-    public float getBabySizeY()
-    {
-        return 0.3F;
-    }
-
-    @Override
-    public float getAdultSizeX()
-    {
-        return 1.0F;
-    }
-
-    @Override
-    public float getAdultSizeY()
-    {
-        return 1.3F;
-    }
-
-    @Override
-    public int getStorage()
-    {
-        return 27;
-    }
-
-    @Override
-    public EnumDiet getDiet()
-    {
-        return EnumDiet.CARNIVORE;
-    }
-
-    @Override
-    public EnumSleepingSchedule getSleepingSchedule()
-    {
-        return EnumSleepingSchedule.DIURNAL;
-    }
-
-    @Override
-    public String[] getBones()
-    {
-        return new String[] { "leg_bones", "pelvis", "skull", "tail_vertebrae", "teeth", "wing_bones" };
+        this.setName("Moganopterus");
+        this.setDinosaurClass(EntityMoganopterus.class);
+        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setEggColorMale(0xE6E2D8, 0xD67F5C);
+        this.setEggColorFemale(0xE0DED3, 0xD37B58);
+        this.setHealth(16, 55);
+        this.setSpeed(0.46, 0.40);
+        this.setStrength(6, 36);
+        this.setMaximumAge(fromDays(40));
+        this.setEyeHeight(0.225F, 1.3F);
+        this.setSizeX(0.3F, 1.0F);
+        this.setSizeY(0.3F, 1.3F);
+        this.setStorage(27);
+        this.setDiet(EnumDiet.CARNIVORE);
+        this.setBones("leg_bones", "pelvis", "skull", "tail_vertebrae", "teeth", "wing_bones");
     }
 }
