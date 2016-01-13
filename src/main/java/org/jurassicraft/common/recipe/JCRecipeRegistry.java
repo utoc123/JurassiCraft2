@@ -58,7 +58,9 @@ public class JCRecipeRegistry implements IContentHandler
 
         GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.fossil_grinder), "lBl", "rRr", "IPI", 'I', Items.iron_ingot, 'R', JCItemRegistry.iron_rod, 'B', JCItemRegistry.iron_blades, 'r', Items.redstone, 'l', new ItemStack(Items.dye, 1, 4), 'P', Blocks.piston);
 
-        GameRegistry.addRecipe(new ItemStack(JCItemRegistry.plaster_and_bandage, 9), "PPP", "PWP", "PPP", 'P', Items.paper, 'W', Blocks.wool);
+        GameRegistry.addRecipe(new ItemStack(JCItemRegistry.plaster_and_bandage, 9), "PGP", "GWG", "PGP", 'P', Items.paper, 'W', Blocks.wool, 'G', JCItemRegistry.gypsum_powder);
+
+        GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.gypsum_stone), "GGG", "GGG", "GGG", 'G', JCItemRegistry.gypsum_powder);
 
         GameRegistry.addRecipe(new ItemStack(JCItemRegistry.cage_small, 1), "III", "BBB", "III", 'I', Items.iron_ingot, 'B', Blocks.iron_bars);
 

@@ -88,6 +88,8 @@ public class JCItemRegistry implements IContentHandler
     public static Map<String, ItemFossil> fossils = new HashMap<String, ItemFossil>();
     public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<String, List<Dinosaur>>();
 
+    public static ItemBasic gypsum_powder;
+
     // TODO more complex crafting components, eg circuit boards
 
     @Override
@@ -144,6 +146,8 @@ public class JCItemRegistry implements IContentHandler
         advanced_circuit = new ItemBasic("Advanced Circuit", JCCreativeTabs.items);
 
         iron_nugget = new ItemBasic("Iron Nugget", JCCreativeTabs.items);
+
+        gypsum_powder = new ItemBasic("Gypsum Powder", JCCreativeTabs.items);
 
         for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
         {
@@ -224,6 +228,8 @@ public class JCItemRegistry implements IContentHandler
         registerItem(action_figure, "Action Figure");
 
         registerItem(dino_scanner, "Dino Scanner");
+
+        registerItem(gypsum_powder, "Gypsum Powder");
 
         // registerItem(entityRemover, "Entity Remover");
 
