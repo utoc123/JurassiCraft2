@@ -350,6 +350,8 @@ public class JCRenderingRegistry
         this.registerItemRenderer(modelMesher, JCItemRegistry.advanced_circuit, "advanced_circuit", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.iron_nugget, "iron_nugget", "inventory");
 
+        this.registerItemRenderer(modelMesher, JCItemRegistry.gypsum_powder, "gypsum_powder", "inventory");
+
         int meta = 0;
 
         for (Dinosaur dino : JCEntityRegistry.getDinosaurs())

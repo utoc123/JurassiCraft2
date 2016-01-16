@@ -1,4 +1,4 @@
-package net.timeless.animationapi.client.dto;
+package org.jurassicraft.client.animation.dto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;

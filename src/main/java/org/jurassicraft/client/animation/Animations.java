@@ -1,7 +1,6 @@
-package net.timeless.animationapi.client;
+package org.jurassicraft.client.animation;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
-import net.timeless.animationapi.AnimationAPI;
 
 /**
  * @author jabelar

@@ -2,7 +2,7 @@ package org.jurassicraft.common.entity.ai;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 
 public class EntityAIMate extends EntityAIBase

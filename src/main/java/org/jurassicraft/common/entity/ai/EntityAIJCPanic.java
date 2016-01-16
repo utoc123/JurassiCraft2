@@ -6,7 +6,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.Vec3;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 
 public class EntityAIJCPanic extends EntityAIBase
 {

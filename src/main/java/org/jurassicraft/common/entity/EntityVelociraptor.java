@@ -7,7 +7,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.common.animation.ControlledAnimation;
 import org.jurassicraft.common.entity.ai.animations.JCAutoAnimBase;
 import org.jurassicraft.common.entity.ai.animations.JCNonAutoAnimBase;

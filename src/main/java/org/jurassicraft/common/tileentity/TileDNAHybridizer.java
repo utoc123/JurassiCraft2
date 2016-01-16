@@ -15,6 +15,9 @@ import org.jurassicraft.common.genetics.GeneticsContainer;
 import org.jurassicraft.common.item.ItemStorageDisc;
 import org.jurassicraft.common.item.JCItemRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TileDNAHybridizer extends TileMachineBase
 {
     private int[] inputs = new int[] { 0, 1, 2, 3, 4, 5 };
@@ -68,13 +71,15 @@ public class TileDNAHybridizer extends TileMachineBase
                 int count = 0;
                 boolean extra = false;
 
+                List<Class<? extends Dinosaur>> usedGenes = new ArrayList<Class<? extends Dinosaur>>();
+
                 for (Dinosaur combo : extraGenes)
                 {
                     Class match = null;
 
                     for (Class clazz : dinoHybrid.getExtraGenes())
                     {
-                        if (clazz.isInstance(combo))
+                        if (clazz.isInstance(combo) && !usedGenes.contains(clazz))
                         {
                             match = clazz;
                         }
@@ -82,6 +87,7 @@ public class TileDNAHybridizer extends TileMachineBase
 
                     if (match != null && match.isInstance(combo))
                     {
+                        usedGenes.add(match);
                         count++;
                     }
                     else if (combo != null)

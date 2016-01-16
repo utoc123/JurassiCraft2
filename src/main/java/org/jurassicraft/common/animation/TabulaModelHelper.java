@@ -1,4 +1,4 @@
-package net.timeless.animationapi;
+package org.jurassicraft.common.animation;
 
 import com.google.gson.Gson;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;

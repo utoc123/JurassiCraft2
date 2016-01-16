@@ -8,7 +8,7 @@
  * For a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
  */
 
-package net.timeless.animationapi.client;
+package org.jurassicraft.client.animation;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.animation.Animation;

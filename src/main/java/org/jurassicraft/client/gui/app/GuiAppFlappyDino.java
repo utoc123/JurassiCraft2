@@ -98,16 +98,19 @@ public class GuiAppFlappyDino extends GuiApp
 
                     gui.drawScaledTexturedModalRect(drawX, (totalHeight * 20), 0, 20, 32, 12, 32, 32, 1.0F);
 
-//                    int topHeight = ((4 - entry.getValue()) * 20) + 11;
-//                    int bottomHeight = (150 - (entry.getValue() * 20)) - 11;
-//
-//                    int actualY = 150 - y;
-//
-//                    gui.drawScaledRect(drawX + 1, topHeight, 30, 1, 1.0F, 0xFFFFFF);
-//                    gui.drawScaledRect(drawX + 1, bottomHeight, 30, 1, 1.0F, 0xFFFF00);
-//
-//                    gui.drawScaledRect(6, actualY + 5, 30, 1, 1.0F, 0xFF0000);
-//                    gui.drawScaledRect(6, actualY + 23, 30, 1, 1.0F, 0xFF00FF);
+                    if (mc.getRenderManager().isDebugBoundingBox())
+                    {
+                        int topHeight = ((4 - entry.getValue()) * 20) + 11;
+                        int bottomHeight = (150 - (entry.getValue() * 20)) - 11;
+
+                        int actualY = 150 - y;
+
+                        gui.drawScaledRect(drawX + 1, topHeight, 30, 1, 1.0F, 0xFFFFFF);
+                        gui.drawScaledRect(drawX + 1, bottomHeight, 30, 1, 1.0F, 0xFFFF00);
+
+                        gui.drawScaledRect(6, actualY + 5, 30, 1, 1.0F, 0xFF0000);
+                        gui.drawScaledRect(6, actualY + 23, 30, 1, 1.0F, 0xFF00FF);
+                    }
                 }
             }
         }

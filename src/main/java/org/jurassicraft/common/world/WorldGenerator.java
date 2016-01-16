@@ -69,7 +69,7 @@ public class WorldGenerator implements IWorldGenerator
             new WorldGenMinable(JCBlockRegistry.amber_ore.getDefaultState(), 3).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
         }
 
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < 16; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosY = random.nextInt(64);
@@ -78,7 +78,7 @@ public class WorldGenerator implements IWorldGenerator
             new WorldGenMinable(JCBlockRegistry.ice_shard.getDefaultState(), 1).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 32; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosY = random.nextInt(128);

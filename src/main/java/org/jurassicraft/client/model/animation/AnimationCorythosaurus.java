@@ -4,7 +4,7 @@ import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.timeless.animationapi.client.DinosaurAnimator;
+import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.ModelDinosaur;
 import org.jurassicraft.common.entity.EntityCorythosaurus;
 import org.jurassicraft.common.entity.base.EntityDinosaur;

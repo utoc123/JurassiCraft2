@@ -1,10 +1,10 @@
-package net.timeless.animationapi;
+package org.jurassicraft.common.animation;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.timeless.animationapi.client.Animations;
+import org.jurassicraft.client.animation.Animations;
 
 public abstract class AIAnimation extends EntityAIBase
 {

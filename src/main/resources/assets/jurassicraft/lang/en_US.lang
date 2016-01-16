@@ -154,6 +154,7 @@ item.dino_scanner.name=Debug Dinosaur Scanner
 item.basic_circuit.name=Basic Circuit
 item.advanced_circuit.name=Advanced Circuit
 item.iron_nugget.name=Iron Nugget
+item.gypsum_powder.name=Gypsum Powder
 
 //Blocks ==================================================
 tile.fossil_block.name={period} Fossil

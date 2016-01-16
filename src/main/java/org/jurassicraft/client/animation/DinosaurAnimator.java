@@ -1,4 +1,4 @@
-package net.timeless.animationapi.client;
+package org.jurassicraft.client.animation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,10 +10,10 @@ import net.ilexiconn.llibrary.common.map.ListHashMap;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.timeless.animationapi.AnimationAPI;
-import net.timeless.animationapi.client.dto.AnimationsDTO;
-import net.timeless.animationapi.client.dto.DinosaurRenderDefDTO;
-import net.timeless.animationapi.client.dto.PoseDTO;
+import org.jurassicraft.common.animation.TabulaModelHelper;
+import org.jurassicraft.client.animation.dto.AnimationsDTO;
+import org.jurassicraft.client.animation.dto.DinosaurRenderDefDTO;
+import org.jurassicraft.client.animation.dto.PoseDTO;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.ModelDinosaur;
 import org.jurassicraft.common.dinosaur.Dinosaur;
@@ -130,7 +130,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
         String growthName = growth.name().toLowerCase(Locale.ROOT);
         URI growthSensitiveDir = dinoDir.resolve(growthName + "/");
         URI definitionFile = growthSensitiveDir.resolve(name + "_" + growthName + ".json");
-        InputStream dinoDef = AnimationAPI.class.getResourceAsStream(definitionFile.toString());
+        InputStream dinoDef = TabulaModelHelper.class.getResourceAsStream(definitionFile.toString());
 
         if (dinoDef == null)
         {

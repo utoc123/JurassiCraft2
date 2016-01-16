@@ -1,4 +1,4 @@
-package net.timeless.animationapi.client.dto;
+package org.jurassicraft.client.animation.dto;
 
 public class GrowthRenderDef
 {
