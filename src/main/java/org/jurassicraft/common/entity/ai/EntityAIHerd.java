@@ -1,151 +1,72 @@
 package org.jurassicraft.common.entity.ai;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jurassicraft.common.entity.ai.util.HerdManager;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EntityAIHerd extends EntityAIBase
 {
-    EntityDinosaur host;
-    double speed = 1.0D;
-    private Entity movingTo;
-    private int updateRate;
+    // How fast we move toward the herd center
+    //private static final double SPEED = 1.0D;
+    private static final double SPEED = 0.6D;
 
-    public EntityAIHerd(EntityDinosaur setHost)
+    protected final EntityDinosaur _dinosaur;
+
+    // The herd center
+    private BlockPos _target;
+
+    public EntityAIHerd(EntityDinosaur host)
     {
-        this.host = setHost;
+        _dinosaur = host;
+        HerdManager.getInstance().add(host);
     }
 
-    public Entity getTarget()
-    {
-        return getEntityWithMostNeighbours();
-    }
-
+    @Override
     public boolean shouldExecute()
     {
-        //System.out.println("CHECKING EXECUTE");
-        Entity target = this.getTarget();
-        if (target == null)
-        {
-            //System.out.println("TARGET IS NULL");
+        // Only do this every once in a while
+        if ( ( _dinosaur.ticksExisted & 0x3F ) != 0)
             return false;
-        }
-        if (!target.isEntityAlive())
-        {
-            // System.out.println("TARGET IS DEAD");
-            return false;
-        }
 
-        //System.out.println("CHECKING EXECUTE DONE");
-        return true;
+        _target = HerdManager.getInstance().getTargetLocation(_dinosaur);
+        if (_target != null)
+            LOGGER.info("Found target=" + _target + ", pos=" + _dinosaur.getPosition());
+
+        return _target != null;
     }
 
+    @Override
     public void startExecuting()
     {
-        this.updateRate = 0;
+        LOGGER.info("MOVING Found target=" + _target + ", pos=" + _dinosaur.getPosition());
+        _dinosaur.getNavigator().tryMoveToXYZ(_target.getX(), _target.getY(), _target.getZ(), SPEED);
     }
 
     @Override
     public boolean continueExecuting()
     {
-        //System.out.println("CHECKING CONTINUE EXECUTE");
-        Entity target = this.getTarget();
-
-        if (target == null)
-        {
-            //System.out.println("TARGET IS NULL");
+        if (_target == null)
             return false;
-        }
 
-        if (!target.isEntityAlive())
+        if (!_dinosaur.getNavigator().noPath())
         {
-            // System.out.println("TARGET IS DEAD");
-            return false;
+            LOGGER.info("Done executing.");
+            _target = null;
         }
 
-        //System.out.println("CHECKING CONTINUE EXECUTE DONE");
-        return true;
+        return (_target != null);
     }
 
-    public void updateTask()
-    {
-        if (--this.updateRate <= 0)
-        {
-            //System.out.println("AI STARTING");
-            this.updateRate = 10;
-            Entity target = this.getTarget();
-
-            if (target.worldObj != null && (!host.shouldSleep() && host.shouldGoBackToSleep()))
-            {
-                int rand = target.worldObj.rand.nextInt(10);
-                int rand2 = target.worldObj.rand.nextInt(10);
-
-                this.host.getNavigator().tryMoveToXYZ(target.posX + rand - rand2, target.posY, target.posZ + rand - rand2, speed);
-                // System.out.println("AI STARTING DONE");
-            }
-        }
-    }
-
-    private Entity getEntityWithMostNeighbours()
-    {
-        List<Entity> nearbyEntities = getEntitiesOfSameTypeWithinDistance(host, 80, 80);
-
-        //System.out.println("AI STARTING MOST NEIGHBOURS");
-        Entity entityWithMostNeighbours = null;
-        int mostNeighbourCount = Integer.MIN_VALUE;
-
-        for (Entity entity : nearbyEntities)
-        {
-            if ((host.getDistanceToEntity(entity)) > 32)
-            {
-                int amountOfNeighbours = getEntitiesOfSameTypeWithinDistance(entity, 20, 20).size();
-
-                if (amountOfNeighbours > mostNeighbourCount)
-                {
-                    // System.out.println("AI STARTING MOST NEIGHBOURS DONE");
-                    mostNeighbourCount = amountOfNeighbours;
-                    entityWithMostNeighbours = entity;
-                }
-            }
-        }
-
-        movingTo = entityWithMostNeighbours;
-
-        //if(movingTo != null)
-        //System.out.println(movingTo);
-
-        return movingTo;
-    }
-
-    public List<Entity> getEntitiesWithinDistance(Entity e, double xz, double y) //TODO make a base jc ai class and put this in it
-    {
-        return e.worldObj.getEntitiesWithinAABBExcludingEntity(e, AxisAlignedBB.fromBounds(e.posX - xz, e.posY - y, e.posZ - xz, e.posX + xz, e.posY + y, e.posZ + xz));
-    }
-
-    public List<Entity> getEntitiesOfSameTypeWithinDistance(Entity e, double xz, double y)
-    {
-        List<Entity> nearbyEntities = getEntitiesWithinDistance(e, xz, y);
-        List<Entity> nearbyEntitiesOfType = new ArrayList<Entity>();
-
-        for (Entity entity : nearbyEntities)
-        {
-            if (entity.getClass().isInstance(e))
-            {
-                nearbyEntitiesOfType.add(entity);
-            }
-        }
-
-        return nearbyEntitiesOfType;
-    }
-
+    @Override
     public void resetTask()
     {
-        //System.out.println("AI RESET");
-        this.host.getNavigator().clearPathEntity();
+        LOGGER.info("resetTask");
+        if (_target != null)
+            _dinosaur.getNavigator().clearPathEntity();
     }
 
+    private static final Logger LOGGER = LogManager.getLogger();
 }

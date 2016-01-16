@@ -9,11 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,9 +30,8 @@ import org.apache.logging.log4j.Logger;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.common.damagesource.EntityDinosaurDamageSource;
 import org.jurassicraft.common.dinosaur.Dinosaur;
-import org.jurassicraft.common.entity.ai.EntityAIHerd;
+import org.jurassicraft.common.entity.ai.*;
 import org.jurassicraft.common.entity.ai.EntityAIMate;
-import org.jurassicraft.common.entity.ai.EntityAISleep;
 import org.jurassicraft.common.entity.ai.animations.AnimationAICall;
 import org.jurassicraft.common.entity.ai.animations.AnimationAIHeadCock;
 import org.jurassicraft.common.entity.ai.animations.AnimationAILook;
@@ -94,28 +89,34 @@ public abstract class EntityDinosaur extends EntityCreature implements IEntityAd
         super(world);
 
         metabolism = new MetabolismContainer(this);
-
         inventory = new InventoryDinosaur(this);
         tailBuffer = new ChainBuffer(getTailBoxCount());
+
+        // SetupAI
+        //tasks.addTask(0, new EntityAIEscapeBlock(this));
 
         if (!dinosaur.isMarineAnimal())
         {
             tasks.addTask(0, new EntityAISwimming(this));
+//            tasks.addTask(0, new EntityAIAdvancedSwim(this));
         }
 
+        // This one make them move around
         tasks.addTask(0, new EntityAISleep(this));
 
+        // WARNING: Do not enable, under development
         tasks.addTask(1, new EntityAIDrink(this));
         tasks.addTask(1, new EntityAIMate(this));
         tasks.addTask(1, new EntityAIEatFoodItem(this));
 
-        if (dinosaur.getDiet().doesEatPlants())
-        {
-            tasks.addTask(1, new EntityAIFindPlant(this));
-        }
+//        if (dinosaur.getDiet().doesEatPlants())
+//        {
+//            tasks.addTask(1, new EntityAIFindPlant(this));
+//        }
 
+        // WARNING: Do not enable, under development
         tasks.addTask(2, new EntityAIWander(this, 0.8));
-        tasks.addTask(2, new EntityAIHerd(this));
+//        tasks.addTask(2, new EntityAIHerd(this));
 
         tasks.addTask(3, new AnimationAICall(this));
         tasks.addTask(3, new AnimationAILook(this));

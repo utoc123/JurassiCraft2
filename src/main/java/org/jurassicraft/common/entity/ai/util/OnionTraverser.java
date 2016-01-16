@@ -183,13 +183,10 @@ public class OnionTraverser implements Iterable<BlockPos>
             _x = _minX;
             _z = _minZ;
             if ((_yCounter & 0x1) == 1)
-            {
                 _y = _center.getY() + _yCounter / 2;
-            }
             else
-            {
                 _y = _center.getY() - _yCounter / 2;
-            }
+
             _facing = EnumFacing.EAST;
 
             //LOGGER.info("Layer. radius=" + _currentRadius + ", x=" + _x + ", y=" + _y + ", z=" + _z + ", facing=" + _facing);
@@ -216,7 +213,7 @@ public class OnionTraverser implements Iterable<BlockPos>
         private int _currentRadius = 0;
         private int _yCounter = 1;
 
-        private int _idx = 0;
+        //private int _idx = 0;
 
         private final int _maxCounter;
         private EnumFacing _facing;

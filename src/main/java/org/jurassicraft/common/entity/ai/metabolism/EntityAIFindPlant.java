@@ -57,25 +57,26 @@ public class EntityAIFindPlant extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        MetabolismContainer metabolism = _dinosaur.getMetabolism();
-
-        // We don't want to eat if we are dead, too often, or not supposed to
-        if (_dinosaur.isDead ||
-                _dinosaur.isCarcass() ||
-                (_dinosaur.ticksExisted & 0x0F) != 0 ||
-                !_dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
-        {
-            return false;
-        }
-
-        // Now, let's see if we are hungry
-        double food = metabolism.getFood();
-        int maxFood = metabolism.getMaxFood();
-
-        return ((food < (maxFood * MUST_EAT_THRESHOLD)) ||
-                ((food < (maxFood * SHOULD_EAT_THRESHOLD)) &&
-                        _dinosaur.getDinosaur().getSleepingSchedule()
-                                .isWithinEatingTime(_dinosaur.getDinosaurTime(), _dinosaur.getRNG())));
+//        MetabolismContainer metabolism = _dinosaur.getMetabolism();
+//
+//        // We don't want to eat if we are dead, too often, or not supposed to
+//        if (_dinosaur.isDead ||
+//                _dinosaur.isCarcass() ||
+//                (_dinosaur.ticksExisted & 0x0F) != 0 ||
+//                !_dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
+//        {
+//            return false;
+//        }
+//
+//        // Now, let's see if we are hungry
+//        double food = metabolism.getFood();
+//        int maxFood = metabolism.getMaxFood();
+//
+//        return ((food < (maxFood * MUST_EAT_THRESHOLD)) ||
+//                ((food < (maxFood * SHOULD_EAT_THRESHOLD)) &&
+//                        _dinosaur.getDinosaur().getSleepingSchedule()
+//                                .isWithinEatingTime(_dinosaur.getDinosaurTime(), _dinosaur.getRNG())));
+        return false;
     }
 
     @Override
