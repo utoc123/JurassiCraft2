@@ -1,7 +1,7 @@
 package org.jurassicraft.common.item;
 
-import net.ilexiconn.bookwiki.server.item.BookWikiItem;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
+import net.ilexiconn.llibrary.common.item.BookWikiItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
