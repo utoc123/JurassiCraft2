@@ -115,8 +115,8 @@ public abstract class EntityDinosaur extends EntityCreature implements IEntityAd
 //        }
 
         // WARNING: Do not enable, under development
-        tasks.addTask(2, new EntityAIWander(this, 0.8));
-//        tasks.addTask(2, new EntityAIHerd(this));
+        //tasks.addTask(2, new EntityAIWander(this, 0.8));
+        tasks.addTask(2, new EntityAIHerd(this));
 
         tasks.addTask(3, new AnimationAICall(this));
         tasks.addTask(3, new AnimationAILook(this));
@@ -927,6 +927,7 @@ public abstract class EntityDinosaur extends EntityCreature implements IEntityAd
     {
         return "EntityDinosaur{ " +
                 dinosaur.getName() +
+                ", id=" + getEntityId() +
                 ", remote=" + getEntityWorld().isRemote +
                 ", isDead=" + isDead +
                 ", isCarcass=" + isCarcass +

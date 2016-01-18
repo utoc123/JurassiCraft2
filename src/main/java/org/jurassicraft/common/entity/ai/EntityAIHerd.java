@@ -18,20 +18,29 @@ public class EntityAIHerd extends EntityAIBase
     // The herd center
     private BlockPos _target;
 
-    public EntityAIHerd(EntityDinosaur host)
+    public EntityAIHerd(EntityDinosaur entity)
     {
-        _dinosaur = host;
-        HerdManager.getInstance().add(host);
+        _dinosaur = entity;
+        if (!entity.getEntityWorld().isRemote)
+        {
+            HerdManager.getInstance().add(entity);
+        }
     }
 
     @Override
     public boolean shouldExecute()
     {
+        if (_dinosaur.getEntityWorld().isRemote)
+        {
+            LOGGER.info(" !!!!! SHOULD EXECUTE IS ON REMOTE");
+            return false;
+        }
+
         // Only do this every once in a while
-        if ( ( _dinosaur.ticksExisted & 0x3F ) != 0)
+        if ((_dinosaur.ticksExisted & 0x3F) != 0)
             return false;
 
-        _target = HerdManager.getInstance().getTargetLocation(_dinosaur);
+        _target = HerdManager.getInstance().getWanderLocation(_dinosaur);
         if (_target != null)
             LOGGER.info("Found target=" + _target + ", pos=" + _dinosaur.getPosition());
 
@@ -42,7 +51,8 @@ public class EntityAIHerd extends EntityAIBase
     public void startExecuting()
     {
         LOGGER.info("MOVING Found target=" + _target + ", pos=" + _dinosaur.getPosition());
-        _dinosaur.getNavigator().tryMoveToXYZ(_target.getX(), _target.getY(), _target.getZ(), SPEED);
+        if (!_dinosaur.getNavigator().tryMoveToXYZ(_target.getX(), _target.getY(), _target.getZ(), SPEED))
+            LOGGER.info("!!!!! Navigator says no.");
     }
 
     @Override
@@ -70,3 +80,13 @@ public class EntityAIHerd extends EntityAIBase
 
     private static final Logger LOGGER = LogManager.getLogger();
 }
+
+
+/**
+ * FUTURE MODEL:
+ *
+ * graze - wander around inside herd radius
+ * alerted - radius is closer
+ *
+ * The basic issue is that we don't have a real herd model.
+ */

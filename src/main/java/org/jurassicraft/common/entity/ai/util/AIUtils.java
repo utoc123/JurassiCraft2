@@ -37,7 +37,7 @@ public class AIUtils
                             center.getZ() + Math.round(deltaZ * scale));
     }
 
-    public static BlockPos moveToward(BlockPos current, BlockPos target, int move)
+    public static BlockPos computePosToward(BlockPos current, BlockPos target, int move)
     {
         int deltaX = target.getX() - current.getX();
         int deltaZ = target.getZ() - current.getZ();

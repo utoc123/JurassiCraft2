@@ -16,77 +16,127 @@ public class HerdManager
     public static final int MIN_SIZE = 3;
     public static final long REBALANCE_DELAY_TICKS = 200;
 
-    private static HerdManager _instance;
+    private static final Logger LOGGER = LogManager.getLogger();
 
-    // For now we have one Herd per class of critter.
-    private final Map<Class, Herd> _herds = new HashMap<Class, Herd>();
-    private long _nextRebalance = 0;
+    private static HerdManager instance;
+
+    // For now we have one Herd per class of critter.  This needs to change when we have
+    // different herds because of different herd leaders.
+    private final Map<Class, Herd> herds = new HashMap<Class, Herd>();
+    private long nextRebalance = 0;
 
     //===============================================
 
     // Returns the current instance of the herd manager
     public static HerdManager getInstance()
     {
-        if (_instance == null)
-            _instance = new HerdManager();
+        if (instance == null)
+        {
+            instance = new HerdManager();
+        }
 
-        return _instance;
+        return instance;
     }
 
     /**
      * Adds a dinosaur to the herd manager.
+     *
      * @param dinosaur The dinosaur to add.
      */
     public void add(EntityDinosaur dinosaur)
     {
-        Herd species = _herds.get(dinosaur.getClass());
-        if (species == null)
+        Herd herd = herds.get(dinosaur.getClass());
+        if (herd == null)
         {
-            species = new Herd();
-            _herds.put(dinosaur.getClass(), species);
+            herd = new Herd();
+            herds.put(dinosaur.getClass(), herd);
         }
 
-        species.add(dinosaur);
+        herd.add(dinosaur);
     }
 
     /**
      * Removes the dinosaur from the herd manager.
+     *
      * @param dinosaur The dinosaur to remove.
      */
     public void remove(EntityDinosaur dinosaur)
     {
-        Herd species = _herds.get(dinosaur.getClass());
+        Herd species = herds.get(dinosaur.getClass());
         if (species != null)
+        {
             species.remove(dinosaur);
+        }
+    }
+
+    /**
+     * Provides the herd for the particular dinosaur.
+     * @param dinosaur The dino.
+     * @return The herd.
+     */
+    public Herd getHerd(EntityDinosaur dinosaur)
+    {
+        return herds.get(dinosaur.getClass());
     }
 
     /**
      * Returns the location this dinosaur is supposed to move to either within
-     * the herd it is already in, or a herd nearby.
+     * the herd it is already in, or to a herd nearby.
+     *
      * @param dinosaur The dinosaur we want to find the destination for.
      * @return The block pos to move to, or null for stay in place.
      */
-    public BlockPos getTargetLocation(EntityDinosaur dinosaur)
+    public BlockPos getWanderLocation(EntityDinosaur dinosaur)
     {
+        // TODO:  Move the rebalance check to a general update tick handler
         long now = dinosaur.getEntityWorld().getTotalWorldTime();
-        if ( now > _nextRebalance)
+        if (now > nextRebalance)
         {
             rebalanceAll();
-            _nextRebalance = now + REBALANCE_DELAY_TICKS;
+            nextRebalance = now + REBALANCE_DELAY_TICKS;
         }
 
-        Herd species = _herds.get(dinosaur.getClass());
-        if (species != null)
-        {
-            BlockPos center = species.getCenter(dinosaur);
-            if (center == null)
-                return null;
+        // Basic design:
+        // 1) Ask the herd for the center of the appropriate cluster
+        // 2) See if we are within the "area of the cluster."  Note, this is expected to change
+        //    based on cluster state ( e.g. IDLE, PANIC )
+        // 3) If not within area of the cluster, compute an interest point based
+        //    the species.
 
-            int distance = species.getIntersectDistance(dinosaur);
-            LOGGER.info("Distance: " + distance);
-            BlockPos target = AIUtils.moveToward(dinosaur.getPosition(), center, distance);
-            //LOGGER.info("start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target);
-            return target;
+        Herd herd = herds.get(dinosaur.getClass());
+        if (herd != null)
+        {
+            Cluster cluster = herd.getCluster(dinosaur);
+
+            if (cluster == null)
+            {
+                // Not inside a cluster, let's find one to move to.
+                cluster = herd.getLargestCluster();
+                LOGGER.info("Found largest.");
+            }
+
+            if (cluster != null)
+            {
+                // Note, the outer radius might change over time.
+                int outerRadius = cluster.getOuterRadius(dinosaur);
+                BlockPos center = cluster.getCenter();
+
+                // Okay, we want to move closer.  Let's just move into radius
+                int distanceToCenter = (int) Math.sqrt(center.distanceSq(dinosaur.getPosition()));
+                if (distanceToCenter < outerRadius)
+                {
+                    return null;
+                }
+
+                int diffDist = distanceToCenter - outerRadius;
+                BlockPos target = AIUtils.computePosToward(dinosaur.getPosition(), center, diffDist);
+                LOGGER.info("id=" + dinosaur.getEntityId() + ", start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target +
+                            ", dtc=" + distanceToCenter + ", outer=" + outerRadius + ", diff=" + diffDist);
+                return target;
+            }
+
+            LOGGER.info("no cluster.");
+            return null;
         }
 
         return null;
@@ -98,8 +148,10 @@ public class HerdManager
     public void rebalanceAll()
     {
         LOGGER.info("!!! Rebalancing");
-        for (Herd species : _herds.values())
+        for (Herd species : herds.values())
+        {
             species.rebalance();
+        }
 
         LOGGER.info(this);
     }
@@ -108,21 +160,31 @@ public class HerdManager
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<Class, Herd> herd : _herds.entrySet())
+        for (Map.Entry<Class, Herd> herd : herds.entrySet())
         {
             builder.append("[ species=" + herd.getKey().getSimpleName() +
-                            ", clusters=" + herd.getValue().numClusters() +
-                            ", noise=" + herd.getValue().noiseSize() +
-                            " ]\n");
+                    ", clusters=" + herd.getValue().numClusters() +
+                    ", noise=" + herd.getValue().noiseSize() +
+                    " ]\n");
             if (herd.getValue().numClusters() > 0)
             {
                 builder.append("  [ ");
                 for (Cluster cluster : herd.getValue()._clusters)
                 {
                     builder.append(" #:" + cluster._dinosaurs.size());
+                    for (EntityDinosaur dino : cluster._dinosaurs)
+                    {
+                        builder.append(", ").append(dino.getPosition());
+                    }
                 }
                 builder.append(" ]\n");
             }
+            builder.append("  noise=[ ");
+            for (EntityDinosaur dino : herd.getValue()._noise)
+            {
+                builder.append(", ").append(dino.getPosition());
+            }
+            builder.append(" ]\n");
         }
         return builder.toString();
     }
@@ -130,11 +192,55 @@ public class HerdManager
     //=============================================================================================
 
     // Takes care of all the members of a species.
-    private class Herd
+    public class Herd
     {
         private LinkedList<Cluster> _clusters = new LinkedList<Cluster>();
         private LinkedList<EntityDinosaur> _noise = new LinkedList<EntityDinosaur>();
         private final LinkedList<EntityDinosaur> _allDinosaurs = new LinkedList<EntityDinosaur>();
+
+        /**
+         * Returns the cluster this dinosaur is in, or null if not in a cluster.
+         * @param dinosaur The dinosaur we are looking for.
+         * @return Cluster or null.
+         */
+        public Cluster getCluster(EntityDinosaur dinosaur)
+        {
+            for (Cluster cluster : _clusters)
+            {
+                if (cluster.contains(dinosaur))
+                {
+                    return cluster;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * @return Returns the largest cluster.
+         */
+        public Cluster getLargestCluster()
+        {
+            Cluster largest = null;
+            for (Cluster cluster : _clusters)
+            {
+                if (largest == null || cluster.size() > largest.size())
+                {
+                    largest = cluster;
+                }
+            }
+            return largest;
+        }
+
+        /**
+         * @return Returns the nearest cluster. Note, this computationally expensive.
+         */
+//        public Cluster getNearestCluster(EntityDinosaur dinosaur)
+//        {
+//
+//        }
+
+
+        // =======================
 
         void add(EntityDinosaur dinosaur)
         {
@@ -161,7 +267,7 @@ public class HerdManager
             // Merge them if we have more than one
             Cluster main = belongsTo.poll();
             Cluster toMerge;
-            while ( (toMerge = belongsTo.poll()) != null )
+            while ((toMerge = belongsTo.poll()) != null)
             {
                 main.mergeFrom(toMerge);
                 _clusters.remove(toMerge);
@@ -175,11 +281,13 @@ public class HerdManager
             for (Cluster cluster : _clusters)
             {
                 if (cluster.remove(dinosaur))
+                {
                     return;
+                }
             }
         }
 
-        BlockPos getCenter(EntityDinosaur dinosaur)
+        BlockPos getClusterCenter(EntityDinosaur dinosaur)
         {
             for (Cluster cluster : _clusters)
             {
@@ -194,7 +302,9 @@ public class HerdManager
             for (Cluster cluster : _clusters)
             {
                 if (largest == null || cluster.size() > largest.size())
+                {
                     largest = cluster;
+                }
             }
 
             return (largest != null) ? largest.getCenter() : null;
@@ -231,26 +341,55 @@ public class HerdManager
                 }
             }
         }
-
-        int getIntersectDistance(EntityDinosaur dinosaur)
-        {
-            double factor = 1 + Math.sqrt(_clusters.size());
-            if (factor < 1.5)
-                factor = 1.5;
-            return (int)Math.round(dinosaur.width * factor);
-        }
     }
 
     //=============================================================================================
 
     // Manages a set of these
-    private class Cluster
+    public class Cluster
     {
         // We use linked list because we traverse and don't need random access
         private LinkedList<EntityDinosaur> _dinosaurs = new LinkedList<EntityDinosaur>();
 
+
+        /**
+         * Gets the "center" (average) of the cluster,
+         *
+         * @return The center.
+         */
+        public BlockPos getCenter()
+        {
+            double totalX = 0.0F;
+            double totalY = 0.0F;
+            double totalZ = 0.0F;
+            int count = 0;
+
+            for (EntityDinosaur dino : _dinosaurs)
+            {
+                BlockPos pos = dino.getPosition();
+                totalX += pos.getX();
+                totalY += pos.getY();
+                totalZ += pos.getZ();
+                count += 1;
+            }
+
+            return new BlockPos(totalX / count, totalY / count, totalZ / count);
+        }
+
+        /**
+         * @return The desired outer radius from the cluster.
+         */
+        public int getOuterRadius(EntityDinosaur dinosaur)
+        {
+            double factor = 1 + Math.sqrt(size());
+            return (int) Math.round(dinosaur.width * factor);
+        }
+
+        //=====================================================
+
         /**
          * Is the dinosaur withinProximity to other dinosaurs?
+         *
          * @param dinosaur The dinosaur in question.
          * @return True if withinProximity to a cluster.
          */
@@ -259,13 +398,16 @@ public class HerdManager
             for (EntityDinosaur entity : _dinosaurs)
             {
                 if (inProximity(dinosaur, entity))
+                {
                     return true;
+                }
             }
             return false;
         }
 
         /**
          * Is the dinosaur in the cluster?
+         *
          * @param dinosaur The dinosaur.
          * @return True if in the list.
          */
@@ -274,8 +416,10 @@ public class HerdManager
             return _dinosaurs.contains(dinosaur);
         }
 
+
         /**
          * The dinosaur to the cluster.
+         *
          * @param dinosaur The dinosaur to add.
          */
         void add(EntityDinosaur dinosaur)
@@ -285,6 +429,7 @@ public class HerdManager
 
         /**
          * Remove the element if it exists.
+         *
          * @param dinosaur The element to remove.
          * @return True if removed.
          */
@@ -316,34 +461,12 @@ public class HerdManager
             // Recursively add all adjacents
             List<EntityDinosaur> allProximates = extractProximates(dinosaur, dinosaurs);
             _dinosaurs.add(dinosaur);
-            for ( EntityDinosaur close : allProximates)
+            for (EntityDinosaur close : allProximates)
             {
                 addWithAdjacents(close, dinosaurs);
             }
         }
 
-        /**
-         * Gets the "center" (average) of the cluster,
-         * @return The center.
-         */
-        BlockPos getCenter()
-        {
-            double totalX = 0.0F;
-            double totalY = 0.0F;
-            double totalZ = 0.0F;
-            int count = 0;
-
-            for (EntityDinosaur dino : _dinosaurs)
-            {
-                BlockPos pos = dino.getPosition();
-                totalX += pos.getX();
-                totalY += pos.getY();
-                totalZ += pos.getZ();
-                count += 1;
-            }
-
-            return new BlockPos(totalX / count, totalY / count, totalZ / count);
-        }
     }
 
     //===============================================
@@ -396,26 +519,19 @@ public class HerdManager
         // Apatosaurus - 6.5 -
         double radius = dinosaur.width * 3;
         if (radius < 4)
+        {
             radius = 4;
-        return (int)Math.round(radius);
+        }
+        return (int) Math.round(radius);
     }
 
     // Square of basic distance
     private static int speciesDistanceSq(EntityDinosaur dinosaur)
     {
         double radius = dinosaur.width * 3;
-        return (int)Math.round(radius * radius);
+        return (int) Math.round(radius * radius);
     }
 
-    // Generally the radius of a cluster
-    private int getClusterRadius(Cluster cluster, EntityDinosaur dinosaur)
-    {
-        double factor = 1 + Math.sqrt(cluster.size());
-        return (int)Math.round(dinosaur.width * factor);
-    }
-
-
-    private static final Logger LOGGER = LogManager.getLogger();
 }
 
 /*
