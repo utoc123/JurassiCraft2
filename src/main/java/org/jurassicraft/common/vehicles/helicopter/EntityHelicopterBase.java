@@ -451,7 +451,18 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
                 if(item instanceof ItemHeliModule)
                 {
                     ItemHeliModule moduleItem = (ItemHeliModule) item;
-                    HelicopterModule.createFromID(moduleItem.getModuleID());
+                    HelicopterModule module = HelicopterModule.createFromID(moduleItem.getModuleID());
+                    for (HelicopterModuleSpot spot : moduleSpots)
+                    {
+                        if (spot != null && spot.isClicked(localVec))
+                        {
+                            if(spot.addModule(module))
+                            {
+                                if(!player.capabilities.isCreativeMode)
+                                    stack.stackSize--;
+                            }
+                        }
+                    }
                 }
             }
             return false;

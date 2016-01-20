@@ -86,4 +86,20 @@ public abstract class HelicopterModule
         }
         return null;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj instanceof HelicopterModule)
+        {
+            return getModuleID().equals(((HelicopterModule) obj).getModuleID());
+        }
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return getModuleID().hashCode();
+    }
 }
