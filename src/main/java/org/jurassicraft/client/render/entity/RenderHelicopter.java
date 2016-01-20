@@ -35,7 +35,7 @@ public class RenderHelicopter implements IRenderFactory<EntityHelicopterBase>
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/helicopter/ranger_helicopter_texture.png");
         private final Map<String, ModelJson> moduleMap;
         private final Map<String, ResourceLocation> moduleTextures;
-        private ResetControlModelJson baseModel;
+        private ModelJson baseModel;
 
         public Renderer()
         {
@@ -44,14 +44,12 @@ public class RenderHelicopter implements IRenderFactory<EntityHelicopterBase>
             moduleTextures = Maps.newHashMap();
             try
             {
-                baseModel = new ResetControlModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/entities/helicopter/ranger_helicopter"), new AnimationHelicopter());
-                baseModel.setResetEachFrame(false); //TODO
+                baseModel = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/entities/helicopter/ranger_helicopter"), new AnimationHelicopter());
 
                 // Modules init.
                 for (String id : HelicopterModule.registry.keySet())
                 {
                     ModelJson model = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/entities/helicopter/modules/ranger_helicopter_" + id));
-                    //model.setResetEachFrame(true); //TODO
                     moduleMap.put(id, model);
 
                     moduleTextures.put(id, new ResourceLocation(JurassiCraft.MODID, "textures/entities/helicopter/modules/ranger_helicopter_" + id + "_texture.png"));

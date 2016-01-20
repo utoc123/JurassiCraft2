@@ -9,6 +9,7 @@ import org.jurassicraft.common.creativetab.JCCreativeTabs;
 import org.jurassicraft.common.dinosaur.Dinosaur;
 import org.jurassicraft.common.entity.base.JCEntityRegistry;
 import org.jurassicraft.common.item.bones.ItemFossil;
+import org.jurassicraft.common.item.vehicules.ItemHelicopter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
