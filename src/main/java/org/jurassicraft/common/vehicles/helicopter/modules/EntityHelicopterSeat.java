@@ -59,7 +59,7 @@ public class EntityHelicopterSeat extends Entity implements IEntityAdditionalSpa
 
     public void onUpdate()
     {
-        ;
+        update();
     }
 
     public void update()

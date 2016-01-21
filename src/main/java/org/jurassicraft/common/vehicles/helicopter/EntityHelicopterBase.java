@@ -101,7 +101,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
     {
         syncModules = false;
         getModuleSpot(EnumModulePosition.LEFT_SIDE).addModule(new HelicopterDoor());
-        getModuleSpot(EnumModulePosition.RIGHT_SIDE).addModule(new HelicopterMinigun());
+//        getModuleSpot(EnumModulePosition.RIGHT_SIDE).addModule(new HelicopterMinigun());
         syncModules = true;
     }
 
@@ -233,7 +233,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
             {
                 seat.setParentID(heliID);
                 seat.parent = this;
-                seat.update();
+           //     seat.update();
             }
         }
 
@@ -460,6 +460,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
                             {
                                 if(!player.capabilities.isCreativeMode)
                                     stack.stackSize--;
+                                return true;
                             }
                         }
                     }
@@ -467,7 +468,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
             }
             return false;
         }
-        return true;
+        return false;
     }
 
     /**

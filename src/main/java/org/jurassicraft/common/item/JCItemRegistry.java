@@ -9,6 +9,7 @@ import org.jurassicraft.common.creativetab.JCCreativeTabs;
 import org.jurassicraft.common.dinosaur.Dinosaur;
 import org.jurassicraft.common.entity.base.JCEntityRegistry;
 import org.jurassicraft.common.item.bones.ItemFossil;
+import org.jurassicraft.common.item.vehicules.ItemHeliModule;
 import org.jurassicraft.common.item.vehicules.ItemHelicopter;
 
 import java.util.ArrayList;
@@ -64,6 +65,8 @@ public class JCItemRegistry implements IContentHandler
     public static ItemPlantCallus plant_callus;
     public static ItemBasic plant_cells_petri_dish;
     public static ItemHelicopter helicopter_spawner;
+    public static ItemHeliModule minigun_module_adder;
+
     public static ItemBasic tracker;
 
     public static ItemJCMusicDisc disc_jurassicraft_theme;
@@ -138,6 +141,7 @@ public class JCItemRegistry implements IContentHandler
         mr_dna_keychain = new ItemBasic("Mr DNA Keychain", JCCreativeTabs.merchandise);
 
         helicopter_spawner = new ItemHelicopter();
+        minigun_module_adder = new ItemHeliModule("minigun");
 
         disc_jurassicraft_theme = new ItemJCMusicDisc("jurassicraft_theme");
         disc_troodons_and_raptors = new ItemJCMusicDisc("troodons_and_raptors");
@@ -217,6 +221,7 @@ public class JCItemRegistry implements IContentHandler
         registerItem(dino_steak, "Dinosaur Steak");
 
         registerItem(helicopter_spawner, "Helicopter Spawner");
+        registerItem(minigun_module_adder, "Helicopter Minigun");
 
         registerItem(disc_jurassicraft_theme, "Disc JurassiCraft Theme");
         registerItem(disc_troodons_and_raptors, "Disc Troodons And Raptors");
