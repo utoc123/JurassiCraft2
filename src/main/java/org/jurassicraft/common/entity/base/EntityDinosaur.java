@@ -637,7 +637,7 @@ public abstract class EntityDinosaur extends EntityCreature implements IEntityAd
     // earlier
     protected void addAIForAttackTargets(Class<? extends EntityLivingBase> entity, int prio)
     {
-        tasks.addTask(0, new EntityAIAttackOnCollide(this, entity, 1.0D, false));
+        tasks.addTask(0, new EntityAIAttackOnCollide(this, entity, dinosaur.getAttackSpeed(), false));
         targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, entity, false));
     }
 

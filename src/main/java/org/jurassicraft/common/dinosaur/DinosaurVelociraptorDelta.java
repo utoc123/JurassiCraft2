@@ -13,6 +13,7 @@ public class DinosaurVelociraptorDelta extends DinosaurVelociraptor implements I
         this.setDinosaurClass(EntityVelociraptorDelta.class);
         this.setEggColorMale(0x526353, 0x3D4F40);
         this.setEggColorFemale(0x526353, 0x3D4F40);
+        this.setOverlayCount(0);
     }
 
     @Override

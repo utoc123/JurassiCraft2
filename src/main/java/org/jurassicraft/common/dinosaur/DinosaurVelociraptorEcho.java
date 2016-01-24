@@ -13,6 +13,7 @@ public class DinosaurVelociraptorEcho extends DinosaurVelociraptor implements IH
         this.setDinosaurClass(EntityVelociraptorEcho.class);
         this.setEggColorMale(0x665941, 0x363E43);
         this.setEggColorFemale(0x665941, 0x363E43);
+        this.setOverlayCount(0);
     }
 
     @Override
