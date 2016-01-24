@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -16,16 +17,14 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.timeless.unilib.utils.Easings;
 import net.timeless.unilib.utils.MutableVec3;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.common.item.vehicules.ItemHeliModule;
 import org.jurassicraft.common.message.MessageHelicopterDirection;
 import org.jurassicraft.common.message.MessageHelicopterEngine;
 import org.jurassicraft.common.message.MessageHelicopterModules;
-import org.jurassicraft.common.vehicles.helicopter.modules.EntityHelicopterSeat;
-import org.jurassicraft.common.vehicles.helicopter.modules.EnumModulePosition;
-import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterDoor;
-import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterMinigun;
-import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModuleSpot;
+import org.jurassicraft.common.vehicles.helicopter.modules.*;
 
 import java.util.UUID;
 
@@ -49,6 +48,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
     private float enginePower;
     private MutableVec3 direction;
     private boolean modulesSynced;
+    private float rotorRotation;
 
     public EntityHelicopterBase(World worldIn, UUID id)
     {
@@ -101,7 +101,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
     {
         syncModules = false;
         getModuleSpot(EnumModulePosition.LEFT_SIDE).addModule(new HelicopterDoor());
-        getModuleSpot(EnumModulePosition.RIGHT_SIDE).addModule(new HelicopterMinigun());
+//        getModuleSpot(EnumModulePosition.RIGHT_SIDE).addModule(new HelicopterMinigun());
         syncModules = true;
     }
 
@@ -217,6 +217,13 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
             modulesSynced = true;
         }
         super.onLivingUpdate();
+
+        // update rotor angle
+        float time = enginePower / MAX_POWER;
+        rotorRotation += Easings.easeInCubic(time, rotorRotation, enginePower, 1f);
+        rotorRotation %= 360f;
+
+
         fallDistance = 0f;
         ignoreFrustumCheck = true; // always draws the entity
         // Update seats positions
@@ -226,7 +233,7 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
             {
                 seat.setParentID(heliID);
                 seat.parent = this;
-                seat.update();
+           //     seat.update();
             }
         }
 
@@ -400,31 +407,66 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
     {
         // Transforms the vector in local coordinates (cancels possible rotations to simplify 'seat detection')
         Vec3 localVec = vec.rotateYaw((float) Math.toRadians(this.rotationYaw));
-        System.out.println(localVec);
 
-        if (localVec.zCoord > 0.6)
+        if(!attachModule(player, localVec))
         {
-            player.mountEntity(seats[0]);
-            return true;
-        }
-        else if (localVec.zCoord < 0.6 && localVec.xCoord > 0)
-        {
-            player.mountEntity(seats[1]);
-            return true;
-        }
-        else if (localVec.zCoord < 0.6 && localVec.xCoord < 0)
-        {
-            player.mountEntity(seats[2]);
-            return true;
-        }
-        for (HelicopterModuleSpot spot : moduleSpots)
-        {
-            if (spot != null && spot.isClicked(localVec))
+            System.out.println(localVec);
+
+            if (localVec.zCoord > 0.6)
             {
-                System.out.println(spot);
-                spot.onClicked(player, vec);
+                player.mountEntity(seats[0]);
                 return true;
             }
+            else if (localVec.zCoord < 0.6 && localVec.xCoord > 0)
+            {
+                player.mountEntity(seats[1]);
+                return true;
+            }
+            else if (localVec.zCoord < 0.6 && localVec.xCoord < 0)
+            {
+                player.mountEntity(seats[2]);
+                return true;
+            }
+            for (HelicopterModuleSpot spot : moduleSpots)
+            {
+                if (spot != null && spot.isClicked(localVec))
+                {
+                    System.out.println(spot);
+                    spot.onClicked(player, vec);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean attachModule(EntityPlayer player, Vec3 localVec)
+    {
+        if(!worldObj.isRemote)
+        {
+            ItemStack stack = player.getHeldItem();
+            if(stack != null)
+            {
+                Item item = stack.getItem();
+                if(item instanceof ItemHeliModule)
+                {
+                    ItemHeliModule moduleItem = (ItemHeliModule) item;
+                    HelicopterModule module = HelicopterModule.createFromID(moduleItem.getModuleID());
+                    for (HelicopterModuleSpot spot : moduleSpots)
+                    {
+                        if (spot != null && spot.isClicked(localVec))
+                        {
+                            if(spot.addModule(module))
+                            {
+                                if(!player.capabilities.isCreativeMode)
+                                    stack.stackSize--;
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
         return false;
     }
@@ -538,5 +580,9 @@ public class EntityHelicopterBase extends EntityLivingBase implements IEntityAdd
     public void setSeat(int index, EntityHelicopterSeat seat)
     {
         seats[index] = seat;
+    }
+
+    public float getRotorRotation() {
+        return rotorRotation;
     }
 }

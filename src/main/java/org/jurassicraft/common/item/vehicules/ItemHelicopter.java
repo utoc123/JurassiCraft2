@@ -1,4 +1,4 @@
-package org.jurassicraft.common.item;
+package org.jurassicraft.common.item.vehicules;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

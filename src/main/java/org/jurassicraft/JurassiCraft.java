@@ -1,6 +1,6 @@
 package org.jurassicraft;
 
-import net.ilexiconn.bookwiki.BookWiki;
+import net.ilexiconn.llibrary.common.book.BookWiki;
 import net.ilexiconn.llibrary.common.message.AbstractMessage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;

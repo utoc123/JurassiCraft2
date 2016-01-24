@@ -40,6 +40,7 @@ repositories {
 
 dependencies {
     compile "net.ilexiconn:llibrary:${config.llibrary_version}-${config.minecraft_version}:dev"
+    testCompile "junit:junit:4.12"
 }
 
 processResources {

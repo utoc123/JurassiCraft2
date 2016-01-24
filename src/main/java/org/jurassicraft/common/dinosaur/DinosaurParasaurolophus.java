@@ -1,6 +1,6 @@
 package org.jurassicraft.common.dinosaur;
 
-import org.jurassicraft.common.entity.EntityPachycephalosaurus;
+import org.jurassicraft.common.entity.EntityParasaurolophus;
 import org.jurassicraft.common.entity.base.EnumDiet;
 import org.jurassicraft.common.period.EnumTimePeriod;
 
@@ -11,7 +11,7 @@ public class DinosaurParasaurolophus extends Dinosaur
         super();
 
         this.setName("Parasaurolophus");
-        this.setDinosaurClass(EntityPachycephalosaurus.class);
+        this.setDinosaurClass(EntityParasaurolophus.class);
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0x9F8138, 0x422306);
         this.setEggColorFemale(0x5F653E, 0x3C3F44);
