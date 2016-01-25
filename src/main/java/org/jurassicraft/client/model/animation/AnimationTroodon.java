@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -22,7 +21,6 @@ public class AnimationTroodon extends DinosaurAnimator
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
         EntityTroodon entity = (EntityTroodon) parEntity;
-        Animator animator = model.animator;
 
         MowzieModelRenderer head = model.getCube("head UPPER");
         MowzieModelRenderer neck1 = model.getCube("neck1");

@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -22,7 +21,6 @@ public class AnimationPteranodon extends DinosaurAnimator
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
         EntityPteranodon entity = (EntityPteranodon) parEntity;
-        Animator animator = model.animator;
 
         MowzieModelRenderer leftThigh = model.getCube("Left thigh");
         MowzieModelRenderer leftCalf = model.getCube("Left calf");
@@ -157,37 +155,5 @@ public class AnimationPteranodon extends DinosaurAnimator
         model.flap(rightArm1, 0.08f, 0.03f, true, 0, 0, frame, 1);
         leftArm1.rotationPointZ -= 1 * Math.cos(frame * 0.08);
         rightArm1.rotationPointZ -= 1 * Math.cos(frame * 0.08);
-
-        // // Twitch right
-        // animator.setAnim(Animations.LOOKING_RIGHT);
-        // animator.startPhase(3);
-        // animator.rotate(head, 0, 0, 0.3f);
-        // animator.move(head, 1, 0, 0);
-        // animator.endPhase();
-        // animator.setStationaryPhase(19);
-        // animator.resetPhase(3);
-        //
-        // // Twitch left
-        // animator.setAnim(Animations.LOOKING_LEFT);
-        // animator.startPhase(3);
-        // animator.rotate(head, 0, 0, -0.3f);
-        // animator.move(head, -1, 0, 0);
-        // animator.endPhase();
-        // animator.setStationaryPhase(19);
-        // animator.resetPhase(3);
-        //
-        // // Call
-        // animator.setAnim(Animations.CALLING);
-        // animator.startPhase(8);
-        // animator.rotate(jaw, 0.3f, 0, 0);
-        // animator.rotate(neck1, -0.15f, 0, 0);
-        // animator.rotate(neck2, -0.15f, 0, 0);
-        // animator.rotate(head, -0.15f, 0, 0);
-        // animator.rotate(body2, -0.15f, 0, 0);
-        // animator.move(body1, 0, 2, 0);
-        // animator.endPhase();
-        // animator.setStationaryPhase(20);
-        // animator.resetPhase(6);
-
     }
 }

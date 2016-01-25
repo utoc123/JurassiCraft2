@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -21,8 +20,6 @@ public class AnimationHypsilophodon extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
-        Animator animator = model.animator;
-
         int ticksExisted = parEntity.ticksExisted;
 
         float scaleFactor = 0.5F;

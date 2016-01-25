@@ -1,12 +1,10 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.ModelDinosaur;
-import org.jurassicraft.common.entity.EntityChasmosaurus;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.base.JCEntityRegistry;
 
@@ -21,9 +19,6 @@ public class AnimationChasmosaurus extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
-        EntityChasmosaurus entity = (EntityChasmosaurus) parEntity;
-        Animator animator = model.animator;
-
         MowzieModelRenderer head = model.getCube("Head");
         MowzieModelRenderer neck2 = model.getCube("Neck 2");
         MowzieModelRenderer neck1 = model.getCube("Neck");
@@ -51,9 +46,6 @@ public class AnimationChasmosaurus extends DinosaurAnimator
 
         MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
 
-        // f = entity.ticksExisted;
-        // f1 = 0.5F;
-
         float sprintModifier = (float) (1 / (1 + Math.exp(30 * (-f1 + 0.92))));
         float legOffsetModifier = 2.5F;
         float bobBase = 2F;
@@ -66,9 +58,6 @@ public class AnimationChasmosaurus extends DinosaurAnimator
         float height = 1.0F;
         float frontOffset = -2F;
         float animationDegree = 2 - sprintModifier * 0.2F;
-
-        // parModel.faceTarget(head, 2, rotationYaw, rotationPitch);
-        // parModel.faceTarget(neck1, 2, rotationYaw, rotationPitch);
 
         model.bob(waist, bobBase * scaleFactor, height, false, f, f1);
         model.bob(thighLeft, bobBase * scaleFactor, height, false, f, f1);
@@ -115,14 +104,6 @@ public class AnimationChasmosaurus extends DinosaurAnimator
 
         model.chainSwing(tail, 0.1F, 0.05F, 2, ticksExisted, 1F);
         model.chainWave(tail, 0.1F, -0.05F, 1, ticksExisted, 1F);
-
-        // model.faceTarget(head, 4, rotationYaw, rotationPitch);
-        // model.faceTarget(neck3, 4, rotationYaw, rotationPitch);
-        // model.faceTarget(neck2, 4, rotationYaw, rotationPitch);
-        // model.faceTarget(neck1, 4, rotationYaw, rotationPitch);
-        //
-        // model.bob(waist, 1 * globalSpeed, height, false, f, f1);
-        // model.walk(waist, 1 * globalSpeed, 0.1F * height, true, -1.5F, 0.05F, f, f1);
 
         parEntity.tailBuffer.applyChainSwingBuffer(tail);
     }

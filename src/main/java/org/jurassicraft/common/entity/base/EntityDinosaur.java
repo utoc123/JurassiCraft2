@@ -1,5 +1,7 @@
 package org.jurassicraft.common.entity.base;
 
+import java.util.UUID;
+
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
 import net.ilexiconn.llibrary.common.animation.Animation;
@@ -9,7 +11,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,27 +29,24 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.animation.AIAnimation;
-import org.jurassicraft.client.animation.Animations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.common.animation.AIAnimation;
 import org.jurassicraft.common.damagesource.EntityDinosaurDamageSource;
 import org.jurassicraft.common.dinosaur.Dinosaur;
-import org.jurassicraft.common.entity.ai.*;
 import org.jurassicraft.common.entity.ai.EntityAIMate;
+import org.jurassicraft.common.entity.ai.EntityAISleep;
 import org.jurassicraft.common.entity.ai.animations.AnimationAICall;
 import org.jurassicraft.common.entity.ai.animations.AnimationAIHeadCock;
 import org.jurassicraft.common.entity.ai.animations.AnimationAILook;
 import org.jurassicraft.common.entity.ai.metabolism.EntityAIDrink;
 import org.jurassicraft.common.entity.ai.metabolism.EntityAIEatFoodItem;
-import org.jurassicraft.common.entity.ai.metabolism.EntityAIFindPlant;
 import org.jurassicraft.common.genetics.GeneticsContainer;
 import org.jurassicraft.common.genetics.GeneticsHelper;
 import org.jurassicraft.common.item.ItemBluePrint;
 import org.jurassicraft.common.item.JCItemRegistry;
-
-import java.util.UUID;
 
 public abstract class EntityDinosaur extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
 {
@@ -70,14 +73,14 @@ public abstract class EntityDinosaur extends EntityCreature implements IEntityAd
 
     private UUID owner;
 
-    private InventoryDinosaur inventory;
+    private final InventoryDinosaur inventory;
 
     private static final int WATCHER_IS_CARCASS = 25;
     private static final int WATCHER_AGE = 26;
     private static final int WATCHER_GROWTH_OFFSET = 27;
     private static final int WATCHER_IS_SLEEPING = 28;
 
-    private MetabolismContainer metabolism;
+    private final MetabolismContainer metabolism;
 
     private boolean isSleeping;
     private boolean goBackToSleep;
@@ -666,6 +669,7 @@ public abstract class EntityDinosaur extends EntityCreature implements IEntityAd
         this.geneticsQuality = quality;
     }
 
+    @Override
     public void setAnimation(Animation newAnimation)
     {
         JurassiCraft.instance.getLogger().debug("Setting anim id for entity " + getEntityId() + " to " + newAnimation);

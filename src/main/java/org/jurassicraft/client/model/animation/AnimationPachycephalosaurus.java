@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -22,7 +21,6 @@ public class AnimationPachycephalosaurus extends DinosaurAnimator
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
         EntityPachycephalosaurus entity = (EntityPachycephalosaurus) parEntity;
-        Animator animator = model.animator;
 
         MowzieModelRenderer waist = model.getCube("Body Rear");
         MowzieModelRenderer chest = model.getCube("Body Middle");
@@ -96,8 +94,6 @@ public class AnimationPachycephalosaurus extends DinosaurAnimator
         neck1.rotateAngleX += f1 * 0.05F;
         neck2.rotateAngleX += f1 * 0.05F;
         head.rotateAngleX += f1 * 0.075F;
-
-        int ticksExisted = entity.ticksExisted;
 
         model.chainWave(tailParts, 0.1F, 0.025F, 2, parEntity.ticksExisted, 1F);
         model.chainWave(bodyParts, 0.1F, -0.03F, 4, parEntity.ticksExisted, 1F);

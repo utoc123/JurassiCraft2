@@ -1,5 +1,12 @@
 package net.timeless.unilib.asm;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -10,13 +17,6 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.util.TraceClassVisitor;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 @IFMLLoadingPlugin.Name(value = "MyCoreMod")
 // The readable mod name
@@ -86,6 +86,7 @@ public class ASMTransformer implements IClassTransformer
                     FileOutputStream out = new FileOutputStream(classFile);
                     out.write(bytes);
                     out.flush();
+                    out.close();
                 }
                 catch (IOException e)
                 {

@@ -1,12 +1,10 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.ModelDinosaur;
-import org.jurassicraft.common.entity.EntityMamenchisaurus;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.base.JCEntityRegistry;
 
@@ -21,9 +19,6 @@ public class AnimationMamenchisaurus extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
-        EntityMamenchisaurus entity = (EntityMamenchisaurus) parEntity;
-        Animator animator = model.animator;
-
         MowzieModelRenderer head = model.getCube("Head");
 
         MowzieModelRenderer neck1 = model.getCube("neck1");

@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation.raptorsquad;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.ModelDinosaur;
 import org.jurassicraft.common.entity.EntityVelociraptor;
@@ -18,8 +17,6 @@ public class AnimationVelociraptorBlue extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur parModel, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
-        Animator animator = parModel.animator;
-
         EntityVelociraptor velociraptor = (EntityVelociraptor) parEntity;
 
         MowzieModelRenderer waist = parModel.getCube("body3");

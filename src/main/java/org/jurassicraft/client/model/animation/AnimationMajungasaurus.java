@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -21,13 +20,6 @@ public class AnimationMajungasaurus extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
-        Animator animator = model.animator;
-
-        EntityMajungasaurus dino = (EntityMajungasaurus) parEntity;
-
-        // f = dino.ticksExisted;
-        // f1 = 1F;
-
         MowzieModelRenderer tail1 = model.getCube("Tail Base");
         MowzieModelRenderer tail2 = model.getCube("Tail 2");
         MowzieModelRenderer tail3 = model.getCube("Tail 3");
@@ -116,10 +108,6 @@ public class AnimationMajungasaurus extends DinosaurAnimator
         model.chainWave(body, 0.1F, 0.03F, -5, ticksExisted, 1F);
         model.chainWave(armRight, 0.1F, 0.1F, -4, ticksExisted, 1F);
         model.chainWave(armLeft, 0.1F, 0.1F, -4, ticksExisted, 1F);
-
-        // model.faceTarget(head, 3, rotationYaw, rotationPitch);
-        // model.faceTarget(neck1, 3, rotationYaw, rotationPitch);
-        // model.faceTarget(neck2, 3, rotationYaw, rotationPitch);
 
         ((EntityMajungasaurus) parEntity).tailBuffer.applyChainSwingBuffer(tail);
     }

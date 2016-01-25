@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -20,7 +19,6 @@ public class AnimationCoelacanth extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur entity)
     {
-        Animator animator = model.animator;
         // NOTES: Because the animation does not need to be synced to the ground, global variables are not needed.
 
         // NOTES: The thing about aquatic creatures is that they are literally tails. Their whole bodies, including their heads, are single tails. Treat them as such.
@@ -38,9 +36,6 @@ public class AnimationCoelacanth extends DinosaurAnimator
         MowzieModelRenderer rightFlipper = model.getCube("Right Front Flipper");
 
         MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail3, tail2, tail1, body3, body2, body1, neck, head };
-
-        // f = entity.ticksExisted;
-        // f1 = 0.4f;
 
         // NOTES: A fish's movement involves moving its head side to side, which sends a wave impulse down its tail. Its fins move back in forth and up and down in a symmetrical rythm, too.
         head.rotationPointX -= -4 * f1 * Math.sin((f + 1) * 0.6); // Head moves side to side

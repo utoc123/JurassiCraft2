@@ -1,12 +1,10 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.ModelDinosaur;
-import org.jurassicraft.common.entity.EntityMetriacanthosaurus;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.base.JCEntityRegistry;
 
@@ -21,9 +19,6 @@ public class AnimationMetriacanthosaurus extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(ModelDinosaur model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EntityDinosaur parEntity)
     {
-        EntityMetriacanthosaurus entity = (EntityMetriacanthosaurus) parEntity;
-        Animator animator = model.animator;
-
         float globalSpeed = 0.65F;
         float globalDegree = 0.4F;
         float height = 1.0F;
