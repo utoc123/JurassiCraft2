@@ -8,15 +8,15 @@ import net.ilexiconn.llibrary.common.animation.Animation;
 public enum Animations
 {
     // These are all those animations defined in our Trello to-do list
-    IDLE, ATTACKING, INJURED, HEAD_COCKING, CALLING, HISSING, POUNCING, SNIFFING, EATING, DRINKING, MATING, SLEEPING(true), RESTING, FLYING, ROARING, LIVING_SOUND,
+    IDLE, ATTACKING, INJURED, HEAD_COCKING, CALLING, HISSING, POUNCING, SNIFFING, EATING, DRINKING, MATING, SLEEPING(true), RESTING, ROARING, LIVING_SOUND,
     // This wasn't in Trello list but was used in one of the dinos
     SCRATCHING,
     // These weren't in Trello list but are an example of how we could have random animations during idle
     LOOKING_LEFT, LOOKING_RIGHT, BEGGING,
     // I was requested by Gegy to add dying animations
     DYING(true),
-    // The walking animation can be applied in addition to some other animations
-    WALKING;
+    // The walking, flying and swimming animation can be applied in addition to some other animations
+    WALKING, SWIMMING, FLYING;
 
     private Animation animation;
     private boolean hold;
