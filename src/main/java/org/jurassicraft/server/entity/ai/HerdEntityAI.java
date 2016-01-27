@@ -76,7 +76,6 @@ public class HerdEntityAI extends EntityAIBase
 
         if (!dinosaur.getNavigator().noPath())
         {
-            LOGGER.info("Done executing.");
             target = null;
         }
 
@@ -86,12 +85,11 @@ public class HerdEntityAI extends EntityAIBase
     @Override
     public void resetTask()
     {
-        LOGGER.info("resetTask");
         if (target != null)
             dinosaur.getNavigator().clearPathEntity();
     }
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    //private static final Logger LOGGER = LogManager.getLogger();
 }
 
 

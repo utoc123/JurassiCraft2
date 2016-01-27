@@ -19,7 +19,8 @@ public class HerdManager
 {
     // Blocks
     public static final int MIN_SIZE = 3;
-//    public static final long REBALANCE_DELAY_TICKS = 200;
+
+    // We do this on a fairly frequent basis to identify all the clusters
     public static final long REBALANCE_DELAY_TICKS = 40;
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -141,8 +142,8 @@ public class HerdManager
                 int someDist = Math.round(dinosaur.width * 12);
 
                 BlockPos target = AIUtils.computePosToward(dinosaur.getPosition(), center, someDist);
-                LOGGER.info("id=" + dinosaur.getEntityId() + ", start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target +
-                            ", dtc=" + distanceToCenter + ", somedist=" + someDist + ", outer=" + outerRadius + ", diff=" + diffDist);
+                //LOGGER.info("id=" + dinosaur.getEntityId() + ", start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target +
+                //            ", dtc=" + distanceToCenter + ", somedist=" + someDist + ", outer=" + outerRadius + ", diff=" + diffDist);
                 return target;
             }
 
@@ -158,13 +159,13 @@ public class HerdManager
      */
     public void rebalanceAll()
     {
-        LOGGER.info("!!! Rebalancing");
+        //LOGGER.info("!!! Rebalancing");
         for (Herd species : herds.values())
         {
             species.rebalance();
         }
 
-        LOGGER.info(this);
+        //LOGGER.info(this);
     }
 
     @Override
@@ -182,8 +183,8 @@ public class HerdManager
                 builder.append("  [ ");
                 for (Cluster cluster : herd.getValue().clusters)
                 {
-                    builder.append(" #:").append(cluster._dinosaurs.size());
-                    for (DinosaurEntity dino : cluster._dinosaurs)
+                    builder.append(" #:").append(cluster.dinosaurs.size());
+                    for (DinosaurEntity dino : cluster.dinosaurs)
                     {
                         builder.append(", ").append(dino.getPosition());
                     }
@@ -379,7 +380,7 @@ public class HerdManager
     public class Cluster
     {
         // We use linked list because we traverse and don't need random access
-        private LinkedList<DinosaurEntity> _dinosaurs = new LinkedList<DinosaurEntity>();
+        private LinkedList<DinosaurEntity> dinosaurs = new LinkedList<DinosaurEntity>();
 
 
         /**
@@ -397,7 +398,7 @@ public class HerdManager
             double totalZ = 0.0F;
             int count = 0;
 
-            for (DinosaurEntity dino : _dinosaurs)
+            for (DinosaurEntity dino : dinosaurs)
             {
                 BlockPos pos = dino.getPosition();
                 totalX += pos.getX();
@@ -432,7 +433,7 @@ public class HerdManager
          */
         boolean withinProximity(DinosaurEntity dinosaur)
         {
-            for (DinosaurEntity entity : _dinosaurs)
+            for (DinosaurEntity entity : dinosaurs)
             {
                 if (inProximity(dinosaur, entity))
                 {
@@ -450,7 +451,7 @@ public class HerdManager
          */
         boolean contains(DinosaurEntity dinosaur)
         {
-            return _dinosaurs.contains(dinosaur);
+            return dinosaurs.contains(dinosaur);
         }
 
 
@@ -461,7 +462,7 @@ public class HerdManager
          */
         void add(DinosaurEntity dinosaur)
         {
-            _dinosaurs.add(dinosaur);
+            dinosaurs.add(dinosaur);
         }
 
         /**
@@ -472,25 +473,25 @@ public class HerdManager
          */
         boolean remove(DinosaurEntity dinosaur)
         {
-            return _dinosaurs.remove(dinosaur);
+            return dinosaurs.remove(dinosaur);
         }
 
         // Bring in the content from another cluster
         void mergeFrom(Cluster other)
         {
-            _dinosaurs.addAll(other._dinosaurs);
-            other._dinosaurs.clear();
+            dinosaurs.addAll(other.dinosaurs);
+            other.dinosaurs.clear();
         }
 
         int size()
         {
-            return _dinosaurs.size();
+            return dinosaurs.size();
         }
 
         void drainTo(Collection<DinosaurEntity> sink)
         {
-            sink.addAll(_dinosaurs);
-            _dinosaurs.clear();
+            sink.addAll(dinosaurs);
+            dinosaurs.clear();
         }
 
         /**
@@ -502,7 +503,7 @@ public class HerdManager
         {
             // Recursively add all adjacents
             List<DinosaurEntity> allProximates = extractProximates(dinosaur, dinosaurs);
-            _dinosaurs.add(dinosaur);
+            this.dinosaurs.add(dinosaur);
             for ( DinosaurEntity close : allProximates)
             {
                 addWithAdjacents(close, dinosaurs);

@@ -43,6 +43,7 @@ import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
 import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
@@ -114,14 +115,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         tasks.addTask(1, new MateEntityAI(this));
         tasks.addTask(1, new EatFoodItemEntityAI(this));
 
-//        if (dinosaur.getDiet().doesEatPlants())
-//        {
-//            tasks.addTask(1, new FindPlantEntityAI(this));
-//        }
+        if (dinosaur.getDiet().doesEatPlants())
+        {
+            tasks.addTask(1, new FindPlantEntityAI(this));
+        }
 
         tasks.addTask(2, new EntityAIWander(this, 0.8));
 
-        // WARNING: Do not enable, under development!
         tasks.addTask(2, new HerdEntityAI(this));
 
         tasks.addTask(3, new CallAnimationAI(this));
