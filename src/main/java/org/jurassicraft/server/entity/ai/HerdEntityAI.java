@@ -26,6 +26,9 @@ public class HerdEntityAI extends EntityAIBase
         {
             HerdManager.getInstance().add(entity);
         }
+
+        // This is the same bits as wander
+        setMutexBits(1);
     }
 
     @Override

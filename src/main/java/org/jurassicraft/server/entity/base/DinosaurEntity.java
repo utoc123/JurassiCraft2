@@ -35,6 +35,7 @@ import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.animation.AIAnimation;
 import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
 import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
@@ -118,9 +119,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 //            tasks.addTask(1, new FindPlantEntityAI(this));
 //        }
 
-        // WARNING: Do not enable, under development
         tasks.addTask(2, new EntityAIWander(this, 0.8));
-//        tasks.addTask(2, new HerdEntityAI(this));
+
+        // WARNING: Do not enable, under development!
+        tasks.addTask(2, new HerdEntityAI(this));
 
         tasks.addTask(3, new CallAnimationAI(this));
         tasks.addTask(3, new LookAnimationAI(this));
@@ -317,7 +319,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         double newHealth = transitionFromAge(dinosaur.getBabyHealth(), dinosaur.getAdultHealth());
 
         getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(newHealth);
-        getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(transitionFromAge(dinosaur.getBabySpeed(), dinosaur.getAdultSpeed()));
+        getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(transitionFromAge(dinosaur
+                .getBabySpeed(), dinosaur.getAdultSpeed()));
 //        getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(transitionFromAge(dinosaur.getBabyKnockback(), dinosaur.getAdultKnockback())); TODO
 
         // adjustHitbox();

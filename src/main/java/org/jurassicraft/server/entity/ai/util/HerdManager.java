@@ -567,8 +567,12 @@ public class HerdManager
         return lhs.getPosition().distanceSq(rhs.getPosition()) < speciesDistanceSq(lhs);
     }
 
-    // Basic species distance
-    private static int speciesDistance(DinosaurEntity dinosaur)
+    /**
+     * How far apart two dinos can be tobe considered "in proximity"
+     * @param dinosaur The entity from which to extract the proximity number.
+     * @return The square of the allowable proximity.
+     */
+    private static int speciesDistanceSq(DinosaurEntity dinosaur)
     {
         // Microceratus - 0.4 - So, micro's need to be 1.4 blocks away to make a cluster!
         // Apatosaurus - 6.5 -
@@ -577,22 +581,12 @@ public class HerdManager
         {
             radius = 4;
         }
-        return (int) Math.round(radius);
-    }
 
-    /**
-     * How far apart two dinos can be tobe considered "in proximity"
-     * @param dinosaur The entity from which to extract the proximity number.
-     * @return The square of the allowable proximity.
-     */
-    private static int speciesDistanceSq(DinosaurEntity dinosaur)
-    {
-        double radius = dinosaur.width * 3;
         int distance = (int) Math.round(radius * radius);
 
-        // Minium to deal with things like the Microceratus
-        if (distance < 4)
-            distance = 4;
+        // Minimum to deal with things like the Microceratus
+        if (distance < 6)
+            distance = 6;
 
         return distance;
     }
