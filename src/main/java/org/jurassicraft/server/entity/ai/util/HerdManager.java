@@ -80,7 +80,7 @@ public class HerdManager
      * @param dinosaur The dino.
      * @return The herd.
      */
-    public Herd getHerd(EntityDinosaur dinosaur)
+    public Herd getHerd(DinosaurEntity dinosaur)
     {
         return herds.get(dinosaur.getClass());
     }
@@ -92,7 +92,7 @@ public class HerdManager
      * @param dinosaur The dinosaur we want to find the destination for.
      * @return The block pos to move to, or null for stay in place.
      */
-    public BlockPos getWanderLocation(EntityDinosaur dinosaur)
+    public BlockPos getWanderLocation(DinosaurEntity dinosaur)
     {
         // TODO:  Move the rebalance check to a general update tick handler
         long now = dinosaur.getEntityWorld().getTotalWorldTime();
@@ -138,7 +138,7 @@ public class HerdManager
                 int diffDist = distanceToCenter - outerRadius;
 
                 // Let's move some number of body widths
-                int someDist = (int) Math.round(dinosaur.width * 12);
+                int someDist = Math.round(dinosaur.width * 12);
 
                 BlockPos target = AIUtils.computePosToward(dinosaur.getPosition(), center, someDist);
                 LOGGER.info("id=" + dinosaur.getEntityId() + ", start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target +
@@ -173,17 +173,17 @@ public class HerdManager
         StringBuilder builder = new StringBuilder();
         for (Map.Entry<Class, Herd> herd : herds.entrySet())
         {
-            builder.append("[ species=" + herd.getKey().getSimpleName() +
-                    ", clusters=" + herd.getValue().numClusters() +
-                    ", noise=" + herd.getValue().noiseSize() +
-                    " ]\n");
+            builder.append("[ species=").append(herd.getKey().getSimpleName());
+            builder.append(", clusters=").append(herd.getValue().numClusters());
+            builder.append(", noise=").append(herd.getValue().noiseSize());
+            builder.append(" ]\n");
             if (herd.getValue().numClusters() > 0)
             {
                 builder.append("  [ ");
                 for (Cluster cluster : herd.getValue().clusters)
                 {
-                    builder.append(" #:" + cluster._dinosaurs.size());
-                    for (EntityDinosaur dino : cluster._dinosaurs)
+                    builder.append(" #:").append(cluster._dinosaurs.size());
+                    for (DinosaurEntity dino : cluster._dinosaurs)
                     {
                         builder.append(", ").append(dino.getPosition());
                     }
@@ -192,7 +192,7 @@ public class HerdManager
                 builder.append(" ]\n");
             }
             builder.append("  noise=[ ");
-            for (EntityDinosaur dino : herd.getValue().noise)
+            for (DinosaurEntity dino : herd.getValue().noise)
             {
                 builder.append(", ").append(dino.getPosition());
             }
@@ -207,15 +207,15 @@ public class HerdManager
     public class Herd
     {
         private LinkedList<Cluster> clusters = new LinkedList<Cluster>();
-        private LinkedList<EntityDinosaur> noise = new LinkedList<EntityDinosaur>();
-        private final LinkedList<EntityDinosaur> allDinosaurs = new LinkedList<EntityDinosaur>();
+        private LinkedList<DinosaurEntity> noise = new LinkedList<DinosaurEntity>();
+        private final LinkedList<DinosaurEntity> allDinosaurs = new LinkedList<DinosaurEntity>();
 
         /**
          * Returns the cluster this dinosaur is in, or null if not in a cluster.
          * @param dinosaur The dinosaur we are looking for.
          * @return Cluster or null.
          */
-        public Cluster getCluster(EntityDinosaur dinosaur)
+        public Cluster getCluster(DinosaurEntity dinosaur)
         {
             for (Cluster cluster : clusters)
             {
@@ -246,7 +246,7 @@ public class HerdManager
         /**
          * @return Returns the nearest cluster. Note, this computationally expensive.
          */
-        public Cluster getNearestCluster(EntityDinosaur dinosaur)
+        public Cluster getNearestCluster(DinosaurEntity dinosaur)
         {
             Cluster nearest = null;
             double closestDistanceSq = Double.MAX_VALUE;
@@ -264,7 +264,6 @@ public class HerdManager
 
         // =======================
 
-        void add(EntityDinosaur dinosaur)
         void add(DinosaurEntity dinosaur)
         {
             allDinosaurs.add(dinosaur);
@@ -310,8 +309,7 @@ public class HerdManager
             }
         }
 
-        BlockPos getClusterCenter(EntityDinosaur dinosaur)
-        BlockPos getCenter(DinosaurEntity dinosaur)
+        BlockPos getClusterCenter(DinosaurEntity dinosaur)
         {
             for (Cluster cluster : clusters)
             {
@@ -347,10 +345,8 @@ public class HerdManager
         void rebalance()
         {
             // For now this is a hack!  We recompute the entire thing instead of just updating
-            noise = new LinkedList<EntityDinosaur>(allDinosaurs);
+            noise = new LinkedList<DinosaurEntity>(allDinosaurs);
             clusters = cluster(noise);
-            _noise = new LinkedList<DinosaurEntity>(_allDinosaurs);
-            _clusters = cluster(_noise);
 
             //LOGGER.info("After rebalance #clusters: " + _clusters.size());
 
@@ -368,9 +364,9 @@ public class HerdManager
             }
         }
 
-        int getIntersectDistance(EntityDinosaur dinosaur)
+        int getIntersectDistance(DinosaurEntity dinosaur)
         {
-            double factor = 1 + Math.sqrt(_clusters.size());
+            double factor = 1 + Math.sqrt(clusters.size());
             if (factor < 1.5)
                 factor = 1.5;
             return (int)Math.round(dinosaur.width * factor);
@@ -401,7 +397,7 @@ public class HerdManager
             double totalZ = 0.0F;
             int count = 0;
 
-            for (EntityDinosaur dino : _dinosaurs)
+            for (DinosaurEntity dino : _dinosaurs)
             {
                 BlockPos pos = dino.getPosition();
                 totalX += pos.getX();
@@ -417,7 +413,7 @@ public class HerdManager
         /**
          * @return The desired outer radius from the cluster.
          */
-        public int getOuterRadius(EntityDinosaur dinosaur)
+        public int getOuterRadius(DinosaurEntity dinosaur)
         {
             // For Mico, make this larger.
 
@@ -497,13 +493,12 @@ public class HerdManager
             _dinosaurs.clear();
         }
 
-        void addWithAdjacents(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
         /**
          * Adds this entity and all adjacent entities.
          * @param dinosaur The entity to add
          * @param dinosaurs The remaining entities that are available to add.
          */
-        void addWithAdjacents(EntityDinosaur dinosaur, LinkedList<EntityDinosaur> dinosaurs)
+        void addWithAdjacents(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
         {
             // Recursively add all adjacents
             List<DinosaurEntity> allProximates = extractProximates(dinosaur, dinosaurs);
@@ -525,7 +520,6 @@ public class HerdManager
      * @param dinosaurs The dinosaurs to cluster.
      * @return A list of clusters.
      */
-    private LinkedList<Cluster> cluster(LinkedList<EntityDinosaur> dinosaurs)
     private LinkedList<Cluster> cluster(LinkedList<DinosaurEntity> dinosaurs)
     {
         DinosaurEntity dino;
@@ -547,7 +541,6 @@ public class HerdManager
      * @param dinosaurs The remaining entities that might be close.
      * @return A list of entities close to the one we are examining.
      */
-    private LinkedList<EntityDinosaur> extractProximates(EntityDinosaur dinosaur, LinkedList<EntityDinosaur> dinosaurs)
     private LinkedList<DinosaurEntity> extractProximates(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
     {
         LinkedList<DinosaurEntity> proximates = new LinkedList<DinosaurEntity>();
@@ -592,8 +585,6 @@ public class HerdManager
      * @param dinosaur The entity from which to extract the proximity number.
      * @return The square of the allowable proximity.
      */
-    private static int speciesDistanceSq(EntityDinosaur dinosaur)
-    // Square of basic distance
     private static int speciesDistanceSq(DinosaurEntity dinosaur)
     {
         double radius = dinosaur.width * 3;

@@ -14,12 +14,12 @@ public class HerdEntityAI extends EntityAIBase
     //private static final double SPEED = 1.0D;
     private static final double SPEED = 0.6D;
 
-    protected final DinosaurEntity _dinosaur;
+    protected final DinosaurEntity dinosaur;
 
     // The herd center
     private BlockPos target;
 
-    public HerdEntityAI(DinosaurEntity host)
+    public HerdEntityAI(DinosaurEntity entity)
     {
         dinosaur = entity;
         if (!entity.getEntityWorld().isRemote)
