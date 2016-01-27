@@ -14,7 +14,8 @@ public class HerdManager
 {
     // Blocks
     public static final int MIN_SIZE = 3;
-    public static final long REBALANCE_DELAY_TICKS = 200;
+//    public static final long REBALANCE_DELAY_TICKS = 200;
+    public static final long REBALANCE_DELAY_TICKS = 40;
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -110,8 +111,9 @@ public class HerdManager
 
             if (cluster == null)
             {
-                // Not inside a cluster, let's find one to move to, like the largest.
-                cluster = herd.getLargestCluster();
+                // Not inside a cluster, let's find one to move to.
+                //cluster = herd.getLargestCluster();
+                cluster = herd.getNearestCluster(dinosaur);
             }
 
             if (cluster != null)
@@ -173,7 +175,7 @@ public class HerdManager
             if (herd.getValue().numClusters() > 0)
             {
                 builder.append("  [ ");
-                for (Cluster cluster : herd.getValue()._clusters)
+                for (Cluster cluster : herd.getValue().clusters)
                 {
                     builder.append(" #:" + cluster._dinosaurs.size());
                     for (EntityDinosaur dino : cluster._dinosaurs)
@@ -185,7 +187,7 @@ public class HerdManager
                 builder.append(" ]\n");
             }
             builder.append("  noise=[ ");
-            for (EntityDinosaur dino : herd.getValue()._noise)
+            for (EntityDinosaur dino : herd.getValue().noise)
             {
                 builder.append(", ").append(dino.getPosition());
             }
@@ -199,9 +201,9 @@ public class HerdManager
     // Takes care of all the members of a species.
     public class Herd
     {
-        private LinkedList<Cluster> _clusters = new LinkedList<Cluster>();
-        private LinkedList<EntityDinosaur> _noise = new LinkedList<EntityDinosaur>();
-        private final LinkedList<EntityDinosaur> _allDinosaurs = new LinkedList<EntityDinosaur>();
+        private LinkedList<Cluster> clusters = new LinkedList<Cluster>();
+        private LinkedList<EntityDinosaur> noise = new LinkedList<EntityDinosaur>();
+        private final LinkedList<EntityDinosaur> allDinosaurs = new LinkedList<EntityDinosaur>();
 
         /**
          * Returns the cluster this dinosaur is in, or null if not in a cluster.
@@ -210,7 +212,7 @@ public class HerdManager
          */
         public Cluster getCluster(EntityDinosaur dinosaur)
         {
-            for (Cluster cluster : _clusters)
+            for (Cluster cluster : clusters)
             {
                 if (cluster.contains(dinosaur))
                 {
@@ -226,7 +228,7 @@ public class HerdManager
         public Cluster getLargestCluster()
         {
             Cluster largest = null;
-            for (Cluster cluster : _clusters)
+            for (Cluster cluster : clusters)
             {
                 if (largest == null || cluster.size() > largest.size())
                 {
@@ -239,21 +241,31 @@ public class HerdManager
         /**
          * @return Returns the nearest cluster. Note, this computationally expensive.
          */
-//        public Cluster getNearestCluster(EntityDinosaur dinosaur)
-//        {
-//
-//        }
-
+        public Cluster getNearestCluster(EntityDinosaur dinosaur)
+        {
+            Cluster nearest = null;
+            double closestDistanceSq = Double.MAX_VALUE;
+            for (Cluster cluster : clusters)
+            {
+                double distanceSq = dinosaur.getPosition().distanceSq(cluster.getCenter());
+                if (nearest == null || distanceSq < closestDistanceSq)
+                {
+                    nearest = cluster;
+                    closestDistanceSq = distanceSq;
+                }
+            }
+            return nearest;
+        }
 
         // =======================
 
         void add(EntityDinosaur dinosaur)
         {
-            _allDinosaurs.add(dinosaur);
+            allDinosaurs.add(dinosaur);
 
             // Add to a cluster if we can find one.
             LinkedList<Cluster> belongsTo = new LinkedList<Cluster>();
-            for (Cluster cluster : _clusters)
+            for (Cluster cluster : clusters)
             {
                 if (cluster.withinProximity(dinosaur))
                 {
@@ -265,7 +277,7 @@ public class HerdManager
             if (belongsTo.size() == 0)
             {
                 //LOGGER.info("Added to noise: " + dinosaur.getClass().getSimpleName());
-                _noise.add(dinosaur);
+                noise.add(dinosaur);
                 return;
             }
 
@@ -275,15 +287,15 @@ public class HerdManager
             while ((toMerge = belongsTo.poll()) != null)
             {
                 main.mergeFrom(toMerge);
-                _clusters.remove(toMerge);
+                clusters.remove(toMerge);
             }
         }
 
         void remove(EntityDinosaur dinosaur)
         {
-            _allDinosaurs.remove(dinosaur);
+            allDinosaurs.remove(dinosaur);
 
-            for (Cluster cluster : _clusters)
+            for (Cluster cluster : clusters)
             {
                 if (cluster.remove(dinosaur))
                 {
@@ -294,7 +306,7 @@ public class HerdManager
 
         BlockPos getClusterCenter(EntityDinosaur dinosaur)
         {
-            for (Cluster cluster : _clusters)
+            for (Cluster cluster : clusters)
             {
                 if (cluster.contains(dinosaur))
                 {
@@ -304,7 +316,7 @@ public class HerdManager
 
             // Choose the largest
             Cluster largest = null;
-            for (Cluster cluster : _clusters)
+            for (Cluster cluster : clusters)
             {
                 if (largest == null || cluster.size() > largest.size())
                 {
@@ -317,31 +329,31 @@ public class HerdManager
 
         int numClusters()
         {
-            return _clusters.size();
+            return clusters.size();
         }
 
         int noiseSize()
         {
-            return _noise.size();
+            return noise.size();
         }
 
         void rebalance()
         {
             // For now this is a hack!  We recompute the entire thing instead of just updating
-            _noise = new LinkedList<EntityDinosaur>(_allDinosaurs);
-            _clusters = cluster(_noise);
+            noise = new LinkedList<EntityDinosaur>(allDinosaurs);
+            clusters = cluster(noise);
 
             //LOGGER.info("After rebalance #clusters: " + _clusters.size());
 
             // Now, prune out all the tiny clusters
-            Iterator<Cluster> iter = _clusters.iterator();
+            Iterator<Cluster> iter = clusters.iterator();
             while (iter.hasNext())
             {
                 Cluster cluster = iter.next();
                 if (cluster.size() < MIN_SIZE)
                 {
                     //LOGGER.info("Merging in cluster of size: " + cluster.size());
-                    cluster.drainTo(_noise);
+                    cluster.drainTo(noise);
                     iter.remove();
                 }
             }
@@ -364,6 +376,9 @@ public class HerdManager
          */
         public BlockPos getCenter()
         {
+            if (center != null)
+                return center;
+
             double totalX = 0.0F;
             double totalY = 0.0F;
             double totalZ = 0.0F;
@@ -378,7 +393,8 @@ public class HerdManager
                 count += 1;
             }
 
-            return new BlockPos(totalX / count, totalY / count, totalZ / count);
+            center = new BlockPos(totalX / count, totalY / count, totalZ / count);
+            return center;
         }
 
         /**
@@ -479,6 +495,8 @@ public class HerdManager
                 addWithAdjacents(close, dinosaurs);
             }
         }
+
+        private BlockPos center = null;
     }
 
     //===============================================

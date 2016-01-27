@@ -57,13 +57,13 @@ public class EntityAIFindPlant extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-//        MetabolismContainer metabolism = _dinosaur.getMetabolism();
+//        MetabolismContainer metabolism = dinosaur.getMetabolism();
 //
 //        // We don't want to eat if we are dead, too often, or not supposed to
-//        if (_dinosaur.isDead ||
-//                _dinosaur.isCarcass() ||
-//                (_dinosaur.ticksExisted & 0x0F) != 0 ||
-//                !_dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
+//        if (dinosaur.isDead ||
+//                dinosaur.isCarcass() ||
+//                (dinosaur.ticksExisted & 0x0F) != 0 ||
+//                !dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
 //        {
 //            return false;
 //        }
@@ -74,8 +74,8 @@ public class EntityAIFindPlant extends EntityAIBase
 //
 //        return ((food < (maxFood * MUST_EAT_THRESHOLD)) ||
 //                ((food < (maxFood * SHOULD_EAT_THRESHOLD)) &&
-//                        _dinosaur.getDinosaur().getSleepingSchedule()
-//                                .isWithinEatingTime(_dinosaur.getDinosaurTime(), _dinosaur.getRNG())));
+//                        dinosaur.getDinosaur().getSleepingSchedule()
+//                                .isWithinEatingTime(dinosaur.getDinosaurTime(), dinosaur.getRNG())));
         return false;
     }
 
