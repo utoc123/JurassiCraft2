@@ -46,6 +46,13 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private int maximumAge;
     private String headCubeName;
 
+    private float scaleInfant;
+    private float scaleAdult;
+
+    private float offsetX;
+    private float offsetY;
+    private float offsetZ;
+
     private JsonTabulaModel modelAdult;
     private JsonTabulaModel modelInfant;
     private JsonTabulaModel modelJuvenile;
@@ -510,5 +517,43 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
             default:
                 return modelAdult;
         }
+    }
+
+    public void setScale(float scaleAdult, float scaleInfant)
+    {
+        this.scaleInfant = scaleInfant;
+        this.scaleAdult = scaleAdult;
+    }
+
+    public void setOffset(float x, float y, float z)
+    {
+        this.offsetX = x;
+        this.offsetY = y;
+        this.offsetZ = z;
+    }
+
+    public double getScaleInfant()
+    {
+        return scaleInfant;
+    }
+
+    public double getScaleAdult()
+    {
+        return scaleAdult;
+    }
+
+    public float getOffsetX()
+    {
+        return offsetX;
+    }
+
+    public float getOffsetY()
+    {
+        return offsetY;
+    }
+
+    public float getOffsetZ()
+    {
+        return offsetZ;
     }
 }

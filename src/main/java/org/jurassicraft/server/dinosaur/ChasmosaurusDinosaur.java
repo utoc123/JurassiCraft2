@@ -26,5 +26,7 @@ public class ChasmosaurusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones");
         this.setHeadCubeName("Head");
+        this.setScale(1.55F, 0.3F);
+        this.setOffset(0.0F, 0.775F, 0.0F);
     }
 }

@@ -26,5 +26,6 @@ public class GallimimusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
         this.setHeadCubeName("Head Base");
+        this.setScale(1.2F, 0.25F);
     }
 }

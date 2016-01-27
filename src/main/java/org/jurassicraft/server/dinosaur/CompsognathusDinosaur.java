@@ -26,5 +26,7 @@ public class CompsognathusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "teeth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "arm_bones");
         this.setHeadCubeName("Head");
+        this.setScale(0.1F, 0.04F);
+        this.setOffset(0.0F, -12.0F, -0.8F);
     }
 }

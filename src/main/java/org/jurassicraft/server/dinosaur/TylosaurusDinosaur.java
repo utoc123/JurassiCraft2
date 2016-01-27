@@ -28,5 +28,7 @@ public class TylosaurusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("front_flipper", "hind_flipper", "inner_teeth", "ribcage", "skull", "spine", "tail_fluke", "tail_vertebrae", "tooth");
         this.setHeadCubeName("Main head");
+        this.setScale(2.2F, 0.45F);
+        this.setOffset(0.0F, 0.0F, 1.0F);
     }
 }

@@ -27,5 +27,7 @@ public class CoelacanthDinosaur extends Dinosaur
         this.setDiet(EnumDiet.PISCIVORE);
         this.setBones("skull", "teeth", "spine", "second_dorsal_fin", "pelvic_fin_bones", "pectoral_fin_bones", "first_dorsal_fin", "caudal_fin", "anal_fin");
         this.setHeadCubeName("Head joint");
+        this.setScale(2.1F, 0.55F);
+        this.setOffset(0.0F, 1.0F, -0.25F);
     }
 }

@@ -26,5 +26,6 @@ public class BaryonyxDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "leg_vertebrae", "leg_bones", "claw", "arm_bones");
         this.setHeadCubeName("Head");
+        this.setScale(1.3F, 0.25F);
     }
 }

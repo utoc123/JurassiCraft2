@@ -26,5 +26,6 @@ public class CearadactylusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "teeth", "wing_bones", "tail_vertebrae", "leg_bones", "pelvis");
         this.setHeadCubeName("Head");
+        this.setScale(1.0F, 0.45F);
     }
 }

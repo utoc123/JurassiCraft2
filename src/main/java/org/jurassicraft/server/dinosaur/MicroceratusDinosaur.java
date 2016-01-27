@@ -26,5 +26,6 @@ public class MicroceratusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
+        this.setScale(0.5F, 0.18F);
     }
 }

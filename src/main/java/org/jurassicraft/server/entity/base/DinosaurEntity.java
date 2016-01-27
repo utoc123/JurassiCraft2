@@ -22,6 +22,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -971,5 +972,30 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 //                ", inventory=" + inventory +
 //                ", metabolism=" + metabolism +
                 " }";
+    }
+
+    @SideOnly(Side.CLIENT)
+    public Vec3 getPositionEyes(float partialTicks)
+    {
+        double x, y, z;
+
+        if (partialTicks == 1.0F)
+        {
+            x = posX;
+            y = posY;
+            z = posZ;
+        }
+        else
+        {
+            x = this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks;
+            y = this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks;
+            z = this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks;
+        }
+
+        double[] headPos = dinosaur.getHeadPosition(getGrowthStage());
+
+        double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
+
+        return new Vec3(x + (((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale), y + (((headPos[1] * 0.0625F) - dinosaur.getOffsetY()) * scale), z + (((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale));
     }
 }

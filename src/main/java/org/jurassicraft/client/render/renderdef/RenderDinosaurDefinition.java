@@ -26,23 +26,13 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
     private ModelJson modelJuvenile;
     private ModelJson modelAdolescent;
 
-    private float adultScaleAdjustment = 1.0F;
-    private float babyScaleAdjustment = 0.325F;
     private float shadowSize = 0.65F;
-    private float renderXOffset = 0.0F;
-    private float renderYOffset = 0.0F;
-    private float renderZOffset = 0.0F;
 
-    public RenderDinosaurDefinition(Dinosaur dinosaur, IModelAnimator animator, float adultScaleAdjustment, float babyScaleAdjustment, float parShadowSize, float parRenderXOffset, float parRenderYOffset, float parRenderZOffset)
+    public RenderDinosaurDefinition(Dinosaur dinosaur, IModelAnimator animator, float parShadowSize)
     {
         this.dinosaur = dinosaur;
         this.animator = animator;
-        this.adultScaleAdjustment = adultScaleAdjustment;
-        this.babyScaleAdjustment = babyScaleAdjustment;
         this.shadowSize = parShadowSize;
-        this.renderXOffset = parRenderXOffset;
-        this.renderYOffset = parRenderYOffset;
-        this.renderZOffset = parRenderZOffset;
 
         this.modelAdult = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.ADULT));
         this.modelInfant = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.INFANT));
@@ -68,31 +58,6 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
     public IModelAnimator getModelAnimator()
     {
         return animator;
-    }
-
-    public float getRenderXOffset()
-    {
-        return renderXOffset;
-    }
-
-    public float getRenderYOffset()
-    {
-        return renderYOffset;
-    }
-
-    public float getRenderZOffset()
-    {
-        return renderZOffset;
-    }
-
-    public float getAdultScaleAdjustment()
-    {
-        return adultScaleAdjustment;
-    }
-
-    public float getBabyScaleAdjustment()
-    {
-        return babyScaleAdjustment;
     }
 
     public float getShadowSize()

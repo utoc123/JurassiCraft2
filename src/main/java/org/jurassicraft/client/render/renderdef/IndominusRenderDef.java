@@ -9,9 +9,9 @@ import org.jurassicraft.server.entity.base.JCEntityRegistry;
 
 public class IndominusRenderDef extends RenderDinosaurDefinition
 {
-    public IndominusRenderDef(float adultScaleAdjustment, float babyScaleAdjustment, float parShadowSize)
+    public IndominusRenderDef(float parShadowSize)
     {
-        super(JCEntityRegistry.indominus, new IndominusAnimator(), adultScaleAdjustment, babyScaleAdjustment, parShadowSize, 0.0F, 0.0F, 0.0F);
+        super(JCEntityRegistry.indominus, new IndominusAnimator(), parShadowSize);
     }
 
     @Override

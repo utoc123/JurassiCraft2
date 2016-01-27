@@ -26,5 +26,7 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("front_leg_bones", "hind_leg_bones", "horn", "neck_vertebrae", "pelvis", "ribcage", "shoulder_bone", "skull", "tail_vertebrae", "tooth");
         this.setHeadCubeName("Head");
+        this.setScale(1.8F, 0.325F);
+        this.setOffset(0.0F, 0.75F, 0.0F);
     }
 }

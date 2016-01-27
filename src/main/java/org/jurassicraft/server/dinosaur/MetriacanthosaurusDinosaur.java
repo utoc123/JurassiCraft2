@@ -26,5 +26,6 @@ public class MetriacanthosaurusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
+        this.setScale(1.0F, 0.25F);
     }
 }
