@@ -3,6 +3,7 @@ package org.jurassicraft.client.model.animation;
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TherizinosaurusEntity;
@@ -111,44 +112,52 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
 
         int frame = parEntity.ticksExisted;
 
-        // float globalHeight = 2F;
-        // float frontOffset = -1.35f;
-
         // The tail must always be up when the neck is down
         float speed = 0.75F;
         float height = 3F;
-
-        model.bob(bodyHips, 1F * speed, height, false, f, f1);
-        model.flap(bodyHips, 0.5F * speed, 0.5F, false, 0, 0, f, f1);
-        model.flap(bodyMain, 0.5F * speed, 0.1F, true, 0, 0, f, f1);
-        model.flap(bodyShoulders, 0.5F * speed, 0.4F, true, 0, 0, f, f1);
-        model.flap(tail1, 0.5F * speed, 0.2F, true, 0, 0, f, f1);
-        model.flap(tail3, 0.5F * speed, 0.2F, true, 0, 0, f, f1);
-        model.flap(tail5, 0.5F * speed, 0.1F, true, 0, 0, f, f1);
-        model.bob(leftThigh, 1F * speed, height, false, f, f1);
-        model.bob(rightThigh, 1F * speed, height, false, f, f1);
-        model.walk(bodyShoulders, 1F * speed, 0.2F, true, 1, 0, f, f1);
-        model.walk(bodyMain1, 1F * speed, 0.2F, false, 0.5F, 0, f, f1);
-
-        model.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, f, f1);
-        model.walk(leftCalf1, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, f, f1);
-        model.walk(leftCalf2, 0.5F * speed, 0.8F, false, -1F, -0.1F, f, f1);
-        model.walk(footLeft, 0.5F * speed, 1.5F, true, -1F, 1F, f, f1);
-
-        model.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, f, f1);
-        model.walk(rightCalf1, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, f, f1);
-        model.walk(rightCalf2, 0.5F * speed, 0.8F, true, -1F, -0.1F, f, f1);
-        model.walk(footRight, 0.5F * speed, 1.5F, false, -1F, 1F, f, f1);
-
-        model.chainSwing(tail, 0.5F * speed, -0.02F, 2, f, f1);
-        model.chainWave(tail, 1F * speed, -0.02F, 2.5F, f, f1);
-        model.chainSwing(neck, 0.5F * speed, 0.02F, 2, f, f1);
-        model.chainWave(neck, 1.0F * speed, 0.02F, 0.5F, f, f1);
-        // model.chainWave(bodyParts, 1F * speed, -0.1F, 4, f, f1);
-
-        model.chainWave(armRight, 1F * speed, -0.3F, 4, f, f1);
-        model.chainWave(armLeft, 1F * speed, -0.3F, 4, f, f1);
-
+        
+        if (parEntity.getDinosaur().getUsePosesForWalkAnim())
+        {
+            // TO-DO
+            // Call jabelar walking animation helper for walking animation
+            JurassiCraft.instance.getLogger().info("Use poses for walking animation");
+        }
+        else
+        {
+            JurassiCraft.instance.getLogger().info("Use Mowzie for walking animation");
+            
+            model.bob(bodyHips, 1F * speed, height, false, f, f1);
+            model.flap(bodyHips, 0.5F * speed, 0.5F, false, 0, 0, f, f1);
+            model.flap(bodyMain, 0.5F * speed, 0.1F, true, 0, 0, f, f1);
+            model.flap(bodyShoulders, 0.5F * speed, 0.4F, true, 0, 0, f, f1);
+            model.flap(tail1, 0.5F * speed, 0.2F, true, 0, 0, f, f1);
+            model.flap(tail3, 0.5F * speed, 0.2F, true, 0, 0, f, f1);
+            model.flap(tail5, 0.5F * speed, 0.1F, true, 0, 0, f, f1);
+            model.bob(leftThigh, 1F * speed, height, false, f, f1);
+            model.bob(rightThigh, 1F * speed, height, false, f, f1);
+            model.walk(bodyShoulders, 1F * speed, 0.2F, true, 1, 0, f, f1);
+            model.walk(bodyMain1, 1F * speed, 0.2F, false, 0.5F, 0, f, f1);
+    
+            model.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, f, f1);
+            model.walk(leftCalf1, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, f, f1);
+            model.walk(leftCalf2, 0.5F * speed, 0.8F, false, -1F, -0.1F, f, f1);
+            model.walk(footLeft, 0.5F * speed, 1.5F, true, -1F, 1F, f, f1);
+    
+            model.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, f, f1);
+            model.walk(rightCalf1, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, f, f1);
+            model.walk(rightCalf2, 0.5F * speed, 0.8F, true, -1F, -0.1F, f, f1);
+            model.walk(footRight, 0.5F * speed, 1.5F, false, -1F, 1F, f, f1);
+    
+            model.chainSwing(tail, 0.5F * speed, -0.02F, 2, f, f1);
+            model.chainWave(tail, 1F * speed, -0.02F, 2.5F, f, f1);
+            model.chainSwing(neck, 0.5F * speed, 0.02F, 2, f, f1);
+            model.chainWave(neck, 1.0F * speed, 0.02F, 0.5F, f, f1);
+            // model.chainWave(bodyParts, 1F * speed, -0.1F, 4, f, f1);
+    
+            model.chainWave(armRight, 1F * speed, -0.3F, 4, f, f1);
+            model.chainWave(armLeft, 1F * speed, -0.3F, 4, f, f1);
+        }
+    
         // Idling
         model.chainWave(tail, 0.1F, 0.02F, 2, frame, 1F);
         model.chainWave(neck, 0.1F, 0.02F, 2, frame, 1F);
@@ -157,6 +166,5 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
         model.chainWave(armLeft, 0.1F, -0.1F, 4, frame, 1F);
 
         ((TherizinosaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
-
     }
 }

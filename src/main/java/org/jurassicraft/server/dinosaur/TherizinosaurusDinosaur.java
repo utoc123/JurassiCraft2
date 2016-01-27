@@ -25,8 +25,9 @@ public class TherizinosaurusDinosaur extends Dinosaur
         this.setSizeY(1.0F, 5.95F);
         this.setStorage(36);
         this.setDiet(EnumDiet.HERBIVORE);
-        this.setSleepingSchedule(EnumSleepingSchedule.NOCTURNAL);
+        this.setSleepingSchedule(EnumSleepingSchedule.DIURNAL);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
+        this.setUsePosesForWalkingAnim(true);
     }
 }

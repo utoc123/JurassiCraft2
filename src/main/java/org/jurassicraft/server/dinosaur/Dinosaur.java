@@ -1,5 +1,10 @@
 package org.jurassicraft.server.dinosaur;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.util.ResourceLocation;
@@ -12,16 +17,11 @@ import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public abstract class Dinosaur implements Comparable<Dinosaur>
 {
-    private Map<EnumGrowthStage, List<ResourceLocation>> overlays = new HashMap<EnumGrowthStage, List<ResourceLocation>>();
-    private Map<EnumGrowthStage, ResourceLocation> maleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
-    private Map<EnumGrowthStage, ResourceLocation> femaleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
+    private final Map<EnumGrowthStage, List<ResourceLocation>> overlays = new HashMap<EnumGrowthStage, List<ResourceLocation>>();
+    private final Map<EnumGrowthStage, ResourceLocation> maleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
+    private final Map<EnumGrowthStage, ResourceLocation> femaleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
 
     private String name;
     private Class<? extends DinosaurEntity> dinoClazz;
@@ -50,6 +50,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private JsonTabulaModel modelInfant;
     private JsonTabulaModel modelJuvenile;
     private JsonTabulaModel modelAdolescent;
+    
+    private boolean usePosesForWalkingAnim = false;
 
     public void init()
     {
@@ -235,6 +237,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     {
         this.bones = bones;
     }
+    
+    public void setUsePosesForWalkingAnim(boolean usePosesForWalkingAnim)
+    {
+        this.usePosesForWalkingAnim = usePosesForWalkingAnim;
+    }
 
     public String getName()
     {
@@ -368,6 +375,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         }
 
         return texture + ".png";
+    }
+    
+    public boolean getUsePosesForWalkAnim()
+    {
+        return this.usePosesForWalkingAnim;
     }
 
     @Override
