@@ -20,86 +20,86 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.gui.app.GuiAppRegistry;
-import org.jurassicraft.client.model.animation.AnimationAchillobator;
-import org.jurassicraft.client.model.animation.AnimationAnkylosaurus;
-import org.jurassicraft.client.model.animation.AnimationApatosaurus;
-import org.jurassicraft.client.model.animation.AnimationBaryonyx;
-import org.jurassicraft.client.model.animation.AnimationBrachiosaurus;
-import org.jurassicraft.client.model.animation.AnimationCarnotaurus;
-import org.jurassicraft.client.model.animation.AnimationCearadactylus;
-import org.jurassicraft.client.model.animation.AnimationChasmosaurus;
-import org.jurassicraft.client.model.animation.AnimationCoelacanth;
-import org.jurassicraft.client.model.animation.AnimationCompsognathus;
-import org.jurassicraft.client.model.animation.AnimationCorythosaurus;
-import org.jurassicraft.client.model.animation.AnimationDilophosaurus;
-import org.jurassicraft.client.model.animation.AnimationDimorphodon;
-import org.jurassicraft.client.model.animation.AnimationDodo;
-import org.jurassicraft.client.model.animation.AnimationDunkleosteus;
-import org.jurassicraft.client.model.animation.AnimationEdmontosaurus;
-import org.jurassicraft.client.model.animation.AnimationGallimimus;
-import org.jurassicraft.client.model.animation.AnimationGiganotosaurus;
-import org.jurassicraft.client.model.animation.AnimationHerrerasaurus;
-import org.jurassicraft.client.model.animation.AnimationHypsilophodon;
-import org.jurassicraft.client.model.animation.AnimationLambeosaurus;
-import org.jurassicraft.client.model.animation.AnimationLeaellynasaura;
-import org.jurassicraft.client.model.animation.AnimationLeptictidium;
-import org.jurassicraft.client.model.animation.AnimationLudodactylus;
-import org.jurassicraft.client.model.animation.AnimationMajungasaurus;
-import org.jurassicraft.client.model.animation.AnimationMamenchisaurus;
-import org.jurassicraft.client.model.animation.AnimationMegapiranha;
-import org.jurassicraft.client.model.animation.AnimationMetriacanthosaurus;
-import org.jurassicraft.client.model.animation.AnimationMicroceratus;
-import org.jurassicraft.client.model.animation.AnimationMoganopterus;
-import org.jurassicraft.client.model.animation.AnimationOrnithomimus;
-import org.jurassicraft.client.model.animation.AnimationOthnielia;
-import org.jurassicraft.client.model.animation.AnimationOviraptor;
-import org.jurassicraft.client.model.animation.AnimationPachycephalosaurus;
-import org.jurassicraft.client.model.animation.AnimationParasaurolophus;
-import org.jurassicraft.client.model.animation.AnimationProtoceratops;
-import org.jurassicraft.client.model.animation.AnimationPteranodon;
-import org.jurassicraft.client.model.animation.AnimationRugops;
-import org.jurassicraft.client.model.animation.AnimationSegisaurus;
-import org.jurassicraft.client.model.animation.AnimationSpinosaurus;
-import org.jurassicraft.client.model.animation.AnimationStegosaurus;
-import org.jurassicraft.client.model.animation.AnimationTherizinosaurus;
-import org.jurassicraft.client.model.animation.AnimationTriceratops;
-import org.jurassicraft.client.model.animation.AnimationTroodon;
-import org.jurassicraft.client.model.animation.AnimationTropeognathus;
-import org.jurassicraft.client.model.animation.AnimationTylosaurus;
-import org.jurassicraft.client.model.animation.AnimationTyrannosaurus;
-import org.jurassicraft.client.model.animation.AnimationVelociraptor;
-import org.jurassicraft.client.model.animation.AnimationZhenyuanopterus;
-import org.jurassicraft.client.model.animation.raptorsquad.AnimationVelociraptorBlue;
-import org.jurassicraft.client.model.animation.raptorsquad.AnimationVelociraptorCharlie;
-import org.jurassicraft.client.model.animation.raptorsquad.AnimationVelociraptorDelta;
-import org.jurassicraft.client.model.animation.raptorsquad.AnimationVelociraptorEcho;
-import org.jurassicraft.client.render.block.SpecialRendererActionFigure;
-import org.jurassicraft.client.render.block.SpecialRendererDNAExtractor;
-import org.jurassicraft.client.render.entity.RenderBluePrint;
-import org.jurassicraft.client.render.entity.RenderCageSmall;
-import org.jurassicraft.client.render.entity.RenderHelicopter;
-import org.jurassicraft.client.render.entity.RenderJurassiCraftSign;
-import org.jurassicraft.client.render.entity.RenderPaddockSign;
-import org.jurassicraft.client.render.renderdef.RenderDefIndominus;
+import org.jurassicraft.client.model.animation.AchillobatorAnimator;
+import org.jurassicraft.client.model.animation.AnkylosaurusAnimator;
+import org.jurassicraft.client.model.animation.ApatosaurusAnimator;
+import org.jurassicraft.client.model.animation.BaryonyxAnimator;
+import org.jurassicraft.client.model.animation.BrachiosaurusAnimator;
+import org.jurassicraft.client.model.animation.CarnotaurusAnimator;
+import org.jurassicraft.client.model.animation.CearadactylusAnimator;
+import org.jurassicraft.client.model.animation.ChasmosaurusAnimator;
+import org.jurassicraft.client.model.animation.CoelacanthAnimator;
+import org.jurassicraft.client.model.animation.CompsognathusAnimator;
+import org.jurassicraft.client.model.animation.CorythosaurusAnimator;
+import org.jurassicraft.client.model.animation.DilophosaurusAnimator;
+import org.jurassicraft.client.model.animation.DimorphodonAnimator;
+import org.jurassicraft.client.model.animation.DodoAnimator;
+import org.jurassicraft.client.model.animation.DunkleosteusAnimator;
+import org.jurassicraft.client.model.animation.EdmontosaurusAnimator;
+import org.jurassicraft.client.model.animation.GallimimusAnimator;
+import org.jurassicraft.client.model.animation.GiganotosaurusAnimator;
+import org.jurassicraft.client.model.animation.HerrerasaurusAnimator;
+import org.jurassicraft.client.model.animation.HypsilophodonAnimator;
+import org.jurassicraft.client.model.animation.LambeosaurusAnimator;
+import org.jurassicraft.client.model.animation.LeaellynasauraAnimator;
+import org.jurassicraft.client.model.animation.LeptictidiumAnimator;
+import org.jurassicraft.client.model.animation.LudodactylusAnimator;
+import org.jurassicraft.client.model.animation.MajungasaurusAnimator;
+import org.jurassicraft.client.model.animation.MamenchisaurusAnimator;
+import org.jurassicraft.client.model.animation.MegapiranhaAnimator;
+import org.jurassicraft.client.model.animation.MetriacanthosaurusAnimator;
+import org.jurassicraft.client.model.animation.MicroceratusAnimator;
+import org.jurassicraft.client.model.animation.MoganopterusAnimator;
+import org.jurassicraft.client.model.animation.OrnithomimusAnimator;
+import org.jurassicraft.client.model.animation.OthnieliaAnimator;
+import org.jurassicraft.client.model.animation.OviraptorAnimator;
+import org.jurassicraft.client.model.animation.PachycephalosaurusAnimator;
+import org.jurassicraft.client.model.animation.ParasaurolophusAnimator;
+import org.jurassicraft.client.model.animation.ProtoceratopsAnimator;
+import org.jurassicraft.client.model.animation.PteranodonAnimator;
+import org.jurassicraft.client.model.animation.RugopsAnimator;
+import org.jurassicraft.client.model.animation.SegisaurusAnimator;
+import org.jurassicraft.client.model.animation.SpinosaurusAnimator;
+import org.jurassicraft.client.model.animation.StegosaurusAnimator;
+import org.jurassicraft.client.model.animation.TherizinosaurusAnimator;
+import org.jurassicraft.client.model.animation.TriceratopsAnimator;
+import org.jurassicraft.client.model.animation.TroodonAnimator;
+import org.jurassicraft.client.model.animation.TropeognathusAnimator;
+import org.jurassicraft.client.model.animation.TylosaurusAnimator;
+import org.jurassicraft.client.model.animation.TyrannosaurusAnimator;
+import org.jurassicraft.client.model.animation.VelociraptorAnimator;
+import org.jurassicraft.client.model.animation.ZhenyuanopterusAnimator;
+import org.jurassicraft.client.model.animation.VelociraptorBlueAnimator;
+import org.jurassicraft.client.model.animation.VelociraptorCharlieAnimator;
+import org.jurassicraft.client.model.animation.VelociraptorDeltaAnimator;
+import org.jurassicraft.client.model.animation.VelociraptorEchoAnimator;
+import org.jurassicraft.client.render.block.ActionFigureSpecialRenderer;
+import org.jurassicraft.client.render.block.DNAExtractorSpecialRenderer;
+import org.jurassicraft.client.render.entity.BluePrintRenderer;
+import org.jurassicraft.client.render.entity.CageSmallRenderer;
+import org.jurassicraft.client.render.entity.HelicopterRenderer;
+import org.jurassicraft.client.render.entity.JurassiCraftSignRenderer;
+import org.jurassicraft.client.render.entity.PaddockSignRenderer;
+import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
-import org.jurassicraft.common.block.BlockEncasedFossil;
-import org.jurassicraft.common.block.BlockFossil;
-import org.jurassicraft.common.block.BlockMeta;
-import org.jurassicraft.common.block.JCBlockRegistry;
-import org.jurassicraft.common.block.tree.EnumType;
-import org.jurassicraft.common.dinosaur.Dinosaur;
-import org.jurassicraft.common.entity.base.JCEntityRegistry;
-import org.jurassicraft.common.entity.item.EntityBluePrint;
-import org.jurassicraft.common.entity.item.EntityCageSmall;
-import org.jurassicraft.common.entity.item.EntityJurassiCraftSign;
-import org.jurassicraft.common.entity.item.EntityPaddockSign;
-import org.jurassicraft.common.item.JCItemRegistry;
-import org.jurassicraft.common.item.bones.ItemFossil;
-import org.jurassicraft.common.plant.JCPlantRegistry;
-import org.jurassicraft.common.plant.Plant;
-import org.jurassicraft.common.tileentity.TileActionFigure;
-import org.jurassicraft.common.tileentity.TileDNAExtractor;
-import org.jurassicraft.common.vehicles.helicopter.EntityHelicopterBase;
+import org.jurassicraft.server.block.EncasedFossilBlock;
+import org.jurassicraft.server.block.FossilBlock;
+import org.jurassicraft.server.block.MetaBlock;
+import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.tree.WoodType;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.item.BluePrintEntity;
+import org.jurassicraft.server.entity.item.CageSmallEntity;
+import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
+import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.bones.FossilItem;
+import org.jurassicraft.server.plant.JCPlantRegistry;
+import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.tileentity.ActionFigureTile;
+import org.jurassicraft.server.tileentity.DNAExtractorTile;
+import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -115,7 +115,7 @@ public class JCRenderingRegistry
         {
             String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
 
-            for (Map.Entry<String, ItemFossil> entry : JCItemRegistry.fossils.entrySet())
+            for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fossils.entrySet())
             {
                 List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
 
@@ -153,60 +153,60 @@ public class JCRenderingRegistry
 
     public void init()
     {
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.achillobator, new AnimationAchillobator(), 1.1F, 0.325F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.anklyosaurus, new AnimationAnkylosaurus(), 2.3F, 0.45F, 0.85F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.brachiosaurus, new AnimationBrachiosaurus(), 2.5F, 0.3F, 1.5F, 0.0F, 0.0F, 1.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.carnotaurus, new AnimationCarnotaurus(), 1.3F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.coelacanth, new AnimationCoelacanth(), 2.1F, 0.55F, 0.35F, 0.0F, 1.0F, -0.25F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.compsognathus, new AnimationCompsognathus(), 0.1F, 0.04F, 1.8F, 0.0F, -12.0F, -0.8F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dilophosaurus, new AnimationDilophosaurus(), 0.95F, 0.22F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dunkleosteus, new AnimationDunkleosteus(), 2.1F, 0.55F, 0.35F, 0.0F, 1.0F, -0.25F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.gallimimus, new AnimationGallimimus(), 1.2F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.giganotosaurus, new AnimationGiganotosaurus(), 2.37F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.hypsilophodon, new AnimationHypsilophodon(), 0.65F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDefIndominus(3.4F, 0.4F, 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.majungasaurus, new AnimationMajungasaurus(), 1.6F, 0.4F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.parasaurolophus, new AnimationParasaurolophus(), 1.9F, 0.4F, 0.65F, 0.0F, 0.75F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.pteranodon, new AnimationPteranodon(), 1.2F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.rugops, new AnimationRugops(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.segisaurus, new AnimationSegisaurus(), 0.55F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.spinosaurus, new AnimationSpinosaurus(), 2.37F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.stegosaurus, new AnimationStegosaurus(), 2.55F, 0.35F, 0.65F, 0.0F, 0.775F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.triceratops, new AnimationTriceratops(), 1.8F, 0.325F, 0.65F, 0.0F, 0.75F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.tyrannosaurus, new AnimationTyrannosaurus(), 2.4F, 0.35F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor, new AnimationVelociraptor(), 1.3F, 0.3F, 0.45F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dodo, new AnimationDodo(), 0.8F, 0.3F, 0.5F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.leptictidium, new AnimationLeptictidium(), 0.6F, 0.25F, 0.45F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.microceratus, new AnimationMicroceratus(), 0.5F, 0.18F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.oviraptor, new AnimationOviraptor(), 0.65F, 0.18F, 0.55F, 0.0F, 0.0F, -0.4F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.apatosaurus, new AnimationApatosaurus(), 2.0F, 0.25F, 1.5F, 0.0F, 0.0F, 0.1F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.othnielia, new AnimationOthnielia(), 0.35F, 0.15F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dimorphodon, new AnimationDimorphodon(), 0.5F, 0.15F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.tylosaurus, new AnimationTylosaurus(), 2.2F, 0.45F, 0.85F, 0.0F, 0.0F, 1.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.ludodactylus, new AnimationLudodactylus(), 0.8F, 0.35F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.protoceratops, new AnimationProtoceratops(), 1.2F, 0.35F, 0.55F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.tropeognathus, new AnimationTropeognathus(), 1.15F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.leaellynasaura, new AnimationLeaellynasaura(), 0.7F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.herrerasaurus, new AnimationHerrerasaurus(), 1.3F, 0.25F, 0.75F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_blue, new AnimationVelociraptorBlue(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_charlie, new AnimationVelociraptorCharlie(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_delta, new AnimationVelociraptorDelta(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_echo, new AnimationVelociraptorEcho(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.therizinosaurus, new AnimationTherizinosaurus(), 3.5F, 0.55F, 0.55F, 0.0F, 1.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.megapiranha, new AnimationMegapiranha(), 1.0F, 0.15F, 0.65F, 0.0F, 0.65F, -0.25F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.baryonyx, new AnimationBaryonyx(), 1.3F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.cearadactylus, new AnimationCearadactylus(), 1.0F, 0.45F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.mamenchisaurus, new AnimationMamenchisaurus(), 1.8F, 0.2F, 1.5F, 0.0F, 0.0F, -0.5F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.chasmosaurus, new AnimationChasmosaurus(), 1.55F, 0.3F, 0.85F, 0.0F, 0.775F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.corythosaurus, new AnimationCorythosaurus(), 1.75F, 0.35F, 0.65F, 0.0F, 0.775F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.edmontosaurus, new AnimationEdmontosaurus(), 2.65F, 0.45F, 0.65F, 0.0F, 0.775F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.lambeosaurus, new AnimationLambeosaurus(), 2.5F, 0.45F, 0.65F, 0.0F, 0.775F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.metriacanthosaurus, new AnimationMetriacanthosaurus(), 1.0F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.moganopterus, new AnimationMoganopterus(), 0.725F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.ornithomimus, new AnimationOrnithomimus(), 0.9F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.zhenyuanopterus, new AnimationZhenyuanopterus(), 0.7F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.troodon, new AnimationTroodon(), 0.75F, 0.25F, 0.65F, 0.0F, 0.0F, 0.5F));
-        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.pachycephalosaurus, new AnimationPachycephalosaurus(), 0.9F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.achillobator, new AchillobatorAnimator(), 1.1F, 0.325F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.anklyosaurus, new AnkylosaurusAnimator(), 2.3F, 0.45F, 0.85F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.brachiosaurus, new BrachiosaurusAnimator(), 2.5F, 0.3F, 1.5F, 0.0F, 0.0F, 1.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.carnotaurus, new CarnotaurusAnimator(), 1.3F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.coelacanth, new CoelacanthAnimator(), 2.1F, 0.55F, 0.35F, 0.0F, 1.0F, -0.25F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.compsognathus, new CompsognathusAnimator(), 0.1F, 0.04F, 1.8F, 0.0F, -12.0F, -0.8F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dilophosaurus, new DilophosaurusAnimator(), 0.95F, 0.22F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dunkleosteus, new DunkleosteusAnimator(), 2.1F, 0.55F, 0.35F, 0.0F, 1.0F, -0.25F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.gallimimus, new GallimimusAnimator(), 1.2F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.giganotosaurus, new GiganotosaurusAnimator(), 2.37F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.hypsilophodon, new HypsilophodonAnimator(), 0.65F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new IndominusRenderDef(3.4F, 0.4F, 0.65F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.majungasaurus, new MajungasaurusAnimator(), 1.6F, 0.4F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.parasaurolophus, new ParasaurolophusAnimator(), 1.9F, 0.4F, 0.65F, 0.0F, 0.75F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.pteranodon, new PteranodonAnimator(), 1.2F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.rugops, new RugopsAnimator(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.segisaurus, new SegisaurusAnimator(), 0.55F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.spinosaurus, new SpinosaurusAnimator(), 2.37F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.stegosaurus, new StegosaurusAnimator(), 2.55F, 0.35F, 0.65F, 0.0F, 0.775F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.triceratops, new TriceratopsAnimator(), 1.8F, 0.325F, 0.65F, 0.0F, 0.75F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.tyrannosaurus, new TyrannosaurusAnimator(), 2.4F, 0.35F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor, new VelociraptorAnimator(), 1.3F, 0.3F, 0.45F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dodo, new DodoAnimator(), 0.8F, 0.3F, 0.5F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.leptictidium, new LeptictidiumAnimator(), 0.6F, 0.25F, 0.45F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.microceratus, new MicroceratusAnimator(), 0.5F, 0.18F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.oviraptor, new OviraptorAnimator(), 0.65F, 0.18F, 0.55F, 0.0F, 0.0F, -0.4F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.apatosaurus, new ApatosaurusAnimator(), 2.0F, 0.25F, 1.5F, 0.0F, 0.0F, 0.1F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.othnielia, new OthnieliaAnimator(), 0.35F, 0.15F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.dimorphodon, new DimorphodonAnimator(), 0.5F, 0.15F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.tylosaurus, new TylosaurusAnimator(), 2.2F, 0.45F, 0.85F, 0.0F, 0.0F, 1.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.ludodactylus, new LudodactylusAnimator(), 0.8F, 0.35F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.protoceratops, new ProtoceratopsAnimator(), 1.2F, 0.35F, 0.55F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.tropeognathus, new TropeognathusAnimator(), 1.15F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.leaellynasaura, new LeaellynasauraAnimator(), 0.7F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.herrerasaurus, new HerrerasaurusAnimator(), 1.3F, 0.25F, 0.75F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_blue, new VelociraptorBlueAnimator(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_charlie, new VelociraptorCharlieAnimator(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_delta, new VelociraptorDeltaAnimator(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.velociraptor_echo, new VelociraptorEchoAnimator(), 1.0F, 0.3F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.therizinosaurus, new TherizinosaurusAnimator(), 3.5F, 0.55F, 0.55F, 0.0F, 1.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.megapiranha, new MegapiranhaAnimator(), 1.0F, 0.15F, 0.65F, 0.0F, 0.65F, -0.25F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.baryonyx, new BaryonyxAnimator(), 1.3F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.cearadactylus, new CearadactylusAnimator(), 1.0F, 0.45F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.mamenchisaurus, new MamenchisaurusAnimator(), 1.8F, 0.2F, 1.5F, 0.0F, 0.0F, -0.5F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.chasmosaurus, new ChasmosaurusAnimator(), 1.55F, 0.3F, 0.85F, 0.0F, 0.775F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.corythosaurus, new CorythosaurusAnimator(), 1.75F, 0.35F, 0.65F, 0.0F, 0.775F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.edmontosaurus, new EdmontosaurusAnimator(), 2.65F, 0.45F, 0.65F, 0.0F, 0.775F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.lambeosaurus, new LambeosaurusAnimator(), 2.5F, 0.45F, 0.65F, 0.0F, 0.775F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.metriacanthosaurus, new MetriacanthosaurusAnimator(), 1.0F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.moganopterus, new MoganopterusAnimator(), 0.725F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.ornithomimus, new OrnithomimusAnimator(), 0.9F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.zhenyuanopterus, new ZhenyuanopterusAnimator(), 0.7F, 0.25F, 0.65F, 0.0F, 0.0F, 0.0F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.troodon, new TroodonAnimator(), 0.75F, 0.25F, 0.65F, 0.0F, 0.0F, 0.5F));
+        registerRenderDef(new RenderDinosaurDefinition(JCEntityRegistry.pachycephalosaurus, new PachycephalosaurusAnimator(), 0.9F, 0.2F, 0.65F, 0.0F, 0.0F, 0.0F));
 
         GuiAppRegistry.register();
 
@@ -215,7 +215,7 @@ public class JCRenderingRegistry
 
         int i = 0;
 
-        for (BlockEncasedFossil fossil : JCBlockRegistry.encased_fossils)
+        for (EncasedFossilBlock fossil : JCBlockRegistry.encased_fossils)
         {
             this.registerBlockRenderer(modelMesher, fossil, "encased_fossil_" + i, "inventory");
 
@@ -224,7 +224,7 @@ public class JCRenderingRegistry
 
         i = 0;
 
-        for (BlockFossil fossil : JCBlockRegistry.fossils)
+        for (FossilBlock fossil : JCBlockRegistry.fossils)
         {
             this.registerBlockRenderer(modelMesher, fossil, "fossil_block_" + i, "inventory");
 
@@ -233,7 +233,7 @@ public class JCRenderingRegistry
 
         for (i = 0; i < JCBlockRegistry.numOfTrees; i++)
         {
-            String name = EnumType.getMetaLookup()[i].getName();
+            String name = WoodType.getMetaLookup()[i].getName();
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.leaves[i], name + "_leaves", "inventory");
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.saplings[i], name + "_sapling", "inventory");
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.planks[i], name + "_planks", "inventory");
@@ -291,14 +291,14 @@ public class JCRenderingRegistry
             RenderingRegistry.registerEntityRenderingHandler(dino.getDinosaurClass(), renderDefs.get(dino).createRenderFor(renderManager));
         }
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityCageSmall.class, new RenderCageSmall().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(EntityBluePrint.class, new RenderBluePrint().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(EntityPaddockSign.class, new RenderPaddockSign().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(EntityJurassiCraftSign.class, new RenderJurassiCraftSign().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(EntityHelicopterBase.class, new RenderHelicopter().createRenderFor(renderManager));
+        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer().createRenderFor(renderManager));
+        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer().createRenderFor(renderManager));
+        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer().createRenderFor(renderManager));
+        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer().createRenderFor(renderManager));
+        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer().createRenderFor(renderManager));
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileDNAExtractor.class, new SpecialRendererDNAExtractor());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileActionFigure.class, new SpecialRendererActionFigure());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
 
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();
@@ -324,7 +324,6 @@ public class JCRenderingRegistry
         this.registerItemRenderer(modelMesher, JCItemRegistry.jc_sign, "jurassicraft_sign", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.empty_test_tube, "empty_test_tube", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.empty_syringe, "empty_syringe", "inventory");
-        this.registerItemRenderer(modelMesher, JCItemRegistry.entityRemover, "entity_remover", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.storage_disc, "storage_disc", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.disc_reader, "disc_reader", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.laser, "laser", "inventory");
@@ -358,7 +357,7 @@ public class JCRenderingRegistry
         {
             String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
 
-            for (Map.Entry<String, ItemFossil> entry : JCItemRegistry.fossils.entrySet())
+            for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fossils.entrySet())
             {
                 List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
 
@@ -442,7 +441,7 @@ public class JCRenderingRegistry
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
             Item item = Item.getItemFromBlock(block);
-            BlockMeta bm = (BlockMeta) block;
+            MetaBlock bm = (MetaBlock) block;
             for (int i = 0; i < bm.getSubBlocks(); i++)
             {
                 String path = JurassiCraft.MODID + ":metablock/" + bm.getPath() + "/" + bm.getUnlocalizedName().substring(5) + "_" + i;

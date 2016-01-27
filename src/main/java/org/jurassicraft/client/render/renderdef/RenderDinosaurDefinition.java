@@ -9,14 +9,14 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.model.ModelDinosaur;
-import org.jurassicraft.client.render.entity.RenderDinosaur;
-import org.jurassicraft.common.dinosaur.Dinosaur;
-import org.jurassicraft.common.entity.base.EntityDinosaur;
-import org.jurassicraft.common.entity.base.EnumGrowthStage;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.client.render.entity.DinosaurRenderer;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.base.EnumGrowthStage;
 
 @SideOnly(Side.CLIENT)
-public class RenderDinosaurDefinition implements IRenderFactory<EntityDinosaur>
+public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 {
     private final Dinosaur dinosaur;
     private final IModelAnimator animator;
@@ -100,9 +100,9 @@ public class RenderDinosaurDefinition implements IRenderFactory<EntityDinosaur>
         return shadowSize;
     }
 
-    public ModelDinosaur getTabulaModel(JsonTabulaModel tabulaModel)
+    public DinosaurModel getTabulaModel(JsonTabulaModel tabulaModel)
     {
-        return new ModelDinosaur(tabulaModel, getModelAnimator());
+        return new DinosaurModel(tabulaModel, getModelAnimator());
     }
 
     public Dinosaur getDinosaur()
@@ -110,8 +110,8 @@ public class RenderDinosaurDefinition implements IRenderFactory<EntityDinosaur>
         return dinosaur;
     }
 
-    public Render<? super EntityDinosaur> createRenderFor(RenderManager manager)
+    public Render<? super DinosaurEntity> createRenderFor(RenderManager manager)
     {
-        return new RenderDinosaur(this);
+        return new DinosaurRenderer(this);
     }
 }
