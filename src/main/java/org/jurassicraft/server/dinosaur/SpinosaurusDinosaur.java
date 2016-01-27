@@ -26,5 +26,6 @@ public class SpinosaurusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
+        this.setScale(2.37F, 0.3F);
     }
 }

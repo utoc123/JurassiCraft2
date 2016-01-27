@@ -25,5 +25,6 @@ public class PachycephalosaurusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
+        this.setScale(0.9F, 0.2F);
     }
 }

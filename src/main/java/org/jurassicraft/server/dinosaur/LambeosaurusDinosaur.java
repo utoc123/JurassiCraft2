@@ -26,5 +26,7 @@ public class LambeosaurusDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "cheek_teeth", "shoulder", "tail_vertebrae", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones");
         this.setHeadCubeName("Head");
+        this.setScale(2.5F, 0.45F);
+        this.setOffset(0.0F, 0.775F, 0.0F);
     }
 }

@@ -26,5 +26,6 @@ public class RugopsDinosaur extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
+        this.setScale(1.0F, 0.3F);
     }
 }

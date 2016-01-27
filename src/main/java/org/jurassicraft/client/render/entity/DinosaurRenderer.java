@@ -60,11 +60,11 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             }
         }
 
-        float scale = (float) entity.transitionFromAge(renderDef.getBabyScaleAdjustment(), renderDef.getAdultScaleAdjustment()); //TODO scale offset
+        float scale = (float) entity.transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult()); //TODO scale offset
 
         shadowSize = scale * renderDef.getShadowSize();
 
-        GL11.glTranslatef(renderDef.getRenderXOffset() * scale, renderDef.getRenderYOffset() * scale, renderDef.getRenderZOffset() * scale);
+        GL11.glTranslatef(dinosaur.getOffsetX() * scale, dinosaur.getOffsetY() * scale, dinosaur.getOffsetZ() * scale);
 
         String name = entity.getCustomNameTag();
 

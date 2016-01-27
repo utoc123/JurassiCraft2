@@ -26,5 +26,6 @@ public class ProtoceratopsDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
+        this.setScale(1.2F, 0.35F);
     }
 }

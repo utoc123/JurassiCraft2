@@ -28,5 +28,7 @@ public class TroodonDinosaur extends Dinosaur
         this.setSleepingSchedule(EnumSleepingSchedule.NOCTURNAL);
         this.setBones("arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "skull", "tail_vertebrae", "tooth");
         this.setHeadCubeName("head UPPER");
+        this.setScale(0.75F, 0.25F);
+        this.setOffset(0.0F, 0.0F, 0.5F);
     }
 }
