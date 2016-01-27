@@ -52,6 +52,8 @@ public class IndominusRenderer extends DinosaurRenderer
         {
             if (!entity.isInvisible())
             {
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
                 IndominusDinosaur indominusDino = (IndominusDinosaur) dinosaur;
 
                 this.renderer.bindTexture(indominusDino.getCamoTexture(entity.getGrowthStage()));
