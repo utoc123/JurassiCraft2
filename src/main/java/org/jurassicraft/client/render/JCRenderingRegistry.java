@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
@@ -84,7 +83,6 @@ import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
-import org.jurassicraft.server.block.MetaBlock;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.tree.WoodType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -278,6 +276,7 @@ public class JCRenderingRegistry
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.gypsum_bricks, "gypsum_bricks", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.action_figure, "action_figure_block", "inventory");
 
+        this.registerBlockRenderer(modelMesher, JCBlockRegistry.moss, "moss", "inventory");
 
 //        this.registerRenderSubBlock(JCBlockRegistry.bPlanks);
     }
@@ -434,22 +433,6 @@ public class JCRenderingRegistry
                 return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
             }
         });
-    }
-
-    public void registerRenderSubBlock(Block block)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-        {
-            Item item = Item.getItemFromBlock(block);
-            MetaBlock bm = (MetaBlock) block;
-            for (int i = 0; i < bm.getSubBlocks(); i++)
-            {
-                String path = JurassiCraft.MODID + ":metablock/" + bm.getPath() + "/" + bm.getUnlocalizedName().substring(5) + "_" + i;
-                ModelBakery.registerItemVariants(item, new ResourceLocation(path));
-                ModelResourceLocation mrs = new ModelResourceLocation(path, "inventory");
-                Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, i, mrs);
-            }
-        }
     }
 
     private void registerRenderDef(RenderDinosaurDefinition renderDef)

@@ -23,7 +23,6 @@ public class AmberBlock extends Block
         super(Material.rock);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
-        this.setUnlocalizedName("amber_ore");
         this.setCreativeTab(JCCreativeTabs.blocks);
         this.setHarvestLevel("pickaxe", 2);
     }

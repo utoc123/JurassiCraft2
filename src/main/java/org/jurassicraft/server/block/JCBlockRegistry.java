@@ -26,6 +26,7 @@ import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
 import org.jurassicraft.server.block.plant.CryPansyBlock;
 import org.jurassicraft.server.block.plant.CycadZamitesBlock;
 import org.jurassicraft.server.block.plant.DicksoniaBlock;
+import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SmallChainFernBlock;
 import org.jurassicraft.server.block.plant.SmallCycadBlock;
@@ -119,7 +120,7 @@ public class JCBlockRegistry implements IContentHandler
 
     public static Block action_figure;
 
-    public static Block bPlanks;
+    public static Block moss;
 
     @Override
     public void init()
@@ -141,29 +142,29 @@ public class JCBlockRegistry implements IContentHandler
         cultivate_bottom = new CultivatorBottomBlock();
         cultivate_top = new CultivatorTopBlock();
 
-        amber_ore = addBlock(new AmberBlock(), "amber_ore");
-        ice_shard = addBlock(new IceShardBlock(), "ice_shard");
+        amber_ore = new AmberBlock();
+        ice_shard = new IceShardBlock();
 
-        gypsum_stone = addBlock(new GypsumStoneBlock().setHardness(1.5F).setResistance(10.0F), "gypsum_stone");
-        gypsum_cobblestone = addBlock(new BasicBlock(Material.rock).setHardness(1.5F).setResistance(10.0F), "gypsum_cobblestone");
-        gypsum_bricks = addBlock(new BasicBlock(Material.rock).setHardness(1.5F).setResistance(10.0F), "gypsum_bricks");
-        reinforced_stone = addBlock(new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F), "reinforced_stone");
-        reinforced_bricks = addBlock(new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F), "reinforced_bricks");
+        gypsum_stone = new GypsumStoneBlock();
+        gypsum_cobblestone = new BasicBlock(Material.rock).setHardness(1.5F).setResistance(1.5F);
+        gypsum_bricks = new BasicBlock(Material.rock).setHardness(1.5F).setResistance(1.5F);
+        reinforced_stone = new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F);
+        reinforced_bricks = new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F);
 
-        small_royal_fern = addBlock(new SmallRoyalFernBlock(), "small_royal_fern");
-        small_chain_fern = addBlock(new SmallChainFernBlock(), "small_chain_fern");
-        small_cycad = addBlock(new SmallCycadBlock(), "small_cycad");
-        bennettitalean_cycadeoidea = addBlock(new BennettitaleanCycadeoideaBlock(), "bennettitalean_cycadeoidea");
-        cry_pansy = addBlock(new CryPansyBlock(), "cry_pansy");
-        scaly_tree_fern = addBlock(new ScalyTreeFernBlock(), "scaly_tree_fern");
-        cycad_zamites = addBlock(new CycadZamitesBlock(), "cycad_zamites");
-        dicksonia = addBlock(new DicksoniaBlock(), "dicksonia");
+        small_royal_fern = new SmallRoyalFernBlock();
+        small_chain_fern = new SmallChainFernBlock();
+        small_cycad = new SmallCycadBlock();
+        bennettitalean_cycadeoidea = new BennettitaleanCycadeoideaBlock();
+        cry_pansy = new CryPansyBlock();
+        scaly_tree_fern = new ScalyTreeFernBlock();
+        cycad_zamites = new CycadZamitesBlock();
+        dicksonia = new DicksoniaBlock();
 
         action_figure = new ActionFigureBlock();
 
-//        bPlanks = addBlock(new MetaBlock(Material.wood, "planks", 8).setCreativeTab(JCCreativeTabs.plants), "planks");
+        security_camera = new SecurityCameraBlock();
 
-        security_camera = addBlock(new SecurityCameraBlock(), "security_camera");
+        moss = new MossBlock();
 
         List<Dinosaur> dinosaurs = JCEntityRegistry.getDinosaurs();
 
@@ -243,6 +244,24 @@ public class JCBlockRegistry implements IContentHandler
     @Override
     public void gameRegistry() throws Exception
     {
+        registerBlock(amber_ore, "Amber Ore");
+        registerBlock(ice_shard, "Ice Shard");
+        registerBlock(gypsum_stone, "Gypsum Stone");
+        registerBlock(gypsum_cobblestone, "Gypsum Cobblestone");
+        registerBlock(gypsum_bricks, "Gypsum Bricks");
+        registerBlock(reinforced_stone, "Reinforced Stone");
+        registerBlock(reinforced_bricks, "Reinforced Bricks");
+        registerBlock(small_royal_fern, "Small Royal Fern");
+        registerBlock(small_chain_fern, "Small Chain Fern");
+        registerBlock(small_cycad, "Small Cycad");
+        registerBlock(bennettitalean_cycadeoidea, "Bennettitalean Cycadeoidea");
+        registerBlock(cry_pansy, "Cry Pansy");
+        registerBlock(scaly_tree_fern, "Scaly Tree Fern");
+        registerBlock(cycad_zamites, "Cycad Zamites");
+        registerBlock(dicksonia, "Dicksonia");
+        registerBlock(security_camera, "Security Camera");
+        registerBlock(moss, "Moss");
+
         registerBlockTileEntity(CultivatorTile.class, cultivate_bottom, "Cultivate Bottom");
         registerBlock(cultivate_top, "Cultivate Top");
         registerBlockTileEntity(CarnivoreFeederTile.class, carnivore_feeder, "Carnivore Feeder");
@@ -257,26 +276,6 @@ public class JCBlockRegistry implements IContentHandler
         registerBlockTileEntity(DNACombinatorTile.class, dna_combinator, "DNA Combinator");
         registerBlockTileEntity(IncubatorTile.class, incubator, "Incubator");
         registerBlockTileEntity(ActionFigureTile.class, action_figure, "Action Figure Block");
-    }
-
-    private Block addBlock(Block block, String name)
-    {
-        block.setUnlocalizedName(name);
-
-        if (block instanceof MetaBlock)
-        {
-            GameRegistry.registerBlock(block, MetaItemBlock.class, name);
-        }
-        else if (block instanceof ISubBlocksBlock)
-        {
-            GameRegistry.registerBlock(block, ((ISubBlocksBlock) block).getItemBlockClass(), name);
-        }
-        else
-        {
-            GameRegistry.registerBlock(block, name);
-        }
-
-        return block;
     }
 
     public FossilBlock getFossilBlock(Dinosaur dinosaur)
@@ -334,6 +333,8 @@ public class JCBlockRegistry implements IContentHandler
     public void registerBlock(Block block, String name)
     {
         name = name.toLowerCase().replaceAll(" ", "_");
+
+        block.setUnlocalizedName(name);
 
         if (block instanceof ISubBlocksBlock)
         {

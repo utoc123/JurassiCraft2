@@ -1,5 +1,6 @@
 package org.jurassicraft.server.world;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -60,31 +61,22 @@ public class WorldGenerator implements IWorldGenerator
             }
         }
 
-        for (int i = 0; i < 16; i++)
+        generateOre(world, chunkX, chunkZ, 20, 16, 3, JCBlockRegistry.amber_ore.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 64, 16, 1, JCBlockRegistry.ice_shard.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 128, 32, 10, JCBlockRegistry.gypsum_stone.getDefaultState(), random);
+    }
+
+    public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random)
+    {
+        WorldGenMinable worldGenMinable = new WorldGenMinable(state, veinSize);
+
+        for (int i = 0; i < veinsPerChunk; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
-            int randPosY = random.nextInt(20);
+            int randPosY = random.nextInt(minHeight);
             int randPosZ = chunkZ + random.nextInt(16);
 
-            new WorldGenMinable(JCBlockRegistry.amber_ore.getDefaultState(), 3).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
-        }
-
-        for (int i = 0; i < 16; i++)
-        {
-            int randPosX = chunkX + random.nextInt(16);
-            int randPosY = random.nextInt(64);
-            int randPosZ = chunkZ + random.nextInt(16);
-
-            new WorldGenMinable(JCBlockRegistry.ice_shard.getDefaultState(), 1).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
-        }
-
-        for (int i = 0; i < 32; i++)
-        {
-            int randPosX = chunkX + random.nextInt(16);
-            int randPosY = random.nextInt(128);
-            int randPosZ = chunkZ + random.nextInt(16);
-
-            (new WorldGenMinable(JCBlockRegistry.gypsum_stone.getDefaultState(), 10)).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+            worldGenMinable.generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
         }
     }
 }

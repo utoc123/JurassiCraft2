@@ -28,7 +28,6 @@ public class ActionFigureBlock extends OrientedBlock
         this.setTickRandomly(true);
         this.setHardness(0.0F);
         this.setResistance(0.0F);
-        this.setUnlocalizedName("action_figure_block");
         float f = 0.2F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
     }

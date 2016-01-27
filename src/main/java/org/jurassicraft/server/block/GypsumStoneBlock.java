@@ -14,8 +14,9 @@ public class GypsumStoneBlock extends Block
     public GypsumStoneBlock()
     {
         super(Material.rock);
-        this.setUnlocalizedName("gypsum_stone");
         this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setHardness(1.5F);
+        this.setResistance(1.5F);
     }
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune)

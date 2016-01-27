@@ -34,7 +34,6 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     public FossilBlock(int start)
     {
         super(Material.rock);
-        this.setUnlocalizedName("fossil_block");
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setStepSound(Block.soundTypeStone);

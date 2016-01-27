@@ -31,7 +31,6 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
     public EncasedFossilBlock(int start)
     {
         super(Material.rock);
-        this.setUnlocalizedName("encased_fossil");
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setStepSound(Block.soundTypeStone);
