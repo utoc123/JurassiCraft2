@@ -25,5 +25,6 @@ public class DinosaurOthnielia extends Dinosaur
         this.setStorage(9);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "teeth");
+        this.setHeadCubeName("Head ");
     }
 }

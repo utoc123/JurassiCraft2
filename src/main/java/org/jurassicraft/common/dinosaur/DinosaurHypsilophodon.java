@@ -25,5 +25,6 @@ public class DinosaurHypsilophodon extends Dinosaur
         this.setStorage(9);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "arm_bones");
+        this.setHeadCubeName("Head ");
     }
 }

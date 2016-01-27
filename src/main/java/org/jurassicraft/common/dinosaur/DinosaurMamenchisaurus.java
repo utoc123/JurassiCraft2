@@ -25,5 +25,6 @@ public class DinosaurMamenchisaurus extends Dinosaur
         this.setSizeX(0.75F, 5.5F);
         this.setSizeY(0.75F, 5.95F);
         this.setBones("skull");
+        this.setHeadCubeName("Head");
     }
 }

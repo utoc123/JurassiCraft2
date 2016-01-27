@@ -25,5 +25,6 @@ public class DinosaurPteranodon extends Dinosaur
         this.setStorage(27);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("leg_bones", "neck_vertebrae", "pelvis", "ribcage", "skull", "tail_vertebrae", "wing_bones");
+        this.setHeadCubeName("Head");
     }
 }

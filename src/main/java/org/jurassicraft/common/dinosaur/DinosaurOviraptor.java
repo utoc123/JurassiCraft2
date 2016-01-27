@@ -26,5 +26,6 @@ public class DinosaurOviraptor extends Dinosaur
         this.setStorage(9);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones();
+        this.setHeadCubeName("Head");
     }
 }

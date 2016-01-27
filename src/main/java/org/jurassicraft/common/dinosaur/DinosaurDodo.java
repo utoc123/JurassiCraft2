@@ -25,5 +25,6 @@ public class DinosaurDodo extends Dinosaur
         this.setStorage(9);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull");
+        this.setHeadCubeName("Head");
     }
 }

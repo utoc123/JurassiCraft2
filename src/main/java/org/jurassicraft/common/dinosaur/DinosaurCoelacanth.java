@@ -26,5 +26,6 @@ public class DinosaurCoelacanth extends Dinosaur
         this.setStorage(18);
         this.setDiet(EnumDiet.PISCIVORE);
         this.setBones("skull", "teeth", "spine", "second_dorsal_fin", "pelvic_fin_bones", "pectoral_fin_bones", "first_dorsal_fin", "caudal_fin", "anal_fin");
+        this.setHeadCubeName("Head joint");
     }
 }

@@ -27,5 +27,6 @@ public class DinosaurSegisaurus extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setSleepingSchedule(EnumSleepingSchedule.NOCTURNAL);
         this.setBones("skull", "teeth");
+        this.setHeadCubeName("head");
     }
 }

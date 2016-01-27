@@ -25,6 +25,7 @@ public class DinosaurAchillobator extends Dinosaur
         this.setSizeY(0.5F, 1.8F);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth");
+        this.setHeadCubeName("head");
     }
 
     @Override

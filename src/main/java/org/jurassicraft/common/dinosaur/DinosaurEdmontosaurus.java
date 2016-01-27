@@ -25,5 +25,6 @@ public class DinosaurEdmontosaurus extends Dinosaur
         this.setStorage(45);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("cheek_teeth");
+        this.setHeadCubeName("Head");
     }
 }

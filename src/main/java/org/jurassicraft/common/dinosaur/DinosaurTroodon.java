@@ -27,5 +27,6 @@ public class DinosaurTroodon extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setSleepingSchedule(EnumSleepingSchedule.NOCTURNAL);
         this.setBones("arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "skull", "tail_vertebrae", "tooth");
+        this.setHeadCubeName("head UPPER");
     }
 }

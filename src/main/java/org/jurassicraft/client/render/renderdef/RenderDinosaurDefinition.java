@@ -2,14 +2,13 @@ package org.jurassicraft.client.render.renderdef;
 
 import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.animation.TabulaModelHelper;
-import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.ModelDinosaur;
 import org.jurassicraft.client.render.entity.RenderDinosaur;
 import org.jurassicraft.common.dinosaur.Dinosaur;
@@ -45,14 +44,10 @@ public class RenderDinosaurDefinition implements IRenderFactory<EntityDinosaur>
         this.renderYOffset = parRenderYOffset;
         this.renderZOffset = parRenderZOffset;
 
-        this.modelAdult = getDefaultTabulaModel("adult");
-        this.modelInfant = getDefaultTabulaModel("infant");
-
-        if (dinosaur.useAllGrowthStages())
-        {
-            this.modelJuvenile = getDefaultTabulaModel("juvenile");
-            this.modelAdolescent = getDefaultTabulaModel("adolescent");
-        }
+        this.modelAdult = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.ADULT));
+        this.modelInfant = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.INFANT));
+        this.modelJuvenile = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.JUVENILE));
+        this.modelAdolescent = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.ADOLESCENT));
     }
 
     public ModelBase getModel(EnumGrowthStage stage)
@@ -105,23 +100,9 @@ public class RenderDinosaurDefinition implements IRenderFactory<EntityDinosaur>
         return shadowSize;
     }
 
-    public ModelDinosaur getTabulaModel(String tabulaModel) throws Exception
+    public ModelDinosaur getTabulaModel(JsonTabulaModel tabulaModel)
     {
-        return new ModelDinosaur(TabulaModelHelper.parseModel(tabulaModel), getModelAnimator());
-    }
-
-    public ModelDinosaur getDefaultTabulaModel(String stage)
-    {
-        String model = "/assets/jurassicraft/models/entities/" + dinosaur.getName().toLowerCase() + "/" + stage + "/" + dinosaur.getName().toLowerCase() + "_" + stage + "_idle";
-        try
-        {
-            return getTabulaModel(model);
-        }
-        catch (Exception e)
-        {
-            JurassiCraft.instance.getLogger().fatal("Couldn't load model " + model, e);
-            return null;
-        }
+        return new ModelDinosaur(tabulaModel, getModelAnimator());
     }
 
     public Dinosaur getDinosaur()

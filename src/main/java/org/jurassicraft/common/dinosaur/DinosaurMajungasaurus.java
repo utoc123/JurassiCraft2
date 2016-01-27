@@ -25,5 +25,6 @@ public class DinosaurMajungasaurus extends Dinosaur
         this.setStorage(36);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth");
+        this.setHeadCubeName("Head");
     }
 }

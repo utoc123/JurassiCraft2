@@ -1,7 +1,5 @@
 package org.jurassicraft.client.render.entity;
 
-import java.util.Map;
-
 import com.google.common.collect.Maps;
 import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
 import net.minecraft.client.Minecraft;
@@ -14,11 +12,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.vehicle.AnimationHelicopter;
-import org.jurassicraft.common.animation.TabulaModelHelper;
+import org.jurassicraft.common.tabula.TabulaModelHelper;
 import org.jurassicraft.common.vehicles.helicopter.EntityHelicopterBase;
 import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModule;
 import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModuleSpot;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelicopter implements IRenderFactory<EntityHelicopterBase>

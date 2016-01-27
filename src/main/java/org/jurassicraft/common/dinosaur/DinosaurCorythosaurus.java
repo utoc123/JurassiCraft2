@@ -25,5 +25,6 @@ public class DinosaurCorythosaurus extends Dinosaur
         this.setStorage(36);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "cheek_teeth", "front_leg_bones", "hind_leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "tail_vertebrae");
+        this.setHeadCubeName("Head");
     }
 }

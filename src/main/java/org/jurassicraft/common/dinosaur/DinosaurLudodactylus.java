@@ -25,5 +25,6 @@ public class DinosaurLudodactylus extends Dinosaur
         this.setStorage(18);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("leg_bones", "pelvis", "skull", "tail_vertebrae", "teeth", "wing_bones");
+        this.setHeadCubeName("Head");
     }
 }

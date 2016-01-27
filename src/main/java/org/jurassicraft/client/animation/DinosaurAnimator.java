@@ -10,15 +10,15 @@ import net.ilexiconn.llibrary.common.map.ListHashMap;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.animation.TabulaModelHelper;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.dto.AnimationsDTO;
 import org.jurassicraft.client.animation.dto.DinosaurRenderDefDTO;
 import org.jurassicraft.client.animation.dto.PoseDTO;
-import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.ModelDinosaur;
 import org.jurassicraft.common.dinosaur.Dinosaur;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.base.EnumGrowthStage;
+import org.jurassicraft.common.tabula.TabulaModelHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,13 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public abstract class DinosaurAnimator implements IModelAnimator

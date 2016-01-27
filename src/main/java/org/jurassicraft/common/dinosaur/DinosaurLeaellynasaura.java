@@ -25,5 +25,6 @@ public class DinosaurLeaellynasaura extends Dinosaur
         this.setStorage(9);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder");
+        this.setHeadCubeName("Head ");
     }
 }

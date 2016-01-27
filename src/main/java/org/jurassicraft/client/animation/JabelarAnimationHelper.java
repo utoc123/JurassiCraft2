@@ -8,11 +8,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.animation.TabulaModelHelper;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.ModelDinosaur;
 import org.jurassicraft.common.entity.base.EntityDinosaur;
 import org.jurassicraft.common.entity.fx.EntityFXBlood;
+import org.jurassicraft.common.tabula.TabulaModelHelper;
 
 import java.util.Map;
 

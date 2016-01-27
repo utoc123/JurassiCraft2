@@ -8,7 +8,7 @@ import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModule;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ItemHeliModule extends Item
 {

@@ -25,5 +25,6 @@ public class DinosaurParasaurolophus extends Dinosaur
         this.setStorage(36);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("ribcage", "front_leg_bones", "hind_leg_bones", "neck_vertebrae", "pelvis", "shoulder_bone", "skull", "tail_vertebrae", "teeth");
+        this.setHeadCubeName("Head");
     }
 }

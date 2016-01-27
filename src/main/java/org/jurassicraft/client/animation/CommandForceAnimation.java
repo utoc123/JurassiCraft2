@@ -12,8 +12,13 @@ package org.jurassicraft.client.animation;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.animation.Animation;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats.Type;
+import net.minecraft.command.EntityNotFoundException;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerSelector;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;

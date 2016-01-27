@@ -27,5 +27,6 @@ public class DinosaurDilophosaurus extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setSleepingSchedule(EnumSleepingSchedule.CREPUSCULAR);
         this.setBones("skull", "tooth", "arm_bones", "leg_bones", "neck", "pelvis", "ribcage", "shoulder", "tail_vertebrae");
+        this.setHeadCubeName("Head");
     }
 }

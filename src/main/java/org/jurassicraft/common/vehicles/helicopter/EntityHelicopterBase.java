@@ -24,7 +24,11 @@ import org.jurassicraft.common.item.vehicules.ItemHeliModule;
 import org.jurassicraft.common.message.MessageHelicopterDirection;
 import org.jurassicraft.common.message.MessageHelicopterEngine;
 import org.jurassicraft.common.message.MessageHelicopterModules;
-import org.jurassicraft.common.vehicles.helicopter.modules.*;
+import org.jurassicraft.common.vehicles.helicopter.modules.EntityHelicopterSeat;
+import org.jurassicraft.common.vehicles.helicopter.modules.EnumModulePosition;
+import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterDoor;
+import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModule;
+import org.jurassicraft.common.vehicles.helicopter.modules.HelicopterModuleSpot;
 
 import java.util.UUID;
 

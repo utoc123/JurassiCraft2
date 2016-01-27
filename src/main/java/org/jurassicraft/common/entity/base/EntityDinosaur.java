@@ -1,7 +1,5 @@
 package org.jurassicraft.common.entity.base;
 
-import java.util.UUID;
-
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
 import net.ilexiconn.llibrary.common.animation.Animation;
@@ -47,6 +45,8 @@ import org.jurassicraft.common.genetics.GeneticsContainer;
 import org.jurassicraft.common.genetics.GeneticsHelper;
 import org.jurassicraft.common.item.ItemBluePrint;
 import org.jurassicraft.common.item.JCItemRegistry;
+
+import java.util.UUID;
 
 public abstract class EntityDinosaur extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
 {

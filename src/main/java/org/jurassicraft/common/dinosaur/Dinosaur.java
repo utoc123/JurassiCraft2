@@ -1,5 +1,7 @@
 package org.jurassicraft.common.dinosaur;
 
+import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
+import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.common.api.IHybrid;
@@ -8,6 +10,7 @@ import org.jurassicraft.common.entity.base.EnumDiet;
 import org.jurassicraft.common.entity.base.EnumGrowthStage;
 import org.jurassicraft.common.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.common.period.EnumTimePeriod;
+import org.jurassicraft.common.tabula.TabulaModelHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,12 +44,32 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private EnumSleepingSchedule sleepingSchedule = EnumSleepingSchedule.DIURNAL;
     private String[] bones;
     private int maximumAge;
+    private String headCubeName;
+
+    private JsonTabulaModel modelAdult;
+    private JsonTabulaModel modelInfant;
+    private JsonTabulaModel modelJuvenile;
+    private JsonTabulaModel modelAdolescent;
 
     public void init()
     {
-        String dinosaurName = getName().toLowerCase().replaceAll(" ", "_");
+        String formattedName = getName().toLowerCase().replaceAll(" ", "_");
 
-        String baseTextures = "textures/entities/" + dinosaurName + "/";
+        this.modelAdult = parseModel("adult");
+        this.modelInfant = parseModel("infant");
+
+        if (useAllGrowthStages())
+        {
+            this.modelJuvenile = parseModel("juvenile");
+            this.modelAdolescent = parseModel("adolescent");
+        }
+        else
+        {
+            this.modelJuvenile = modelInfant;
+            this.modelAdolescent = modelAdult;
+        }
+
+        String baseTextures = "textures/entities/" + formattedName + "/";
 
         for (EnumGrowthStage growthStage : EnumGrowthStage.values())
         {
@@ -66,26 +89,43 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
             if (this instanceof IHybrid)
             {
-                ResourceLocation hybridTexture = new ResourceLocation(JurassiCraft.MODID, baseTextures + dinosaurName + "_" + growthStageName + ".png");
+                ResourceLocation hybridTexture = new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_" + growthStageName + ".png");
 
                 maleTextures.put(growthStage, hybridTexture);
                 femaleTextures.put(growthStage, hybridTexture);
             }
             else
             {
-                maleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + dinosaurName + "_male_" + growthStageName + ".png"));
-                femaleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + dinosaurName + "_female_" + growthStageName + ".png"));
+                maleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + ".png"));
+                femaleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + ".png"));
             }
 
             List<ResourceLocation> overlaysForGrowthStage = new ArrayList<ResourceLocation>();
 
             for (int i = 1; i <= getOverlayCount(); i++)
             {
-                overlaysForGrowthStage.add(new ResourceLocation(JurassiCraft.MODID, baseTextures + dinosaurName + "_overlay_" + growthStageName + "_" + i + ".png"));
+                overlaysForGrowthStage.add(new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_overlay_" + growthStageName + "_" + i + ".png"));
             }
 
             overlays.put(growthStage, overlaysForGrowthStage);
         }
+    }
+
+    protected JsonTabulaModel parseModel(String growthStage)
+    {
+        String formattedName = getName().toLowerCase().replaceAll(" ", "_");
+        String modelPath = "/assets/jurassicraft/models/entities/" + formattedName + "/" + growthStage + "/" + formattedName + "_" + growthStage + "_idle";
+
+        try
+        {
+            return TabulaModelHelper.parseModel(modelPath);
+        }
+        catch (Exception e)
+        {
+            JurassiCraft.instance.getLogger().fatal("Couldn't load model " + modelPath, e);
+        }
+
+        return null;
     }
 
     public void setName(String name)
@@ -426,5 +466,49 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public void setMaximumAge(int age)
     {
         this.maximumAge = age;
+    }
+
+    public void setHeadCubeName(String headCubeName)
+    {
+        this.headCubeName = headCubeName;
+    }
+
+    public String getHeadCubeName()
+    {
+        return headCubeName;
+    }
+
+    public double[] getCubePosition(String cubeName, EnumGrowthStage stage)
+    {
+        JsonTabulaModel model = getModelContainer(stage);
+
+        CubeInfo cube = TabulaModelHelper.getCubeByName(cubeName, model);
+
+        if (cube != null)
+        {
+            return cube.position;
+        }
+
+        return new double[] {0.0, 0.0, 0.0};
+    }
+
+    public double[] getHeadPosition(EnumGrowthStage stage)
+    {
+        return getCubePosition(getHeadCubeName(), stage);
+    }
+
+    public JsonTabulaModel getModelContainer(EnumGrowthStage stage)
+    {
+        switch (stage)
+        {
+            case INFANT:
+                return modelInfant;
+            case JUVENILE:
+                return modelJuvenile;
+            case ADOLESCENT:
+                return modelAdolescent;
+            default:
+                return modelAdult;
+        }
     }
 }

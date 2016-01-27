@@ -25,5 +25,6 @@ public class DinosaurApatosaurus extends Dinosaur
         this.setStorage(54);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "tooth");
+        this.setHeadCubeName("Head");
     }
 }

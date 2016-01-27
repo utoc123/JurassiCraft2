@@ -25,5 +25,6 @@ public class DinosaurStegosaurus extends Dinosaur
         this.setStorage(36);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("front_leg_bones", "hind_leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder_bone", "skull", "tail", "thagomizer", "tooth");
+        this.setHeadCubeName("Head");
     }
 }

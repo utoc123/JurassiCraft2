@@ -24,5 +24,6 @@ public class DinosaurGiganotosaurus extends Dinosaur
         this.setStorage(54);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("skull", "tooth");
+        this.setHeadCubeName("Head");
     }
 }

@@ -24,5 +24,6 @@ public class DinosaurOrnithomimus extends Dinosaur
         this.setSizeY(0.45F, 1.55F);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "skull", "tail_vertebrae");
+        this.setHeadCubeName("Head Base");
     }
 }

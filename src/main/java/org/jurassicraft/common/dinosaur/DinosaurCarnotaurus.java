@@ -27,5 +27,6 @@ public class DinosaurCarnotaurus extends Dinosaur
         this.setDiet(EnumDiet.CARNIVORE);
         this.setSleepingSchedule(EnumSleepingSchedule.CREPUSCULAR);
         this.setBones("skull", "tooth");
+        this.setHeadCubeName("Head");
     }
 }

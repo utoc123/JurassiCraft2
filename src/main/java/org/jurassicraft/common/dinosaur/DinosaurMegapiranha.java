@@ -26,5 +26,6 @@ public class DinosaurMegapiranha extends Dinosaur
         this.setStorage(18);
         this.setDiet(EnumDiet.CARNIVORE);
         this.setBones("anal_fin", "body_fins", "caudal_fin", "dorsal_fin", "skull", "spine", "teeth");
+        this.setHeadCubeName("Neck ");
     }
 }

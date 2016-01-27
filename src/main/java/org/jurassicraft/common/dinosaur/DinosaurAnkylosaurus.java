@@ -25,5 +25,6 @@ public class DinosaurAnkylosaurus extends Dinosaur
         this.setStorage(27);
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "tail_club", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones", "armor_plating");
+        this.setHeadCubeName("head ");
     }
 }
