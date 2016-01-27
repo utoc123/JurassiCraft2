@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import org.jurassicraft.common.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.entity.base.EnumGrowthStage;
 
 import java.lang.reflect.Type;
 import java.util.EnumMap;

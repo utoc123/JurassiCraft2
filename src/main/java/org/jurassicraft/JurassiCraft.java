@@ -16,30 +16,30 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import org.jurassicraft.client.animation.CommandForceAnimation;
 import org.apache.logging.log4j.Logger;
-import org.jurassicraft.common.block.JCBlockRegistry;
-import org.jurassicraft.common.configuration.JCConfigurations;
-import org.jurassicraft.common.food.FoodHelper;
-import org.jurassicraft.common.message.MessageChangeTemperature;
-import org.jurassicraft.common.message.MessageHelicopterDirection;
-import org.jurassicraft.common.message.MessageHelicopterEngine;
-import org.jurassicraft.common.message.MessageHelicopterModules;
-import org.jurassicraft.common.message.MessagePlacePaddockSign;
-import org.jurassicraft.common.message.MessageRequestFile;
-import org.jurassicraft.common.message.MessageSendFile;
-import org.jurassicraft.common.message.MessageSyncPaleoPad;
-import org.jurassicraft.common.proxy.CommonProxy;
-import org.jurassicraft.common.world.islanublar.WorldTypeIslaNublar;
+import org.jurassicraft.client.animation.CommandForceAnimation;
+import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.configuration.JCConfigurations;
+import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.message.ChangeTemperatureMessage;
+import org.jurassicraft.server.message.HelicopterDirectionMessage;
+import org.jurassicraft.server.message.HelicopterEngineMessage;
+import org.jurassicraft.server.message.HelicopterModulesMessage;
+import org.jurassicraft.server.message.PlacePaddockSignMessage;
+import org.jurassicraft.server.message.RequestFileMessage;
+import org.jurassicraft.server.message.SendFileMessage;
+import org.jurassicraft.server.message.SyncPaleoPadMessage;
+import org.jurassicraft.server.proxy.ProxyServer;
+import org.jurassicraft.server.world.islanublar.IslaNublarWorldType;
 
 import java.io.File;
 import java.io.InputStreamReader;
 
-@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[0.8.0,)")
+@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[0.8.1,)")
 public class JurassiCraft
 {
-    @SidedProxy(serverSide = "org.jurassicraft.common.proxy.CommonProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")
-    public static CommonProxy proxy;
+    @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ProxyServer", clientSide = "org.jurassicraft.client.proxy.ProxyClient")
+    public static ProxyServer proxy;
 
     public static final String MODID = "jurassicraft";
     public static final String MODNAME = "JurassiCraft";
@@ -55,7 +55,7 @@ public class JurassiCraft
     public static JCBlockRegistry blockRegistry;
     public static JCConfigurations configurations = new JCConfigurations();
 
-    public static WorldTypeIslaNublar worldTypeIslaNublar = new WorldTypeIslaNublar();
+    public static IslaNublarWorldType worldTypeIslaNublar = new IslaNublarWorldType();
 
     // set up configuration properties (will be read from config file in preInit)
     public static File configFile;
@@ -71,21 +71,21 @@ public class JurassiCraft
 
         int id = 0;
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("jurassicraft");
-        AbstractMessage.registerMessage(networkWrapper, MessageSyncPaleoPad.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageSyncPaleoPad.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessageRequestFile.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageRequestFile.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessageSendFile.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageSendFile.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessagePlacePaddockSign.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessageChangeTemperature.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageChangeTemperature.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessageHelicopterEngine.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageHelicopterEngine.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessageHelicopterDirection.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageHelicopterDirection.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, MessageHelicopterModules.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, MessageHelicopterModules.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, SyncPaleoPadMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, SyncPaleoPadMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, RequestFileMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, RequestFileMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, SendFileMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, SendFileMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, PlacePaddockSignMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, ChangeTemperatureMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, ChangeTemperatureMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, HelicopterEngineMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, HelicopterEngineMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, HelicopterDirectionMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, HelicopterDirectionMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, HelicopterModulesMessage.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, HelicopterModulesMessage.class, id++, Side.SERVER);
 
         proxy.preInit(event);
         logger.debug("Finished pre-initialization for JurassiCraft!");

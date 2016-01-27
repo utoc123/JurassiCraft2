@@ -1,8 +1,6 @@
 package net.timeless.unilib;
 
-import java.util.Collection;
-import java.util.List;
-
+import com.google.common.reflect.ClassPath;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumChatFormatting;
@@ -22,7 +20,8 @@ import net.timeless.unilib.common.BaseMod;
 import net.timeless.unilib.common.BlockProvider;
 import net.timeless.unilib.common.ItemProvider;
 
-import com.google.common.reflect.ClassPath;
+import java.util.Collection;
+import java.util.List;
 
 @Mod(modid = "net/timeless/unilib", name = "Unilib", version = "${unilib_version}")
 public class Unilib extends BaseMod

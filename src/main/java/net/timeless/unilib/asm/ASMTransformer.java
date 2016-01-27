@@ -86,6 +86,7 @@ public class ASMTransformer implements IClassTransformer
                     FileOutputStream out = new FileOutputStream(classFile);
                     out.write(bytes);
                     out.flush();
+                    out.close();
                 }
                 catch (IOException e)
                 {

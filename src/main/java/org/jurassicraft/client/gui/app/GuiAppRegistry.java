@@ -2,8 +2,8 @@ package org.jurassicraft.client.gui.app;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.paleopad.App;
-import org.jurassicraft.common.paleopad.AppRegistry;
+import org.jurassicraft.server.paleopad.App;
+import org.jurassicraft.server.paleopad.AppRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +20,10 @@ public class GuiAppRegistry
 
     public static void register()
     {
-        registerApp(new GuiAppFileExplorer(AppRegistry.file_explorer));
-        registerApp(new GuiAppFlappyDino(AppRegistry.flappy_dino));
-        registerApp(new GuiAppMinimap(AppRegistry.minimap));
-        registerApp(new GuiAppSecurity(AppRegistry.security));
+        registerApp(new FileExplorerGuiApp(AppRegistry.file_explorer));
+        registerApp(new FlappyDinoGuiApp(AppRegistry.flappy_dino));
+        registerApp(new MinimapGuiApp(AppRegistry.minimap));
+        registerApp(new SecurityGuiApp(AppRegistry.security));
     }
 
     public static GuiApp getGui(App app)

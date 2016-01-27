@@ -12,8 +12,13 @@ package org.jurassicraft.client.animation;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.animation.Animation;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats.Type;
+import net.minecraft.command.EntityNotFoundException;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerSelector;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -21,7 +26,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.common.entity.base.EntityDinosaur;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,12 +168,12 @@ public class CommandForceAnimation implements ICommand
                 throw new WrongUsageException("Missing the animation to set");
             }
             String entitySelector = argString.length < 2 ? "@e[c=1]" : argString[1];
-            List<EntityDinosaur> dinos = PlayerSelector.matchEntities(new ProxySender(parSender), entitySelector, EntityDinosaur.class);
+            List<DinosaurEntity> dinos = PlayerSelector.matchEntities(new ProxySender(parSender), entitySelector, DinosaurEntity.class);
             if (dinos == null || dinos.size() == 0)
             {
                 throw new EntityNotFoundException("No IAnimatedEntity to animate");
             }
-            for (EntityDinosaur entity : dinos)
+            for (DinosaurEntity entity : dinos)
             {
                 setDinoAnimation(parSender, entity, argString[0]);
                 parSender.addChatMessage(new ChatComponentText("Animating entity " + entity.getEntityId() + " with animation type " + argString[0]));
@@ -201,7 +206,7 @@ public class CommandForceAnimation implements ICommand
         return null;
     }
 
-    private static void setDinoAnimation(ICommandSender sender, EntityDinosaur entity, String parAnimType) throws CommandException
+    private static void setDinoAnimation(ICommandSender sender, DinosaurEntity entity, String parAnimType) throws CommandException
     {
         try
         {

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.common.configuration.JCConfigurations;
+import org.jurassicraft.server.configuration.JCConfigurations;
 
 import java.util.List;
 

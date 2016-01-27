@@ -49,18 +49,18 @@
     {
       "id": "moss_cobblestone",
       "recipe": [
-        "", "minecraft:cobblestone", "",
-        "minecraft:cobblestone", "", "minecraft:cobblestone",
-        "", "minecraft:cobblestone", ""
+        "jurassicraft:moss", "minecraft:cobblestone", "jurassicraft:moss",
+        "minecraft:cobblestone", "jurassicraft:moss", "minecraft:cobblestone",
+        "jurassicraft:moss", "minecraft:cobblestone", "jurassicraft:moss"
       ],
       "result": "minecraft:mossy_cobblestone*4"
     },
     {
       "id": "moss_stone",
       "recipe": [
-        "", "minecraft:stone", "",
-        "minecraft:stone", "", "minecraft:stone",
-        "", "minecraft:stone", ""
+        "jurassicraft:moss", "minecraft:stonebrick", "jurassicraft:moss",
+        "minecraft:stonebrick", "jurassicraft:moss", "minecraft:stonebrick",
+        "jurassicraft:moss", "minecraft:stonebrick", "jurassicraft:moss"
       ],
       "result": "minecraft:stonebrick*4*1"
     },

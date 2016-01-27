@@ -8,11 +8,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.animation.TabulaModelHelper;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.ModelDinosaur;
-import org.jurassicraft.common.entity.base.EntityDinosaur;
-import org.jurassicraft.common.entity.fx.EntityFXBlood;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.fx.BloodEntityFX;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.util.Map;
 
@@ -22,7 +22,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class JabelarAnimationHelper
 {
-    private final EntityDinosaur theEntity;
+    private final DinosaurEntity theEntity;
 
     private final Minecraft mc;
 
@@ -62,8 +62,8 @@ public class JabelarAnimationHelper
      * @param parInertialTweens
      */
     public JabelarAnimationHelper(
-            EntityDinosaur parEntity,
-            ModelDinosaur parModel,
+            DinosaurEntity parEntity,
+            DinosaurModel parModel,
             int parNumParts,
             MowzieModelRenderer[][] parArrayOfPoses,
             Map<Animation, int[][]> parMapOfSequences,
@@ -105,7 +105,7 @@ public class JabelarAnimationHelper
         partialTicks = parPartialTicks; // need to update this after the call because entity ticks are updated one call after partial ticks
     }
 
-    private void init(ModelDinosaur parModel)
+    private void init(DinosaurModel parModel)
     {
         initSequence(theEntity.getAnimation());
 //        JurassiCraft.instance.getLogger().info("Initializing to animation sequence = " + currentSequence);
@@ -252,7 +252,7 @@ public class JabelarAnimationHelper
         }
     }
 
-    private MowzieModelRenderer[] convertPassedInModelToModelRendererArray(ModelDinosaur parModel)
+    private MowzieModelRenderer[] convertPassedInModelToModelRendererArray(DinosaurModel parModel)
     {
         String[] partNameArray = parModel.getCubeNamesArray();
 
@@ -437,12 +437,12 @@ public class JabelarAnimationHelper
         return currentPose;
     }
 
-    public static ModelDinosaur getTabulaModel(String tabulaModel, int geneticVariant)
+    public static DinosaurModel getTabulaModel(String tabulaModel, int geneticVariant)
     {
         // catch the exception so you can call method without further catching
         try
         {
-            return new ModelDinosaur(TabulaModelHelper.parseModel(tabulaModel), null); // okay to use null for animator
+            return new DinosaurModel(TabulaModelHelper.parseModel(tabulaModel), null); // okay to use null for animator
             // parameter as we get animator
             // from passed-in model
         }
@@ -454,7 +454,7 @@ public class JabelarAnimationHelper
         return null;
     }
 
-    public ModelDinosaur getTabulaModel(String tabulaModel)
+    public DinosaurModel getTabulaModel(String tabulaModel)
     {
         return getTabulaModel(tabulaModel, 0);
     }
@@ -491,6 +491,6 @@ public class JabelarAnimationHelper
 
     private void addBloodEffect(World world, EffectRenderer effectRenderer, double x, double y, double z)
     {
-        effectRenderer.addEffect((new EntityFXBlood(world, x + 0.5D, y + 0.5D, z + 0.5D, 0, 0, 0)).func_174846_a(new BlockPos(x, y, z)));
+        effectRenderer.addEffect((new BloodEntityFX(world, x + 0.5D, y + 0.5D, z + 0.5D, 0, 0, 0)).func_174846_a(new BlockPos(x, y, z)));
     }
 }

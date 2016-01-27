@@ -10,15 +10,15 @@ import net.ilexiconn.llibrary.common.map.ListHashMap;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.common.animation.TabulaModelHelper;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.dto.AnimationsDTO;
 import org.jurassicraft.client.animation.dto.DinosaurRenderDefDTO;
 import org.jurassicraft.client.animation.dto.PoseDTO;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.ModelDinosaur;
-import org.jurassicraft.common.dinosaur.Dinosaur;
-import org.jurassicraft.common.entity.base.EntityDinosaur;
-import org.jurassicraft.common.entity.base.EnumGrowthStage;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,13 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public abstract class DinosaurAnimator implements IModelAnimator
@@ -205,7 +211,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
         MowzieModelRenderer[][] posedCubes = new MowzieModelRenderer[posedModelResources.size()][];
         Map<Animation, int[][]> animationSequences = new ListHashMap<Animation, int[][]>();
         // find all names we need
-        ModelDinosaur mainModel = JabelarAnimationHelper.getTabulaModel(posedModelResources.get(0), 0);
+        DinosaurModel mainModel = JabelarAnimationHelper.getTabulaModel(posedModelResources.get(0), 0);
         if (mainModel == null)
         {
             throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
@@ -216,7 +222,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
         for (int i = 0; i < posedModelResources.size(); i++)
         {
             String resource = posedModelResources.get(i);
-            ModelDinosaur theModel = JabelarAnimationHelper.getTabulaModel(resource, 0);
+            DinosaurModel theModel = JabelarAnimationHelper.getTabulaModel(resource, 0);
             if (theModel == null)
             {
                 throw new IllegalArgumentException("Couldn't load the model from " + resource);
@@ -256,7 +262,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
         return uri.toString();
     }
 
-    private JabelarAnimationHelper getAnimationHelper(EntityDinosaur entity, ModelDinosaur model)
+    private JabelarAnimationHelper getAnimationHelper(DinosaurEntity entity, DinosaurModel model)
     {
         Integer id = entity.getEntityId();
         EnumGrowthStage growth = entity.getGrowthStage();
@@ -284,14 +290,14 @@ public abstract class DinosaurAnimator implements IModelAnimator
     @Override
     public final void setRotationAngles(ModelJson model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
-        ModelDinosaur theModel = (ModelDinosaur) model;
-        EntityDinosaur theEntity = (EntityDinosaur) entity;
+        DinosaurModel theModel = (DinosaurModel) model;
+        DinosaurEntity theEntity = (DinosaurEntity) entity;
         // assert(size == 1/16f); // Ignore the size
 
         setRotationAngles(theModel, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, theEntity);
     }
 
-    protected void setRotationAngles(ModelDinosaur model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTick, EntityDinosaur entity)
+    protected void setRotationAngles(DinosaurModel model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTick, DinosaurEntity entity)
     {
         getAnimationHelper(entity, model).performJabelarAnimations(partialTick);
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
@@ -307,14 +313,14 @@ public abstract class DinosaurAnimator implements IModelAnimator
         }
     }
 
-    protected void performMowzieLandAnimations(ModelDinosaur parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, EntityDinosaur parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, DinosaurEntity parEntity)
     {
     }
 
     /*
      * @Override this if you want swimming dino to have different cyclical animations.
      */
-    protected void performMowzieSwimmingAnimations(ModelDinosaur parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, EntityDinosaur parEntity)
+    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, DinosaurEntity parEntity)
     {
         performMowzieLandAnimations(parModel, parLimbSwing, parLimbSwingAmount, parRotation, parRotationYaw, parRotationPitch, parPartialTicks, parEntity);
     }
