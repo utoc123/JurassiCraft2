@@ -110,9 +110,8 @@ public class HerdManager
 
             if (cluster == null)
             {
-                // Not inside a cluster, let's find one to move to.
+                // Not inside a cluster, let's find one to move to, like the largest.
                 cluster = herd.getLargestCluster();
-                LOGGER.info("Found largest.");
             }
 
             if (cluster != null)
@@ -121,7 +120,8 @@ public class HerdManager
                 int outerRadius = cluster.getOuterRadius(dinosaur);
                 BlockPos center = cluster.getCenter();
 
-                // Okay, we want to move closer.  Let's just move into radius
+                // Okay, we want to move closer.
+                // What is the edge of the cluster
                 int distanceToCenter = (int) Math.sqrt(center.distanceSq(dinosaur.getPosition()));
                 if (distanceToCenter < outerRadius)
                 {
@@ -129,13 +129,17 @@ public class HerdManager
                 }
 
                 int diffDist = distanceToCenter - outerRadius;
-                BlockPos target = AIUtils.computePosToward(dinosaur.getPosition(), center, diffDist);
+
+                // Let's move some number of body widths
+                int someDist = (int) Math.round(dinosaur.width * 12);
+
+                BlockPos target = AIUtils.computePosToward(dinosaur.getPosition(), center, someDist);
                 LOGGER.info("id=" + dinosaur.getEntityId() + ", start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target +
-                            ", dtc=" + distanceToCenter + ", outer=" + outerRadius + ", diff=" + diffDist);
+                            ", dtc=" + distanceToCenter + ", somedist=" + someDist + ", outer=" + outerRadius + ", diff=" + diffDist);
                 return target;
             }
 
-            LOGGER.info("no cluster.");
+            //LOGGER.info("no cluster.");
             return null;
         }
 
@@ -176,6 +180,7 @@ public class HerdManager
                     {
                         builder.append(", ").append(dino.getPosition());
                     }
+                    builder.append("\n");
                 }
                 builder.append(" ]\n");
             }
@@ -381,8 +386,11 @@ public class HerdManager
          */
         public int getOuterRadius(EntityDinosaur dinosaur)
         {
+            // For Mico, make this larger.
+
             double factor = 1 + Math.sqrt(size());
-            return (int) Math.round(dinosaur.width * factor);
+            double width = dinosaur.width > 1.0 ? dinosaur.width : 1.0;
+            return (int) Math.round(width * factor);
         }
 
         //=====================================================
@@ -456,6 +464,11 @@ public class HerdManager
             _dinosaurs.clear();
         }
 
+        /**
+         * Adds this entity and all adjacent entities.
+         * @param dinosaur The entity to add
+         * @param dinosaurs The remaining entities that are available to add.
+         */
         void addWithAdjacents(EntityDinosaur dinosaur, LinkedList<EntityDinosaur> dinosaurs)
         {
             // Recursively add all adjacents
@@ -466,11 +479,16 @@ public class HerdManager
                 addWithAdjacents(close, dinosaurs);
             }
         }
-
     }
 
     //===============================================
 
+    /**
+     * Goes through all the dinosaurs in the list, putting them into clusters.
+     * They may be in clusters of size 1.
+     * @param dinosaurs The dinosaurs to cluster.
+     * @return A list of clusters.
+     */
     private LinkedList<Cluster> cluster(LinkedList<EntityDinosaur> dinosaurs)
     {
         EntityDinosaur dino;
@@ -486,6 +504,12 @@ public class HerdManager
         return clusters;
     }
 
+    /**
+     * Returns a list of all entities that are in close proximity
+     * @param dinosaur The entity we are examining.
+     * @param dinosaurs The remaining entities that might be close.
+     * @return A list of entities close to the one we are examining.
+     */
     private LinkedList<EntityDinosaur> extractProximates(EntityDinosaur dinosaur, LinkedList<EntityDinosaur> dinosaurs)
     {
         LinkedList<EntityDinosaur> proximates = new LinkedList<EntityDinosaur>();
@@ -525,11 +549,21 @@ public class HerdManager
         return (int) Math.round(radius);
     }
 
-    // Square of basic distance
+    /**
+     * How far apart two dinos can be tobe considered "in proximity"
+     * @param dinosaur The entity from which to extract the proximity number.
+     * @return The square of the allowable proximity.
+     */
     private static int speciesDistanceSq(EntityDinosaur dinosaur)
     {
         double radius = dinosaur.width * 3;
-        return (int) Math.round(radius * radius);
+        int distance = (int) Math.round(radius * radius);
+
+        // Minium to deal with things like the Microceratus
+        if (distance < 4)
+            distance = 4;
+
+        return distance;
     }
 
 }
