@@ -136,15 +136,12 @@ public class HerdManager
                     return null;
                 }
 
-                int diffDist = distanceToCenter - outerRadius;
-
-                // Let's move some number of body widths
+                // Let's move some number of body widths toward the center
                 int someDist = Math.round(dinosaur.width * 12);
 
-                BlockPos target = AIUtils.computePosToward(dinosaur.getPosition(), center, someDist);
+                return AIUtils.computePosToward(dinosaur.getPosition(), center, someDist);
                 //LOGGER.info("id=" + dinosaur.getEntityId() + ", start=" + dinosaur.getPosition() + ", center=" + center + ", target=" + target +
                 //            ", dtc=" + distanceToCenter + ", somedist=" + someDist + ", outer=" + outerRadius + ", diff=" + diffDist);
-                return target;
             }
 
             //LOGGER.info("no cluster.");
@@ -416,9 +413,9 @@ public class HerdManager
          */
         public int getOuterRadius(DinosaurEntity dinosaur)
         {
-            // For Mico, make this larger.
+            // For Micro, make this larger.
 
-            double factor = 1 + Math.sqrt(size());
+            double factor = 3 + Math.sqrt(size());
             double width = dinosaur.width > 1.0 ? dinosaur.width : 1.0;
             return (int) Math.round(width * factor);
         }
