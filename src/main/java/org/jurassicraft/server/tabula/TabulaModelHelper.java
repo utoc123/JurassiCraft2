@@ -68,6 +68,21 @@ public class TabulaModelHelper
         return null;
     }
 
+    public static CubeInfo getCubeByIdentifier(String identifier, JsonTabulaModel model)
+    {
+        List<CubeInfo> allCubes = getAllCubes(model);
+
+        for (CubeInfo cube : allCubes)
+        {
+            if (cube.identifier.equals(identifier))
+            {
+                return cube;
+            }
+        }
+
+        return null;
+    }
+
     public static List<CubeInfo> getAllCubes(JsonTabulaModel model)
     {
         List<CubeInfo> cubes = new ArrayList<CubeInfo>();
@@ -106,11 +121,35 @@ public class TabulaModelHelper
     {
         List<CubeInfo> retCubes = new ArrayList<CubeInfo>();
 
+        retCubes.add(cube);
+
         for (CubeInfo child : cube.children)
         {
             retCubes.addAll(traverse(child));
         }
 
         return retCubes;
+    }
+
+    public static CubeInfo copy(CubeInfo original)
+    {
+        CubeInfo copy = new CubeInfo();
+
+        copy.children = original.children;
+        copy.position = original.position;
+        copy.rotation = original.rotation;
+        copy.identifier = original.identifier;
+        copy.parentIdentifier = original.parentIdentifier;
+        copy.dimensions = original.dimensions;
+        copy.hidden = original.hidden;
+        copy.mcScale = original.mcScale;
+        copy.offset = original.offset;
+        copy.txOffset = original.txOffset;
+        copy.txMirror = original.txMirror;
+        copy.opacity = original.opacity;
+        copy.name = original.name;
+        copy.scale = original.scale;
+
+        return copy;
     }
 }

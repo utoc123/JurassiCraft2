@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -444,6 +445,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onUpdate()
     {
         super.onUpdate();
+
+        Vec3 eyes = getHeadPos();
+
+        worldObj.spawnParticle(EnumParticleTypes.FLAME, eyes.xCoord, eyes.yCoord, eyes.zCoord, 0, 0, 0);
 
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
 
@@ -958,7 +963,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 ", health=" + getHealth() + " / " + getMaxHealth() +
                 "\n    " +
                 ", pos=" + getPosition() +
-                ", eyePos=" + getPositionEyes(0.0F) +
+                ", eyePos=" + getHeadPos() +
                 ", eyeHeight=" + getEyeHeight() +
                 ", lookX=" + getLookHelper().getLookPosX() + ", lookY=" + getLookHelper().getLookPosY() + ", lookZ=" + getLookHelper().getLookPosZ() +
                 "\n    " +
@@ -981,28 +986,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 " }";
     }
 
-    @SideOnly(Side.CLIENT)
-    public Vec3 getPositionEyes(float partialTicks)
+    public Vec3 getHeadPos()
     {
-        double x, y, z;
-
-        if (partialTicks == 1.0F)
-        {
-            x = posX;
-            y = posY;
-            z = posZ;
-        }
-        else
-        {
-            x = this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks;
-            y = this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks;
-            z = this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks;
-        }
-
-        double[] headPos = dinosaur.getHeadPosition(getGrowthStage());
-
         double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 
-        return new Vec3(x + (((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale), y + (((headPos[1] * 0.0625F) - dinosaur.getOffsetY()) * scale), z + (((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale));
+        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), rotationYaw);
+
+        double headX = ((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale;
+        double headY = ((headPos[1] * 0.0625F) - dinosaur.getOffsetY()) * scale;
+        double headZ = ((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale;
+
+        return new Vec3(posX + headX, posY + headY, posZ + headZ);
     }
 }

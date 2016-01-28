@@ -12,6 +12,8 @@ import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
+import javax.vecmath.Matrix4d;
+import javax.vecmath.Vector3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -511,9 +513,111 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return new double[] { 0.0, 0.0, 0.0 };
     }
 
-    public double[] getHeadPosition(EnumGrowthStage stage)
+    public double[] getParentedCubePosition(String cubeName, EnumGrowthStage stage, float rot)
     {
-        return getCubePosition(getHeadCubeName(), stage);
+        JsonTabulaModel model = getModelContainer(stage);
+
+        CubeInfo cube = TabulaModelHelper.getCubeByName(cubeName, model);
+
+        if (cube != null)
+        {
+            CubeInfo copy = TabulaModelHelper.copy(cube);
+
+            setTransformation(copy, getParentRotationMatrix(model, copy, true, false, rot));
+
+            return copy.position;
+        }
+
+        return new double[] { 0.0, 0.0, 0.0 };
+    }
+
+    public static Matrix4d getParentRotationMatrix(JsonTabulaModel model, CubeInfo cubeInfo, boolean includeParents, boolean ignoreSelf, float rot)
+    {
+        List<CubeInfo> parentCubes = new ArrayList<CubeInfo>();
+        CubeInfo cube = cubeInfo;
+
+        do
+        {
+            if (ignoreSelf)
+            {
+                ignoreSelf = false;
+            }
+            else
+            {
+                parentCubes.add(cube);
+            }
+        }
+        while (includeParents && cube.parentIdentifier != null && (cube = TabulaModelHelper.getCubeByIdentifier(cube.parentIdentifier, model)) != null);
+
+        Matrix4d mat = new Matrix4d();
+        mat.setIdentity();
+        Matrix4d transform = new Matrix4d();
+
+        for (int i = parentCubes.size() - 1; i >= 0; i--)
+        {
+            cube = parentCubes.get(i);
+            transform.setIdentity();
+            transform.setTranslation(new Vector3d(cube.position[0], cube.position[1], cube.position[2]));
+            mat.mul(transform);
+
+            double rotX = cube.rotation[0];
+            double rotY = cube.rotation[1];
+            double rotZ = cube.rotation[2];
+
+            transform.rotZ(rotZ / 180 * Math.PI);
+            mat.mul(transform);
+            transform.rotY(rotY / 180 * Math.PI);
+            mat.mul(transform);
+            transform.rotX(rotX / 180 * Math.PI);
+            mat.mul(transform);
+        }
+
+        return mat;
+    }
+
+    private void setTransformation(CubeInfo cubeInfo, Matrix4d matrix)
+    {
+        double[][] transformation = getTransformation(matrix);
+        cubeInfo.position = transformation[0];
+        cubeInfo.rotation = transformation[1];
+    }
+
+    private static double[][] getTransformation(Matrix4d matrix)
+    {
+        double sinRotationAngleY, cosRotationAngleY, sinRotationAngleX, cosRotationAngleX, sinRotationAngleZ, cosRotationAngleZ;
+
+        sinRotationAngleY = -matrix.m20;
+        cosRotationAngleY = Math.sqrt(1 - sinRotationAngleY * sinRotationAngleY);
+
+        if (Math.abs(cosRotationAngleY) > 0.0001)
+        {
+            sinRotationAngleX = matrix.m21 / cosRotationAngleY;
+            cosRotationAngleX = matrix.m22 / cosRotationAngleY;
+            sinRotationAngleZ = matrix.m10 / cosRotationAngleY;
+            cosRotationAngleZ = matrix.m00 / cosRotationAngleY;
+        }
+        else
+        {
+            sinRotationAngleX = -matrix.m12;
+            cosRotationAngleX = matrix.m11;
+            sinRotationAngleZ = 0;
+            cosRotationAngleZ = 1;
+        }
+
+        double rotationAngleX = epsilon(Math.atan2(sinRotationAngleX, cosRotationAngleX)) / Math.PI * 180;
+        double rotationAngleY = epsilon(Math.atan2(sinRotationAngleY, cosRotationAngleY)) / Math.PI * 180;
+        double rotationAngleZ = epsilon(Math.atan2(sinRotationAngleZ, cosRotationAngleZ)) / Math.PI * 180;
+        return new double[][] { { epsilon(matrix.m03), epsilon(matrix.m13), epsilon(matrix.m23) }, { rotationAngleX, rotationAngleY, rotationAngleZ } };
+    }
+
+    private static double epsilon(double x)
+    {
+        return x < 0 ? x > -0.0001 ? 0 : x : x < 0.0001 ? 0 : x;
+    }
+
+    public double[] getHeadPosition(EnumGrowthStage stage, float rot)
+    {
+        return getParentedCubePosition(getHeadCubeName(), stage, rot);
     }
 
     public JsonTabulaModel getModelContainer(EnumGrowthStage stage)
