@@ -552,29 +552,27 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     protected void dropFewItems(boolean p_70628_1_, int looting)
     {
-        int meatAmount = (int) (rand.nextInt(3) + ((width * height) / 4)) + looting;
+        int meatAmount = Math.max(1, (int) (rand.nextInt(3) + ((width * height) / 4)) + looting);
+
+        boolean burning = isBurning();
 
         for (int i = 0; i < meatAmount; ++i)
         {
-            if (isBurning())
-            {
-                dropStackWithGenetics(new ItemStack(JCItemRegistry.dino_steak, 1, JCEntityRegistry.getDinosaurId(dinosaur)));
-            }
-            else
-            {
-                dropStackWithGenetics(new ItemStack(JCItemRegistry.dino_meat, 1, JCEntityRegistry.getDinosaurId(dinosaur)));
-            }
+            dropStackWithGenetics(new ItemStack(burning ? JCItemRegistry.dino_steak : JCItemRegistry.dino_meat, 1, JCEntityRegistry.getDinosaurId(dinosaur)), burning);
         }
 
         inventory.dropItems(worldObj, rand);
     }
 
-    private void dropStackWithGenetics(ItemStack stack)
+    private void dropStackWithGenetics(ItemStack stack, boolean cooked)
     {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("DNAQuality", geneticsQuality);
-        nbt.setString("Genetics", genetics.toString());
-        stack.setTagCompound(nbt);
+        if (!cooked)
+        {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setInteger("DNAQuality", geneticsQuality);
+            nbt.setString("Genetics", genetics.toString());
+            stack.setTagCompound(nbt);
+        }
 
         entityDropItem(stack, 0.0F);
     }

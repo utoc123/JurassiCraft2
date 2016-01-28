@@ -474,13 +474,15 @@ public class JabelarAnimationHelper
             float entityWidth = theEntity.width;
             float entityHeight = theEntity.height;
 
-            for (float x = 0; x < entityWidth; x++)
+            float amount = 2;
+
+            for (int x = 0; x < amount; x++)
             {
-                for (float y = 0; y < entityHeight; y++)
+                for (int y = 0; y < amount; y++)
                 {
-                    for (float z = 0; z < entityWidth; z++)
+                    for (int z = 0; z < amount; z++)
                     {
-                        addBloodEffect(world, effectRenderer, x + posX - (entityWidth / 2.0F), y + posY, z + posZ - (entityWidth / 2.0F));
+                        addBloodEffect(world, effectRenderer, (x / amount * entityWidth) + posX - (entityWidth / 2.0F), (y / amount * entityHeight) + posY, (z / amount * entityWidth) + posZ - (entityWidth / 2.0F));
                     }
                 }
             }
