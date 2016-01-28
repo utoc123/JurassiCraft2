@@ -2,7 +2,6 @@ package org.jurassicraft.server.entity.base;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityMoveHelper;
-import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -17,11 +16,6 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         this.moveHelper = new AggressiveSwimmingDinosaurEntity.SwimmingMoveHelper();
         this.tasks.addTask(1, new MoveUnderwaterEntityAI(this));
         this.navigator = new PathNavigateSwimmer(this, worldIn);
-    }
-
-    protected PathNavigate func_175447_b(World worldIn)
-    {
-        return new PathNavigateSwimmer(this, worldIn);
     }
 
     /**

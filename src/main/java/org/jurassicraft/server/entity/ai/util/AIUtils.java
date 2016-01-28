@@ -17,9 +17,10 @@ public class AIUtils
     /**
      * Finds the point on the radius edge where we'll intersect if we travel in a
      * straight line.
+     *
      * @param center Center of target area.
      * @param radius Radius of target area.
-     * @param start Our starting (or current) location.
+     * @param start  Our starting (or current) location.
      * @return BlockPos on intersect or null if already within center
      */
     public static BlockPos findIntersect(BlockPos center, int radius, BlockPos start)
@@ -29,12 +30,14 @@ public class AIUtils
         double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 
         if (distance < radius)
+        {
             return start;
+        }
 
-        double scale = radius/distance;
+        double scale = radius / distance;
         return new BlockPos(center.getX() + Math.round(deltaX * scale),
-                            center.getY(),
-                            center.getZ() + Math.round(deltaZ * scale));
+                center.getY(),
+                center.getZ() + Math.round(deltaZ * scale));
     }
 
     public static BlockPos computePosToward(BlockPos current, BlockPos target, int move)
@@ -45,9 +48,11 @@ public class AIUtils
         double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 
         if (distance < move)
+        {
             return target;
+        }
 
-        double scale = move/distance;
+        double scale = move / distance;
         return new BlockPos(current.getX() + Math.round(deltaX * scale),
                 current.getY(),
                 current.getZ() + Math.round(deltaZ * scale));
@@ -58,7 +63,9 @@ public class AIUtils
     public static BlockPos findSurface(EntityLiving entity)
     {
         if (!entity.isInWater())
+        {
             return null;
+        }
 
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getPosition();
@@ -78,7 +85,9 @@ public class AIUtils
     public static int getWaterDepth(EntityLiving entity)
     {
         if (!entity.isInWater())
+        {
             return 0;
+        }
 
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getPosition();
@@ -140,18 +149,18 @@ public class AIUtils
         int y = 0;
         int decisionOver2 = 1 - x;   // Decision criterion divided by 2 evaluated at x=r, y=0
 
-        while( y <= x )
+        while (y <= x)
         {
-            drawPixel( x + x0,  y + y0); // Octant 1
-            drawPixel( y + x0,  x + y0); // Octant 2
-            drawPixel(-x + x0,  y + y0); // Octant 4
-            drawPixel(-y + x0,  x + y0); // Octant 3
+            drawPixel(x + x0, y + y0); // Octant 1
+            drawPixel(y + x0, x + y0); // Octant 2
+            drawPixel(-x + x0, y + y0); // Octant 4
+            drawPixel(-y + x0, x + y0); // Octant 3
             drawPixel(-x + x0, -y + y0); // Octant 5
             drawPixel(-y + x0, -x + y0); // Octant 6
-            drawPixel( x + x0, -y + y0); // Octant 8
-            drawPixel( y + x0, -x + y0); // Octant 7
+            drawPixel(x + x0, -y + y0); // Octant 8
+            drawPixel(y + x0, -x + y0); // Octant 7
             y++;
-            if (decisionOver2<=0)
+            if (decisionOver2 <= 0)
             {
                 decisionOver2 += 2 * y + 1;   // Change in decision criterion for y -> y+1
             }

@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.item.ItemDNA;
-import org.jurassicraft.server.item.PlantDNAItem;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.PlantDNAItem;
 
 public class EmbryonicMachineTile extends MachineBaseTile
 {

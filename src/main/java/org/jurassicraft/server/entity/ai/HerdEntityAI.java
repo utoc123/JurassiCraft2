@@ -2,8 +2,6 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.BlockPos;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jurassicraft.server.entity.ai.util.HerdManager;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -35,7 +33,9 @@ public class HerdEntityAI extends EntityAIBase
     public boolean shouldExecute()
     {
         if (!dinosaur.worldObj.getGameRules().getBoolean("dinoHerding"))
+        {
             return false;
+        }
 
         if (dinosaur.getEntityWorld().isRemote)
         {
@@ -44,7 +44,9 @@ public class HerdEntityAI extends EntityAIBase
 
         // Only do this every once in a while.
         if ((dinosaur.ticksExisted & 0x3F) != (hashCode() & 0x3F))
+        {
             return false;
+        }
 
         // Ask the herd manager where we should move to
         target = HerdManager.getInstance().getWanderLocation(dinosaur);
@@ -72,7 +74,9 @@ public class HerdEntityAI extends EntityAIBase
     public boolean continueExecuting()
     {
         if (target == null)
+        {
             return false;
+        }
 
         if (!dinosaur.getNavigator().noPath())
         {
@@ -86,7 +90,9 @@ public class HerdEntityAI extends EntityAIBase
     public void resetTask()
     {
         if (target != null)
+        {
             dinosaur.getNavigator().clearPathEntity();
+        }
     }
 
     //private static final Logger LOGGER = LogManager.getLogger();
@@ -95,9 +101,9 @@ public class HerdEntityAI extends EntityAIBase
 
 /**
  * FUTURE MODEL:
- *
+ * <p/>
  * graze - wander around inside herd radius
  * alerted - radius is closer
- *
+ * <p/>
  * The basic issue is that we don't have a real herd model.
  */

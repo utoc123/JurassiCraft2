@@ -1,10 +1,5 @@
 package org.jurassicraft.server.dinosaur;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +11,11 @@ import org.jurassicraft.server.entity.base.EnumGrowthStage;
 import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class Dinosaur implements Comparable<Dinosaur>
 {
@@ -57,7 +57,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private JsonTabulaModel modelInfant;
     private JsonTabulaModel modelJuvenile;
     private JsonTabulaModel modelAdolescent;
-    
+
     private boolean usePosesForWalkingAnim = false;
 
     public void init()
@@ -244,7 +244,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     {
         this.bones = bones;
     }
-    
+
     public void setUsePosesForWalkingAnim(boolean usePosesForWalkingAnim)
     {
         this.usePosesForWalkingAnim = usePosesForWalkingAnim;
@@ -383,7 +383,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
         return texture + ".png";
     }
-    
+
     public boolean getUsePosesForWalkAnim()
     {
         return this.usePosesForWalkingAnim;
@@ -508,7 +508,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
             return cube.position;
         }
 
-        return new double[] {0.0, 0.0, 0.0};
+        return new double[] { 0.0, 0.0, 0.0 };
     }
 
     public double[] getHeadPosition(EnumGrowthStage stage)

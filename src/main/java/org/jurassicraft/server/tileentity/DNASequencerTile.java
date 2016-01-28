@@ -9,8 +9,8 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNASequencerContainer;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.item.SoftTissueItem;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.SoftTissueItem;
 
 import java.util.Random;
 

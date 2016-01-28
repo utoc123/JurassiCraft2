@@ -29,16 +29,20 @@ public enum Animations
         this(false);
     }
 
-    public Animation get() {
-        if (animation == null) {
+    public Animation get()
+    {
+        if (animation == null)
+        {
             animation = new Animation(ordinal(), -1);
         }
         return animation;
     }
 
-    public static Animation[] getAnimations() {
+    public static Animation[] getAnimations()
+    {
         Animation[] animations = new Animation[values().length];
-        for (int i = 0; i < animations.length; i++) {
+        for (int i = 0; i < animations.length; i++)
+        {
             animations[i] = values()[i].get();
         }
         return animations;

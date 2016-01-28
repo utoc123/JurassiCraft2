@@ -8,8 +8,8 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
 
 public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorTile>

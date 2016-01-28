@@ -24,11 +24,11 @@ import org.jurassicraft.server.item.vehicles.HeliModuleItem;
 import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;
 import org.jurassicraft.server.message.HelicopterModulesMessage;
-import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterSeatEntity;
 import org.jurassicraft.server.vehicles.helicopter.modules.EnumModulePosition;
 import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterDoor;
 import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterModule;
 import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterModuleSpot;
+import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterSeatEntity;
 
 import java.util.UUID;
 
@@ -237,7 +237,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
             {
                 seat.setParentID(heliID);
                 seat.parent = this;
-           //     seat.update();
+                //     seat.update();
             }
         }
 
@@ -412,7 +412,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         // Transforms the vector in local coordinates (cancels possible rotations to simplify 'seat detection')
         Vec3 localVec = vec.rotateYaw((float) Math.toRadians(this.rotationYaw));
 
-        if(!attachModule(player, localVec))
+        if (!attachModule(player, localVec))
         {
             System.out.println(localVec);
 
@@ -446,13 +446,13 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
 
     private boolean attachModule(EntityPlayer player, Vec3 localVec)
     {
-        if(!worldObj.isRemote)
+        if (!worldObj.isRemote)
         {
             ItemStack stack = player.getHeldItem();
-            if(stack != null)
+            if (stack != null)
             {
                 Item item = stack.getItem();
-                if(item instanceof HeliModuleItem)
+                if (item instanceof HeliModuleItem)
                 {
                     HeliModuleItem moduleItem = (HeliModuleItem) item;
                     HelicopterModule module = HelicopterModule.createFromID(moduleItem.getModuleID());
@@ -460,10 +460,12 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
                     {
                         if (spot != null && spot.isClicked(localVec))
                         {
-                            if(spot.addModule(module))
+                            if (spot.addModule(module))
                             {
-                                if(!player.capabilities.isCreativeMode)
+                                if (!player.capabilities.isCreativeMode)
+                                {
                                     stack.stackSize--;
+                                }
                                 return true;
                             }
                         }
@@ -586,7 +588,8 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         seats[index] = seat;
     }
 
-    public float getRotorRotation() {
+    public float getRotorRotation()
+    {
         return rotorRotation;
     }
 }

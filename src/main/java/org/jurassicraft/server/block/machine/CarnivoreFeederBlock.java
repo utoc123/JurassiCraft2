@@ -11,8 +11,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.tileentity.CarnivoreFeederTile;
 

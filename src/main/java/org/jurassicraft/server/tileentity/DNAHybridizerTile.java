@@ -12,8 +12,8 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsContainer;
-import org.jurassicraft.server.item.StorageDiscItem;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.StorageDiscItem;
 
 import java.util.ArrayList;
 import java.util.List;

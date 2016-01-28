@@ -10,7 +10,7 @@ import org.jurassicraft.server.entity.ai.util.AIUtils;
 
 /**
  * Copyright Timeless Mod Team
- * <p>
+ * <p/>
  * Make things swim/wade to land.
  */
 public class AdvancedSwimEntityAI extends EntityAIBase
@@ -19,7 +19,7 @@ public class AdvancedSwimEntityAI extends EntityAIBase
     {
         _entity = entitylivingIn;
         setMutexBits(4);
-        ((PathNavigateGround)entitylivingIn.getNavigator()).setCanSwim(true);
+        ((PathNavigateGround) entitylivingIn.getNavigator()).setCanSwim(true);
     }
 
     @Override
@@ -27,7 +27,9 @@ public class AdvancedSwimEntityAI extends EntityAIBase
     {
         // If in lava, move to shore
         if (_entity.isInLava())
+        {
             return true;
+        }
 
         // We need to be not going any where, in water and
         return (_entity.getNavigator().noPath() && _entity.isInWater());

@@ -183,9 +183,13 @@ public class OnionTraverser implements Iterable<BlockPos>
             _x = _minX;
             _z = _minZ;
             if ((_yCounter & 0x1) == 1)
+            {
                 _y = _center.getY() + _yCounter / 2;
+            }
             else
+            {
                 _y = _center.getY() - _yCounter / 2;
+            }
 
             _facing = EnumFacing.EAST;
 

@@ -78,6 +78,7 @@ public class HerdManager
 
     /**
      * Provides the herd for the particular dinosaur.
+     *
      * @param dinosaur The dino.
      * @return The herd.
      */
@@ -210,6 +211,7 @@ public class HerdManager
 
         /**
          * Returns the cluster this dinosaur is in, or null if not in a cluster.
+         *
          * @param dinosaur The dinosaur we are looking for.
          * @return Cluster or null.
          */
@@ -366,8 +368,10 @@ public class HerdManager
         {
             double factor = 1 + Math.sqrt(clusters.size());
             if (factor < 1.5)
+            {
                 factor = 1.5;
-            return (int)Math.round(dinosaur.width * factor);
+            }
+            return (int) Math.round(dinosaur.width * factor);
         }
     }
 
@@ -388,7 +392,9 @@ public class HerdManager
         public BlockPos getCenter()
         {
             if (center != null)
+            {
                 return center;
+            }
 
             double totalX = 0.0F;
             double totalY = 0.0F;
@@ -493,7 +499,8 @@ public class HerdManager
 
         /**
          * Adds this entity and all adjacent entities.
-         * @param dinosaur The entity to add
+         *
+         * @param dinosaur  The entity to add
          * @param dinosaurs The remaining entities that are available to add.
          */
         void addWithAdjacents(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
@@ -501,7 +508,7 @@ public class HerdManager
             // Recursively add all adjacents
             List<DinosaurEntity> allProximates = extractProximates(dinosaur, dinosaurs);
             this.dinosaurs.add(dinosaur);
-            for ( DinosaurEntity close : allProximates)
+            for (DinosaurEntity close : allProximates)
             {
                 addWithAdjacents(close, dinosaurs);
             }
@@ -515,6 +522,7 @@ public class HerdManager
     /**
      * Goes through all the dinosaurs in the list, putting them into clusters.
      * They may be in clusters of size 1.
+     *
      * @param dinosaurs The dinosaurs to cluster.
      * @return A list of clusters.
      */
@@ -535,7 +543,8 @@ public class HerdManager
 
     /**
      * Returns a list of all entities that are in close proximity
-     * @param dinosaur The entity we are examining.
+     *
+     * @param dinosaur  The entity we are examining.
      * @param dinosaurs The remaining entities that might be close.
      * @return A list of entities close to the one we are examining.
      */
@@ -567,6 +576,7 @@ public class HerdManager
 
     /**
      * How far apart two dinos can be tobe considered "in proximity"
+     *
      * @param dinosaur The entity from which to extract the proximity number.
      * @return The square of the allowable proximity.
      */
@@ -584,7 +594,9 @@ public class HerdManager
 
         // Minimum to deal with things like the Microceratus
         if (distance < 6)
+        {
             distance = 6;
+        }
 
         return distance;
     }

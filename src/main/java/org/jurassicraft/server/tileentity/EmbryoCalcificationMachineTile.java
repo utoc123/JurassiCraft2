@@ -9,8 +9,8 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.SyringeItem;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.SyringeItem;
 
 public class EmbryoCalcificationMachineTile extends MachineBaseTile
 {

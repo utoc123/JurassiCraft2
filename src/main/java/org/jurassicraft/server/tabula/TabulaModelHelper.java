@@ -40,7 +40,8 @@ public class TabulaModelHelper
             }
 
             return parseTabulaModel;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             return null;

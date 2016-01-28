@@ -90,7 +90,7 @@ public abstract class HelicopterModule
     @Override
     public boolean equals(Object obj)
     {
-        if(obj instanceof HelicopterModule)
+        if (obj instanceof HelicopterModule)
         {
             return getModuleID().equals(((HelicopterModule) obj).getModuleID());
         }
