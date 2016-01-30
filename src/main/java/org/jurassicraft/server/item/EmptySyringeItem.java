@@ -14,7 +14,6 @@ public class EmptySyringeItem extends Item
     public EmptySyringeItem()
     {
         super();
-        this.setUnlocalizedName("empty_syringe");
         this.setCreativeTab(JCCreativeTabs.items);
     }
 

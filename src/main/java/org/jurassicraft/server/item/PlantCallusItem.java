@@ -16,7 +16,6 @@ public class PlantCallusItem extends Item
     public PlantCallusItem()
     {
         super();
-        this.setUnlocalizedName("plant_callus");
     }
 
     public String getItemStackDisplayName(ItemStack stack)

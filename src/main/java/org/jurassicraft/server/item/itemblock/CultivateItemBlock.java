@@ -13,7 +13,6 @@ public class CultivateItemBlock extends ItemBlock
         super(block);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
-        this.setUnlocalizedName("cultivate_bottom");
     }
 
     @Override

@@ -16,7 +16,6 @@ public class HelicopterItem extends Item
 {
     public HelicopterItem()
     {
-        setUnlocalizedName("helicopter_spawner");
         setCreativeTab(JCCreativeTabs.items);
         setMaxStackSize(1);
     }

@@ -17,7 +17,6 @@ public class BluePrintItem extends Item
 {
     public BluePrintItem()
     {
-        this.setUnlocalizedName("blue_print");
         this.setCreativeTab(JCCreativeTabs.items);
         this.setMaxStackSize(1);
     }

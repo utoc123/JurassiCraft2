@@ -18,7 +18,6 @@ public class HeliModuleItem extends Item
     public HeliModuleItem(String helicopterModuleID)
     {
         moduleID = helicopterModuleID;
-        setUnlocalizedName("helicopter_module_" + helicopterModuleID);
         module = checkNotNull(HelicopterModule.registry.get(helicopterModuleID), "Invalid module id " + helicopterModuleID);
         setCreativeTab(JCCreativeTabs.items);
     }

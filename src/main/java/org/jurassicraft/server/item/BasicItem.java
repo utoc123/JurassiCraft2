@@ -5,10 +5,9 @@ import net.minecraft.item.Item;
 
 public class BasicItem extends Item
 {
-    public BasicItem(String name, CreativeTabs tab)
+    public BasicItem(CreativeTabs tab)
     {
         super();
-        this.setUnlocalizedName(name.replaceAll(" ", "_").toLowerCase());
         this.setCreativeTab(tab);
     }
 }

@@ -16,7 +16,6 @@ public class FossilItemBlock extends ItemBlock
         super(block);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
-        this.setUnlocalizedName("fossil_block");
     }
 
     public String getItemStackDisplayName(ItemStack stack)

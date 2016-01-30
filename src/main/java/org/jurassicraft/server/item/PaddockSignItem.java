@@ -13,7 +13,6 @@ public class PaddockSignItem extends Item
 {
     public PaddockSignItem()
     {
-        this.setUnlocalizedName("paddock_sign");
         this.setCreativeTab(JCCreativeTabs.items);
     }
 

@@ -23,7 +23,6 @@ public class DinosaurSteakItem extends ItemFood
     {
         super(8, 0.8F, true);
 
-        this.setUnlocalizedName("dinosaur_steak");
         this.setHasSubtypes(true);
 
         this.setCreativeTab(JCCreativeTabs.foods);

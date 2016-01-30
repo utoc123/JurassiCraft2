@@ -15,7 +15,6 @@ public class AmberItem extends Item
     public AmberItem()
     {
         super();
-        this.setUnlocalizedName("amber");
         this.setCreativeTab(JCCreativeTabs.items);
         this.setHasSubtypes(true);
     }

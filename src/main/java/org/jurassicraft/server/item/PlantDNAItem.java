@@ -25,8 +25,6 @@ public class PlantDNAItem extends Item
     {
         super();
 
-        this.setUnlocalizedName("plant_dna");
-
         this.setCreativeTab(JCCreativeTabs.plants);
         this.setHasSubtypes(true);
     }

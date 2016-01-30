@@ -5,8 +5,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.dinosaur.IndominusDinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.lang.AdvLang;
@@ -20,14 +22,13 @@ import java.util.Map;
 public class FossilItem extends Item
 {
     private String type;
-    private String fossilType;
+    private boolean includeHybrids;
 
-    public FossilItem(String type, String fossilType)
+    public FossilItem(String type, boolean includeHybrids)
     {
         this.type = type.toLowerCase().replaceAll(" ", "_");
-        this.fossilType = fossilType.toLowerCase().replaceAll(" ", "_");
+        this.includeHybrids = includeHybrids;
 
-        this.setUnlocalizedName("fossil_" + this.type);
         this.setHasSubtypes(true);
 
         this.setCreativeTab(JCCreativeTabs.bones);
@@ -66,11 +67,11 @@ public class FossilItem extends Item
 
         Collections.sort(dinosaurs);
 
-        List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(fossilType);
+        List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(type);
 
         for (Dinosaur dino : dinosaurs)
         {
-            if (dino.shouldRegister() && dinosaursForType.contains(dino))
+            if (dino.shouldRegister() && dinosaursForType.contains(dino) && !(!includeHybrids && dino instanceof IHybrid))
             {
                 subtypes.add(new ItemStack(item, 1, ids.get(dino)));
             }

@@ -21,7 +21,6 @@ public class PaleoPadItem extends Item
     {
         super();
 
-        this.setUnlocalizedName("paleo_pad");
         this.setMaxStackSize(1);
 
         this.setCreativeTab(JCCreativeTabs.items);

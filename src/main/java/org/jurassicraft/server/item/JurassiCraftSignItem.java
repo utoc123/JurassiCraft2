@@ -13,7 +13,6 @@ public class JurassiCraftSignItem extends Item
 {
     public JurassiCraftSignItem()
     {
-        this.setUnlocalizedName("jurassicraft_sign");
         this.setCreativeTab(JCCreativeTabs.items);
     }
 

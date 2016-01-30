@@ -21,7 +21,6 @@ public class ItemPlasterAndBandage extends Item
     {
         super();
 
-        this.setUnlocalizedName("plaster_and_bandage");
         this.setCreativeTab(JCCreativeTabs.items);
     }
 

@@ -22,8 +22,6 @@ public class ItemDinosaurEgg extends DNAContainerItem
     {
         super();
 
-        this.setUnlocalizedName("dino_egg");
-
         this.setCreativeTab(JCCreativeTabs.eggs);
         this.setHasSubtypes(true);
     }

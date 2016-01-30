@@ -20,7 +20,6 @@ public class SoftTissueItem extends Item
 {
     public SoftTissueItem()
     {
-        this.setUnlocalizedName("soft_tissue");
         this.setHasSubtypes(true);
 
         this.setCreativeTab(JCCreativeTabs.dna);

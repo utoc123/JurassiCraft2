@@ -12,7 +12,6 @@ public class JCLogItemBlock extends ItemBlock
         super(block);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
-        this.setUnlocalizedName("jc_log");
     }
 
     @Override

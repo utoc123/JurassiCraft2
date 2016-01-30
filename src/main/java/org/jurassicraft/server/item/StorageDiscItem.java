@@ -19,7 +19,6 @@ public class StorageDiscItem extends Item
     public StorageDiscItem()
     {
         super();
-        this.setUnlocalizedName("storage_disc");
         this.setCreativeTab(JCCreativeTabs.items);
     }
 

@@ -8,7 +8,6 @@ public class JCMusicDiscItem extends ItemRecord
     public JCMusicDiscItem(String name)
     {
         super(name);
-        this.setUnlocalizedName("disc_" + name);
     }
 
     /**

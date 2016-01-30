@@ -13,7 +13,6 @@ public class GrowthSerumItem extends Item
     {
         super();
         this.setCreativeTab(JCCreativeTabs.items);
-        this.setUnlocalizedName("growth_serum");
     }
 
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target)

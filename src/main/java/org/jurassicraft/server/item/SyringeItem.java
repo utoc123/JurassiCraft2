@@ -22,8 +22,6 @@ public class SyringeItem extends DNAContainerItem
     {
         super();
 
-        this.setUnlocalizedName("syringe");
-
         this.setCreativeTab(JCCreativeTabs.dna);
         this.setHasSubtypes(true);
     }

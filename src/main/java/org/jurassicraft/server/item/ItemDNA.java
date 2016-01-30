@@ -22,8 +22,6 @@ public class ItemDNA extends DNAContainerItem
     {
         super();
 
-        this.setUnlocalizedName("dna");
-
         this.setCreativeTab(JCCreativeTabs.dna);
         this.setHasSubtypes(true);
     }

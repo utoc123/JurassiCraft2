@@ -23,7 +23,6 @@ public class CageItem extends Item
     public CageItem()
     {
         super();
-        this.setUnlocalizedName("cage_small");
         this.setHasSubtypes(true);
         this.setCreativeTab(JCCreativeTabs.items);
     }

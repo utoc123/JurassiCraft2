@@ -21,7 +21,6 @@ public class DinoScannerItem extends Item
     public DinoScannerItem()
     {
         super();
-        this.setUnlocalizedName("dino_scanner");
         this.setCreativeTab(JCCreativeTabs.items);
         this.setMaxStackSize(1);
     }

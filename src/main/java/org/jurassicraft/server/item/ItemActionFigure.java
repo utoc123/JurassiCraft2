@@ -30,8 +30,6 @@ public class ItemActionFigure extends Item
     {
         super();
 
-        this.setUnlocalizedName("action_figure");
-
         this.setCreativeTab(JCCreativeTabs.merchandise);
         this.setHasSubtypes(true);
     }

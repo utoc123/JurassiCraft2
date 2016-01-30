@@ -37,7 +37,6 @@ public class DinosaurSpawnEggItem extends Item
 {
     public DinosaurSpawnEggItem()
     {
-        this.setUnlocalizedName("dino_spawn_egg");
         this.setHasSubtypes(true);
 
         this.setCreativeTab(JCCreativeTabs.spawnEggs);

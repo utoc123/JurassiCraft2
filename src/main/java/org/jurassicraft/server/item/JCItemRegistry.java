@@ -5,6 +5,7 @@ import net.ilexiconn.llibrary.common.item.BookWikiItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
@@ -110,33 +111,33 @@ public class JCItemRegistry implements IContentHandler
         jc_sign = new JurassiCraftSignItem();
         soft_tissue = new SoftTissueItem();
         amber = new AmberItem();
-        petri_dish = new BasicItem("Petri Dish", JCCreativeTabs.items);
-        empty_test_tube = new BasicItem("Empty Test Tube", JCCreativeTabs.items);
+        petri_dish = new BasicItem(JCCreativeTabs.items);
+        empty_test_tube = new BasicItem(JCCreativeTabs.items);
         syringe = new SyringeItem();
         empty_syringe = new EmptySyringeItem();
         storage_disc = new StorageDiscItem();
-        disc_reader = new BasicItem("Disc Reader", JCCreativeTabs.items);
-        laser = new BasicItem("Laser", JCCreativeTabs.items);
-        dna_base = new BasicItem("DNA Base Material", JCCreativeTabs.items);
+        disc_reader = new BasicItem(JCCreativeTabs.items);
+        laser = new BasicItem(JCCreativeTabs.items);
+        dna_base = new BasicItem(JCCreativeTabs.items);
         cage_small = new CageItem();
         plant_dna = new PlantDNAItem();
-        sea_lamprey = new BasicItem("Sea Lamprey", JCCreativeTabs.items);
-        iron_blades = new BasicItem("Iron Blades", JCCreativeTabs.items);
-        iron_rod = new BasicItem("Iron Rod", JCCreativeTabs.items);
+        sea_lamprey = new BasicItem(JCCreativeTabs.items);
+        iron_blades = new BasicItem(JCCreativeTabs.items);
+        iron_rod = new BasicItem(JCCreativeTabs.items);
         growth_serum = new GrowthSerumItem();
-        needle = new BasicItem("Needle", JCCreativeTabs.items);
-        plant_cells = new BasicItem("Plant Cells", JCCreativeTabs.items);
+        needle = new BasicItem(JCCreativeTabs.items);
+        plant_cells = new BasicItem(JCCreativeTabs.items);
         plant_callus = new PlantCallusItem();
-        plant_cells_petri_dish = new BasicItem("Plant Cells Petri Dish", JCCreativeTabs.items);
-        tracker = new BasicItem("Tracker", JCCreativeTabs.items);
+        plant_cells_petri_dish = new BasicItem(JCCreativeTabs.items);
+        tracker = new BasicItem(JCCreativeTabs.items);
         action_figure = new ItemActionFigure();
         dino_scanner = new DinoScannerItem();
 
-        amber_cane = new BasicItem("Amber Cane", JCCreativeTabs.merchandise);
+        amber_cane = new BasicItem(JCCreativeTabs.merchandise);
         amber_cane.setFull3D();
         amber_cane.setMaxStackSize(1);
-        amber_keychain = new BasicItem("Amber Keychain", JCCreativeTabs.merchandise);
-        mr_dna_keychain = new BasicItem("Mr DNA Keychain", JCCreativeTabs.merchandise);
+        amber_keychain = new BasicItem(JCCreativeTabs.merchandise);
+        mr_dna_keychain = new BasicItem(JCCreativeTabs.merchandise);
 
         helicopter_spawner = new HelicopterItem();
         minigun_module_adder = new HeliModuleItem("minigun");
@@ -145,12 +146,12 @@ public class JCItemRegistry implements IContentHandler
         disc_troodons_and_raptors = new JCMusicDiscItem("troodons_and_raptors");
         disc_dont_move_a_muscle = new JCMusicDiscItem("dont_move_a_muscle");
 
-        basic_circuit = new BasicItem("Basic Circuit", JCCreativeTabs.items);
-        advanced_circuit = new BasicItem("Advanced Circuit", JCCreativeTabs.items);
+        basic_circuit = new BasicItem(JCCreativeTabs.items);
+        advanced_circuit = new BasicItem(JCCreativeTabs.items);
 
-        iron_nugget = new BasicItem("Iron Nugget", JCCreativeTabs.items);
+        iron_nugget = new BasicItem(JCCreativeTabs.items);
 
-        gypsum_powder = new BasicItem("Gypsum Powder", JCCreativeTabs.items);
+        gypsum_powder = new BasicItem(JCCreativeTabs.items);
 
         for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
         {
@@ -158,16 +159,19 @@ public class JCItemRegistry implements IContentHandler
 
             for (String boneType : boneTypes)
             {
-                if (!fossils.containsKey(boneType))
+                if (!(dinosaur instanceof IHybrid))
                 {
-                    FossilItem fossil = new FossilItem(boneType, boneType);
-                    fossils.put(boneType, fossil);
-                    registerItem(fossil, boneType);
+                    if (!fossils.containsKey(boneType))
+                    {
+                        FossilItem fossil = new FossilItem(boneType, false);
+                        fossils.put(boneType, fossil);
+                        registerItem(fossil, boneType);
+                    }
                 }
 
                 if (!fresh_fossils.containsKey(boneType))
                 {
-                    FossilItem fossil = new FossilItem(boneType + "_fresh", boneType);
+                    FossilItem fossil = new FossilItem(boneType, true);
                     fresh_fossils.put(boneType, fossil);
                     registerItem(fossil, boneType + " Fresh");
                 }
@@ -260,6 +264,9 @@ public class JCItemRegistry implements IContentHandler
 
     public void registerItem(Item item, String name)
     {
-        GameRegistry.registerItem(item, name.toLowerCase().replaceAll(" ", "_").replaceAll("'", ""));
+        String formattedName = name.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
+        item.setUnlocalizedName(formattedName);
+
+        GameRegistry.registerItem(item, formattedName);
     }
 }
