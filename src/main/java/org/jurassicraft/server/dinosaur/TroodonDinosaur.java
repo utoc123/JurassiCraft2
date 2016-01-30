@@ -16,9 +16,9 @@ public class TroodonDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0x9DAA7A, 0x636B67);
         this.setEggColorFemale(0xA2A67C, 0x646D66);
-        this.setHealth(16, 30);
+        this.setHealth(5, 20);
         this.setSpeed(0.46, 0.40);
-        this.setStrength(6, 36);
+        this.setStrength(1, 15);
         this.setMaximumAge(fromDays(35));
         this.setEyeHeight(0.3F, 0.95F);
         this.setSizeX(0.3F, 0.7F);

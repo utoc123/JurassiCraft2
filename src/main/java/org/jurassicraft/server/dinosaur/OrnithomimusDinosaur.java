@@ -15,9 +15,9 @@ public class OrnithomimusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0x92A8D5, 0x475F93);
         this.setEggColorFemale(0xBDC4A9, 0x7F91C1);
-        this.setHealth(16, 65);
+        this.setHealth(5, 25);
         this.setSpeed(0.52, 0.40);
-        this.setStrength(6, 36);
+        this.setStrength(1, 5);
         this.setMaximumAge(fromDays(35));
         this.setEyeHeight(0.58F, 1.95F);
         this.setSizeX(0.2F, 1.0F);

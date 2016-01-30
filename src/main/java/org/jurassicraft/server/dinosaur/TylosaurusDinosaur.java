@@ -15,9 +15,9 @@ public class TylosaurusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0x187D75, 0x15544F);
         this.setEggColorFemale(0x798A8F, 0x101517);
-        this.setHealth(20, 95);
+        this.setHealth(10, 40);
         this.setSpeed(0.85, 0.75);
-        this.setStrength(6, 36);
+        this.setStrength(5, 30);
         this.setMaximumAge(fromDays(60));
         this.setEyeHeight(0.35F, 2.35F);
         this.setSizeX(0.85F, 4.5F);

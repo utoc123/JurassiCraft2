@@ -123,6 +123,16 @@ public class JCRenderingRegistry
                 }
             }
 
+            for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fresh_fossils.entrySet())
+            {
+                List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
+
+                if (dinosaursForType.contains(dino))
+                {
+                    ModelBakery.registerItemVariants(entry.getValue(), new ResourceLocation("jurassicraft:fresh_bones/" + dinoName + "_" + entry.getKey()));
+                }
+            }
+
             ModelBakery.registerItemVariants(JCItemRegistry.dna, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
             ModelBakery.registerItemVariants(JCItemRegistry.egg, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
             ModelBakery.registerItemVariants(JCItemRegistry.dino_meat, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
@@ -363,6 +373,16 @@ public class JCRenderingRegistry
                 if (dinosaursForType.contains(dino))
                 {
                     this.registerItemRenderer(modelMesher, entry.getValue(), meta, "bones/" + dinoName + "_" + entry.getKey(), "inventory");
+                }
+            }
+
+            for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fresh_fossils.entrySet())
+            {
+                List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
+
+                if (dinosaursForType.contains(dino))
+                {
+                    this.registerItemRenderer(modelMesher, entry.getValue(), meta, "fresh_bones/" + dinoName + "_" + entry.getKey(), "inventory");
                 }
             }
 

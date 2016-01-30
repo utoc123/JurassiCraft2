@@ -15,9 +15,9 @@ public class LambeosaurusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0x82947A, 0x2F3129);
         this.setEggColorFemale(0x898969, 0x464C3A);
-        this.setHealth(18, 75);
+        this.setHealth(10, 50);
         this.setSpeed(0.46, 0.41);
-        this.setStrength(6, 36);
+        this.setStrength(5, 20);
         this.setMaximumAge(fromDays(50));
         this.setEyeHeight(0.5F, 3.45F);
         this.setSizeX(0.5F, 2.8F);

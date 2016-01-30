@@ -15,9 +15,9 @@ public class HerrerasaurusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.TRIASSIC);
         this.setEggColorMale(0x2B1919, 0x932C23);
         this.setEggColorFemale(0x7C6F44, 0x2B2721);
-        this.setHealth(16, 65);
+        this.setHealth(10, 40);
         this.setSpeed(0.45, 0.40);
-        this.setStrength(6, 36);
+        this.setStrength(5, 15);
         this.setMaximumAge(fromDays(45));
         this.setEyeHeight(0.45F, 2.25F);
         this.setSizeX(0.4F, 1.8F);

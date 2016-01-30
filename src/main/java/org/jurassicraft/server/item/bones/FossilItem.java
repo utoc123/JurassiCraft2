@@ -20,10 +20,12 @@ import java.util.Map;
 public class FossilItem extends Item
 {
     private String type;
+    private String fossilType;
 
-    public FossilItem(String type)
+    public FossilItem(String type, String fossilType)
     {
         this.type = type.toLowerCase().replaceAll(" ", "_");
+        this.fossilType = fossilType.toLowerCase().replaceAll(" ", "_");
 
         this.setUnlocalizedName("fossil_" + this.type);
         this.setHasSubtypes(true);
@@ -64,7 +66,7 @@ public class FossilItem extends Item
 
         Collections.sort(dinosaurs);
 
-        List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(type);
+        List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(fossilType);
 
         for (Dinosaur dino : dinosaurs)
         {

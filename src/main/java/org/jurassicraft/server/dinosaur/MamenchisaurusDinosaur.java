@@ -15,11 +15,11 @@ public class MamenchisaurusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.JURASSIC);
         this.setEggColorMale(0xD1BA49, 0x909B1D);
         this.setEggColorFemale(0x98764E, 0x545028);
-        this.setHealth(25, 140);
+        this.setHealth(40, 120);
         this.setSpeed(0.32, 0.25);
         this.setStorage(52);
         this.setDiet(EnumDiet.HERBIVORE);
-        this.setStrength(6, 36);
+        this.setStrength(20, 60);
         this.setMaximumAge(fromDays(95));
         this.setEyeHeight(1.55F, 13.95F);
         this.setSizeX(0.75F, 5.5F);

@@ -15,9 +15,9 @@ public class PteranodonDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
         this.setEggColorMale(0x57504C, 0x24383F);
         this.setEggColorFemale(0x535F65, 0x56312C);
-        this.setHealth(16, 55);
+        this.setHealth(10, 20);
+        this.setStrength(5, 20);
         this.setSpeed(0.46, 0.40);
-        this.setStrength(6, 36);
         this.setMaximumAge(fromDays(40));
         this.setEyeHeight(0.45F, 1.6F);
         this.setSizeX(0.8F, 2.0F);

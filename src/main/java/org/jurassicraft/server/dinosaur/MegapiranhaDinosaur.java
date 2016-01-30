@@ -15,9 +15,9 @@ public class MegapiranhaDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS); // TODO LATE MIOCENE
         this.setEggColorMale(0x17100B, 0x645C54);
         this.setEggColorFemale(0x7D735D, 0x322922);
-        this.setHealth(10, 30);
+        this.setHealth(1, 10);
         this.setSpeed(0.62, 0.50);
-        this.setStrength(2, 6);
+        this.setStrength(5, 10);
         this.setMaximumAge(fromDays(30));
         this.setEyeHeight(0.35F, 0.35F);//TODO uh?
         this.setSizeX(0.15F, 0.5F);

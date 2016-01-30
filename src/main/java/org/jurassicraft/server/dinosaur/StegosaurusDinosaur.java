@@ -15,9 +15,9 @@ public class StegosaurusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.JURASSIC);
         this.setEggColorMale(0xBABF83, 0x75964E);
         this.setEggColorFemale(0xC8BC9A, 0x827D54);
-        this.setHealth(16, 55);
+        this.setHealth(10, 50);
+        this.setStrength(10, 25);
         this.setSpeed(0.38, 0.32);
-        this.setStrength(6, 36);
         this.setMaximumAge(fromDays(50));
         this.setEyeHeight(0.26F, 2.2F);
         this.setSizeX(0.5F, 4.0F);

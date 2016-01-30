@@ -16,8 +16,8 @@ public class SegisaurusDinosaur extends Dinosaur
         this.setTimePeriod(EnumTimePeriod.JURASSIC);
         this.setEggColorMale(0x834B4C, 0x4B8FB5);
         this.setEggColorFemale(0xCEEE99, 0x776343);
-        this.setHealth(16, 30);
-        this.setStrength(6, 36);
+        this.setHealth(5, 10);
+        this.setStrength(3, 7);
         this.setSpeed(0.46, 0.40);
         this.setMaximumAge(fromDays(30));
         this.setEyeHeight(0.3F, 0.85F);

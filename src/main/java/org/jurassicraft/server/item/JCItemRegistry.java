@@ -88,6 +88,7 @@ public class JCItemRegistry implements IContentHandler
     public static BookWikiItem book_wiki;
 
     public static Map<String, FossilItem> fossils = new HashMap<String, FossilItem>();
+    public static Map<String, FossilItem> fresh_fossils = new HashMap<String, FossilItem>();
     public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<String, List<Dinosaur>>();
 
     public static BasicItem gypsum_powder;
@@ -159,9 +160,16 @@ public class JCItemRegistry implements IContentHandler
             {
                 if (!fossils.containsKey(boneType))
                 {
-                    FossilItem fossil = new FossilItem(boneType);
+                    FossilItem fossil = new FossilItem(boneType, boneType);
                     fossils.put(boneType, fossil);
                     registerItem(fossil, boneType);
+                }
+
+                if (!fresh_fossils.containsKey(boneType))
+                {
+                    FossilItem fossil = new FossilItem(boneType + "_fresh", boneType);
+                    fresh_fossils.put(boneType, fossil);
+                    registerItem(fossil, boneType + " Fresh");
                 }
 
                 List<Dinosaur> dinosaursWithType = fossilDinosaurs.get(boneType);
