@@ -83,6 +83,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private static final int WATCHER_AGE = 26;
     private static final int WATCHER_GROWTH_OFFSET = 27;
     private static final int WATCHER_IS_SLEEPING = 28;
+    private static final int WATCHER_HAS_TRACKER = 29;
 
     private final MetabolismContainer metabolism;
 
@@ -300,6 +301,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         dataWatcher.addObject(WATCHER_AGE, 0);
         dataWatcher.addObject(WATCHER_GROWTH_OFFSET, 0);
         dataWatcher.addObject(WATCHER_IS_SLEEPING, 0);
+        dataWatcher.addObject(WATCHER_HAS_TRACKER, 0);
     }
 
     @Override
@@ -459,6 +461,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             dataWatcher.updateObject(WATCHER_GROWTH_OFFSET, growthSpeedOffset);
             dataWatcher.updateObject(WATCHER_IS_SLEEPING, isSleeping ? 1 : 0);
             dataWatcher.updateObject(WATCHER_IS_CARCASS, isCarcass ? 1 : 0);
+            dataWatcher.updateObject(WATCHER_HAS_TRACKER, hasTracker ? 1 : 0);
         }
         else
         {
@@ -466,6 +469,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             growthSpeedOffset = dataWatcher.getWatchableObjectInt(WATCHER_GROWTH_OFFSET);
             isSleeping = dataWatcher.getWatchableObjectInt(WATCHER_IS_SLEEPING) == 1;
             isCarcass = dataWatcher.getWatchableObjectInt(WATCHER_IS_CARCASS) == 1;
+            hasTracker = dataWatcher.getWatchableObjectInt(WATCHER_HAS_TRACKER) == 1;
         }
 
         if (ticksExisted % 16 == 0)
