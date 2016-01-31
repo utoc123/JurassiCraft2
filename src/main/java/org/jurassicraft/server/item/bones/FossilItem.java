@@ -8,7 +8,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.dinosaur.IndominusDinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.lang.AdvLang;

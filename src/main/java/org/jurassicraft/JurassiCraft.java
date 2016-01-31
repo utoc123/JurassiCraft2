@@ -120,19 +120,16 @@ public class JurassiCraft
     {
         GameRules gameRules = MinecraftServer.getServer().worldServerForDimension(0).getGameRules();
 
-        if (!gameRules.hasRule("dinoMetabolism"))
-        {
-            gameRules.addGameRule("dinoMetabolism", "true", GameRules.ValueType.BOOLEAN_VALUE);
-        }
+        registerGameRule(gameRules, "dinoMetabolism", true);
+        registerGameRule(gameRules, "dinoGrowth", true);
+        registerGameRule(gameRules, "dinoHerding", false);
+    }
 
-        if (!gameRules.hasRule("dinoGrowth"))
+    private void registerGameRule(GameRules gameRules, String name, boolean value)
+    {
+        if (!gameRules.hasRule(name))
         {
-            gameRules.addGameRule("dinoGrowth", "true", GameRules.ValueType.BOOLEAN_VALUE);
-        }
-
-        if (!gameRules.hasRule("dinoHerding"))
-        {
-            gameRules.addGameRule("dinoHerding", "false", GameRules.ValueType.BOOLEAN_VALUE);
+            gameRules.addGameRule(name, value + "", GameRules.ValueType.BOOLEAN_VALUE);
         }
     }
 

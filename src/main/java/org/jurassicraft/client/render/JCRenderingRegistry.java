@@ -106,6 +106,7 @@ import java.util.Map;
 public class JCRenderingRegistry
 {
     private static Map<Dinosaur, RenderDinosaurDefinition> renderDefs = Maps.newHashMap();
+    private static final Minecraft mc = Minecraft.getMinecraft();
 
     public void preInit()
     {
@@ -219,7 +220,7 @@ public class JCRenderingRegistry
         GuiAppRegistry.register();
 
         // Blocks
-        ItemModelMesher modelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+        ItemModelMesher modelMesher = mc.getRenderItem().getItemModelMesher();
 
         int i = 0;
 
@@ -293,7 +294,7 @@ public class JCRenderingRegistry
 
     public void postInit()
     {
-        RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+        RenderManager renderManager = mc.getRenderManager();
 
         for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
         {
@@ -309,7 +310,7 @@ public class JCRenderingRegistry
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
 
-        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+        RenderItem renderItem = mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();
 
         // Items

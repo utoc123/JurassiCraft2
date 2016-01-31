@@ -145,11 +145,13 @@ public class SelectDinoGui extends GuiScreen
     public void selectDinosaur(Dinosaur dinosaur)
     {
         mc.displayGuiScreen(null);
+
         if (!mc.thePlayer.capabilities.isCreativeMode)
         {
             InventoryPlayer inventory = mc.thePlayer.inventory;
             inventory.decrStackSize(inventory.currentItem, 1);
         }
+
         JurassiCraft.networkWrapper.sendToServer(new PlacePaddockSignMessage(facing, pos, dinosaur));
     }
 
@@ -258,15 +260,5 @@ public class SelectDinoGui extends GuiScreen
     public boolean doesGuiPauseGame()
     {
         return false;
-    }
-
-    /**
-     * Called when the screen is unloaded. Used to disable keyboard repeat events
-     */
-    public void onGuiClosed()
-    {
-        super.onGuiClosed();
-
-        //TODO send packet
     }
 }

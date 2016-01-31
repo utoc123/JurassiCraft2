@@ -494,8 +494,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
                     }
                     else
                     {
-                        // TODO find valid spawn area
-                        dino.setLocationAndAngles(blockX + 2, blockY + 0.5, blockZ + 2, MathHelper.wrapAngleTo180_float(worldObj.rand.nextFloat() * 360.0F), 0.0F);
+                        dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapAngleTo180_float(worldObj.rand.nextFloat() * 360.0F), 0.0F);
                         dino.rotationYawHead = dino.rotationYaw;
                         dino.renderYawOffset = dino.rotationYaw;
 
