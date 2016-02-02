@@ -14,7 +14,9 @@ public enum Animations
     // These weren't in Trello list but are an example of how we could have random animations during idle
     LOOKING_LEFT, LOOKING_RIGHT, BEGGING,
     // I was requested by Gegy to add dying animations
-    DYING(true);
+    DYING(true),
+    // The walking animation can be applied in addition to some other animations
+    WALKING;
 
     private Animation animation;
     private boolean hold;
