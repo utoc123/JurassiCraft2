@@ -5,30 +5,27 @@ import net.ilexiconn.llibrary.common.animation.Animation;
 /**
  * @author jabelar
  */
-public enum Animations
+public enum Animations //TODO if continuing movement of specific cube, dont slow down
 {
-    // These are all those animations defined in our Trello to-do list
-    IDLE, ATTACKING, INJURED, HEAD_COCKING, CALLING, HISSING, POUNCING, SNIFFING, EATING, DRINKING, MATING, SLEEPING(true), RESTING, ROARING, LIVING_SOUND,
-    // This wasn't in Trello list but was used in one of the dinos
+    IDLE(false, false), ATTACKING(false, false), INJURED(false, false), HEAD_COCKING, CALLING, HISSING, POUNCING(false, false), SNIFFING, EATING, DRINKING, MATING(false, false), SLEEPING(true, true), RESTING(true, false), ROARING, LIVING_SOUND(false, false),
     SCRATCHING,
-    // These weren't in Trello list but are an example of how we could have random animations during idle
     LOOKING_LEFT, LOOKING_RIGHT, BEGGING,
-    // I was requested by Gegy to add dying animations
-    DYING(true),
-    // The walking, flying and swimming animation can be applied in addition to some other animations
-    WALKING, SWIMMING, FLYING;
+    DYING(true, true),
+    WALKING(false, false), SWIMMING(false, false), FLYING(false, false);
 
     private Animation animation;
     private boolean hold;
+    private boolean doesBlockMovement;
 
-    Animations(boolean hold)
+    Animations(boolean hold, boolean blockMovement)
     {
         this.hold = hold;
+        this.doesBlockMovement = blockMovement;
     }
 
     Animations()
     {
-        this(false);
+        this(false, true);
     }
 
     public Animation get()
@@ -66,5 +63,10 @@ public enum Animations
     public boolean shouldHold()
     {
         return hold;
+    }
+
+    public boolean doesBlockMovement()
+    {
+        return doesBlockMovement;
     }
 }

@@ -29,7 +29,7 @@ import org.jurassicraft.server.message.PlacePaddockSignMessage;
 import org.jurassicraft.server.message.RequestFileMessage;
 import org.jurassicraft.server.message.SendFileMessage;
 import org.jurassicraft.server.message.SyncPaleoPadMessage;
-import org.jurassicraft.server.proxy.ProxyServer;
+import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.world.islanublar.IslaNublarWorldType;
 
 import java.io.File;
@@ -38,8 +38,8 @@ import java.io.InputStreamReader;
 @Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[0.8.1,)")
 public class JurassiCraft
 {
-    @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ProxyServer", clientSide = "org.jurassicraft.client.proxy.ProxyClient")
-    public static ProxyServer proxy;
+    @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")
+    public static ServerProxy proxy;
 
     public static final String MODID = "jurassicraft";
     public static final String MODNAME = "JurassiCraft";

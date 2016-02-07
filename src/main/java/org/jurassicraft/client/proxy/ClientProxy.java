@@ -11,10 +11,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.event.EventHandlerClient;
 import org.jurassicraft.client.render.JCRenderingRegistry;
-import org.jurassicraft.server.proxy.ProxyServer;
+import org.jurassicraft.server.proxy.ServerProxy;
 
 @SideOnly(Side.CLIENT)
-public class ProxyClient extends ProxyServer
+public class ClientProxy extends ServerProxy
 {
     public static JCRenderingRegistry renderingRegistry = new JCRenderingRegistry();
 

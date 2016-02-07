@@ -288,7 +288,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void playLivingSound()
     {
-        Animation.sendAnimationPacket(this, Animations.LIVING_SOUND.get());
+        if (getAnimation() == Animations.IDLE.get())
+        {
+//            Animation.sendAnimationPacket(this, Animations.LIVING_SOUND.get());
+        }
+
         super.playLivingSound();
     }
 
@@ -515,7 +519,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean isMovementBlocked()
     {
-        return isCarcass() || isSleeping();
+        Animation animation = getAnimation();
+        return isCarcass() || isSleeping() || (animation != null && Animations.getAnimation(animation).doesBlockMovement());
     }
 
     public int getDaysExisted()
@@ -990,7 +995,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 " }";
     }
 
-    public Vec3 getHeadPos()
+    public Vec3 getHeadPos() //TODO not working correctly
     {
         double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 

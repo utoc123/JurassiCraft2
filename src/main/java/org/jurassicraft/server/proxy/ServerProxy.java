@@ -34,7 +34,7 @@ import org.jurassicraft.server.world.WorldGenerator;
 
 import java.util.Map;
 
-public class ProxyServer
+public class ServerProxy
 {
     public void preInit(FMLPreInitializationEvent event)
     {
