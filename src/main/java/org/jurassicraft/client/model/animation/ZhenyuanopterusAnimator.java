@@ -62,7 +62,7 @@ public class ZhenyuanopterusAnimator extends DinosaurAnimator
         float globalHeight = 2F;
         float frontOffset = -1.35f;
 
-        if (!entity.isFlying())
+//        if (!entity.isFlying())
         {
             model.bob(body1, 1 * globalSpeed, 1 * globalHeight, false, f, f1);
             model.bob(leftThigh, 1 * globalSpeed, 1 * globalHeight, false, f, f1);

@@ -52,14 +52,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     {
         //this.renderDef.getModelAnimator().preRenderCallback(entity, partialTick); TODO
 
-        if (entity instanceof AggressiveFlyingDinosaurEntity) //TODO default flying
-        {
-            if (((AggressiveFlyingDinosaurEntity) entity).isFlying())
-            {
-                GlStateManager.rotate(-entity.rotationPitch / 2, 1.0F, 0.0F, 0.0F);
-            }
-        }
-
         float scale = (float) entity.transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult()); //TODO scale offset
 
         shadowSize = scale * renderDef.getShadowSize();
