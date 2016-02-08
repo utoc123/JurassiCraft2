@@ -668,7 +668,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean allowLeashing()
     {
-        return !getLeashed() && (getAgePercentage() < 50);
+        return !getLeashed() && (width < 1.5);
     }
 
     // NOTE: This registers which attackers to defend from. Class should be the entity class for the attacker, lower

@@ -18,7 +18,7 @@ public class LeaellynasauraDinosaur extends Dinosaur
         this.setHealth(3, 10);
         this.setStrength(1, 5);
         this.setSpeed(0.45, 0.50);
-        this.setMaximumAge(35);
+        this.setMaximumAge(fromDays(35));
         this.setEyeHeight(0.35F, 0.95F);
         this.setSizeX(0.25F, 0.6F);
         this.setSizeY(0.35F, 0.95F);
