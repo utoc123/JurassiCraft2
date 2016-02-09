@@ -123,11 +123,11 @@ public class DilophosaurusAnimator extends DinosaurAnimator
 
         int ticksExisted = entity.ticksExisted;
 
-        model.chainWave(tail, 0.15F, -0.03F, 2, ticksExisted, 1.0F);
-        model.chainWave(body, 0.15F, 0.03F, 3.5F, ticksExisted, 1.0F);
-        model.chainWave(armRight, 0.15F, -0.1F, 4, ticksExisted, 1.0F);
-        model.chainWave(armLeft, 0.15F, -0.1F, 4, ticksExisted, 1.0F);
-        model.chainSwing(tail, 0.15F, -0.1F, 3, ticksExisted, 1.0F);
+        model.chainWave(tail, 0.15F, -0.03F, 2, ticksExisted, 0.25F);
+        model.chainWave(body, 0.15F, 0.03F, 3.5F, ticksExisted, 0.25F);
+        model.chainWave(armRight, 0.15F, -0.1F, 4, ticksExisted, 0.25F);
+        model.chainWave(armLeft, 0.15F, -0.1F, 4, ticksExisted, 0.25F);
+        model.chainSwing(tail, 0.15F, -0.1F, 3, ticksExisted, 0.25F);
 
         ((DilophosaurusEntity) entity).tailBuffer.applyChainSwingBuffer(tail);
     }

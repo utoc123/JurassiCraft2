@@ -87,8 +87,8 @@ public class MicroceratusAnimator extends DinosaurAnimator
 
         int frame = parEntity.ticksExisted;
 
-        parModel.chainWave(tail, globalSpeed * 0.2F, globalHeight * 0.05F, 2, frame, 1.0F);
-        parModel.chainWave(neck, globalSpeed * 0.2F, globalHeight * 0.05F, 3, frame, 1.0F);
+        parModel.chainWave(tail, globalSpeed * 0.2F, globalHeight * 0.05F, 2, frame, 0.25F);
+        parModel.chainWave(neck, globalSpeed * 0.2F, globalHeight * 0.05F, 3, frame, 0.25F);
 
         ((MicroceratusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
     }

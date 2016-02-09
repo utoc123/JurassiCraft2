@@ -104,10 +104,10 @@ public class MajungasaurusAnimator extends DinosaurAnimator
 
         int ticksExisted = parEntity.ticksExisted;
 
-        model.chainWave(tail, 0.1F, 0.05F, -2, ticksExisted, 1F);
-        model.chainWave(body, 0.1F, 0.03F, -5, ticksExisted, 1F);
-        model.chainWave(armRight, 0.1F, 0.1F, -4, ticksExisted, 1F);
-        model.chainWave(armLeft, 0.1F, 0.1F, -4, ticksExisted, 1F);
+        model.chainWave(tail, 0.1F, 0.05F, -2, ticksExisted, 0.25F);
+        model.chainWave(body, 0.1F, 0.03F, -5, ticksExisted, 0.25F);
+        model.chainWave(armRight, 0.1F, 0.1F, -4, ticksExisted, 0.25F);
+        model.chainWave(armLeft, 0.1F, 0.1F, -4, ticksExisted, 0.25F);
 
         ((MajungasaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
     }

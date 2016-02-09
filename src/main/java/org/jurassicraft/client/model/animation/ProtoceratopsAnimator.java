@@ -90,8 +90,8 @@ public class ProtoceratopsAnimator extends DinosaurAnimator
 
         int ticksExisted = parEntity.ticksExisted;
 
-        model.chainWave(tail, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.1F);
-        model.chainWave(neck, globalSpeed * 0.25F, globalHeight * 1.0F, -3, ticksExisted, 0.1F);
+        model.chainWave(tail, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.025F);
+        model.chainWave(neck, globalSpeed * 0.25F, globalHeight * 1.0F, -3, ticksExisted, 0.025F);
 
         ((ProtoceratopsEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
     }

@@ -98,13 +98,13 @@ public class HerrerasaurusAnimator extends DinosaurAnimator
         // Idling
         int ticksExisted = entity.ticksExisted;
 
-        model.chainWave(tailParts, 0.1F, -0.05F, 2, ticksExisted, 1.0F);
-        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 1.0F);
-        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 1.0F);
-        model.walk(body1, 0.1F, 0.05F, false, 0F, 0F, ticksExisted, 1.0F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticksExisted, 1.0F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticksExisted, 1.0F);
-        model.chainSwing(tailParts, 0.1F, -0.1F, 3, ticksExisted, 1.0F);
+        model.chainWave(tailParts, 0.1F, -0.05F, 2, ticksExisted, 0.25F);
+        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 0.25F);
+        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(body1, 0.1F, 0.05F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticksExisted, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticksExisted, 0.25F);
+        model.chainSwing(tailParts, 0.1F, -0.1F, 3, ticksExisted, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

@@ -95,10 +95,10 @@ public class PachycephalosaurusAnimator extends DinosaurAnimator
         neck2.rotateAngleX += f1 * 0.05F;
         head.rotateAngleX += f1 * 0.075F;
 
-        model.chainWave(tailParts, 0.1F, 0.025F, 2, parEntity.ticksExisted, 1F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 4, parEntity.ticksExisted, 1F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 1F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 1F);
+        model.chainWave(tailParts, 0.1F, 0.025F, 2, parEntity.ticksExisted, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
 
         parEntity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

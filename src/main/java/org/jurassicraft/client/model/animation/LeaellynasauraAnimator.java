@@ -98,7 +98,7 @@ public class LeaellynasauraAnimator extends DinosaurAnimator
 
         int ticksExisted = entity.ticksExisted;
 
-        model.chainWave(tail, globalSpeed * 0.5F, globalHeight * 0.8F, 3, ticksExisted, 0.1F);
-        model.chainWave(neck, globalSpeed * 0.5F, globalHeight * 0.4F, -3, ticksExisted, 0.1F);
+        model.chainWave(tail, globalSpeed * 0.5F, globalHeight * 0.8F, 3, ticksExisted, 0.025F);
+        model.chainWave(neck, globalSpeed * 0.5F, globalHeight * 0.4F, -3, ticksExisted, 0.025F);
     }
 }

@@ -159,11 +159,11 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
         }
 
         // Idling
-        model.chainWave(tail, 0.1F, 0.02F, 2, frame, 1F);
-        model.chainWave(neck, 0.1F, 0.02F, 2, frame, 1F);
-        // model.chainWave(bodyParts, 0.1F, -0.03F, 5, frame, 1F);
-        model.chainWave(armRight, 0.1F, -0.1F, 4, frame, 1F);
-        model.chainWave(armLeft, 0.1F, -0.1F, 4, frame, 1F);
+        model.chainWave(tail, 0.1F, 0.02F, 2, frame, 0.25F);
+        model.chainWave(neck, 0.1F, 0.02F, 2, frame, 0.25F);
+        // model.chainWave(bodyParts, 0.1F, -0.03F, 5, frame, 0.25F);
+        model.chainWave(armRight, 0.1F, -0.1F, 4, frame, 0.25F);
+        model.chainWave(armLeft, 0.1F, -0.1F, 4, frame, 0.25F);
 
         ((TherizinosaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
     }

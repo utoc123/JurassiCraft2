@@ -20,7 +20,6 @@ import java.util.Set;
 @SideOnly(Side.CLIENT)
 public class DinosaurModel extends ModelJson
 {
-    public Animator animator;
     public Field nameMapField;
 
     public DinosaurModel(JsonTabulaModel model)
@@ -30,11 +29,6 @@ public class DinosaurModel extends ModelJson
 
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
-        if (!Minecraft.getMinecraft().isGamePaused())
-        {
-            animator.update((IAnimated) entity);
-        }
-
         DinosaurEntity dinosaur = (DinosaurEntity) entity;
 
         this.setMovementScale(dinosaur.isSleeping() ? 0.5F : 1.0F);
@@ -45,7 +39,6 @@ public class DinosaurModel extends ModelJson
     public DinosaurModel(JsonTabulaModel model, IModelAnimator animator)
     {
         super(model, animator);
-        this.animator = new Animator(this);
 
         try
         {

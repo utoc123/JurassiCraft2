@@ -22,7 +22,7 @@ public class HypsilophodonAnimator extends DinosaurAnimator
     {
         int ticksExisted = parEntity.ticksExisted;
 
-        float scaleFactor = 0.5F;
+        float scaleFactor = 1F;
         float height = 12F * f1;
 
         MowzieModelRenderer upperlegright = model.getCube("Leg UPPER RIGHT");
@@ -84,15 +84,15 @@ public class HypsilophodonAnimator extends DinosaurAnimator
         model.walk(armleft, 1 * scaleFactor, 0.3F, false, 1, -0.2F, f, f1);
 
         // Idling
-        model.chainWave(tailParts, 0.2F, -0.05F, 2, ticksExisted, 1F);
-        model.walk(neck, 0.2F, 0.1F, false, -1F, 0F, ticksExisted, 1F);
-        model.walk(head, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(body1, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(body2, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(shoulderright, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(shoulderleft, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(armright, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armleft, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 1F);
+        model.chainWave(tailParts, 0.2F, -0.05F, 2, ticksExisted, 0.25F);
+        model.walk(neck, 0.2F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
+        model.walk(head, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(body1, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(body2, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(shoulderright, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(shoulderleft, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armright, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armleft, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
 
         model.chainWave(tailParts, 1F * scaleFactor, 0.15F, 2, f, f1);
 

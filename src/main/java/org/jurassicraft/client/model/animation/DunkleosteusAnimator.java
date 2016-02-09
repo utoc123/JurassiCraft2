@@ -51,12 +51,9 @@ public class DunkleosteusAnimator extends DinosaurAnimator
 
         int ticksExisted = parEntity.ticksExisted;
 
-        model.bob(head, 0.04F, 2.0F, false, ticksExisted, 1.0F);
-
-        model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 1.0F);
-
-        model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 1.0F);
-
-        model.chainSwing(tail, 0.05F, -0.075F, 1.5D, ticksExisted, 1.0F);
+        model.bob(head, 0.04F, 2.0F, false, ticksExisted, 0.25F);
+        model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
+        model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
+        model.chainSwing(tail, 0.05F, -0.075F, 1.5D, ticksExisted, 0.25F);
     }
 }

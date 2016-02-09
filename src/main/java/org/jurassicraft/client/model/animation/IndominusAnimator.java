@@ -103,10 +103,10 @@ public class IndominusAnimator extends DinosaurAnimator
 
         int ticksExisted = parEntity.ticksExisted;
 
-        model.chainWave(tail, 0.1F, -0.025F, 2, ticksExisted, 1F);
-        model.chainWave(body, 0.1F, 0.03F, 5, ticksExisted, 1F);
-        model.chainWave(armRight, -0.1F, 0.1F, 4, ticksExisted, 1F);
-        model.chainWave(armLeft, -0.1F, 0.1F, 4, ticksExisted, 1F);
+        model.chainWave(tail, 0.1F, -0.025F, 2, ticksExisted, 0.25F);
+        model.chainWave(body, 0.1F, 0.03F, 5, ticksExisted, 0.25F);
+        model.chainWave(armRight, -0.1F, 0.1F, 4, ticksExisted, 0.25F);
+        model.chainWave(armLeft, -0.1F, 0.1F, 4, ticksExisted, 0.25F);
 
         // parModel.faceTarget(bodyMid, 6.0F, rotationYaw, rotationPitch);
         // parModel.faceTarget(bodyFront, 6.0F, rotationYaw, rotationPitch);

@@ -123,10 +123,10 @@ public class SpinosaurusAnimator extends DinosaurAnimator
         model.walk(rightFoot, 0.5F * globalSpeed, 1.5F * globalDegree, false, 0.5F, 0.1F, f, f1);
 
         // idling
-        model.chainWave(tailParts, 0.1F, 0.05F, 2, parEntity.ticksExisted, 1F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 4, parEntity.ticksExisted, 1F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 1F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 1F);
+        model.chainWave(tailParts, 0.1F, 0.05F, 2, parEntity.ticksExisted, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
 
         ((SpinosaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tailParts);
     }

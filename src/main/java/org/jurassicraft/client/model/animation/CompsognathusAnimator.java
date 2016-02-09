@@ -87,8 +87,8 @@ public class CompsognathusAnimator extends DinosaurAnimator
 
         int ticksExisted = entity.ticksExisted;
 
-        model.chainWave(tail, 0.125F * globalSpeed, globalHeight * 0.125F, 2, ticksExisted, 0.25F);
-        model.chainWave(neck, 0.125F * globalSpeed, globalHeight * 0.125F, -2, ticksExisted, 0.25F);
+        model.chainWave(tail, 0.125F * globalSpeed, globalHeight * 0.125F, 2, ticksExisted, 0.0625F);
+        model.chainWave(neck, 0.125F * globalSpeed, globalHeight * 0.125F, -2, ticksExisted, 0.0625F);
 
         ((CompsognathusEntity) entity).tailBuffer.applyChainSwingBuffer(tail);
     }

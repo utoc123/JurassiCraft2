@@ -143,16 +143,16 @@ public class ZhenyuanopterusAnimator extends DinosaurAnimator
 //        }
 
         int frame = entity.ticksExisted;
-        model.walk(body1, 0.08f, -0.05f, false, 0, 0, frame, 1);
-        model.chainWave(neck, 0.08f, 0.03f, 2, frame, 1);
-        model.walk(leftArm1, 0.08f, 0.1f, false, 0, 0, frame, 1);
-        model.walk(rightArm1, 0.08f, 0.1f, false, 0, 0, frame, 1);
-        model.walk(leftArm2, 0.08f, 0.1f, false, 0, 0, frame, 1);
-        model.walk(rightArm2, 0.08f, 0.1f, false, 0, 0, frame, 1);
-        model.walk(leftArm3, 0.08f, 0.2f, true, 0, 0, frame, 1);
-        model.walk(rightArm3, 0.08f, 0.2f, true, 0, 0, frame, 1);
-        model.flap(leftArm1, 0.08f, 0.03f, false, 0, 0, frame, 1);
-        model.flap(rightArm1, 0.08f, 0.03f, true, 0, 0, frame, 1);
+        model.walk(body1, 0.08f, -0.05f, false, 0, 0, frame, 0.25F);
+        model.chainWave(neck, 0.08f, 0.03f, 2, frame, 0.25F);
+        model.walk(leftArm1, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
+        model.walk(rightArm1, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
+        model.walk(leftArm2, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
+        model.walk(rightArm2, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
+        model.walk(leftArm3, 0.08f, 0.2f, true, 0, 0, frame, 0.25F);
+        model.walk(rightArm3, 0.08f, 0.2f, true, 0, 0, frame, 0.25F);
+        model.flap(leftArm1, 0.08f, 0.03f, false, 0, 0, frame, 0.25F);
+        model.flap(rightArm1, 0.08f, 0.03f, true, 0, 0, frame, 0.25F);
         leftArm1.rotationPointZ -= 1 * Math.cos(frame * 0.08);
         rightArm1.rotationPointZ -= 1 * Math.cos(frame * 0.08);
     }

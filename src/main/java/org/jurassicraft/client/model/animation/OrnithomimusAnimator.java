@@ -115,10 +115,10 @@ public class OrnithomimusAnimator extends DinosaurAnimator
 
         int frame = parEntity.ticksExisted;
 
-        model.chainWave(tail, 0.1F, 0.05F, 1, frame, 1.0F);
-        model.chainWave(body, 0.1F, -0.05F, 4, frame, 1.0F);
-        model.chainWave(armRight, 0.1F, -0.15F, 4, frame, 1.0F);
-        model.chainWave(armLeft, 0.1F, -0.15F, 4, frame, 1.0F);
+        model.chainWave(tail, 0.1F, 0.05F, 1, frame, 0.25F);
+        model.chainWave(body, 0.1F, -0.05F, 4, frame, 0.25F);
+        model.chainWave(armRight, 0.1F, -0.15F, 4, frame, 0.25F);
+        model.chainWave(armLeft, 0.1F, -0.15F, 4, frame, 0.25F);
 
         parEntity.tailBuffer.applyChainSwingBuffer(tail);
     }

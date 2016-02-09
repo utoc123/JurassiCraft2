@@ -48,13 +48,10 @@ public class CoelacanthAnimator extends DinosaurAnimator
         model.flap(rightFlipper, 0.6F, 0.6F, true, 0.0F, -0.8F, f, f1);
 
         int ticksExisted = entity.ticksExisted;
-        model.bob(head, 0.04F, 2.0F, false, ticksExisted, 1.0F);
-
-        model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 1.0F);
-
-        model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 1.0F);
-
-        model.chainSwing(tail, 0.05F, -0.075F, 1.5D, ticksExisted, 1.0F);
+        model.bob(head, 0.04F, 2.0F, false, ticksExisted, 0.25F);
+        model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
+        model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
+        model.chainSwing(tail, 0.05F, -0.075F, 1.5D, ticksExisted, 0.25F);
         // ((CoelacanthEntity)entity).tailBuffer.applyChainSwingBuffer(this.bodyParts); //Tail buffer does not exist right now. Apply once added.
     }
 }

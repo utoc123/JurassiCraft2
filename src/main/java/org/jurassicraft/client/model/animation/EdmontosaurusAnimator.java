@@ -127,15 +127,15 @@ public class EdmontosaurusAnimator extends DinosaurAnimator
         // Idle
         int ticksExisted = parEntity.ticksExisted;
 
-        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 1F);
-        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(waist, 0.1F, 0.04F, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(upperArmRight, 0.1F, 0.1F, false, -1F, 0F, ticksExisted, 1F);
-        model.walk(upperArmLeft, 0.1F, 0.1F, false, -1F, 0F, ticksExisted, 1F);
-        model.walk(lowerArmRight, 0.1F, 0.1F, true, -1.5F, 0F, ticksExisted, 1F);
-        model.walk(lowerArmLeft, 0.1F, 0.1F, true, -1.5F, 0F, ticksExisted, 1F);
-        model.walk(rightHand, 0.1F, 0.1F, false, -2F, 0F, ticksExisted, 1F);
-        model.walk(leftHand, 0.1F, 0.1F, false, -2F, 0F, ticksExisted, 1F);
+        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 0.25F);
+        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(waist, 0.1F, 0.04F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(upperArmRight, 0.1F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
+        model.walk(upperArmLeft, 0.1F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
+        model.walk(lowerArmRight, 0.1F, 0.1F, true, -1.5F, 0F, ticksExisted, 0.25F);
+        model.walk(lowerArmLeft, 0.1F, 0.1F, true, -1.5F, 0F, ticksExisted, 0.25F);
+        model.walk(rightHand, 0.1F, 0.1F, false, -2F, 0F, ticksExisted, 0.25F);
+        model.walk(leftHand, 0.1F, 0.1F, false, -2F, 0F, ticksExisted, 0.25F);
 
         model.chainWave(tail, 0.1F, -0.02F, 2, ticksExisted, 1F);
 

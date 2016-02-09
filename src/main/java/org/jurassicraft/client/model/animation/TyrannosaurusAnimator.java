@@ -97,12 +97,11 @@ public class TyrannosaurusAnimator extends DinosaurAnimator
         model.chainWave(rightArmParts, 1F * globalSpeed, 0.2F, 1, f, f1);
 
         // Idling
-        model.chainWave(bodyParts, 0.1F, -0.03F, 3, parEntity.ticksExisted, 1.0F);
-        model.chainWave(rightArmParts, -0.1F, 0.2F, 4, parEntity.ticksExisted, 1.0F);
-        model.chainWave(leftArmParts, -0.1F, 0.2F, 4, parEntity.ticksExisted, 1.0F);
-
-        model.chainSwing(tailParts, 0.1F, 0.05F - (0.05F), 1, parEntity.ticksExisted, 1.0F - 0.6F);
-        model.chainWave(tailParts, 0.1F, -0.1F, 2, parEntity.ticksExisted, 1.0F - 0.6F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 3, parEntity.ticksExisted, 0.25F);
+        model.chainWave(rightArmParts, -0.1F, 0.2F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(leftArmParts, -0.1F, 0.2F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainSwing(tailParts, 0.1F, 0.05F - (0.05F), 1, parEntity.ticksExisted, 0.1F);
+        model.chainWave(tailParts, 0.1F, -0.1F, 2, parEntity.ticksExisted, 0.1F);
 
         ((TyrannosaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tailParts);
     }

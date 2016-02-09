@@ -93,8 +93,8 @@ public class BrachiosaurusAnimator extends DinosaurAnimator
 
         int ticksExisted = entity.ticksExisted;
 
-        model.chainWave(tailParts, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.1F);
-        model.chainWave(neckParts, globalSpeed * 0.25F, globalHeight * 0.25F, -3, ticksExisted, 0.1F);
+        model.chainWave(tailParts, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.025F);
+        model.chainWave(neckParts, globalSpeed * 0.25F, globalHeight * 0.25F, -3, ticksExisted, 0.025F);
 
         ((BrachiosaurusEntity) entity).tailBuffer.applyChainSwingBuffer(tailParts2);
     }

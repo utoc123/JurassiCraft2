@@ -114,10 +114,10 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator
         parModel.chainWave(leftArmParts, 1F * speed, -0.3F, 4, f, f1);
 
         // Idling
-        parModel.chainWave(tailParts, 0.1F, 0.05F, 2, parEntity.ticksExisted, 1F);
-        parModel.chainWave(bodyParts, 0.1F, -0.03F, 5, parEntity.ticksExisted, 1F);
-        parModel.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 1F);
-        parModel.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 1F);
+        parModel.chainWave(tailParts, 0.1F, 0.05F, 2, parEntity.ticksExisted, 0.25F);
+        parModel.chainWave(bodyParts, 0.1F, -0.03F, 5, parEntity.ticksExisted, 0.25F);
+        parModel.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
+        parModel.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
 
         // float sittingProgress =
         // raptor.sittingProgress.getAnimationProgressSin();

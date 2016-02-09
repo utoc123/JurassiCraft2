@@ -102,17 +102,17 @@ public class TriceratopsAnimator extends DinosaurAnimator
         model.walk(waist, 0.1F, 0.025F, false, 0F, 0F, ticksExisted, 1F);
 
         float inverseKinematicsConstant = 0.3F;
-        model.walk(armUpperRight, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armLowerRight, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(handRight, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armUpperLeft, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armLowerLeft, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(handLeft, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        armUpperRight.rotationPointZ -= 0.5 * Math.cos(ticksExisted * 0.1F);
-        armUpperLeft.rotationPointZ -= 0.5 * Math.cos(ticksExisted * 0.1F);
+        model.walk(armUpperRight, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armLowerRight, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(handRight, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armUpperLeft, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armLowerLeft, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(handLeft, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        armUpperRight.rotationPointZ -= 0.5 * Math.cos(ticksExisted * 0.025F);
+        armUpperLeft.rotationPointZ -= 0.5 * Math.cos(ticksExisted * 0.025F);
 
-        model.chainSwing(tail, 0.1F, 0.05F, 2, ticksExisted, 1F);
-        model.chainWave(tail, 0.1F, -0.05F, 1, ticksExisted, 1F);
+        model.chainSwing(tail, 0.1F, 0.05F, 2, ticksExisted, 0.25F);
+        model.chainWave(tail, 0.1F, -0.05F, 1, ticksExisted, 0.25F);
 
         // model.faceTarget(head, 4, rotationYaw, rotationPitch);
         // model.faceTarget(neck3, 4, rotationYaw, rotationPitch);

@@ -21,8 +21,6 @@ public class DodoAnimator extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
     {
-        Animator animator = model.animator;
-
         MowzieModelRenderer head = model.getCube("Head");
 
         MowzieModelRenderer neck1 = model.getCube("Neck1");
@@ -88,24 +86,7 @@ public class DodoAnimator extends DinosaurAnimator
 
         int ticksExisted = parEntity.ticksExisted;
 
-        model.chainWave(neckParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 1.0F);
-        model.chainWave(bodyParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 1.0F);
-
-        animator.setAnimationId(Animations.EATING.get().animationId);
-        animator.startPhase(7);
-        animator.rotate(head, -0.3f, 0, 0);
-        animator.rotate(body, 0.35f, 0, 0);
-        animator.rotate(bodyFront, 0.4f, 0, 0);
-        animator.rotate(neck1, 0.3f, 0, 0);
-        animator.rotate(neck2, 0.2f, 0, 0);
-        animator.rotate(neck3, 0.2f, 0, 0);
-        animator.rotate(lowerJaw, 0.2f, 0, 0);
-        animator.endPhase();
-
-        animator.startPhase(6);
-        animator.rotate(lowerJaw, 0, 0, 0);
-        animator.endPhase();
-
-        animator.resetPhase(5);
+        model.chainWave(neckParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 0.25F);
+        model.chainWave(bodyParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 0.25F);
     }
 }

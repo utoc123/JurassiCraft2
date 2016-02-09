@@ -87,15 +87,15 @@ public class OthnieliaAnimator extends DinosaurAnimator
         // parModel.faceTarget(head, 1, rotationYaw, rotationPitch);
 
         // Idling
-        model.chainWave(tailParts, 0.2F, -0.05F, 2, ticksExisted, 1F);
-        model.walk(neck1, 0.2F, 0.1F, false, -1F, 0F, ticksExisted, 1F);
-        model.walk(head, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(bodyFront, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(bodyRear, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(upperArmRight, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(upperArmLeft, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(lowerArmRight, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(lowerArmLeft, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 1F);
+        model.chainWave(tailParts, 0.2F, -0.05F, 2, ticksExisted, 0.25F);
+        model.walk(neck1, 0.2F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
+        model.walk(head, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(bodyFront, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(bodyRear, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(upperArmRight, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(upperArmLeft, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(lowerArmRight, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(lowerArmLeft, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
 
         model.chainWave(tailParts, 1F * speed, 0.15F, 2, f, f1);
 

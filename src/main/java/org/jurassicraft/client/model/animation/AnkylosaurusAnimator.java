@@ -97,12 +97,12 @@ public class AnkylosaurusAnimator extends DinosaurAnimator
         model.walk(legrightthigh, 0.1F, 0.025F, true, 0F, 0F, ticksExisted, 1F);
 
         float inverseKinematicsConstant = 0.4F;
-        model.walk(armleftthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armleftcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(armleftfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armrightthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(armrightcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(armrightfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 1F);
+        model.walk(armleftthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armleftcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armleftfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armrightthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armrightcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 0.25F);
+        model.walk(armrightfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
         armleftthigh.rotationPointZ -= 0.5 * inverseKinematicsConstant * Math.cos(ticksExisted * 0.1F);
         armrightthigh.rotationPointZ -= 0.5 * inverseKinematicsConstant * Math.cos(ticksExisted * 0.1F);
 
