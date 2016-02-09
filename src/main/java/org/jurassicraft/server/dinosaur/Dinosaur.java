@@ -4,6 +4,7 @@ import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.api.GrowthStageGenderContainer;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumDiet;
@@ -24,6 +25,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private final Map<EnumGrowthStage, List<ResourceLocation>> overlays = new HashMap<EnumGrowthStage, List<ResourceLocation>>();
     private final Map<EnumGrowthStage, ResourceLocation> maleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
     private final Map<EnumGrowthStage, ResourceLocation> femaleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
+    private final Map<GrowthStageGenderContainer, ResourceLocation> eyelidTextures = new HashMap<GrowthStageGenderContainer, ResourceLocation>();
 
     private String name;
     private Class<? extends DinosaurEntity> dinoClazz;
@@ -100,15 +102,23 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
             if (this instanceof IHybrid)
             {
-                ResourceLocation hybridTexture = new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_" + growthStageName + ".png");
+                String baseName = baseTextures + formattedName + "_" + growthStageName;
+
+                ResourceLocation hybridTexture = new ResourceLocation(JurassiCraft.MODID, baseName + ".png");
 
                 maleTextures.put(growthStage, hybridTexture);
                 femaleTextures.put(growthStage, hybridTexture);
+
+                ResourceLocation eyelidTexture = new ResourceLocation(JurassiCraft.MODID, baseName + "_eyelid.png");
+                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), eyelidTexture);
+                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), eyelidTexture);
             }
             else
             {
                 maleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + ".png"));
                 femaleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + ".png"));
+                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + "_eyelid.png"));
+                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + "_eyelid.png"));
             }
 
             List<ResourceLocation> overlaysForGrowthStage = new ArrayList<ResourceLocation>();
@@ -451,6 +461,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public int getOverlayCount()
     {
         return overlayCount;
+    }
+
+    public ResourceLocation getEyelidTexture(DinosaurEntity entity)
+    {
+        return eyelidTextures.get(new GrowthStageGenderContainer(entity.getGrowthStage(), entity.isMale()));
     }
 
     public boolean useAllGrowthStages()

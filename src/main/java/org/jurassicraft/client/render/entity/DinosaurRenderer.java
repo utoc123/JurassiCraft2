@@ -16,7 +16,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.VelociraptorEntity;
-import org.jurassicraft.server.entity.base.AggressiveFlyingDinosaurEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumGrowthStage;
 import org.lwjgl.opengl.GL11;
@@ -45,6 +44,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         {
             addLayer(new LayerDinosaurVariations(this, i));
         }
+
+        addLayer(new LayerEyelid(this));
     }
 
     @Override
@@ -105,11 +106,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         boolean flag1 = (i >> 24 & 255) > 0;
         boolean flag2 = false; // entity.hurtTime > 0 || entity.deathTime > 0;
 
-        if (!flag1 && !flag2)
-        {
-            return false;
-        }
-        else if (!flag1 && !combineTextures)
+        if (!flag1)
         {
             return false;
         }
@@ -141,24 +138,14 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
             this.brightnessBuffer.position(0);
 
-            if (flag2)
-            {
-                this.brightnessBuffer.put(1.0F);
-                this.brightnessBuffer.put(0.0F);
-                this.brightnessBuffer.put(0.0F);
-                this.brightnessBuffer.put(0.3F);
-            }
-            else
-            {
-                float f2 = (i >> 24 & 255) / 255.0F;
-                float f3 = (i >> 16 & 255) / 255.0F;
-                float f4 = (i >> 8 & 255) / 255.0F;
-                float f5 = (i & 255) / 255.0F;
-                this.brightnessBuffer.put(f3);
-                this.brightnessBuffer.put(f4);
-                this.brightnessBuffer.put(f5);
-                this.brightnessBuffer.put(1.0F - f2);
-            }
+            float f2 = (i >> 24 & 255) / 255.0F;
+            float f3 = (i >> 16 & 255) / 255.0F;
+            float f4 = (i >> 8 & 255) / 255.0F;
+            float f5 = (i & 255) / 255.0F;
+            this.brightnessBuffer.put(f3);
+            this.brightnessBuffer.put(f4);
+            this.brightnessBuffer.put(f5);
+            this.brightnessBuffer.put(1.0F - f2);
 
             this.brightnessBuffer.flip();
             GL11.glTexEnv(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_COLOR, this.brightnessBuffer);
@@ -222,7 +209,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             this.index = index;
         }
 
-        public void render(DinosaurEntity entity, float armSwing, float armSwingAmount, float p_177148_4_, float p_177148_5_, float p_177148_6_, float p_177148_7_, float partialTicks)
+        public void render(DinosaurEntity entity, float f, float f1, float f2, float f3, float f4, float f5, float f6)
         {
             if (!entity.isInvisible())
             {
@@ -236,10 +223,49 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
                     this.renderer.bindTexture(texture);
 
-                    this.renderer.getMainModel().render(entity, armSwing, armSwingAmount, p_177148_5_, p_177148_6_, p_177148_7_, partialTicks);
-                    this.renderer.func_177105_a(entity, p_177148_4_);
+                    this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
+                    this.renderer.func_177105_a(entity, f2);
 
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                }
+            }
+        }
+
+        @Override
+        public boolean shouldCombineTextures()
+        {
+            return true;
+        }
+
+        @Override
+        public void doRenderLayer(EntityLivingBase entity, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_)
+        {
+            this.render((DinosaurEntity) entity, p_177141_2_, p_177141_3_, p_177141_4_, p_177141_5_, p_177141_6_, p_177141_7_, p_177141_8_);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public class LayerEyelid implements LayerRenderer
+    {
+        private final DinosaurRenderer renderer;
+
+        public LayerEyelid(DinosaurRenderer renderer)
+        {
+            this.renderer = renderer;
+        }
+
+        public void render(DinosaurEntity entity, float f, float f1, float f2, float f3, float f4, float f5, float f6)
+        {
+            if (!entity.isInvisible())
+            {
+                ResourceLocation texture = renderer.dinosaur.getEyelidTexture(entity);
+
+                if (texture != null && entity.areEyelidsClosed())
+                {
+                    this.renderer.bindTexture(texture);
+
+                    this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
+                    this.renderer.func_177105_a(entity, f2);
                 }
             }
         }

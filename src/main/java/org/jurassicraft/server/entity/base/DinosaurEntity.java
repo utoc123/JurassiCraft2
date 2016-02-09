@@ -1007,4 +1007,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         return new Vec3(posX + headX, posY + headY, posZ + headZ);
     }
+
+    public boolean areEyelidsClosed()
+    {
+        return (isCarcass || isSleeping) || ticksExisted % 100 < 4;
+    }
 }
