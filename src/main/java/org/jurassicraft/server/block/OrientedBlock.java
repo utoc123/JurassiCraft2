@@ -98,7 +98,7 @@ public abstract class OrientedBlock extends BlockContainer
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getIndex();
+        return state.getValue(FACING).getIndex();
     }
 
     @Override

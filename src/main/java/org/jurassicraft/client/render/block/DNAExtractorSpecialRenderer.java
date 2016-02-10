@@ -30,13 +30,9 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
 
             EnumFacing value = blockState.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.EAST)
+            if (value == EnumFacing.EAST || value == EnumFacing.WEST)
             {
-                value = EnumFacing.WEST;
-            }
-            else if (value == EnumFacing.WEST)
-            {
-                value = EnumFacing.EAST;
+                value = value.getOpposite();
             }
 
             GlStateManager.rotate(value.getHorizontalIndex() * 90, 0, 1, 0);

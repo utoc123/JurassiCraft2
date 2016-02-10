@@ -74,6 +74,7 @@ import org.jurassicraft.client.model.animation.VelociraptorEchoAnimator;
 import org.jurassicraft.client.model.animation.ZhenyuanopterusAnimator;
 import org.jurassicraft.client.render.block.ActionFigureSpecialRenderer;
 import org.jurassicraft.client.render.block.DNAExtractorSpecialRenderer;
+import org.jurassicraft.client.render.block.DNASequencerSpecialRenderer;
 import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.CageSmallRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
@@ -97,6 +98,7 @@ import org.jurassicraft.server.plant.JCPlantRegistry;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
+import org.jurassicraft.server.tileentity.DNASequencerTile;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 
 import java.util.List;
@@ -309,6 +311,7 @@ public class JCRenderingRegistry
 
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerTile.class, new DNASequencerSpecialRenderer());
 
         RenderItem renderItem = mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();

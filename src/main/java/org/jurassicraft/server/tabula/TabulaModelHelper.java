@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -19,7 +20,7 @@ public class TabulaModelHelper
 
     public static JsonTabulaModel parseModel(String path) throws Exception
     {
-        if (!path.endsWith("\\.tbl"))
+        if (!path.endsWith(".tbl"))
         {
             path += ".tbl";
         }

@@ -328,7 +328,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return side == EnumFacing.DOWN ? getOutputs() : getOutputs();
+        return side == EnumFacing.DOWN ? getOutputs() : getInputs();
     }
 
     /**
