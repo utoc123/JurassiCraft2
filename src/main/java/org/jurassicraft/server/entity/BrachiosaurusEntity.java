@@ -5,16 +5,15 @@ import org.jurassicraft.server.entity.base.DefensiveDinosaurEntity;
 
 public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements IEntityAICreature, IHerbivore
 {
-    private static final String[] livingSounds = new String[] { "brachiosaurus_living_1", "brachiosaurus_living_2", "brachiosaurus_living_3", "brachiosaurus_living_4" };
-
-    private static final String[] hurtSounds = new String[] { "brachiosaurus_hurt_1", "brachiosaurus_hurt_2" };
-    private static final String[] deathSounds = new String[] { "brachiosaurus_death_1", "brachiosaurus_death_2" };
-
     private int stepCount = 0;
 
     public BrachiosaurusEntity(World world)
     {
         super(world);
+        
+        idleSounds = new String[] { "brachiosaurus_living_1", "brachiosaurus_living_2", "brachiosaurus_living_3", "brachiosaurus_living_4" };
+        hurtSounds = new String[] { "brachiosaurus_hurt_1", "brachiosaurus_hurt_2" };
+        deathSounds = new String[] { "brachiosaurus_death_1", "brachiosaurus_death_2" };
     }
 
     @Override
@@ -23,6 +22,7 @@ public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements I
         return 5;
     }
 
+    @Override
     public void onUpdate()
     {
         super.onUpdate();
@@ -35,20 +35,5 @@ public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements I
         }
 
         this.stepCount -= this.moveForward * 9.5;
-    }
-
-    public String getLivingSound()
-    {
-        return randomSound(livingSounds);
-    }
-
-    public String getHurtSound()
-    {
-        return randomSound(hurtSounds);
-    }
-
-    public String getDeathSound()
-    {
-        return randomSound(deathSounds);
     }
 }

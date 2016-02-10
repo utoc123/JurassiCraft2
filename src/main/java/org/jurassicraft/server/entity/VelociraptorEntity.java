@@ -1,5 +1,7 @@
 package org.jurassicraft.server.entity;
 
+import java.util.Random;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
@@ -13,15 +15,8 @@ import org.jurassicraft.server.entity.ai.animations.JCAutoAnimBase;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
-import java.util.Random;
-
 public class VelociraptorEntity extends AggressiveDinosaurEntity // implements ICarnivore, IEntityAICreature
 {
-    private static final String[] hurtSounds = new String[] { "velociraptor_hurt_1" };
-    private static final String[] livingSounds = new String[] { "velociraptor_living_1", "velociraptor_living_2", "velociraptor_living_3" };
-    private static final String[] deathSounds = new String[] { "velociraptor_death_1" };
-    private static final String[] barkSounds = new String[] { "velociraptor_bark_1", "velociraptor_bark_2", "velociraptor_bark_3" };
-
     private static final Class[] targets = { CompsognathusEntity.class, EntityPlayer.class, DilophosaurusEntity.class, DimorphodonEntity.class, DodoEntity.class, LeaellynasauraEntity.class, HypsilophodonEntity.class, SegisaurusEntity.class, ProtoceratopsEntity.class, OthnieliaEntity.class, MicroceratusEntity.class };
 
     private static final Class[] deftargets = { EntityPlayer.class, TyrannosaurusEntity.class, GiganotosaurusEntity.class, SpinosaurusEntity.class };
@@ -31,6 +26,11 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
     public VelociraptorEntity(World world)
     {
         super(world);
+        
+        hurtSounds = new String[] { "velociraptor_hurt_1" };
+        idleSounds = new String[] { "velociraptor_living_1", "velociraptor_living_2", "velociraptor_living_3" };
+        deathSounds = new String[] { "velociraptor_death_1" };
+        callSounds = new String[] { "velociraptor_bark_1", "velociraptor_bark_2", "velociraptor_bark_3" };
 
         tasks.addTask(2, new JCAutoAnimBase(this, 25, Animations.IDLE.get())); // Call
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
@@ -67,34 +67,6 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
         this.tasks.addTask(0, new EntityAIAttackOnCollide(this, entity, 1.0D, false));
         this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.5F));
         this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, entity, false));
-    }
-
-    public String getCallSound()
-    {
-        return randomSound(barkSounds);
-    }
-
-    @Override
-    public String getLivingSound()
-    {
-        if (getAnimation() == Animations.IDLE.get())
-        {
-            return randomSound(livingSounds);
-        }
-
-        return null;
-    }
-
-    @Override
-    public String getHurtSound()
-    {
-        return randomSound(hurtSounds);
-    }
-
-    @Override
-    public String getDeathSound()
-    {
-        return randomSound(deathSounds);
     }
 
     @Override

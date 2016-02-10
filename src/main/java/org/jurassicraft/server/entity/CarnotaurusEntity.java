@@ -1,10 +1,10 @@
 package org.jurassicraft.server.entity;
 
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
-
-import java.util.Random;
 
 public class CarnotaurusEntity extends AggressiveDinosaurEntity // implements IEntityAICreature, ICarnivore
 {
@@ -14,6 +14,11 @@ public class CarnotaurusEntity extends AggressiveDinosaurEntity // implements IE
     public CarnotaurusEntity(World world)
     {
         super(world);
+
+
+        idleSounds = new String[] {"carnotaurus_living_1"};
+        hurtSounds = new String[] {"carnotaurus_hurt_1"};
+        deathSounds = new String[] {"carnotaurus_death_1"};
 
         for (int i = 0; i < targets.length; i++)
         {
@@ -30,20 +35,5 @@ public class CarnotaurusEntity extends AggressiveDinosaurEntity // implements IE
     public int getTailBoxCount()
     {
         return 6;
-    }
-
-    public String getLivingSound()
-    {
-        return randomSound("carnotaurus_living_1");
-    }
-
-    public String getHurtSound()
-    {
-        return randomSound("carnotaurus_hurt_1");
-    }
-
-    public String getDeathSound()
-    {
-        return randomSound("carnotaurus_death_1");
     }
 }

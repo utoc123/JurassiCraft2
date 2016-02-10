@@ -13,11 +13,6 @@ import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
 public class IndominusEntity extends AggressiveDinosaurEntity // implements ICarnivore, IEntityAICreature
 {
-    private static final String[] hurtSounds = new String[] { "indominus_hurt_1" };
-    private static final String[] livingSounds = new String[] { "indominus_living_1" };
-    private static final String[] deathSounds = new String[] { "indominus_death_1" };
-    private static final String[] breathSounds = new String[] { "indominus_breath" };
-
     private float[] newSkinColor = new float[3];
     private float[] skinColor = new float[3];
 
@@ -28,7 +23,12 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     public IndominusEntity(World world)
     {
         super(world);
-        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.IDLE.get(), 750, breathSounds[0], 1.5F));
+        
+        hurtSounds = new String[] { "indominus_hurt_1" };
+        idleSounds = new String[] { "indominus_living_1", "indominus_breath"};
+        deathSounds = new String[] { "indominus_death_1" };
+
+        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.IDLE.get(), 750, getIdleSound(), 1.5F));
         this.addAIForAttackTargets(EntityLivingBase.class, 0);
         this.defendFromAttacker(EntityLivingBase.class, 0);
     }
@@ -61,11 +61,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     {
         super.onUpdate();
 
-        if (this.ticksExisted % 62 == 0)
-        {
-            this.playSound(randomSound(breathSounds), this.getSoundVolume(), this.getSoundPitch());
-        }
-
         /** Step Sound */
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
@@ -92,24 +87,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     public float getSoundVolume()
     {
         return (float) transitionFromAge(0.9F, 1.6F) + ((rand.nextFloat() - 0.5F) * 0.125F);
-    }
-
-    @Override
-    public String getLivingSound()
-    {
-        return randomSound(livingSounds);
-    }
-
-    @Override
-    public String getHurtSound()
-    {
-        return randomSound(hurtSounds);
-    }
-
-    @Override
-    public String getDeathSound()
-    {
-        return randomSound(deathSounds);
     }
 
     public boolean isCamouflaging()

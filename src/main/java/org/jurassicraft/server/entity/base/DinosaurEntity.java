@@ -1,5 +1,7 @@
 package org.jurassicraft.server.entity.base;
 
+import java.util.UUID;
+
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
 import net.ilexiconn.llibrary.common.animation.Animation;
@@ -50,8 +52,6 @@ import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.JCItemRegistry;
 
-import java.util.UUID;
-
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
 {
     protected Dinosaur dinosaur;
@@ -70,6 +70,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public AIAnimation currentAnim = null;
     private Animation animation;
     private int animTick;
+    
+    protected String[] hurtSounds ;
+    protected String[] deathSounds ;
+    protected String[] attackSounds ;
+    protected String[] idleSounds ;
+    protected String[] breathSounds ;
+    protected String[] callSounds ;
 
     private boolean hasTracker;
 
@@ -290,10 +297,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         if (getAnimation() == Animations.IDLE.get())
         {
-//            Animation.sendAnimationPacket(this, Animations.LIVING_SOUND.get());
+            super.playLivingSound();
         }
-
-        super.playLivingSound();
     }
 
     @Override
@@ -422,6 +427,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             updateGrowth();
 
             metabolism.update();
+            
+
+            if (this.ticksExisted % 62 == 0)
+            {
+                this.playSound(getBreathSound(), this.getSoundVolume(), this.getSoundPitch());
+            }
         }
     }
 
@@ -729,7 +740,53 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         return JurassiCraft.MODID + ":" + sounds[rand.nextInt(sounds.length)];
     }
+    
+    @Override
+    public String getLivingSound()
+    {
+        if (getAnimation() == Animations.IDLE.get())
+        {
+            return randomSound(idleSounds);
+        }
 
+        return null;
+    }
+    
+    // Idle sound and living sound are synonymous, but for readability it is better to associate
+    // method names with animation names
+    public String getIdleSound()
+    {
+        return getLivingSound();
+    }
+
+    @Override
+    public String getHurtSound()
+    {
+        return randomSound(hurtSounds);
+    }
+
+    @Override
+    public String getDeathSound()
+    {
+        return randomSound(deathSounds);
+    }
+
+    public String getCallSound()
+    {
+        return randomSound(callSounds);
+    }
+    
+    public String getBreathSound()
+    {
+        return randomSound(breathSounds);
+    }
+
+    public String getAttackSound()
+    {
+        return randomSound(attackSounds);
+        
+    }
+    
     public double getAttackDamage()
     {
         return transitionFromAge(dinosaur.getBabyStrength(), dinosaur.getAdultStrength());
@@ -819,11 +876,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean isSwimming()
     {
         return (isInWater() || isInLava());
-    }
-
-    public String getCallSound()
-    {
-        return null;
     }
 
     @Override
