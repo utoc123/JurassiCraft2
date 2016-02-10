@@ -745,7 +745,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public String getLivingSound()
     {
-        JurassiCraft.instance.getLogger().info("getLivingSound");
+        JurassiCraft.instance.getLogger().info("getLivingSound for "+this.getDinosaur().getName());
         return getIdleSound();
     }
     
@@ -753,7 +753,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     // method names with animation names
     public String getIdleSound()
     {
-        JurassiCraft.instance.getLogger().info("getIdleSound");
+        JurassiCraft.instance.getLogger().info("getIdleSound for "+this.getDinosaur().getName());
         if (getAnimation() == Animations.IDLE.get())
         {
             return randomSound(idleSounds);
@@ -765,32 +765,32 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public String getHurtSound()
     {
-        JurassiCraft.instance.getLogger().info("getHurtSound");
+        JurassiCraft.instance.getLogger().info("getHurtSound for "+this.getDinosaur().getName());
         return randomSound(hurtSounds);
     }
 
     @Override
     public String getDeathSound()
     {
-        JurassiCraft.instance.getLogger().info("getDeathSound");
+        JurassiCraft.instance.getLogger().info("getDeathSound for "+this.getDinosaur().getName());
         return randomSound(deathSounds);
     }
 
     public String getCallSound()
     {
-        JurassiCraft.instance.getLogger().info("getCallSound");
+        JurassiCraft.instance.getLogger().info("getCallSound for "+this.getDinosaur().getName());
         return randomSound(callSounds);
     }
     
     public String getBreathSound()
     {
-        JurassiCraft.instance.getLogger().info("getBreathSound");
+        JurassiCraft.instance.getLogger().info("getBreathSound for "+this.getDinosaur().getName());
         return randomSound(breathSounds);
     }
 
     public String getAttackSound()
     {
-        JurassiCraft.instance.getLogger().info("getAttackSound");
+        JurassiCraft.instance.getLogger().info("getAttackSound for "+this.getDinosaur().getName());
         return randomSound(attackSounds);        
     }
     
