@@ -738,12 +738,22 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     protected String randomSound(String... sounds)
     {
+        if (sounds == null) return "";
         return JurassiCraft.MODID + ":" + sounds[rand.nextInt(sounds.length)];
     }
     
     @Override
     public String getLivingSound()
     {
+        JurassiCraft.instance.getLogger().info("getLivingSound");
+        return getIdleSound();
+    }
+    
+    // Idle sound and living sound are synonymous, but for readability it is better to associate
+    // method names with animation names
+    public String getIdleSound()
+    {
+        JurassiCraft.instance.getLogger().info("getIdleSound");
         if (getAnimation() == Animations.IDLE.get())
         {
             return randomSound(idleSounds);
@@ -751,40 +761,37 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         return null;
     }
-    
-    // Idle sound and living sound are synonymous, but for readability it is better to associate
-    // method names with animation names
-    public String getIdleSound()
-    {
-        return getLivingSound();
-    }
 
     @Override
     public String getHurtSound()
     {
+        JurassiCraft.instance.getLogger().info("getHurtSound");
         return randomSound(hurtSounds);
     }
 
     @Override
     public String getDeathSound()
     {
+        JurassiCraft.instance.getLogger().info("getDeathSound");
         return randomSound(deathSounds);
     }
 
     public String getCallSound()
     {
+        JurassiCraft.instance.getLogger().info("getCallSound");
         return randomSound(callSounds);
     }
     
     public String getBreathSound()
     {
+        JurassiCraft.instance.getLogger().info("getBreathSound");
         return randomSound(breathSounds);
     }
 
     public String getAttackSound()
     {
-        return randomSound(attackSounds);
-        
+        JurassiCraft.instance.getLogger().info("getAttackSound");
+        return randomSound(attackSounds);        
     }
     
     public double getAttackDamage()
