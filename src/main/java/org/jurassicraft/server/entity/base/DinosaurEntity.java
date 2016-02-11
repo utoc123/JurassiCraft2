@@ -381,6 +381,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         this.setFullyGrown();
         this.setMale(true);
+        this.ticksExisted = 4;
         this.genetics = new GeneticsContainer(JCEntityRegistry.getDinosaurId(dinosaur), 0, 0, 0, 255, 255, 255);
     }
 

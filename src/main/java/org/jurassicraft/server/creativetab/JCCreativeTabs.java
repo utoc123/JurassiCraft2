@@ -1,77 +1,48 @@
 package org.jurassicraft.server.creativetab;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.item.Item;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
 
-public class JCCreativeTabs implements IContentHandler
+public class JCCreativeTabs
 {
-    public static JurassiCraftTab items;
-    public static JurassiCraftTab blocks;
-
-    public static JurassiCraftDNATab dna;
-    public static JurassiCraftEggsTab eggs;
-    public static JurassiCraftSpawnEggsTab spawnEggs;
-    public static JurassiCraftFoodTab foods;
-    public static JurassiCraftTab plants;
-    public static JurassiCraftTab fossils;
-
-    public static JurassiCraftFossilTab bones;
-
-    public static JurassiCraftMerchandiseTab merchandise;
-
-    @Override
-    public void init()
+    public static JurassiCraftTab items = new JurassiCraftTab("jurassicraft.items")
     {
-        items = new JurassiCraftTab("jurassicraft.items")
+        public Item getTabIconItem()
         {
-            public Item getTabIconItem()
-            {
-                return JCItemRegistry.amber;
-            }
-        };
+            return JCItemRegistry.amber;
+        }
+    };
 
-        bones = new JurassiCraftFossilTab("jurassicraft.dino_bones");
+    public static JurassiCraftFossilTab bones = new JurassiCraftFossilTab("jurassicraft.dino_bones");
+    public static JurassiCraftDNATab dna = new JurassiCraftDNATab("jurassicraft.dna");
+    public static JurassiCraftEggsTab eggs = new JurassiCraftEggsTab("jurassicraft.eggs");
+    public static JurassiCraftSpawnEggsTab spawnEggs = new JurassiCraftSpawnEggsTab("jurassicraft.spawnEggs");
+    public static JurassiCraftFoodTab foods = new JurassiCraftFoodTab("jurassicraft.foods");
 
-        dna = new JurassiCraftDNATab("jurassicraft.dna");
-
-        eggs = new JurassiCraftEggsTab("jurassicraft.eggs");
-
-        spawnEggs = new JurassiCraftSpawnEggsTab("jurassicraft.spawnEggs");
-
-        foods = new JurassiCraftFoodTab("jurassicraft.foods");
-
-        blocks = new JurassiCraftTab("jurassicraft.blocks")
-        {
-            public Item getTabIconItem()
-            {
-                return Item.getItemFromBlock(JCBlockRegistry.gypsum_bricks);
-            }
-        };
-
-        plants = new JurassiCraftTab("jurassicraft.plants")
-        {
-            public Item getTabIconItem()
-            {
-                return Item.getItemFromBlock(JCBlockRegistry.small_royal_fern);
-            }
-        };
-
-        fossils = new JurassiCraftTab("jurassicraft.fossils")
-        {
-            public Item getTabIconItem()
-            {
-                return Item.getItemFromBlock(JCBlockRegistry.encased_fossils.get(0));
-            }
-        };
-
-        merchandise = new JurassiCraftMerchandiseTab("jurassicraft.merchandise");
-    }
-
-    @Override
-    public void gameRegistry() throws Exception
+    public static JurassiCraftTab blocks = new JurassiCraftTab("jurassicraft.blocks")
     {
+        public Item getTabIconItem()
+        {
+            return Item.getItemFromBlock(JCBlockRegistry.gypsum_bricks);
+        }
+    };
 
-    }
+    public static JurassiCraftTab plants = new JurassiCraftTab("jurassicraft.plants")
+    {
+        public Item getTabIconItem()
+        {
+            return Item.getItemFromBlock(JCBlockRegistry.small_royal_fern);
+        }
+    };
+
+    public static JurassiCraftTab fossils = new JurassiCraftTab("jurassicraft.fossils")
+    {
+        public Item getTabIconItem()
+        {
+            return Item.getItemFromBlock(JCBlockRegistry.encased_fossils.get(0));
+        }
+    };
+
+    public static JurassiCraftMerchandiseTab merchandise = new JurassiCraftMerchandiseTab("jurassicraft.merchandise");
 }

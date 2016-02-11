@@ -19,19 +19,16 @@ public class JurassiCraftEggsTab extends CreativeTabs
         super(label);
         this.metas = new int[JCEntityRegistry.getRegisteredDinosaurs().size()];
 
-        int id = 0;
         int i = 0;
 
         for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
         {
             if (dino.shouldRegister() && !(dino.isMammal()))
             {
-                metas[i] = id;
+                metas[i] = JCEntityRegistry.getDinosaurId(dino);
 
                 i++;
             }
-
-            id++;
         }
     }
 

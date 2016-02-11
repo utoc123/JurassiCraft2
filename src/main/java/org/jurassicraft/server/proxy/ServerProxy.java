@@ -3,6 +3,7 @@ package org.jurassicraft.server.proxy;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
+import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -40,10 +41,9 @@ public class ServerProxy
     {
         JurassiCraft.configurations.initConfig(event);
 
-        ContentHelper.init(
+        initContentHandlers(
                 new JCEntityRegistry(),
                 new JCPlantRegistry(),
-                new JCCreativeTabs(),
                 new JCItemRegistry(),
                 JurassiCraft.blockRegistry = new JCBlockRegistry(),
                 new JCRecipeRegistry(),
@@ -62,6 +62,26 @@ public class ServerProxy
 
         MinecraftForge.EVENT_BUS.register(JurassiCraft.configurations);
         MinecraftForge.EVENT_BUS.register(eventHandler);
+    }
+
+    protected void initContentHandlers(IContentHandler... contentHandlers)
+    {
+        for (IContentHandler contentHandler : contentHandlers)
+        {
+            contentHandler.init();
+        }
+
+        for (IContentHandler contentHandler : contentHandlers)
+        {
+            try
+            {
+                contentHandler.gameRegistry();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
 //    private void addChestGenItems()

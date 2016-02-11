@@ -159,12 +159,6 @@ public class JCEntityRegistry implements IContentHandler
     @Override
     public void init()
     {
-
-    }
-
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerDinosaurType(velociraptor);
         registerDinosaurType(achillobator);
         registerDinosaurType(anklyosaurus);
@@ -219,7 +213,11 @@ public class JCEntityRegistry implements IContentHandler
         registerDinosaurType(zhenyuanopterus);
         registerDinosaurType(troodon);
         registerDinosaurType(pachycephalosaurus);
+    }
 
+    @Override
+    public void gameRegistry() throws Exception
+    {
         registerEntity(BluePrintEntity.class, "Blueprint");
         registerEntity(JurassiCraftSignEntity.class, "JurassiCraft Sign");
         registerEntity(CageSmallEntity.class, "Small Dinosaur Cage");

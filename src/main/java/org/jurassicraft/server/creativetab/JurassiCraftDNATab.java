@@ -27,21 +27,20 @@ public class JurassiCraftDNATab extends CreativeTabs
             int dinosaurs = JCEntityRegistry.getRegisteredDinosaurs().size();
             this.stacks = new ItemStack[dinosaurs * 3];
 
-            int id = 0;
             int i = 0;
 
             for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
             {
                 if (dino.shouldRegister())
                 {
+                    int id = JCEntityRegistry.getDinosaurId(dino);
+
                     stacks[i] = new ItemStack(JCItemRegistry.dna, 1, id);
                     stacks[i + dinosaurs] = new ItemStack(JCItemRegistry.soft_tissue, 1, id);
                     stacks[i + (dinosaurs * 2)] = new ItemStack(JCItemRegistry.syringe, 1, id);
 
                     i++;
                 }
-
-                id++;
             }
         }
 
