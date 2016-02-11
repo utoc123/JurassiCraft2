@@ -44,6 +44,7 @@ public class ServerProxy
         initContentHandlers(
                 new JCEntityRegistry(),
                 new JCPlantRegistry(),
+                new JCCreativeTabs(),
                 new JCItemRegistry(),
                 JurassiCraft.blockRegistry = new JCBlockRegistry(),
                 new JCRecipeRegistry(),
