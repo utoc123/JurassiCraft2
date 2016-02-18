@@ -1,5 +1,7 @@
 package org.jurassicraft.client.animation;
 
+import java.util.Map;
+
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -13,8 +15,6 @@ import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.fx.BloodEntityFX;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-
-import java.util.Map;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
@@ -361,6 +361,76 @@ public class JabelarAnimationHelper
 
         updateCurrentPoseArrays();
         setNextPoseModel();
+        
+        playSound();
+    }
+    
+    private void playSound()
+    {
+        JurassiCraft.instance.getLogger().info("playSound in state "+theEntity.getAnimation()+" for "+theEntity.getDinosaur().getName());      
+
+        // only play sounds in first tick in tween
+        if (currentTickInTween > 0) 
+        {
+            JurassiCraft.instance.getLogger().info("Don't play sound cause currentTickInTween > 0");      
+
+            return;
+        }
+        
+        // also idle sounds are taken care of separately from the pose system
+        if (theEntity.getAnimation() == Animations.IDLE.get()) return;
+        
+        JurassiCraft.instance.getLogger().info("playSound in state "+theEntity.getAnimation()+" for "+theEntity.getDinosaur().getName());      
+        
+        if (theEntity.getAnimation() == Animations.ATTACKING.get())
+        {
+           theEntity.playSound(theEntity.getAttackingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.CALLING.get())
+        {
+            theEntity.playSound(theEntity.getCallingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.DYING.get())
+        {
+            theEntity.playSound(theEntity.getDeathSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.INJURED.get())
+        {
+            theEntity.playSound(theEntity.getHurtSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.DRINKING.get())
+        {
+            theEntity.playSound(theEntity.getDrinkingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.EATING.get())
+        {
+            theEntity.playSound(theEntity.getEatingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.HISSING.get())
+        {
+            theEntity.playSound(theEntity.getHissingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.SCRATCHING.get())
+        {
+            theEntity.playSound(theEntity.getScratchingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.MATING.get())
+        {
+            theEntity.playSound(theEntity.getMatingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.ROARING.get())
+        {
+            theEntity.playSound(theEntity.getRoaringSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.SNIFFING.get())
+        {
+            theEntity.playSound(theEntity.getSniffingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+        else if (theEntity.getAnimation() == Animations.POUNCING.get())
+        {
+            theEntity.playSound(theEntity.getPouncingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+
     }
 
     // boolean returned indicates if tween was finished

@@ -15,9 +15,9 @@ public class RugopsEntity extends AggressiveDinosaurEntity // implements IEntity
     {
         super(world);
         
-        hurtSounds = new String[] { "rugops_hurt_1", "rugops_hurt_2" };
+        injuredSounds = new String[] { "rugops_hurt_1", "rugops_hurt_2" };
         idleSounds = new String[] { "rugops_living_1", "rugops_living_2", "rugops_living_3", "rugops_living_4" };
-        deathSounds = new String[] { "rugops_death_1", "rugops_death_2" };
+        dyingSounds = new String[] { "rugops_death_1", "rugops_death_2" };
 
         for (int i = 0; i < targets.length; i++)
         {

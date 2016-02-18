@@ -24,9 +24,9 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     {
         super(world);
         
-        hurtSounds = new String[] { "indominus_hurt_1" };
+        injuredSounds = new String[] { "indominus_hurt_1" };
         idleSounds = new String[] { "indominus_living_1", "indominus_breath"};
-        deathSounds = new String[] { "indominus_death_1" };
+        dyingSounds = new String[] { "indominus_death_1" };
 
         tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.IDLE.get(), 750, getIdleSound(), 1.5F));
         this.addAIForAttackTargets(EntityLivingBase.class, 0);

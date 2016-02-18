@@ -12,8 +12,8 @@ public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements I
         super(world);
         
         idleSounds = new String[] { "brachiosaurus_living_1", "brachiosaurus_living_2", "brachiosaurus_living_3", "brachiosaurus_living_4" };
-        hurtSounds = new String[] { "brachiosaurus_hurt_1", "brachiosaurus_hurt_2" };
-        deathSounds = new String[] { "brachiosaurus_death_1", "brachiosaurus_death_2" };
+        injuredSounds = new String[] { "brachiosaurus_hurt_1", "brachiosaurus_hurt_2" };
+        dyingSounds = new String[] { "brachiosaurus_death_1", "brachiosaurus_death_2" };
     }
 
     @Override

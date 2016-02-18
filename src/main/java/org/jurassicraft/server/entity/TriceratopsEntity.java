@@ -9,9 +9,9 @@ public class TriceratopsEntity extends ProvokableDinosaurEntity // implements IE
     {
         super(world);
         
-        hurtSounds = new String[] { "triceratops_hurt_1" };
+        injuredSounds = new String[] { "triceratops_hurt_1" };
         idleSounds = new String[] { "triceratops_living_1", "triceratops_living_2", "triceratops_living_3" };
-        deathSounds = new String[] { "triceratops_death_1" };
+        dyingSounds = new String[] { "triceratops_death_1" };
     }
 
     @Override

@@ -9,9 +9,9 @@ public class DilophosaurusEntity extends AggressiveDinosaurEntity // implements 
     {
         super(world);
 
-        hurtSounds = new String[] { "dilophosaurus_hurt_1", "dilophosaurus_hurt_2" };
+        injuredSounds = new String[] { "dilophosaurus_hurt_1", "dilophosaurus_hurt_2" };
         idleSounds = new String[] { "dilophosaurus_living_1", "dilophosaurus_living_2", "dilophosaurus_living_3" };
-        deathSounds = new String[] { "dilophosaurus_death_1" };
+        dyingSounds = new String[] { "dilophosaurus_death_1" };
     }
 
     @Override

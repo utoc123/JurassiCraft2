@@ -9,8 +9,8 @@ public class AnkylosaurusEntity extends ProvokableDinosaurEntity // implements I
     {
         super(world);
 
-        hurtSounds = new String[] { "ankylosaurus_hurt_1", "ankylosaurus_hurt_2" };
-        deathSounds = new String[] { "ankylosaurus_hurt_1", "ankylosaurus_hurt_2" };
+        injuredSounds = new String[] { "ankylosaurus_hurt_1", "ankylosaurus_hurt_2" };
+        dyingSounds = new String[] { "ankylosaurus_hurt_1", "ankylosaurus_hurt_2" };
         idleSounds = new String[] { "ankylosaurus_living_1", "ankylosaurus_living_2", "ankylosaurus_living_3", "ankylosaurus_living_4" };
 }
 

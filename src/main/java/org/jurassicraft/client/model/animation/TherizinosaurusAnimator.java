@@ -120,7 +120,7 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
         {
             // TO-DO
             // Call jabelar walking animation helper for walking animation
-            JurassiCraft.instance.getLogger().info("Use poses for walking animation");
+            // JurassiCraft.instance.getLogger().info("Use poses for walking animation");
         }
         else
         {

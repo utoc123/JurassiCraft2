@@ -9,9 +9,9 @@ public class StegosaurusEntity extends ProvokableDinosaurEntity // implements IE
     {
         super(world);
 
-        hurtSounds = new String[] { "stegosaurus_hurt_1", "stegosaurus_hurt_2" };
+        injuredSounds = new String[] { "stegosaurus_hurt_1", "stegosaurus_hurt_2" };
         idleSounds = new String[] { "stegosaurus_living_1", "stegosaurus_living_2" };
-        deathSounds = new String[] { "stegosaurus_death_1", "stegosaurus_death_2" };
+        dyingSounds = new String[] { "stegosaurus_death_1", "stegosaurus_death_2" };
 }
 
     @Override

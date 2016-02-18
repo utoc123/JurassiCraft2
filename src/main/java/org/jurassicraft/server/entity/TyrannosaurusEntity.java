@@ -24,9 +24,9 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAI
     {
         super(world);
         
-        hurtSounds = new String[] { "tyrannosaurus_hurt_1", "tyrannosaurus_hurt_2" };
-        deathSounds = new String[] { "tyrannosaurus_death_1" };
-        attackSounds = new String[] { "tyrannosaurus_roar_1" };
+        injuredSounds = new String[] { "tyrannosaurus_hurt_1", "tyrannosaurus_hurt_2" };
+        dyingSounds = new String[] { "tyrannosaurus_death_1" };
+        attackingSounds = new String[] { "tyrannosaurus_roar_1" };
         breathSounds = new String[] { "tyrannosaurus_breath_1" };
 
         tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.IDLE.get(), 750, this.getIdleSound(), 1.5F));
