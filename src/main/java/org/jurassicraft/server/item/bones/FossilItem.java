@@ -23,6 +23,8 @@ public class FossilItem extends Item
     private String type;
     private boolean includeHybrids;
 
+    public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<String, List<Dinosaur>>();
+
     public FossilItem(String type, boolean includeHybrids)
     {
         this.type = type.toLowerCase().replaceAll(" ", "_");
@@ -31,6 +33,28 @@ public class FossilItem extends Item
         this.setHasSubtypes(true);
 
         this.setCreativeTab(JCCreativeTabs.bones);
+    }
+
+    public static void init()
+    {
+        for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
+        {
+            String[] boneTypes = dinosaur.getBones();
+
+            for (String boneType : boneTypes)
+            {
+                List<Dinosaur> dinosaursWithType = fossilDinosaurs.get(boneType);
+
+                if (dinosaursWithType == null)
+                {
+                    dinosaursWithType = new ArrayList<Dinosaur>();
+                }
+
+                dinosaursWithType.add(dinosaur);
+
+                fossilDinosaurs.put(boneType, dinosaursWithType);
+            }
+        }
     }
 
     @Override
@@ -66,7 +90,7 @@ public class FossilItem extends Item
 
         Collections.sort(dinosaurs);
 
-        List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(type);
+        List<Dinosaur> dinosaursForType = fossilDinosaurs.get(type);
 
         for (Dinosaur dino : dinosaurs)
         {

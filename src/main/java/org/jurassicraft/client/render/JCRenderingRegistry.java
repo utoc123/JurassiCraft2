@@ -118,7 +118,7 @@ public class JCRenderingRegistry
 
             for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fossils.entrySet())
             {
-                List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
+                List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
                 if (dinosaursForType.contains(dino))
                 {
@@ -128,7 +128,7 @@ public class JCRenderingRegistry
 
             for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fresh_fossils.entrySet())
             {
-                List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
+                List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
                 if (dinosaursForType.contains(dino))
                 {
@@ -372,7 +372,7 @@ public class JCRenderingRegistry
 
             for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fossils.entrySet())
             {
-                List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
+                List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
                 if (dinosaursForType.contains(dino))
                 {
@@ -382,7 +382,7 @@ public class JCRenderingRegistry
 
             for (Map.Entry<String, FossilItem> entry : JCItemRegistry.fresh_fossils.entrySet())
             {
-                List<Dinosaur> dinosaursForType = JCItemRegistry.fossilDinosaurs.get(entry.getKey());
+                List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
                 if (dinosaursForType.contains(dino))
                 {

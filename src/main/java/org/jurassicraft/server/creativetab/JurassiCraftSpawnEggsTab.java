@@ -10,6 +10,8 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
 
+import java.util.List;
+
 public class JurassiCraftSpawnEggsTab extends CreativeTabs
 {
     private int[] metas;
@@ -17,21 +19,17 @@ public class JurassiCraftSpawnEggsTab extends CreativeTabs
     public JurassiCraftSpawnEggsTab(String label)
     {
         super(label);
-        this.metas = new int[JCEntityRegistry.getRegisteredDinosaurs().size()];
 
-        int id = 0;
+        List<Dinosaur> registeredDinosaurs = JCEntityRegistry.getRegisteredDinosaurs();
+        this.metas = new int[registeredDinosaurs.size()];
+
         int i = 0;
 
-        for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
+        for (Dinosaur dino : registeredDinosaurs)
         {
-            if (dino.shouldRegister())
-            {
-                metas[i] = id;
+            metas[i] = JCEntityRegistry.getDinosaurId(dino);
 
-                i++;
-            }
-
-            id++;
+            i++;
         }
     }
 

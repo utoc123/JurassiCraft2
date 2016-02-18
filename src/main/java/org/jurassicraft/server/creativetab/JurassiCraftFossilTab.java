@@ -9,6 +9,10 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.bones.FossilItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JurassiCraftFossilTab extends CreativeTabs
 {
@@ -17,22 +21,33 @@ public class JurassiCraftFossilTab extends CreativeTabs
     public JurassiCraftFossilTab(String label)
     {
         super(label);
-        this.metas = new int[JCEntityRegistry.getRegisteredDinosaurs().size()];
 
-        int id = 0;
+        List<Dinosaur> fossilDinosaurs = getFossilDinosaurs();
+        this.metas = new int[fossilDinosaurs.size()];
+
         int i = 0;
 
-        for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
+        for (Dinosaur dino : fossilDinosaurs)
+        {
+            metas[i] = JCEntityRegistry.getDinosaurId(dino);
+
+            i++;
+        }
+    }
+
+    public List<Dinosaur> getFossilDinosaurs()
+    {
+        List<Dinosaur> fossilDinosaurs = new ArrayList<Dinosaur>();
+
+        for (Dinosaur dino : FossilItem.fossilDinosaurs.get("skull"))
         {
             if (dino.shouldRegister())
             {
-                metas[i] = id;
-
-                i++;
+                fossilDinosaurs.add(dino);
             }
-
-            id++;
         }
+
+        return fossilDinosaurs;
     }
 
     @SideOnly(Side.CLIENT)
