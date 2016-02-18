@@ -86,11 +86,8 @@ public class JCItemRegistry implements IContentHandler
     // Debug items
     public static Item dino_scanner;
 
-    public static BookWikiItem book_wiki;
-
     public static Map<String, FossilItem> fossils = new HashMap<String, FossilItem>();
     public static Map<String, FossilItem> fresh_fossils = new HashMap<String, FossilItem>();
-    public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<String, List<Dinosaur>>();
 
     public static BasicItem gypsum_powder;
 
@@ -175,17 +172,6 @@ public class JCItemRegistry implements IContentHandler
                     fresh_fossils.put(boneType, fossil);
                     registerItem(fossil, boneType + " Fresh");
                 }
-
-                List<Dinosaur> dinosaursWithType = fossilDinosaurs.get(boneType);
-
-                if (dinosaursWithType == null)
-                {
-                    dinosaursWithType = new ArrayList<Dinosaur>();
-                }
-
-                dinosaursWithType.add(dinosaur);
-
-                fossilDinosaurs.put(boneType, dinosaursWithType);
             }
         }
     }

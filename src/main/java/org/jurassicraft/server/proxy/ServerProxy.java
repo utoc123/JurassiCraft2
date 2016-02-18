@@ -27,6 +27,7 @@ import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.event.EventHandlerServer;
 import org.jurassicraft.server.handler.JCGuiHandler;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.paleopad.AppRegistry;
 import org.jurassicraft.server.plant.JCPlantRegistry;
 import org.jurassicraft.server.recipe.JCRecipeRegistry;
@@ -41,8 +42,11 @@ public class ServerProxy
     {
         JurassiCraft.configurations.initConfig(event);
 
+        initContentHandlers(new JCEntityRegistry());
+
+        FossilItem.init();
+
         initContentHandlers(
-                new JCEntityRegistry(),
                 new JCPlantRegistry(),
                 new JCCreativeTabs(),
                 new JCItemRegistry(),

@@ -9,6 +9,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.bones.FossilItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class JurassiCraftFossilTab extends CreativeTabs
     {
         List<Dinosaur> fossilDinosaurs = new ArrayList<Dinosaur>();
 
-        for (Dinosaur dino : JCItemRegistry.fossilDinosaurs.get("skull"))
+        for (Dinosaur dino : FossilItem.fossilDinosaurs.get("skull"))
         {
             if (dino.shouldRegister())
             {
