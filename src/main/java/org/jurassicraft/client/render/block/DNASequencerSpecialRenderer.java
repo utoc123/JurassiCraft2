@@ -82,11 +82,14 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
                 {
                     GlStateManager.translate(0.0, 0.0, 0.2);
 
-                    ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
-
-                    if (sequence != null)
+                    if (inputSlot % 2 == 0)
                     {
-                        renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
+                        ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
+
+                        if (sequence != null)
+                        {
+                            renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
+                        }
                     }
                 }
             }
