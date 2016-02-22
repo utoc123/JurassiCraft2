@@ -2,6 +2,12 @@ package org.jurassicraft.client.animation;
 
 import java.util.Map;
 
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.fx.BloodEntityFX;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
+
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -10,11 +16,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.fx.BloodEntityFX;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
@@ -26,11 +27,11 @@ public class JabelarAnimationHelper
 
     private final Minecraft mc;
 
-    private final Map<Animation, int[][]> mapOfSequences;
+    private final Map<Animation, int[][]> mapOfPoseSequences;
 
     private final MowzieModelRenderer[][] arrayOfPoses;
     private MowzieModelRenderer[] theModelRendererArray;
-    private MowzieModelRenderer[] nextPoseModel;
+    private MowzieModelRenderer[] nextModelRendererArray;
 
     private float[][] currentRotationArray;
     private float[][] currentPositionArray;
@@ -42,16 +43,23 @@ public class JabelarAnimationHelper
 
     private final int numParts;
 
-    private Animation currentSequence;
+    private Animation currentPoseSequence;
     private int numPosesInSequence;
-    private int currentPose;
+    private int currentPoseIndex;
     private int numTicksInTween;
     private int currentTickInTween;
     private float partialTicks;
 
     private int lastTicksExisted;
 
+    // This enables or disables all inertial tweening. For a living entity like dinosaur
+    // you generally want this true. For a non-living entity like a machine, you can make this
+    // false for a more robotic movement.
     private final boolean inertialTweens;
+    // this should be true if next pose is duplicate of current pose
+    // allowing non duplicates to tween linearly. If you want to force an inertial
+    // tween you should create a one tick duplicate pose between poses.
+    private boolean isThisTweenInertial; 
 
     /**
      * @param parEntity         the entity to animate from
@@ -74,12 +82,13 @@ public class JabelarAnimationHelper
         theEntity = parEntity;
         numParts = parNumParts;
         arrayOfPoses = parArrayOfPoses;
-        mapOfSequences = parMapOfSequences;
+        mapOfPoseSequences = parMapOfSequences;
         inertialTweens = parInertialTweens;
 
         lastTicksExisted = theEntity.ticksExisted;
 
         partialTicks = 0.0F;
+        isThisTweenInertial = inertialTweens;
 
         mc = Minecraft.getMinecraft();
 
@@ -96,7 +105,7 @@ public class JabelarAnimationHelper
         performBloodSpurt();
 
         // Allow interruption of the animation if it is a new animation and not currently dying
-        if (theEntity.getAnimation() != currentSequence && currentSequence != Animations.DYING.get())
+        if (theEntity.getAnimation() != currentPoseSequence && currentPoseSequence != Animations.DYING.get())
         {
             setNextSequence(theEntity.getAnimation());
         }
@@ -136,57 +145,57 @@ public class JabelarAnimationHelper
         // I.e. could reject certain changes depending on what current animation is playing
 
         // handle case where animation sequence isn't available
-        if (mapOfSequences.get(parSequenceIndex) == null)
+        if (mapOfPoseSequences.get(parSequenceIndex) == null)
         {
             JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.toString() + " that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
-            currentSequence = Animations.IDLE.get();
+            currentPoseSequence = Animations.IDLE.get();
             theEntity.setAnimation(Animations.IDLE.get());
         }
-        else if (currentSequence != Animations.IDLE.get() && currentSequence == parSequenceIndex) // finished sequence but no new sequence set
+        else if (currentPoseSequence != Animations.IDLE.get() && currentPoseSequence == parSequenceIndex) // finished sequence but no new sequence set
         {
 //            JurassiCraft.instance.getLogger().debug("Intializing to idle sequence");
-            currentSequence = Animations.IDLE.get();
+            currentPoseSequence = Animations.IDLE.get();
             theEntity.setAnimation(Animations.IDLE.get());
         }
         else if (theEntity.isCarcass())
         {
-            currentSequence = Animations.DYING.get();
+            currentPoseSequence = Animations.DYING.get();
         }
         else
         {
-            currentSequence = parSequenceIndex;
+            currentPoseSequence = parSequenceIndex;
         }
     }
 
     private void initPoseModel()
     {
-        numPosesInSequence = mapOfSequences.get(currentSequence).length;
+        numPosesInSequence = mapOfPoseSequences.get(currentPoseSequence).length;
 
         // initialize first pose
         // carcass should init to last pose in dying sequence
         if (theEntity.isCarcass())
         {
-            currentPose = numPosesInSequence - 1;
+            currentPoseIndex = numPosesInSequence - 1;
         }
         else
         {
-            currentPose = 0;
+            currentPoseIndex = 0;
         }
-        nextPoseModel = arrayOfPoses[mapOfSequences.get(currentSequence)[currentPose][0]];
+        nextModelRendererArray = arrayOfPoses[mapOfPoseSequences.get(currentPoseSequence)[currentPoseIndex][0]];
     }
 
     private void setNextPoseModel(int parPose)
     {
-        numPosesInSequence = mapOfSequences.get(currentSequence).length;
+        numPosesInSequence = mapOfPoseSequences.get(currentPoseSequence).length;
 
         // initialize first pose
-        currentPose = parPose;
-        nextPoseModel = arrayOfPoses[mapOfSequences.get(currentSequence)[currentPose][0]];
+        currentPoseIndex = parPose;
+        nextModelRendererArray = arrayOfPoses[mapOfPoseSequences.get(currentPoseSequence)[currentPoseIndex][0]];
     }
 
     private void initTweenTicks()
     {
-        numTicksInTween = mapOfSequences.get(currentSequence)[currentPose][1];
+        numTicksInTween = mapOfPoseSequences.get(currentPoseSequence)[currentPoseIndex][1];
         // filter out illegal values in array
         if (numTicksInTween < 1)
         {
@@ -206,7 +215,7 @@ public class JabelarAnimationHelper
 
     private void startNextTween()
     {
-        numTicksInTween = mapOfSequences.get(currentSequence)[currentPose][1];
+        numTicksInTween = mapOfPoseSequences.get(currentPoseSequence)[currentPoseIndex][1];
         // filter out illegal values in array
         if (numTicksInTween < 1)
         {
@@ -223,17 +232,16 @@ public class JabelarAnimationHelper
         for (int partIndex = 0; partIndex < numParts; partIndex++)
         {
 
-            rotationIncrementArray[partIndex][0] = (nextPoseModel[partIndex].rotateAngleX - currentRotationArray[partIndex][0]) * inertiaFactor;
-            rotationIncrementArray[partIndex][1] = (nextPoseModel[partIndex].rotateAngleY - currentRotationArray[partIndex][1]) * inertiaFactor;
-            rotationIncrementArray[partIndex][2] = (nextPoseModel[partIndex].rotateAngleZ - currentRotationArray[partIndex][2]) * inertiaFactor;
-            positionIncrementArray[partIndex][0] = (nextPoseModel[partIndex].rotationPointX - currentPositionArray[partIndex][0]) * inertiaFactor;
-            positionIncrementArray[partIndex][1] = (nextPoseModel[partIndex].rotationPointY - currentPositionArray[partIndex][1]) * inertiaFactor;
-            positionIncrementArray[partIndex][2] = (nextPoseModel[partIndex].rotationPointZ - currentPositionArray[partIndex][2]) * inertiaFactor;
-            offsetIncrementArray[partIndex][0] = (nextPoseModel[partIndex].offsetX - currentOffsetArray[partIndex][0]) * inertiaFactor;
-            offsetIncrementArray[partIndex][1] = (nextPoseModel[partIndex].offsetY - currentOffsetArray[partIndex][1]) * inertiaFactor;
-            offsetIncrementArray[partIndex][2] = (nextPoseModel[partIndex].offsetZ - currentOffsetArray[partIndex][2]) * inertiaFactor;
+            rotationIncrementArray[partIndex][0] = (nextModelRendererArray[partIndex].rotateAngleX - currentRotationArray[partIndex][0]) * inertiaFactor;
+            rotationIncrementArray[partIndex][1] = (nextModelRendererArray[partIndex].rotateAngleY - currentRotationArray[partIndex][1]) * inertiaFactor;
+            rotationIncrementArray[partIndex][2] = (nextModelRendererArray[partIndex].rotateAngleZ - currentRotationArray[partIndex][2]) * inertiaFactor;
+            positionIncrementArray[partIndex][0] = (nextModelRendererArray[partIndex].rotationPointX - currentPositionArray[partIndex][0]) * inertiaFactor;
+            positionIncrementArray[partIndex][1] = (nextModelRendererArray[partIndex].rotationPointY - currentPositionArray[partIndex][1]) * inertiaFactor;
+            positionIncrementArray[partIndex][2] = (nextModelRendererArray[partIndex].rotationPointZ - currentPositionArray[partIndex][2]) * inertiaFactor;
+            offsetIncrementArray[partIndex][0] = (nextModelRendererArray[partIndex].offsetX - currentOffsetArray[partIndex][0]) * inertiaFactor;
+            offsetIncrementArray[partIndex][1] = (nextModelRendererArray[partIndex].offsetY - currentOffsetArray[partIndex][1]) * inertiaFactor;
+            offsetIncrementArray[partIndex][2] = (nextModelRendererArray[partIndex].offsetZ - currentOffsetArray[partIndex][2]) * inertiaFactor;
         }
-
     }
 
     private void updateCurrentPoseArrays()
@@ -268,8 +276,8 @@ public class JabelarAnimationHelper
 
     private void setNextPoseModel()
     {
-        nextPoseModel = arrayOfPoses[mapOfSequences.get(currentSequence)[currentPose][0]];
-        numTicksInTween = mapOfSequences.get(currentSequence)[currentPose][1];
+        nextModelRendererArray = arrayOfPoses[mapOfPoseSequences.get(currentPoseSequence)[currentPoseIndex][0]];
+        numTicksInTween = mapOfPoseSequences.get(currentPoseSequence)[currentPoseIndex][1];
         currentTickInTween = 0;
     }
 
@@ -297,11 +305,11 @@ public class JabelarAnimationHelper
 
         for (int partIndex = 0; partIndex < numParts; partIndex++)
         {
-            if (nextPoseModel == null)
+            if (nextModelRendererArray == null)
             {
                 JurassiCraft.instance.getLogger().error("Trying to tween to a null next pose array");
             }
-            else if (nextPoseModel[partIndex] == null)
+            else if (nextModelRendererArray[partIndex] == null)
             {
                 JurassiCraft.instance.getLogger().error("The part index " + partIndex + " in next pose is null");
             }
@@ -311,6 +319,7 @@ public class JabelarAnimationHelper
             }
             else
             {
+                isThisTweenInertial = isTweenInertial();
                 updateIncrementArrays();
                 nextTweenRotations(partIndex);
                 nextTweenPositions(partIndex);
@@ -319,6 +328,11 @@ public class JabelarAnimationHelper
         }
     }
 
+    private boolean isTweenInertial()
+    {
+        return true;
+    }
+    
     private void nextTweenRotations(int parPartIndex)
     {
         theModelRendererArray[parPartIndex].rotateAngleX = currentRotationArray[parPartIndex][0] + rotationIncrementArray[parPartIndex][0];
@@ -354,7 +368,7 @@ public class JabelarAnimationHelper
 
     private void handleFinishedPose()
     {
-        if (incrementCurrentPose()) // increments pose and returns true if finished sequence
+        if (incrementCurrentPoseIndex()) // increments pose and returns true if finished sequence
         {
             setNextSequence(theEntity.getAnimation());
         }
@@ -443,24 +457,24 @@ public class JabelarAnimationHelper
     }
 
     // boolean returned indicates if sequence was finished
-    public boolean incrementCurrentPose()
+    public boolean incrementCurrentPoseIndex()
     {
         boolean finishedSequence = false;
 
         // increment current sequence step
-        currentPose++;
+        currentPoseIndex++;
         // check if finished sequence
-        if (currentPose >= numPosesInSequence)
+        if (currentPoseIndex >= numPosesInSequence)
         {
             Animations animation = Animations.getAnimation(theEntity.getAnimation());
 
             if (animation != null && animation.shouldHold()) // hold last dying pose indefinitely
             {
-                currentPose--;
+                currentPoseIndex--;
             }
             else
             {
-                currentPose = 0;
+                currentPoseIndex = 0;
                 finishedSequence = true;
             }
         }
@@ -469,30 +483,44 @@ public class JabelarAnimationHelper
         return finishedSequence;
     }
 
-    private void setNextSequence(Animation parSequenceIndex)
+    // will return value of -1 if this is last pose in sequence
+    private int getNextPoseIndex()
+    {
+        int nextPoseIndex = currentPoseIndex++;
+        // check if finished sequence
+        if (nextPoseIndex >= numPosesInSequence)
+        {
+            nextPoseIndex = -1;
+        }
+
+//        JurassiCraft.instance.getLogger().debug("Next pose is pose = " + nextPoseIndex);
+        return nextPoseIndex;
+    }
+    
+    private void setNextSequence(Animation parPoseSequenceIndex)
     {
         // TODO
         // Should control here which animations are interruptible, in which priority
         // I.e. could reject certain changes depending on what current animation is playing
 
         // handle case where animation sequence isn't available
-        if (mapOfSequences.get(parSequenceIndex) == null)
+        if (mapOfPoseSequences.get(parPoseSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.animationId + " (" + Animations.getAnimation(parSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
-            currentSequence = Animations.IDLE.get();
+            JurassiCraft.instance.getLogger().error("Requested an anim id " + parPoseSequenceIndex.animationId + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
+            currentPoseSequence = Animations.IDLE.get();
         }
-        else if (currentSequence != Animations.IDLE.get() && currentSequence == parSequenceIndex) // finished sequence but no new sequence set
+        else if (currentPoseSequence != Animations.IDLE.get() && currentPoseSequence == parPoseSequenceIndex) // finished sequence but no new sequence set
         {
 //            JurassiCraft.instance.getLogger().debug("Reverting to idle sequence");
-            currentSequence = Animations.IDLE.get();
+            currentPoseSequence = Animations.IDLE.get();
         }
         else
         {
 //            JurassiCraft.instance.getLogger().debug("Setting new sequence to " + parSequenceIndex);
-            currentSequence = parSequenceIndex;
+            currentPoseSequence = parPoseSequenceIndex;
         }
 
-        theEntity.setAnimation(currentSequence);
+        theEntity.setAnimation(currentPoseSequence);
         setNextPoseModel(0);
         startNextTween();
 
@@ -504,7 +532,7 @@ public class JabelarAnimationHelper
 
     public int getCurrentPose()
     {
-        return currentPose;
+        return currentPoseIndex;
     }
 
     public static DinosaurModel getTabulaModel(String tabulaModel, int geneticVariant)
