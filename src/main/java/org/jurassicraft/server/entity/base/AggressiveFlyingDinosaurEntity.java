@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.base;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityMoveHelper;
@@ -67,9 +66,9 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             }
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= (double)f2;
-            this.motionY *= (double)f2;
-            this.motionZ *= (double)f2;
+            this.motionX *= (double) f2;
+            this.motionY *= (double) f2;
+            this.motionZ *= (double) f2;
         }
 
         this.prevLimbSwingAmount = this.limbSwingAmount;
@@ -138,9 +137,9 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         public void startExecuting()
         {
             Random random = this.dino.getRNG();
-            double d0 = this.dino.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            double d1 = this.dino.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            double d2 = this.dino.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double d0 = this.dino.posX + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double d1 = this.dino.posY + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double d2 = this.dino.posZ + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             this.dino.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
         }
     }
@@ -167,7 +166,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
                 if (this.timer-- <= 0)
                 {
                     this.timer += this.dino.getRNG().nextInt(5) + 2;
-                    dist = (double)MathHelper.sqrt_double(dist);
+                    dist = (double) MathHelper.sqrt_double(dist);
 
                     if (this.canMoveTo(this.posX, this.posY, this.posZ, dist))
                     {
@@ -190,7 +189,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             double d6 = (posZ - this.dino.posZ) / dist;
             AxisAlignedBB boudningBox = this.dino.getEntityBoundingBox();
 
-            for (int i = 1; (double)i < dist; ++i)
+            for (int i = 1; (double) i < dist; ++i)
             {
                 boudningBox = boudningBox.offset(d4, d5, d6);
 
@@ -228,7 +227,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         {
             if (this.dino.getAttackTarget() == null)
             {
-                this.dino.renderYawOffset = this.dino.rotationYaw = -((float)Math.atan2(this.dino.motionX, this.dino.motionZ)) * 180.0F / (float)Math.PI;
+                this.dino.renderYawOffset = this.dino.rotationYaw = -((float) Math.atan2(this.dino.motionX, this.dino.motionZ)) * 180.0F / (float) Math.PI;
             }
             else
             {
@@ -239,7 +238,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
                 {
                     double diffX = attackTarget.posX - this.dino.posX;
                     double diffZ = attackTarget.posZ - this.dino.posZ;
-                    this.dino.renderYawOffset = this.dino.rotationYaw = -((float)Math.atan2(diffX, diffZ)) * 180.0F / (float)Math.PI;
+                    this.dino.renderYawOffset = this.dino.rotationYaw = -((float) Math.atan2(diffX, diffZ)) * 180.0F / (float) Math.PI;
                 }
             }
         }

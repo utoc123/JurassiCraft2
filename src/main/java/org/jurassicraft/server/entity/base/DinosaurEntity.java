@@ -1,7 +1,5 @@
 package org.jurassicraft.server.entity.base;
 
-import java.util.UUID;
-
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
 import net.ilexiconn.llibrary.common.animation.Animation;
@@ -52,6 +50,8 @@ import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.JCItemRegistry;
 
+import java.util.UUID;
+
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
 {
     protected Dinosaur dinosaur;
@@ -70,21 +70,21 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public AIAnimation currentAnim = null;
     private Animation animation;
     private int animTick;
-    
-    protected String[] injuredSounds ;
-    protected String[] dyingSounds ;
-    protected String[] attackingSounds ;
-    protected String[] idleSounds ;
-    protected String[] breathSounds ;
-    protected String[] callingsounds ;
-    protected String[] drinkingSounds ;
-    protected String[] eatingSounds ;
-    protected String[] hissingSounds ;
-    protected String[] scratchingSounds ;
-    protected String[] matingSounds ;
-    protected String[] roaringSounds ;
-    protected String[] sniffingSounds ;
-    protected String[] pouncingSounds ;
+
+    protected String[] injuredSounds;
+    protected String[] dyingSounds;
+    protected String[] attackingSounds;
+    protected String[] idleSounds;
+    protected String[] breathSounds;
+    protected String[] callingsounds;
+    protected String[] drinkingSounds;
+    protected String[] eatingSounds;
+    protected String[] hissingSounds;
+    protected String[] scratchingSounds;
+    protected String[] matingSounds;
+    protected String[] roaringSounds;
+    protected String[] sniffingSounds;
+    protected String[] pouncingSounds;
 
     private boolean hasTracker;
 
@@ -436,7 +436,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             updateGrowth();
 
             metabolism.update();
-            
+
 
             if (this.ticksExisted % 62 == 0)
             {
@@ -747,22 +747,25 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     protected String randomSound(String... sounds)
     {
-        if (sounds == null) return "";
+        if (sounds == null)
+        {
+            return "";
+        }
         return JurassiCraft.MODID + ":" + sounds[rand.nextInt(sounds.length)];
     }
-    
+
     @Override
     public String getLivingSound()
     {
-        JurassiCraft.instance.getLogger().info("getLivingSound for "+this.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("getLivingSound for " + this.getDinosaur().getName());
         return getIdleSound();
     }
-    
+
     // Idle sound and living sound are synonymous, but for readability it is better to associate
     // method names with animation names
     public String getIdleSound()
     {
-        JurassiCraft.instance.getLogger().info("getIdleSound for "+this.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("getIdleSound for " + this.getDinosaur().getName());
         if (getAnimation() == Animations.IDLE.get())
         {
             return randomSound(idleSounds);
@@ -774,82 +777,82 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public String getHurtSound()
     {
-        JurassiCraft.instance.getLogger().info("getHurtSound for "+this.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("getHurtSound for " + this.getDinosaur().getName());
         return randomSound(injuredSounds);
     }
 
     @Override
     public String getDeathSound()
     {
-        JurassiCraft.instance.getLogger().info("getDeathSound for "+this.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("getDeathSound for " + this.getDinosaur().getName());
         return randomSound(dyingSounds);
     }
 
     public String getCallingSound()
     {
-        JurassiCraft.instance.getLogger().info("getCallingSound for "+this.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("getCallingSound for " + this.getDinosaur().getName());
         return randomSound(callingsounds);
     }
-    
+
     public String getBreathingSound()
     {
-        JurassiCraft.instance.getLogger().info("getBreathingSound for "+this.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("getBreathingSound for " + this.getDinosaur().getName());
         return randomSound(breathSounds);
     }
 
     public String getAttackingSound()
     {
-        JurassiCraft.instance.getLogger().info("getAttackingSound for "+this.getDinosaur().getName());
-        return randomSound(attackingSounds);        
+        JurassiCraft.instance.getLogger().info("getAttackingSound for " + this.getDinosaur().getName());
+        return randomSound(attackingSounds);
     }
 
     public String getDrinkingSound()
     {
-        JurassiCraft.instance.getLogger().info("getDrinkingSound for "+this.getDinosaur().getName());
-        return randomSound(drinkingSounds);        
+        JurassiCraft.instance.getLogger().info("getDrinkingSound for " + this.getDinosaur().getName());
+        return randomSound(drinkingSounds);
     }
 
     public String getEatingSound()
     {
-        JurassiCraft.instance.getLogger().info("getEatingSound for "+this.getDinosaur().getName());
-        return randomSound(eatingSounds);        
+        JurassiCraft.instance.getLogger().info("getEatingSound for " + this.getDinosaur().getName());
+        return randomSound(eatingSounds);
     }
 
     public String getHissingSound()
     {
-        JurassiCraft.instance.getLogger().info("getHissingSound for "+this.getDinosaur().getName());
-        return randomSound(hissingSounds);        
+        JurassiCraft.instance.getLogger().info("getHissingSound for " + this.getDinosaur().getName());
+        return randomSound(hissingSounds);
     }
 
     public String getScratchingSound()
     {
-        JurassiCraft.instance.getLogger().info("getScratchingSound for "+this.getDinosaur().getName());
-        return randomSound(scratchingSounds);        
+        JurassiCraft.instance.getLogger().info("getScratchingSound for " + this.getDinosaur().getName());
+        return randomSound(scratchingSounds);
     }
 
     public String getMatingSound()
     {
-        JurassiCraft.instance.getLogger().info("getMatingSound for "+this.getDinosaur().getName());
-        return randomSound(matingSounds);        
+        JurassiCraft.instance.getLogger().info("getMatingSound for " + this.getDinosaur().getName());
+        return randomSound(matingSounds);
     }
 
 
     public String getRoaringSound()
     {
-        JurassiCraft.instance.getLogger().info("getRoaringSound for "+this.getDinosaur().getName());
-        return randomSound(roaringSounds);        
+        JurassiCraft.instance.getLogger().info("getRoaringSound for " + this.getDinosaur().getName());
+        return randomSound(roaringSounds);
     }
 
     public String getSniffingSound()
     {
-        JurassiCraft.instance.getLogger().info("getSniffingSound for "+this.getDinosaur().getName());
-        return randomSound(sniffingSounds);        
+        JurassiCraft.instance.getLogger().info("getSniffingSound for " + this.getDinosaur().getName());
+        return randomSound(sniffingSounds);
     }
 
     public String getPouncingSound()
     {
-        JurassiCraft.instance.getLogger().info("getPouncingSound for "+this.getDinosaur().getName());
-        return randomSound(pouncingSounds);        
+        JurassiCraft.instance.getLogger().info("getPouncingSound for " + this.getDinosaur().getName());
+        return randomSound(pouncingSounds);
     }
 
     public double getAttackDamage()

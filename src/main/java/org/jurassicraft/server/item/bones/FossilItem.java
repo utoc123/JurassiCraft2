@@ -9,7 +9,6 @@ import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.lang.AdvLang;
 
 import java.util.ArrayList;

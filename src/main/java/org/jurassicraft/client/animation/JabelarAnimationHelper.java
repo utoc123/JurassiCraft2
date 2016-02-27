@@ -1,13 +1,5 @@
 package org.jurassicraft.client.animation;
 
-import java.util.Map;
-
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.fx.BloodEntityFX;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
-
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -16,6 +8,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.fx.BloodEntityFX;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import java.util.Map;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
@@ -59,7 +58,7 @@ public class JabelarAnimationHelper
     // this should be true if next pose is duplicate of current pose
     // allowing non duplicates to tween linearly. If you want to force an inertial
     // tween you should create a one tick duplicate pose between poses.
-    private boolean isThisTweenInertial; 
+    private boolean isThisTweenInertial;
 
     /**
      * @param parEntity         the entity to animate from
@@ -332,7 +331,7 @@ public class JabelarAnimationHelper
     {
         return true;
     }
-    
+
     private void nextTweenRotations(int parPartIndex)
     {
         theModelRendererArray[parPartIndex].rotateAngleX = currentRotationArray[parPartIndex][0] + rotationIncrementArray[parPartIndex][0];
@@ -375,30 +374,33 @@ public class JabelarAnimationHelper
 
         updateCurrentPoseArrays();
         setNextPoseModel();
-        
+
         playSound();
     }
-    
+
     private void playSound()
     {
-        JurassiCraft.instance.getLogger().info("playSound in state "+theEntity.getAnimation()+" for "+theEntity.getDinosaur().getName());      
+        JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
 
         // only play sounds in first tick in tween
-        if (currentTickInTween > 0) 
+        if (currentTickInTween > 0)
         {
-            JurassiCraft.instance.getLogger().info("Don't play sound cause currentTickInTween > 0");      
+            JurassiCraft.instance.getLogger().info("Don't play sound cause currentTickInTween > 0");
 
             return;
         }
-        
+
         // also idle sounds are taken care of separately from the pose system
-        if (theEntity.getAnimation() == Animations.IDLE.get()) return;
-        
-        JurassiCraft.instance.getLogger().info("playSound in state "+theEntity.getAnimation()+" for "+theEntity.getDinosaur().getName());      
-        
+        if (theEntity.getAnimation() == Animations.IDLE.get())
+        {
+            return;
+        }
+
+        JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
+
         if (theEntity.getAnimation() == Animations.ATTACKING.get())
         {
-           theEntity.playSound(theEntity.getAttackingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theEntity.playSound(theEntity.getAttackingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
         }
         else if (theEntity.getAnimation() == Animations.CALLING.get())
         {
@@ -496,7 +498,7 @@ public class JabelarAnimationHelper
 //        JurassiCraft.instance.getLogger().debug("Next pose is pose = " + nextPoseIndex);
         return nextPoseIndex;
     }
-    
+
     private void setNextSequence(Animation parPoseSequenceIndex)
     {
         // TODO

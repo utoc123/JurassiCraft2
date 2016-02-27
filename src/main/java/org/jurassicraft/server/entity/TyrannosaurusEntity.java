@@ -1,7 +1,5 @@
 package org.jurassicraft.server.entity;
 
-import java.util.Random;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
@@ -9,6 +7,8 @@ import org.jurassicraft.server.animation.ControlledParam;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimSoundBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
+
+import java.util.Random;
 
 public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAICreature,
 // ICarnivore
@@ -23,7 +23,7 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAI
     public TyrannosaurusEntity(World world)
     {
         super(world);
-        
+
         injuredSounds = new String[] { "tyrannosaurus_hurt_1", "tyrannosaurus_hurt_2" };
         dyingSounds = new String[] { "tyrannosaurus_death_1" };
         attackingSounds = new String[] { "tyrannosaurus_roar_1" };

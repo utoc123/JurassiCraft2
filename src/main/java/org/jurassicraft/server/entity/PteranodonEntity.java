@@ -11,7 +11,7 @@ public class PteranodonEntity extends AggressiveFlyingDinosaurEntity // implemen
     public PteranodonEntity(World world)
     {
         super(world);
-        
+
         injuredSounds = new String[] { "pteranodon_hurt_1" };
         idleSounds = new String[] { "pteranodon_living_1" };
         dyingSounds = new String[] { "pteranodon_death_1" };

@@ -1,7 +1,5 @@
 package org.jurassicraft.server.entity;
 
-import java.util.Random;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
@@ -15,6 +13,8 @@ import org.jurassicraft.server.entity.ai.animations.JCAutoAnimBase;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
+import java.util.Random;
+
 public class VelociraptorEntity extends AggressiveDinosaurEntity // implements ICarnivore, IEntityAICreature
 {
     private static final Class[] targets = { CompsognathusEntity.class, EntityPlayer.class, DilophosaurusEntity.class, DimorphodonEntity.class, DodoEntity.class, LeaellynasauraEntity.class, HypsilophodonEntity.class, SegisaurusEntity.class, ProtoceratopsEntity.class, OthnieliaEntity.class, MicroceratusEntity.class };
@@ -26,7 +26,7 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
     public VelociraptorEntity(World world)
     {
         super(world);
-        
+
         injuredSounds = new String[] { "velociraptor_hurt_1" };
         idleSounds = new String[] { "velociraptor_living_1", "velociraptor_living_2", "velociraptor_living_3" };
         dyingSounds = new String[] { "velociraptor_death_1" };

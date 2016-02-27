@@ -1,10 +1,10 @@
 package org.jurassicraft.server.entity;
 
-import java.util.Random;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
+
+import java.util.Random;
 
 public class RugopsEntity extends AggressiveDinosaurEntity // implements IEntityAICreature, ICarnivore
 {
@@ -14,7 +14,7 @@ public class RugopsEntity extends AggressiveDinosaurEntity // implements IEntity
     public RugopsEntity(World world)
     {
         super(world);
-        
+
         injuredSounds = new String[] { "rugops_hurt_1", "rugops_hurt_2" };
         idleSounds = new String[] { "rugops_living_1", "rugops_living_2", "rugops_living_3", "rugops_living_4" };
         dyingSounds = new String[] { "rugops_death_1", "rugops_death_2" };

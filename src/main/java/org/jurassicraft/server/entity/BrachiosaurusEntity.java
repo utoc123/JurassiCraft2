@@ -10,7 +10,7 @@ public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements I
     public BrachiosaurusEntity(World world)
     {
         super(world);
-        
+
         idleSounds = new String[] { "brachiosaurus_living_1", "brachiosaurus_living_2", "brachiosaurus_living_3", "brachiosaurus_living_4" };
         injuredSounds = new String[] { "brachiosaurus_hurt_1", "brachiosaurus_hurt_2" };
         dyingSounds = new String[] { "brachiosaurus_death_1", "brachiosaurus_death_2" };

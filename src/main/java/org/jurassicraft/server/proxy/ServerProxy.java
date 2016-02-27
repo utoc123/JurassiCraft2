@@ -2,7 +2,6 @@ package org.jurassicraft.server.proxy;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
-import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;

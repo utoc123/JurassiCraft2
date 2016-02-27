@@ -1,12 +1,12 @@
 package org.jurassicraft.server.entity;
 
-import java.util.Random;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimSoundBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
+
+import java.util.Random;
 
 public class SpinosaurusEntity extends AggressiveDinosaurEntity // implements IEntityAICreature, IOmnivore
 {

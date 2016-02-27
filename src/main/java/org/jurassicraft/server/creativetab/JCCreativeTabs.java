@@ -48,7 +48,7 @@ public class JCCreativeTabs implements IContentHandler
                 return Item.getItemFromBlock(JCBlockRegistry.small_royal_fern);
             }
         };
-        fossils= new JurassiCraftTab("jurassicraft.fossils")
+        fossils = new JurassiCraftTab("jurassicraft.fossils")
         {
             public Item getTabIconItem()
             {

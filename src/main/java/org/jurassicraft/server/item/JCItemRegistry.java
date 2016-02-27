@@ -1,7 +1,6 @@
 package org.jurassicraft.server.item;
 
 import net.ilexiconn.llibrary.common.content.IContentHandler;
-import net.ilexiconn.llibrary.common.item.BookWikiItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -13,9 +12,7 @@ import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.item.vehicles.HeliModuleItem;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class JCItemRegistry implements IContentHandler

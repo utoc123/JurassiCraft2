@@ -1,10 +1,10 @@
 package org.jurassicraft.server.entity;
 
-import java.util.Random;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
+
+import java.util.Random;
 
 public class HerrerasaurusEntity extends AggressiveDinosaurEntity // implements IEntityAICreature, ICarnivore
 {
@@ -35,7 +35,7 @@ public class HerrerasaurusEntity extends AggressiveDinosaurEntity // implements 
     {
         return 6;
     }
-    
+
     @Override
     public float getSoundVolume()
     {
