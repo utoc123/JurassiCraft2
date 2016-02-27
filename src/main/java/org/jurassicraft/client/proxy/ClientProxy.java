@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.event.EventHandlerClient;
+import org.jurassicraft.client.event.ClientEventHandler;
 import org.jurassicraft.client.render.JCRenderingRegistry;
 import org.jurassicraft.server.proxy.ServerProxy;
 
@@ -23,7 +23,7 @@ public class ClientProxy extends ServerProxy
     {
         super.preInit(event);
 
-        EventHandlerClient eventHandler = new EventHandlerClient();
+        ClientEventHandler eventHandler = new ClientEventHandler();
         MinecraftForge.EVENT_BUS.register(eventHandler);
 
         renderingRegistry.preInit();

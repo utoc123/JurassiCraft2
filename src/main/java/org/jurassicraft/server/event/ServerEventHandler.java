@@ -21,7 +21,7 @@ import org.jurassicraft.server.item.JCItemRegistry;
 
 import java.util.Random;
 
-public class EventHandlerServer
+public class ServerEventHandler
 {
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void entityConstructing(EntityConstructing event)

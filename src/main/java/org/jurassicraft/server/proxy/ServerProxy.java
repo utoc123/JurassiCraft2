@@ -23,7 +23,7 @@ import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.event.EventHandlerServer;
+import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.handler.JCGuiHandler;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.bones.FossilItem;
@@ -62,7 +62,7 @@ public class ServerProxy
 
         NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.instance, new JCGuiHandler());
 
-        EventHandlerServer eventHandler = new EventHandlerServer();
+        ServerEventHandler eventHandler = new ServerEventHandler();
 
         MinecraftForge.EVENT_BUS.register(JurassiCraft.configurations);
         MinecraftForge.EVENT_BUS.register(eventHandler);

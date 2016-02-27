@@ -13,7 +13,7 @@ import org.jurassicraft.client.render.entity.IDinosaurRenderer;
 import org.jurassicraft.client.render.entity.IndominusRenderer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class EventHandlerClient
+public class ClientEventHandler
 {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
