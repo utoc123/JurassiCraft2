@@ -28,5 +28,6 @@ public class ApatosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(2.0F, 0.25F);
         this.setOffset(0.0F, 0.0F, 0.1F);
+        this.disableRegistry();
     }
 }

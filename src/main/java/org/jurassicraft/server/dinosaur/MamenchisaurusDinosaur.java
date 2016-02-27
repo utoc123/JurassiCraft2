@@ -28,5 +28,6 @@ public class MamenchisaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(1.8F, 0.2F);
         this.setOffset(0.0F, 0.0F, -0.5F);
+        this.disableRegistry();
     }
 }

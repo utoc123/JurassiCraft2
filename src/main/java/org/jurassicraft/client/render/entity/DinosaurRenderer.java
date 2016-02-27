@@ -57,13 +57,13 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
         shadowSize = scale * renderDef.getShadowSize();
 
-        GL11.glTranslatef(dinosaur.getOffsetX() * scale, dinosaur.getOffsetY() * scale, dinosaur.getOffsetZ() * scale);
+        GlStateManager.translate(dinosaur.getOffsetX() * scale, dinosaur.getOffsetY() * scale, dinosaur.getOffsetZ() * scale);
 
         String name = entity.getCustomNameTag();
 
         if (entity instanceof VelociraptorEntity && (name.equals("iLexiconn") || name.equals("JTGhawk137")))
         {
-            GL11.glScalef(scale - 0.86F, scale, scale);
+            GlStateManager.scale(scale - 0.86F, scale, scale);
         }
         else if (name.equals("Gegy"))
         {
@@ -81,19 +81,19 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                 time = 1 - time;
             }
 
-            GL11.glScalef(scale * (0.5F + time * 0.5F), scale * (1 + time * 0.5F), scale * (0.9F + time * 0.25F));
+            GlStateManager.scale(scale * (0.5F + time * 0.5F), scale * (1 + time * 0.5F), scale * (0.9F + time * 0.25F));
         }
         else if (name.equals("Notch") || name.equals("Jumbo"))
         {
-            GL11.glScalef(scale * 2, scale * 2, scale * 2);
+            GlStateManager.scale(scale * 2, scale * 2, scale * 2);
         }
         else if (name.equals("jglrxavpok"))
         {
-            GL11.glScalef(scale, scale, scale * -1);
+            GlStateManager.scale(scale, scale, scale * -1);
         }
         else
         {
-            GL11.glScalef(scale, scale, scale);
+            GlStateManager.scale(scale, scale, scale);
         }
     }
 

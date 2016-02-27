@@ -27,5 +27,6 @@ public class MoganopterusDinosaur extends Dinosaur
         this.setBones("leg_bones", "pelvis", "skull", "tail_vertebrae", "teeth", "wing_bones");
         this.setHeadCubeName("Head");
         this.setScale(0.725F, 0.2F);
+        this.disableRegistry();
     }
 }

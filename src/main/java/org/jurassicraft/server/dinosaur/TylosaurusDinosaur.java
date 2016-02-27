@@ -30,5 +30,6 @@ public class TylosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Main head");
         this.setScale(2.2F, 0.45F);
         this.setOffset(0.0F, 0.0F, 1.0F);
+        this.disableRegistry();
     }
 }

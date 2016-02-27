@@ -29,5 +29,6 @@ public class CarnotaurusDinosaur extends Dinosaur
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.25F);
+        this.disableRegistry();
     }
 }

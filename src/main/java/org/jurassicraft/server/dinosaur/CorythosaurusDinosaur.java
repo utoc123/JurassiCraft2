@@ -28,5 +28,6 @@ public class CorythosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(1.75F, 0.35F);
         this.setOffset(0.0F, 0.775F, 0.0F);
+        this.disableRegistry();
     }
 }

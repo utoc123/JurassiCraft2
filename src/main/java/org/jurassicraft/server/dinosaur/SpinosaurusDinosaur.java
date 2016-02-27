@@ -27,5 +27,6 @@ public class SpinosaurusDinosaur extends Dinosaur
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(2.37F, 0.3F);
+        this.disableRegistry();
     }
 }

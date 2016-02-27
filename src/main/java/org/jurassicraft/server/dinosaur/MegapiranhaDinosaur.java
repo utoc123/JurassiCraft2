@@ -29,5 +29,6 @@ public class MegapiranhaDinosaur extends Dinosaur
         this.setHeadCubeName("Neck ");
         this.setScale(1.0F, 0.15F);
         this.setOffset(0.0F, 0.65F, -0.25F);
+        this.disableRegistry();
     }
 }

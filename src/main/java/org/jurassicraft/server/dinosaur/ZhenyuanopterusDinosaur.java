@@ -9,7 +9,6 @@ public class ZhenyuanopterusDinosaur extends Dinosaur
     public ZhenyuanopterusDinosaur()
     {
         super();
-
         this.setName("Zhenyuanopterus");
         this.setDinosaurClass(ZhenyuanopterusEntity.class);
         this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
@@ -27,5 +26,6 @@ public class ZhenyuanopterusDinosaur extends Dinosaur
         this.setBones("leg_bones", "pelvis", "skull", "tail_vertebrae", "teeth", "wing_bones");
         this.setHeadCubeName("Head");
         this.setScale(0.7F, 0.25F);
+        this.disableRegistry();
     }
 }

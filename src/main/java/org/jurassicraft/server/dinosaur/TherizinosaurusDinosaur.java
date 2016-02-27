@@ -31,5 +31,6 @@ public class TherizinosaurusDinosaur extends Dinosaur
         this.setUsePosesForWalkingAnim(true);
         this.setScale(3.5F, 0.55F);
         this.setOffset(0.0F, 1.0F, 0.0F);
+        this.disableRegistry();
     }
 }

@@ -28,5 +28,6 @@ public class StegosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(2.55F, 0.35F);
         this.setOffset(0.0F, 0.775F, 0.0F);
+        this.disableRegistry();
     }
 }

@@ -27,5 +27,6 @@ public class HypsilophodonDinosaur extends Dinosaur
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "arm_bones");
         this.setHeadCubeName("Head ");
         this.setScale(0.65F, 0.2F);
+        this.disableRegistry();
     }
 }

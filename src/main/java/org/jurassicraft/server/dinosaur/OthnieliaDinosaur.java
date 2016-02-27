@@ -27,5 +27,6 @@ public class OthnieliaDinosaur extends Dinosaur
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head ");
         this.setScale(0.35F, 0.15F);
+        this.disableRegistry();
     }
 }

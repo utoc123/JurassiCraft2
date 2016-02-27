@@ -27,5 +27,6 @@ public class DodoDinosaur extends Dinosaur
         this.setBones("skull");
         this.setHeadCubeName("Head");
         this.setScale(0.8F, 0.3F);
+        this.disableRegistry();
     }
 }

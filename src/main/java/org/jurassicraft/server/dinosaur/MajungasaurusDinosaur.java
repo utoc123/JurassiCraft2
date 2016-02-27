@@ -27,5 +27,6 @@ public class MajungasaurusDinosaur extends Dinosaur
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.6F, 0.4F);
+        this.disableRegistry();
     }
 }

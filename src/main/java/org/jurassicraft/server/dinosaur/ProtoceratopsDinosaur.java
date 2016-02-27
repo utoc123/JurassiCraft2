@@ -27,5 +27,6 @@ public class ProtoceratopsDinosaur extends Dinosaur
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(1.2F, 0.35F);
+        this.disableRegistry();
     }
 }

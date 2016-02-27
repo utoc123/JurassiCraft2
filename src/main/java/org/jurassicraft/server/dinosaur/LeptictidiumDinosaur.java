@@ -27,5 +27,6 @@ public class LeptictidiumDinosaur extends Dinosaur
         this.setDiet(EnumDiet.HERBIVORE);
         this.setBones();
         this.setScale(0.6F, 0.25F);
+        this.disableRegistry();
     }
 }

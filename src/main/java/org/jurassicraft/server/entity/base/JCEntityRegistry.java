@@ -234,24 +234,21 @@ public class JCEntityRegistry implements IContentHandler
 
     public void registerDinosaur(Dinosaur dinosaur)
     {
-        if (dinosaur.shouldRegister())
+        Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
+
+        registerEntity(clazz, dinosaur.getName());
+
+        if (dinosaur.shouldRegister() && !(dinosaur instanceof IHybrid) && JCConfigurations.spawnJurassiCraftMobsNaturally())
         {
-            Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
-
-            registerEntity(clazz, dinosaur.getName());
-
-            if (dinosaur.shouldRegister() && !(dinosaur instanceof IHybrid) && JCConfigurations.spawnJurassiCraftMobsNaturally())
+            if (dinosaur.isMarineAnimal())
             {
-                if (dinosaur.isMarineAnimal())
-                {
-                    EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, BiomeGenBase.ocean, BiomeGenBase.deepOcean, BiomeGenBase.river);
-                    EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.IN_WATER);
-                }
-                else
-                {
-                    EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(Iterators.forArray(BiomeGenBase.getBiomeGenArray()), Predicates.notNull()), BiomeGenBase.class));
-                    EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.ON_GROUND);
-                }
+                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, BiomeGenBase.ocean, BiomeGenBase.deepOcean, BiomeGenBase.river);
+                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.IN_WATER);
+            }
+            else
+            {
+                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(Iterators.forArray(BiomeGenBase.getBiomeGenArray()), Predicates.notNull()), BiomeGenBase.class));
+                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.ON_GROUND);
             }
         }
     }

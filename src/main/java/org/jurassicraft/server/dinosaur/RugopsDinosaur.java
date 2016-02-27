@@ -27,5 +27,6 @@ public class RugopsDinosaur extends Dinosaur
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.0F, 0.3F);
+        this.disableRegistry();
     }
 }

@@ -28,5 +28,6 @@ public class CompsognathusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(0.1F, 0.04F);
         this.setOffset(0.0F, -12.0F, -0.8F);
+        this.disableRegistry();
     }
 }

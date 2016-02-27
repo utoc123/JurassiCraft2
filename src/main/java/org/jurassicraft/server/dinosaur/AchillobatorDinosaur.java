@@ -27,6 +27,7 @@ public class AchillobatorDinosaur extends Dinosaur
         this.setBones("skull", "tooth");
         this.setHeadCubeName("head");
         this.setScale(1.1F, 0.325F);
+        this.disableRegistry();
     }
 
     @Override

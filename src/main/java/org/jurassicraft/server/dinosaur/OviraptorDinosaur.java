@@ -29,5 +29,6 @@ public class OviraptorDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(0.65F, 0.18F);
         this.setOffset(0.0F, 0.0F, -0.4F);
+        this.disableRegistry();
     }
 }

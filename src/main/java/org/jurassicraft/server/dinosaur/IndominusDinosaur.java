@@ -43,6 +43,7 @@ public class IndominusDinosaur extends Dinosaur implements IHybrid
 
         this.baseGenes = new Class[] { TyrannosaurusDinosaur.class, VelociraptorDinosaur.class };
         this.extraGenes = new Class[] { GiganotosaurusDinosaur.class, RugopsDinosaur.class, MajungasaurusDinosaur.class, CarnotaurusDinosaur.class }; // TODO therizino
+        this.disableRegistry();
     }
 
     @Override

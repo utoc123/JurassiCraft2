@@ -29,5 +29,6 @@ public class SegisaurusDinosaur extends Dinosaur
         this.setBones("skull", "teeth");
         this.setHeadCubeName("head");
         this.setScale(0.55F, 0.2F);
+        this.disableRegistry();
     }
 }

@@ -30,5 +30,6 @@ public class TroodonDinosaur extends Dinosaur
         this.setHeadCubeName("head UPPER");
         this.setScale(0.75F, 0.25F);
         this.setOffset(0.0F, 0.0F, 0.5F);
+        this.disableRegistry();
     }
 }

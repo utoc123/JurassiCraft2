@@ -14,6 +14,7 @@ public class VelociraptorBlueDinosaur extends VelociraptorDinosaur implements IH
         this.setEggColorMale(0x5A5752, 0x32D3E55);
         this.setEggColorFemale(0x5A5752, 0x32D3E55);
         this.setOverlayCount(0);
+        this.disableRegistry();
     }
 
     @Override

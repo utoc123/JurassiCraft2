@@ -27,5 +27,6 @@ public class PachycephalosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(0.9F, 0.2F);
         this.setEyeHeight(0.4F, 1.8F);
+        this.disableRegistry();
     }
 }

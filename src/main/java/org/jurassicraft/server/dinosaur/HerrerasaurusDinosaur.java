@@ -27,5 +27,6 @@ public class HerrerasaurusDinosaur extends Dinosaur
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.25F);
+        this.disableRegistry();
     }
 }

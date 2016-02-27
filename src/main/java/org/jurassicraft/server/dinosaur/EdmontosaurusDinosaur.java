@@ -28,5 +28,6 @@ public class EdmontosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(2.65F, 0.45F);
         this.setOffset(0.0F, 0.775F, 0.0F);
+        this.disableRegistry();
     }
 }

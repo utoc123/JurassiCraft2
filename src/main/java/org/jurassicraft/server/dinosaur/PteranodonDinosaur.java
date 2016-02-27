@@ -27,5 +27,6 @@ public class PteranodonDinosaur extends Dinosaur
         this.setBones("leg_bones", "neck_vertebrae", "pelvis", "ribcage", "skull", "tail_vertebrae", "wing_bones");
         this.setHeadCubeName("Head");
         this.setScale(1.2F, 0.3F);
+        this.disableRegistry();
     }
 }

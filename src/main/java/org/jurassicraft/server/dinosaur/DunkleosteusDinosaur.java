@@ -31,5 +31,6 @@ public class DunkleosteusDinosaur extends Dinosaur
         this.setHeadCubeName("Main head");
         this.setScale(2.1F, 0.55F);
         this.setOffset(0.0F, 1.0F, -0.25F);
+        this.disableRegistry();
     }
 }

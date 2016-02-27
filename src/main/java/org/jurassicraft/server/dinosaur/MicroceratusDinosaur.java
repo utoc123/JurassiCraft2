@@ -27,5 +27,6 @@ public class MicroceratusDinosaur extends Dinosaur
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(0.5F, 0.18F);
+        this.disableRegistry();
     }
 }

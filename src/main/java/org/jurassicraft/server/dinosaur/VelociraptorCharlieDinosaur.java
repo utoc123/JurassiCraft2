@@ -14,6 +14,7 @@ public class VelociraptorCharlieDinosaur extends VelociraptorDinosaur implements
         this.setEggColorMale(0x525637, 0x2C2F24);
         this.setEggColorFemale(0x525637, 0x2C2F24);
         this.setOverlayCount(0);
+        this.disableRegistry();
     }
 
     @Override

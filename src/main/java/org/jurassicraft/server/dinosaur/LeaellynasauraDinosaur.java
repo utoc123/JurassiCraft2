@@ -27,5 +27,6 @@ public class LeaellynasauraDinosaur extends Dinosaur
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder");
         this.setHeadCubeName("Head ");
         this.setScale(0.7F, 0.25F);
+        this.disableRegistry();
     }
 }
