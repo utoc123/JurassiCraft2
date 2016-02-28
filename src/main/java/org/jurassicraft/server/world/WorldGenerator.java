@@ -47,16 +47,20 @@ public class WorldGenerator implements IWorldGenerator
 
             if (period != null)
             {
-                randPosY += random.nextInt(4) - 2;
+                randPosY += random.nextInt(8) - 4;
 
                 List<Dinosaur> dinos = JCEntityRegistry.getDinosaursFromPeriod(period);
 
                 if (dinos != null && dinos.size() > 0)
                 {
                     Dinosaur dinosaur = dinos.get(random.nextInt(dinos.size()));
-                    int meta = JurassiCraft.blockRegistry.getMetadata(dinosaur);
 
-                    new WorldGenMinable(JurassiCraft.blockRegistry.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+                    if (dinosaur.shouldRegister())
+                    {
+                        int meta = JurassiCraft.blockRegistry.getMetadata(dinosaur);
+
+                        new WorldGenMinable(JurassiCraft.blockRegistry.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+                    }
                 }
             }
         }
