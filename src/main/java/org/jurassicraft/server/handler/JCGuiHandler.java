@@ -24,7 +24,6 @@ import org.jurassicraft.client.gui.IncubatorGui;
 import org.jurassicraft.client.gui.PaleoPadGui;
 import org.jurassicraft.client.gui.PaleoPadViewDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
-import org.jurassicraft.server.container.CarnivoreFeederContainer;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.container.DNACombinatorContainer;
@@ -37,7 +36,6 @@ import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.tileentity.CarnivoreFeederTile;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 import org.jurassicraft.server.tileentity.CultivatorTile;
 import org.jurassicraft.server.tileentity.DNACombinatorTile;
@@ -103,10 +101,6 @@ public class JCGuiHandler implements IGuiHandler
             else if (tileEntity instanceof CultivatorTile && id == 10)
             {
                 return new CultivateContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof CarnivoreFeederTile && id == 11)
-            {
-                return new CarnivoreFeederContainer();
             }
         }
 

@@ -20,10 +20,8 @@ public class GuiAppRegistry
 
     public static void register()
     {
-        registerApp(new FileExplorerGuiApp(AppRegistry.file_explorer));
         registerApp(new FlappyDinoGuiApp(AppRegistry.flappy_dino));
         registerApp(new MinimapGuiApp(AppRegistry.minimap));
-        registerApp(new SecurityGuiApp(AppRegistry.security));
     }
 
     public static GuiApp getGui(App app)

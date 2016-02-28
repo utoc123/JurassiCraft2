@@ -56,6 +56,7 @@ public class PaleoPadGui extends GuiScreen
     {
         ScaledResolution dimensions = new ScaledResolution(mc);
         int scaledWidth = dimensions.getScaledWidth();
+        int scaledHeight = dimensions.getScaledWidth();
 
         if (focus == null)
         {
@@ -83,6 +84,15 @@ public class PaleoPadGui extends GuiScreen
         else
         {
             focus.mouseClicked(mouseX, mouseY, this);
+
+            mouseX -= dimensions.getScaledWidth() / 2 - 115;
+            mouseY -= 65;
+
+            if (mouseX > 97 && mouseY > 153 && mouseX < 131 && mouseY < 157)
+            {
+                focus.requestShutdown();
+                focus = null;
+            }
         }
     }
 

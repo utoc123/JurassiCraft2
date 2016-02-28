@@ -8,7 +8,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.block.machine.CarnivoreFeederBlock;
 import org.jurassicraft.server.block.machine.CleaningStationBlock;
 import org.jurassicraft.server.block.machine.CultivatorBottomBlock;
 import org.jurassicraft.server.block.machine.CultivatorTopBlock;
@@ -21,7 +20,6 @@ import org.jurassicraft.server.block.machine.EmbryoCalcificationMachineBlock;
 import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
-import org.jurassicraft.server.block.machine.SecurityCameraBlock;
 import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
 import org.jurassicraft.server.block.plant.CryPansyBlock;
 import org.jurassicraft.server.block.plant.CycadZamitesBlock;
@@ -43,7 +41,6 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
-import org.jurassicraft.server.tileentity.CarnivoreFeederTile;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 import org.jurassicraft.server.tileentity.CultivatorTile;
 import org.jurassicraft.server.tileentity.DNACombinatorTile;
@@ -98,8 +95,6 @@ public class JCBlockRegistry implements IContentHandler
     public static Block dna_hybridizer;
     public static Block dna_combinator;
 
-    public static Block security_camera;
-
     public static Block reinforced_stone;
     public static Block reinforced_bricks;
 
@@ -110,7 +105,6 @@ public class JCBlockRegistry implements IContentHandler
     public static Block cultivate_top;
     public static Block cultivate_bottom;
 
-    public static Block carnivore_feeder;
     public static Block bennettitalean_cycadeoidea;
     public static Block cry_pansy;
     public static Block scaly_tree_fern;
@@ -127,7 +121,6 @@ public class JCBlockRegistry implements IContentHandler
         fossils = new ArrayList<FossilBlock>();
         encased_fossils = new ArrayList<EncasedFossilBlock>();
 
-        carnivore_feeder = new CarnivoreFeederBlock();
         cleaning_station = new CleaningStationBlock();
         fossil_grinder = new FossilGrinderBlock();
         dna_sequencer = new DNASequencerBlock();
@@ -160,8 +153,6 @@ public class JCBlockRegistry implements IContentHandler
         dicksonia = new DicksoniaBlock();
 
         action_figure = new ActionFigureBlock();
-
-        security_camera = new SecurityCameraBlock();
 
         moss = new MossBlock();
 
@@ -258,12 +249,10 @@ public class JCBlockRegistry implements IContentHandler
         registerBlock(scaly_tree_fern, "Scaly Tree Fern");
         registerBlock(cycad_zamites, "Cycad Zamites");
         registerBlock(dicksonia, "Dicksonia");
-        registerBlock(security_camera, "Security Camera");
         registerBlock(moss, "Moss");
 
         registerBlockTileEntity(CultivatorTile.class, cultivate_bottom, "Cultivate Bottom");
         registerBlock(cultivate_top, "Cultivate Top");
-        registerBlockTileEntity(CarnivoreFeederTile.class, carnivore_feeder, "Carnivore Feeder");
         registerBlockTileEntity(CleaningStationTile.class, cleaning_station, "Cleaning Station");
         registerBlockTileEntity(FossilGrinderTile.class, fossil_grinder, "Fossil Grinder");
         registerBlockTileEntity(DNASequencerTile.class, dna_sequencer, "DNA Sequencer");

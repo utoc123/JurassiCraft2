@@ -34,14 +34,6 @@ public class PaleoPadItem extends Item
      */
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.getBlockState(pos).getBlock() == JCBlockRegistry.security_camera)
-        {
-            JCPlayerData data = JCPlayerData.getPlayerData(player);
-            data.addCamera(pos);
-
-            return true;
-        }
-
         return false;
     }
 
