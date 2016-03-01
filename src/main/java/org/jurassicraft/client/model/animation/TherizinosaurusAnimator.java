@@ -3,7 +3,6 @@ package org.jurassicraft.client.model.animation;
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TherizinosaurusEntity;
@@ -124,7 +123,7 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
         }
         else
         {
-            JurassiCraft.instance.getLogger().info("Use Mowzie for walking animation");
+            // JurassiCraft.instance.getLogger().info("Use Mowzie for walking animation");
 
             model.bob(bodyHips, 1F * speed, height, false, f, f1);
             model.flap(bodyHips, 0.5F * speed, 0.5F, false, 0, 0, f, f1);
