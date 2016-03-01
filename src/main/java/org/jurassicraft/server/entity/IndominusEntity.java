@@ -7,8 +7,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimSoundBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
 public class IndominusEntity extends AggressiveDinosaurEntity // implements ICarnivore, IEntityAICreature
@@ -28,7 +26,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
         idleSounds = new String[] { "indominus_living_1", "indominus_breath" };
         dyingSounds = new String[] { "indominus_death_1" };
 
-        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.IDLE.get(), 750, getIdleSound(), 1.5F));
         this.addAIForAttackTargets(EntityLivingBase.class, 0);
         this.defendFromAttacker(EntityLivingBase.class, 0);
     }

@@ -30,7 +30,7 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
         injuredSounds = new String[] { "velociraptor_hurt_1" };
         idleSounds = new String[] { "velociraptor_living_1", "velociraptor_living_2", "velociraptor_living_3" };
         dyingSounds = new String[] { "velociraptor_death_1" };
-        callingsounds = new String[] { "velociraptor_bark_1", "velociraptor_bark_2", "velociraptor_bark_3" };
+        callingSounds = new String[] { "velociraptor_bark_1", "velociraptor_bark_2", "velociraptor_bark_3" };
 
         tasks.addTask(2, new JCAutoAnimBase(this, 25, Animations.IDLE.get())); // Call
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));

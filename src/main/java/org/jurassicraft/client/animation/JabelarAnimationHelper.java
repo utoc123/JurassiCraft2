@@ -1,5 +1,7 @@
 package org.jurassicraft.client.animation;
 
+import java.util.Map;
+
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -13,8 +15,6 @@ import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.fx.BloodEntityFX;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-
-import java.util.Map;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
@@ -398,54 +398,62 @@ public class JabelarAnimationHelper
 
         JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
 
+        String theSound = "";
+        
         if (theEntity.getAnimation() == Animations.ATTACKING.get())
         {
-            theEntity.playSound(theEntity.getAttackingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getAttackingSound();
         }
         else if (theEntity.getAnimation() == Animations.CALLING.get())
         {
-            theEntity.playSound(theEntity.getCallingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getCallingSound();
         }
         else if (theEntity.getAnimation() == Animations.DYING.get())
         {
-            theEntity.playSound(theEntity.getDeathSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getDyingSound();
         }
         else if (theEntity.getAnimation() == Animations.INJURED.get())
         {
-            theEntity.playSound(theEntity.getHurtSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getInjuredSound();
         }
         else if (theEntity.getAnimation() == Animations.DRINKING.get())
         {
-            theEntity.playSound(theEntity.getDrinkingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getDrinkingSound();
         }
         else if (theEntity.getAnimation() == Animations.EATING.get())
         {
-            theEntity.playSound(theEntity.getEatingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getEatingSound();
         }
         else if (theEntity.getAnimation() == Animations.HISSING.get())
         {
-            theEntity.playSound(theEntity.getHissingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getHissingSound();
         }
         else if (theEntity.getAnimation() == Animations.SCRATCHING.get())
         {
-            theEntity.playSound(theEntity.getScratchingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getScratchingSound();
         }
         else if (theEntity.getAnimation() == Animations.MATING.get())
         {
-            theEntity.playSound(theEntity.getMatingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getMatingSound();
         }
         else if (theEntity.getAnimation() == Animations.ROARING.get())
         {
-            theEntity.playSound(theEntity.getRoaringSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getRoaringSound();
         }
         else if (theEntity.getAnimation() == Animations.SNIFFING.get())
         {
-            theEntity.playSound(theEntity.getSniffingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getSniffingSound();
         }
         else if (theEntity.getAnimation() == Animations.POUNCING.get())
         {
-            theEntity.playSound(theEntity.getPouncingSound(), theEntity.getSoundVolume(), theEntity.getSoundPitch());
+            theSound = theEntity.getPouncingSound();
         }
+        
+        if (theSound != null)
+        {
+            theEntity.playSound(theSound, theEntity.getSoundVolume(), theEntity.getSoundPitch());
+        }
+
 
     }
 

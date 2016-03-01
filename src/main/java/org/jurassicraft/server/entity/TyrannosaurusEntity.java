@@ -1,14 +1,13 @@
 package org.jurassicraft.server.entity;
 
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.animation.ControlledParam;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
-import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimSoundBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
-
-import java.util.Random;
 
 public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAICreature,
 // ICarnivore
@@ -29,7 +28,6 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAI
         attackingSounds = new String[] { "tyrannosaurus_roar_1" };
         breathSounds = new String[] { "tyrannosaurus_breath_1" };
 
-        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.IDLE.get(), 750, this.getIdleSound(), 1.5F));
         tasks.addTask(2, new JCNonAutoAnimBase(this, 75, Animations.INJURED.get(), 750));
 
         for (Class target : targets)
