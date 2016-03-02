@@ -73,8 +73,10 @@ import org.jurassicraft.client.model.animation.VelociraptorDeltaAnimator;
 import org.jurassicraft.client.model.animation.VelociraptorEchoAnimator;
 import org.jurassicraft.client.model.animation.ZhenyuanopterusAnimator;
 import org.jurassicraft.client.render.block.ActionFigureSpecialRenderer;
+import org.jurassicraft.client.render.block.DNACombinatorHybridizerSpecialRenderer;
 import org.jurassicraft.client.render.block.DNAExtractorSpecialRenderer;
 import org.jurassicraft.client.render.block.DNASequencerSpecialRenderer;
+import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
 import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.CageSmallRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
@@ -97,8 +99,10 @@ import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.JCPlantRegistry;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
+import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
 import org.jurassicraft.server.tileentity.DNASequencerTile;
+import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 
 import java.util.List;
@@ -279,6 +283,7 @@ public class JCRenderingRegistry
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.cleaning_station, "cleaning_station", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.fossil_grinder, "fossil_grinder", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.dna_sequencer, "dna_sequencer", "inventory");
+        this.registerBlockRenderer(modelMesher, JCBlockRegistry.dna_combinator_hybridizer, "dna_combinator_hybridizer", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.dna_synthesizer, "dna_synthesizer", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.embryonic_machine, "embryonic_machine", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.embryo_calcification_machine, "embryo_calcification_machine", "inventory");
@@ -312,6 +317,8 @@ public class JCRenderingRegistry
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerTile.class, new DNASequencerSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(EmbryoCalcificationMachineTile.class, new EmbryoCalcificationMachineSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNACombinatorHybridizerTile.class, new DNACombinatorHybridizerSpecialRenderer());
 
         RenderItem renderItem = mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();

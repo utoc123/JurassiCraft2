@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.gui.CleaningStationGui;
 import org.jurassicraft.client.gui.CultivateGui;
 import org.jurassicraft.client.gui.CultivateProcessGui;
-import org.jurassicraft.client.gui.DNACombinatorGui;
 import org.jurassicraft.client.gui.DNAExtractorGui;
 import org.jurassicraft.client.gui.DNAHybridizerGui;
 import org.jurassicraft.client.gui.DNASequencerGui;
@@ -26,9 +25,8 @@ import org.jurassicraft.client.gui.PaleoPadViewDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
-import org.jurassicraft.server.container.DNACombinatorContainer;
 import org.jurassicraft.server.container.DNAExtractorContainer;
-import org.jurassicraft.server.container.DNAHybridizerContainer;
+import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.container.DNASequencerContainer;
 import org.jurassicraft.server.container.DNASynthesizerContainer;
 import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
@@ -38,9 +36,8 @@ import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 import org.jurassicraft.server.tileentity.CultivatorTile;
-import org.jurassicraft.server.tileentity.DNACombinatorTile;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNAHybridizerTile;
+import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 import org.jurassicraft.server.tileentity.DNASequencerTile;
 import org.jurassicraft.server.tileentity.DNASynthesizerTile;
 import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
@@ -86,13 +83,9 @@ public class JCGuiHandler implements IGuiHandler
             {
                 return new IncubatorContainer(player.inventory, tileEntity);
             }
-            else if (tileEntity instanceof DNAHybridizerTile && id == 7)
+            else if (tileEntity instanceof DNACombinatorHybridizerTile && id == 7)
             {
-                return new DNAHybridizerContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof DNACombinatorTile && id == 8)
-            {
-                return new DNACombinatorContainer(player.inventory, (DNACombinatorTile) tileEntity);
+                return new DNACombinatorHybridizerContainer(player.inventory, tileEntity);
             }
             else if (tileEntity instanceof DNAExtractorTile && id == 9)
             {
@@ -143,13 +136,9 @@ public class JCGuiHandler implements IGuiHandler
             {
                 return new IncubatorGui(player.inventory, (IncubatorTile) tileEntity);
             }
-            else if (tileEntity instanceof DNAHybridizerTile && id == 7)
+            else if (tileEntity instanceof DNACombinatorHybridizerTile && id == 7)
             {
-                return new DNAHybridizerGui(player.inventory, (DNAHybridizerTile) tileEntity);
-            }
-            else if (tileEntity instanceof DNACombinatorTile && id == 8)
-            {
-                return new DNACombinatorGui(player.inventory, (DNACombinatorTile) tileEntity);
+                return new DNAHybridizerGui(player.inventory, (DNACombinatorHybridizerTile) tileEntity);
             }
             else if (tileEntity instanceof DNAExtractorTile && id == 9)
             {

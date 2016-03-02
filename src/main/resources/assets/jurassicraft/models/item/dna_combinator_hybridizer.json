@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-		"layer0": "jurassicraft:items/embryo_calcification_machine"
+		"layer0": "jurassicraft:items/dna_combinator_hybridizer"
     },
     "display": {
         "thirdperson": {

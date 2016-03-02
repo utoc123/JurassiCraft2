@@ -169,7 +169,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
             stack.stackSize = this.getInventoryStackLimit();
         }
 
-        if (index < getInputs().length && !flag)
+        if (!flag)
         {
             int i = getProcess(index);
             this.totalProcessTime[i] = this.getStackProcessTime(stack);
@@ -247,51 +247,51 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     {
         ItemStack[] slots = getSlots();
 
-        for (int i = 0; i < getProcessCount(); i++)
+        for (int process = 0; process < getProcessCount(); process++)
         {
-            boolean flag = this.isProcessing(i);
+            boolean flag = this.isProcessing(process);
             boolean sync = false;
 
             if (!this.worldObj.isRemote)
             {
-                if (!this.isProcessing(i) && (slots[getMainInput(i)] == null))
+                if (!this.isProcessing(process) && (slots[getInputs(process)[0]] == null))
                 {
-                    if (!this.isProcessing(i) && this.processTime[i] > 0)
+                    if (!this.isProcessing(process) && this.processTime[process] > 0)
                     {
-                        this.processTime[i] = MathHelper.clamp_int(this.processTime[i] - 2, 0, this.totalProcessTime[i]);
+                        this.processTime[process] = MathHelper.clamp_int(this.processTime[process] - 2, 0, this.totalProcessTime[process]);
                     }
                 }
                 else
                 {
-                    if (this.canProcess(i))
+                    if (this.canProcess(process))
                     {
-                        ++this.processTime[i];
+                        ++this.processTime[process];
 
-                        if (this.processTime[i] == this.totalProcessTime[i])
+                        if (this.processTime[process] == this.totalProcessTime[process])
                         {
-                            this.processTime[i] = 0;
-                            this.totalProcessTime[i] = this.getStackProcessTime(slots[getMainInput(i)]);
-                            this.processItem(i);
+                            this.processTime[process] = 0;
+                            this.totalProcessTime[process] = this.getStackProcessTime(slots[getInputs()[0]]);
+                            this.processItem(process);
                             sync = true;
                         }
                     }
                     else
                     {
-                        this.processTime[i] = 0;
+                        this.processTime[process] = 0;
                         sync = true;
                     }
                 }
 
-                if (flag != this.isProcessing(i))
+                if (flag != this.isProcessing(process))
                 {
                     sync = true;
                 }
             }
             else
             {
-                if (this.canProcess(i))
+                if (this.canProcess(process))
                 {
-                    ++this.processTime[i];
+                    ++this.processTime[process];
                 }
             }
 
@@ -345,8 +345,6 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
     protected abstract void processItem(int process);
 
-    protected abstract int getMainInput(int process);
-
     protected abstract int getMainOutput(int process);
 
     protected abstract int getStackProcessTime(ItemStack stack);
@@ -354,6 +352,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     protected abstract int getProcessCount();
 
     protected abstract int[] getInputs();
+    protected abstract int[] getInputs(int process);
 
     protected abstract int[] getOutputs();
 

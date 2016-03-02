@@ -11,9 +11,8 @@ import org.jurassicraft.server.api.ISubBlocksBlock;
 import org.jurassicraft.server.block.machine.CleaningStationBlock;
 import org.jurassicraft.server.block.machine.CultivatorBottomBlock;
 import org.jurassicraft.server.block.machine.CultivatorTopBlock;
-import org.jurassicraft.server.block.machine.DNACombinatorBlock;
 import org.jurassicraft.server.block.machine.DNAExtractorBlock;
-import org.jurassicraft.server.block.machine.DNAHybridizerBlock;
+import org.jurassicraft.server.block.machine.DNACombinatorHybridizerBlock;
 import org.jurassicraft.server.block.machine.DNASequencerBlock;
 import org.jurassicraft.server.block.machine.DNASynthesizerBlock;
 import org.jurassicraft.server.block.machine.EmbryoCalcificationMachineBlock;
@@ -43,9 +42,8 @@ import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 import org.jurassicraft.server.tileentity.CultivatorTile;
-import org.jurassicraft.server.tileentity.DNACombinatorTile;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNAHybridizerTile;
+import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 import org.jurassicraft.server.tileentity.DNASequencerTile;
 import org.jurassicraft.server.tileentity.DNASynthesizerTile;
 import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
@@ -92,8 +90,7 @@ public class JCBlockRegistry implements IContentHandler
     public static Block gypsum_cobblestone;
     public static Block gypsum_stone;
     public static Block gypsum_bricks;
-    public static Block dna_hybridizer;
-    public static Block dna_combinator;
+    public static Block dna_combinator_hybridizer;
 
     public static Block reinforced_stone;
     public static Block reinforced_bricks;
@@ -129,8 +126,7 @@ public class JCBlockRegistry implements IContentHandler
         embryo_calcification_machine = new EmbryoCalcificationMachineBlock();
         incubator = new IncubatorBlock();
         dna_extractor = new DNAExtractorBlock();
-        dna_hybridizer = new DNAHybridizerBlock();
-        dna_combinator = new DNACombinatorBlock();
+        dna_combinator_hybridizer = new DNACombinatorHybridizerBlock();
         cultivate_bottom = new CultivatorBottomBlock();
         cultivate_top = new CultivatorTopBlock();
 
@@ -260,8 +256,7 @@ public class JCBlockRegistry implements IContentHandler
         registerBlockTileEntity(EmbryonicMachineTile.class, embryonic_machine, "Embryonic Machine");
         registerBlockTileEntity(EmbryoCalcificationMachineTile.class, embryo_calcification_machine, "Embryo Calcification Machine");
         registerBlockTileEntity(DNAExtractorTile.class, dna_extractor, "DNA Extractor");
-        registerBlockTileEntity(DNAHybridizerTile.class, dna_hybridizer, "DNA Hybridizer");
-        registerBlockTileEntity(DNACombinatorTile.class, dna_combinator, "DNA Combinator");
+        registerBlockTileEntity(DNACombinatorHybridizerTile.class, dna_combinator_hybridizer, "DNA Combinator Hybridizer");
         registerBlockTileEntity(IncubatorTile.class, incubator, "Incubator");
         registerBlockTileEntity(ActionFigureTile.class, action_figure, "Action Figure Block");
     }

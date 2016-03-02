@@ -18,13 +18,7 @@ public class VelociraptorCharlieDinosaur extends VelociraptorDinosaur implements
     }
 
     @Override
-    public Class[] getBaseGenes()
-    {
-        return new Class[] { VelociraptorDinosaur.class }; // TODO
-    }
-
-    @Override
-    public Class[] getExtraGenes()
+    public Class[] getDinosaurs()
     {
         return new Class[] { VelociraptorDinosaur.class };
     }

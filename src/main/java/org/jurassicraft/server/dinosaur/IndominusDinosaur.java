@@ -13,9 +13,6 @@ public class IndominusDinosaur extends Dinosaur implements IHybrid
 
     private ResourceLocation overlayTexture;
 
-    private Class[] baseGenes;
-    private Class[] extraGenes;
-
     public IndominusDinosaur()
     {
         super();
@@ -41,21 +38,13 @@ public class IndominusDinosaur extends Dinosaur implements IHybrid
         this.texture = new ResourceLocation(getDinosaurTexture("camouflage"));
         this.overlayTexture = new ResourceLocation(getDinosaurTexture(""));
 
-        this.baseGenes = new Class[] { TyrannosaurusDinosaur.class, VelociraptorDinosaur.class };
-        this.extraGenes = new Class[] { GiganotosaurusDinosaur.class, RugopsDinosaur.class, MajungasaurusDinosaur.class, CarnotaurusDinosaur.class }; // TODO therizino
         this.disableRegistry();
     }
 
     @Override
-    public Class[] getBaseGenes()
+    public Class<? extends Dinosaur>[] getDinosaurs()
     {
-        return baseGenes;
-    }
-
-    @Override
-    public Class[] getExtraGenes()
-    {
-        return extraGenes;
+        return new Class[] { TyrannosaurusDinosaur.class, VelociraptorDinosaur.class, GiganotosaurusDinosaur.class, RugopsDinosaur.class, MajungasaurusDinosaur.class, CarnotaurusDinosaur.class, TherizinosaurusDinosaur.class };
     }
 
     @Override

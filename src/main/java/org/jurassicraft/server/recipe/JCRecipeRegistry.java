@@ -80,8 +80,7 @@ public class JCRecipeRegistry implements IContentHandler
         GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.embryonic_machine), "GIG", "GIG", "III", 'G', Blocks.glass_pane, 'I', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.embryo_calcification_machine), "GIG", "GSG", "III", 'G', Blocks.glass_pane, 'I', Items.iron_ingot, 'S', JCItemRegistry.needle);
         GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.incubator), "GGG", "RRR", "III", 'I', Items.iron_ingot, 'R', Items.redstone, 'G', Blocks.glass);
-        GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.dna_combinator), "IDI", "GRG", "III", 'G', Blocks.glass, 'I', Items.iron_ingot, 'R', Items.redstone, 'D', JCItemRegistry.disc_reader);
-        GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.dna_hybridizer), "IRI", "GIG", "IRI", 'G', Blocks.glass, 'I', Items.iron_ingot, 'R', Items.redstone);
+        GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.dna_combinator_hybridizer), "IRI", "GIG", "IRI", 'G', Blocks.glass, 'I', Items.iron_ingot, 'R', Items.redstone);
         GameRegistry.addShapelessRecipe(new ItemStack(JCItemRegistry.plant_cells_petri_dish), JCItemRegistry.plant_cells, JCItemRegistry.petri_dish);
 
         GameRegistry.addRecipe(new ItemStack(JCItemRegistry.iron_nugget, 9), "i", 'i', Items.iron_ingot);

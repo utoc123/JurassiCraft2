@@ -129,12 +129,6 @@ public class IncubatorTile extends MachineBaseTile
     }
 
     @Override
-    protected int getMainInput(int process)
-    {
-        return process;
-    }
-
-    @Override
     protected int getMainOutput(int process)
     {
         return 0;
@@ -156,6 +150,12 @@ public class IncubatorTile extends MachineBaseTile
     protected int[] getInputs()
     {
         return inputs;
+    }
+
+    @Override
+    protected int[] getInputs(int process)
+    {
+        return new int[] { process };
     }
 
     @Override

@@ -18,13 +18,7 @@ public class VelociraptorEchoDinosaur extends VelociraptorDinosaur implements IH
     }
 
     @Override
-    public Class[] getBaseGenes()
-    {
-        return new Class[] { VelociraptorDinosaur.class }; // TODO
-    }
-
-    @Override
-    public Class[] getExtraGenes()
+    public Class[] getDinosaurs()
     {
         return new Class[] { VelociraptorDinosaur.class };
     }

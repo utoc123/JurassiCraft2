@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,16 +20,16 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.tileentity.DNAHybridizerTile;
+import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 
 import java.util.Random;
 
-public class DNAHybridizerBlock extends OrientedBlock
+public class DNACombinatorHybridizerBlock extends OrientedBlock
 {
-    public DNAHybridizerBlock()
+    public DNACombinatorHybridizerBlock()
     {
         super(Material.iron);
-        this.setUnlocalizedName("dna_hybridizer");
+        this.setUnlocalizedName("dna_combinator_hybridizer");
         this.setHardness(2.0F);
         this.setStepSound(Block.soundTypeMetal);
         this.setCreativeTab(JCCreativeTabs.blocks);
@@ -42,9 +44,9 @@ public class DNAHybridizerBlock extends OrientedBlock
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof DNAHybridizerTile)
+            if (tileentity instanceof DNACombinatorHybridizerTile)
             {
-                ((DNAHybridizerTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+                ((DNACombinatorHybridizerTile) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -54,9 +56,9 @@ public class DNAHybridizerBlock extends OrientedBlock
     {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof DNAHybridizerTile)
+        if (tileentity instanceof DNACombinatorHybridizerTile)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (DNAHybridizerTile) tileentity);
+            InventoryHelper.dropInventoryItems(worldIn, pos, (DNACombinatorHybridizerTile) tileentity);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -65,20 +67,20 @@ public class DNAHybridizerBlock extends OrientedBlock
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.dna_hybridizer);
+        return Item.getItemFromBlock(JCBlockRegistry.dna_combinator_hybridizer);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.dna_hybridizer);
+        return Item.getItemFromBlock(JCBlockRegistry.dna_combinator_hybridizer);
     }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new DNAHybridizerTile();
+        return new DNACombinatorHybridizerTile();
     }
 
     @Override
@@ -92,9 +94,9 @@ public class DNAHybridizerBlock extends OrientedBlock
         {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof DNAHybridizerTile)
+            if (tileEntity instanceof DNACombinatorHybridizerTile)
             {
-                DNAHybridizerTile embryonicMachine = (DNAHybridizerTile) tileEntity;
+                DNACombinatorHybridizerTile embryonicMachine = (DNACombinatorHybridizerTile) tileEntity;
 
                 if (embryonicMachine.isUseableByPlayer(player))
                 {
@@ -104,5 +106,29 @@ public class DNAHybridizerBlock extends OrientedBlock
             }
         }
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer()
+    {
+        return EnumWorldBlockLayer.CUTOUT_MIPPED;
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube()
+    {
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    {
+        return true;
     }
 }

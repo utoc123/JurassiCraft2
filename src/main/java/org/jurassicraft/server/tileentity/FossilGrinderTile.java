@@ -77,12 +77,6 @@ public class FossilGrinderTile extends MachineBaseTile
     }
 
     @Override
-    protected int getMainInput(int process)
-    {
-        return 0;
-    }
-
-    @Override
     protected int getMainOutput(int process)
     {
         return 1;
@@ -104,6 +98,12 @@ public class FossilGrinderTile extends MachineBaseTile
     protected int[] getInputs()
     {
         return inputs;
+    }
+
+    @Override
+    protected int[] getInputs(int process)
+    {
+        return getInputs();
     }
 
     @Override

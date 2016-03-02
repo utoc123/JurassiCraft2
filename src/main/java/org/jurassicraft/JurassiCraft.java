@@ -26,6 +26,7 @@ import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;
 import org.jurassicraft.server.message.HelicopterModulesMessage;
 import org.jurassicraft.server.message.PlacePaddockSignMessage;
+import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
 import org.jurassicraft.server.message.SyncPaleoPadMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.world.islanublar.IslaNublarWorldType;
@@ -80,6 +81,8 @@ public class JurassiCraft
         AbstractMessage.registerMessage(networkWrapper, HelicopterDirectionMessage.class, id++, Side.SERVER);
         AbstractMessage.registerMessage(networkWrapper, HelicopterModulesMessage.class, id++, Side.CLIENT);
         AbstractMessage.registerMessage(networkWrapper, HelicopterModulesMessage.class, id++, Side.SERVER);
+        AbstractMessage.registerMessage(networkWrapper, SwitchHybridizerCombinatorMode.class, id++, Side.CLIENT);
+        AbstractMessage.registerMessage(networkWrapper, SwitchHybridizerCombinatorMode.class, id++, Side.SERVER);
 
         proxy.preInit(event);
         logger.debug("Finished pre-initialization for JurassiCraft!");
