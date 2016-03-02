@@ -62,11 +62,11 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
             GlStateManager.pushMatrix();
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
+            GlStateManager.translate(x + 0.5, y + 1.125F, z + 0.5);
 
             GlStateManager.rotate(rotation, 0, 1, 0);
 
-            double scale = 1.0;
+            double scale = 0.75;
             GlStateManager.scale(scale, -scale, scale);
 
             mc.getTextureManager().bindTexture(tileEntity.getMode() ? textureHybridizer : textureCombinator);

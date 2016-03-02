@@ -107,6 +107,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private int rareVariant;
+
     public DinosaurEntity(World world)
     {
         super(world);
@@ -156,6 +158,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         goBackToSleep = true;
 
         ignoreFrustumCheck = true; // stops dino disappearing when hitbox goes off screen
+
+        int rareVariantCount = dinosaur.getRareVariants().length;
+
+        if (rareVariantCount > 0)
+        {
+            if (rand.nextInt(100) < 5)
+            {
+                rareVariant = rand.nextInt(rareVariantCount) + 1;
+            }
+        }
     }
 
     public boolean shouldSleep()
@@ -1029,6 +1041,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setString("Genetics", genetics.toString());
         nbt.setBoolean("IsMale", isMale);
         nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
+        nbt.setByte("RareVariant", (byte) rareVariant);
 
         metabolism.writeToNBT(nbt);
 
@@ -1050,6 +1063,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         genetics = new GeneticsContainer(nbt.getString("Genetics"));
         isMale = nbt.getBoolean("IsMale");
         growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
+        rareVariant = nbt.getByte("RareVariant");
 
         metabolism.readFromNBT(nbt);
 
@@ -1074,6 +1088,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         buffer.writeInt(geneticsQuality);
         buffer.writeBoolean(isMale);
         buffer.writeInt(growthSpeedOffset);
+        buffer.writeByte((byte) rareVariant);
 
         metabolism.writeSpawnData(buffer);
 
@@ -1088,6 +1103,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         geneticsQuality = additionalData.readInt();
         isMale = additionalData.readBoolean();
         growthSpeedOffset = additionalData.readInt();
+        rareVariant = additionalData.readByte();
 
         metabolism.readSpawnData(additionalData);
 
@@ -1203,5 +1219,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean areEyelidsClosed()
     {
         return (isCarcass || isSleeping) || ticksExisted % 100 < 4;
+    }
+
+    public int getRareVariant()
+    {
+        return rareVariant;
     }
 }
