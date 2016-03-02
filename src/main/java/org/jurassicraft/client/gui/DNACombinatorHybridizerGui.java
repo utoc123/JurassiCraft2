@@ -13,7 +13,7 @@ import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 
 @SideOnly(Side.CLIENT)
-public class DNAHybridizerGui extends GuiContainer
+public class DNACombinatorHybridizerGui extends GuiContainer
 {
     private static final ResourceLocation hybridizerTexture = new ResourceLocation("jurassicraft:textures/gui/dna_hybridizer.png");
     private static final ResourceLocation combinatorTexture = new ResourceLocation("jurassicraft:textures/gui/dna_combinator.png");
@@ -22,7 +22,7 @@ public class DNAHybridizerGui extends GuiContainer
     private DNACombinatorHybridizerTile inventory;
     private DNACombinatorHybridizerContainer container;
 
-    public DNAHybridizerGui(InventoryPlayer playerInv, DNACombinatorHybridizerTile inventory)
+    public DNACombinatorHybridizerGui(InventoryPlayer playerInv, DNACombinatorHybridizerTile inventory)
     {
         super(new DNACombinatorHybridizerContainer(playerInv, inventory));
         this.playerInventory = playerInv;

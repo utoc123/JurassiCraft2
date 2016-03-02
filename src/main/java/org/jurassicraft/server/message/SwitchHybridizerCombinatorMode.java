@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.gui.DNAHybridizerGui;
+import org.jurassicraft.client.gui.DNACombinatorHybridizerGui;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 
@@ -38,9 +38,9 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
 
         GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
-        if (screen instanceof DNAHybridizerGui)
+        if (screen instanceof DNACombinatorHybridizerGui)
         {
-            ((DNACombinatorHybridizerContainer) ((DNAHybridizerGui) screen).inventorySlots).updateSlots(message.hybridizer);
+            ((DNACombinatorHybridizerContainer) ((DNACombinatorHybridizerGui) screen).inventorySlots).updateSlots(message.hybridizer);
         }
     }
 

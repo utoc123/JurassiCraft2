@@ -13,7 +13,7 @@ import org.jurassicraft.client.gui.CleaningStationGui;
 import org.jurassicraft.client.gui.CultivateGui;
 import org.jurassicraft.client.gui.CultivateProcessGui;
 import org.jurassicraft.client.gui.DNAExtractorGui;
-import org.jurassicraft.client.gui.DNAHybridizerGui;
+import org.jurassicraft.client.gui.DNACombinatorHybridizerGui;
 import org.jurassicraft.client.gui.DNASequencerGui;
 import org.jurassicraft.client.gui.DNASynthesizerGui;
 import org.jurassicraft.client.gui.EmbryoCalcificationMachineGui;
@@ -138,7 +138,7 @@ public class JCGuiHandler implements IGuiHandler
             }
             else if (tileEntity instanceof DNACombinatorHybridizerTile && id == 7)
             {
-                return new DNAHybridizerGui(player.inventory, (DNACombinatorHybridizerTile) tileEntity);
+                return new DNACombinatorHybridizerGui(player.inventory, (DNACombinatorHybridizerTile) tileEntity);
             }
             else if (tileEntity instanceof DNAExtractorTile && id == 9)
             {

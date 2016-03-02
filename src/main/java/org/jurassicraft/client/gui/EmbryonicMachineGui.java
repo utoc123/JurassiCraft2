@@ -48,7 +48,7 @@ public class EmbryonicMachineGui extends GuiContainer
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
 
-        int progress = this.getProgress(17);
+        int progress = this.getProgress(24);
         this.drawTexturedModalRect(k + 79, l + 34, 176, 14, progress + 1, 16);
 
     }

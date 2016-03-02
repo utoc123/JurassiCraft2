@@ -77,6 +77,7 @@ import org.jurassicraft.client.render.block.DNACombinatorHybridizerSpecialRender
 import org.jurassicraft.client.render.block.DNAExtractorSpecialRenderer;
 import org.jurassicraft.client.render.block.DNASequencerSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
+import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
 import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.CageSmallRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
@@ -103,6 +104,7 @@ import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
 import org.jurassicraft.server.tileentity.DNASequencerTile;
 import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 
 import java.util.List;
@@ -319,6 +321,7 @@ public class JCRenderingRegistry
         ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerTile.class, new DNASequencerSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(EmbryoCalcificationMachineTile.class, new EmbryoCalcificationMachineSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(DNACombinatorHybridizerTile.class, new DNACombinatorHybridizerSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(EmbryonicMachineTile.class, new EmbryonicMachineSpecialRenderer());
 
         RenderItem renderItem = mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();
