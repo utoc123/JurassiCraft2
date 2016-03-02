@@ -32,21 +32,18 @@ public class VelociraptorAnimator extends DinosaurAnimator
         MowzieModelRenderer neck3 = model.getCube("neck3");
         MowzieModelRenderer neck4 = model.getCube("neck4");
         MowzieModelRenderer head = model.getCube("Head");
-        MowzieModelRenderer jaw = model.getCube("down_jaw");
         MowzieModelRenderer leftShin = model.getCube("Left shin");
         MowzieModelRenderer rightShin = model.getCube("Right shin");
-        MowzieModelRenderer leftUpperFoot = model.getCube("Left upper foot");
-        MowzieModelRenderer leftFoot = model.getCube("Left foot");
-        MowzieModelRenderer rightUpperFoot = model.getCube("Right upper foot");
-        MowzieModelRenderer rightFoot = model.getCube("Right foot");
+        MowzieModelRenderer leftUpperFoot = model.getCube("Left Calf Centre");
+        MowzieModelRenderer leftFoot = model.getCube("Foot Left Centre");
+        MowzieModelRenderer rightUpperFoot = model.getCube("Right Calf Centre");
+        MowzieModelRenderer rightFoot = model.getCube("Foot Right Centre");
         MowzieModelRenderer tail1 = model.getCube("tail1");
         MowzieModelRenderer tail2 = model.getCube("tail2");
         MowzieModelRenderer tail3 = model.getCube("tail3");
         MowzieModelRenderer tail4 = model.getCube("tail4");
         MowzieModelRenderer tail5 = model.getCube("tail5");
         MowzieModelRenderer tail6 = model.getCube("tail6");
-        MowzieModelRenderer rightToe = model.getCube("Right toe");
-        MowzieModelRenderer leftToe = model.getCube("Left toe");
 
         MowzieModelRenderer upperArmRight = model.getCube("Right arm");
         MowzieModelRenderer upperArmLeft = model.getCube("Left arm");
@@ -60,24 +57,8 @@ public class VelociraptorAnimator extends DinosaurAnimator
         MowzieModelRenderer[] tailParts = new MowzieModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
         MowzieModelRenderer[] bodyParts = new MowzieModelRenderer[] { waist, chest, shoulders, neck4, neck3, neck2, neck1, head };
 
-        // if (velociraptor.isCarcass()) //Death Animation
-        // {
-        // model.walk(head, 1.0F, 0.5F, false, 0, 0, velociraptor.hurtTime, 1.0F);
-        // }
-        // else
-        // {
         int frame = velociraptor.ticksExisted;
 
-        // f = entity.ticksExisted;
-        // f1 = 1F;
-        // f1 = (float) (Math.sin(velociraptor.ticksExisted * 0.01) *
-        // Math.sin(velociraptor.ticksExisted * 0.01));
-
-        // if (raptor.leaping)
-        // limbSwingAmount = 0;
-        // if (raptor.getAnimationId() == JurassiCraftAnimationIDs.LEAP.animID()
-        // && raptor.getAnimationTick() >= 6)
-        // limbSwingAmount = 0;
         float speed = 0.75F;
         float height = 2F * limbSwingAmount;
 
