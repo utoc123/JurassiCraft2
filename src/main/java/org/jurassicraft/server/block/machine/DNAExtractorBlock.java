@@ -111,7 +111,7 @@ public class DNAExtractorBlock extends OrientedBlock
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.CUTOUT;
+        return EnumWorldBlockLayer.CUTOUT_MIPPED;
     }
 
     @Override
