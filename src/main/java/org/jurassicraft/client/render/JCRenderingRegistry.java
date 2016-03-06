@@ -301,6 +301,7 @@ public class JCRenderingRegistry
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.action_figure, "action_figure_block", "inventory");
 
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.moss, "moss", "inventory");
+        this.registerBlockRenderer(modelMesher, JCBlockRegistry.clear_glass, "clear_glass", "inventory");
 
 //        this.registerRenderSubBlock(JCBlockRegistry.bPlanks);
     }

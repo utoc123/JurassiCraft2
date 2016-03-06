@@ -258,6 +258,8 @@ tile.planks_5.name=Glossopteris Planks
 tile.planks_6.name=Dorycordaites Planks
 tile.planks_7.name=Mangrove Planks
 
+tile.clear_glass.name=Clear Glass
+
 //Plants =========================================
 plants.small_royal_fern.name=Small Royal Fern
 plants.calamites.name=Calamites

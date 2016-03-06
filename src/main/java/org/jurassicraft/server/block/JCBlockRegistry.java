@@ -112,6 +112,8 @@ public class JCBlockRegistry implements IContentHandler
 
     public static Block moss;
 
+    public static Block clear_glass;
+
     @Override
     public void init()
     {
@@ -151,6 +153,8 @@ public class JCBlockRegistry implements IContentHandler
         action_figure = new ActionFigureBlock();
 
         moss = new MossBlock();
+
+        clear_glass = new ClearGlassBlock();
 
         List<Dinosaur> dinosaurs = JCEntityRegistry.getDinosaurs();
 
@@ -246,6 +250,7 @@ public class JCBlockRegistry implements IContentHandler
         registerBlock(cycad_zamites, "Cycad Zamites");
         registerBlock(dicksonia, "Dicksonia");
         registerBlock(moss, "Moss");
+        registerBlock(clear_glass, "Clear Glass");
 
         registerBlockTileEntity(CultivatorTile.class, cultivate_bottom, "Cultivate Bottom");
         registerBlock(cultivate_top, "Cultivate Top");
