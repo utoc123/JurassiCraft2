@@ -163,7 +163,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (rareVariantCount > 0)
         {
-            if (rand.nextInt(100) < 5)
+            if (rand.nextInt(100) < 2)
             {
                 rareVariant = rand.nextInt(rareVariantCount) + 1;
             }
