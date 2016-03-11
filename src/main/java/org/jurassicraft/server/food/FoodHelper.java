@@ -1,9 +1,13 @@
 package org.jurassicraft.server.food;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+
+import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.entity.base.EnumDiet;
 import org.jurassicraft.server.item.JCItemRegistry;
 
@@ -14,14 +18,48 @@ import java.util.Map;
 
 public class FoodHelper
 {
-    private static final Map<FoodType, List<Item>> foods = new HashMap<FoodType, List<Item>>();
-    private static final List<Item> allFoods = new ArrayList<Item>();
+    private static final Map<FoodType, List<Item>> itemFoods = new HashMap<FoodType, List<Item>>();
+    private static final List<Item> allItemFoods = new ArrayList<Item>();
+
+    private static final Map<FoodType, List<Block>> blockFoods = new HashMap<FoodType, List<Block>>();
+    private static final List<Block> allBlockFoods = new ArrayList<Block>();
 
     // TODO:  Add food values for each.
-    // TODO:  Add blocks (like leaves/foliage) for herbivores.
 
     public static void init()
     {
+        //blocks
+        registerFood(Blocks.leaves, FoodType.PLANT);
+        registerFood(Blocks.leaves2, FoodType.PLANT);
+        registerFood(Blocks.tallgrass, FoodType.PLANT);
+        registerFood(Blocks.wheat, FoodType.PLANT);
+        registerFood(Blocks.melon_block, FoodType.PLANT);
+        registerFood(Blocks.reeds, FoodType.PLANT);
+        registerFood(Blocks.sapling, FoodType.PLANT);
+        registerFood(Blocks.pumpkin, FoodType.PLANT);
+        registerFood(Blocks.carrots, FoodType.PLANT);
+        registerFood(Blocks.potatoes, FoodType.PLANT);
+        registerFood(Blocks.hay_block, FoodType.PLANT);    	
+        registerFood(Blocks.waterlily, FoodType.PLANT);
+        registerFood(Blocks.yellow_flower, FoodType.PLANT);
+        registerFood(Blocks.red_flower, FoodType.PLANT);
+        registerFood(Blocks.double_plant, FoodType.PLANT);
+
+        registerFood(JCBlockRegistry.bennettitalean_cycadeoidea, FoodType.PLANT);
+        registerFood(JCBlockRegistry.cry_pansy, FoodType.PLANT);
+        registerFood(JCBlockRegistry.cycad_zamites, FoodType.PLANT);
+        registerFood(JCBlockRegistry.dicksonia, FoodType.PLANT);
+        registerFood(JCBlockRegistry.scaly_tree_fern, FoodType.PLANT);
+        registerFood(JCBlockRegistry.small_chain_fern, FoodType.PLANT);
+        registerFood(JCBlockRegistry.small_cycad, FoodType.PLANT);
+        registerFood(JCBlockRegistry.small_royal_fern, FoodType.PLANT);
+        for(int i = 0;i < JCBlockRegistry.saplings.length;i++)
+        {
+            registerFood(JCBlockRegistry.leaves[i], FoodType.PLANT);
+            registerFood(JCBlockRegistry.saplings[i], FoodType.PLANT);
+        }
+
+        //items
         registerFood(Items.apple, FoodType.PLANT);
         registerFood(Items.potato, FoodType.PLANT);
         registerFood(Items.carrot, FoodType.PLANT);
@@ -57,14 +95,10 @@ public class FoodHelper
                 {
                     ItemFood food = (ItemFood) item;
 
-                    if (food.getHealAmount(new ItemStack(food)) > 3)
-                    {
-                        registerFood(food, FoodType.PLANT);
-                    }
+                    if (food.getHealAmount(new ItemStack(food)) > 3)            
+                        registerFood(food, FoodType.PLANT);                  
                     else
-                    {
                         registerFood(food, FoodType.MEAT);
-                    }
                 }
             }
         }
@@ -72,9 +106,9 @@ public class FoodHelper
 
     public static void registerFood(Item food, FoodType foodType)
     {
-        if (!allFoods.contains(food))
+        if (!allItemFoods.contains(food))
         {
-            List<Item> foodsForType = foods.get(foodType);
+            List<Item> foodsForType = itemFoods.get(foodType);
 
             if (foodsForType == null)
             {
@@ -83,22 +117,45 @@ public class FoodHelper
 
             foodsForType.add(food);
 
-            allFoods.add(food);
+            allItemFoods.add(food);
 
-            foods.put(foodType, foodsForType);
+            itemFoods.put(foodType, foodsForType);
         }
     }
 
-    public static List<Item> getFoodsForFoodType(FoodType type)
+    public static void registerFood(Block food, FoodType foodType)
     {
-        return foods.get(type);
+        if(!allBlockFoods.contains(food))
+        {
+            List<Block> foodsForType = blockFoods.get(foodType);
+
+            if(foodsForType == null)
+            {
+                foodsForType = new ArrayList<Block>();
+            }
+
+            foodsForType.add(food);
+
+            allBlockFoods.add(food);
+
+            blockFoods.put(foodType, foodsForType);
+        }
+    }//end of overloaded registerFood(block)
+
+    public static List<Item> getItemFoodType(FoodType type)
+    {
+        return itemFoods.get(type);
+    }
+    public static List<Block> getBlockFoodType(FoodType type)
+    {
+        return blockFoods.get(type);
     }
 
     public static FoodType getFoodType(Item item)
     {
         for (FoodType foodType : FoodType.values())
         {
-            if (getFoodsForFoodType(foodType).contains(item))
+            if (getItemFoodType(foodType).contains(item))
             {
                 return foodType;
             }
@@ -106,31 +163,68 @@ public class FoodHelper
 
         return null;
     }
+    public static FoodType getFoodType(Block block)
+    {
+        for(FoodType foodType : FoodType.values())
+        {
+            if(getBlockFoodType(foodType).contains(block))
+                return foodType;
+        }
+
+        return null;
+    }//end of overloaded getFoodType(block)
+
 
     public static boolean canDietEat(EnumDiet diet, Item item)
     {
-        return getFoodsForDiet(diet).contains(item);
+        return getItemFoodsForDiet(diet).contains(item);
     }
+    public static boolean canDietEat(EnumDiet diet, Block block)
+    {
+        return getBlockFoodsForDiet(diet).contains(block);
+    }//end of overloaded canDietEat(block)
 
-    private static List<Item> getFoodsForDiet(EnumDiet diet)
+    private static List<Item> getItemFoodsForDiet(EnumDiet diet)
     {
         List<Item> possibleItems = new ArrayList<Item>();
 
         if (diet.doesEatPlants())
         {
-            possibleItems.addAll(getFoodsForFoodType(FoodType.PLANT));
+            possibleItems.addAll(getItemFoodType(FoodType.PLANT));
         }
 
         if (diet.doesEatFish())
         {
-            possibleItems.addAll(getFoodsForFoodType(FoodType.FISH));
+            possibleItems.addAll(getItemFoodType(FoodType.FISH));
         }
 
         if (diet.doesEatMeat())
         {
-            possibleItems.addAll(getFoodsForFoodType(FoodType.MEAT));
+            possibleItems.addAll(getItemFoodType(FoodType.MEAT));
         }
 
         return possibleItems;
+    }
+    private static List<Block> getBlockFoodsForDiet(EnumDiet diet)
+    {
+        List<Block> possibleBlocks = new ArrayList<Block>();
+
+        if (diet.doesEatPlants())
+        {
+            possibleBlocks.addAll(getBlockFoodType(FoodType.PLANT));
+        }
+
+        //guess I'll keep these here in case fish/meat blocks are implemented...
+        //if (diet.doesEatFish())
+        //{
+        //    possibleBlocks.addAll(getBlockFoodType(FoodType.FISH));
+        //}
+
+        //if (diet.doesEatMeat())
+        //{
+        //    possibleBlocks.addAll(getBlockFoodType(FoodType.MEAT));
+        //}
+
+        return possibleBlocks;
     }
 }
