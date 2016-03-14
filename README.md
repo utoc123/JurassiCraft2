@@ -16,7 +16,7 @@ iLexiconn
 
 ## Artists
 CarrotJet  
-TheDurpiDaedric 
+TheDurpiDaedric   
 Raptorek20  
 Cucholololthespanishman   
 codyrex78117
