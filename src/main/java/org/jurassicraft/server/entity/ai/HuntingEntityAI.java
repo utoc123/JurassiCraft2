@@ -1,13 +1,10 @@
 package org.jurassicraft.server.entity.ai;
 
-import com.google.common.collect.Lists;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.BlockPos;
 import org.jurassicraft.server.entity.ai.util.HuntingUtils;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-
-import java.util.ArrayList;
 
 public class HuntingEntityAI extends EntityAIBase
 {
@@ -20,17 +17,21 @@ public class HuntingEntityAI extends EntityAIBase
     public HuntingEntityAI(DinosaurEntity dinosaur)
     {
         this.dinosaur = dinosaur;
-        utils = new HuntingUtils();
+        utils = new HuntingUtils(dinosaur);
     }
 
     @Override
     public boolean shouldExecute()
     {
-        if(!dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
+        if (!dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
             return false;
         }
-        if(dinosaur.getMetabolism().getFood() > (dinosaur.getMetabolism().getMaxFood() / 3 * 2))
+        if (dinosaur.getMetabolism().getFood() > (dinosaur.getMetabolism().getMaxFood() / 3 * 2))
+        {
+            return false;
+        }
+        if (utils.getEntitiesWithinDistance(dinosaur, 30, 10).isEmpty())
         {
             return false;
         }
@@ -40,6 +41,8 @@ public class HuntingEntityAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
+        utils.addEntity(utils.getEntitiesWithinDistance(dinosaur, 30, 10));
+        target = utils.chooseEntity();
         if (!dinosaur.attackEntityAsMob(target))
         {
             target = null;

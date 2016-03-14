@@ -8,8 +8,8 @@ public class MetabolismContainer
 {
     // Basically this is ticks of food and ticks of water.  Specia actions like mating/healing
     // cause them to loose faster.
-    public final int MAX_FOOD;
-    public final int MAX_WATER;
+    private final int MAX_FOOD;
+    private final int MAX_WATER;
 
     private int food;
     private int water;

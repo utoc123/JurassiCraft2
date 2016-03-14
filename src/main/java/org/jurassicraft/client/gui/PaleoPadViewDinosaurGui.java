@@ -75,6 +75,9 @@ public class PaleoPadViewDinosaurGui extends GuiScreen
         Dinosaur dinoDef = this.dinosaur.getDinosaur();
         drawScaledText("Viewing: " + this.dinosaur.getName(), 5, 5, 1.0F, this.dinosaur.isMale() ? dinoDef.getEggPrimaryColorMale() : dinoDef.getEggPrimaryColorFemale());
         drawScaledText("Age: " + this.dinosaur.getDaysExisted() + " days", 5, 20, 1.0F, 0x808080);
+        drawScaledText("Hunger: " + this.dinosaur.getMetabolism().getFood() + " / " + this.dinosaur.getMetabolism().getMaxFood(), 5, 35, 1.0F, 0x808080);
+        drawScaledText("Thirst: " + this.dinosaur.getMetabolism().getWater() + " / " + this.dinosaur.getMetabolism().getMaxWater(), 5, 50, 1.0F, 0x808080);
+
         drawScaledRect(0, 0, 458, 2, 0.5F, 0x404040);
 
         drawScaledText(StatCollector.translateToLocal("paleopad.os.name"), 2, -10, 1.0F, 0xFFFFFF);
