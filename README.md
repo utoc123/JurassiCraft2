@@ -11,8 +11,8 @@ gegy1000
 jglrxavpok  
 Kaneras  
 WorldSEnder  
-JTGhawk137  
-iLexiconn
+iLexiconn  
+JTGhawk137
 
 ## Artists
 CarrotJet  
