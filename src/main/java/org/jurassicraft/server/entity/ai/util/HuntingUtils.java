@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 import org.jurassicraft.server.entity.base.AggressiveSwimmingDinosaurEntity;
 import org.jurassicraft.server.entity.base.DefensiveDinosaurEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -13,7 +13,6 @@ import java.util.*;
 
 public class HuntingUtils
 {
-
     private DinosaurEntity entity;
 
     private ArrayList<EntityLiving> localEntities;
@@ -81,7 +80,7 @@ public class HuntingUtils
 
     public List<Entity> getEntitiesWithinDistance(EntityLiving e, double xz, double y)
     {
-        return e.worldObj.getEntitiesWithinAABBExcludingEntity(e, AxisAlignedBB.fromBounds(e.posX - xz, e.posY - y, e.posZ - xz, e.posX + xz, e.posY + y, e.posZ + xz));
+        return e.worldObj.getEntitiesWithinAABBExcludingEntity(e, new AxisAlignedBB(e.posX - xz, e.posY - y, e.posZ - xz, e.posX + xz, e.posY + y, e.posZ + xz));
     }
 
     public double getEntitySize(EntityLiving entity)
