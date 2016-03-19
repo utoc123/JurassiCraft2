@@ -6,7 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
-import org.jurassicraft.server.item.ItemDNA;
+import org.jurassicraft.server.item.DNAItem;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.PlantDNAItem;
 
@@ -34,7 +34,7 @@ public class EmbryonicMachineTile extends MachineBaseTile
         {
             ItemStack output = null;
 
-            if (petridish.getItem() == JCItemRegistry.petri_dish && dna.getItem() instanceof ItemDNA)
+            if (petridish.getItem() == JCItemRegistry.petri_dish && dna.getItem() instanceof DNAItem)
             {
                 output = new ItemStack(JCItemRegistry.syringe, 1, dna.getItemDamage());
                 output.setTagCompound(dna.getTagCompound());
@@ -58,7 +58,7 @@ public class EmbryonicMachineTile extends MachineBaseTile
         {
             ItemStack output = null;
 
-            if (slots[0].getItem() instanceof ItemDNA && slots[1].getItem() == JCItemRegistry.petri_dish)
+            if (slots[0].getItem() instanceof DNAItem && slots[1].getItem() == JCItemRegistry.petri_dish)
             {
                 output = new ItemStack(JCItemRegistry.syringe, 1, slots[0].getItemDamage());
             }

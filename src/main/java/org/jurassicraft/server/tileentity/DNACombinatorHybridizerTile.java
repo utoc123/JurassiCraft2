@@ -5,9 +5,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
@@ -309,8 +309,8 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
     }
 
     @Override
-    public IChatComponent getDisplayName()
+    public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatComponentTranslation(hybridizerMode ? "container.dna_hybridizer" : "container.dna_combinator", new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(hybridizerMode ? "container.dna_hybridizer" : "container.dna_combinator", new Object[0]);
     }
 }

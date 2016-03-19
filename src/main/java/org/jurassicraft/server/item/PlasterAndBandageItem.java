@@ -5,7 +5,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
@@ -15,9 +17,9 @@ import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
-public class ItemPlasterAndBandage extends Item
+public class PlasterAndBandageItem extends Item
 {
-    public ItemPlasterAndBandage()
+    public PlasterAndBandageItem()
     {
         super();
 
@@ -25,15 +27,11 @@ public class ItemPlasterAndBandage extends Item
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
+        if (world.isRemote || !player.canPlayerEdit(pos.offset(side), side, stack))
         {
-            return true;
-        }
-        else if (!player.canPlayerEdit(pos.offset(side), side, stack))
-        {
-            return false;
+            return EnumActionResult.PASS;
         }
         else
         {
@@ -56,10 +54,10 @@ public class ItemPlasterAndBandage extends Item
 
                 player.addStat(JCAchievements.fossils, 1);
 
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return false;
+        return EnumActionResult.PASS;
     }
 }

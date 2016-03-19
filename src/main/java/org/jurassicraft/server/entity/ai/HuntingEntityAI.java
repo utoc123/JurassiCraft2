@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import org.jurassicraft.server.entity.ai.util.HuntingUtils;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 

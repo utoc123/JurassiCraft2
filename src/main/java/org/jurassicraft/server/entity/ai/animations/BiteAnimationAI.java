@@ -82,7 +82,7 @@ public class BiteAnimationAI extends AIAnimation
 
     public double getCreatureSpeed()
     {
-        return (double) ((int) (100 * this.entityBiting.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue())) / 100;
+        return (double) ((int) (100 * this.entityBiting.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue())) / 100;
     }
 
     @Override

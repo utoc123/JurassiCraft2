@@ -4,6 +4,9 @@ import net.ilexiconn.llibrary.common.book.BookWiki;
 import net.ilexiconn.llibrary.common.message.AbstractMessage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -19,6 +22,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.CommandForceAnimation;
 import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.capability.PlayerDataCapability;
+import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
+import org.jurassicraft.server.capability.PlayerDataCapabilityStorage;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
@@ -29,7 +35,6 @@ import org.jurassicraft.server.message.PlacePaddockSignMessage;
 import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
 import org.jurassicraft.server.message.SyncPaleoPadMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
-import org.jurassicraft.server.world.islanublar.IslaNublarWorldType;
 
 import java.io.File;
 import java.io.InputStreamReader;
@@ -54,19 +59,22 @@ public class JurassiCraft
     public static JCBlockRegistry blockRegistry;
     public static JCConfigurations configurations = new JCConfigurations();
 
-    public static IslaNublarWorldType worldTypeIslaNublar = new IslaNublarWorldType();
-
     // set up configuration properties (will be read from config file in preInit)
     public static File configFile;
     public static Configuration config;
 
     public static BookWiki bookWiki;
 
+    @CapabilityInject(PlayerDataCapability.class)
+    public static final Capability<PlayerDataCapability> PLAYER_DATA_CAPABILITY = null;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
         logger.info("Loading JurassiCraft...");
+
+        CapabilityManager.INSTANCE.register(PlayerDataCapability.class, new PlayerDataCapabilityStorage(), PlayerDataCapabilityImplementation.class);
 
         int id = 0;
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("jurassicraft");
@@ -115,11 +123,11 @@ public class JurassiCraft
     @Mod.EventHandler
     public void serverStart(FMLServerStartedEvent event)
     {
-        GameRules gameRules = MinecraftServer.getServer().worldServerForDimension(0).getGameRules();
-
-        registerGameRule(gameRules, "dinoMetabolism", true);
-        registerGameRule(gameRules, "dinoGrowth", true);
-        registerGameRule(gameRules, "dinoHerding", false);
+//        GameRules gameRules = event.worldServerForDimension(0).getGameRules();
+//
+//        registerGameRule(gameRules, "dinoMetabolism", true);
+//        registerGameRule(gameRules, "dinoGrowth", true);
+//        registerGameRule(gameRules, "dinoHerding", false);
     }
 
     private void registerGameRule(GameRules gameRules, String name, boolean value)

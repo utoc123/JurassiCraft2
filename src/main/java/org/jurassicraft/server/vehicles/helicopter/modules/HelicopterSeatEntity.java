@@ -4,8 +4,8 @@ import com.google.common.base.Predicate;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -36,7 +36,7 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
 
     private AxisAlignedBB createBoundingBox()
     {
-        return AxisAlignedBB.fromBounds(posX, posY, posZ, posX, posY, posZ);
+        return new AxisAlignedBB(posX, posY, posZ, posX, posY, posZ);
     }
 
     public HelicopterSeatEntity(float dist, int index, HelicopterBaseEntity parent)

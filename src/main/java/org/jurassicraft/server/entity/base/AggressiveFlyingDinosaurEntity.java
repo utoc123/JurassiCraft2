@@ -3,9 +3,10 @@ package org.jurassicraft.server.entity.base;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityMoveHelper;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -146,7 +147,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
 
     class FlyingMoveHelper extends EntityMoveHelper
     {
-        private AggressiveFlyingDinosaurEntity dino = AggressiveFlyingDinosaurEntity.this;
+        private AggressiveFlyingDinosaurEntity parentEntity = AggressiveFlyingDinosaurEntity.this;
         private int timer;
 
         public FlyingMoveHelper()
@@ -156,44 +157,47 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
 
         public void onUpdateMoveHelper()
         {
-            if (this.update)
+            if (this.field_188491_h == EntityMoveHelper.Action.MOVE_TO)
             {
-                double distX = this.posX - this.dino.posX;
-                double distY = this.posY - this.dino.posY;
-                double distZ = this.posZ - this.dino.posZ;
-                double dist = distX * distX + distY * distY + distZ * distZ;
+                double distanceX = this.posX - this.parentEntity.posX;
+                double distanceY = this.posY - this.parentEntity.posY;
+                double distanceZ = this.posZ - this.parentEntity.posZ;
+                double distance = distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ;
 
                 if (this.timer-- <= 0)
                 {
-                    this.timer += this.dino.getRNG().nextInt(5) + 2;
-                    dist = (double) MathHelper.sqrt_double(dist);
+                    this.timer += this.parentEntity.getRNG().nextInt(5) + 2;
+                    distance = (double)MathHelper.sqrt_double(distance);
 
-                    if (this.canMoveTo(this.posX, this.posY, this.posZ, dist))
+                    if (this.isNotColliding(this.posX, this.posY, this.posZ, distance))
                     {
-                        this.dino.motionX += distX / dist * 0.1D;
-                        this.dino.motionY += distY / dist * 0.1D;
-                        this.dino.motionZ += distZ / dist * 0.1D;
+                        this.parentEntity.motionX += distanceX / distance * 0.1D;
+                        this.parentEntity.motionY += distanceY / distance * 0.1D;
+                        this.parentEntity.motionZ += distanceZ / distance * 0.1D;
                     }
                     else
                     {
-                        this.update = false;
+                        this.field_188491_h = EntityMoveHelper.Action.WAIT;
                     }
                 }
             }
         }
 
-        private boolean canMoveTo(double posX, double posY, double posZ, double dist)
+        /**
+         * Checks if entity bounding box is not colliding with terrain
+         */
+        private boolean isNotColliding(double x, double y, double z, double distance)
         {
-            double d4 = (posX - this.dino.posX) / dist;
-            double d5 = (posY - this.dino.posY) / dist;
-            double d6 = (posZ - this.dino.posZ) / dist;
-            AxisAlignedBB boudningBox = this.dino.getEntityBoundingBox();
+            double d0 = (x - this.parentEntity.posX) / distance;
+            double d1 = (y - this.parentEntity.posY) / distance;
+            double d2 = (z - this.parentEntity.posZ) / distance;
+            AxisAlignedBB axisalignedbb = this.parentEntity.getEntityBoundingBox();
 
-            for (int i = 1; (double) i < dist; ++i)
+            for (int i = 1; (double)i < distance; ++i)
             {
-                boudningBox = boudningBox.offset(d4, d5, d6);
+                axisalignedbb = axisalignedbb.offset(d0, d1, d2);
 
-                if (!this.dino.worldObj.getCollidingBoundingBoxes(this.dino, boudningBox).isEmpty())
+                if (!this.parentEntity.worldObj.getCubes(this.parentEntity, axisalignedbb).isEmpty())
                 {
                     return false;
                 }
@@ -232,9 +236,9 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             else
             {
                 EntityLivingBase attackTarget = this.dino.getAttackTarget();
-                double d0 = 64.0D;
+                double maxDistance = 64.0D;
 
-                if (attackTarget.getDistanceSqToEntity(this.dino) < d0 * d0)
+                if (attackTarget.getDistanceSqToEntity(this.dino) < maxDistance * maxDistance)
                 {
                     double diffX = attackTarget.posX - this.dino.posX;
                     double diffZ = attackTarget.posZ - this.dino.posZ;

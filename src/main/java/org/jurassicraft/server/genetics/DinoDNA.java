@@ -2,7 +2,7 @@ package org.jurassicraft.server.genetics;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -54,28 +54,28 @@ public class DinoDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(EnumChatFormatting.DARK_AQUA + new AdvLang("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + JCEntityRegistry.getDinosaurById(genetics.getDinosaur()).getName().toLowerCase() + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new AdvLang("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + JCEntityRegistry.getDinosaurById(genetics.getDinosaur()).getName().toLowerCase() + ".name").build());
 
-        EnumChatFormatting colour;
+        TextFormatting colour;
 
         if (quality > 75)
         {
-            colour = EnumChatFormatting.GREEN;
+            colour = TextFormatting.GREEN;
         }
         else if (quality > 50)
         {
-            colour = EnumChatFormatting.YELLOW;
+            colour = TextFormatting.YELLOW;
         }
         else if (quality > 25)
         {
-            colour = EnumChatFormatting.GOLD;
+            colour = TextFormatting.GOLD;
         }
         else
         {
-            colour = EnumChatFormatting.RED;
+            colour = TextFormatting.RED;
         }
 
         tooltip.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        tooltip.add(EnumChatFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", genetics.toString()).build());
+        tooltip.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", genetics.toString()).build());
     }
 }

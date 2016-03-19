@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
@@ -24,11 +24,11 @@ public class PlantDNAItem extends Item
     public PlantDNAItem()
     {
         super();
-
         this.setCreativeTab(JCCreativeTabs.plants);
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
@@ -101,29 +101,30 @@ public class PlantDNAItem extends Item
         return quality;
     }
 
+    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
         int quality = getDNAQuality(player, stack);
 
-        EnumChatFormatting colour;
+        TextFormatting formatting;
 
         if (quality > 75)
         {
-            colour = EnumChatFormatting.GREEN;
+            formatting = TextFormatting.GREEN;
         }
         else if (quality > 50)
         {
-            colour = EnumChatFormatting.YELLOW;
+            formatting = TextFormatting.YELLOW;
         }
         else if (quality > 25)
         {
-            colour = EnumChatFormatting.GOLD;
+            formatting = TextFormatting.GOLD;
         }
         else
         {
-            colour = EnumChatFormatting.RED;
+            formatting = TextFormatting.RED;
         }
 
-        lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        lore.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
     }
 }

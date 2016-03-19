@@ -7,7 +7,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.gui.PaleoPadGui;
-import org.jurassicraft.server.entity.data.JCPlayerData;
+import org.jurassicraft.server.capability.PlayerDataCapability;
+import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
 import org.jurassicraft.server.paleopad.App;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public abstract class GuiApp
     {
         this.requestShutdown = true;
 
-        JCPlayerData playerData = JCPlayerData.getPlayerData(Minecraft.getMinecraft().thePlayer);
+        PlayerDataCapability playerData = PlayerDataCapabilityImplementation.get(Minecraft.getMinecraft().thePlayer);
         playerData.closeApp(app);
     }
 

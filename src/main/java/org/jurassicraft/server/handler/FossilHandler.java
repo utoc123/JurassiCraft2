@@ -1,6 +1,6 @@
 package org.jurassicraft.server.handler;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.period.EnumTimePeriod;
 

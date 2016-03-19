@@ -2,7 +2,7 @@ package org.jurassicraft.server.vehicles.helicopter.modules;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +27,7 @@ public class HelicopterDoor extends HelicopterModule
     }
 
     @Override
-    public boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3 vec)
+    public boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec)
     {
         return false; // TODO: Open or close door
     }

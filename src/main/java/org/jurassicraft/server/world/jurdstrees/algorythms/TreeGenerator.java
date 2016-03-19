@@ -2,7 +2,7 @@ package org.jurassicraft.server.world.jurdstrees.algorythms;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.world.jurdstrees.algorythms.InsPCoord.InsPType;
@@ -12,7 +12,6 @@ import java.util.Random;
 
 public class TreeGenerator
 {
-
     private Tree tree;
     private int code;
     private BlockPos pos;
@@ -22,14 +21,12 @@ public class TreeGenerator
 
     public TreeGenerator(int code, World world, BlockPos pos)
     {
-
         this.world = world;
         x = 0;
         y = 0;
         z = 0;
         this.code = code;
         this.pos = pos;
-
     }
 
     public void placeTree()

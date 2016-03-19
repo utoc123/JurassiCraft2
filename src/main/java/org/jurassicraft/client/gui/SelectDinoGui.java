@@ -4,13 +4,14 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
@@ -36,13 +37,15 @@ public class SelectDinoGui extends GuiScreen
 
     private BlockPos pos;
     private EnumFacing facing;
+    private EnumHand hand;
 
     private List<Dinosaur> dinosaurs;
 
-    public SelectDinoGui(BlockPos pos, EnumFacing facing)
+    public SelectDinoGui(BlockPos pos, EnumFacing facing, EnumHand hand)
     {
         this.pos = pos;
         this.facing = facing;
+        this.hand = hand;
     }
 
     public void initGui()
@@ -152,7 +155,7 @@ public class SelectDinoGui extends GuiScreen
             inventory.decrStackSize(inventory.currentItem, 1);
         }
 
-        JurassiCraft.networkWrapper.sendToServer(new PlacePaddockSignMessage(facing, pos, dinosaur));
+        JurassiCraft.networkWrapper.sendToServer(new PlacePaddockSignMessage(hand, facing, pos, dinosaur));
     }
 
     @Override
@@ -235,12 +238,12 @@ public class SelectDinoGui extends GuiScreen
         float f = 1.0F / (float) width;
         float f1 = 1.0F / (float) height;
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (0), (double) ((float) (height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) (height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) 0)).endVertex();
-        worldrenderer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) 0), (double) ((float) 0)).endVertex();
+        VertexBuffer vertexBuffer = tessellator.getBuffer();
+        vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        vertexBuffer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (0), (double) ((float) (height) * f1)).endVertex();
+        vertexBuffer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) (height) * f1)).endVertex();
+        vertexBuffer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) 0)).endVertex();
+        vertexBuffer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) 0), (double) ((float) 0)).endVertex();
         tessellator.draw();
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

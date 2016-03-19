@@ -13,12 +13,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -147,7 +147,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
         {
             this.totalCultivateTime = this.getCultivateTime(stack);
             this.cultivateTime = 0;
-            worldObj.markBlockForUpdate(pos);
+            this.markDirty();
         }
     }
 
@@ -350,7 +350,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
 
         if (sync)
         {
-            worldObj.markBlockForUpdate(pos);
+            this.markDirty();
         }
     }
 
@@ -475,7 +475,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
 
                     dino.setAge(0);
 
-                    List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, AxisAlignedBB.fromBounds(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
+                    List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, new AxisAlignedBB(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
 
                     CageSmallEntity cage = null;
 
@@ -637,11 +637,11 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
     {
         NBTTagCompound compound = new NBTTagCompound();
         this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
+        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
+    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet)
     {
         NBTTagCompound compound = packet.getNbtCompound();
         this.readFromNBT(compound);

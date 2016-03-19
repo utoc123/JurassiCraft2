@@ -11,21 +11,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -94,11 +92,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private final InventoryDinosaur inventory;
 
-    private static final int WATCHER_IS_CARCASS = 25;
-    private static final int WATCHER_AGE = 26;
-    private static final int WATCHER_GROWTH_OFFSET = 27;
-    private static final int WATCHER_IS_SLEEPING = 28;
-    private static final int WATCHER_HAS_TRACKER = 29;
+    private static final DataParameter<Boolean> WATCHER_IS_CARCASS = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> WATCHER_AGE = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> WATCHER_GROWTH_OFFSET = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Boolean> WATCHER_IS_SLEEPING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
 
     private final MetabolismContainer metabolism;
 
@@ -233,12 +231,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         Animation.sendAnimationPacket(this, Animations.ATTACKING.get());
 
-        float damage = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+        float damage = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int knockback = 0;
 
         if (entity instanceof EntityLivingBase)
         {
-            damage += EnchantmentHelper.func_152377_a(getHeldItem(), ((EntityLivingBase) entity).getCreatureAttribute());
+            damage += EnchantmentHelper.getModifierForCreature(getHeldItemMainhand(), ((EntityLivingBase) entity).getCreatureAttribute());
             knockback += EnchantmentHelper.getKnockbackModifier(this);
         }
 
@@ -290,7 +288,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void knockBack(Entity entity, float p_70653_2_, double motionX, double motionZ)
     {
-        if (rand.nextDouble() >= getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue())
+        if (rand.nextDouble() >= getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue())
         {
             isAirBorne = true;
             float distance = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
@@ -326,11 +324,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.entityInit();
 
-        dataWatcher.addObject(WATCHER_IS_CARCASS, 0);
-        dataWatcher.addObject(WATCHER_AGE, 0);
-        dataWatcher.addObject(WATCHER_GROWTH_OFFSET, 0);
-        dataWatcher.addObject(WATCHER_IS_SLEEPING, 0);
-        dataWatcher.addObject(WATCHER_HAS_TRACKER, 0);
+        dataWatcher.register(WATCHER_IS_CARCASS, false);
+        dataWatcher.register(WATCHER_AGE, 0);
+        dataWatcher.register(WATCHER_GROWTH_OFFSET, 0);
+        dataWatcher.register(WATCHER_IS_SLEEPING, false);
+        dataWatcher.register(WATCHER_HAS_TRACKER, false);
     }
 
     @Override
@@ -340,7 +338,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         dinosaur = JCEntityRegistry.getDinosaurByClass(getClass());
 
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
+        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         updateCreatureData();
         adjustHitbox();
     }
@@ -350,19 +348,19 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         double prevHealth = getMaxHealth();
         double newHealth = transitionFromAge(dinosaur.getBabyHealth(), dinosaur.getAdultHealth());
 
-        getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(newHealth);
-        getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(transitionFromAge(dinosaur
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(newHealth);
+        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(transitionFromAge(dinosaur
                 .getBabySpeed(), dinosaur.getAdultSpeed()));
 //        getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(transitionFromAge(dinosaur.getBabyKnockback(), dinosaur.getAdultKnockback())); TODO
 
         // adjustHitbox();
 
-        getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(transitionFromAge(dinosaur.getBabyStrength(), dinosaur.getAdultStrength()));
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(transitionFromAge(dinosaur.getBabyStrength(), dinosaur.getAdultStrength()));
 
         // EntityLiving has a base of 16 the AI needs to have longer range for things like Herding
         // DO NOT CHANGE FOR NOW - Eventually we'll make the AI work in smaller increments and probably
         //                         have different ranges for different eyesights, but for now please keep it long.
-        getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(64.0D);
+        getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 
         if (prevHealth != newHealth)
         {
@@ -484,7 +482,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.onUpdate();
 
-        Vec3 eyes = getHeadPos();
+        Vec3d eyes = getHeadPos();
 
         worldObj.spawnParticle(EnumParticleTypes.FLAME, eyes.xCoord, eyes.yCoord, eyes.zCoord, 0, 0, 0);
 
@@ -492,20 +490,19 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!worldObj.isRemote)
         {
-            dataWatcher.updateObject(WATCHER_AGE, dinosaurAge);
-
-            dataWatcher.updateObject(WATCHER_GROWTH_OFFSET, growthSpeedOffset);
-            dataWatcher.updateObject(WATCHER_IS_SLEEPING, isSleeping ? 1 : 0);
-            dataWatcher.updateObject(WATCHER_IS_CARCASS, isCarcass ? 1 : 0);
-            dataWatcher.updateObject(WATCHER_HAS_TRACKER, hasTracker ? 1 : 0);
+            dataWatcher.set(WATCHER_AGE, dinosaurAge);
+            dataWatcher.set(WATCHER_GROWTH_OFFSET, growthSpeedOffset);
+            dataWatcher.set(WATCHER_IS_SLEEPING, isSleeping);
+            dataWatcher.set(WATCHER_IS_CARCASS, isCarcass);
+            dataWatcher.set(WATCHER_HAS_TRACKER, hasTracker);
         }
         else
         {
-            dinosaurAge = dataWatcher.getWatchableObjectInt(WATCHER_AGE);
-            growthSpeedOffset = dataWatcher.getWatchableObjectInt(WATCHER_GROWTH_OFFSET);
-            isSleeping = dataWatcher.getWatchableObjectInt(WATCHER_IS_SLEEPING) == 1;
-            isCarcass = dataWatcher.getWatchableObjectInt(WATCHER_IS_CARCASS) == 1;
-            hasTracker = dataWatcher.getWatchableObjectInt(WATCHER_HAS_TRACKER) == 1;
+            dinosaurAge = dataWatcher.get(WATCHER_AGE);
+            growthSpeedOffset = dataWatcher.get(WATCHER_GROWTH_OFFSET);
+            isSleeping = dataWatcher.get(WATCHER_IS_SLEEPING);
+            isCarcass = dataWatcher.get(WATCHER_IS_CARCASS);
+            hasTracker = dataWatcher.get(WATCHER_HAS_TRACKER);
         }
 
         if (ticksExisted % 16 == 0)
@@ -634,7 +631,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public boolean interact(EntityPlayer player)
+    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
     {
         if (player.isSneaking())
         {
@@ -657,21 +654,19 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         msg = "This " + getName();
                     }
 
-                    player.addChatComponentMessage(new ChatComponentText(msg + " is not old enough to hold items!")); //TODO translation
+                    player.addChatComponentMessage(new TextComponentString(msg + " is not old enough to hold items!")); //TODO translation
                 }
             }
         }
         else
         {
-            ItemStack heldItem = player.getHeldItem();
-
-            if (heldItem != null)
+            if (stack != null)
             {
-                Item item = heldItem.getItem();
+                Item item = stack.getItem();
 
                 if (item instanceof BluePrintItem)
                 {
-                    ((BluePrintItem) item).setDinosaur(heldItem, JCEntityRegistry.getDinosaurId(getDinosaur()));
+                    ((BluePrintItem) item).setDinosaur(stack, JCEntityRegistry.getDinosaurId(getDinosaur()));
                 }
             }
         }
@@ -683,12 +678,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     // earlier
     protected void addAIForAttackTargets(Class<? extends EntityLivingBase> entity, int prio)
     {
-        tasks.addTask(0, new EntityAIAttackOnCollide(this, entity, dinosaur.getAttackSpeed(), false));
+        tasks.addTask(0, new EntityAIAttackMelee(this, dinosaur.getAttackSpeed(), false));
         targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, entity, false));
     }
 
     @Override
-    public boolean allowLeashing()
+    public boolean canBeLeashedTo(EntityPlayer player)
     {
         return !getLeashed() && (width < 1.5);
     }
@@ -747,195 +742,37 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return animTick;
     }
 
-    protected String randomSound(String... sounds)
+    protected SoundEvent randomSound(String... sounds)
     {
-        if (sounds == null)
-        {
-            return "";
-        }
-        return JurassiCraft.MODID + ":" + sounds[rand.nextInt(sounds.length)];
+        return new SoundEvent(new ResourceLocation(JurassiCraft.MODID, sounds[rand.nextInt(sounds.length)]));
     }
 
     @Override
-    public String getLivingSound()
+    public SoundEvent getAmbientSound()
     {
         // Living sounds don't need to be synced to animations, so let this method
         // return a sound
         JurassiCraft.instance.getLogger().info("getLivingSound for " + this.getDinosaur().getName());
-        return getIdleSound();
+        return getSoundForAnimation(Animations.IDLE.get());
     }
 
     @Override
-    public String getHurtSound()
+    public SoundEvent getHurtSound()
     {
         // To better aid syncing animations to sounds, the getInjuredSound() method is used instead
         // called from JabelarAnimationHelper
         return null;
     }
 
-    @Override
-    public String getDeathSound()
+    public SoundEvent getSoundForAnimation(Animation animation)
     {
         // To better aid syncing animations to sounds, the getDyingSound() method is used instead
         // called from JabelarAnimationHelper
         return null;
     }
 
-    // Idle sound and living sound are synonymous, but for readability it is better to associate
-    // method names with animation names
-    public String getIdleSound()
+    public SoundEvent getBreathingSound()
     {
-        JurassiCraft.instance.getLogger().info("getIdleSound for " + this.getDinosaur().getName());
-        // The getLivingSound() method isn't aware of other animations, so need to test if idle
-        if (getAnimation() == Animations.IDLE.get() && idleSounds != null)
-        {
-            return randomSound(idleSounds);
-        }
-
-        return null;
-    }
-    
-    public String getInjuredSound()
-    {
-        JurassiCraft.instance.getLogger().info("getInjuredSound for " + this.getDinosaur().getName());
-        if (injuredSounds != null)
-        {
-            return randomSound(injuredSounds);
-        }
-        
-        return null;
-    }
-    
-    public String getDyingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getDyingSound for " + this.getDinosaur().getName());
-        if (dyingSounds != null)
-        {
-            return randomSound(dyingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getCallingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getCallingSound for " + this.getDinosaur().getName());
-        if (callingSounds != null)
-        {
-            return randomSound(callingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getBreathingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getBreathingSound for " + this.getDinosaur().getName());
-        if (breathSounds != null)
-        {
-            return randomSound(breathSounds);
-        }
-        
-        return null;
-    }
-
-    public String getAttackingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getAttackingSound for " + this.getDinosaur().getName());
-        if (attackingSounds != null)
-        {
-            return randomSound(attackingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getDrinkingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getDrinkingSound for " + this.getDinosaur().getName());
-        if (drinkingSounds != null)
-        {
-            return randomSound(drinkingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getEatingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getEatingSound for " + this.getDinosaur().getName());
-        if (eatingSounds != null)
-        {
-            return randomSound(eatingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getHissingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getHissingSound for " + this.getDinosaur().getName());
-        if (hissingSounds != null)
-        {
-            return randomSound(hissingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getScratchingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getScratchingSound for " + this.getDinosaur().getName());
-        if (scratchingSounds != null)
-        {
-            return randomSound(scratchingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getMatingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getMatingSound for " + this.getDinosaur().getName());
-        if (matingSounds != null)
-        {
-            return randomSound(matingSounds);
-        }
-        
-        return null;
-    }
-
-
-    public String getRoaringSound()
-    {
-        JurassiCraft.instance.getLogger().info("getRoaringSound for " + this.getDinosaur().getName());
-        if (roaringSounds != null)
-        {
-            return randomSound(roaringSounds);
-        }
-        
-        return null;
-    }
-
-    public String getSniffingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getSniffingSound for " + this.getDinosaur().getName());
-        if (sniffingSounds != null)
-        {
-            return randomSound(sniffingSounds);
-        }
-        
-        return null;
-    }
-
-    public String getPouncingSound()
-    {
-        JurassiCraft.instance.getLogger().info("getPouncingSound for " + this.getDinosaur().getName());
-        if (pouncingSounds != null)
-        {
-            return randomSound(pouncingSounds);
-        }
-        
         return null;
     }
 
@@ -1203,7 +1040,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 " }";
     }
 
-    public Vec3 getHeadPos() //TODO not working correctly
+    public Vec3d getHeadPos() //TODO not working correctly
     {
         double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 
@@ -1213,7 +1050,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         double headY = ((headPos[1] * 0.0625F) - dinosaur.getOffsetY()) * scale;
         double headZ = ((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale;
 
-        return new Vec3(posX + headX, posY + headY, posZ + headZ);
+        return new Vec3d(posX + headX, posY + headY, posZ + headZ);
     }
 
     public boolean areEyelidsClosed()

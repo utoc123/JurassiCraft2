@@ -1,37 +1,37 @@
 package org.jurassicraft.server.vehicles.helicopter.modules;
 
 import com.google.common.base.Function;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
 public enum EnumModulePosition
 {
-    FRONT(new Function<Vec3, Boolean>()
+    FRONT(new Function<Vec3d, Boolean>()
     {
-        public Boolean apply(Vec3 vec)
+        public Boolean apply(Vec3d vec)
         {
             return vec.zCoord > 0.6;
         }
     }),
-    LEFT_SIDE(new Function<Vec3, Boolean>()
+    LEFT_SIDE(new Function<Vec3d, Boolean>()
     {
-        public Boolean apply(Vec3 vec)
+        public Boolean apply(Vec3d vec)
         {
             return vec.zCoord < 0.6 && vec.xCoord > 0;
         }
     }),
-    RIGHT_SIDE(new Function<Vec3, Boolean>()
+    RIGHT_SIDE(new Function<Vec3d, Boolean>()
     {
-        public Boolean apply(Vec3 vec)
+        public Boolean apply(Vec3d vec)
         {
             return vec.zCoord < 0.6 && vec.xCoord < 0;
         }
     });
 
-    private final Function<Vec3, Boolean> func;
+    private final Function<Vec3d, Boolean> func;
 
-    EnumModulePosition(Function<Vec3, Boolean> clickCheckFunc)
+    EnumModulePosition(Function<Vec3d, Boolean> clickCheckFunc)
     {
         this.func = Objects.requireNonNull(clickCheckFunc);
     }
@@ -42,7 +42,7 @@ public enum EnumModulePosition
      * @param v The helicopter-relative raytrace produced by the player trying to interact
      * @return True if the raytrace ends up in this module, false otherwise
      */
-    public boolean isClicked(Vec3 v)
+    public boolean isClicked(Vec3d v)
     {
         return func.apply(v);
     }

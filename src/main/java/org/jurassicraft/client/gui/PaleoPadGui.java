@@ -5,16 +5,16 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.gui.app.GuiApp;
 import org.jurassicraft.client.gui.app.GuiAppRegistry;
-import org.jurassicraft.server.entity.data.JCPlayerDataClient;
+import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.paleopad.App;
 import org.jurassicraft.server.paleopad.AppRegistry;
@@ -46,8 +46,7 @@ public class PaleoPadGui extends GuiScreen
     {
         if (focus != null)
         {
-            JCPlayerDataClient.getPlayerData().closeApp(focus.getApp());
-            // JurassiCraft.networkWrapper.sendToServer(new MessageSyncoPad(mc.thePlayer));
+            PlayerDataCapabilityImplementation.get(mc.thePlayer).closeApp(focus.getApp());
         }
     }
 
@@ -73,7 +72,7 @@ public class PaleoPadGui extends GuiScreen
 
                     focus = GuiAppRegistry.getGui(app);
                     focus.init();
-                    JCPlayerDataClient.getPlayerData().openApp(app);
+                    PlayerDataCapabilityImplementation.get(mc.thePlayer).openApp(app);
 
                     focus.buttons.clear();
                     buttonList.clear();
@@ -148,7 +147,7 @@ public class PaleoPadGui extends GuiScreen
                 drawCenteredScaledText(app.getName(), x + 22, y + 39, 0.7F, 0xFFFFFF);
             }
 
-            drawScaledText(StatCollector.translateToLocal("paleopad.os.name"), 2, -10, 1.0F, 0xFFFFFF);
+            drawScaledText(I18n.translateToLocal("paleopad.os.name"), 2, -10, 1.0F, 0xFFFFFF);
         }
         else
         {
@@ -178,12 +177,12 @@ public class PaleoPadGui extends GuiScreen
         float f = 1.0F / (float) textureWidth;
         float f1 = 1.0F / (float) textureHeight;
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX) * f), (double) ((float) (textureY + height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + width) * f), (double) ((float) (textureY + height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (textureX + width) * f), (double) ((float) (textureY) * f1)).endVertex();
-        worldrenderer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) (textureX) * f), (double) ((float) (textureY) * f1)).endVertex();
+        VertexBuffer vertexBuffer = tessellator.getBuffer();
+        vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        vertexBuffer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX) * f), (double) ((float) (textureY + height) * f1)).endVertex();
+        vertexBuffer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + width) * f), (double) ((float) (textureY + height) * f1)).endVertex();
+        vertexBuffer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (textureX + width) * f), (double) ((float) (textureY) * f1)).endVertex();
+        vertexBuffer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) (textureX) * f), (double) ((float) (textureY) * f1)).endVertex();
         tessellator.draw();
 
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
@@ -218,12 +217,12 @@ public class PaleoPadGui extends GuiScreen
         float f = 1.0F / (float) width;
         float f1 = 1.0F / (float) height;
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (0), (double) ((float) (height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) (height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) 0)).endVertex();
-        worldrenderer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) 0), (double) ((float) 0)).endVertex();
+        VertexBuffer buffer = tessellator.getBuffer();
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (0), (double) ((float) (height) * f1)).endVertex();
+        buffer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) (height) * f1)).endVertex();
+        buffer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) 0)).endVertex();
+        buffer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) 0), (double) ((float) 0)).endVertex();
         tessellator.draw();
 
         GL11.glColor3f(1.0F, 1.0F, 1.0F);

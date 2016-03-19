@@ -59,7 +59,7 @@ public class IndominusRenderer extends DinosaurRenderer
                 this.renderer.bindTexture(indominusDino.getCamoTexture(entity.getGrowthStage()));
 
                 this.renderer.getMainModel().render(entity, armSwing, armSwingAmount, p_177148_5_, p_177148_6_, p_177148_7_, partialTicks);
-                this.renderer.func_177105_a(entity, p_177148_4_);
+                this.renderer.setLightmap(entity, p_177148_4_);
             }
         }
 

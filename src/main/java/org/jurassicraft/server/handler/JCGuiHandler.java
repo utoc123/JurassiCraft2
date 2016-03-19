@@ -3,8 +3,9 @@ package org.jurassicraft.server.handler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -170,11 +171,11 @@ public class JCGuiHandler implements IGuiHandler
         // JurassiCraft.networkWrapper.sendTo(new SyncPaleoPadMessage(player), (EntityPlayerMP) player);
     }
 
-    public static void openSelectDino(EntityPlayer player, BlockPos pos, EnumFacing facing)
+    public static void openSelectDino(EntityPlayer player, BlockPos pos, EnumFacing facing, EnumHand hand)
     {
         if (player.worldObj.isRemote)
         {
-            displayOpenSelectDino(pos, facing);
+            displayOpenSelectDino(pos, facing, hand);
         }
     }
 
@@ -185,9 +186,9 @@ public class JCGuiHandler implements IGuiHandler
     }
 
     @SideOnly(Side.CLIENT)
-    private static void displayOpenSelectDino(BlockPos pos, EnumFacing facing)
+    private static void displayOpenSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand)
     {
-        Minecraft.getMinecraft().displayGuiScreen(new SelectDinoGui(pos, facing));
+        Minecraft.getMinecraft().displayGuiScreen(new SelectDinoGui(pos, facing, hand));
     }
 
     public static void openViewDinosaur(DinosaurEntity dinosaur)

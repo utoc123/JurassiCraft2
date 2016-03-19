@@ -1,6 +1,6 @@
 package net.timeless.unilib.utils;
 
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * Mutable version of Minecraft's Vec3

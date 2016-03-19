@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
@@ -64,7 +64,7 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
     @Override
     protected void addAIForAttackTargets(Class<? extends EntityLivingBase> entity, int prio)
     {
-        this.tasks.addTask(0, new EntityAIAttackOnCollide(this, entity, 1.0D, false));
+        this.tasks.addTask(0, new EntityAIAttackMelee(this, 1.0D, false));
         this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.5F));
         this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, entity, false));
     }

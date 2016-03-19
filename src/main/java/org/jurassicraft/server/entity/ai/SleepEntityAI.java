@@ -2,8 +2,8 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -62,9 +62,9 @@ public class SleepEntityAI extends EntityAIBase
         double y = pos.getY();
         double z = pos.getZ() + 0.5;
 
-        AxisAlignedBB boundingBox = AxisAlignedBB.fromBounds(x, y, z, x + dinosaur.width, y + dinosaur.height, z + dinosaur.width);
+        AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + dinosaur.width, y + dinosaur.height, z + dinosaur.width);
 
-        return dinosaur.worldObj.getCollidingBoundingBoxes(dinosaur, boundingBox).isEmpty();
+        return dinosaur.worldObj.getCubes(dinosaur, boundingBox).isEmpty();
     }
 
     @Override

@@ -7,8 +7,8 @@ import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -139,6 +139,11 @@ public class JurassiCraftSignEntity extends EntityHanging implements IEntityAddi
 
             this.entityDropItem(new ItemStack(JCItemRegistry.jc_sign), 0.0F);
         }
+    }
+
+    @Override
+    public void func_184523_o() //On place
+    {
     }
 
     /**

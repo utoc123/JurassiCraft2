@@ -5,7 +5,7 @@ import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.client.animation.Animations;
 
 public class JCPanicEntityAI extends EntityAIBase
@@ -35,7 +35,7 @@ public class JCPanicEntityAI extends EntityAIBase
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(theEntityCreature, 5, 4);
+            Vec3d vec3 = RandomPositionGenerator.findRandomTarget(theEntityCreature, 5, 4);
 
             if (vec3 == null)
             {

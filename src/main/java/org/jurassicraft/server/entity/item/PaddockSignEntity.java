@@ -6,8 +6,8 @@ import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -93,6 +93,11 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
 
             this.entityDropItem(stack, 0.0F);
         }
+    }
+
+    @Override
+    public void func_184523_o()
+    {
     }
 
     /**

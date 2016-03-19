@@ -3,14 +3,13 @@ package org.jurassicraft.server.vehicles.helicopter.modules;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Collection;
 import java.util.Map;
 
 public abstract class HelicopterModule
 {
-
     public static final Map<String, Class<? extends HelicopterModule>> registry;
 
     static
@@ -54,14 +53,14 @@ public abstract class HelicopterModule
         return moduleID;
     }
 
-    public abstract boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3 vec);
+    public abstract boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec);
 
-    public void onAdded(HelicopterModuleSpot m, EntityPlayer player, Vec3 vec)
+    public void onAdded(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec)
     {
 
     }
 
-    public void onRemoved(HelicopterModuleSpot m, EntityPlayer player, Vec3 vec)
+    public void onRemoved(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec)
     {
 
     }

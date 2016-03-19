@@ -1,13 +1,14 @@
 package org.jurassicraft.server.block;
 
 import net.minecraft.block.BlockGlass;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,7 +28,7 @@ public class ClearGlassBlock extends BlockGlass
         super(Material.glass, false);
         this.setCreativeTab(JCCreativeTabs.blocks);
         this.setHardness(0.3F);
-        this.setStepSound(soundTypeGlass);
+        this.setStepSound(SoundType.GLASS);
         this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false).withProperty(WEST, false).withProperty(UP, false).withProperty(DOWN, false));
     }
 
@@ -36,38 +37,35 @@ public class ClearGlassBlock extends BlockGlass
         return world.getBlockState(pos).getBlock() instanceof ClearGlassBlock;
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return 0;
     }
 
-    /**
-     * Get the actual Block state of this Block at the given position. This applies properties not visible in the
-     * metadata, such as fence connections.
-     */
+    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return state.withProperty(NORTH, canConnectTo(world, pos.north())).withProperty(EAST, canConnectTo(world, pos.east())).withProperty(SOUTH, canConnectTo(world, pos.south())).withProperty(WEST, canConnectTo(world, pos.west())).withProperty(UP, canConnectTo(world, pos.up())).withProperty(DOWN, canConnectTo(world, pos.down()));
     }
 
-    protected BlockState createBlockState()
+    @Override
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, NORTH, EAST, WEST, SOUTH, UP, DOWN);
+        return new BlockStateContainer(this, NORTH, EAST, WEST, SOUTH, UP, DOWN);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.TRANSLUCENT;
+        return BlockRenderLayer.TRANSLUCENT;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess world, BlockPos pos, EnumFacing side)
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
     {
-        return world.getBlockState(pos.offset(side.getOpposite())) != world.getBlockState(pos) && super.shouldSideBeRendered(world, pos, side);
+        return world.getBlockState(pos.offset(side.getOpposite())) != world.getBlockState(pos) && super.shouldSideBeRendered(state, world, pos, side);
     }
 }

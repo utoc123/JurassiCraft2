@@ -6,8 +6,12 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -17,6 +21,12 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 {
     private DinosaurEntity entity;
     private boolean marine;
+
+    private static DataParameter<Integer> DATA_WATCHER_ENTITY_ID = EntityDataManager.createKey(CageSmallEntity.class, DataSerializers.VARINT);
+    private static DataParameter<Integer> DATA_WATCHER_AGE = EntityDataManager.createKey(CageSmallEntity.class, DataSerializers.VARINT);
+    private static DataParameter<Integer> DATA_WATCHER_DNA_QUALITY = EntityDataManager.createKey(CageSmallEntity.class, DataSerializers.VARINT);
+    private static DataParameter<String> DATA_WATCHER_GENETICS = EntityDataManager.createKey(CageSmallEntity.class, DataSerializers.STRING);
+    private static DataParameter<Boolean> DATA_WATCHER_GENDER = EntityDataManager.createKey(CageSmallEntity.class, DataSerializers.BOOLEAN);
 
     public CageSmallEntity(World world)
     {
@@ -30,33 +40,19 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
         this.marine = marine;
     }
 
-    /**
-     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be pushable on contact, like boats or minecarts.
-     */
-    public AxisAlignedBB getCollisionBox(Entity entityIn)
+    @Override
+    public AxisAlignedBB getCollisionBox(Entity entity)
     {
-        return entityIn.getEntityBoundingBox();
+        return entity.getEntityBoundingBox();
     }
 
-    /**
-     * returns the bounding box for this entity
-     */
-    public AxisAlignedBB getBoundingBox()
-    {
-        return this.getEntityBoundingBox();
-    }
-
-    /**
-     * Returns true if other Entities should be prevented from moving through this Entity.
-     */
+    @Override
     public boolean canBeCollidedWith()
     {
         return true;
     }
 
-    /**
-     * Returns true if this entity should push and be pushed by other entities when colliding.
-     */
+    @Override
     public boolean canBePushed()
     {
         return false;
@@ -65,11 +61,11 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     @Override
     protected void entityInit()
     {
-        this.dataWatcher.addObject(25, new Integer(-1));
-        this.dataWatcher.addObject(17, new Integer(0));
-        this.dataWatcher.addObject(18, new Integer(0));
-        this.dataWatcher.addObject(19, new String(""));
-        this.dataWatcher.addObject(20, new Integer(0));
+        this.dataWatcher.register(DATA_WATCHER_ENTITY_ID, -1);
+        this.dataWatcher.register(DATA_WATCHER_AGE, 0);
+        this.dataWatcher.register(DATA_WATCHER_DNA_QUALITY, 0);
+        this.dataWatcher.register(DATA_WATCHER_GENETICS, "");
+        this.dataWatcher.register(DATA_WATCHER_GENDER, false);
     }
 
     @Override
@@ -79,7 +75,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 
         if (worldObj.isRemote)
         {
-            int id = dataWatcher.getWatchableObjectInt(25);
+            int id = dataWatcher.get(DATA_WATCHER_ENTITY_ID);
 
             if (id != -1)
             {
@@ -87,10 +83,10 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 
                 if (entity != null)
                 {
-                    entity.setMale(dataWatcher.getWatchableObjectInt(20) == 0);
-                    entity.setAge(dataWatcher.getWatchableObjectInt(17));
-                    entity.setDNAQuality(dataWatcher.getWatchableObjectInt(18));
-                    entity.setGenetics(dataWatcher.getWatchableObjectString(19));
+                    entity.setMale(dataWatcher.get(DATA_WATCHER_GENDER));
+                    entity.setAge(dataWatcher.get(DATA_WATCHER_AGE));
+                    entity.setDNAQuality(dataWatcher.get(DATA_WATCHER_DNA_QUALITY));
+                    entity.setGenetics(dataWatcher.get(DATA_WATCHER_GENETICS));
                 }
             }
             else
@@ -109,23 +105,21 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
         {
             if (entity != null)
             {
-                dataWatcher.updateObject(25, EntityList.getEntityID(entity));
-                dataWatcher.updateObject(17, entity.getDinosaurAge());
-                dataWatcher.updateObject(18, entity.getDNAQuality());
-                dataWatcher.updateObject(19, entity.getGenetics().toString());
-                dataWatcher.updateObject(20, entity.isMale() ? 0 : 1);
+                dataWatcher.set(DATA_WATCHER_ENTITY_ID, EntityList.getEntityID(entity));
+                dataWatcher.set(DATA_WATCHER_AGE, entity.getDinosaurAge());
+                dataWatcher.set(DATA_WATCHER_DNA_QUALITY, entity.getDNAQuality());
+                dataWatcher.set(DATA_WATCHER_GENETICS, entity.getGenetics().toString());
+                dataWatcher.set(DATA_WATCHER_GENDER, entity.isMale());
             }
             else
             {
-                dataWatcher.updateObject(25, -1);
+                dataWatcher.set(DATA_WATCHER_ENTITY_ID, -1);
             }
         }
     }
 
-    /**
-     * First layer of player interaction
-     */
-    public boolean interactFirst(EntityPlayer playerIn)
+    @Override
+    public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand)
     {
         if (entity != null && !worldObj.isRemote)
         {

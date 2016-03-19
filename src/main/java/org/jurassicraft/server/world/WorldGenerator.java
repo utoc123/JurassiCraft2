@@ -1,8 +1,9 @@
 package org.jurassicraft.server.world;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -17,9 +18,10 @@ import java.util.Random;
 
 public class WorldGenerator implements IWorldGenerator
 {
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+    @Override
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
     {
-        if (world.provider.getDimensionId() == 0)
+        if (world.provider.getDimension() == 0)
         {
             generateOverworld(world, random, chunkX * 16, chunkZ * 16);
         }

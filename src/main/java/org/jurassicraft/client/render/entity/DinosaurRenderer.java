@@ -72,8 +72,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             int k = ticksExisted % colorTypes;
             int l = (ticksExisted + 1) % colorTypes;
             float time = ((float) (entity.ticksExisted % 25) + 2) / 25.0F;
-            float[] colors = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(k));
-            float[] colors2 = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(l));
+            float[] colors = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
+            float[] colors2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
             GlStateManager.color(colors[0] * (1.0F - time) + colors2[0] * time, colors[1] * (1.0F - time) + colors2[1] * time, colors[2] * (1.0F - time) + colors2[2] * time);
 
             if (time > 0.5F)
@@ -231,7 +231,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                     this.renderer.bindTexture(texture);
 
                     this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
-                    this.renderer.func_177105_a(entity, f2);
+                    this.renderer.setLightmap(entity, f2);
 
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 }
@@ -272,7 +272,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                     this.renderer.bindTexture(texture);
 
                     this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
-                    this.renderer.func_177105_a(entity, f2);
+                    this.renderer.setLightmap(entity, f2);
                 }
             }
         }

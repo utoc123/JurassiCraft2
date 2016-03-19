@@ -2,17 +2,25 @@ package org.jurassicraft.client.render;
 
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -90,6 +98,7 @@ import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.tree.JCLeavesBlock;
 import org.jurassicraft.server.block.tree.WoodType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
@@ -97,6 +106,7 @@ import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.item.DinosaurSpawnEggItem;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.JCPlantRegistry;
@@ -303,7 +313,24 @@ public class JCRenderingRegistry
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.moss, "moss", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.clear_glass, "clear_glass", "inventory");
 
-//        this.registerRenderSubBlock(JCBlockRegistry.bPlanks);
+        BlockColors blockColors = mc.getBlockColors();
+        blockColors.registerBlockColorHandler(new IBlockColor()
+        {
+            @Override
+            public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
+            {
+                return BiomeColorHelper.getGrassColorAtPos(access, pos);
+            }
+        }, JCBlockRegistry.moss);
+        blockColors.registerBlockColorHandler(new IBlockColor()
+        {
+            @Override
+            public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
+            {
+                JCLeavesBlock block = (JCLeavesBlock) (state.getBlock());
+                return block.getTreeType() == WoodType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
+            }
+        }, JCBlockRegistry.leaves);
     }
 
     public void postInit()
@@ -428,6 +455,38 @@ public class JCRenderingRegistry
 
             meta++;
         }
+
+        ItemColors itemColors = mc.getItemColors();
+        itemColors.registerItemColorHandler(new IItemColor()
+        {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+            {
+                DinosaurSpawnEggItem item = (DinosaurSpawnEggItem) stack.getItem();
+                Dinosaur dino = item.getDinosaur(stack);
+
+                if (dino != null)
+                {
+                    int mode = item.getMode(stack);
+
+                    if (mode == 0)
+                    {
+                        mode = JurassiCraft.timerTicks % 64 > 32 ? 1 : 2;
+                    }
+
+                    if (mode == 1)
+                    {
+                        return tintIndex == 0 ? dino.getEggPrimaryColorMale() : dino.getEggSecondaryColorMale();
+                    }
+                    else
+                    {
+                        return tintIndex == 0 ? dino.getEggPrimaryColorFemale() : dino.getEggSecondaryColorFemale();
+                    }
+                }
+
+                return 0xFFFFFF;
+            }
+        }, JCItemRegistry.spawn_egg);
     }
 
     /**

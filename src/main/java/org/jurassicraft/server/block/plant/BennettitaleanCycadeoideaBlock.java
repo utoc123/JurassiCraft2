@@ -1,19 +1,34 @@
 package org.jurassicraft.server.block.plant;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class BennettitaleanCycadeoideaBlock extends BlockBush
 {
+    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, 0.8F, 0.9F);
+
     public BennettitaleanCycadeoideaBlock()
     {
         super();
         this.setCreativeTab(JCCreativeTabs.plants);
+        this.setStepSound(SoundType.PLANT);
+    }
 
-        float f = 0.4F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos)
+    {
+        return BOUNDS;
+    }
 
-        this.setStepSound(Block.soundTypeGrass);
+    @Override
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    {
+        return NULL_AABB;
     }
 }

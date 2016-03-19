@@ -10,11 +10,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -174,7 +174,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
             int i = getProcess(index);
             this.totalProcessTime[i] = this.getStackProcessTime(stack);
             this.processTime[i] = 0;
-            worldObj.markBlockForUpdate(pos);
+            this.markDirty();
         }
     }
 
@@ -289,7 +289,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
                 if (sync)
                 {
-                    worldObj.markBlockForUpdate(pos);
+                    this.markDirty();
                 }
             }
         }
@@ -477,11 +477,11 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     {
         NBTTagCompound compound = new NBTTagCompound();
         this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
+        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
     {
         NBTTagCompound compound = packet.getNbtCompound();
         this.readFromNBT(compound);

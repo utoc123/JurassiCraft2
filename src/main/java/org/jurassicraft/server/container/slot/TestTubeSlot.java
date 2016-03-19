@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.item.ItemDNA;
+import org.jurassicraft.server.item.DNAItem;
 import org.jurassicraft.server.item.PlantDNAItem;
 
 public class TestTubeSlot extends Slot
@@ -16,6 +16,6 @@ public class TestTubeSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        return stack.getItem() instanceof ItemDNA || stack.getItem() instanceof PlantDNAItem;
+        return stack.getItem() instanceof DNAItem || stack.getItem() instanceof PlantDNAItem;
     }
 }

@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import org.jurassicraft.JurassiCraft;
@@ -16,7 +16,6 @@ import java.util.List;
 
 public class HelicopterModuleSpot
 {
-
     private final List<HelicopterModule> modules;
     private final float angleFromCenter;
     private final EnumModulePosition position;
@@ -40,10 +39,10 @@ public class HelicopterModuleSpot
 
     public boolean addModule(HelicopterModule m)
     {
-        return addModule(m, null, new Vec3(0, 0, 0));
+        return addModule(m, null, new Vec3d(0, 0, 0));
     }
 
-    public boolean addModule(HelicopterModule m, EntityPlayer player, Vec3 v)
+    public boolean addModule(HelicopterModule m, EntityPlayer player, Vec3d v)
     {
         if (!modules.contains(m))
         {
@@ -139,12 +138,12 @@ public class HelicopterModuleSpot
         return position;
     }
 
-    public boolean isClicked(Vec3 v)
+    public boolean isClicked(Vec3d v)
     {
         return position.isClicked(v);
     }
 
-    public void onClicked(EntityPlayer player, Vec3 vec)
+    public void onClicked(EntityPlayer player, Vec3d vec)
     {
         for (HelicopterModule m : modules)
         {

@@ -5,12 +5,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Vec3;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -41,7 +48,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     private final HelicopterSeatEntity[] seats;
     private boolean syncModules;
     private UUID heliID;
-    public static final int ENGINE_RUNNING = 20;
+    private static final DataParameter<Boolean> DATA_WATCHER_ENGINE_RUNNING = EntityDataManager.createKey(HelicopterBaseEntity.class, DataSerializers.BOOLEAN);
     public static final int FRONT = EnumModulePosition.FRONT.ordinal();
     public static final int LEFT_SIDE = EnumModulePosition.LEFT_SIDE.ordinal();
     public static final int RIGHT_SIDE = EnumModulePosition.RIGHT_SIDE.ordinal();
@@ -136,7 +143,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     protected void entityInit()
     {
         super.entityInit();
-        dataWatcher.addObject(ENGINE_RUNNING, (byte) 0);
+        dataWatcher.register(DATA_WATCHER_ENGINE_RUNNING, false);
     }
 
     @Override
@@ -158,33 +165,21 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     }
 
     @Override
-    public ItemStack getHeldItem()
+    public Iterable<ItemStack> getArmorInventoryList()
     {
         return null;
     }
 
     @Override
-    public ItemStack getEquipmentInSlot(int slotIn)
+    public ItemStack getItemStackFromSlot(EntityEquipmentSlot slot)
     {
         return null;
     }
 
     @Override
-    public ItemStack getCurrentArmor(int slotIn)
-    {
-        return null;
-    }
-
-    @Override
-    public void setCurrentItemOrArmor(int slotIn, ItemStack stack)
+    public void setItemStackToSlot(EntityEquipmentSlot slot, ItemStack stack)
     {
 
-    }
-
-    @Override
-    public ItemStack[] getInventory()
-    {
-        return new ItemStack[0];
     }
 
     @Override
@@ -244,11 +239,11 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         HelicopterSeatEntity seat = seats[0];
         if (seat != null)
         {
-            Entity riderEntity = seat.riddenByEntity;
-            boolean runEngine = false;
-            if (riderEntity != null) // There is a pilot!
+            Entity controller = seat.getControllingPassenger();
+            boolean runEngine;
+            if (controller != null) // There is a pilot!
             {
-                EntityPlayer rider = (EntityPlayer) riderEntity;
+                EntityPlayer rider = (EntityPlayer) controller;
                 if (worldObj.isRemote) // We are on client
                 {
                     runEngine = handleClientRunning(rider);
@@ -407,29 +402,29 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     }
 
     @Override
-    public boolean interactAt(EntityPlayer player, Vec3 vec)
+    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand)
     {
         // Transforms the vector in local coordinates (cancels possible rotations to simplify 'seat detection')
-        Vec3 localVec = vec.rotateYaw((float) Math.toRadians(this.rotationYaw));
+        Vec3d localVec = vec.rotateYaw((float) Math.toRadians(this.rotationYaw));
 
-        if (!attachModule(player, localVec))
+        if (!attachModule(player, localVec, stack))
         {
             System.out.println(localVec);
 
             if (localVec.zCoord > 0.6)
             {
-                player.mountEntity(seats[0]);
-                return true;
+                player.startRiding(seats[0]);
+                return EnumActionResult.SUCCESS;
             }
             else if (localVec.zCoord < 0.6 && localVec.xCoord > 0)
             {
-                player.mountEntity(seats[1]);
-                return true;
+                player.startRiding(seats[1]);
+                return EnumActionResult.SUCCESS;
             }
             else if (localVec.zCoord < 0.6 && localVec.xCoord < 0)
             {
-                player.mountEntity(seats[2]);
-                return true;
+                player.startRiding(seats[2]);
+                return EnumActionResult.SUCCESS;
             }
             for (HelicopterModuleSpot spot : moduleSpots)
             {
@@ -437,18 +432,17 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
                 {
                     System.out.println(spot);
                     spot.onClicked(player, vec);
-                    return true;
+                    return EnumActionResult.SUCCESS;
                 }
             }
         }
-        return false;
+        return EnumActionResult.PASS;
     }
 
-    private boolean attachModule(EntityPlayer player, Vec3 localVec)
+    private boolean attachModule(EntityPlayer player, Vec3d localVec, ItemStack stack)
     {
         if (!worldObj.isRemote)
         {
-            ItemStack stack = player.getHeldItem();
             if (stack != null)
             {
                 Item item = stack.getItem();
@@ -499,6 +493,12 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     public boolean canBePushed()
     {
         return false;
+    }
+
+    @Override
+    public EnumHandSide getPrimaryHand()
+    {
+        return EnumHandSide.RIGHT;
     }
 
     public float getRoll()

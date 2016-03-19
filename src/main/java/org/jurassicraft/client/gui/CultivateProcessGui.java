@@ -3,7 +3,7 @@ package org.jurassicraft.client.gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
@@ -64,7 +64,7 @@ public class CultivateProcessGui extends GuiScreen
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
 
-        this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, StatCollector.translateToLocal("container.close.name")));
+        this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, I18n.translateToLocal("container.close.name")));
     }
 
     public void actionPerformed(GuiButton button)
@@ -96,8 +96,8 @@ public class CultivateProcessGui extends GuiScreen
             name = "Unknown";
         }
 
-        String cultivatingLang = StatCollector.translateToLocal("container.cultivator.cultivating");
-        String progressLang = StatCollector.translateToLocal("container.cultivator.progress");
+        String cultivatingLang = I18n.translateToLocal("container.cultivator.cultivating");
+        String progressLang = I18n.translateToLocal("container.cultivator.progress");
 
         String progress = progressLang + ": " + getScaled(cultivator.getField(0), cultivator.getField(1), 100) + "%";
         String cultivating = cultivatingLang + ": " + name;

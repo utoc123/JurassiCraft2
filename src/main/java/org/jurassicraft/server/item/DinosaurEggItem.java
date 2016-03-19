@@ -16,9 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemDinosaurEgg extends DNAContainerItem
+public class DinosaurEggItem extends DNAContainerItem
 {
-    public ItemDinosaurEgg()
+    public DinosaurEggItem()
     {
         super();
 

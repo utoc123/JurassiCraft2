@@ -17,11 +17,11 @@ import java.util.Map;
 
 public class JCItemRegistry implements IContentHandler
 {
-    public static ItemPlasterAndBandage plaster_and_bandage;
+    public static PlasterAndBandageItem plaster_and_bandage;
     public static DinosaurSpawnEggItem spawn_egg;
 
-    public static ItemDNA dna;
-    public static ItemDinosaurEgg egg;
+    public static DNAItem dna;
+    public static DinosaurEggItem egg;
     public static PaleoPadItem paleo_pad;
     public static SoftTissueItem soft_tissue;
 
@@ -69,7 +69,7 @@ public class JCItemRegistry implements IContentHandler
     public static JCMusicDiscItem disc_troodons_and_raptors;
     public static JCMusicDiscItem disc_dont_move_a_muscle;
 
-    public static ItemActionFigure action_figure;
+    public static ActionFigureItem action_figure;
 
     public static BasicItem amber_keychain;
     public static BasicItem amber_cane;
@@ -93,10 +93,10 @@ public class JCItemRegistry implements IContentHandler
     @Override
     public void init()
     {
-        plaster_and_bandage = new ItemPlasterAndBandage();
+        plaster_and_bandage = new PlasterAndBandageItem();
         spawn_egg = new DinosaurSpawnEggItem();
-        dna = new ItemDNA();
-        egg = new ItemDinosaurEgg();
+        dna = new DNAItem();
+        egg = new DinosaurEggItem();
         paleo_pad = new PaleoPadItem();
         dino_meat = new DinsaurMeatItem();
         dino_steak = new DinosaurSteakItem();
@@ -124,7 +124,7 @@ public class JCItemRegistry implements IContentHandler
         plant_callus = new PlantCallusItem();
         plant_cells_petri_dish = new BasicItem(JCCreativeTabs.items);
         tracker = new BasicItem(JCCreativeTabs.items);
-        action_figure = new ItemActionFigure();
+        action_figure = new ActionFigureItem();
         dino_scanner = new DinoScannerItem();
 
         amber_cane = new BasicItem(JCCreativeTabs.merchandise);

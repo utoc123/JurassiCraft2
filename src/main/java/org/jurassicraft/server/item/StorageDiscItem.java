@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
@@ -22,14 +22,9 @@ public class StorageDiscItem extends Item
         this.setCreativeTab(JCCreativeTabs.items);
     }
 
-    /**
-     * allows items to add custom lines of information to the mouseover description
-     *
-     * @param tooltip  All lines to display in the Item's tooltip. This is a List of Strings.
-     * @param advanced Whether the setting "Advanced tooltips" is enabled
-     */
+    @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         NBTTagCompound nbt = stack.getTagCompound();
 
@@ -46,7 +41,7 @@ public class StorageDiscItem extends Item
         }
         else
         {
-            tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("cage.empty.name"));
+            tooltip.add(TextFormatting.RED + I18n.translateToLocal("cage.empty.name"));
         }
     }
 

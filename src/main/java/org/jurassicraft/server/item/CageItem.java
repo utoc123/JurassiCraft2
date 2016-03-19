@@ -6,10 +6,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -53,30 +55,21 @@ public class CageItem extends Item
 
         if (caged != -1)
         {
-            tooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("entity.jurassicraft." + EntityList.classToStringMapping.get(EntityList.idToClassMapping.get(caged)) + ".name"));
+            tooltip.add(TextFormatting.BLUE + I18n.translateToLocal("entity.jurassicraft." + EntityList.classToStringMapping.get(EntityList.idToClassMapping.get(caged)) + ".name"));
 
             if (data != null)
             {
-                tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("gender." + (data.getBoolean("IsMale") ? "male" : "female") + ".name"));
+                tooltip.add(TextFormatting.RED + I18n.translateToLocal("gender." + (data.getBoolean("IsMale") ? "male" : "female") + ".name"));
             }
         }
         else
         {
-            tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("cage.empty.name"));
+            tooltip.add(TextFormatting.RED + I18n.translateToLocal("cage.empty.name"));
         }
     }
 
-    /**
-     * This is called when the item is used, before the block is activated.
-     *
-     * @param stack  The Item Stack
-     * @param player The Player that used the item
-     * @param world  The Current World
-     * @param pos    Target position
-     * @param side   The side of the target hit
-     * @return Return true to prevent any further processing.
-     */
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    @Override
+    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
     {
         pos = pos.offset(side);
 
@@ -94,10 +87,10 @@ public class CageItem extends Item
                 stack.stackSize--;
             }
 
-            return true;
+            return EnumActionResult.SUCCESS;
         }
 
-        return false;
+        return EnumActionResult.PASS;
     }
 
     private int getCaged(ItemStack stack)

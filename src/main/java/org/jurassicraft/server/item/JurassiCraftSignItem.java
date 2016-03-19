@@ -3,8 +3,10 @@ package org.jurassicraft.server.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
@@ -16,40 +18,31 @@ public class JurassiCraftSignItem extends Item
         this.setCreativeTab(JCCreativeTabs.items);
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (side == EnumFacing.DOWN)
+        if (side != EnumFacing.DOWN && side != EnumFacing.UP)
         {
-            return false;
-        }
-        else if (side == EnumFacing.UP)
-        {
-            return false;
-        }
-        else
-        {
-            BlockPos blockpos1 = pos.offset(side);
+            BlockPos offset = pos.offset(side);
 
-            if (!playerIn.canPlayerEdit(blockpos1, side, stack))
+            if (player.canPlayerEdit(offset, side, stack))
             {
-                return false;
-            }
-            else
-            {
-                JurassiCraftSignEntity sign = new JurassiCraftSignEntity(worldIn, blockpos1, side);
+                JurassiCraftSignEntity sign = new JurassiCraftSignEntity(world, offset, side);
 
                 if (sign.onValidSurface())
                 {
-                    if (!worldIn.isRemote)
+                    if (!world.isRemote)
                     {
-                        worldIn.spawnEntityInWorld(sign);
+                        world.spawnEntityInWorld(sign);
                     }
 
                     --stack.stackSize;
                 }
 
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
+
+        return EnumActionResult.PASS;
     }
 }

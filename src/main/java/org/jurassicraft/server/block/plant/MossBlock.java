@@ -1,11 +1,13 @@
 package org.jurassicraft.server.block.plant;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -16,6 +18,8 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class MossBlock extends Block
 {
+     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
+
     public MossBlock()
     {
         super(Material.leaves);
@@ -23,58 +27,56 @@ public class MossBlock extends Block
         this.setHardness(0.2F);
         this.setResistance(0.0F);
         this.setTickRandomly(true);
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
         this.setCreativeTab(JCCreativeTabs.plants);
-        this.setStepSound(soundTypeGrass);
+        this.setStepSound(SoundType.PLANT);
         this.setLightOpacity(0);
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getBlockColor()
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos)
     {
-        return ColorizerGrass.getGrassColor(0.5D, 1.0D);
+        return BOUNDS;
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getRenderColor(IBlockState state)
+    @Override
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
     {
-        return this.getBlockColor();
+        return NULL_AABB;
     }
 
-    @SideOnly(Side.CLIENT)
-    public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
-    {
-        return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
-    }
-
-    public boolean isFullCube()
+    @Override
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.TRANSLUCENT;
+        return BlockRenderLayer.TRANSLUCENT;
     }
 
     /**
      * Used to determine ambient occlusion and culling when rebuilding chunks for render
      */
-    public boolean isOpaqueCube()
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    @Override
+    public boolean canPlaceBlockAt(World world, BlockPos pos)
     {
-        IBlockState below = worldIn.getBlockState(pos.down());
-        return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos) && (below != null && below.getBlock().isFullCube());
+        IBlockState below = world.getBlockState(pos.down());
+        return super.canPlaceBlockAt(world, pos) && this.canBlockStay(world, pos) && (below != null && below.getBlock().isFullCube(below));
     }
 
     /**
      * Called when a neighboring block changes.
      */
+    @Override
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         this.checkForDrop(worldIn, pos, state);
@@ -99,9 +101,10 @@ public class MossBlock extends Block
         return !worldIn.isAirBlock(pos.down());
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
     {
-        return side == EnumFacing.UP || super.shouldSideBeRendered(worldIn, pos, side);
+        return side == EnumFacing.UP || super.shouldSideBeRendered(state, world, pos, side);
     }
 }

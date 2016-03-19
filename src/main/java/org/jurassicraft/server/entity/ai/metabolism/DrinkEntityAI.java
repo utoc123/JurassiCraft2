@@ -2,9 +2,10 @@ package org.jurassicraft.server.entity.ai.metabolism;
 
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -77,7 +78,8 @@ public class DrinkEntityAI extends EntityAIBase
                                 {
                                     for (int landZ = z - 1; landZ < z + 1; landZ++)
                                     {
-                                        if (world.getBlockState(new BlockPos(landX, y, landZ)).getBlock().isOpaqueCube())
+                                        IBlockState state = world.getBlockState(new BlockPos(landX, y, landZ));
+                                        if (state.getBlock().isOpaqueCube(state))
                                         {
                                             int diffX = posX - landX;
                                             int diffY = posY - y;

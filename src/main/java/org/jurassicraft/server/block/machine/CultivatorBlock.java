@@ -5,7 +5,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.InventoryHelper;
@@ -14,8 +14,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -39,15 +40,14 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
         this.setResistance(5.0F);
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
     }
 
-    public void dropItems(World world, BlockPos pos)
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         if (world.getBlockState(pos).getBlock() == JCBlockRegistry.cultivate_top)
         {
@@ -66,13 +66,13 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
      * returns a subtypes of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
     @SideOnly(Side.CLIENT)
+    @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
         EnumDyeColor[] colors = EnumDyeColor.values();
 
-        for (int j = 0; j < colors.length; ++j)
+        for (EnumDyeColor color : colors)
         {
-            EnumDyeColor color = colors[j];
             subtypes.add(new ItemStack(item, 1, color.getMetadata()));
         }
     }
@@ -92,6 +92,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Get the MapColor for this Block and the given BlockState
      */
+    @Override
     public MapColor getMapColor(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMapColor();
@@ -100,6 +101,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
@@ -108,37 +110,40 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
     }
 
-    protected BlockState createBlockState()
+    @Override
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] { COLOR });
+        return new BlockStateContainer(this, COLOR);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.TRANSLUCENT;
+        return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 }

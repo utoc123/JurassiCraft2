@@ -1,20 +1,25 @@
 package org.jurassicraft.server.entity.base;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
 public abstract class ProvokableDinosaurEntity extends DinosaurEntity
 {
+    private static DataParameter<Boolean> DATA_WATCHER_ANGRY = EntityDataManager.createKey(ProvokableDinosaurEntity.class, DataSerializers.BOOLEAN);
+
     public ProvokableDinosaurEntity(World world)
     {
         super(world);
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true, new Class[0]));
-        this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
+        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+        this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, true));
     }
 
     /**
@@ -73,7 +78,7 @@ public abstract class ProvokableDinosaurEntity extends DinosaurEntity
     public void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(16, new Byte((byte) 0));
+        this.dataWatcher.register(DATA_WATCHER_ANGRY, false);
     }
 
     /**
@@ -81,7 +86,7 @@ public abstract class ProvokableDinosaurEntity extends DinosaurEntity
      */
     public boolean isAngry()
     {
-        return (this.dataWatcher.getWatchableObjectByte(16) & 2) != 0;
+        return this.dataWatcher.get(DATA_WATCHER_ANGRY);
     }
 
     /**
@@ -89,15 +94,6 @@ public abstract class ProvokableDinosaurEntity extends DinosaurEntity
      */
     public void setAngry(boolean angry)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-
-        if (angry)
-        {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
-        }
-        else
-        {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
-        }
+        this.dataWatcher.set(DATA_WATCHER_ANGRY, angry);
     }
 }

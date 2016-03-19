@@ -3,23 +3,21 @@ package org.jurassicraft.server.damagesource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.translation.I18n;
 
 public class DinosaurEntityDamageSource extends DamageSource
 {
-    protected Entity damageSourceEntity;
-    /**
-     * Whether this EntityDamageSource is from an entity wearing Thorns-enchanted armor.
-     */
+    protected Entity entity;
     private boolean isThornsDamage = false;
 
-    public DinosaurEntityDamageSource(String name, Entity damageSourceEntityIn)
+    public DinosaurEntityDamageSource(String damageType, Entity entity)
     {
-        super(name);
-        this.damageSourceEntity = damageSourceEntityIn;
+        super(damageType);
+        this.entity = entity;
     }
 
     /**
@@ -38,23 +36,27 @@ public class DinosaurEntityDamageSource extends DamageSource
 
     public Entity getEntity()
     {
-        return this.damageSourceEntity;
+        return this.entity;
     }
 
     /**
      * Gets the death message that is displayed when the player dies
      */
-    public IChatComponent getDeathMessage(EntityLivingBase entity)
+    public ITextComponent getDeathMessage(EntityLivingBase entity)
     {
-        ItemStack itemstack = this.damageSourceEntity instanceof EntityLivingBase ? ((EntityLivingBase) this.damageSourceEntity).getHeldItem() : null;
+        ItemStack itemstack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;
         String s = "death.attack." + this.damageType;
         String s1 = s + ".item";
-        return itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1) ? new ChatComponentTranslation(s1, entity.getDisplayName(), this.damageSourceEntity.getDisplayName(), itemstack.getChatComponent()) : new ChatComponentTranslation(s, new Object[] { entity.getDisplayName(), this.damageSourceEntity.getDisplayName() });
+        return itemstack != null && itemstack.hasDisplayName() && I18n.canTranslate(s1) ? new TextComponentTranslation(s1, entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getChatComponent()): new TextComponentTranslation(s, new Object[] {entity.getDisplayName(), this.entity.getDisplayName()});
     }
 
-    /**
-     * Return whether this damage source will have its damage amount scaled based on the current difficulty.
-     */
+    @Override
+    public Vec3d getDamageLocation()
+    {
+        return new Vec3d(this.entity.posX, this.entity.posY, this.entity.posZ);
+    }
+
+    @Override
     public boolean isDifficultyScaled()
     {
         return false;

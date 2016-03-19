@@ -2,11 +2,11 @@ package org.jurassicraft.server.event;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -16,22 +16,12 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.jurassicraft.server.achievements.JCAchievements;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.data.JCPlayerData;
 import org.jurassicraft.server.item.JCItemRegistry;
 
 import java.util.Random;
 
 public class ServerEventHandler
 {
-    @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void entityConstructing(EntityConstructing event)
-    {
-        if (event.entity instanceof EntityPlayer)
-        {
-            event.entity.registerExtendedProperties(JCPlayerData.identifier, new JCPlayerData());
-        }
-    }
-
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
@@ -103,14 +93,14 @@ public class ServerEventHandler
 
         BiomeGenBase biome = world.getBiomeGenForCoords(pos);
 
-        if (biome == BiomeGenBase.forest || biome == BiomeGenBase.birchForest || biome == BiomeGenBase.taiga || biome == BiomeGenBase.megaTaiga || biome == BiomeGenBase.swampland || biome == BiomeGenBase.jungle)
+        if (biome == Biomes.forest || biome == Biomes.birchForest || biome == Biomes.taiga || biome == Biomes.megaTaiga || biome == Biomes.swampland || biome == Biomes.jungle)
         {
             if (rand.nextInt(8) == 0)
             {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
                 IBlockState state = world.getBlockState(topBlock.down());
 
-                if (state != null && state.getBlock().isOpaqueCube())
+                if (state != null && state.getBlock().isOpaqueCube(state))
                 {
                     world.setBlockState(topBlock, JCBlockRegistry.moss.getDefaultState(), 2);
                 }

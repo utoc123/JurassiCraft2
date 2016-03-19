@@ -199,8 +199,8 @@ public class JCBlockRegistry implements IContentHandler
             WoodType type = WoodType.getMetaLookup()[i];
             String typeName = type.getName();
 
-            planks[i] = new JCPlanksBlock(type, typeName);
-            woods[i] = new JCLogBlock(type, typeName);
+            planks[i] = new JCPlanksBlock(typeName);
+            woods[i] = new JCLogBlock(typeName);
             leaves[i] = new JCLeavesBlock(type, typeName);
             saplings[i] = new JCSaplingBlock(type, typeName);
             stairs[i] = new JCStairsBlock(typeName, planks[i].getDefaultState());

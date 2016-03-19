@@ -3,7 +3,7 @@ package org.jurassicraft.server.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -20,7 +20,7 @@ public class ActionFigureTile extends TileEntity
 
         updateEntity();
 
-        this.worldObj.markBlockForUpdate(pos);
+        this.markDirty();
     }
 
     public void readFromNBT(NBTTagCompound nbt)
@@ -60,11 +60,11 @@ public class ActionFigureTile extends TileEntity
     {
         NBTTagCompound compound = new NBTTagCompound();
         this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
+        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
+    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet)
     {
         NBTTagCompound compound = packet.getNbtCompound();
         this.readFromNBT(compound);

@@ -1,7 +1,10 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
 import java.util.Random;
@@ -34,7 +37,7 @@ public class GiganotosaurusEntity extends AggressiveDinosaurEntity // implements
         /** Step Sound */
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
-            this.playSound("jurassicraft:stomp", (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
+            this.playSound(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "stomp")), (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
             stepCount = 65;
         }
 

@@ -122,7 +122,7 @@ public class ServerProxy
         /*
          * Remove null entries from biomeList.
          */
-        BiomeGenBase[] allBiomes = Iterators.toArray(Iterators.filter(Iterators.forArray(BiomeGenBase.getBiomeGenArray()), Predicates.notNull()), BiomeGenBase.class);
+        BiomeGenBase[] allBiomes = Iterators.toArray(Iterators.filter(BiomeGenBase.biomeRegistry.iterator(), Predicates.notNull()), BiomeGenBase.class);
 
         for (Object object : EntityList.classToStringMapping.entrySet())
         {

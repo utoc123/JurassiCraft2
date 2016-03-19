@@ -1,16 +1,17 @@
 package org.jurassicraft.server.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,7 +34,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
         super(Material.rock);
         this.setHardness(2.0F);
         this.setResistance(8.0F);
-        this.setStepSound(Block.soundTypeStone);
+        this.setStepSound(SoundType.STONE);
         this.setCreativeTab(JCCreativeTabs.fossils);
 
         this.start = start;
@@ -41,43 +42,37 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
         this.setDefaultState(blockState.getBaseState().withProperty(VARIANT, 0));
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(VARIANT, meta);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
-        return (Integer) state.getValue(VARIANT);
+        return state.getValue(VARIANT);
     }
 
-    protected BlockState createBlockState()
+    @Override
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] { VARIANT });
+        return new BlockStateContainer(this, VARIANT);
     }
 
+    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
     }
 
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
@@ -110,38 +105,32 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
         return EncasedFossilItemBlock.class;
     }
 
-    /**
-     * Queries the class of tool required to harvest this block, if null is returned we assume that anything can harvest this block.
-     */
     public String getHarvestTool(IBlockState state)
     {
         return "pickaxe";
     }
 
-    /**
-     * Queries the harvest level of this item stack for the specified tool class, Returns -1 if this tool is not of the specified type
-     *
-     * @return Harvest level, or -1 if not the specified tool type.
-     */
+    @Override
     public int getHarvestLevel(IBlockState state)
     {
         return 1;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.SOLID;
+        return BlockRenderLayer.SOLID;
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return true;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return true;
     }
@@ -153,8 +142,8 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 }

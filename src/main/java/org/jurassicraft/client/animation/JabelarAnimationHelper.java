@@ -6,7 +6,8 @@ import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,7 +23,7 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 @SideOnly(Side.CLIENT)
 public class JabelarAnimationHelper
 {
-    private final DinosaurEntity theEntity;
+    private final DinosaurEntity animatedEntity;
 
     private final Minecraft mc;
 
@@ -78,13 +79,13 @@ public class JabelarAnimationHelper
     )
     {
         // transfer static animation info from constructor parameters to instance
-        theEntity = parEntity;
+        animatedEntity = parEntity;
         numParts = parNumParts;
         arrayOfPoses = parArrayOfPoses;
         mapOfPoseSequences = parMapOfSequences;
         inertialTweens = parInertialTweens;
 
-        lastTicksExisted = theEntity.ticksExisted;
+        lastTicksExisted = animatedEntity.ticksExisted;
 
         partialTicks = 0.0F;
         isThisTweenInertial = inertialTweens;
@@ -99,14 +100,14 @@ public class JabelarAnimationHelper
     public void performJabelarAnimations(float parPartialTicks)
     {
 
-//        JurassiCraft.instance.getLogger().debug("FPS = " + Minecraft.getDebugFPS() + " and current sequence = " + currentSequence + " and current pose = " + this.currentPose + " and current tick = " + this.currentTickInTween + " out of " + numTicksInTween + " and entity ticks existed = " + theEntity.ticksExisted + " and partial ticks = " + partialTicks);
+//        JurassiCraft.instance.getLogger().debug("FPS = " + Minecraft.getDebugFPS() + " and current sequence = " + currentSequence + " and current pose = " + this.currentPose + " and current tick = " + this.currentTickInTween + " out of " + numTicksInTween + " and entity ticks existed = " + animatedEntity.ticksExisted + " and partial ticks = " + partialTicks);
 
         performBloodSpurt();
 
         // Allow interruption of the animation if it is a new animation and not currently dying
-        if (theEntity.getAnimation() != currentPoseSequence && currentPoseSequence != Animations.DYING.get())
+        if (animatedEntity.getAnimation() != currentPoseSequence && currentPoseSequence != Animations.DYING.get())
         {
-            setNextSequence(theEntity.getAnimation());
+            setNextSequence(animatedEntity.getAnimation());
         }
         performNextTweenTick();
 
@@ -115,7 +116,7 @@ public class JabelarAnimationHelper
 
     private void init(DinosaurModel parModel)
     {
-        initSequence(theEntity.getAnimation());
+        initSequence(animatedEntity.getAnimation());
 //        JurassiCraft.instance.getLogger().info("Initializing to animation sequence = " + currentSequence);
         initPoseModel();
         initTweenTicks();
@@ -146,17 +147,17 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.toString() + " that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
+            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.toString() + " that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
-            theEntity.setAnimation(Animations.IDLE.get());
+            animatedEntity.setAnimation(Animations.IDLE.get());
         }
         else if (currentPoseSequence != Animations.IDLE.get() && currentPoseSequence == parSequenceIndex) // finished sequence but no new sequence set
         {
 //            JurassiCraft.instance.getLogger().debug("Intializing to idle sequence");
             currentPoseSequence = Animations.IDLE.get();
-            theEntity.setAnimation(Animations.IDLE.get());
+            animatedEntity.setAnimation(Animations.IDLE.get());
         }
-        else if (theEntity.isCarcass())
+        else if (animatedEntity.isCarcass())
         {
             currentPoseSequence = Animations.DYING.get();
         }
@@ -172,7 +173,7 @@ public class JabelarAnimationHelper
 
         // initialize first pose
         // carcass should init to last pose in dying sequence
-        if (theEntity.isCarcass())
+        if (animatedEntity.isCarcass())
         {
             currentPoseIndex = numPosesInSequence - 1;
         }
@@ -202,7 +203,7 @@ public class JabelarAnimationHelper
             numTicksInTween = 1;
         }
 
-        if (theEntity.isCarcass())
+        if (animatedEntity.isCarcass())
         {
             currentTickInTween = numTicksInTween - 1;
         }
@@ -287,9 +288,9 @@ public class JabelarAnimationHelper
 
         // since the method is called at rate of twice the display refresh rate
         // need to slow it down to only increment per tick.
-        if (theEntity.ticksExisted > lastTicksExisted)
+        if (animatedEntity.ticksExisted > lastTicksExisted)
         {
-            lastTicksExisted = theEntity.ticksExisted;
+            lastTicksExisted = animatedEntity.ticksExisted;
 
             if (incrementTweenTick()) // increments tween tick and returns true if finished pose
             {
@@ -369,7 +370,7 @@ public class JabelarAnimationHelper
     {
         if (incrementCurrentPoseIndex()) // increments pose and returns true if finished sequence
         {
-            setNextSequence(theEntity.getAnimation());
+            setNextSequence(animatedEntity.getAnimation());
         }
 
         updateCurrentPoseArrays();
@@ -380,7 +381,7 @@ public class JabelarAnimationHelper
 
     private void playSound()
     {
-        JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
 
         // only play sounds in first tick in tween
         if (currentTickInTween > 0)
@@ -391,70 +392,19 @@ public class JabelarAnimationHelper
         }
 
         // also idle sounds are taken care of separately from the pose system
-        if (theEntity.getAnimation() == Animations.IDLE.get())
+        if (animatedEntity.getAnimation() == Animations.IDLE.get())
         {
             return;
         }
 
-        JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
+        JurassiCraft.instance.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
 
-        String theSound = "";
+        SoundEvent sound = animatedEntity.getSoundForAnimation(animatedEntity.getAnimation());
         
-        if (theEntity.getAnimation() == Animations.ATTACKING.get())
+        if (sound != null)
         {
-            theSound = theEntity.getAttackingSound();
+            animatedEntity.playSound(sound, animatedEntity.getSoundVolume(), animatedEntity.getSoundPitch());
         }
-        else if (theEntity.getAnimation() == Animations.CALLING.get())
-        {
-            theSound = theEntity.getCallingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.DYING.get())
-        {
-            theSound = theEntity.getDyingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.INJURED.get())
-        {
-            theSound = theEntity.getInjuredSound();
-        }
-        else if (theEntity.getAnimation() == Animations.DRINKING.get())
-        {
-            theSound = theEntity.getDrinkingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.EATING.get())
-        {
-            theSound = theEntity.getEatingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.HISSING.get())
-        {
-            theSound = theEntity.getHissingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.SCRATCHING.get())
-        {
-            theSound = theEntity.getScratchingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.MATING.get())
-        {
-            theSound = theEntity.getMatingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.ROARING.get())
-        {
-            theSound = theEntity.getRoaringSound();
-        }
-        else if (theEntity.getAnimation() == Animations.SNIFFING.get())
-        {
-            theSound = theEntity.getSniffingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.POUNCING.get())
-        {
-            theSound = theEntity.getPouncingSound();
-        }
-        
-        if (theSound != null)
-        {
-            theEntity.playSound(theSound, theEntity.getSoundVolume(), theEntity.getSoundPitch());
-        }
-
-
     }
 
     // boolean returned indicates if tween was finished
@@ -476,7 +426,7 @@ public class JabelarAnimationHelper
         // check if finished sequence
         if (currentPoseIndex >= numPosesInSequence)
         {
-            Animations animation = Animations.getAnimation(theEntity.getAnimation());
+            Animations animation = Animations.getAnimation(animatedEntity.getAnimation());
 
             if (animation != null && animation.shouldHold()) // hold last dying pose indefinitely
             {
@@ -516,7 +466,7 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parPoseSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parPoseSequenceIndex.animationId + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
+            JurassiCraft.instance.getLogger().error("Requested an anim id " + parPoseSequenceIndex.animationId + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
         }
         else if (currentPoseSequence != Animations.IDLE.get() && currentPoseSequence == parPoseSequenceIndex) // finished sequence but no new sequence set
@@ -530,13 +480,13 @@ public class JabelarAnimationHelper
             currentPoseSequence = parPoseSequenceIndex;
         }
 
-        theEntity.setAnimation(currentPoseSequence);
+        animatedEntity.setAnimation(currentPoseSequence);
         setNextPoseModel(0);
         startNextTween();
 
 //        if (currentSequence != Animations.IDLE)
 //        {
-//            JurassiCraft.instance.getLogger().debug("current sequence for entity ID " + theEntity.getEntityId() + " is " + currentSequence + " out of " + mapOfSequences.size() + " and current pose " + currentPose + " out of " + mapOfSequences.get(currentSequence).length + " with " + numTicksInTween + " ticks in tween");
+//            JurassiCraft.instance.getLogger().debug("current sequence for entity ID " + animatedEntity.getEntityId() + " is " + currentSequence + " out of " + mapOfSequences.size() + " and current pose " + currentPose + " out of " + mapOfSequences.get(currentSequence).length + " with " + numTicksInTween + " ticks in tween");
 //        }
     }
 
@@ -569,18 +519,18 @@ public class JabelarAnimationHelper
 
     private void performBloodSpurt()
     {
-        double posX = theEntity.posX;
-        double posY = theEntity.posY;
-        double posZ = theEntity.posZ;
+        double posX = animatedEntity.posX;
+        double posY = animatedEntity.posY;
+        double posZ = animatedEntity.posZ;
 
-        World world = theEntity.worldObj;
+        World world = animatedEntity.worldObj;
 
         EffectRenderer effectRenderer = mc.effectRenderer;
 
-        if (theEntity.hurtTime == theEntity.maxHurtTime - 1)
+        if (animatedEntity.hurtTime == animatedEntity.maxHurtTime - 1)
         {
-            float entityWidth = theEntity.width;
-            float entityHeight = theEntity.height;
+            float entityWidth = animatedEntity.width;
+            float entityHeight = animatedEntity.height;
 
             float amount = 2;
 
@@ -594,13 +544,11 @@ public class JabelarAnimationHelper
                     }
                 }
             }
-
-//            addBloodEffect(world, effectRenderer, posX, posY + Math.round(theEntity.height * 0.75), posZ);
         }
     }
 
     private void addBloodEffect(World world, EffectRenderer effectRenderer, double x, double y, double z)
     {
-        effectRenderer.addEffect((new BloodEntityFX(world, x + 0.5D, y + 0.5D, z + 0.5D, 0, 0, 0)).func_174846_a(new BlockPos(x, y, z)));
+        effectRenderer.addEffect((new BloodEntityFX(world, x + 0.5D, y + 0.5D, z + 0.5D, 0, 0, 0)).setBlockPos(new BlockPos(x, y, z)));
     }
 }

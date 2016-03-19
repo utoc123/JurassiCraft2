@@ -1,12 +1,19 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockPos;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
 public class IndominusEntity extends AggressiveDinosaurEntity // implements ICarnivore, IEntityAICreature
@@ -17,6 +24,8 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     private int stepCount = 0;
 
     private boolean isCamouflaging;
+
+    private static final DataParameter<Boolean> DATA_WATCHER_IS_CAMOUFLAGING = EntityDataManager.createKey(IndominusEntity.class, DataSerializers.BOOLEAN);
 
     public IndominusEntity(World world)
     {
@@ -41,7 +50,7 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     {
         super.entityInit();
 
-        this.dataWatcher.addObject(31, (byte) 0);
+        this.dataWatcher.register(DATA_WATCHER_IS_CAMOUFLAGING, false);
     }
 
     @Override
@@ -61,7 +70,7 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
         /** Step Sound */
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
-            this.playSound("jurassicraft:stomp", (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
+            this.playSound(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "stomp")), (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
             stepCount = 65;
         }
 
@@ -69,15 +78,13 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
 
         if (worldObj.isRemote)
         {
-            isCamouflaging = this.dataWatcher.getWatchableObjectByte(31) == 1;
+            isCamouflaging = this.dataWatcher.get(DATA_WATCHER_IS_CAMOUFLAGING);
             changeSkinColor();
         }
         else
         {
-            this.dataWatcher.updateObject(31, (byte) (isCamouflaging ? 1 : 0));
+            this.dataWatcher.set(DATA_WATCHER_IS_CAMOUFLAGING, isCamouflaging);
         }
-        // if (getAnimation() == 0)
-        // AnimationAPI.sendAnimPacket(this, 1);
     }
 
     @Override
@@ -100,7 +107,7 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
 
         if (isCamouflaging())
         {
-            color = state.getBlock().colorMultiplier(this.worldObj, pos);
+            color = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, worldObj, pos, 0); //TODO
 
             if (color == 0xFFFFFF)
             {

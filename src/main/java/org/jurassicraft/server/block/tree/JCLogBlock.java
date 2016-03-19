@@ -1,9 +1,8 @@
 package org.jurassicraft.server.block.tree;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,36 +10,25 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCLogBlock extends BlockLog
 {
-    private WoodType treeType;
-
-    public JCLogBlock(WoodType type, String treeName)
+    public JCLogBlock(String treeName)
     {
         this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
-        setHardness(2.0F);
-        setResistance(0.5F);
-        setStepSound(Block.soundTypeWood);
-        setUnlocalizedName(treeName + "_log");
+        this.setHardness(2.0F);
+        this.setResistance(0.5F);
+        this.setStepSound(SoundType.WOOD);
+        this.setUnlocalizedName(treeName + "_log");
 
         this.setCreativeTab(JCCreativeTabs.plants);
-
-        treeType = type;
     }
 
-    public boolean isOpaqueCube()
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
     {
-        if (treeType == null)
-        {
-            return true;
-        }
         return true;
     }
 
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
-        if (treeType == null)
-        {
-            return true;
-        }
         return true;
     }
 
@@ -49,24 +37,24 @@ public class JCLogBlock extends BlockLog
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState iblockstate = this.getDefaultState();
+        IBlockState state = this.getDefaultState();
 
         switch (meta & 12)
         {
             case 0:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
                 break;
             case 4:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
                 break;
             case 8:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
                 break;
             default:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
         }
 
-        return iblockstate;
+        return state;
     }
 
     /**
@@ -76,7 +64,7 @@ public class JCLogBlock extends BlockLog
     {
         int i = 0;
 
-        switch (JCLogBlock.SwitchEnumAxis.AXIS_LOOKUP[((BlockLog.EnumAxis) state.getValue(LOG_AXIS)).ordinal()])
+        switch (JCLogBlock.SwitchEnumAxis.AXIS_LOOKUP[state.getValue(LOG_AXIS).ordinal()])
         {
             case 1:
                 i = 4;
@@ -91,19 +79,19 @@ public class JCLogBlock extends BlockLog
         return i;
     }
 
-    protected BlockState createBlockState()
+    @Override
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] { LOG_AXIS });
+        return new BlockStateContainer(this, LOG_AXIS);
     }
 
+    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(Item.getItemFromBlock(this), 1, 0);
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return 0;
@@ -115,32 +103,9 @@ public class JCLogBlock extends BlockLog
 
         static
         {
-            try
-            {
-                AXIS_LOOKUP[BlockLog.EnumAxis.X.ordinal()] = 1;
-            }
-            catch (NoSuchFieldError var3)
-            {
-                ;
-            }
-
-            try
-            {
-                AXIS_LOOKUP[BlockLog.EnumAxis.Z.ordinal()] = 2;
-            }
-            catch (NoSuchFieldError var2)
-            {
-                ;
-            }
-
-            try
-            {
-                AXIS_LOOKUP[BlockLog.EnumAxis.NONE.ordinal()] = 3;
-            }
-            catch (NoSuchFieldError var1)
-            {
-                ;
-            }
+            AXIS_LOOKUP[BlockLog.EnumAxis.X.ordinal()] = 1;
+            AXIS_LOOKUP[BlockLog.EnumAxis.Z.ordinal()] = 2;
+            AXIS_LOOKUP[BlockLog.EnumAxis.NONE.ordinal()] = 3;
         }
     }
 }

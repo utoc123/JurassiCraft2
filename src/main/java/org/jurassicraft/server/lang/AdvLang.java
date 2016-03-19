@@ -1,6 +1,6 @@
 package org.jurassicraft.server.lang;
 
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +19,14 @@ public class AdvLang
 
     public AdvLang withProperty(String propertyName, String value)
     {
-        properties.put(propertyName, StatCollector.translateToLocal(value));
+        properties.put(propertyName, I18n.translateToLocal(value));
 
         return this;
     }
 
     public String build()
     {
-        String translation = StatCollector.translateToLocal(langPath);
+        String translation = I18n.translateToLocal(langPath);
 
         for (Entry<String, String> property : properties.entrySet())
         {

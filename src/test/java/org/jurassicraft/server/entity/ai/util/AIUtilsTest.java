@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.ai.util;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -5,9 +5,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.IncubatorContainer;
@@ -15,7 +15,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
-import org.jurassicraft.server.item.ItemDinosaurEgg;
+import org.jurassicraft.server.item.DinosaurEggItem;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected boolean canProcess(int process)
     {
-        return slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof ItemDinosaurEgg;
+        return slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof DinosaurEggItem;
     }
 
     public int[] getSlotsForFace(EnumFacing side)
@@ -92,7 +92,7 @@ public class IncubatorTile extends MachineBaseTile
                     int blockY = pos.getY();
                     int blockZ = pos.getZ();
 
-                    List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, AxisAlignedBB.fromBounds(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
+                    List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, new AxisAlignedBB(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
 
                     CageSmallEntity cage = null;
 

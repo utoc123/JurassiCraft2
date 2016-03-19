@@ -4,8 +4,9 @@ import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.common.message.AbstractMessage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,12 +22,13 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
     private int y;
     private int z;
     private EnumFacing facing;
+    private EnumHand hand;
 
     public PlacePaddockSignMessage()
     {
     }
 
-    public PlacePaddockSignMessage(EnumFacing facing, BlockPos pos, Dinosaur dino)
+    public PlacePaddockSignMessage(EnumHand hand, EnumFacing facing, BlockPos pos, Dinosaur dino)
     {
         this.dino = JCEntityRegistry.getDinosaurId(dino);
         this.pos = new BlockPos(x, y, z);
@@ -34,32 +36,33 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
         this.y = pos.getY();
         this.z = pos.getZ();
         this.facing = facing;
+        this.hand = hand;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(PlacePaddockSignMessage messagePlacePaddockSign, EntityPlayer entityPlayer)
+    public void handleClientMessage(PlacePaddockSignMessage message, EntityPlayer entityPlayer)
     {
 
     }
 
     @Override
-    public void handleServerMessage(PlacePaddockSignMessage messagePlacePaddockSign, EntityPlayer entityPlayer)
+    public void handleServerMessage(PlacePaddockSignMessage message, EntityPlayer player)
     {
-        World world = entityPlayer.worldObj;
+        World world = player.worldObj;
 
-        EnumFacing side = messagePlacePaddockSign.facing;
-        BlockPos pos = messagePlacePaddockSign.pos;
+        EnumFacing side = message.facing;
+        BlockPos pos = message.pos;
 
-        PaddockSignEntity paddockSign = new PaddockSignEntity(world, pos, side, messagePlacePaddockSign.dino);
+        PaddockSignEntity paddockSign = new PaddockSignEntity(world, pos, side, message.dino);
 
-        if (entityPlayer.canPlayerEdit(pos, side, entityPlayer.getHeldItem()) && paddockSign.onValidSurface())
+        if (player.canPlayerEdit(pos, side, player.getHeldItem(message.hand)) && paddockSign.onValidSurface())
         {
             world.spawnEntityInWorld(paddockSign);
 
-            if (!entityPlayer.capabilities.isCreativeMode)
+            if (!player.capabilities.isCreativeMode)
             {
-                InventoryPlayer inventory = entityPlayer.inventory;
+                InventoryPlayer inventory = player.inventory;
                 inventory.decrStackSize(inventory.currentItem, 1);
             }
         }
@@ -73,6 +76,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
         buffer.writeInt(z);
         buffer.writeInt(dino);
         buffer.writeByte((byte) facing.getIndex());
+        buffer.writeByte((byte) hand.ordinal());
     }
 
     @Override
@@ -83,6 +87,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
         z = buffer.readInt();
         dino = buffer.readInt();
         facing = EnumFacing.getFront(buffer.readByte());
+        hand = EnumHand.values()[buffer.readByte()];
         pos = new BlockPos(x, y, z);
     }
 }

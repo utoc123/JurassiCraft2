@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.entity.data.JCPlayerData;
+import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
 
 public class SyncPaleoPadMessage extends AbstractMessage<SyncPaleoPadMessage>
 {
@@ -20,20 +20,20 @@ public class SyncPaleoPadMessage extends AbstractMessage<SyncPaleoPadMessage>
     public SyncPaleoPadMessage(EntityPlayer player)
     {
         nbt = new NBTTagCompound();
-        JCPlayerData.getPlayerData(player).saveNBTData(nbt);
+        PlayerDataCapabilityImplementation.get(player).save(nbt);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(SyncPaleoPadMessage messageSyncPaleoPad, EntityPlayer entityPlayer)
+    public void handleClientMessage(SyncPaleoPadMessage message, EntityPlayer player)
     {
-        JCPlayerData.setPlayerData(null, messageSyncPaleoPad.nbt);
+        PlayerDataCapabilityImplementation.get(player).load(message.nbt);
     }
 
     @Override
-    public void handleServerMessage(SyncPaleoPadMessage messageSyncPaleoPad, EntityPlayer entityPlayer)
+    public void handleServerMessage(SyncPaleoPadMessage message, EntityPlayer player)
     {
-        JCPlayerData.setPlayerData(entityPlayer, messageSyncPaleoPad.nbt);
+        PlayerDataCapabilityImplementation.get(player).load(message.nbt);
     }
 
     @Override
