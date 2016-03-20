@@ -2,6 +2,27 @@ package org.jurassicraft.server.entity.base;
 
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.server.animation.AIAnimation;
+import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.HerdEntityAI;
+import org.jurassicraft.server.entity.ai.MateEntityAI;
+import org.jurassicraft.server.entity.ai.SleepEntityAI;
+import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
+import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
+import org.jurassicraft.server.genetics.GeneticsContainer;
+import org.jurassicraft.server.genetics.GeneticsHelper;
+import org.jurassicraft.server.item.BluePrintItem;
+import org.jurassicraft.server.item.JCItemRegistry;
+
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
 import net.ilexiconn.llibrary.common.animation.Animation;
@@ -31,26 +52,6 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.animation.AIAnimation;
-import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.ai.HerdEntityAI;
-import org.jurassicraft.server.entity.ai.MateEntityAI;
-import org.jurassicraft.server.entity.ai.SleepEntityAI;
-import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
-import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
-import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
-import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
-import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
-import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
-import org.jurassicraft.server.genetics.GeneticsContainer;
-import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.item.BluePrintItem;
-import org.jurassicraft.server.item.JCItemRegistry;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
 {
@@ -108,6 +109,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private static final Logger LOGGER = LogManager.getLogger();
 
     private int rareVariant;
+
+    private boolean useInertialTweens;
 
     public DinosaurEntity(World world)
     {
@@ -168,6 +171,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 rareVariant = rand.nextInt(rareVariantCount) + 1;
             }
         }
+        // animations have inertia, meaning that they start slow then go fast 
+        // and then slow at end to give sense of mass  Good for large dinos, not for mechanical
+        // or light-weight entities
+        setUseInertialTweens(true); 
     }
 
     public boolean shouldSleep()
@@ -1224,5 +1231,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public int getRareVariant()
     {
         return rareVariant;
+    }
+    
+    public boolean getUseInertialTweens()
+    {
+        return useInertialTweens;
+    }
+    
+    public void setUseInertialTweens(boolean parUseInertialTweens)
+    {
+        useInertialTweens = parUseInertialTweens;
     }
 }

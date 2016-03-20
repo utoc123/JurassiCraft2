@@ -14,16 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.map.ListHashMap;
-import net.minecraft.entity.Entity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.dto.AnimationsDTO;
 import org.jurassicraft.client.animation.dto.DinosaurRenderDefDTO;
@@ -33,6 +23,18 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumGrowthStage;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
+import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.common.map.ListHashMap;
+import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public abstract class DinosaurAnimator implements IModelAnimator
@@ -262,7 +264,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
         return uri.toString();
     }
 
-    private JabelarAnimationHelper getAnimationHelper(DinosaurEntity entity, DinosaurModel model)
+    private JabelarAnimationHelper getAnimationHelper(DinosaurEntity entity, DinosaurModel model, boolean useInertialTweens)
     {
         Integer id = entity.getEntityId();
         EnumGrowthStage growth = entity.getGrowthStage();
@@ -280,7 +282,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
         {
             PreloadedModelData growthModel = modelData.get(growth);
             int cubes = growthModel.models.length > 0 ? growthModel.models[0].length : 0;
-            render = new JabelarAnimationHelper(entity, model, cubes, growthModel.models, growthModel.animations, true);
+            render = new JabelarAnimationHelper(entity, model, cubes, growthModel.models, growthModel.animations, useInertialTweens);
             growthToRender.put(growth, render);
         }
 
@@ -299,7 +301,7 @@ public abstract class DinosaurAnimator implements IModelAnimator
 
     protected void setRotationAngles(DinosaurModel model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTick, DinosaurEntity entity)
     {
-        getAnimationHelper(entity, model).performJabelarAnimations(partialTick);
+        getAnimationHelper(entity, model, entity.getUseInertialTweens()).performJabelarAnimations(partialTick);
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
         {
             if (entity.isSwimming())

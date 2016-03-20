@@ -2,12 +2,13 @@ package org.jurassicraft.server.entity;
 
 import java.util.Random;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.animation.ControlledParam;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 
 public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAICreature,
 // ICarnivore
@@ -34,6 +35,8 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAI
         {
             this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);
         }
+        
+        setUseInertialTweens(true);
     }
 
     @Override
