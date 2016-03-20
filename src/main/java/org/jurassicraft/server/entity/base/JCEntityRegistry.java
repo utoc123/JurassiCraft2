@@ -67,6 +67,7 @@ import org.jurassicraft.server.dinosaur.VelociraptorDeltaDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorEchoDinosaur;
 import org.jurassicraft.server.dinosaur.ZhenyuanopterusDinosaur;
+import org.jurassicraft.server.entity.egg.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
@@ -222,7 +223,7 @@ public class JCEntityRegistry implements IContentHandler
         registerEntity(JurassiCraftSignEntity.class, "JurassiCraft Sign");
         registerEntity(CageSmallEntity.class, "Small Dinosaur Cage");
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
-
+        registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
         registerEntity(HelicopterBaseEntity.class, "Helicopter base");
         registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
 
