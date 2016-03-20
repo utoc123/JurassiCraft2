@@ -13,6 +13,7 @@ import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
 import org.lwjgl.opengl.GL11;
 
 public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerTile>

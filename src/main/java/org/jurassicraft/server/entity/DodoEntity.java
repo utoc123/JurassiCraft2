@@ -12,6 +12,10 @@ public class DodoEntity extends DinosaurEntity // implements IEntityAICreature, 
     {
         super(world);
 
+        injuredSounds = new String[] { "dodo_hurt_1", "dodo_hurt_2" };
+        idleSounds = new String[] { "dodo_living_1", "dodo_living_2", "dodo_living_3" };
+        dyingSounds = new String[] { "dodo_death_1" };
+
         tasks.addTask(2, new JCAutoAnimBase(this, 18, Animations.EATING.get()));
         tasks.addTask(1, new FindPlantEntityAI(this));
     }

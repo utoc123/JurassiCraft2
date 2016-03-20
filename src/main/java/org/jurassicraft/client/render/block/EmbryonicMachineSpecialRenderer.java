@@ -12,8 +12,11 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
+import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
 import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Arrays;
 
 public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryonicMachineTile>
 {

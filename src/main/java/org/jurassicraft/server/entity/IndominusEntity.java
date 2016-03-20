@@ -6,10 +6,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,6 +30,10 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     public IndominusEntity(World world)
     {
         super(world);
+
+        injuredSounds = new String[] { "indominus_hurt_1" };
+        idleSounds = new String[] { "indominus_living_1", "indominus_breath" };
+        dyingSounds = new String[] { "indominus_death_1" };
 
         this.addAIForAttackTargets(EntityLivingBase.class, 0);
         this.defendFromAttacker(EntityLivingBase.class, 0);

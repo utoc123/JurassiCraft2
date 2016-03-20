@@ -1,25 +1,5 @@
 package org.jurassicraft.client.animation;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.map.ListHashMap;
-import net.minecraft.entity.Entity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.animation.dto.AnimationsDTO;
-import org.jurassicraft.client.animation.dto.DinosaurRenderDefDTO;
-import org.jurassicraft.client.animation.dto.PoseDTO;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +13,28 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.animation.dto.AnimationsDTO;
+import org.jurassicraft.client.animation.dto.DinosaurRenderDefDTO;
+import org.jurassicraft.client.animation.dto.PoseDTO;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
+import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.common.map.ListHashMap;
+import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public abstract class DinosaurAnimator implements IModelAnimator

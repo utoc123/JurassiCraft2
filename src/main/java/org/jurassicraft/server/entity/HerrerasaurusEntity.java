@@ -15,6 +15,10 @@ public class HerrerasaurusEntity extends AggressiveDinosaurEntity // implements 
     {
         super(world);
 
+        dyingSounds = new String[] { "herrerasaurus_death_1" };
+        idleSounds = new String[] { "herrerasaurus_living_1" };
+        injuredSounds = new String[] { "herrerasaurus_living_1" };
+
         for (Class target : targets)
         {
             this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);

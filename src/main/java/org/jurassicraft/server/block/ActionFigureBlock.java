@@ -44,7 +44,7 @@ public class ActionFigureBlock extends OrientedBlock
     @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos)
     {
-        return BOUNDS;
+        return NULL_AABB;
     }
 
     @Override

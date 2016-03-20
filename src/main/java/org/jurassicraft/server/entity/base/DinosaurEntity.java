@@ -1,40 +1,7 @@
 package org.jurassicraft.server.entity.base;
 
-import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import java.util.UUID;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.JurassiCraft;
@@ -56,7 +23,33 @@ import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.JCItemRegistry;
 
-import java.util.UUID;
+import io.netty.buffer.ByteBuf;
+import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
+import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
 {
@@ -76,6 +69,21 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public AIAnimation currentAnim = null;
     private Animation animation;
     private int animTick;
+
+    protected String[] injuredSounds;
+    protected String[] dyingSounds;
+    protected String[] attackingSounds;
+    protected String[] idleSounds;
+    protected String[] breathSounds;
+    protected String[] callingSounds;
+    protected String[] drinkingSounds;
+    protected String[] eatingSounds;
+    protected String[] hissingSounds;
+    protected String[] scratchingSounds;
+    protected String[] matingSounds;
+    protected String[] roaringSounds;
+    protected String[] sniffingSounds;
+    protected String[] pouncingSounds;
 
     private boolean hasTracker;
 
@@ -446,6 +454,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             metabolism.update();
 
+
             if (this.ticksExisted % 62 == 0)
             {
                 this.playSound(getBreathingSound(), this.getSoundVolume(), this.getSoundPitch());
@@ -740,9 +749,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return animTick;
     }
 
-    protected SoundEvent getSound(String sound)
+    protected SoundEvent randomSound(String... sounds)
     {
-        return new SoundEvent(new ResourceLocation(JurassiCraft.MODID, dinosaur.getName().toLowerCase() + "_" + sound));
+        return new SoundEvent(new ResourceLocation(JurassiCraft.MODID, sounds[rand.nextInt(sounds.length)]));
     }
 
     @Override
@@ -759,40 +768,19 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         // To better aid syncing animations to sounds, the getInjuredSound() method is used instead
         // called from JabelarAnimationHelper
-        return getSoundForAnimation(Animations.INJURED.get());
+        return null;
     }
 
     public SoundEvent getSoundForAnimation(Animation animation)
     {
         // To better aid syncing animations to sounds, the getDyingSound() method is used instead
         // called from JabelarAnimationHelper
-        if (animation == Animations.INJURED.get())
-        {
-            return getSound("hurt");
-        }
-        else if (animation == Animations.IDLE.get())
-        {
-            return getSound("living");
-        }
-        else if (animation == Animations.CALLING.get())
-        {
-            return getSound("call");
-        }
-        else if (animation == Animations.DYING.get())
-        {
-            return getSound("death");
-        }
-        else if (animation == Animations.ROARING.get())
-        {
-            return getSound("roar");
-        }
-
         return null;
     }
 
     public SoundEvent getBreathingSound()
     {
-        return getSound("breathing");
+        return null;
     }
 
     public double getAttackDamage()

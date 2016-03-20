@@ -15,6 +15,11 @@ public class CarnotaurusEntity extends AggressiveDinosaurEntity // implements IE
     {
         super(world);
 
+
+        idleSounds = new String[] { "carnotaurus_living_1" };
+        injuredSounds = new String[] { "carnotaurus_hurt_1" };
+        dyingSounds = new String[] { "carnotaurus_death_1" };
+
         for (int i = 0; i < targets.length; i++)
         {
             this.addAIForAttackTargets(targets[i], new Random().nextInt(3) + 1);
