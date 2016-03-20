@@ -36,7 +36,7 @@ public class CallAnimationAI extends EntityAIBase
             {
                 if (animatingEntity.getClass().isInstance(entity))
                 {
-                    animatingEntity.playSound(animatingEntity.getCallingSound(), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
+                    animatingEntity.playSound(animatingEntity.getSoundForAnimation(Animations.CALLING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
                     return true;
                 }
             }

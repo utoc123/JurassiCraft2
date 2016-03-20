@@ -22,10 +22,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     {
         super(world);
 
-        injuredSounds = new String[] { "indominus_hurt_1" };
-        idleSounds = new String[] { "indominus_living_1", "indominus_breath" };
-        dyingSounds = new String[] { "indominus_death_1" };
-
         this.addAIForAttackTargets(EntityLivingBase.class, 0);
         this.defendFromAttacker(EntityLivingBase.class, 0);
     }

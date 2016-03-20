@@ -18,10 +18,6 @@ public class SpinosaurusEntity extends AggressiveDinosaurEntity // implements IE
     {
         super(world);
 
-        injuredSounds = new String[] { "spinosaurus_hurt_1" };
-        idleSounds = new String[] { "spinosaurus_living_1", "spinosaurus_living_2", "spinosaurus_living_3", "spinosaurus_living_4" };
-        dyingSounds = new String[] { "spinosaurus_death_1", "spinosaurus_death_2" };
-
         for (int i = 0; i < targets.length; i++)
         {
             this.addAIForAttackTargets(targets[i], new Random().nextInt(3) + 1);

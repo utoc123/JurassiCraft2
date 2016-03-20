@@ -1,13 +1,5 @@
 package org.jurassicraft.client.animation;
 
-import java.util.Map;
-
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.fx.BloodEntityFX;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
-
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -16,6 +8,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.fx.BloodEntityFX;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import java.util.Map;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
@@ -392,63 +391,12 @@ public class JabelarAnimationHelper
 
         JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
 
-        String theSound = "";
-        
-        if (theEntity.getAnimation() == Animations.ATTACKING.get())
-        {
-            theSound = theEntity.getAttackingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.CALLING.get())
-        {
-            theSound = theEntity.getCallingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.DYING.get())
-        {
-            theSound = theEntity.getDyingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.INJURED.get())
-        {
-            theSound = theEntity.getInjuredSound();
-        }
-        else if (theEntity.getAnimation() == Animations.DRINKING.get())
-        {
-            theSound = theEntity.getDrinkingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.EATING.get())
-        {
-            theSound = theEntity.getEatingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.HISSING.get())
-        {
-            theSound = theEntity.getHissingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.SCRATCHING.get())
-        {
-            theSound = theEntity.getScratchingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.MATING.get())
-        {
-            theSound = theEntity.getMatingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.ROARING.get())
-        {
-            theSound = theEntity.getRoaringSound();
-        }
-        else if (theEntity.getAnimation() == Animations.SNIFFING.get())
-        {
-            theSound = theEntity.getSniffingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.POUNCING.get())
-        {
-            theSound = theEntity.getPouncingSound();
-        }
+        String theSound = theEntity.getSoundForAnimation(theEntity.getAnimation());
         
         if (theSound != null)
         {
             theEntity.playSound(theSound, theEntity.getSoundVolume(), theEntity.getSoundPitch());
         }
-
-
     }
 
     // boolean returned indicates if tween was finished

@@ -141,6 +141,5 @@ public class EatFoodItemEntityAI extends EntityAIBase
         return dinosaur != null && !this.dinosaur.getNavigator().noPath() && item != null && !item.isDead;
     }
 
-
     private static final Logger LOGGER = LogManager.getLogger();
 }
