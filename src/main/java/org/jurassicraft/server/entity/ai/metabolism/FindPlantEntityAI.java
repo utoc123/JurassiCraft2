@@ -11,10 +11,12 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.entity.ai.util.BlockBreaker;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
+
+import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.entity.base.EnumDiet;
 
 /**
  * This piece of AI use used to find a plant and eat it. Should be titled "graze".
@@ -40,14 +42,11 @@ public class FindPlantEntityAI extends EntityAIBase
     // TODO: Add eyesight/smell attribute for finding plants.
     public static final int LOOK_RADIUS = 16;
 
-    // The dinosaur we are tracking for.
-    protected final DinosaurEntity dinosaur;
+    // The animal we are tracking for.
+    protected DinosaurEntity dinosaur;
 
     // The target block to feed on, other null if currently not targeting anything
     protected BlockPos target = null;
-
-    // Used to animate block breaking
-    protected BlockBreaker breaker = null;
 
     public FindPlantEntityAI(DinosaurEntity dinosaur)
     {
@@ -57,20 +56,18 @@ public class FindPlantEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        MetabolismContainer metabolism = dinosaur.getMetabolism();
-
-        // We don't want to eat if we are dead, too often, or not supposed to
+        //We don't want to eat if we are dead or not supposed to
         if (dinosaur.isDead ||
                 dinosaur.isCarcass() ||
-                (dinosaur.ticksExisted & 0x0F) != 0 ||
                 !dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
             return false;
         }
 
         // Now, let's see if we are hungry
-        double food = metabolism.getFood();
-        int maxFood = metabolism.getMaxFood();
+        MetabolismContainer metabolism = dinosaur.getMetabolism();
+            double food = metabolism.getFood();
+            int maxFood = metabolism.getMaxFood();
 
         return ((food < (maxFood * MUST_EAT_THRESHOLD)) ||
                 ((food < (maxFood * SHOULD_EAT_THRESHOLD)) &&
@@ -84,100 +81,97 @@ public class FindPlantEntityAI extends EntityAIBase
         // This gets called once to initiate.  Here's where we find the plant and start movement
         BlockPos head = getHeadPos();
 
+        //world the animal currently inhabits
         World world = dinosaur.worldObj;
 
-        // Look in increasing layers (e.g. boxes) around the head.
+        MetabolismContainer metabolism = dinosaur.getMetabolism();
+            double food = metabolism.getFood();
+            int maxFood = metabolism.getMaxFood();
+
+        // Look in increasing layers (e.g. boxes) around the head. Traversers... are like ogres?
         OnionTraverser traverser = new OnionTraverser(head, LOOK_RADIUS);
         target = null;
+
+        //scans all blocks around the LOOK_RADIUS
         for (BlockPos pos : traverser)
         {
             Block block = world.getBlockState(pos).getBlock();
 
-            // TODO: Use FoodHelper and diet
-            // TODO: Maybe user block drops
             if (block instanceof BlockBush || block instanceof BlockLeaves)
+//          if (FoodHelper.canDietEat(EnumDiet.HERBIVORE, block))
             {
                 target = pos;
                 break;
             }
         }
 
-        if (target != null)
+        if (target != null && food <= (maxFood * MUST_EAT_THRESHOLD))
         {
-//            LOGGER.info("Found plant food pos=" + _target);
-            dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 1.0);
+//          LOGGER.info("Running towards found plant food pos = " + target);
+            dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 1.4);
+        }
+
+        else if (target != null && food <= (maxFood * SHOULD_EAT_THRESHOLD))
+        {
+//          LOGGER.info("Walking towards found plant food pos = " + target);
+            dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 0.7);
         }
     }
 
-    @Override
-    public void updateTask()
-    {
-        if (breaker != null)
-        {
-            if (breaker.tickUpdate())
-            {
-                if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
-                {
-                    dinosaur.worldObj.destroyBlock(target, false);
-                }
-
-                // TODO:  Add food value & food heal value to food helper
-                dinosaur.getMetabolism().increaseFood(2000);
-                dinosaur.heal(4.0F);
-                breaker = null;
-                target = null;
-
-                // Now that we have finished stop the animation
-                Animation.sendAnimationPacket(dinosaur, Animations.IDLE.get());
-            }
-            return;
-        }
-
-        if (dinosaur.getNavigator().noPath())
-        {
-            // No path.  If close enough, start the breaker
-            // TODO: Head is above ground, so we need to compute this differently.  Ideally it can bend down
-//            if (getHeadPos().distanceSq(_target) < EAT_RADIUS)
-            {
-                // Start the animation
-                Animation.sendAnimationPacket(dinosaur, Animations.EATING.get());
-
-                // Eating grass is really slow
-                breaker = new BlockBreaker(dinosaur, EAT_BREAK_SPEED, target, MIN_BREAK_TIME_SEC);
-                dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(),
-                        0, dinosaur.getVerticalFaceSpeed());
-
-//                LOGGER.info("Started breaker: " + _breaker);
-            }
-//            else
-//            {
-//                // We got near our target but not close enough.  Try again.
-//                _target = null;
-//            }
-        }
-    }
-
-    /**
-     * Returns whether an in-progress EntityAIBase should continue executing
-     */
-    @Override
+    @Override 
     public boolean continueExecuting()
     {
         return target != null;
     }
 
-    // ================================
+    @Override
+    public void updateTask()
+    {
+        if (dinosaur.getNavigator().noPath())
+        {
+//            TODO: Head is above ground, so we need to compute this differently.  Ideally it can bend down
+//            if (getHeadPos().distanceSq(target) < EAT_RADIUS)
+//            {               
+                if(target != null){
+                    // Start the animation
+                    Animation.sendAnimationPacket(dinosaur, Animations.EATING.get());
+
+                    dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(),0, dinosaur.getVerticalFaceSpeed());
+
+                    if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
+                    {
+                        dinosaur.worldObj.destroyBlock(target, false);
+                    }
+
+                    // TODO:  Add food value & food heal value to food helper
+                    dinosaur.getMetabolism().increaseFood(2000);
+                    dinosaur.heal(4.0F);
+
+                    //Now that we have finished stop the animation
+                    TerminateTask();
+                }
+//            }
+//            else
+//            {
+//              // TODO If animal cannot reach location, try again or end task  
+//            }
+        }
+    }
+
+    private void TerminateTask(){
+        dinosaur.getNavigator().clearPathEntity();
+        target = null;
+        Animation.sendAnimationPacket(dinosaur, Animations.IDLE.get());
+    }
+
+    //=========================================================================
 
     private BlockPos getHeadPos()
     {
-        // Current we use head height when we really want length.
-        // TODO:  Move this method to DinosaurEntity
+        // TODO:  Use getHeadPos() from DinosaurEntity once working correctly
         return dinosaur.getPosition().
                 offset(dinosaur.getHorizontalFacing(), (int) dinosaur.width).
                 offset(EnumFacing.UP, (int) dinosaur.getEyeHeight());
     }
-
-    private static final Logger LOGGER = LogManager.getLogger();
-
-
+  private static final Logger LOGGER = LogManager.getLogger();
 }
