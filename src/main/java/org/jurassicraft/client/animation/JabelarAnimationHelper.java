@@ -1,13 +1,5 @@
 package org.jurassicraft.client.animation;
 
-import java.util.Map;
-
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.fx.BloodEntityFX;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
-
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -17,6 +9,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.fx.BloodEntityFX;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import java.util.Map;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.

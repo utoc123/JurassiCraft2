@@ -1,7 +1,6 @@
 package org.jurassicraft.server.entity;
 
-import java.util.Random;
-
+import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -12,8 +11,9 @@ import org.jurassicraft.server.animation.ControlledParam;
 import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
-public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAICreature,
-// ICarnivore
+import java.util.Random;
+
+public class TyrannosaurusEntity extends AggressiveDinosaurEntity
 {
     private static final Class[] targets = { CompsognathusEntity.class, AnkylosaurusEntity.class, EntityPlayer.class, DilophosaurusEntity.class, DimorphodonEntity.class, DodoEntity.class, LeaellynasauraEntity.class, LudodactylusEntity.class, HypsilophodonEntity.class, GallimimusEntity.class, SegisaurusEntity.class, ProtoceratopsEntity.class, ParasaurolophusEntity.class, OthnieliaEntity.class, MicroceratusEntity.class, TriceratopsEntity.class, StegosaurusEntity.class, BrachiosaurusEntity.class, ApatosaurusEntity.class, RugopsEntity.class, HerrerasaurusEntity.class, VelociraptorEntity.class, SpinosaurusEntity.class, AchillobatorEntity.class, CarnotaurusEntity.class, TherizinosaurusEntity.class, IndominusEntity.class };
 
@@ -26,11 +26,6 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAI
     {
         super(world);
 
-        injuredSounds = new String[] { "tyrannosaurus_hurt_1", "tyrannosaurus_hurt_2" };
-        dyingSounds = new String[] { "tyrannosaurus_death_1" };
-        attackingSounds = new String[] { "tyrannosaurus_roar_1" };
-        breathSounds = new String[] { "tyrannosaurus_breath_1" };
-
         tasks.addTask(2, new JCNonAutoAnimBase(this, 75, Animations.INJURED.get(), 750));
 
         for (Class target : targets)
@@ -39,6 +34,17 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity // , IEntityAI
         }
         
         setUseInertialTweens(true);
+    }
+
+    @Override
+    public SoundEvent getSoundForAnimation(Animation animation)
+    {
+        if (animation == Animations.ATTACKING.get())
+        {
+            return getSound("roar");
+        }
+
+        return super.getSoundForAnimation(animation);
     }
 
     @Override
