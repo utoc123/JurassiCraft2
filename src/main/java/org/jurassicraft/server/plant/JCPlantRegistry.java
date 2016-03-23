@@ -9,6 +9,7 @@ public class JCPlantRegistry implements IContentHandler
 {
     private static List<Plant> plants = new ArrayList<Plant>();
 
+    public static Plant ajuginucula_smithii;
     public static Plant small_royal_fern;
     public static Plant calamites;
     public static Plant small_chain_fern;
@@ -23,6 +24,7 @@ public class JCPlantRegistry implements IContentHandler
     @Override
     public void init()
     {
+        ajuginucula_smithii = new AjuginuculaSmithiiPlant();
         small_royal_fern = new SmallRoyalFernPlant();
         calamites = new CalamitesPlant();
         small_chain_fern = new SmallChainFernPlant();
@@ -38,6 +40,7 @@ public class JCPlantRegistry implements IContentHandler
     @Override
     public void gameRegistry() throws Exception
     {
+        registerPlant(ajuginucula_smithii);
         registerPlant(small_royal_fern);
         registerPlant(calamites);
         registerPlant(small_chain_fern);

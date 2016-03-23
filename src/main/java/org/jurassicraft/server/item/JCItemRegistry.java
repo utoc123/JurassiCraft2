@@ -1,10 +1,14 @@
 package org.jurassicraft.server.item;
 
 import net.ilexiconn.llibrary.common.content.IContentHandler;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.server.api.IHybrid;
+import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
@@ -80,6 +84,11 @@ public class JCItemRegistry implements IContentHandler
 
     public static BasicItem iron_nugget;
 
+    // Seeds and Plant Products
+    public static Item ajuginucula_smithii_seeds;
+    public static Item ajuginucula_smithii_leaves;
+    public static Item ajuginucula_smithii_oil;
+
     // Debug items
     public static Item dino_scanner;
 
@@ -146,6 +155,11 @@ public class JCItemRegistry implements IContentHandler
         iron_nugget = new BasicItem(JCCreativeTabs.items);
 
         gypsum_powder = new BasicItem(JCCreativeTabs.items);
+
+        // Seeds and plant products
+        ajuginucula_smithii_seeds = new ItemSeeds(JCBlockRegistry.ajuginucula_smithii, Blocks.farmland).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(JCCreativeTabs.plants);
+        ajuginucula_smithii_leaves = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(JCCreativeTabs.plants);
+        ajuginucula_smithii_oil = new BasicItem(JCCreativeTabs.plants);
 
         for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
         {
@@ -228,6 +242,13 @@ public class JCItemRegistry implements IContentHandler
         registerItem(dino_scanner, "Dino Scanner");
 
         registerItem(gypsum_powder, "Gypsum Powder");
+
+        // -------
+        // Seeds and plant products
+
+        registerItem(ajuginucula_smithii_seeds, "Ajuginucula Smithii Seeds");
+        registerItem(ajuginucula_smithii_leaves, "Ajuginucula Smithii Leaves");
+        registerItem(ajuginucula_smithii_oil, "Ajuginucula Smithii Oil");
 
         // registerItem(entityRemover, "Entity Remover");
 

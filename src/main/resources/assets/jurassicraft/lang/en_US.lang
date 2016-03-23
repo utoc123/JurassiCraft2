@@ -199,6 +199,10 @@ item.advanced_circuit.name=Advanced Circuit
 item.iron_nugget.name=Iron Nugget
 item.gypsum_powder.name=Gypsum Powder
 
+item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
+item.ajuginucula_smithii_leaves.name=Ajuginucula Smithii Leaves
+item.ajuginucula_smithii_oil.name=Ajuginucula Smithii Oil
+
 //Blocks ==================================================
 tile.fossil_block.name={period} Fossil
 tile.encased_fossil.name=Encased {period} Fossil
@@ -260,6 +264,8 @@ tile.planks_7.name=Mangrove Planks
 
 tile.clear_glass.name=Clear Glass
 
+tile.ajuginucula_smithii.name=Ajuginucula Smithii
+
 //Plants =========================================
 plants.small_royal_fern.name=Small Royal Fern
 plants.calamites.name=Calamites
@@ -271,6 +277,7 @@ plants.cry_pansy.name=Cry Pansy
 plants.scaly_tree_fern.name=Scaly Tree Fern
 plants.cycad_zamites.name=Zamites
 plants.dicksonia.name=Dicksonia
+plants.ajuginucula_smithii.name=Ajuginucula Smithii
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

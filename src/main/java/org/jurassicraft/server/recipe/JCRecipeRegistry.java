@@ -90,6 +90,8 @@ public class JCRecipeRegistry implements IContentHandler
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(JCItemRegistry.laser), "IDI", "ICI", "IRI", 'I', "nuggetIron", 'C', JCItemRegistry.basic_circuit, 'D', Items.diamond, 'R', Items.redstone));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(JCItemRegistry.disc_reader), "CLI", "i  ", "iib", 'i', "nuggetIron", 'C', JCItemRegistry.advanced_circuit, 'L', JCItemRegistry.laser, 'I', Items.iron_ingot, 'b', Blocks.stone_button));
 
+        GameRegistry.addShapelessRecipe(new ItemStack(JCItemRegistry.ajuginucula_smithii_oil), JCItemRegistry.ajuginucula_smithii_leaves, JCItemRegistry.ajuginucula_smithii_leaves, JCItemRegistry.ajuginucula_smithii_leaves, JCItemRegistry.ajuginucula_smithii_leaves, Items.glass_bottle );
+
         GameRegistry.addRecipe(new ItemStack(Blocks.mossy_cobblestone, 4), "MCM", "CMC", "MCM", 'M', JCBlockRegistry.moss, 'C', Blocks.cobblestone);
         GameRegistry.addRecipe(new ItemStack(Blocks.stonebrick, 4, 1), "MCM", "CMC", "MCM", 'M', JCBlockRegistry.moss, 'C', new ItemStack(Blocks.stonebrick, 1, 0));
 
