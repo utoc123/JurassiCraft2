@@ -331,6 +331,8 @@ public class JCRenderingRegistry
                 return block.getTreeType() == WoodType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
             }
         }, JCBlockRegistry.leaves);
+
+        this.registerBlockRenderer(modelMesher, JCBlockRegistry.ajuginucula_smithii, "ajuginucula_smithii", "inventory");
     }
 
     public void postInit()
@@ -407,6 +409,10 @@ public class JCRenderingRegistry
         this.registerItemRenderer(modelMesher, JCItemRegistry.iron_nugget, "iron_nugget", "inventory");
 
         this.registerItemRenderer(modelMesher, JCItemRegistry.gypsum_powder, "gypsum_powder", "inventory");
+
+        this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_seeds, "ajuginucula_smithii_seeds", "inventory");
+        this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_leaves, "ajuginucula_smithii_leaves", "inventory");
+        this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
 
         int meta = 0;
 

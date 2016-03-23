@@ -45,11 +45,13 @@ public class ServerProxy
 
         FossilItem.init();
 
+        // NOTE!!: The block regsitry must happen before item registry because we need the blocks
+        // for some of the items.  In particular, the ItemSeeds requires the block.
         initContentHandlers(
                 new JCPlantRegistry(),
                 new JCCreativeTabs(),
+                JurassiCraft.blockRegistry = new JCBlockRegistry(), // Must be before ItemRegistry
                 new JCItemRegistry(),
-                JurassiCraft.blockRegistry = new JCBlockRegistry(),
                 new JCRecipeRegistry(),
                 new AppRegistry(),
                 new JCAchievements(),

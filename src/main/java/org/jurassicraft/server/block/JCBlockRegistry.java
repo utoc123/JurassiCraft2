@@ -19,15 +19,7 @@ import org.jurassicraft.server.block.machine.EmbryoCalcificationMachineBlock;
 import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
-import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
-import org.jurassicraft.server.block.plant.CryPansyBlock;
-import org.jurassicraft.server.block.plant.CycadZamitesBlock;
-import org.jurassicraft.server.block.plant.DicksoniaBlock;
-import org.jurassicraft.server.block.plant.MossBlock;
-import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
-import org.jurassicraft.server.block.plant.SmallChainFernBlock;
-import org.jurassicraft.server.block.plant.SmallCycadBlock;
-import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
+import org.jurassicraft.server.block.plant.*;
 import org.jurassicraft.server.block.tree.JCDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.JCLeavesBlock;
 import org.jurassicraft.server.block.tree.JCLogBlock;
@@ -114,6 +106,8 @@ public class JCBlockRegistry implements IContentHandler
 
     public static Block clear_glass;
 
+    public static Block ajuginucula_smithii;
+
     @Override
     public void init()
     {
@@ -141,6 +135,7 @@ public class JCBlockRegistry implements IContentHandler
         reinforced_stone = new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F);
         reinforced_bricks = new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F);
 
+        ajuginucula_smithii = new AjuginuculaSmithiiBlock();
         small_royal_fern = new SmallRoyalFernBlock();
         small_chain_fern = new SmallChainFernBlock();
         small_cycad = new SmallCycadBlock();
@@ -241,6 +236,8 @@ public class JCBlockRegistry implements IContentHandler
         registerBlock(gypsum_bricks, "Gypsum Bricks");
         registerBlock(reinforced_stone, "Reinforced Stone");
         registerBlock(reinforced_bricks, "Reinforced Bricks");
+
+        registerBlock(ajuginucula_smithii, "Ajuginucula Smithii");
         registerBlock(small_royal_fern, "Small Royal Fern");
         registerBlock(small_chain_fern, "Small Chain Fern");
         registerBlock(small_cycad, "Small Cycad");
@@ -249,6 +246,7 @@ public class JCBlockRegistry implements IContentHandler
         registerBlock(scaly_tree_fern, "Scaly Tree Fern");
         registerBlock(cycad_zamites, "Cycad Zamites");
         registerBlock(dicksonia, "Dicksonia");
+
         registerBlock(moss, "Moss");
         registerBlock(clear_glass, "Clear Glass");
 
