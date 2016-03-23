@@ -1,7 +1,5 @@
 package org.jurassicraft.client.animation;
 
-import java.util.Map;
-
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.animation.Animation;
 import net.minecraft.client.Minecraft;
@@ -15,6 +13,8 @@ import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.fx.BloodEntityFX;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
+
+import java.util.Map;
 
 /**
  * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
@@ -54,19 +54,14 @@ public class JabelarAnimationHelper
     // This enables or disables all inertial tweening. For a living entity like dinosaur
     // you generally want this true. For a non-living entity like a machine, you can make this
     // false for a more robotic movement.
-    private final boolean inertialTweens;
-    // this should be true if next pose is duplicate of current pose
-    // allowing non duplicates to tween linearly. If you want to force an inertial
-    // tween you should create a one tick duplicate pose between poses.
-    private boolean isThisTweenInertial;
-
+    private final boolean useInertialTweens;
     /**
      * @param parEntity         the entity to animate from
      * @param parModel          the model to animate
      * @param parNumParts
      * @param parArrayOfPoses   for each pose(-index) an array of posed Renderers
      * @param parMapOfSequences maps from an {@link Animations} to the sequence of (pose-index, tween-length)
-     * @param parInertialTweens
+     * @param parUseInertialTweens
      */
     public JabelarAnimationHelper(
             DinosaurEntity parEntity,
@@ -74,7 +69,7 @@ public class JabelarAnimationHelper
             int parNumParts,
             MowzieModelRenderer[][] parArrayOfPoses,
             Map<Animation, int[][]> parMapOfSequences,
-            boolean parInertialTweens
+            boolean parUseInertialTweens
     )
     {
         // transfer static animation info from constructor parameters to instance
@@ -82,13 +77,11 @@ public class JabelarAnimationHelper
         numParts = parNumParts;
         arrayOfPoses = parArrayOfPoses;
         mapOfPoseSequences = parMapOfSequences;
-        inertialTweens = parInertialTweens;
+        useInertialTweens = parUseInertialTweens;
 
         lastTicksExisted = theEntity.ticksExisted;
 
         partialTicks = 0.0F;
-        isThisTweenInertial = inertialTweens;
-
         mc = Minecraft.getMinecraft();
 
         init(parModel);
@@ -318,7 +311,7 @@ public class JabelarAnimationHelper
             }
             else
             {
-                isThisTweenInertial = isTweenInertial();
+                isTweenInertial();
                 updateIncrementArrays();
                 nextTweenRotations(partIndex);
                 nextTweenPositions(partIndex);
@@ -356,7 +349,7 @@ public class JabelarAnimationHelper
     private float calculateInertiaFactor()
     {
         double inertiaFactor = (currentTickInTween + partialTicks) / numTicksInTween;
-        if (inertialTweens)
+        if (useInertialTweens)
         {
             inertiaFactor = 0.5D + 0.5D * Math.sin((Math.PI * ((inertiaFactor) - 0.5D)));
         }
@@ -398,63 +391,12 @@ public class JabelarAnimationHelper
 
         JurassiCraft.instance.getLogger().info("playSound in state " + theEntity.getAnimation() + " for " + theEntity.getDinosaur().getName());
 
-        String theSound = "";
-        
-        if (theEntity.getAnimation() == Animations.ATTACKING.get())
-        {
-            theSound = theEntity.getAttackingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.CALLING.get())
-        {
-            theSound = theEntity.getCallingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.DYING.get())
-        {
-            theSound = theEntity.getDyingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.INJURED.get())
-        {
-            theSound = theEntity.getInjuredSound();
-        }
-        else if (theEntity.getAnimation() == Animations.DRINKING.get())
-        {
-            theSound = theEntity.getDrinkingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.EATING.get())
-        {
-            theSound = theEntity.getEatingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.HISSING.get())
-        {
-            theSound = theEntity.getHissingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.SCRATCHING.get())
-        {
-            theSound = theEntity.getScratchingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.MATING.get())
-        {
-            theSound = theEntity.getMatingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.ROARING.get())
-        {
-            theSound = theEntity.getRoaringSound();
-        }
-        else if (theEntity.getAnimation() == Animations.SNIFFING.get())
-        {
-            theSound = theEntity.getSniffingSound();
-        }
-        else if (theEntity.getAnimation() == Animations.POUNCING.get())
-        {
-            theSound = theEntity.getPouncingSound();
-        }
+        String theSound = theEntity.getSoundForAnimation(theEntity.getAnimation());
         
         if (theSound != null)
         {
             theEntity.playSound(theSound, theEntity.getSoundVolume(), theEntity.getSoundPitch());
         }
-
-
     }
 
     // boolean returned indicates if tween was finished
