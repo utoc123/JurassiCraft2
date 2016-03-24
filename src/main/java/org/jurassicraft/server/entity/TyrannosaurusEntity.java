@@ -29,7 +29,7 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity
         {
             this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);
         }
-        
+
         setUseInertialTweens(true);
     }
 

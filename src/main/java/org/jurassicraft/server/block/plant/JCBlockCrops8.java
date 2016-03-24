@@ -9,7 +9,8 @@ import net.minecraft.block.state.BlockState;
  */
 public abstract class JCBlockCrops8 extends JCBlockCropsBase
 {
-    private static PropertyInteger AGE = PropertyInteger.create("age", 0, 7);;
+    private static PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+    ;
     private static int MAX_AGE = 7;
 
 
@@ -26,7 +27,7 @@ public abstract class JCBlockCrops8 extends JCBlockCropsBase
     // NOTE:  This is called on parent object construction.
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {AGE});
+        return new BlockState(this, new IProperty[] { AGE });
     }
 
     //================

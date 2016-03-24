@@ -9,10 +9,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.data.JCPlayerData;
 import org.jurassicraft.server.handler.JCGuiHandler;
 
 public class PaleoPadItem extends Item

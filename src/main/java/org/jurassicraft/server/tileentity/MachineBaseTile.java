@@ -345,6 +345,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     protected abstract int getProcessCount();
 
     protected abstract int[] getInputs();
+
     protected abstract int[] getInputs(int process);
 
     protected abstract int[] getOutputs();

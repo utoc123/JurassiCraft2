@@ -30,36 +30,39 @@ package javax.vecmath;
 /**
  * A 2-element vector that is represented by single-precision floating
  * point x,y coordinates.
- *
  */
-public class TexCoord2f extends Tuple2f implements java.io.Serializable {
+public class TexCoord2f extends Tuple2f implements java.io.Serializable
+{
 
     // Combatible with 1.1
     static final long serialVersionUID = 7998248474800032487L;
 
     /**
      * Constructs and initializes a TexCoord2f from the specified xy coordinates.
+     *
      * @param x the x coordinate
      * @param y the y coordinate
      */
     public TexCoord2f(float x, float y)
     {
-         super(x,y);
+        super(x, y);
     }
 
 
     /**
      * Constructs and initializes a TexCoord2f from the specified array.
+     *
      * @param v the array of length 2 containing xy in order
      */
     public TexCoord2f(float[] v)
     {
-         super(v);
+        super(v);
     }
 
 
     /**
      * Constructs and initializes a TexCoord2f from the specified TexCoord2f.
+     *
      * @param v1 the TexCoord2f containing the initialization x y data
      */
     public TexCoord2f(TexCoord2f v1)
@@ -70,11 +73,12 @@ public class TexCoord2f extends Tuple2f implements java.io.Serializable {
 
     /**
      * Constructs and initializes a TexCoord2f from the specified Tuple2f.
+     *
      * @param t1 the Tuple2f containing the initialization x y data
      */
     public TexCoord2f(Tuple2f t1)
     {
-       super(t1);
+        super(t1);
     }
 
 
@@ -83,7 +87,7 @@ public class TexCoord2f extends Tuple2f implements java.io.Serializable {
      */
     public TexCoord2f()
     {
-       super();
+        super();
     }
 
 

@@ -47,7 +47,7 @@ public class FoodHelper
             registerFood(plant.getBlock(), FoodType.PLANT);
         }
 
-        for (int i = 0; i < JCBlockRegistry.saplings.length;i++)
+        for (int i = 0; i < JCBlockRegistry.saplings.length; i++)
         {
             registerFood(JCBlockRegistry.leaves[i], FoodType.PLANT);
             registerFood(JCBlockRegistry.saplings[i], FoodType.PLANT);

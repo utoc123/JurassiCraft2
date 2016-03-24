@@ -38,7 +38,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
 
         // NOTE: No tab because the seeds are placed not the plant.
-        this.setCreativeTab((CreativeTabs)null);
+        this.setCreativeTab((CreativeTabs) null);
         this.setHardness(0.0F);
         this.setStepSound(soundTypeGrass);
         this.disableStats();
@@ -71,13 +71,13 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
 
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9)
         {
-            int i = ((Integer)state.getValue(getAgeProperty())).intValue();
+            int i = ((Integer) state.getValue(getAgeProperty())).intValue();
 
             if (i < this.getMaxAge())
             {
                 float f = getGrowthChance(this, worldIn, pos);
 
-                if (rand.nextInt((int)(25.0F / f) + 1) == 0)
+                if (rand.nextInt((int) (25.0F / f) + 1) == 0)
                 {
                     worldIn.setBlockState(pos, state.withProperty(getAgeProperty(), Integer.valueOf(i + 1)), 2);
                 }
@@ -88,7 +88,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     public void grow(World worldIn, BlockPos pos, IBlockState state)
     {
         // TODO:  Pull out these two numbers.
-        int i = ((Integer)state.getValue(getAgeProperty())).intValue() + MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
+        int i = ((Integer) state.getValue(getAgeProperty())).intValue() + MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
 
         if (i > this.getMaxAge())
         {
@@ -111,7 +111,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
                 IBlockState iblockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
 
                 if (iblockstate.getBlock().canSustainPlant(worldIn, blockpos.add(i, 0, j),
-                        net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable)blockIn))
+                        net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable) blockIn))
                 {
                     f1 = 1.0F;
 
@@ -144,9 +144,9 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         else
         {
             boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() ||
-                            blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() ||
-                            blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() ||
-                            blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
+                    blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() ||
+                    blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() ||
+                    blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
 
             if (flag2)
             {
@@ -168,7 +168,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
      */
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
     {
-        return ((Integer)state.getValue(getAgeProperty())).intValue() < this.getMaxAge();
+        return ((Integer) state.getValue(getAgeProperty())).intValue() < this.getMaxAge();
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
@@ -200,11 +200,12 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
      */
     public int getMetaFromState(IBlockState state)
     {
-        return ((Integer)state.getValue(getAgeProperty())).intValue();
+        return ((Integer) state.getValue(getAgeProperty())).intValue();
     }
 
 
     //==============
+
     /**
      * Spawns this Block's drops into the World as EntityItems.
      */
@@ -228,7 +229,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         List<ItemStack> drops = new ArrayList<ItemStack>();
 
         int age = state.getValue(getAgeProperty());
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        Random rand = world instanceof World ? ((World) world).rand : new Random();
 
         if (age < this.getMaxAge())
         {

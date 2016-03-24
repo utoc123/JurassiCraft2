@@ -20,7 +20,6 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
 import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
 
 import java.util.Random;

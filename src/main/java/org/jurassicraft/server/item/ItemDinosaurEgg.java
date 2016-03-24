@@ -18,7 +18,11 @@ import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.egg.DinosaurEggEntity;
 import org.jurassicraft.server.lang.AdvLang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ItemDinosaurEgg extends DNAContainerItem
 {
@@ -77,10 +81,12 @@ public class ItemDinosaurEgg extends DNAContainerItem
         if (world.isRemote)
         {
             return true;
-        } else if (!player.canPlayerEdit(pos.offset(side), side, stack))
+        }
+        else if (!player.canPlayerEdit(pos.offset(side), side, stack))
         {
             return false;
-        } else
+        }
+        else
         {
             IBlockState iblockstate = world.getBlockState(pos);
 
@@ -122,7 +128,8 @@ public class ItemDinosaurEgg extends DNAContainerItem
                 DinosaurEggEntity egg = new DinosaurEggEntity(world, dinosaur.getDinosaur().isMarineAnimal(), dinosaur);
                 egg.setPosition(x, y, z);
                 return egg;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }

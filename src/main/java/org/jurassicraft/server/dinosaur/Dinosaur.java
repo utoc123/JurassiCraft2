@@ -133,7 +133,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
             for (String variant : getRareVariants())
             {
-                variantsForGrowthStage.add(new ResourceLocation(JurassiCraft.MODID,  baseTextures + formattedName + "_" + variant + "_" + growthStageName + ".png"));
+                variantsForGrowthStage.add(new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_" + variant + "_" + growthStageName + ".png"));
             }
 
             rareVariantTextures.put(growthStage, variantsForGrowthStage);

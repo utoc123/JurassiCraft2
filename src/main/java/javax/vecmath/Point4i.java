@@ -33,7 +33,8 @@ package javax.vecmath;
  *
  * @since vecmath 1.2
  */
-public class Point4i extends Tuple4i implements java.io.Serializable {
+public class Point4i extends Tuple4i implements java.io.Serializable
+{
 
     // Combatible with 1.2
     static final long serialVersionUID = 620124780244617983L;
@@ -41,40 +42,47 @@ public class Point4i extends Tuple4i implements java.io.Serializable {
     /**
      * Constructs and initializes a Point4i from the specified
      * x, y, z, and w coordinates.
+     *
      * @param x the x coordinate
      * @param y the y coordinate
      * @param z the z coordinate
      * @param w the w coordinate
      */
-    public Point4i(int x, int y, int z, int w) {
-	super(x, y, z, w);
+    public Point4i(int x, int y, int z, int w)
+    {
+        super(x, y, z, w);
     }
 
 
     /**
      * Constructs and initializes a Point4i from the array of length 4.
+     *
      * @param t the array of length 4 containing x, y, z, and w in order.
      */
-    public Point4i(int[] t) {
-	super(t);
+    public Point4i(int[] t)
+    {
+        super(t);
     }
 
 
     /**
      * Constructs and initializes a Point4i from the specified Tuple4i.
+     *
      * @param t1 the Tuple4i containing the initialization x, y, z,
-     * and w data.
+     *           and w data.
      */
-    public Point4i(Tuple4i t1) {
-	super(t1);
+    public Point4i(Tuple4i t1)
+    {
+        super(t1);
     }
 
 
     /**
      * Constructs and initializes a Point4i to (0,0,0,0).
      */
-    public Point4i() {
-	super();
+    public Point4i()
+    {
+        super();
     }
 
 }
