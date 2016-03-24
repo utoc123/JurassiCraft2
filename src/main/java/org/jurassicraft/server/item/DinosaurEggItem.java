@@ -130,7 +130,8 @@ public class DinosaurEggItem extends DNAContainerItem
                 DinosaurEggEntity egg = new DinosaurEggEntity(world, dinosaur.getDinosaur().isMarineAnimal(), dinosaur);
                 egg.setPosition(x, y, z);
                 return egg;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }

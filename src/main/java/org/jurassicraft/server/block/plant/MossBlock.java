@@ -16,7 +16,7 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class MossBlock extends Block
 {
-     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
+    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
 
     public MossBlock()
     {

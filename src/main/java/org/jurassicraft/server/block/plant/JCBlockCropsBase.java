@@ -17,8 +17,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +83,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
             {
                 float f = getGrowthChance(this, world, pos);
 
-                if (rand.nextInt((int)(25.0F / f) + 1) == 0)
+                if (rand.nextInt((int) (25.0F / f) + 1) == 0)
                 {
                     world.setBlockState(pos, state.withProperty(getAgeProperty(), i + 1), 2);
                 }
@@ -151,9 +149,9 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         else
         {
             boolean flag2 = block == world.getBlockState(blockpos3.north()).getBlock() ||
-                            block == world.getBlockState(blockpos4.north()).getBlock() ||
-                            block == world.getBlockState(blockpos4.south()).getBlock() ||
-                            block == world.getBlockState(blockpos3.south()).getBlock();
+                    block == world.getBlockState(blockpos4.north()).getBlock() ||
+                    block == world.getBlockState(blockpos4.south()).getBlock() ||
+                    block == world.getBlockState(blockpos3.south()).getBlock();
 
             if (flag2)
             {
@@ -225,7 +223,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         List<ItemStack> drops = new ArrayList<ItemStack>();
 
         int age = state.getValue(getAgeProperty());
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        Random rand = world instanceof World ? ((World) world).rand : new Random();
 
         if (age < this.getMaxAge())
         {

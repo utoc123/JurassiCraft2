@@ -43,7 +43,9 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         {
             hatchTime--;
             if (hatchTime == 0)
+            {
                 hatch();
+            }
         }
     }
 
@@ -94,7 +96,8 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
             worldObj.spawnEntityInWorld(entity);
             entity.playLivingSound();
             this.setDead();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -136,7 +139,8 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         try
         {
             dinosaur = JCEntityRegistry.getDinosaurById(compound.getInteger("Dinosaur")).getDinosaurClass().getConstructor(World.class).newInstance(worldObj);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }

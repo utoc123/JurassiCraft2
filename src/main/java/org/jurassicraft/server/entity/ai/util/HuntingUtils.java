@@ -62,7 +62,8 @@ public class HuntingUtils
             if (entity instanceof AggressiveSwimmingDinosaurEntity)
             {
                 removeEntity(entity);
-            } else
+            }
+            else
             {
                 entitySize.put(getEntitySize(entity), entity);
             }

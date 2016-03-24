@@ -47,7 +47,7 @@ public class DinosaurEntityDamageSource extends DamageSource
         ItemStack itemstack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;
         String s = "death.attack." + this.damageType;
         String s1 = s + ".item";
-        return itemstack != null && itemstack.hasDisplayName() && I18n.canTranslate(s1) ? new TextComponentTranslation(s1, entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getChatComponent()): new TextComponentTranslation(s, new Object[] {entity.getDisplayName(), this.entity.getDisplayName()});
+        return itemstack != null && itemstack.hasDisplayName() && I18n.canTranslate(s1) ? new TextComponentTranslation(s1, entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getChatComponent()) : new TextComponentTranslation(s, new Object[] { entity.getDisplayName(), this.entity.getDisplayName() });
     }
 
     @Override

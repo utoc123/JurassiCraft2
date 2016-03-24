@@ -15,9 +15,6 @@ import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
 
-import org.jurassicraft.server.food.FoodHelper;
-import org.jurassicraft.server.entity.base.EnumDiet;
-
 /**
  * This piece of AI use used to find a plant and eat it. Should be titled "graze".
  */
@@ -66,8 +63,8 @@ public class FindPlantEntityAI extends EntityAIBase
 
         // Now, let's see if we are hungry
         MetabolismContainer metabolism = dinosaur.getMetabolism();
-            double food = metabolism.getFood();
-            int maxFood = metabolism.getMaxFood();
+        double food = metabolism.getFood();
+        int maxFood = metabolism.getMaxFood();
 
         return ((food < (maxFood * MUST_EAT_THRESHOLD)) ||
                 ((food < (maxFood * SHOULD_EAT_THRESHOLD)) &&
@@ -85,8 +82,8 @@ public class FindPlantEntityAI extends EntityAIBase
         World world = dinosaur.worldObj;
 
         MetabolismContainer metabolism = dinosaur.getMetabolism();
-            double food = metabolism.getFood();
-            int maxFood = metabolism.getMaxFood();
+        double food = metabolism.getFood();
+        int maxFood = metabolism.getMaxFood();
 
         // Look in increasing layers (e.g. boxes) around the head. Traversers... are like ogres?
         OnionTraverser traverser = new OnionTraverser(head, LOOK_RADIUS);
@@ -118,7 +115,7 @@ public class FindPlantEntityAI extends EntityAIBase
         }
     }
 
-    @Override 
+    @Override
     public boolean continueExecuting()
     {
         return target != null;
@@ -132,24 +129,25 @@ public class FindPlantEntityAI extends EntityAIBase
 //            TODO: Head is above ground, so we need to compute this differently.  Ideally it can bend down
 //            if (getHeadPos().distanceSq(target) < EAT_RADIUS)
 //            {               
-                if(target != null){
-                    // Start the animation
-                    Animation.sendAnimationPacket(dinosaur, Animations.EATING.get());
+            if (target != null)
+            {
+                // Start the animation
+                Animation.sendAnimationPacket(dinosaur, Animations.EATING.get());
 
-                    dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(),0, dinosaur.getVerticalFaceSpeed());
+                dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 0, dinosaur.getVerticalFaceSpeed());
 
-                    if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
-                    {
-                        dinosaur.worldObj.destroyBlock(target, false);
-                    }
-
-                    // TODO:  Add food value & food heal value to food helper
-                    dinosaur.getMetabolism().increaseFood(2000);
-                    dinosaur.heal(4.0F);
-
-                    //Now that we have finished stop the animation
-                    TerminateTask();
+                if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
+                {
+                    dinosaur.worldObj.destroyBlock(target, false);
                 }
+
+                // TODO:  Add food value & food heal value to food helper
+                dinosaur.getMetabolism().increaseFood(2000);
+                dinosaur.heal(4.0F);
+
+                //Now that we have finished stop the animation
+                TerminateTask();
+            }
 //            }
 //            else
 //            {
@@ -158,7 +156,8 @@ public class FindPlantEntityAI extends EntityAIBase
         }
     }
 
-    private void TerminateTask(){
+    private void TerminateTask()
+    {
         dinosaur.getNavigator().clearPathEntity();
         target = null;
         Animation.sendAnimationPacket(dinosaur, Animations.IDLE.get());
@@ -173,5 +172,6 @@ public class FindPlantEntityAI extends EntityAIBase
                 offset(dinosaur.getHorizontalFacing(), (int) dinosaur.width).
                 offset(EnumFacing.UP, (int) dinosaur.getEyeHeight());
     }
-  private static final Logger LOGGER = LogManager.getLogger();
+
+    private static final Logger LOGGER = LogManager.getLogger();
 }

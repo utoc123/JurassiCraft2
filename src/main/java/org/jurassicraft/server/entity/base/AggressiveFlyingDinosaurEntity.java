@@ -166,7 +166,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
                 if (this.timer-- <= 0)
                 {
                     this.timer += this.parentEntity.getRNG().nextInt(5) + 2;
-                    distance = (double)MathHelper.sqrt_double(distance);
+                    distance = (double) MathHelper.sqrt_double(distance);
 
                     if (this.isNotColliding(this.posX, this.posY, this.posZ, distance))
                     {
@@ -192,7 +192,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             double d2 = (z - this.parentEntity.posZ) / distance;
             AxisAlignedBB axisalignedbb = this.parentEntity.getEntityBoundingBox();
 
-            for (int i = 1; (double)i < distance; ++i)
+            for (int i = 1; (double) i < distance; ++i)
             {
                 axisalignedbb = axisalignedbb.offset(d0, d1, d2);
 

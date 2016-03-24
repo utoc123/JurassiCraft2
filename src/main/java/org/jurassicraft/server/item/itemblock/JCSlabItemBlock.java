@@ -139,6 +139,6 @@ public class JCSlabItemBlock extends ItemBlock
 
     protected <T extends Comparable<T>> IBlockState getState(IProperty<T> property, Comparable<?> comparable)
     {
-        return this.doubleSlab.getDefaultState().withProperty(property, (T)comparable);
+        return this.doubleSlab.getDefaultState().withProperty(property, (T) comparable);
     }
 }

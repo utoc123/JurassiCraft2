@@ -56,12 +56,13 @@ public class JabelarAnimationHelper
     // you generally want this true. For a non-living entity like a machine, you can make this
     // false for a more robotic movement.
     private final boolean useInertialTweens;
+
     /**
-     * @param parEntity         the entity to animate from
-     * @param parModel          the model to animate
+     * @param parEntity            the entity to animate from
+     * @param parModel             the model to animate
      * @param parNumParts
-     * @param parArrayOfPoses   for each pose(-index) an array of posed Renderers
-     * @param parMapOfSequences maps from an {@link Animations} to the sequence of (pose-index, tween-length)
+     * @param parArrayOfPoses      for each pose(-index) an array of posed Renderers
+     * @param parMapOfSequences    maps from an {@link Animations} to the sequence of (pose-index, tween-length)
      * @param parUseInertialTweens
      */
     public JabelarAnimationHelper(
@@ -393,7 +394,7 @@ public class JabelarAnimationHelper
         JurassiCraft.instance.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
 
         SoundEvent sound = animatedEntity.getSoundForAnimation(animatedEntity.getAnimation());
-        
+
         if (sound != null)
         {
             animatedEntity.playSound(sound, animatedEntity.getSoundVolume(), animatedEntity.getSoundPitch());

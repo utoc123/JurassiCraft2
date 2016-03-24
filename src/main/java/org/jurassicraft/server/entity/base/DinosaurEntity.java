@@ -164,7 +164,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         // animations have inertia, meaning that they start slow then go fast 
         // and then slow at end to give sense of mass  Good for large dinos, not for mechanical
         // or light-weight entities
-        setUseInertialTweens(true); 
+        setUseInertialTweens(true);
     }
 
     public boolean shouldSleep()
@@ -1081,12 +1081,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         return rareVariant;
     }
-    
+
     public boolean getUseInertialTweens()
     {
         return useInertialTweens;
     }
-    
+
     public void setUseInertialTweens(boolean parUseInertialTweens)
     {
         useInertialTweens = parUseInertialTweens;

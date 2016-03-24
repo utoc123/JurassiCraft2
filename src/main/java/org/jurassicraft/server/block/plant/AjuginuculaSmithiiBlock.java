@@ -23,7 +23,7 @@ public class AjuginuculaSmithiiBlock extends JCBlockCrops8
     }
 
     @Override
-    protected  Item getCrop()
+    protected Item getCrop()
     {
         return JCItemRegistry.ajuginucula_smithii_leaves;
     }
