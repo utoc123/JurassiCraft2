@@ -298,7 +298,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             carcassHealth--;
 
-            if (worldObj.getGameRules().getBoolean("doMobLoot"))
+            if (!dead && carcassHealth >= 0 && worldObj.getGameRules().getBoolean("doMobLoot"))
             {
                 dropMeat(damageSource.getEntity());
             }
@@ -306,6 +306,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             if (carcassHealth < 0)
             {
                 this.onDeath(damageSource);
+                this.setDead();
             }
         }
 
