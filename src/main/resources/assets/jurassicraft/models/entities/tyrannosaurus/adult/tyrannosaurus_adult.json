@@ -3,18 +3,6 @@
     "poses": {
         "IDLE": [
             {"pose": "tyrannosaurus_adult_idle", "time": 20}
-        ],
-        "ATTACKING": [
-            {"pose": "tyrannosaurus_adult_attacking_1", "time": 8},
-            {"pose": "tyrannosaurus_adult_attacking_1a", "time": 6},
-            {"pose": "tyrannosaurus_adult_attacking_1b", "time": 6},
-            {"pose": "tyrannosaurus_adult_attacking_2", "time": 8},
-            {"pose": "tyrannosaurus_adult_attacking_2a", "time": 6},
-            {"pose": "tyrannosaurus_adult_attacking_2b", "time": 6},
-            {"pose": "tyrannosaurus_adult_idle", "time": 2}
-        ],
-		"SLEEPING": [
-            {"pose": "tyrannosaurus_adult_sleeping", "time": 20}
         ]
     }
 }

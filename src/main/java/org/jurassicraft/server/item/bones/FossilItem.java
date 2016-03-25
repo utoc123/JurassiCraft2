@@ -66,7 +66,7 @@ public class FossilItem extends Item
 
         if (dinosaur != null)
         {
-            return new AdvLang("item." + type + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+            return new AdvLang(getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
         }
 
         return super.getItemStackDisplayName(stack);
