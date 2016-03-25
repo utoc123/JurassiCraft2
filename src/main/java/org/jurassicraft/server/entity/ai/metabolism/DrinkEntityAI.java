@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -126,7 +126,7 @@ public class DrinkEntityAI extends EntityAIBase
         {
             if (dinosaur.getAnimation() != Animations.DRINKING.get())
             {
-                Animation.sendAnimationPacket(dinosaur, Animations.DRINKING.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.DRINKING.get());
             }
 
             MetabolismContainer metabolism = dinosaur.getMetabolism();

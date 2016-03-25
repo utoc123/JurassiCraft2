@@ -27,12 +27,6 @@ public class HerrerasaurusEntity extends AggressiveDinosaurEntity // implements 
     }
 
     @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
-
-    @Override
     public float getSoundVolume()
     {
         return (float) transitionFromAge(1.3F, 2.0F);

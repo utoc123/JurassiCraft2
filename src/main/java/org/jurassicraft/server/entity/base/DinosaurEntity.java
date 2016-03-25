@@ -1,9 +1,10 @@
 package org.jurassicraft.server.entity.base;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.client.model.modelbase.ChainBuffer;
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -58,7 +59,7 @@ import org.jurassicraft.server.item.JCItemRegistry;
 
 import java.util.UUID;
 
-public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimated
+public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity
 {
     protected Dinosaur dinosaur;
 
@@ -79,7 +80,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private boolean hasTracker;
 
-    public ChainBuffer tailBuffer;
+    @SideOnly(Side.CLIENT)
+    public ChainBuffer tailBuffer = new ChainBuffer();
 
     private UUID owner;
 
@@ -108,7 +110,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         metabolism = new MetabolismContainer(this);
         inventory = new InventoryDinosaur(this);
-        tailBuffer = new ChainBuffer(getTailBoxCount());
 
         // SetupAI
         //tasks.addTask(0, new EscapeBlockEntityAI(this));
@@ -178,11 +179,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (sleeping)
             {
-                Animation.sendAnimationPacket(this, Animations.SLEEPING.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SLEEPING.get());
             }
             else
             {
-                Animation.sendAnimationPacket(this, Animations.IDLE.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
             }
         }
 
@@ -202,8 +203,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         return (int) time;
     }
-
-    public abstract int getTailBoxCount();
 
     public boolean hasTracker()
     {
@@ -228,7 +227,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean attackEntityAsMob(Entity entity)
     {
-        Animation.sendAnimationPacket(this, Animations.ATTACKING.get());
+        AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.ATTACKING.get());
 
         float damage = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int knockback = 0;
@@ -247,7 +246,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             // if attacked entity is killed, stop attacking animation
             if (theEntityLivingBase.getHealth() < 0.0F)
             {
-                Animation.sendAnimationPacket(this, Animations.IDLE.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
             }
         }
 
@@ -271,7 +270,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         if (getAnimation() == Animations.IDLE.get())
         {
-            Animation.sendAnimationPacket(this, Animations.INJURED.get());
+            AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.INJURED.get());
         }
 
         if (isSleeping)
@@ -306,7 +305,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @SideOnly(Side.CLIENT)
     public void performHurtAnimation()
     {
-        Animation.sendAnimationPacket(this, Animations.INJURED.get());
+        AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.INJURED.get());
     }
 
     @Override
@@ -484,8 +483,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         worldObj.spawnParticle(EnumParticleTypes.FLAME, eyes.xCoord, eyes.yCoord, eyes.zCoord, 0, 0, 0);
 
-        this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
-
         if (!worldObj.isRemote)
         {
             dataWatcher.set(WATCHER_AGE, dinosaurAge);
@@ -496,6 +493,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
         else
         {
+            updateTailBuffer();
+
             dinosaurAge = dataWatcher.get(WATCHER_AGE);
             growthSpeedOffset = dataWatcher.get(WATCHER_GROWTH_OFFSET);
             isSleeping = dataWatcher.get(WATCHER_IS_SLEEPING);
@@ -513,7 +512,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (getAnimation() != Animations.DYING.get())
             {
-                Animation.sendAnimationPacket(this, Animations.DYING.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.DYING.get());
             }
         }
 
@@ -521,7 +520,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (getAnimation() != Animations.SLEEPING.get())
             {
-                Animation.sendAnimationPacket(this, Animations.SLEEPING.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SLEEPING.get());
             }
 
             if (!shouldSleep() && !worldObj.isRemote)
@@ -541,6 +540,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         prevAge = dinosaurAge;
+    }
+
+    private void updateTailBuffer()
+    {
+        this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
     }
 
     @Override
@@ -717,7 +721,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public Animation[] animations()
+    public Animation[] getAnimations()
     {
         return Animations.getAnimations();
     }

@@ -1,6 +1,5 @@
 package org.jurassicraft.server.item;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -19,7 +18,7 @@ import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JCItemRegistry implements IContentHandler
+public class JCItemRegistry
 {
     public static PlasterAndBandageItem plaster_and_bandage;
     public static DinosaurSpawnEggItem spawn_egg;
@@ -99,7 +98,6 @@ public class JCItemRegistry implements IContentHandler
 
     // TODO more complex crafting components, eg circuit boards
 
-    @Override
     public void init()
     {
         plaster_and_bandage = new PlasterAndBandageItem();
@@ -185,11 +183,7 @@ public class JCItemRegistry implements IContentHandler
                 }
             }
         }
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerItem(amber, "Amber");
         registerItem(sea_lamprey, "Sea Lamprey");
         registerItem(plaster_and_bandage, "Plaster And Bandage");

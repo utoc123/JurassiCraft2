@@ -9,10 +9,4 @@ public class TriceratopsEntity extends ProvokableDinosaurEntity
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

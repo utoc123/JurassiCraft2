@@ -9,10 +9,4 @@ public class LeptictidiumEntity extends DefensiveDinosaurEntity // implements IE
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

@@ -1,7 +1,8 @@
 package org.jurassicraft.client.render.entity;
 
 import com.google.common.collect.Maps;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -32,9 +33,9 @@ public class HelicopterRenderer implements IRenderFactory<HelicopterBaseEntity>
     public static class Renderer extends Render<HelicopterBaseEntity>
     {
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/helicopter/ranger_helicopter_texture.png");
-        private final Map<String, ModelJson> moduleMap;
+        private final Map<String, TabulaModel> moduleMap;
         private final Map<String, ResourceLocation> moduleTextures;
-        private ModelJson baseModel;
+        private TabulaModel baseModel;
 
         public Renderer()
         {
@@ -43,12 +44,12 @@ public class HelicopterRenderer implements IRenderFactory<HelicopterBaseEntity>
             moduleTextures = Maps.newHashMap();
             try
             {
-                baseModel = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/entities/helicopter/ranger_helicopter"), new HelicopterAnimator());
+                baseModel = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/entities/helicopter/ranger_helicopter"), new HelicopterAnimator());
 
                 // Modules init.
                 for (String id : HelicopterModule.registry.keySet())
                 {
-                    ModelJson model = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/entities/helicopter/modules/ranger_helicopter_" + id));
+                    TabulaModel model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/entities/helicopter/modules/ranger_helicopter_" + id));
                     moduleMap.put(id, model);
 
                     moduleTextures.put(id, new ResourceLocation(JurassiCraft.MODID, "textures/entities/helicopter/modules/ranger_helicopter_" + id + "_texture.png"));
@@ -100,7 +101,7 @@ public class HelicopterRenderer implements IRenderFactory<HelicopterBaseEntity>
                     }
                     GlStateManager.rotate((float) Math.toDegrees(m.getBaseRotationAngle()), 0, 1, 0);
                     bindTexture(moduleTextures.get(m.getModuleID()));
-                    ModelJson model = moduleMap.get(m.getModuleID());
+                    TabulaModel model = moduleMap.get(m.getModuleID());
                     model.render(helicopter, 0f, 0f, 0f, 0f, 0f, 0.0625f);
                     GlStateManager.rotate(-(float) Math.toDegrees(m.getBaseRotationAngle()), 0, 1, 0);
                 }

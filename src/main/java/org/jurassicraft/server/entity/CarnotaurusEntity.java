@@ -25,10 +25,4 @@ public class CarnotaurusEntity extends AggressiveDinosaurEntity // implements IE
             this.defendFromAttacker(deftargets[j], new Random().nextInt(3) + 1);
         }
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

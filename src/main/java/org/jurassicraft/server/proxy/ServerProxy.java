@@ -2,7 +2,6 @@ package org.jurassicraft.server.proxy;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -41,24 +40,21 @@ public class ServerProxy
     {
         JurassiCraft.configurations.initConfig(event);
 
-        initContentHandlers(new JCEntityRegistry());
+        new JCEntityRegistry().init();
 
         FossilItem.init();
 
         // NOTE!!: The block regsitry must happen before item registry because we need the blocks
         // for some of the items.  In particular, the ItemSeeds requires the block.
-        initContentHandlers(
-                new JCPlantRegistry(),
-                new JCCreativeTabs(),
-                JurassiCraft.blockRegistry = new JCBlockRegistry(), // Must be before ItemRegistry
-                new JCItemRegistry(),
-                new JCRecipeRegistry(),
-                new AppRegistry(),
-                new JCAchievements(),
-                new StorageTypeRegistry()
-        );
-
-        // addChestGenItems();
+        new JCPlantRegistry().init();
+        new JCCreativeTabs().init();
+        JurassiCraft.blockRegistry = new JCBlockRegistry();
+        JurassiCraft.blockRegistry.init();
+        new JCItemRegistry().init();
+        new JCRecipeRegistry().init();
+        new AppRegistry().init();
+        new JCAchievements().init();
+        new StorageTypeRegistry().init();
 
         GameRegistry.registerWorldGenerator(new WorldGenerator(), 0);
 
@@ -69,55 +65,6 @@ public class ServerProxy
         MinecraftForge.EVENT_BUS.register(JurassiCraft.configurations);
         MinecraftForge.EVENT_BUS.register(eventHandler);
     }
-
-    protected void initContentHandlers(IContentHandler... contentHandlers)
-    {
-        for (IContentHandler contentHandler : contentHandlers)
-        {
-            contentHandler.init();
-        }
-
-        for (IContentHandler contentHandler : contentHandlers)
-        {
-            try
-            {
-                contentHandler.gameRegistry();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-//    private void addChestGenItems()
-//    {
-//        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(new ItemStack(JCItemRegistry.amber, 1, 0), 1, 2, 30));
-//        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(new ItemStack(JCItemRegistry.amber, 1, 1), 1, 2, 30));
-//
-//        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
-//
-//        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
-//
-//        int id = 0;
-//
-//        for (Dinosaur dino : dinosaurs)
-//        {
-//            ids.put(dino, id);
-//
-//            id++;
-//        }
-//
-//        Collections.sort(dinosaurs);
-//
-//        for (Dinosaur dino : dinosaurs)
-//        {
-//            if (dino.shouldRegister() && !(dino instanceof IHybrid))
-//            {
-//                ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(JCItemRegistry.skull, 1, ids.get(dino)), 1, 6, 80));
-//            }
-//        }
-//    }
 
     public void postInit(FMLPostInitializationEvent event)
     {

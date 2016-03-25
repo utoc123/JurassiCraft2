@@ -19,10 +19,4 @@ public class BaryonyxEntity extends AggressiveDinosaurEntity // implements IEnti
             this.addAIForAttackTargets(targets[i], new Random().nextInt(3) + 1);
         }
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

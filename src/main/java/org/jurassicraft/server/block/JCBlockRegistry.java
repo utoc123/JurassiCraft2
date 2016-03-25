@@ -1,6 +1,5 @@
 package org.jurassicraft.server.block;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -56,7 +55,7 @@ import org.jurassicraft.server.world.jurdstrees.algorythms.TreeCompendium;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JCBlockRegistry implements IContentHandler
+public class JCBlockRegistry
 {
     public static final int numOfTrees = 2;
 
@@ -117,7 +116,6 @@ public class JCBlockRegistry implements IContentHandler
 
     public static Block ajuginucula_smithii;
 
-    @Override
     public void init()
     {
         fossils = new ArrayList<FossilBlock>();
@@ -233,11 +231,7 @@ public class JCBlockRegistry implements IContentHandler
             Blocks.fire.setFireInfo(slabs[i], 5, 20);
             Blocks.fire.setFireInfo(stairs[i], 5, 20);
         }
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerBlock(amber_ore, "Amber Ore");
         registerBlock(ice_shard, "Ice Shard");
         registerBlock(gypsum_stone, "Gypsum Stone");

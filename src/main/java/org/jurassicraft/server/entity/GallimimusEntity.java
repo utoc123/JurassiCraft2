@@ -9,10 +9,4 @@ public class GallimimusEntity extends DefensiveDinosaurEntity // implements IEnt
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

@@ -25,10 +25,4 @@ public class RugopsEntity extends AggressiveDinosaurEntity // implements IEntity
             this.defendFromAttacker(deftargets[j], new Random().nextInt(3) + 1);
         }
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

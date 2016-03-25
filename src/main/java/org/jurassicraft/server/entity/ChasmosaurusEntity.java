@@ -9,10 +9,4 @@ public class ChasmosaurusEntity extends DefensiveDinosaurEntity
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
 }

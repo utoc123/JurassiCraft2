@@ -9,10 +9,4 @@ public class AnkylosaurusEntity extends ProvokableDinosaurEntity // implements I
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
 }

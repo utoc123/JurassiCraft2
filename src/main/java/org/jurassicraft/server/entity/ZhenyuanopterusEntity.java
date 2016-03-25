@@ -9,10 +9,4 @@ public class ZhenyuanopterusEntity extends AggressiveFlyingDinosaurEntity
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

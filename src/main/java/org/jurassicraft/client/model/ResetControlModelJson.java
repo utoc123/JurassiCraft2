@@ -1,16 +1,16 @@
 package org.jurassicraft.client.model;
 
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
-import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.entity.Entity;
 
-public class ResetControlModelJson extends ModelJson
+public class ResetControlModelJson extends TabulaModel
 {
-    private final IModelAnimator animator;
+    private final ITabulaModelAnimator animator;
     private boolean resetAllowed;
 
-    public ResetControlModelJson(JsonTabulaModel model, IModelAnimator animator)
+    public ResetControlModelJson(TabulaModelContainer model, ITabulaModelAnimator animator)
     {
         super(model, animator);
         this.animator = animator;
@@ -26,7 +26,7 @@ public class ResetControlModelJson extends ModelJson
         {
             if (this.animator != null)
             {
-                this.animator.setRotationAngles(this, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
+                this.animator.setRotationAngles(this, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
             }
         }
     }
@@ -35,5 +35,4 @@ public class ResetControlModelJson extends ModelJson
     {
         resetAllowed = reset;
     }
-
 }

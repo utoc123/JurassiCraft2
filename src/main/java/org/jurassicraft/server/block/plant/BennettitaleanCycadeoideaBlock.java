@@ -25,10 +25,4 @@ public class BennettitaleanCycadeoideaBlock extends BlockBush
     {
         return BOUNDS;
     }
-
-    @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
-    {
-        return NULL_AABB;
-    }
 }

@@ -10,12 +10,6 @@ public class LeaellynasauraEntity extends DefensiveDinosaurEntity // implements 
         super(world);
     }
 
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
-
     public void onUpdate()
     {
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);

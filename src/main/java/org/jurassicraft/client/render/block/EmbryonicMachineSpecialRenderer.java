@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.block;
 
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,14 +12,13 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
 import org.lwjgl.opengl.GL11;
 
 public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryonicMachineTile>
 {
     private Minecraft mc = Minecraft.getMinecraft();
-    private ModelJson model;
+    private TabulaModel model;
     private ResourceLocation texture;
     private ResourceLocation textureNoTestTubes;
 
@@ -26,7 +26,7 @@ public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<E
     {
         try
         {
-            this.model = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/block/embryonic_machine"));
+            this.model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/block/embryonic_machine"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryonic_machine.png");
             this.textureNoTestTubes = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryonic_machine_no_test_tubes.png");
         }

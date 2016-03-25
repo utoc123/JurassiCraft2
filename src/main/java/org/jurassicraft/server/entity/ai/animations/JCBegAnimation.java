@@ -1,12 +1,12 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import org.jurassicraft.client.animation.Animations;
 
 public class JCBegAnimation extends JCNonAutoAnimBase
 {
-    public JCBegAnimation(IAnimated entity, int duration, Animation animation, int chance)
+    public JCBegAnimation(IAnimatedEntity entity, int duration, Animation animation, int chance)
     {
         super(entity, duration, animation, chance);
     }

@@ -1,15 +1,16 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
@@ -40,14 +41,12 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void handleClientMessage(PlacePaddockSignMessage message, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft minecraft, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
     {
-
     }
 
     @Override
-    public void handleServerMessage(PlacePaddockSignMessage message, EntityPlayer player)
+    public void onServerReceived(MinecraftServer server, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
     {
         World world = player.worldObj;
 

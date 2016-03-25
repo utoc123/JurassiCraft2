@@ -1,6 +1,6 @@
 package org.jurassicraft.client.animation;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.Animation;
 
 /**
  * @author jabelar
@@ -32,7 +32,7 @@ public enum Animations //TODO if continuing movement of specific cube, dont slow
     {
         if (animation == null)
         {
-            animation = new Animation(ordinal(), -1);
+            animation = Animation.create(ordinal(), -1);
         }
         return animation;
     }
@@ -49,15 +49,7 @@ public enum Animations //TODO if continuing movement of specific cube, dont slow
 
     public static Animations getAnimation(Animation animation)
     {
-        for (Animations anim : values())
-        {
-            if (animation.animationId == anim.get().animationId)
-            {
-                return anim;
-            }
-        }
-
-        return null;
+        return values()[animation.getID()];
     }
 
     public boolean shouldHold()

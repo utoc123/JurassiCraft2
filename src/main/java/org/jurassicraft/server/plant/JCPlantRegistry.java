@@ -1,11 +1,9 @@
 package org.jurassicraft.server.plant;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class JCPlantRegistry implements IContentHandler
+public class JCPlantRegistry
 {
     private static List<Plant> plants = new ArrayList<Plant>();
 
@@ -21,7 +19,6 @@ public class JCPlantRegistry implements IContentHandler
     public static Plant cycad_zamites;
     public static Plant dicksonia;
 
-    @Override
     public void init()
     {
         ajuginucula_smithii = new AjuginuculaSmithiiPlant();
@@ -35,11 +32,7 @@ public class JCPlantRegistry implements IContentHandler
         scaly_tree_fern = new ScalyTreeFernPlant();
         cycad_zamites = new ZamitesPlant();
         dicksonia = new DicksoniaPlant();
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerPlant(ajuginucula_smithii);
         registerPlant(small_royal_fern);
         registerPlant(calamites);

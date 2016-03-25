@@ -48,12 +48,6 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
         }
     }
 
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
-
     // NOTE: This adds an attack target. Class should be the entity class for the target, lower prio get executed
     // earlier
     @Override

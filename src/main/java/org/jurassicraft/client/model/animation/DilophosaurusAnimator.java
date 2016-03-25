@@ -1,16 +1,15 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.DilophosaurusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 
 @SideOnly(Side.CLIENT)
-public class DilophosaurusAnimator extends DinosaurAnimator
+public class DilophosaurusAnimator<ENTITY extends DilophosaurusEntity> extends DinosaurAnimator<ENTITY>
 {
     public DilophosaurusAnimator()
     {
@@ -18,20 +17,20 @@ public class DilophosaurusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DilophosaurusEntity entity)
     {
-        boolean scary = false;
+        boolean frillsExtended = false;
 
-        MowzieModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
-        MowzieModelRenderer frillLeftTop = model.getCube("Frill Upper Left");
+        AdvancedModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
+        AdvancedModelRenderer frillLeftTop = model.getCube("Frill Upper Left");
 
-        MowzieModelRenderer frillRightBottom = model.getCube("Frill Lower Right");
-        MowzieModelRenderer frillRightTop = model.getCube("Frill Upper Right");
+        AdvancedModelRenderer frillRightBottom = model.getCube("Frill Lower Right");
+        AdvancedModelRenderer frillRightTop = model.getCube("Frill Upper Right");
 
-        frillLeftBottom.showModel = scary;
-        frillLeftTop.showModel = scary;
-        frillRightBottom.showModel = scary;
-        frillRightTop.showModel = scary;
+        frillLeftBottom.showModel = frillsExtended;
+        frillLeftTop.showModel = frillsExtended;
+        frillRightBottom.showModel = frillsExtended;
+        frillRightTop.showModel = frillsExtended;
 
         frillLeftTop.rotateAngleY = (float) Math.toRadians(180);
         frillLeftTop.rotationPointX += 10F;
@@ -46,55 +45,55 @@ public class DilophosaurusAnimator extends DinosaurAnimator
         // f = entity.ticksExisted;
         // f1 = 1F;
 
-        MowzieModelRenderer head = model.getCube("Head");
+        AdvancedModelRenderer head = model.getCube("Head");
 
-        MowzieModelRenderer neck1 = model.getCube("Neck Base");
-        MowzieModelRenderer neck2 = model.getCube("Neck 2");
-        MowzieModelRenderer neck3 = model.getCube("Neck 3");
-        MowzieModelRenderer neck4 = model.getCube("Neck 4");
-        MowzieModelRenderer neck5 = model.getCube("Neck 5");
-        MowzieModelRenderer neck6 = model.getCube("Neck 6");
+        AdvancedModelRenderer neck1 = model.getCube("Neck Base");
+        AdvancedModelRenderer neck2 = model.getCube("Neck 2");
+        AdvancedModelRenderer neck3 = model.getCube("Neck 3");
+        AdvancedModelRenderer neck4 = model.getCube("Neck 4");
+        AdvancedModelRenderer neck5 = model.getCube("Neck 5");
+        AdvancedModelRenderer neck6 = model.getCube("Neck 6");
 
-        MowzieModelRenderer body1 = model.getCube("Body FRONT");
-        MowzieModelRenderer body2 = model.getCube("Body MIDDLE");
-        MowzieModelRenderer body3 = model.getCube("Body REAR");
+        AdvancedModelRenderer body1 = model.getCube("Body FRONT");
+        AdvancedModelRenderer body2 = model.getCube("Body MIDDLE");
+        AdvancedModelRenderer body3 = model.getCube("Body REAR");
 
-        MowzieModelRenderer tail1 = model.getCube("Tail BASE");
-        MowzieModelRenderer tail2 = model.getCube("Tail 2");
-        MowzieModelRenderer tail3 = model.getCube("Tail 3");
-        MowzieModelRenderer tail4 = model.getCube("Tail 4");
-        MowzieModelRenderer tail5 = model.getCube("Tail 5");
-        MowzieModelRenderer tail6 = model.getCube("Tail 6");
+        AdvancedModelRenderer tail1 = model.getCube("Tail BASE");
+        AdvancedModelRenderer tail2 = model.getCube("Tail 2");
+        AdvancedModelRenderer tail3 = model.getCube("Tail 3");
+        AdvancedModelRenderer tail4 = model.getCube("Tail 4");
+        AdvancedModelRenderer tail5 = model.getCube("Tail 5");
+        AdvancedModelRenderer tail6 = model.getCube("Tail 6");
 
-        MowzieModelRenderer rightThigh = model.getCube("Leg Right UPPER");
-        MowzieModelRenderer leftThigh = model.getCube("Leg Left UPPER");
+        AdvancedModelRenderer rightThigh = model.getCube("Leg Right UPPER");
+        AdvancedModelRenderer leftThigh = model.getCube("Leg Left UPPER");
 
-        MowzieModelRenderer lowerRightLeg = model.getCube("Leg Right MID");
-        MowzieModelRenderer lowerLeftLeg = model.getCube("Leg Left MID");
+        AdvancedModelRenderer lowerRightLeg = model.getCube("Leg Right MID");
+        AdvancedModelRenderer lowerLeftLeg = model.getCube("Leg Left MID");
 
-        MowzieModelRenderer upperRightFoot = model.getCube("Leg Right BOTTOM");
-        MowzieModelRenderer upperLeftFoot = model.getCube("Leg Left BOTTOM");
+        AdvancedModelRenderer upperRightFoot = model.getCube("Leg Right BOTTOM");
+        AdvancedModelRenderer upperLeftFoot = model.getCube("Leg Left BOTTOM");
 
-        MowzieModelRenderer rightFoot = model.getCube("Foot Right");
-        MowzieModelRenderer leftFoot = model.getCube("Foot Left");
+        AdvancedModelRenderer rightFoot = model.getCube("Foot Right");
+        AdvancedModelRenderer leftFoot = model.getCube("Foot Left");
 
-        MowzieModelRenderer upperArmRight = model.getCube("Right arm");
-        MowzieModelRenderer upperArmLeft = model.getCube("Left arm");
+        AdvancedModelRenderer upperArmRight = model.getCube("Right arm");
+        AdvancedModelRenderer upperArmLeft = model.getCube("Left arm");
 
-        MowzieModelRenderer lowerArmRight = model.getCube("Right forearm");
-        MowzieModelRenderer lowerArmLeft = model.getCube("Left forearm");
+        AdvancedModelRenderer lowerArmRight = model.getCube("Right forearm");
+        AdvancedModelRenderer lowerArmLeft = model.getCube("Left forearm");
 
-        MowzieModelRenderer handRight = model.getCube("Right hand");
-        MowzieModelRenderer handLeft = model.getCube("Left hand");
+        AdvancedModelRenderer handRight = model.getCube("Right hand");
+        AdvancedModelRenderer handLeft = model.getCube("Left hand");
 
-        // MowzieModelRenderer upperJaw = model.getCube("upperjaw");
-        // MowzieModelRenderer lowerJaw = model.getCube("down_jaw");
+        // AdvancedModelRenderer upperJaw = model.getCube("upperjaw");
+        // AdvancedModelRenderer lowerJaw = model.getCube("down_jaw");
 
-        MowzieModelRenderer[] body = new MowzieModelRenderer[] { head, neck6, neck5, neck4, neck3, neck2, neck1, body1, body2, body3 };
-        MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck6, neck5, neck4, neck3, neck2, neck1, body1, body2, body3 };
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
 
-        MowzieModelRenderer[] armRight = new MowzieModelRenderer[] { handRight, lowerArmRight, upperArmRight };
-        MowzieModelRenderer[] armLeft = new MowzieModelRenderer[] { handLeft, lowerArmLeft, upperArmLeft };
+        AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { handRight, lowerArmRight, upperArmRight };
+        AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { handLeft, lowerArmLeft, upperArmLeft };
 
         neck4.rotateAngleZ += (rotationYaw / (180f / (float) Math.PI)) / 5;
         neck3.rotateAngleZ += (rotationYaw / (180f / (float) Math.PI)) / 5;
@@ -129,6 +128,6 @@ public class DilophosaurusAnimator extends DinosaurAnimator
         model.chainWave(armLeft, 0.15F, -0.1F, 4, ticksExisted, 0.25F);
         model.chainSwing(tail, 0.15F, -0.1F, 3, ticksExisted, 0.25F);
 
-        ((DilophosaurusEntity) entity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

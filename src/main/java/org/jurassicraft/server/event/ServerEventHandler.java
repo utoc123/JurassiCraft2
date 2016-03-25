@@ -1,5 +1,6 @@
 package org.jurassicraft.server.event;
 
+import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
@@ -8,21 +9,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.achievements.JCAchievements;
 import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
+import org.jurassicraft.server.data.PlayerData;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.item.JCItemRegistry;
 
@@ -31,32 +35,29 @@ import java.util.Random;
 public class ServerEventHandler
 {
     @SubscribeEvent
-    public void onEntityLoad(final AttachCapabilitiesEvent.Entity event)
+    public void onEntityConstruct(EntityEvent.EntityConstructing event)
     {
-        event.addCapability(new ResourceLocation(JurassiCraft.MODID, "PlayerDataCapability"), new ICapabilityProvider()
+        if (event.entity instanceof EntityPlayer)
         {
-            @Override
-            public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-            {
-                return JurassiCraft.PLAYER_DATA_CAPABILITY == capability;
-            }
-
-            @Override
-            public <T> T getCapability(Capability<T> capability, EnumFacing facing)
-            {
-                return (T) new PlayerDataCapabilityImplementation();
-            }
-        });
+            EntityDataHandler.INSTANCE.registerExtendedEntityData(event.entity, new PlayerData());
+        }
     }
 
     @SubscribeEvent
-    public void playerClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone event)
+    public void onWorldLoad(WorldEvent.Load event)
     {
-        if (event.wasDeath)
+        GameRules gameRules = event.world.getGameRules();
+
+        registerGameRule(gameRules, "dinoMetabolism", true);
+        registerGameRule(gameRules, "dinoGrowth", true);
+        registerGameRule(gameRules, "dinoHerding", false);
+    }
+
+    private void registerGameRule(GameRules gameRules, String name, boolean value)
+    {
+        if (!gameRules.hasRule(name))
         {
-            NBTTagCompound data = new NBTTagCompound();
-            PlayerDataCapabilityImplementation.get(event.original).save(data);
-            PlayerDataCapabilityImplementation.get(event.entityPlayer).load(data);
+            gameRules.addGameRule(name, value + "", GameRules.ValueType.BOOLEAN_VALUE);
         }
     }
 

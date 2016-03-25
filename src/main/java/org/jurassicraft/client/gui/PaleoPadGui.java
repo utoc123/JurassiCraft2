@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.gui.app.GuiApp;
 import org.jurassicraft.client.gui.app.GuiAppRegistry;
-import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
+import org.jurassicraft.server.data.PlayerData;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.paleopad.App;
 import org.jurassicraft.server.paleopad.AppRegistry;
@@ -46,7 +46,7 @@ public class PaleoPadGui extends GuiScreen
     {
         if (focus != null)
         {
-            PlayerDataCapabilityImplementation.get(mc.thePlayer).closeApp(focus.getApp());
+            PlayerData.get(mc.thePlayer).closeApp(focus.getApp());
         }
     }
 
@@ -72,7 +72,7 @@ public class PaleoPadGui extends GuiScreen
 
                     focus = GuiAppRegistry.getGui(app);
                     focus.init();
-                    PlayerDataCapabilityImplementation.get(mc.thePlayer).openApp(app);
+                    PlayerData.get(mc.thePlayer).openApp(app);
 
                     focus.buttons.clear();
                     buttonList.clear();

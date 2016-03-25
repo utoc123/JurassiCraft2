@@ -9,10 +9,4 @@ public class CearadactylusEntity extends AggressiveFlyingDinosaurEntity // imple
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

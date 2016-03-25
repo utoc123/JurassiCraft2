@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compile "net.ilexiconn:llibrary:${config.llibrary_version}-${config.minecraft_version}:dev"
+    compile fileTree(dir: "libs", include: "*.jar")
     testCompile "junit:junit:4.12"
 }
 

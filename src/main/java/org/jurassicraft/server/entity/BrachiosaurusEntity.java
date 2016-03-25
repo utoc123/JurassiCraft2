@@ -16,12 +16,6 @@ public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements I
     }
 
     @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
-
-    @Override
     public void onUpdate()
     {
         super.onUpdate();

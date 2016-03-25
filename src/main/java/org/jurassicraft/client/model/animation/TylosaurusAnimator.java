@@ -1,6 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -22,30 +22,30 @@ public class TylosaurusAnimator extends DinosaurAnimator
     {
         TylosaurusEntity entity = (TylosaurusEntity) parEntity;
 
-        MowzieModelRenderer head = model.getCube("Main head");
-        MowzieModelRenderer neck = model.getCube("Neck ");
+        AdvancedModelRenderer head = model.getCube("Main head");
+        AdvancedModelRenderer neck = model.getCube("Neck ");
 
-        MowzieModelRenderer body1 = model.getCube("Body Section 1");
-        MowzieModelRenderer body2 = model.getCube("Body Section 2");
-        MowzieModelRenderer body3 = model.getCube("Body Section 3");
+        AdvancedModelRenderer body1 = model.getCube("Body Section 1");
+        AdvancedModelRenderer body2 = model.getCube("Body Section 2");
+        AdvancedModelRenderer body3 = model.getCube("Body Section 3");
 
-        MowzieModelRenderer tail1 = model.getCube("Tail Section 1");
-        MowzieModelRenderer tail2 = model.getCube("Tail Section 2");
-        MowzieModelRenderer tail3 = model.getCube("Tail Section 3");
-        MowzieModelRenderer tail4 = model.getCube("Tail Section 4");
+        AdvancedModelRenderer tail1 = model.getCube("Tail Section 1");
+        AdvancedModelRenderer tail2 = model.getCube("Tail Section 2");
+        AdvancedModelRenderer tail3 = model.getCube("Tail Section 3");
+        AdvancedModelRenderer tail4 = model.getCube("Tail Section 4");
 
-        MowzieModelRenderer leftFrontFlipper = model.getCube("Left Front Flipper");
-        MowzieModelRenderer rightFrontFlipper = model.getCube("Right Front Flipper");
+        AdvancedModelRenderer leftFrontFlipper = model.getCube("Left Front Flipper");
+        AdvancedModelRenderer rightFrontFlipper = model.getCube("Right Front Flipper");
 
-        MowzieModelRenderer leftBackFlipper = model.getCube("Left Back Flipper");
-        MowzieModelRenderer rightBackFlipper = model.getCube("Right Back Flipper");
+        AdvancedModelRenderer leftBackFlipper = model.getCube("Left Back Flipper");
+        AdvancedModelRenderer rightBackFlipper = model.getCube("Right Back Flipper");
 
         float scaleFactor = 0.3F;
 
         // f = entity.ticksExisted;
         // f1 = 0.4F;
 
-        MowzieModelRenderer[] bodyParts = new MowzieModelRenderer[] { head, neck, body1, body2, body3, tail1, tail2, tail3, tail4 };
+        AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { head, neck, body1, body2, body3, tail1, tail2, tail3, tail4 };
 
         model.chainSwing(bodyParts, 1F * scaleFactor, 0.2F, -3, f, f1);
         head.rotationPointX -= 6 * f1 * Math.sin(f * scaleFactor);

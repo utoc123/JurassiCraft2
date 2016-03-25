@@ -26,10 +26,4 @@ public class AchillobatorEntity extends AggressiveDinosaurEntity // implements I
             this.defendFromAttacker(deftarget, new Random().nextInt(3) + 1);
         }
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

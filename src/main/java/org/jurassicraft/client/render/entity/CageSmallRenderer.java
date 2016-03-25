@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.entity;
 
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -24,7 +25,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
     {
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small.png");
         private static final ResourceLocation texture_marine = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small_marine.png");
-        private ModelJson model;
+        private TabulaModel model;
 
         public Renderer()
         {
@@ -33,7 +34,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
             String modelLoc = "/assets/jurassicraft/models/entities/cage_small/cage_small";
             try
             {
-                model = new ModelJson(TabulaModelHelper.parseModel(modelLoc));
+                model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel(modelLoc));
             }
             catch (Exception e)
             {

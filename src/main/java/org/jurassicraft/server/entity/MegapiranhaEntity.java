@@ -9,10 +9,4 @@ public class MegapiranhaEntity extends AggressiveSwimmingDinosaurEntity
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

@@ -9,10 +9,4 @@ public class ProtoceratopsEntity extends DefensiveDinosaurEntity // implements I
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 4;
-    }
 }

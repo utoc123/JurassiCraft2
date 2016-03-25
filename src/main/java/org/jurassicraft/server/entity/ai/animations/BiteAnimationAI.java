@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;

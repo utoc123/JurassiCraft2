@@ -9,10 +9,4 @@ public class LambeosaurusEntity extends DefensiveDinosaurEntity
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

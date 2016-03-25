@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.util.SoundEvent;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.animation.AIAnimation;
@@ -19,7 +19,7 @@ public class JCNonAutoAnimSoundBase extends AIAnimation
     protected SoundEvent sound;
     protected float volumeOffset;
 
-    public JCNonAutoAnimSoundBase(IAnimated entity, int duration, Animation animation, int chance, SoundEvent sound, float volumeOffset)
+    public JCNonAutoAnimSoundBase(IAnimatedEntity entity, int duration, Animation animation, int chance, SoundEvent sound, float volumeOffset)
     {
         super(entity);
         this.duration = duration;

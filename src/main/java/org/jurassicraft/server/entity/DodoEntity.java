@@ -15,10 +15,4 @@ public class DodoEntity extends DinosaurEntity // implements IEntityAICreature, 
         tasks.addTask(2, new JCAutoAnimBase(this, 18, Animations.EATING.get()));
         tasks.addTask(1, new FindPlantEntityAI(this));
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

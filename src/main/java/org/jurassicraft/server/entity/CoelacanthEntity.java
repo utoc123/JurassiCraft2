@@ -9,10 +9,4 @@ public class CoelacanthEntity extends AggressiveSwimmingDinosaurEntity // implem
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

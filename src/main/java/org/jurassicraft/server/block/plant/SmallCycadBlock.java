@@ -25,10 +25,4 @@ public class SmallCycadBlock extends BlockBush
     {
         return BOUNDS;
     }
-
-    @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos)
-    {
-        return NULL_AABB;
-    }
 }

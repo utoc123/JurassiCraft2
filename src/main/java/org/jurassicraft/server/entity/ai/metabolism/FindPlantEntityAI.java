@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
@@ -132,7 +132,7 @@ public class FindPlantEntityAI extends EntityAIBase
             if (target != null)
             {
                 // Start the animation
-                Animation.sendAnimationPacket(dinosaur, Animations.EATING.get());
+                AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.EATING.get());
 
                 dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 0, dinosaur.getVerticalFaceSpeed());
 
@@ -160,7 +160,7 @@ public class FindPlantEntityAI extends EntityAIBase
     {
         dinosaur.getNavigator().clearPathEntity();
         target = null;
-        Animation.sendAnimationPacket(dinosaur, Animations.IDLE.get());
+        AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.IDLE.get());
     }
 
     //=========================================================================

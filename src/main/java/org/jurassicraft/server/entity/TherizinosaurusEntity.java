@@ -10,10 +10,4 @@ public class TherizinosaurusEntity extends DefensiveDinosaurEntity // implements
         super(world);
         this.addAIForAttackTargets(TyrannosaurusEntity.class, 1);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

@@ -9,10 +9,4 @@ public class MicroceratusEntity extends DefensiveDinosaurEntity // implements IE
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
 }

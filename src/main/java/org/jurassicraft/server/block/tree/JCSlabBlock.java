@@ -1,6 +1,7 @@
 package org.jurassicraft.server.block.tree;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoubleStoneSlab;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -60,12 +61,6 @@ public abstract class JCSlabBlock extends BlockSlab
     }
 
     @Override
-    public IProperty getVariantProperty()
-    {
-        return null;
-    }
-
-    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState state = this.getDefaultState();
@@ -84,6 +79,7 @@ public abstract class JCSlabBlock extends BlockSlab
         return state.getValue(HALF) == BlockSlab.EnumBlockHalf.BOTTOM ? 0 : 1;
     }
 
+    @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, HALF);
@@ -100,6 +96,12 @@ public abstract class JCSlabBlock extends BlockSlab
 
     @Override
     public Comparable<?> getTypeForItem(ItemStack stack)
+    {
+        return null;
+    }
+
+    @Override
+    public IProperty<?> getVariantProperty()
     {
         return null;
     }

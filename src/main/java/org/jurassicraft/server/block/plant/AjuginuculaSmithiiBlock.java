@@ -27,6 +27,4 @@ public class AjuginuculaSmithiiBlock extends JCBlockCrops8
     {
         return JCItemRegistry.ajuginucula_smithii_leaves;
     }
-
-
 }

@@ -9,10 +9,4 @@ public class OviraptorEntity extends DefensiveDinosaurEntity // implements IEnti
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

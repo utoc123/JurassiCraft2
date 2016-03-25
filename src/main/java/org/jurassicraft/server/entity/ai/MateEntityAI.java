@@ -1,6 +1,7 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -50,7 +51,7 @@ public class MateEntityAI extends EntityAIBase
     {
         if (dinosaur.getEntityBoundingBox().intersectsWith(mate.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
         {
-            Animation.sendAnimationPacket(dinosaur, Animations.MATING.get());
+            AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.MATING.get());
 
             dinosaur.getMetabolism().decreaseFood(1000);
         }

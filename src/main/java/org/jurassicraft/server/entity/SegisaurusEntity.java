@@ -9,10 +9,4 @@ public class SegisaurusEntity extends AggressiveDinosaurEntity // implements IEn
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
 }

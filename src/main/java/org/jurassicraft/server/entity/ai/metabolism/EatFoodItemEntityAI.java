@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -111,7 +111,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
     {
         if (dinosaur.getEntityBoundingBox().intersectsWith(item.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
         {
-            Animation.sendAnimationPacket(dinosaur, Animations.EATING.get());
+            AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.EATING.get());
 
             if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
             {

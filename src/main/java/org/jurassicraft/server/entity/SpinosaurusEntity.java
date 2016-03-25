@@ -30,12 +30,6 @@ public class SpinosaurusEntity extends AggressiveDinosaurEntity // implements IE
     }
 
     @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
-
-    @Override
     public void onUpdate()
     {
         super.onUpdate();

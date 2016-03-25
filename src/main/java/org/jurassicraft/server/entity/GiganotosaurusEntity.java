@@ -24,12 +24,6 @@ public class GiganotosaurusEntity extends AggressiveDinosaurEntity // implements
         }
     }
 
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
-
     public void onUpdate()
     {
         super.onUpdate();

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import org.jurassicraft.server.animation.AIAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -11,7 +11,7 @@ public class JCAutoAnimBase extends AIAnimation
     protected int duration;
     protected Animation animation;
 
-    public JCAutoAnimBase(IAnimated entity, int duration, Animation animation)
+    public JCAutoAnimBase(IAnimatedEntity entity, int duration, Animation animation)
     {
         super(entity);
         this.duration = duration;

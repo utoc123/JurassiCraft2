@@ -9,10 +9,4 @@ public class DimorphodonEntity extends AggressiveFlyingDinosaurEntity // impleme
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }

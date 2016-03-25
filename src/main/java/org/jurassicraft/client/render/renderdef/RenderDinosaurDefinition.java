@@ -1,8 +1,8 @@
 package org.jurassicraft.client.render.renderdef;
 
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
-import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -19,16 +19,16 @@ import org.jurassicraft.server.entity.base.EnumGrowthStage;
 public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 {
     private final Dinosaur dinosaur;
-    private final IModelAnimator animator;
+    private final ITabulaModelAnimator<DinosaurEntity> animator;
 
-    private final ModelJson modelAdult;
-    private final ModelJson modelInfant;
-    private ModelJson modelJuvenile;
-    private ModelJson modelAdolescent;
+    private final TabulaModel modelAdult;
+    private final TabulaModel modelInfant;
+    private TabulaModel modelJuvenile;
+    private TabulaModel modelAdolescent;
 
     private float shadowSize = 0.65F;
 
-    public RenderDinosaurDefinition(Dinosaur dinosaur, IModelAnimator animator, float parShadowSize)
+    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<DinosaurEntity> animator, float parShadowSize)
     {
         this.dinosaur = dinosaur;
         this.animator = animator;
@@ -55,7 +55,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         }
     }
 
-    public IModelAnimator getModelAnimator()
+    public ITabulaModelAnimator<DinosaurEntity> getModelAnimator()
     {
         return animator;
     }
@@ -65,7 +65,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         return shadowSize;
     }
 
-    public DinosaurModel getTabulaModel(JsonTabulaModel tabulaModel)
+    public DinosaurModel getTabulaModel(TabulaModelContainer tabulaModel)
     {
         return new DinosaurModel(tabulaModel, getModelAnimator());
     }

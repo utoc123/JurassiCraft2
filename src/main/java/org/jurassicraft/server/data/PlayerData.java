@@ -1,9 +1,10 @@
-package org.jurassicraft.server.capability;
+package org.jurassicraft.server.data;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
+import net.ilexiconn.llibrary.server.capability.IEntityData;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.paleopad.App;
 
 import java.util.ArrayList;
@@ -11,28 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerDataCapabilityImplementation implements PlayerDataCapability
+public class PlayerData implements IEntityData
 {
+    public static final String IDENTIFIER = "jurassicraft:playerdata";
+
     private Map<String, NBTTagCompound> appdata = new HashMap<String, NBTTagCompound>();
     private List<App> openApps = new ArrayList<App>();
 
     @Override
-    public void load(NBTTagCompound nbt)
-    {
-        appdata.clear();
-
-        NBTTagList appDataList = nbt.getTagList("JCAppData", 10);
-
-        for (int i = 0; i < appDataList.tagCount(); i++)
-        {
-            NBTTagCompound appData = (NBTTagCompound) appDataList.get(i);
-
-            this.appdata.put(appData.getString("Name"), appData.getCompoundTag("Data"));
-        }
-    }
-
-    @Override
-    public void save(NBTTagCompound nbt)
+    public void writeToNBT(NBTTagCompound nbt)
     {
         NBTTagList appDataList = new NBTTagList();
 
@@ -50,18 +38,36 @@ public class PlayerDataCapabilityImplementation implements PlayerDataCapability
     }
 
     @Override
+    public void readFromNBT(NBTTagCompound nbt)
+    {
+        appdata.clear();
+
+        NBTTagList appDataList = nbt.getTagList("JCAppData", 10);
+
+        for (int i = 0; i < appDataList.tagCount(); i++)
+        {
+            NBTTagCompound appData = (NBTTagCompound) appDataList.get(i);
+
+            this.appdata.put(appData.getString("Name"), appData.getCompoundTag("Data"));
+        }
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return IDENTIFIER;
+    }
+
     public List<App> getOpenApps()
     {
         return openApps;
     }
 
-    @Override
     public Map<String, NBTTagCompound> getAppdata()
     {
         return appdata;
     }
 
-    @Override
     public void openApp(App app)
     {
         if (appdata.containsKey(app.getName()))
@@ -75,7 +81,6 @@ public class PlayerDataCapabilityImplementation implements PlayerDataCapability
         openApps.add(app);
     }
 
-    @Override
     public void closeApp(App app)
     {
         NBTTagCompound data = new NBTTagCompound();
@@ -85,8 +90,8 @@ public class PlayerDataCapabilityImplementation implements PlayerDataCapability
         openApps.remove(app);
     }
 
-    public static PlayerDataCapability get(EntityPlayer player)
+    public static PlayerData get(Entity entity)
     {
-        return player.getCapability(JurassiCraft.PLAYER_DATA_CAPABILITY, null);
+        return ((PlayerData) EntityDataHandler.getManager(entity, IDENTIFIER));
     }
 }

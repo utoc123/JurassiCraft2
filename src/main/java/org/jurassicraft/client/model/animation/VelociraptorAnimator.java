@@ -1,6 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -22,40 +22,40 @@ public class VelociraptorAnimator extends DinosaurAnimator
     {
         VelociraptorEntity velociraptor = (VelociraptorEntity) entity;
 
-        MowzieModelRenderer waist = model.getCube("body3");
-        MowzieModelRenderer chest = model.getCube("body2");
-        MowzieModelRenderer shoulders = model.getCube("body1");
-        MowzieModelRenderer leftThigh = model.getCube("Left thigh");
-        MowzieModelRenderer rightThigh = model.getCube("Right thigh");
-        MowzieModelRenderer neck1 = model.getCube("neck1");
-        MowzieModelRenderer neck2 = model.getCube("neck2");
-        MowzieModelRenderer neck3 = model.getCube("neck3");
-        MowzieModelRenderer neck4 = model.getCube("neck4");
-        MowzieModelRenderer head = model.getCube("Head");
-        MowzieModelRenderer leftShin = model.getCube("Left shin");
-        MowzieModelRenderer rightShin = model.getCube("Right shin");
-        MowzieModelRenderer leftUpperFoot = model.getCube("Left Calf Centre");
-        MowzieModelRenderer leftFoot = model.getCube("Foot Left Centre");
-        MowzieModelRenderer rightUpperFoot = model.getCube("Right Calf Centre");
-        MowzieModelRenderer rightFoot = model.getCube("Foot Right Centre");
-        MowzieModelRenderer tail1 = model.getCube("tail1");
-        MowzieModelRenderer tail2 = model.getCube("tail2");
-        MowzieModelRenderer tail3 = model.getCube("tail3");
-        MowzieModelRenderer tail4 = model.getCube("tail4");
-        MowzieModelRenderer tail5 = model.getCube("tail5");
-        MowzieModelRenderer tail6 = model.getCube("tail6");
+        AdvancedModelRenderer waist = model.getCube("body3");
+        AdvancedModelRenderer chest = model.getCube("body2");
+        AdvancedModelRenderer shoulders = model.getCube("body1");
+        AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
+        AdvancedModelRenderer rightThigh = model.getCube("Right thigh");
+        AdvancedModelRenderer neck1 = model.getCube("neck1");
+        AdvancedModelRenderer neck2 = model.getCube("neck2");
+        AdvancedModelRenderer neck3 = model.getCube("neck3");
+        AdvancedModelRenderer neck4 = model.getCube("neck4");
+        AdvancedModelRenderer head = model.getCube("Head");
+        AdvancedModelRenderer leftShin = model.getCube("Left shin");
+        AdvancedModelRenderer rightShin = model.getCube("Right shin");
+        AdvancedModelRenderer leftUpperFoot = model.getCube("Left Calf Centre");
+        AdvancedModelRenderer leftFoot = model.getCube("Foot Left Centre");
+        AdvancedModelRenderer rightUpperFoot = model.getCube("Right Calf Centre");
+        AdvancedModelRenderer rightFoot = model.getCube("Foot Right Centre");
+        AdvancedModelRenderer tail1 = model.getCube("tail1");
+        AdvancedModelRenderer tail2 = model.getCube("tail2");
+        AdvancedModelRenderer tail3 = model.getCube("tail3");
+        AdvancedModelRenderer tail4 = model.getCube("tail4");
+        AdvancedModelRenderer tail5 = model.getCube("tail5");
+        AdvancedModelRenderer tail6 = model.getCube("tail6");
 
-        MowzieModelRenderer upperArmRight = model.getCube("Right arm");
-        MowzieModelRenderer upperArmLeft = model.getCube("Left arm");
-        MowzieModelRenderer lowerArmRight = model.getCube("Right forearm");
-        MowzieModelRenderer lowerArmLeft = model.getCube("Left forearm");
-        MowzieModelRenderer Hand_Right = model.getCube("Right hand");
-        MowzieModelRenderer Hand_Left = model.getCube("Left hand");
+        AdvancedModelRenderer upperArmRight = model.getCube("Right arm");
+        AdvancedModelRenderer upperArmLeft = model.getCube("Left arm");
+        AdvancedModelRenderer lowerArmRight = model.getCube("Right forearm");
+        AdvancedModelRenderer lowerArmLeft = model.getCube("Left forearm");
+        AdvancedModelRenderer Hand_Right = model.getCube("Right hand");
+        AdvancedModelRenderer Hand_Left = model.getCube("Left hand");
 
-        MowzieModelRenderer[] rightArmParts = new MowzieModelRenderer[] { Hand_Right, lowerArmRight, upperArmRight };
-        MowzieModelRenderer[] leftArmParts = new MowzieModelRenderer[] { Hand_Left, lowerArmLeft, upperArmLeft };
-        MowzieModelRenderer[] tailParts = new MowzieModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
-        MowzieModelRenderer[] bodyParts = new MowzieModelRenderer[] { waist, chest, shoulders, neck4, neck3, neck2, neck1, head };
+        AdvancedModelRenderer[] rightArmParts = new AdvancedModelRenderer[] { Hand_Right, lowerArmRight, upperArmRight };
+        AdvancedModelRenderer[] leftArmParts = new AdvancedModelRenderer[] { Hand_Left, lowerArmLeft, upperArmLeft };
+        AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { waist, chest, shoulders, neck4, neck3, neck2, neck1, head };
 
         int frame = velociraptor.ticksExisted;
 

@@ -13,10 +13,4 @@ public class CompsognathusEntity extends AggressiveDinosaurEntity // implements 
 
         tasks.addTask(2, new JCAutoAnimBase(this, 25, Animations.BEGGING.get())); // Beg
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
 }

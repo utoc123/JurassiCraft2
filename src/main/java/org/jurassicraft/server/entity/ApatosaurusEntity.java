@@ -15,12 +15,6 @@ public class ApatosaurusEntity extends DefensiveDinosaurEntity // implements IEn
         super(world);
     }
 
-    @Override
-    public int getTailBoxCount()
-    {
-        return 5;
-    }
-
     public void onUpdate()
     {
         super.onUpdate();

@@ -13,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -24,12 +25,20 @@ public class DoublePlantBlock extends BlockBush
 {
     public static final PropertyEnum HALF = PropertyEnum.create("half", DoublePlantBlock.EnumBlockHalf.class);
 
+    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, 1.0F, 0.9F);
+
     public DoublePlantBlock(Material material)
     {
         super(material);
         this.setHardness(0.0F);
         this.setStepSound(SoundType.PLANT);
         this.setCreativeTab(JCCreativeTabs.plants);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return BOUNDS;
     }
 
     @Override

@@ -9,10 +9,4 @@ public class DilophosaurusEntity extends AggressiveDinosaurEntity // implements 
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

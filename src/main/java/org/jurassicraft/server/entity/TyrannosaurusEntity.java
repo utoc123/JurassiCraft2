@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -45,12 +45,6 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity
         }
 
         return super.getSoundForAnimation(animation);
-    }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
     }
 
     @Override

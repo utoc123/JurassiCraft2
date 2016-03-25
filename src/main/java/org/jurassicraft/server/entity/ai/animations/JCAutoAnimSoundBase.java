@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.util.SoundEvent;
 import org.jurassicraft.server.animation.AIAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -14,7 +14,7 @@ public class JCAutoAnimSoundBase extends AIAnimation
     protected SoundEvent sound;
     protected float volumeOffset;
 
-    public JCAutoAnimSoundBase(IAnimated entity, int duration, Animation animation, SoundEvent sound, float volumeOffset)
+    public JCAutoAnimSoundBase(IAnimatedEntity entity, int duration, Animation animation, SoundEvent sound, float volumeOffset)
     {
         super(entity);
         this.duration = duration;
@@ -24,7 +24,7 @@ public class JCAutoAnimSoundBase extends AIAnimation
         this.volumeOffset = volumeOffset;
     }
 
-    public JCAutoAnimSoundBase(IAnimated entity, int duration, Animation animation, SoundEvent sound)
+    public JCAutoAnimSoundBase(IAnimatedEntity entity, int duration, Animation animation, SoundEvent sound)
     {
         this(entity, duration, animation, sound, 0.0F);
     }

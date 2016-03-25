@@ -34,7 +34,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
 
     protected JCBlockCropsBase()
     {
-        this.setDefaultState(this.blockState.getBaseState().withProperty(getAgeProperty(), Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(getAgeProperty(), 0));
         this.setTickRandomly(true);
         // NOTE: No tab because the seeds are placed not the plant.
         this.setCreativeTab(null);
@@ -46,7 +46,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, state.getValue(getAgeProperty()) * 0.125F + 0.25F, 1.0F);
+        return new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, (state.getValue(getAgeProperty()) + 1) * 0.125F, 0.9F);
     }
 
     abstract protected PropertyInteger getAgeProperty();

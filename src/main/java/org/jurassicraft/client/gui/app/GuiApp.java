@@ -1,14 +1,15 @@
 package org.jurassicraft.client.gui.app;
 
 import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.gui.PaleoPadGui;
-import org.jurassicraft.server.capability.PlayerDataCapability;
-import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
+import org.jurassicraft.server.data.PlayerData;
 import org.jurassicraft.server.paleopad.App;
 
 import java.util.List;
@@ -33,8 +34,7 @@ public abstract class GuiApp
     {
         this.requestShutdown = true;
 
-        PlayerDataCapability playerData = PlayerDataCapabilityImplementation.get(Minecraft.getMinecraft().thePlayer);
-        playerData.closeApp(app);
+        PlayerData.get(mc.thePlayer).closeApp(app);
     }
 
     public boolean doesRequestShutdown()

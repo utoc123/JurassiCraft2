@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -14,7 +14,7 @@ public class CallAnimationAI extends EntityAIBase
 {
     protected DinosaurEntity animatingEntity;
 
-    public CallAnimationAI(IAnimated entity)
+    public CallAnimationAI(IAnimatedEntity entity)
     {
         super();
         animatingEntity = (DinosaurEntity) entity;
@@ -49,7 +49,7 @@ public class CallAnimationAI extends EntityAIBase
     public void startExecuting()
     {
         super.startExecuting();
-        Animation.sendAnimationPacket(animatingEntity, Animations.CALLING.get());
+        AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, Animations.CALLING.get());
         animatingEntity.getNavigator().clearPathEntity();
     }
 

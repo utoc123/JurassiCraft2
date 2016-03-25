@@ -1,24 +1,16 @@
 package org.jurassicraft.server.storagedisc;
 
 import com.google.common.base.Supplier;
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class StorageTypeRegistry implements IContentHandler
+public class StorageTypeRegistry
 {
     private static Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<String, Supplier<? extends IStorageType>>();
 
-    @Override
     public void init()
-    {
-
-    }
-
-    @Override
-    public void gameRegistry() throws Exception
     {
         register("DinoDNA", new Supplier<IStorageType>()
         {
@@ -30,7 +22,6 @@ public class StorageTypeRegistry implements IContentHandler
         });
         register("PlantDNA", new Supplier<IStorageType>()
         {
-
             @Override
             public PlantDNAStorageType get()
             {

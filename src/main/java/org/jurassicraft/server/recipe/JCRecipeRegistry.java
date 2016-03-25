@@ -1,6 +1,5 @@
 package org.jurassicraft.server.recipe;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -14,16 +13,9 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
 
-public class JCRecipeRegistry implements IContentHandler
+public class JCRecipeRegistry
 {
-    @Override
     public void init()
-    {
-
-    }
-
-    @Override
-    public void gameRegistry() throws Exception
     {
         for (Dinosaur dinosaur : JCEntityRegistry.getDinosaurs())
         {

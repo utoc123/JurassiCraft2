@@ -18,10 +18,4 @@ public class TylosaurusEntity extends AggressiveSwimmingDinosaurEntity // implem
             this.addAIForAttackTargets(targets[i], new Random().nextInt(3) + 1);
         }
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 9;
-    }
 }

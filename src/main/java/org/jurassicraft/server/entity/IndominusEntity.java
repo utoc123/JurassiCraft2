@@ -36,12 +36,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     }
 
     @Override
-    public int getTailBoxCount()
-    {
-        return 7;
-    }
-
-    @Override
     public void entityInit()
     {
         super.entityInit();

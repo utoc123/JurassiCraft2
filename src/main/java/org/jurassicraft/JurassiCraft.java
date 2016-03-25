@@ -1,7 +1,5 @@
 package org.jurassicraft;
 
-import net.ilexiconn.llibrary.common.book.BookWiki;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -21,9 +19,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.CommandForceAnimation;
 import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.capability.PlayerDataCapability;
-import org.jurassicraft.server.capability.PlayerDataCapabilityImplementation;
-import org.jurassicraft.server.capability.PlayerDataCapabilityStorage;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
@@ -36,9 +31,8 @@ import org.jurassicraft.server.message.SyncPaleoPadMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 import java.io.File;
-import java.io.InputStreamReader;
 
-@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[0.9.2,)")
+@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[0.0.0-develop,)")
 public class JurassiCraft
 {
     @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")
@@ -62,10 +56,7 @@ public class JurassiCraft
     public static File configFile;
     public static Configuration config;
 
-    public static BookWiki bookWiki;
-
-    @CapabilityInject(PlayerDataCapability.class)
-    public static final Capability<PlayerDataCapability> PLAYER_DATA_CAPABILITY = null;
+//    public static BookWiki bookWiki;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -73,30 +64,28 @@ public class JurassiCraft
         logger = event.getModLog();
         logger.info("Loading JurassiCraft...");
 
-        CapabilityManager.INSTANCE.register(PlayerDataCapability.class, new PlayerDataCapabilityStorage(), PlayerDataCapabilityImplementation.class);
-
         int id = 0;
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("jurassicraft");
-        AbstractMessage.registerMessage(networkWrapper, SyncPaleoPadMessage.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, SyncPaleoPadMessage.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, PlacePaddockSignMessage.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, ChangeTemperatureMessage.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, ChangeTemperatureMessage.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, HelicopterEngineMessage.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, HelicopterEngineMessage.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, HelicopterDirectionMessage.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, HelicopterDirectionMessage.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, HelicopterModulesMessage.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, HelicopterModulesMessage.class, id++, Side.SERVER);
-        AbstractMessage.registerMessage(networkWrapper, SwitchHybridizerCombinatorMode.class, id++, Side.CLIENT);
-        AbstractMessage.registerMessage(networkWrapper, SwitchHybridizerCombinatorMode.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(SyncPaleoPadMessage.class, SyncPaleoPadMessage.class, id++, Side.CLIENT);
+        networkWrapper.registerMessage(SyncPaleoPadMessage.class, SyncPaleoPadMessage.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(PlacePaddockSignMessage.class, PlacePaddockSignMessage.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(ChangeTemperatureMessage.class, ChangeTemperatureMessage.class, id++, Side.CLIENT);
+        networkWrapper.registerMessage(ChangeTemperatureMessage.class, ChangeTemperatureMessage.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(HelicopterEngineMessage.class, HelicopterEngineMessage.class, id++, Side.CLIENT);
+        networkWrapper.registerMessage(HelicopterEngineMessage.class, HelicopterEngineMessage.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(HelicopterDirectionMessage.class, HelicopterDirectionMessage.class, id++, Side.CLIENT);
+        networkWrapper.registerMessage(HelicopterDirectionMessage.class, HelicopterDirectionMessage.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(HelicopterModulesMessage.class, HelicopterModulesMessage.class, id++, Side.CLIENT);
+        networkWrapper.registerMessage(HelicopterModulesMessage.class, HelicopterModulesMessage.class, id++, Side.SERVER);
+        networkWrapper.registerMessage(SwitchHybridizerCombinatorMode.class, SwitchHybridizerCombinatorMode.class, id++, Side.CLIENT);
+        networkWrapper.registerMessage(SwitchHybridizerCombinatorMode.class, SwitchHybridizerCombinatorMode.class, id++, Side.SERVER);
 
         proxy.preInit(event);
         logger.debug("Finished pre-initialization for JurassiCraft!");
 
         FoodHelper.init();
 
-        bookWiki = BookWiki.create(instance, new InputStreamReader(JurassiCraft.class.getResourceAsStream("/assets/jurassicraft/bookwiki/bookwiki.json")));
+//        bookWiki = BookWiki.create(instance, new InputStreamReader(JurassiCraft.class.getResourceAsStream("/assets/jurassicraft/bookwiki/bookwiki.json")));
     }
 
     @Mod.EventHandler
@@ -117,24 +106,6 @@ public class JurassiCraft
     public void serverStarting(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new CommandForceAnimation());
-    }
-
-    @Mod.EventHandler
-    public void serverStart(FMLServerStartedEvent event)
-    {
-//        GameRules gameRules = event.worldServerForDimension(0).getGameRules();
-//
-//        registerGameRule(gameRules, "dinoMetabolism", true);
-//        registerGameRule(gameRules, "dinoGrowth", true);
-//        registerGameRule(gameRules, "dinoHerding", false);
-    }
-
-    private void registerGameRule(GameRules gameRules, String name, boolean value)
-    {
-        if (!gameRules.hasRule(name))
-        {
-            gameRules.addGameRule(name, value + "", GameRules.ValueType.BOOLEAN_VALUE);
-        }
     }
 
     public Logger getLogger()

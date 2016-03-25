@@ -1,6 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
@@ -20,45 +20,45 @@ public class MicroceratusAnimator extends DinosaurAnimator
     @Override
     protected void performMowzieLandAnimations(DinosaurModel parModel, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
     {
-        MowzieModelRenderer body = parModel.getCube("Body MAIN");
+        AdvancedModelRenderer body = parModel.getCube("Body MAIN");
 
-        MowzieModelRenderer tail1 = parModel.getCube("Tail #1");
-        MowzieModelRenderer tail2 = parModel.getCube("Tail #2");
-        MowzieModelRenderer tail3 = parModel.getCube("Tail #3");
-        MowzieModelRenderer tail4 = parModel.getCube("Tail #4");
-        MowzieModelRenderer tail5 = parModel.getCube("Tail #5");
+        AdvancedModelRenderer tail1 = parModel.getCube("Tail #1");
+        AdvancedModelRenderer tail2 = parModel.getCube("Tail #2");
+        AdvancedModelRenderer tail3 = parModel.getCube("Tail #3");
+        AdvancedModelRenderer tail4 = parModel.getCube("Tail #4");
+        AdvancedModelRenderer tail5 = parModel.getCube("Tail #5");
 
-        MowzieModelRenderer neck1 = parModel.getCube("Neck #1");
-        MowzieModelRenderer neck2 = parModel.getCube("Neck #2");
+        AdvancedModelRenderer neck1 = parModel.getCube("Neck #1");
+        AdvancedModelRenderer neck2 = parModel.getCube("Neck #2");
 
-        MowzieModelRenderer head = parModel.getCube("Head");
+        AdvancedModelRenderer head = parModel.getCube("Head");
 
-        MowzieModelRenderer thighLeft = parModel.getCube("Leg Top LEFT");
-        MowzieModelRenderer thighRight = parModel.getCube("Leg Top RIGHT");
+        AdvancedModelRenderer thighLeft = parModel.getCube("Leg Top LEFT");
+        AdvancedModelRenderer thighRight = parModel.getCube("Leg Top RIGHT");
 
-        MowzieModelRenderer thighMidLeft = parModel.getCube("Leg Mid LEFT");
-        MowzieModelRenderer thighMidRight = parModel.getCube("Leg Mid RIGHT");
+        AdvancedModelRenderer thighMidLeft = parModel.getCube("Leg Mid LEFT");
+        AdvancedModelRenderer thighMidRight = parModel.getCube("Leg Mid RIGHT");
 
-        MowzieModelRenderer upperFootLeft = parModel.getCube("Leg Bot LEFT");
-        MowzieModelRenderer upperFootRight = parModel.getCube("Leg Bot RIGHT");
+        AdvancedModelRenderer upperFootLeft = parModel.getCube("Leg Bot LEFT");
+        AdvancedModelRenderer upperFootRight = parModel.getCube("Leg Bot RIGHT");
 
-        MowzieModelRenderer footLeft = parModel.getCube("Leg Foot LEFT");
-        MowzieModelRenderer footRight = parModel.getCube("Leg Foot RIGHT");
+        AdvancedModelRenderer footLeft = parModel.getCube("Leg Foot LEFT");
+        AdvancedModelRenderer footRight = parModel.getCube("Leg Foot RIGHT");
 
-        MowzieModelRenderer armTopLeft = parModel.getCube("Arm Top LEFT");
-        MowzieModelRenderer armTopRight = parModel.getCube("Arm Top RIGHT");
+        AdvancedModelRenderer armTopLeft = parModel.getCube("Arm Top LEFT");
+        AdvancedModelRenderer armTopRight = parModel.getCube("Arm Top RIGHT");
 
-        MowzieModelRenderer armMidLeft = parModel.getCube("Arm Mid LEFT");
-        MowzieModelRenderer armMidRight = parModel.getCube("Arm Mid RIGHT");
+        AdvancedModelRenderer armMidLeft = parModel.getCube("Arm Mid LEFT");
+        AdvancedModelRenderer armMidRight = parModel.getCube("Arm Mid RIGHT");
 
-        MowzieModelRenderer handLeft = parModel.getCube("Arm Hand LEFT");
-        MowzieModelRenderer handRight = parModel.getCube("Arm Hand RIGHT");
+        AdvancedModelRenderer handLeft = parModel.getCube("Arm Hand LEFT");
+        AdvancedModelRenderer handRight = parModel.getCube("Arm Hand RIGHT");
 
-        MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
-        MowzieModelRenderer[] neck = new MowzieModelRenderer[] { head, neck2, neck1, body };
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] neck = new AdvancedModelRenderer[] { head, neck2, neck1, body };
 
-        MowzieModelRenderer[] armLeft = new MowzieModelRenderer[] { handLeft, armMidLeft, armTopLeft };
-        MowzieModelRenderer[] armRight = new MowzieModelRenderer[] { handRight, armMidRight, armTopRight };
+        AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { handLeft, armMidLeft, armTopLeft };
+        AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { handRight, armMidRight, armTopRight };
 
         // f = entity.ticksExisted;
         // f1 = 0.5F;

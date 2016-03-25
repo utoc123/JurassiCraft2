@@ -9,10 +9,4 @@ public class StegosaurusEntity extends ProvokableDinosaurEntity // implements IE
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

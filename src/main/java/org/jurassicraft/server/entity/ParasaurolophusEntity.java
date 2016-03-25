@@ -12,10 +12,4 @@ public class ParasaurolophusEntity extends DefensiveDinosaurEntity // implements
         super(world);
         tasks.addTask(2, new JCNonAutoAnimBase(this, 60, Animations.CALLING.get(), 100)); // Call
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

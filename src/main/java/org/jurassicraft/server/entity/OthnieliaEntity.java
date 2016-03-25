@@ -9,10 +9,4 @@ public class OthnieliaEntity extends DefensiveDinosaurEntity // implements IEnti
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 6;
-    }
 }

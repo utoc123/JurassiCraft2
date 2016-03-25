@@ -9,10 +9,4 @@ public class DunkleosteusEntity extends AggressiveSwimmingDinosaurEntity // impl
     {
         super(world);
     }
-
-    @Override
-    public int getTailBoxCount()
-    {
-        return 0;
-    }
 }
