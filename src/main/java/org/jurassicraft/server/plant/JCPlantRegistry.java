@@ -20,6 +20,7 @@ public class JCPlantRegistry implements IContentHandler
     public static Plant scaly_tree_fern;
     public static Plant cycad_zamites;
     public static Plant dicksonia;
+    public static Plant wild_onion;
 
     @Override
     public void init()
@@ -35,6 +36,7 @@ public class JCPlantRegistry implements IContentHandler
         scaly_tree_fern = new ScalyTreeFernPlant();
         cycad_zamites = new ZamitesPlant();
         dicksonia = new DicksoniaPlant();
+        wild_onion = new WildOnionPlant();
     }
 
     @Override
@@ -51,6 +53,7 @@ public class JCPlantRegistry implements IContentHandler
         registerPlant(scaly_tree_fern);
         registerPlant(cycad_zamites);
         registerPlant(dicksonia);
+        registerPlant(wild_onion);
     }
 
     public static Plant getPlantById(int id)

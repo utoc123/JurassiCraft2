@@ -297,6 +297,7 @@ public class JCRenderingRegistry
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.clear_glass, "clear_glass", "inventory");
 
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.ajuginucula_smithii, "ajuginucula_smithii", "inventory");
+        this.registerBlockRenderer(modelMesher, JCBlockRegistry.wild_onion, "wild_onion_plant", "inventory");
 
 //        this.registerRenderSubBlock(JCBlockRegistry.bPlanks);
     }
@@ -380,6 +381,8 @@ public class JCRenderingRegistry
         this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_seeds, "ajuginucula_smithii_seeds", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_leaves, "ajuginucula_smithii_leaves", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
+
+        this.registerItemRenderer(modelMesher, JCItemRegistry.wild_onion, "wild_onion", "inventory");
 
         int meta = 0;
 
