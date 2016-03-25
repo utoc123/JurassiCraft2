@@ -88,6 +88,8 @@ public class JCItemRegistry
     public static Item ajuginucula_smithii_leaves;
     public static Item ajuginucula_smithii_oil;
 
+    public static Item wild_onion;
+
     // Debug items
     public static Item dino_scanner;
 
@@ -159,8 +161,11 @@ public class JCItemRegistry
         ajuginucula_smithii_leaves = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(JCCreativeTabs.plants);
         ajuginucula_smithii_oil = new BasicItem(JCCreativeTabs.plants);
 
+        wild_onion = new ItemSeeds(JCBlockRegistry.wild_onion, Blocks.farmland).setUnlocalizedName("wild_onion").setCreativeTab(JCCreativeTabs.plants);
+
         for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
         {
+
             String[] boneTypes = dinosaur.getBones();
 
             for (String boneType : boneTypes)
@@ -243,6 +248,9 @@ public class JCItemRegistry
         registerItem(ajuginucula_smithii_seeds, "Ajuginucula Smithii Seeds");
         registerItem(ajuginucula_smithii_leaves, "Ajuginucula Smithii Leaves");
         registerItem(ajuginucula_smithii_oil, "Ajuginucula Smithii Oil");
+
+        registerItem(wild_onion, "Wild Onion");
+
 
         // registerItem(entityRemover, "Entity Remover");
 
