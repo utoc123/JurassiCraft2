@@ -1,8 +1,11 @@
 package org.jurassicraft.server.item.bones;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.IHybrid;
@@ -97,6 +100,39 @@ public class FossilItem extends Item
             {
                 subtypes.add(new ItemStack(item, 1, ids.get(dino)));
             }
+        }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
+    {
+        NBTTagCompound nbt = stack.getTagCompound();
+
+        if (nbt != null && nbt.hasKey("Genetics") && nbt.hasKey("DNAQuality"))
+        {
+            int quality = nbt.getInteger("DNAQuality");
+
+            EnumChatFormatting colour;
+
+            if (quality > 75)
+            {
+                colour = EnumChatFormatting.GREEN;
+            }
+            else if (quality > 50)
+            {
+                colour = EnumChatFormatting.YELLOW;
+            }
+            else if (quality > 25)
+            {
+                colour = EnumChatFormatting.GOLD;
+            }
+            else
+            {
+                colour = EnumChatFormatting.RED;
+            }
+
+            lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+            lore.add(EnumChatFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", nbt.getString("Genetics")).build());
         }
     }
 }
