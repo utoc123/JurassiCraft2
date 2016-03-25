@@ -34,9 +34,10 @@ import org.jurassicraft.server.block.tree.JCLeavesBlock;
 import org.jurassicraft.server.block.tree.JCLogBlock;
 import org.jurassicraft.server.block.tree.JCPlanksBlock;
 import org.jurassicraft.server.block.tree.JCSaplingBlock;
+import org.jurassicraft.server.block.tree.JCSlabBlock;
 import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
 import org.jurassicraft.server.block.tree.JCStairsBlock;
-import org.jurassicraft.server.block.tree.WoodType;
+import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
@@ -54,24 +55,20 @@ import org.jurassicraft.server.tileentity.IncubatorTile;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeCompendium;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JCBlockRegistry implements IContentHandler
 {
-    public static final int numOfTrees = 2;
+    public static Map<TreeType, JCPlanksBlock> planks = new HashMap<TreeType, JCPlanksBlock>();
+    public static Map<TreeType, JCLogBlock> logs = new HashMap<TreeType, JCLogBlock>();
+    public static Map<TreeType, JCLeavesBlock> leaves = new HashMap<TreeType, JCLeavesBlock>();
+    public static Map<TreeType, JCSaplingBlock> saplings = new HashMap<TreeType, JCSaplingBlock>();
 
-    // tree blocks
-    public static Block[] planks;
-    public static Block[] woods;
-    public static Block[] leaves;
-    public static Block[] saplings;
-
-    // wood products
-    public static Block[] doors;
-    public static Block[] fences;
-    public static Block[] slabs;
-    public static Block[] doubleSlabs;
-    public static Block[] stairs;
+    public static Map<TreeType, JCSlabBlock> slabs = new HashMap<TreeType, JCSlabBlock>();
+    public static Map<TreeType, JCDoubleSlabBlock> doubleSlabs = new HashMap<TreeType, JCDoubleSlabBlock>();
+    public static Map<TreeType, JCStairsBlock> stairs = new HashMap<TreeType, JCStairsBlock>();
 
     public static List<FossilBlock> fossils;
     public static List<EncasedFossilBlock> encased_fossils;
@@ -178,61 +175,56 @@ public class JCBlockRegistry implements IContentHandler
             OreDictionary.registerOre("fossil", fossil);
         }
 
-        // initialize WoodType meta lookup
-        WoodType.GINKGO.setMetaLookup();
-        WoodType.CALAMITES.setMetaLookup();
-
-        // register Tree Variables
         TreeCompendium.addShapesToCompendium();
         TreeCompendium.registerTrees();
 
-        // initialize arrays
-        planks = new Block[numOfTrees];
-        woods = new Block[numOfTrees];
-        leaves = new Block[numOfTrees];
-        saplings = new Block[numOfTrees];
-        doors = new Block[numOfTrees];
-        fences = new Block[numOfTrees];
-        slabs = new Block[numOfTrees];
-        doubleSlabs = new Block[numOfTrees];
-        stairs = new Block[numOfTrees];
-
-        // initialize blocks within arrays
-        for (int i = 0; i < numOfTrees; i++)
+        for (TreeType type : TreeType.values())
         {
-            WoodType type = WoodType.getMetaLookup()[i];
-            String typeName = type.getName();
-
-            planks[i] = new JCPlanksBlock(type, typeName);
-            woods[i] = new JCLogBlock(type, typeName);
-            leaves[i] = new JCLeavesBlock(type, typeName);
-            saplings[i] = new JCSaplingBlock(type, typeName);
-            stairs[i] = new JCStairsBlock(typeName, planks[i].getDefaultState());
-            slabs[i] = new JCSlabHalfBlock(typeName, planks[i].getDefaultState());
-            doubleSlabs[i] = new JCDoubleSlabBlock(typeName, slabs[i], planks[i].getDefaultState());
-
-            GameRegistry.registerBlock(planks[i], typeName + "_planks");
-            GameRegistry.registerBlock(woods[i], typeName + "_log");
-            GameRegistry.registerBlock(leaves[i], typeName + "_leaves");
-            GameRegistry.registerBlock(saplings[i], typeName + "_sapling");
-            GameRegistry.registerBlock(stairs[i], typeName + "_stairs");
-            GameRegistry.registerBlock(slabs[i], JCSlabItemBlock.class, typeName + "_slab", slabs[i], doubleSlabs[i]);
-            GameRegistry.registerBlock(doubleSlabs[i], JCSlabItemBlock.class, typeName + "_double_slab", slabs[i], doubleSlabs[i]);
-
-            OreDictionary.registerOre("logWood", woods[i]);
-            OreDictionary.registerOre("plankWood", planks[i]);
-            OreDictionary.registerOre("treeLeaves", leaves[i]);
-            OreDictionary.registerOre("treeSapling", saplings[i]);
-            OreDictionary.registerOre("slabWood", slabs[i]);
-            OreDictionary.registerOre("stairkWood", stairs[i]);
-
-            Blocks.fire.setFireInfo(leaves[i], 30, 60);
-            Blocks.fire.setFireInfo(planks[i], 5, 20);
-            Blocks.fire.setFireInfo(woods[i], 5, 5);
-            Blocks.fire.setFireInfo(doubleSlabs[i], 5, 20);
-            Blocks.fire.setFireInfo(slabs[i], 5, 20);
-            Blocks.fire.setFireInfo(stairs[i], 5, 20);
+            registerTreeType(type);
         }
+    }
+
+    private void registerTreeType(TreeType type)
+    {
+        JCPlanksBlock planks = new JCPlanksBlock(type);
+        JCLogBlock log = new JCLogBlock(type);
+        JCLeavesBlock leaves = new JCLeavesBlock(type);
+        JCSaplingBlock sapling = new JCSaplingBlock(type);
+        JCStairsBlock stair = new JCStairsBlock(type, planks.getDefaultState());
+        JCSlabHalfBlock slab = new JCSlabHalfBlock(type, planks.getDefaultState());
+        JCDoubleSlabBlock doubleSlab = new JCDoubleSlabBlock(type, slab, planks.getDefaultState());
+
+        JCBlockRegistry.planks.put(type, planks);
+        JCBlockRegistry.logs.put(type, log);
+        JCBlockRegistry.leaves.put(type, leaves);
+        JCBlockRegistry.saplings.put(type, sapling);
+        JCBlockRegistry.stairs.put(type, stair);
+        JCBlockRegistry.slabs.put(type, slab);
+        JCBlockRegistry.doubleSlabs.put(type, doubleSlab);
+
+        String typeName = type.name().toLowerCase();
+
+        GameRegistry.registerBlock(planks, typeName + "_planks");
+        GameRegistry.registerBlock(log, typeName + "_log");
+        GameRegistry.registerBlock(leaves, typeName + "_leaves");
+        GameRegistry.registerBlock(sapling, typeName + "_sapling");
+        GameRegistry.registerBlock(stair, typeName + "_stairs");
+        GameRegistry.registerBlock(slab, JCSlabItemBlock.class, typeName + "_slab", slab, doubleSlab);
+        GameRegistry.registerBlock(doubleSlab, JCSlabItemBlock.class, typeName + "_double_slab", slab, doubleSlab);
+
+        OreDictionary.registerOre("logWood", log);
+        OreDictionary.registerOre("plankWood", planks);
+        OreDictionary.registerOre("treeLeaves", leaves);
+        OreDictionary.registerOre("treeSapling", sapling);
+        OreDictionary.registerOre("slabWood", slab);
+        OreDictionary.registerOre("stairkWood", stair);
+
+        Blocks.fire.setFireInfo(leaves, 30, 60);
+        Blocks.fire.setFireInfo(planks, 5, 20);
+        Blocks.fire.setFireInfo(log, 5, 5);
+        Blocks.fire.setFireInfo(doubleSlab, 5, 20);
+        Blocks.fire.setFireInfo(slab, 5, 20);
+        Blocks.fire.setFireInfo(stair, 5, 20);
     }
 
     @Override

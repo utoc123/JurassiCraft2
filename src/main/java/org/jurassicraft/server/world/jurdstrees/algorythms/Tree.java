@@ -2,6 +2,7 @@ package org.jurassicraft.server.world.jurdstrees.algorythms;
 
 import net.minecraft.block.Block;
 import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.Feature.FeatureType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.InsPCoord.InsPType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeBlock.InsPoint;
@@ -12,11 +13,8 @@ import java.util.Random;
 
 public class Tree
 {
+    private TreeType treeType;
 
-    // unique identifier.
-    private int treeCode;
-
-    // Features that can be built in the tree in the form of arrays of codes. This is used to generate a random tree.
     private int[] TrunkList;
     private int[] BranchList;
     private int[] WoodList;
@@ -33,51 +31,44 @@ public class Tree
 
     private ArrayList<InsPCoord> insPList = new ArrayList<InsPCoord>();
 
-    public Tree(int code, int maxAge, int maxBranchLength)
+    public Tree(TreeType type, int maxAge, int maxBranchLength)
     {
-        treeCode = code;
+        this.treeType = type;
         this.maxAge = maxAge;
         this.maxBranchLevel = maxBranchLength;
-        penaltyPerHeight = 3;
-        lowerBranchLevel = 0;
-        maxTrunkHeight = 30;
+        this.penaltyPerHeight = 3;
+        this.lowerBranchLevel = 0;
+        this.maxTrunkHeight = 30;
     }
 
-    public static Block getBlocksFromCode(int code)
+    public static Block getBlocksFromCode(TreeType type)
     {
-
-        return JCBlockRegistry.woods[code];
-
+        return JCBlockRegistry.logs.get(type);
     }
 
-    public static Block getLeavesFromCode(int code)
+    public static Block getLeavesFromCode(TreeType type)
     {
-
-        return JCBlockRegistry.leaves[code];
-
+        return JCBlockRegistry.leaves.get(type);
     }
 
-    public Tree(int code, int maxAge, int maxBranchLength, int penalty, int lbl, int mtheight)
+    public Tree(TreeType type, int maxAge, int maxBranchLength, int penalty, int lbl, int mtheight)
     {
-
-        treeCode = code;
+        this.treeType = type;
         this.maxAge = maxAge;
         this.maxBranchLevel = maxBranchLength;
-        penaltyPerHeight = penalty;
-        lowerBranchLevel = lbl;
-        maxTrunkHeight = mtheight;
-
+        this.penaltyPerHeight = penalty;
+        this.lowerBranchLevel = lbl;
+        this.maxTrunkHeight = mtheight;
     }
 
-    public int getCode()
+    public TreeType getTreeType()
     {
-        return treeCode;
+        return treeType;
     }
 
     public Tree getBaseCopy()
     {
-
-        Tree tree = new Tree(treeCode, maxAge, maxBranchLevel, penaltyPerHeight, lowerBranchLevel, maxTrunkHeight);
+        Tree tree = new Tree(treeType, maxAge, maxBranchLevel, penaltyPerHeight, lowerBranchLevel, maxTrunkHeight);
 
         tree.addFeatureList(TrunkList, FeatureType.Trunk);
         tree.addFeatureList(BranchList, FeatureType.Branch);
@@ -272,10 +263,8 @@ public class Tree
         // Iterate over the shape to find the next insert point
         for (TreeBlock block : shape.blocksList)
         {
-
             if (block instanceof InsPoint)
             {
-
                 InsPoint insertp = (InsPoint) block;
 
                 int xC = insPList.get(j).getX() + insertp.getX();
@@ -285,19 +274,15 @@ public class Tree
                 // if the next insert point allows for trunk, then trunk rotation does not matter, it can be random.
                 if (insertp.allowTrunk && addLeavesInsPOnly == false)
                 {
-
                     // Rotation of the insert point is corrected in the Tree Compendium method that gives the rotated shape.
                     int newRotation = 0;
 
                     if (insertp.rotation == Rotation.none)
                     {
-
                         newRotation = random.nextInt(4) + 1;
-
                     }
                     else
                     {
-
                         newRotation = Rotation.getRotationIndex(insertp.rotation);
 
                     }
@@ -389,5 +374,4 @@ public class Tree
     {
         this.age++;
     }
-
 }

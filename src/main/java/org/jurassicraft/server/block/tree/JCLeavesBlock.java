@@ -33,16 +33,16 @@ import java.util.Random;
 
 public class JCLeavesBlock extends BlockLeaves
 {
-    private WoodType treeType;
+    private TreeType treeType;
 
-    public JCLeavesBlock(WoodType type, String name)
+    public JCLeavesBlock(TreeType type)
     {
-        treeType = type;
-        setUnlocalizedName(name + "_leaves");
+        this.treeType = type;
+        this.setUnlocalizedName(type.name().toLowerCase() + "_leaves");
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setStepSound(soundTypeGrass);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(false)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false));
         this.setCreativeTab(JCCreativeTabs.plants);
     }
 
@@ -50,24 +50,24 @@ public class JCLeavesBlock extends BlockLeaves
     @SideOnly(Side.CLIENT)
     public int getBlockColor()
     {
-        return this.treeType == WoodType.GINKGO ? 0xFFFFFF : ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
+        return this.treeType == TreeType.GINKGO ? 0xFFFFFF : ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor(IBlockState state)
     {
-        return this.treeType == WoodType.GINKGO ? 0xFFFFFF : ColorizerFoliage.getFoliageColorBasic();
+        return this.treeType == TreeType.GINKGO ? 0xFFFFFF : ColorizerFoliage.getFoliageColorBasic();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
     {
-        return this.treeType == WoodType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
+        return this.treeType == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
     }
 
-    public WoodType getTreeType()
+    public TreeType getTreeType()
     {
         return treeType;
     }
@@ -105,7 +105,7 @@ public class JCLeavesBlock extends BlockLeaves
     }
 
     /*
-     * protected int getSaplingDropChance(IBlockState state) { return treeType.equals(WoodType.REDWOOD) ? 80 : treeType.equals(WoodType.BAMBOO) ? 5 : super.getSaplingDropChance(state); }
+     * protected int getSaplingDropChance(IBlockState state) { return treeType.equals(TreeType.REDWOOD) ? 80 : treeType.equals(TreeType.BAMBOO) ? 5 : super.getSaplingDropChance(state); }
      */
 
     /**
@@ -132,16 +132,6 @@ public class JCLeavesBlock extends BlockLeaves
             ret.add(new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state)));
         }
 
-        chance = 200;
-        if (fortune > 0)
-        {
-            chance -= 10 << fortune;
-            if (chance < 40)
-            {
-                chance = 40;
-            }
-        }
-
         this.captureDrops(true);
         ret.addAll(this.captureDrops(false));
         return ret;
@@ -150,7 +140,7 @@ public class JCLeavesBlock extends BlockLeaves
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.saplings[treeType.getMetadata()]);
+        return Item.getItemFromBlock(JCBlockRegistry.saplings.get(treeType));
     }
 
     /**

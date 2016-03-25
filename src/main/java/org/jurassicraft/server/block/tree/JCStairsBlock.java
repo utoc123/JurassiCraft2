@@ -40,7 +40,7 @@ public class JCStairsBlock extends Block
     private boolean hasRaytraced;
     private int rayTracePass;
 
-    public JCStairsBlock(String name, IBlockState modelState)
+    public JCStairsBlock(TreeType type, IBlockState modelState)
     {
         super(modelState.getBlock().getMaterial());
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(HALF, JCStairsBlock.EnumHalf.BOTTOM).withProperty(SHAPE, JCStairsBlock.EnumShape.STRAIGHT));
@@ -52,7 +52,7 @@ public class JCStairsBlock extends Block
         this.setHarvestLevel(this.modelBlock.getHarvestTool(this.modelState), this.modelBlock.getHarvestLevel(this.modelState));
         this.setLightOpacity(255);
         this.setCreativeTab(JCCreativeTabs.plants);
-        this.setUnlocalizedName(name.toLowerCase().replaceAll(" ", "_") + "_stairs");
+        this.setUnlocalizedName(type.name().toLowerCase().replaceAll(" ", "_") + "_stairs");
     }
 
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)

@@ -11,72 +11,45 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCLogBlock extends BlockLog
 {
-    private WoodType treeType;
-
-    public JCLogBlock(WoodType type, String treeName)
+    public JCLogBlock(TreeType type)
     {
         this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
-        setHardness(2.0F);
-        setResistance(0.5F);
-        setStepSound(Block.soundTypeWood);
-        setUnlocalizedName(treeName + "_log");
-
+        this.setHardness(2.0F);
+        this.setResistance(0.5F);
+        this.setStepSound(Block.soundTypeWood);
+        this.setUnlocalizedName(type.name().toLowerCase() + "_log");
         this.setCreativeTab(JCCreativeTabs.plants);
-
-        treeType = type;
     }
 
-    public boolean isOpaqueCube()
-    {
-        if (treeType == null)
-        {
-            return true;
-        }
-        return true;
-    }
-
-    public boolean isFullCube()
-    {
-        if (treeType == null)
-        {
-            return true;
-        }
-        return true;
-    }
-
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState iblockstate = this.getDefaultState();
+        IBlockState state = this.getDefaultState();
 
         switch (meta & 12)
         {
             case 0:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
                 break;
             case 4:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
                 break;
             case 8:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
                 break;
             default:
-                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
         }
 
-        return iblockstate;
+        return state;
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
 
-        switch (JCLogBlock.SwitchEnumAxis.AXIS_LOOKUP[((BlockLog.EnumAxis) state.getValue(LOG_AXIS)).ordinal()])
+        switch (JCLogBlock.SwitchEnumAxis.AXIS_LOOKUP[state.getValue(LOG_AXIS).ordinal()])
         {
             case 1:
                 i = 4;
@@ -91,19 +64,19 @@ public class JCLogBlock extends BlockLog
         return i;
     }
 
+    @Override
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] { LOG_AXIS });
+        return new BlockState(this, LOG_AXIS);
     }
 
+    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(Item.getItemFromBlock(this), 1, 0);
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return 0;
@@ -115,32 +88,9 @@ public class JCLogBlock extends BlockLog
 
         static
         {
-            try
-            {
-                AXIS_LOOKUP[BlockLog.EnumAxis.X.ordinal()] = 1;
-            }
-            catch (NoSuchFieldError var3)
-            {
-                ;
-            }
-
-            try
-            {
-                AXIS_LOOKUP[BlockLog.EnumAxis.Z.ordinal()] = 2;
-            }
-            catch (NoSuchFieldError var2)
-            {
-                ;
-            }
-
-            try
-            {
-                AXIS_LOOKUP[BlockLog.EnumAxis.NONE.ordinal()] = 3;
-            }
-            catch (NoSuchFieldError var1)
-            {
-                ;
-            }
+            AXIS_LOOKUP[BlockLog.EnumAxis.X.ordinal()] = 1;
+            AXIS_LOOKUP[BlockLog.EnumAxis.Z.ordinal()] = 2;
+            AXIS_LOOKUP[BlockLog.EnumAxis.NONE.ordinal()] = 3;
         }
     }
 }

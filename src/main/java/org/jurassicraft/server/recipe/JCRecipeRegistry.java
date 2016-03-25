@@ -10,9 +10,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.tree.JCPlanksBlock;
+import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
+
+import java.util.Map;
 
 public class JCRecipeRegistry implements IContentHandler
 {
@@ -35,17 +39,16 @@ public class JCRecipeRegistry implements IContentHandler
             }
         }
 
-        int i = 0;
-
-        for (Block block : JCBlockRegistry.planks)
+        for (Map.Entry<TreeType, JCPlanksBlock> entry : JCBlockRegistry.planks.entrySet())
         {
-            GameRegistry.addShapelessRecipe(new ItemStack(block, 4), JCBlockRegistry.woods[i]);
+            TreeType type = entry.getKey();
+            JCPlanksBlock planks = entry.getValue();
 
-            GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.stairs[i], 4), "w  ", "ww ", "www", 'w', block);
-            GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.stairs[i], 4), "  w", " ww", "www", 'w', block);
-            GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.slabs[i], 6), "www", 'w', block);
+            GameRegistry.addShapelessRecipe(new ItemStack(planks, 4), JCBlockRegistry.logs.get(type));
 
-            i++;
+            GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.stairs.get(type), 4), "w  ", "ww ", "www", 'w', planks);
+            GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.stairs.get(type), 4), "  w", " ww", "www", 'w', planks);
+            GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.slabs.get(type), 6), "www", 'w', planks);
         }
 
         GameRegistry.addSmelting(new ItemStack(JCBlockRegistry.gypsum_cobblestone), new ItemStack(JCBlockRegistry.gypsum_stone), 1.5F);
@@ -72,7 +75,7 @@ public class JCRecipeRegistry implements IContentHandler
         GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.dna_sequencer), "RDR", "GNG", "III", 'G', Items.gold_ingot, 'I', Items.iron_ingot, 'N', JCItemRegistry.needle, 'D', JCItemRegistry.disc_reader, 'R', Items.redstone);
         GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.dna_synthesizer), "GDG", "RBR", "ITI", 'G', Items.gold_ingot, 'I', Items.iron_ingot, 'B', Items.bucket, 'R', Items.redstone, 'D', JCItemRegistry.disc_reader);
 
-        for (i = 0; i < 16; i++)
+        for (int i = 0; i < 16; i++)
         {
             GameRegistry.addRecipe(new ItemStack(JCBlockRegistry.cultivate_bottom, 1, i), "GGG", "GWG", "III", 'G', new ItemStack(Blocks.stained_glass_pane, 1, i), 'W', Items.water_bucket, 'I', Items.iron_ingot);
         }
@@ -102,7 +105,7 @@ public class JCRecipeRegistry implements IContentHandler
         addGrowthSerumRecipe(Items.cooked_porkchop);
         addGrowthSerumRecipe(Items.cooked_rabbit);
 
-        for (i = 0; i < JCEntityRegistry.getDinosaurs().size(); i++)
+        for (int i = 0; i < JCEntityRegistry.getDinosaurs().size(); i++)
         {
             addGrowthSerumRecipe(new ItemStack(JCItemRegistry.dino_steak, 1, i));
         }

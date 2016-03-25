@@ -14,10 +14,10 @@ public class JCDoubleSlabBlock extends JCSlabBlock
 {
     private Block singleSlab;
 
-    public JCDoubleSlabBlock(String name, Block slab, IBlockState state)
+    public JCDoubleSlabBlock(TreeType type, Block slab, IBlockState state)
     {
         super(state);
-        this.setUnlocalizedName(name + "_double_slab");
+        this.setUnlocalizedName(type.name().toLowerCase() + "_double_slab");
         this.singleSlab = slab;
     }
 

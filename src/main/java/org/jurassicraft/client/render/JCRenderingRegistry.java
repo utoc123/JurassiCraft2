@@ -86,7 +86,7 @@ import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.block.tree.WoodType;
+import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.*;
@@ -245,16 +245,16 @@ public class JCRenderingRegistry
             i++;
         }
 
-        for (i = 0; i < JCBlockRegistry.numOfTrees; i++)
+        for (TreeType type : TreeType.values())
         {
-            String name = WoodType.getMetaLookup()[i].getName();
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.leaves[i], name + "_leaves", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.saplings[i], name + "_sapling", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.planks[i], name + "_planks", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.woods[i], name + "_log", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.stairs[i], name + "_stairs", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.slabs[i], name + "_slab", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.doubleSlabs[i], name + "_double_sab", "inventory");
+            String name = type.name().toLowerCase();
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.leaves.get(type), name + "_leaves", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.saplings.get(type), name + "_sapling", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.planks.get(type), name + "_planks", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.logs.get(type), name + "_log", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.stairs.get(type), name + "_stairs", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.slabs.get(type), name + "_slab", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.doubleSlabs.get(type), name + "_double_sab", "inventory");
         }
 
         for (EnumDyeColor color : EnumDyeColor.values())
