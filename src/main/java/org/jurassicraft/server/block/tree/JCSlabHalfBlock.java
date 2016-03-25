@@ -5,10 +5,10 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCSlabHalfBlock extends JCSlabBlock
 {
-    public JCSlabHalfBlock(String name, IBlockState state)
+    public JCSlabHalfBlock(TreeType type, IBlockState state)
     {
         super(state);
-        this.setUnlocalizedName(name + "_slab");
+        this.setUnlocalizedName(type.name().toLowerCase() + "_slab");
         this.setCreativeTab(JCCreativeTabs.plants);
     }
 

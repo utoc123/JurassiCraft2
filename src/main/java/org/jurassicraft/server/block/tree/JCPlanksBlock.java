@@ -7,13 +7,13 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCPlanksBlock extends Block
 {
-    public JCPlanksBlock(String treeName)
+    public JCPlanksBlock(TreeType treeType)
     {
         super(Material.wood);
         this.setHardness(2.0F);
         this.setResistance(0.5F);
         this.setStepSound(SoundType.WOOD);
-        this.setUnlocalizedName(treeName + "_planks");
+        this.setUnlocalizedName(treeType.name().toLowerCase() + "_planks");
         this.setCreativeTab(JCCreativeTabs.plants);
     }
 }

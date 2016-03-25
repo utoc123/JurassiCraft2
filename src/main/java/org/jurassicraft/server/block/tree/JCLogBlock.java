@@ -10,13 +10,13 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCLogBlock extends BlockLog
 {
-    public JCLogBlock(String treeName)
+    public JCLogBlock(TreeType treeType)
     {
         this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
         this.setHardness(2.0F);
         this.setResistance(0.5F);
         this.setStepSound(SoundType.WOOD);
-        this.setUnlocalizedName(treeName + "_log");
+        this.setUnlocalizedName(treeType.name().toLowerCase() + "_log");
 
         this.setCreativeTab(JCCreativeTabs.plants);
     }
@@ -27,14 +27,13 @@ public class JCLogBlock extends BlockLog
         return true;
     }
 
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return true;
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState state = this.getDefaultState();

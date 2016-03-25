@@ -16,25 +16,24 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.world.jurdstrees.trees.WorldGenCalamites;
-import org.jurassicraft.server.world.jurdstrees.trees.WorldGenGinkgo;
+import org.jurassicraft.server.world.jurdstrees.trees.WorldGenJCTree;
 
 import java.util.List;
 import java.util.Random;
 
 public class JCSaplingBlock extends BlockBush implements IGrowable
 {
-    private WoodType treeType;
+    private TreeType treeType;
 
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
 
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.6F, 0.8F, 0.6F);
 
-    public JCSaplingBlock(WoodType type, String name)
+    public JCSaplingBlock(TreeType type)
     {
         super();
-        this.setUnlocalizedName(name + "_sapling");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
+        this.setUnlocalizedName(type.name().toLowerCase() + "_sapling");
+        this.setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
         this.setStepSound(SoundType.PLANT);
         this.setCreativeTab(JCCreativeTabs.plants);
         this.treeType = type;
@@ -62,17 +61,7 @@ public class JCSaplingBlock extends BlockBush implements IGrowable
         }
         else
         {
-            switch (treeType)
-            {
-                case GINKGO:
-                    WorldGenGinkgo ginkgo = new WorldGenGinkgo(0);
-                    ginkgo.generate(world, rand, pos);
-                    break;
-                case CALAMITES:
-                    WorldGenCalamites calamites = new WorldGenCalamites(1);
-                    calamites.generate(world, rand, pos);
-                    break;
-            }
+            treeType.getTreeGenerator().generate(world, rand, pos);
         }
     }
 

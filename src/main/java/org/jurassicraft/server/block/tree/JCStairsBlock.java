@@ -6,10 +6,10 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCStairsBlock extends BlockStairs
 {
-    public JCStairsBlock(String name, IBlockState state)
+    public JCStairsBlock(TreeType type, IBlockState state)
     {
         super(state);
         this.setCreativeTab(JCCreativeTabs.plants);
-        this.setUnlocalizedName(name.toLowerCase().replaceAll(" ", "_") + "_stairs");
+        this.setUnlocalizedName(type.name().toLowerCase().replaceAll(" ", "_") + "_stairs");
     }
 }

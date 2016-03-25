@@ -26,12 +26,12 @@ import java.util.Random;
 
 public class JCLeavesBlock extends BlockLeaves
 {
-    private WoodType treeType;
+    private TreeType treeType;
 
-    public JCLeavesBlock(WoodType type, String name)
+    public JCLeavesBlock(TreeType type)
     {
-        treeType = type;
-        setUnlocalizedName(name + "_leaves");
+        this.treeType = type;
+        this.setUnlocalizedName(type.name().toLowerCase() + "_leaves");
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setStepSound(SoundType.PLANT);
@@ -39,15 +39,14 @@ public class JCLeavesBlock extends BlockLeaves
         this.setCreativeTab(JCCreativeTabs.plants);
     }
 
-    public WoodType getTreeType()
+    public TreeType getTreeType()
     {
         return treeType;
     }
 
     @Override
-    protected void dropApple(World worldIn, BlockPos pos, IBlockState state, int chance)
+    protected void dropApple(World world, BlockPos pos, IBlockState state, int chance)
     {
-
     }
 
     @Override
@@ -105,7 +104,7 @@ public class JCLeavesBlock extends BlockLeaves
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.saplings[treeType.getMetadata()]);
+        return Item.getItemFromBlock(JCBlockRegistry.saplings.get(treeType));
     }
 
     @Override

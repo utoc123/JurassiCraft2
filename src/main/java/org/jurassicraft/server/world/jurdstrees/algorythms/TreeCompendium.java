@@ -1,5 +1,6 @@
 package org.jurassicraft.server.world.jurdstrees.algorythms;
 
+import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.Feature.FeatureType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeBlock.InsPoint;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeBlock.Rotation;
@@ -316,20 +317,9 @@ public class TreeCompendium
 
     public static void registerTrees()
     {
-
         Tree tree;
 
-        tree = new Tree(2, 7, 3);
-        tree.addFeatureList(new int[] { 1, 1 }, FeatureType.Trunk);
-        tree.addFeatureList(new int[] { 3, 6, 7, 8, 9, 10 }, FeatureType.Branch);
-        tree.addFeatureList(new int[] { 5, 6 }, FeatureType.Fruit);
-        tree.addFeatureList(new int[] { 4, 4 }, FeatureType.leaves);
-        tree.addFeatureList(new int[] { 5, 5 }, FeatureType.TrunkLeaves);
-        tree.addFeatureList(new int[] { 2, 2 }, FeatureType.wood);
-
-        TreeList.add(tree);
-
-        tree = new Tree(1, 8, 4);
+        tree = new Tree(TreeType.CALAMITES, 8, 4);
         tree.addFeatureList(new int[] { 1, 1 }, FeatureType.Trunk);
         tree.addFeatureList(new int[] { 11, 12, 13, 14, 15, 16, 17, 18 }, FeatureType.Branch);
         tree.addFeatureList(new int[] { 5, 6 }, FeatureType.Fruit);
@@ -339,7 +329,7 @@ public class TreeCompendium
 
         TreeList.add(tree);
 
-        tree = new Tree(0, 8, 4, 3, 3, 5);
+        tree = new Tree(TreeType.GINKGO, 8, 4, 3, 3, 5);
         tree.addFeatureList(new int[] { 1, 1 }, FeatureType.Trunk);
         tree.addFeatureList(new int[] { 11, 12, 13, 14, 15, 16, 17, 18 }, FeatureType.Branch);
         tree.addFeatureList(new int[] { 5, 6 }, FeatureType.Fruit);
@@ -367,13 +357,13 @@ public class TreeCompendium
 
     }
 
-    public static Tree getTreeFromCode(int code)
+    public static Tree getTreeFromCode(TreeType type)
     {
 
         for (Tree tree : TreeList)
         {
 
-            if (tree.getCode() == code)
+            if (tree.getTreeType() == type)
             {
                 return tree.getBaseCopy();
             }
