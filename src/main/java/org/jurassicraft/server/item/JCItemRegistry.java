@@ -179,9 +179,10 @@ public class JCItemRegistry implements IContentHandler
 
                 if (!fresh_fossils.containsKey(boneType))
                 {
-                    FossilItem fossil = new FossilItem(boneType, true);
+                    String freshBoneType = boneType + " Fresh";
+                    FossilItem fossil = new FossilItem(freshBoneType, true);
                     fresh_fossils.put(boneType, fossil);
-                    registerItem(fossil, boneType + " Fresh");
+                    registerItem(fossil, freshBoneType);
                 }
             }
         }
