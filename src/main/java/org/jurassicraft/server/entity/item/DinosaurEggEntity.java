@@ -1,9 +1,10 @@
-package org.jurassicraft.server.entity.egg;
+package org.jurassicraft.server.entity.item;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -13,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.item.JCItemRegistry;
 
 import java.util.List;
 
@@ -20,19 +22,20 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
 {
 
     private DinosaurEntity dinosaur;
-    private boolean marine = false;
+    private boolean marine;
     private int hatchTime;
 
-    public DinosaurEggEntity(World world, boolean marine, DinosaurEntity dinosaur)
+    public DinosaurEggEntity(World world, DinosaurEntity dinosaur)
     {
         super(world);
         this.dinosaur = dinosaur;
-        this.marine = marine;
+        this.marine = dinosaur.getDinosaur().isMarineAnimal();
     }
 
     public DinosaurEggEntity(World world)
     {
         super(world);
+        this.setSize(.3F, .5F);
     }
 
     @Override
@@ -43,9 +46,12 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         {
             hatchTime--;
             if (hatchTime == 0)
-            {
                 hatch();
+            if (!this.onGround)
+            {
+                this.motionY -= 0.035D;
             }
+            this.moveEntity(0, this.motionY, 0);
         }
     }
 
@@ -66,6 +72,19 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         return marine;
     }
 
+    public boolean canBeCollidedWith()
+    {
+        return true;
+    }
+
+    public boolean interactFirst(EntityPlayer playerIn)
+    {
+        if (dinosaur != null && !worldObj.isRemote)
+        {
+            this.entityDropItem(new ItemStack(JCItemRegistry.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur.getDinosaur())), 0.5F);
+        }
+        return true;
+    }
 
     public void hatch()
     {
@@ -90,14 +109,24 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         try
         {
             DinosaurEntity entity = dinosaur.getClass().getConstructor(World.class).newInstance(worldObj);
-            entity.setPosition(this.posX + 1, this.posY, this.posZ + 1);
             entity.setAge(0);
             entity.setDNAQuality(100);
+            entity.setHealth(entity.getMaxHealth());
+            entity.setPosition(posX, posY, posZ);
+            entity.prevPosX = prevPosX;
+            entity.prevPosY = prevPosY;
+            entity.prevPosZ = prevPosZ;
+            entity.motionX = 0;
+            entity.motionY = 0;
+            entity.motionZ = 0;
+            entity.fallDistance = 0;
+            entity.deathTime = 0;
+            entity.hurtTime = 0;
+            entity.ticksExisted = 0;
             worldObj.spawnEntityInWorld(entity);
             entity.playLivingSound();
             this.setDead();
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -139,8 +168,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         try
         {
             dinosaur = JCEntityRegistry.getDinosaurById(compound.getInteger("Dinosaur")).getDinosaurClass().getConstructor(World.class).newInstance(worldObj);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
