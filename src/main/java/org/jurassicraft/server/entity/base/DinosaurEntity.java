@@ -56,6 +56,7 @@ import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.bones.FossilItem;
 
 import java.util.UUID;
 
@@ -68,6 +69,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int growthSpeedOffset;
 
     private boolean isCarcass;
+    private int carcassHealth;
 
     private GeneticsContainer genetics;
     private int geneticsQuality;
@@ -268,18 +270,74 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float amount)
     {
-        if (getAnimation() == Animations.IDLE.get())
+        if (!isCarcass())
         {
-            AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.INJURED.get());
+            if (getHealth() - amount <= 0.0F)
+            {
+                this.setHealth(getMaxHealth());
+                this.setCarcass(true);
+                return false;
+            }
+            else
+            {
+                if (getAnimation() == Animations.IDLE.get())
+                {
+                    AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.INJURED.get());
+                }
+
+                if (isSleeping)
+                {
+                    isSleeping = false;
+                    dontGoBackToSleep();
+                }
+
+                return super.attackEntityFrom(damageSource, amount);
+            }
+        }
+        else if (!worldObj.isRemote)
+        {
+            carcassHealth--;
+
+            if (worldObj.getGameRules().getBoolean("doMobLoot"))
+            {
+                dropMeat(damageSource.getEntity());
+            }
+
+            if (carcassHealth < 0)
+            {
+                this.onDeath(damageSource);
+            }
         }
 
-        if (isSleeping)
+        return false;
+    }
+
+    private void dropMeat(Entity attacker)
+    {
+        int fortune = 0;
+
+        if (attacker instanceof EntityLivingBase)
         {
-            isSleeping = false;
-            dontGoBackToSleep();
+            fortune = EnchantmentHelper.getLootingModifier((EntityLivingBase) attacker);
         }
 
-        return super.attackEntityFrom(damageSource, amount);
+        int count = rand.nextInt(2) + 1 + fortune;
+
+        boolean burning = isBurning();
+
+        for (int i = 0; i < count; ++i)
+        {
+            int meta = JCEntityRegistry.getDinosaurId(dinosaur);
+
+            if (burning)
+            {
+                entityDropItem(new ItemStack(JCItemRegistry.dino_steak, 1, meta), 0.0F);
+            }
+            else
+            {
+                dropStackWithGenetics(new ItemStack(JCItemRegistry.dino_meat, 1, meta));
+            }
+        }
     }
 
     // Need to override because vanilla knockback makes big dinos get knocked into air
@@ -591,33 +649,24 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return (float) transitionFromAge(dinosaur.getBabyEyeHeight(), dinosaur.getAdultEyeHeight());
     }
 
-    /**
-     * Drop 0-2 items of this living's type
-     */
     @Override
-    protected void dropFewItems(boolean p_70628_1_, int looting)
+    protected void dropFewItems(boolean playerAttack, int looting)
     {
-        int meatAmount = Math.max(1, (int) (rand.nextInt(3) + ((width * height) / 4)) + looting);
-
-        boolean burning = isBurning();
-
-        for (int i = 0; i < meatAmount; ++i)
+        for (String bone : dinosaur.getBones())
         {
-            dropStackWithGenetics(new ItemStack(burning ? JCItemRegistry.dino_steak : JCItemRegistry.dino_meat, 1, JCEntityRegistry.getDinosaurId(dinosaur)), burning);
+            if (rand.nextInt(10) != 0)
+            {
+                dropStackWithGenetics(new ItemStack(JCItemRegistry.fresh_fossils.get(bone), 1, JCEntityRegistry.getDinosaurId(dinosaur)));
+            }
         }
-
-        inventory.dropItems(worldObj, rand);
     }
 
-    private void dropStackWithGenetics(ItemStack stack, boolean cooked)
+    private void dropStackWithGenetics(ItemStack stack)
     {
-        if (!cooked)
-        {
-            NBTTagCompound nbt = new NBTTagCompound();
-            nbt.setInteger("DNAQuality", geneticsQuality);
-            nbt.setString("Genetics", genetics.toString());
-            stack.setTagCompound(nbt);
-        }
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setInteger("DNAQuality", geneticsQuality);
+        nbt.setString("Genetics", genetics.toString());
+        stack.setTagCompound(nbt);
 
         entityDropItem(stack, 0.0F);
     }
@@ -625,6 +674,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void setCarcass(boolean carcass)
     {
         isCarcass = carcass;
+
+        if (carcass)
+        {
+            carcassHealth = (int) Math.sqrt(width * height) * 2;
+            inventory.dropItems(worldObj, rand);
+        }
     }
 
     public boolean isCarcass()

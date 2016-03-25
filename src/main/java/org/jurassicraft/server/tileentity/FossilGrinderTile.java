@@ -5,6 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.item.JCItemRegistry;
@@ -51,19 +52,25 @@ public class FossilGrinderTile extends MachineBaseTile
 
             Random rand = new Random();
 
-            int item = rand.nextInt(6);
+            ItemStack fossilStack = slots[0];
+            FossilItem fossil = (FossilItem) fossilStack.getItem();
 
-            if (item < 3)
+            NBTTagCompound tag = fossilStack.getTagCompound();
+
+            int outputType = rand.nextInt(6);
+
+            if (outputType == 5 || fossil.getUnlocalizedName().contains("fresh"))
+            {
+                output = new ItemStack(JCItemRegistry.soft_tissue, 1, fossilStack.getItemDamage());
+                output.setTagCompound(tag);
+            }
+            else if (outputType < 3)
             {
                 output = new ItemStack(Items.dye, 1, 15);
             }
-            else if (item < 5)
-            {
-                output = new ItemStack(Items.flint);
-            }
             else
             {
-                output = new ItemStack(JCItemRegistry.soft_tissue, 1, slots[0].getItemDamage());
+                output = new ItemStack(Items.flint);
             }
 
             int emptySlot = getOutputSlot(output);

@@ -67,14 +67,14 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
                 GlStateManager.translate(0.2, -0.6, 0.15);
                 GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
 
-                GlStateManager.scale(0.75F, 0.75F, 0.75F);
+                GlStateManager.scale(0.75F * 0.5F, 0.75F * 0.5F, 0.75F * 0.5F);
                 mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 
                 RenderItem renderItem = mc.getRenderItem();
 
                 for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP))
                 {
-                    GlStateManager.translate(0.0, 0.0, 0.2);
+                    GlStateManager.translate(0.0, 0.0, 0.4);
 
                     if (inputSlot % 2 == 0)
                     {

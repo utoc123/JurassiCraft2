@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNASequencerContainer;
 import org.jurassicraft.server.genetics.DinoDNA;
+import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.SoftTissueItem;
@@ -65,8 +66,6 @@ public class DNASequencerTile extends MachineBaseTile
 
             int tissue = process * 2;
 
-            // EntityPlayer player = worldObj.getPlayerEntityByUUID(UUID.fromString(slots[1].getTagCompound().getString("LastOwner")));
-
             int quality = rand.nextInt(25) + 1;
 
             if (rand.nextDouble() < 0.10)
@@ -84,21 +83,19 @@ public class DNASequencerTile extends MachineBaseTile
                 }
             }
 
-            NBTTagCompound nbt = slots[tissue + 1].getTagCompound();
+            NBTTagCompound nbt = slots[tissue].getTagCompound();
+
+            int dinosaur = slots[tissue].getItemDamage();
 
             if (nbt == null)
             {
                 nbt = new NBTTagCompound();
+                DinoDNA dna = new DinoDNA(quality, GeneticsHelper.randomGenetics(rand, dinosaur, quality).toString());
+                dna.writeToNBT(nbt);
             }
 
-            DinoDNA dna = new DinoDNA(quality, GeneticsHelper.randomGenetics(rand, slots[tissue].getItemDamage(), quality).toString());
-            dna.writeToNBT(nbt);
-
-            ItemStack output = new ItemStack(JCItemRegistry.storage_disc, 1, slots[tissue].getItemDamage());
-            output.setItemDamage(dna.getContainer().getDinosaur());
+            ItemStack output = new ItemStack(JCItemRegistry.storage_disc, 1, dinosaur);
             output.setTagCompound(nbt);
-
-            // JCPlayerData.getPlayerData(player).addSequencedDNA(new DinoDNA(quality, GeneticsHelper.randomGenetics(rand, slots[0].getItemDamage(), quality).toString()));
 
             mergeStack(process + 6, output);
 
