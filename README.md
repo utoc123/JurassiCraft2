@@ -26,6 +26,10 @@ Codyrex78117
 Cucholololthespanishman   
 Raptorek20   
 Totemaster   
+TheDurpiDaedric   
+PapaWhale   
+ma_rio11   
+Whalezilla   
 
 # Contributing
 Feel free to speed up development and create pull requests. Here's a guide on how to setup your workspace.
