@@ -29,7 +29,7 @@ public class WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
@@ -108,7 +108,7 @@ public class WorldGenerator implements IWorldGenerator
         float xOffset = -MathHelper.sin(rotY * (float) Math.PI / 180.0F) * horizontal;
         float yOffset = MathHelper.cos(rotY * (float) Math.PI / 180.0F) * horizontal;
 
-        for (int i = 0; i < rand.nextInt(4) + 6; i++)
+        for (int i = 0; i < rand.nextInt(7) + 3; i++)
         {
             int blockX = x + Math.round(xOffset * i);
             int blockY = y + Math.round(vertical * i);
