@@ -48,6 +48,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(VARIANT, meta);
@@ -56,16 +57,19 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return state.getValue(VARIANT);
     }
 
+    @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, VARIANT);
     }
 
+    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
@@ -74,6 +78,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Get the damage value that this Block should drop
      */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
@@ -82,6 +87,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {

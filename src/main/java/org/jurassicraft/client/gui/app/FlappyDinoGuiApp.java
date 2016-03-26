@@ -161,6 +161,7 @@ public class FlappyDinoGuiApp extends GuiApp
         mainScreen = true;
     }
 
+    @Override
     public void update()
     {
         if (!mainScreen && mc.thePlayer.ticksExisted % 2 == 0)

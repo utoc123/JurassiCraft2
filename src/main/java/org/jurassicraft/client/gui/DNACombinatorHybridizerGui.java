@@ -56,6 +56,7 @@ public class DNACombinatorHybridizerGui extends GuiContainer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
      */
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         String s = this.inventory.getDisplayName().getUnformattedText();
@@ -66,6 +67,7 @@ public class DNACombinatorHybridizerGui extends GuiContainer
     /**
      * Args : renderPartialTicks, mouseX, mouseY
      */
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

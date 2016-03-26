@@ -29,6 +29,7 @@ public class CultivateProcessGui extends GuiScreen
         this.ySize = 107;
     }
 
+    @Override
     public void updateScreen()
     {
         if (!this.cultivator.isCultivating())
@@ -37,16 +38,19 @@ public class CultivateProcessGui extends GuiScreen
         }
     }
 
+    @Override
     public void onGuiClosed()
     {
         super.onGuiClosed();
     }
 
+    @Override
     public boolean doesGuiPauseGame()
     {
         return false;
     }
 
+    @Override
     protected void keyTyped(char var1, int key)
     {
         if (key == 1 || key == this.mc.gameSettings.keyBindInventory.getKeyCode())
@@ -55,6 +59,7 @@ public class CultivateProcessGui extends GuiScreen
         }
     }
 
+    @Override
     public void initGui()
     {
         super.initGui();
@@ -67,6 +72,7 @@ public class CultivateProcessGui extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, I18n.translateToLocal("container.close.name")));
     }
 
+    @Override
     public void actionPerformed(GuiButton button)
     {
         if (button.id == 0)
@@ -75,6 +81,7 @@ public class CultivateProcessGui extends GuiScreen
         }
     }
 
+    @Override
     public void drawScreen(int x, int y, float f)
     {
         this.drawDefaultBackground();

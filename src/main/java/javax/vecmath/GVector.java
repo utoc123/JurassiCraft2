@@ -1134,7 +1134,7 @@ public class GVector implements java.io.Serializable, Cloneable
     @Override
     public Object clone()
     {
-        GVector v1 = null;
+        GVector v1;
         try
         {
             v1 = (GVector) super.clone();

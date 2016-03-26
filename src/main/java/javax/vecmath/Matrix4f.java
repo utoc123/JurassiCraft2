@@ -3600,7 +3600,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable
     @Override
     public Object clone()
     {
-        Matrix4f m1 = null;
+        Matrix4f m1;
         try
         {
             m1 = (Matrix4f) super.clone();

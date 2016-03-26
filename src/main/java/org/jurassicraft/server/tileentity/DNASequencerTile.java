@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNASequencerContainer;
 import org.jurassicraft.server.genetics.DinoDNA;
-import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.SoftTissueItem;
@@ -173,6 +172,7 @@ public class DNASequencerTile extends MachineBaseTile
         return JurassiCraft.MODID + ":dna_sequencer";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.dna_sequencer";

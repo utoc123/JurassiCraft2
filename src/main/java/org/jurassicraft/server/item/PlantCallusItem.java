@@ -15,6 +15,7 @@ import org.jurassicraft.server.plant.Plant;
 
 public class PlantCallusItem extends Item
 {
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         return new AdvLang("item.plant_callus.name").withProperty("plant", "plants." + JCPlantRegistry.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();

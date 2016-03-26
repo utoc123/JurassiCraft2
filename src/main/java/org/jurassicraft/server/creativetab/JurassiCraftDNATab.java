@@ -19,6 +19,7 @@ public class JurassiCraftDNATab extends CreativeTabs
         super(label);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack()
     {

@@ -3,15 +3,11 @@ package org.jurassicraft.client.model;
 import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @SideOnly(Side.CLIENT)
@@ -22,6 +18,7 @@ public class DinosaurModel extends TabulaModel
         this(model, null);
     }
 
+    @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
         DinosaurEntity dinosaur = (DinosaurEntity) entity;

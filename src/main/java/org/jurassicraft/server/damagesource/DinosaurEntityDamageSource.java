@@ -34,6 +34,7 @@ public class DinosaurEntityDamageSource extends DamageSource
         return this.isThornsDamage;
     }
 
+    @Override
     public Entity getEntity()
     {
         return this.entity;
@@ -42,6 +43,7 @@ public class DinosaurEntityDamageSource extends DamageSource
     /**
      * Gets the death message that is displayed when the player dies
      */
+    @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity)
     {
         ItemStack itemstack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;

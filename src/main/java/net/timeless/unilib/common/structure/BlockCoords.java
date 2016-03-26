@@ -20,6 +20,7 @@ public class BlockCoords
         this.z = z;
     }
 
+    @Override
     public boolean equals(Object o)
     {
         if (o instanceof BlockCoords)
@@ -35,6 +36,7 @@ public class BlockCoords
         return false;
     }
 
+    @Override
     public int hashCode()
     {
         final int BASE = 17;

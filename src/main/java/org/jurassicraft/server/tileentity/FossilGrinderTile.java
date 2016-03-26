@@ -143,6 +143,7 @@ public class FossilGrinderTile extends MachineBaseTile
         return JurassiCraft.MODID + ":fossil_grinder";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.fossil_grinder";

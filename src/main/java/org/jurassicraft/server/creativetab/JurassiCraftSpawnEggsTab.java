@@ -33,6 +33,7 @@ public class JurassiCraftSpawnEggsTab extends CreativeTabs
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack()
     {

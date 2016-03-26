@@ -139,6 +139,7 @@ public class ActionFigureBlock extends OrientedBlock
      * @param fortune Breakers fortune level
      * @return A ArrayList containing all items this block drops
      */
+    @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         List<ItemStack> drops = new java.util.ArrayList<ItemStack>();

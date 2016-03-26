@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.entity;
 
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -9,7 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
 public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
@@ -23,7 +23,7 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
     public static class Renderer extends Render<DinosaurEggEntity>
     {
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/egg/tyrannosaurus.png");
-        private ModelJson model;
+        private TabulaModel model;
 
         /**
          * This is just what I decided to go with for this push. I tried using a Hashmap and load all the tabula models,
@@ -36,7 +36,7 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
             String modelLoc = "/assets/jurassicraft/models/entities/egg/tyrannosaurus";
             try
             {
-                model = new ModelJson(TabulaModelHelper.parseModel(modelLoc));
+                model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel(modelLoc));
             }
             catch (Exception e)
             {
@@ -50,16 +50,16 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
             GlStateManager.pushMatrix();
             GlStateManager.translate((float) x, (float) y + 1.5F, (float) z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
-            float f4 = 0.75F;
-            GlStateManager.scale(f4, f4, f4);
-            GlStateManager.scale(1.0F / f4, 1.0F / f4, 1.0F / f4);
+            float scale = 0.75F;
+            GlStateManager.scale(scale, scale, scale);
+            GlStateManager.scale(1.0F / scale, 1.0F / scale, 1.0F / scale);
             this.bindEntityTexture(egg);
             GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-            GL11.glEnable(GL11.GL_BLEND);
+            GlStateManager.enableBlend();
             GL11.glDisable(GL11.GL_ALPHA_TEST);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             this.model.render(egg, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-            GL11.glDisable(GL11.GL_BLEND);
+            GlStateManager.disableBlend();
             GL11.glEnable(GL11.GL_ALPHA_TEST);
             GlStateManager.popMatrix();
             super.doRender(egg, x, y, z, yaw, partialTicks);

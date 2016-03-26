@@ -24,6 +24,7 @@ public class GiganotosaurusEntity extends AggressiveDinosaurEntity // implements
         }
     }
 
+    @Override
     public void onUpdate()
     {
         super.onUpdate();

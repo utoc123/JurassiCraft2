@@ -275,7 +275,7 @@ public class Tree
                 if (insertp.allowTrunk && addLeavesInsPOnly == false)
                 {
                     // Rotation of the insert point is corrected in the Tree Compendium method that gives the rotated shape.
-                    int newRotation = 0;
+                    int newRotation;
 
                     if (insertp.rotation == Rotation.none)
                     {

@@ -33,6 +33,7 @@ public class RandomRule extends FixedRule
         times = random.nextInt(max - min) + min;
     }
 
+    @Override
     public void init(World world, Random random, BlockCoords pos)
     {
         countdown = times;

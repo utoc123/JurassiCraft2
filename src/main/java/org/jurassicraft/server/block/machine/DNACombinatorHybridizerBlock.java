@@ -92,6 +92,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
@@ -110,6 +111,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
     {

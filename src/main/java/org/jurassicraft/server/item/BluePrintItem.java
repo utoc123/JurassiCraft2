@@ -67,6 +67,7 @@ public class BluePrintItem extends Item
         return -1;
     }
 
+    @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (side != EnumFacing.DOWN && side != EnumFacing.UP)

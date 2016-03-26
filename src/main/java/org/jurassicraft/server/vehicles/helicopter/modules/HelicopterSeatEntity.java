@@ -57,6 +57,7 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         height = 0f;
     }
 
+    @Override
     public void onUpdate()
     {
         update();

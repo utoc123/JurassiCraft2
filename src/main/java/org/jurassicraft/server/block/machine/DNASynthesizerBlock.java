@@ -92,6 +92,7 @@ public class DNASynthesizerBlock extends OrientedBlock
         return new DNASynthesizerTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {

@@ -1,7 +1,5 @@
 package org.jurassicraft.server.item;
 
-import net.minecraft.block.BlockFence;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,7 +15,7 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.entity.egg.DinosaurEggEntity;
+import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.lang.AdvLang;
 
 import java.util.ArrayList;
@@ -80,40 +78,23 @@ public class DinosaurEggItem extends DNAContainerItem
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
-        {
-            return EnumActionResult.SUCCESS;
-        }
-        else if (!player.canPlayerEdit(pos.offset(side), side, stack))
-        {
-            return EnumActionResult.PASS;
-        }
-        else
-        {
-            IBlockState state = world.getBlockState(pos);
+        pos = pos.offset(side);
 
-            pos = pos.offset(side);
-            double yOffset = 0.0D;
+        if (player.canPlayerEdit(pos, side, stack) && !world.isRemote)
+        {
+            DinosaurEggEntity egg = spawnEgg(world, player, stack, pos.getX(), pos.getY(), pos.getZ());
+            egg.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            world.spawnEntityInWorld(egg);
 
-            if (side == EnumFacing.UP && state.getBlock() instanceof BlockFence)
+            if (!player.capabilities.isCreativeMode)
             {
-                yOffset = 0.5D;
-            }
-
-            DinosaurEggEntity egg = spawnEgg(world, player, stack, (double) pos.getX() + 0.5D, (double) pos.getY() + yOffset, (double) pos.getZ() + 0.5D);
-
-            if (egg != null)
-            {
-                if (!player.capabilities.isCreativeMode)
-                {
-                    --stack.stackSize;
-                }
-
-                world.spawnEntityInWorld(egg);
+                stack.stackSize--;
             }
 
             return EnumActionResult.SUCCESS;
         }
+
+        return EnumActionResult.PASS;
     }
 
     public DinosaurEggEntity spawnEgg(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)
@@ -127,7 +108,7 @@ public class DinosaurEggItem extends DNAContainerItem
             try
             {
                 DinosaurEntity dinosaur = dinoClass.getConstructor(World.class).newInstance(player.worldObj);
-                DinosaurEggEntity egg = new DinosaurEggEntity(world, dinosaur.getDinosaur().isMarineAnimal(), dinosaur);
+                DinosaurEggEntity egg = new DinosaurEggEntity(world, dinosaur);
                 egg.setPosition(x, y, z);
                 return egg;
             }

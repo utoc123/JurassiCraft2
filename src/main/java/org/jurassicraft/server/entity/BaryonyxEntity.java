@@ -14,9 +14,9 @@ public class BaryonyxEntity extends AggressiveDinosaurEntity // implements IEnti
     {
         super(world);
 
-        for (int i = 0; i < targets.length; i++)
+        for (Class target : targets)
         {
-            this.addAIForAttackTargets(targets[i], new Random().nextInt(3) + 1);
+            this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);
         }
     }
 }

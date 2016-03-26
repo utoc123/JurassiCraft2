@@ -66,6 +66,7 @@ public class ActionFigureItem extends Item
         return EnumActionResult.PASS;
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");

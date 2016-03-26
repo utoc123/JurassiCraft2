@@ -28,6 +28,7 @@ public class IncubatorTile extends MachineBaseTile
 
     private ItemStack[] slots = new ItemStack[6];
 
+    @Override
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
@@ -38,6 +39,7 @@ public class IncubatorTile extends MachineBaseTile
         }
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
@@ -60,6 +62,7 @@ public class IncubatorTile extends MachineBaseTile
         return slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof DinosaurEggItem;
     }
 
+    @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
         return side == EnumFacing.DOWN ? getInputs() : other;
@@ -188,11 +191,13 @@ public class IncubatorTile extends MachineBaseTile
         return JurassiCraft.MODID + ":incubator";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.incubator";
     }
 
+    @Override
     public int getField(int id)
     {
         if (id < 5)
@@ -211,6 +216,7 @@ public class IncubatorTile extends MachineBaseTile
         return 0;
     }
 
+    @Override
     public void setField(int id, int value)
     {
         if (id < 5)

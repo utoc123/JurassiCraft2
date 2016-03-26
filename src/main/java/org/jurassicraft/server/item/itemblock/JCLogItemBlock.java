@@ -20,6 +20,7 @@ public class JCLogItemBlock extends ItemBlock
         return metadata;
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         // So there I specify the lang

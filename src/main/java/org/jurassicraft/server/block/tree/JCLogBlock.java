@@ -59,6 +59,7 @@ public class JCLogBlock extends BlockLog
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;

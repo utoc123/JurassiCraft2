@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -20,7 +21,6 @@ import java.util.List;
 
 public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnData
 {
-
     private DinosaurEntity dinosaur;
     private boolean marine;
     private int hatchTime;
@@ -72,17 +72,20 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         return marine;
     }
 
+    @Override
     public boolean canBeCollidedWith()
     {
         return true;
     }
 
-    public boolean interactFirst(EntityPlayer playerIn)
+    @Override
+    public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand)
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
             this.entityDropItem(new ItemStack(JCItemRegistry.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur.getDinosaur())), 0.5F);
         }
+
         return true;
     }
 
@@ -94,18 +97,21 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
             hatchTime += 1000;
             return;
         }
+
         if (isMarine() && !dinosaur.isInWater())
         {
             warnPlayersWithinRadius("An aquatic animals egg is on land!");
             hatchTime += 1000;
             return;
         }
+
         if (!isNextBlockAir(1, 0, 0) || !isNextBlockAir(0, 1, 0) || !isNextBlockAir(0, 0, 1))
         {
             warnPlayersWithinRadius("There is not enough space for the egg to hatch!");
             hatchTime += 1000;
             return;
         }
+
         try
         {
             DinosaurEntity entity = dinosaur.getClass().getConstructor(World.class).newInstance(worldObj);
@@ -126,7 +132,8 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
             worldObj.spawnEntityInWorld(entity);
             entity.playLivingSound();
             this.setDead();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -168,7 +175,8 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         try
         {
             dinosaur = JCEntityRegistry.getDinosaurById(compound.getInteger("Dinosaur")).getDinosaurClass().getConstructor(World.class).newInstance(worldObj);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }

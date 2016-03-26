@@ -15,11 +15,13 @@ public class WaterBucketSlot extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
+    @Override
     public boolean isItemValid(ItemStack stack)
     {
         return CleaningStationTile.isItemFuel(stack);
     }
 
+    @Override
     public int getItemStackLimit(ItemStack stack)
     {
         return 1;

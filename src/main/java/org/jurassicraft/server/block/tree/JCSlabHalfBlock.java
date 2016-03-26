@@ -12,6 +12,7 @@ public class JCSlabHalfBlock extends JCSlabBlock
         this.setCreativeTab(JCCreativeTabs.plants);
     }
 
+    @Override
     public boolean isDouble()
     {
         return false;

@@ -70,6 +70,7 @@ public class DNAContainerItem extends Item
         return genetics;
     }
 
+    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
         int quality = getDNAQuality(player, stack);

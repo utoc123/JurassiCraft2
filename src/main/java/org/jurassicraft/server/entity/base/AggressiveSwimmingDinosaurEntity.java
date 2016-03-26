@@ -21,6 +21,7 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
     /**
      * Gets called every tick from main Entity class
      */
+    @Override
     public void onEntityUpdate()
     {
         int i = this.getAir();
@@ -46,6 +47,7 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
     /**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
      */
+    @Override
     public void onLivingUpdate()
     {
         super.onLivingUpdate();
@@ -64,11 +66,13 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
     /**
      * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to prevent them from trampling crops
      */
+    @Override
     protected boolean canTriggerWalking()
     {
         return false;
     }
 
+    @Override
     public float getEyeHeight()
     {
         return this.height * 0.5F;
@@ -77,6 +81,7 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
     /**
      * Moves the entity based on the specified heading. Args: strafe, forward
      */
+    @Override
     public void moveEntityWithHeading(float strafe, float forward)
     {
         if (this.isServerWorld() && this.isInWater())
@@ -102,6 +107,7 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
             super(AggressiveSwimmingDinosaurEntity.this);
         }
 
+        @Override
         public void onUpdateMoveHelper()
         {
             if (this.field_188491_h == EntityMoveHelper.Action.MOVE_TO && !this.swimmingEntity.getNavigator().noPath())

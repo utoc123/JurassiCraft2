@@ -17,11 +17,13 @@ public class FixedRule extends RepeatRule
         this.countdown = times;
     }
 
+    @Override
     public boolean continueRepeating(World world, Random rand, BlockCoords position)
     {
         return countdown > 0;
     }
 
+    @Override
     public void repeat(World world, Random rand, BlockCoords position)
     {
         countdown--;

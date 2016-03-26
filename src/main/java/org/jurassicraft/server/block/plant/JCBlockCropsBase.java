@@ -54,6 +54,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     abstract protected int getMaxAge();
 
     // NOTE:  This is called on parent object construction.
+    @Override
     abstract protected BlockStateContainer createBlockState();
 
     abstract protected Item getSeed();
@@ -65,6 +66,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     /**
      * is the block grass, dirt or farmland
      */
+    @Override
     protected boolean func_185514_i(IBlockState ground)
     {
         return ground == Blocks.farmland;
@@ -101,7 +103,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
             i = this.getMaxAge();
         }
 
-        world.setBlockState(pos, state.withProperty(getAgeProperty(), Integer.valueOf(i)), 2);
+        world.setBlockState(pos, state.withProperty(getAgeProperty(), i), 2);
     }
 
     protected static float getGrowthChance(Block block, World world, BlockPos pos)

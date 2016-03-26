@@ -93,6 +93,7 @@ public class CleaningStationBlock extends OrientedBlock
         return new CleaningStationTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {

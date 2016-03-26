@@ -98,6 +98,7 @@ public abstract class OrientedBlock extends BlockContainer
         return new BlockStateContainer(this, FACING);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {

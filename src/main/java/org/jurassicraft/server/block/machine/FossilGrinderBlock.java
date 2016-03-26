@@ -92,6 +92,7 @@ public class FossilGrinderBlock extends OrientedBlock
         return new FossilGrinderTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {

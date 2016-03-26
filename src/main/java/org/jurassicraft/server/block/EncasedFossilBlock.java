@@ -105,6 +105,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
         return EncasedFossilItemBlock.class;
     }
 
+    @Override
     public String getHarvestTool(IBlockState state)
     {
         return "pickaxe";

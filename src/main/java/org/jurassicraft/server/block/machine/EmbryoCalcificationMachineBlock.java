@@ -92,6 +92,7 @@ public class EmbryoCalcificationMachineBlock extends OrientedBlock
         return new EmbryoCalcificationMachineTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {

@@ -25,6 +25,7 @@ public class DNAItem extends DNAContainerItem
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
@@ -44,6 +45,7 @@ public class DNAItem extends DNAContainerItem
         return dinosaur;
     }
 
+    @Override
     public int getContainerId(ItemStack stack)
     {
         return JCEntityRegistry.getDinosaurId(getDinosaur(stack));

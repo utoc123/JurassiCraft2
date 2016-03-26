@@ -3961,7 +3961,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
     @Override
     public Object clone()
     {
-        Matrix4d m1 = null;
+        Matrix4d m1;
         try
         {
             m1 = (Matrix4d) super.clone();

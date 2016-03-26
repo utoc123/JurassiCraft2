@@ -75,6 +75,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         return dinosaur;
     }
 
+    @Override
     public Render<? super DinosaurEntity> createRenderFor(RenderManager manager)
     {
         return new DinosaurRenderer(this);

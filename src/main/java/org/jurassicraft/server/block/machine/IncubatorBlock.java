@@ -93,6 +93,7 @@ public class IncubatorBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
