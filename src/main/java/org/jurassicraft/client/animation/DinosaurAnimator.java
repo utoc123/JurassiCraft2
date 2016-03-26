@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.util.ListHashMap;
@@ -17,7 +18,6 @@ import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumGrowthStage;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -129,7 +129,7 @@ public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITab
         String growthName = growth.name().toLowerCase(Locale.ROOT);
         URI growthSensitiveDir = dinoDir.resolve(growthName + "/");
         URI definitionFile = growthSensitiveDir.resolve(name + "_" + growthName + ".json");
-        InputStream dinoDef = TabulaModelHelper.class.getResourceAsStream(definitionFile.toString());
+        InputStream dinoDef = TabulaModelHandler.class.getResourceAsStream(definitionFile.toString());
 
         if (dinoDef == null)
         {
