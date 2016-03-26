@@ -80,7 +80,12 @@ import org.jurassicraft.client.render.block.DNASynthesizerSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
 import org.jurassicraft.client.render.block.IncubatorSpecialRenderer;
-import org.jurassicraft.client.render.entity.*;
+import org.jurassicraft.client.render.entity.BluePrintRenderer;
+import org.jurassicraft.client.render.entity.CageSmallRenderer;
+import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
+import org.jurassicraft.client.render.entity.HelicopterRenderer;
+import org.jurassicraft.client.render.entity.JurassiCraftSignRenderer;
+import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.block.EncasedFossilBlock;
@@ -89,7 +94,11 @@ import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.entity.item.*;
+import org.jurassicraft.server.entity.item.BluePrintEntity;
+import org.jurassicraft.server.entity.item.CageSmallEntity;
+import org.jurassicraft.server.entity.item.DinosaurEggEntity;
+import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
+import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.JCPlantRegistry;
@@ -254,7 +263,8 @@ public class JCRenderingRegistry
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.logs.get(type), name + "_log", "inventory");
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.stairs.get(type), name + "_stairs", "inventory");
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.slabs.get(type), name + "_slab", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.doubleSlabs.get(type), name + "_double_sab", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.double_slabs.get(type), name + "_double_sab", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.petrified_logs.get(type), name + "_log_petrified", "inventory");
         }
 
         for (EnumDyeColor color : EnumDyeColor.values())

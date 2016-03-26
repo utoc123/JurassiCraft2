@@ -2,7 +2,7 @@ package org.jurassicraft.server.block.tree;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -11,57 +11,51 @@ import org.jurassicraft.server.creativetab.JCCreativeTabs;
 
 public class JCLogBlock extends BlockLog
 {
-    public JCLogBlock(TreeType type)
+    private boolean petrified;
+
+    public JCLogBlock(TreeType treeType, boolean petrified)
     {
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+        this.setDefaultState(getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
         this.setHardness(2.0F);
         this.setResistance(0.5F);
         this.setStepSound(Block.soundTypeWood);
-        this.setUnlocalizedName(type.name().toLowerCase() + "_log");
         this.setCreativeTab(JCCreativeTabs.plants);
+        this.petrified = petrified;
+
+        String name = treeType.name().toLowerCase() + "_log";
+
+        if (petrified)
+        {
+            name += "_petrified";
+            this.setHarvestLevel("pickaxe", 2);
+            this.setHardness(4.0F);
+            this.setResistance(4.0F);
+        }
+
+        this.setUnlocalizedName(name);
+    }
+
+    public boolean isPetrified()
+    {
+        return petrified;
+    }
+
+    @Override
+    public Material getMaterial()
+    {
+        return petrified ? Material.rock : super.getMaterial();
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState state = this.getDefaultState();
-
-        switch (meta & 12)
-        {
-            case 0:
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
-                break;
-            case 4:
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
-                break;
-            case 8:
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
-                break;
-            default:
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-        }
-
-        return state;
+        return getDefaultState().withProperty(LOG_AXIS, EnumAxis.values()[meta]);
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        int i = 0;
-
-        switch (JCLogBlock.SwitchEnumAxis.AXIS_LOOKUP[state.getValue(LOG_AXIS).ordinal()])
-        {
-            case 1:
-                i = 4;
-                break;
-            case 2:
-                i = 8;
-                break;
-            case 3:
-                i = 12;
-        }
-
-        return i;
+        return state.getValue(LOG_AXIS).ordinal();
     }
 
     @Override
@@ -80,17 +74,5 @@ public class JCLogBlock extends BlockLog
     public int damageDropped(IBlockState state)
     {
         return 0;
-    }
-
-    static final class SwitchEnumAxis
-    {
-        static final int[] AXIS_LOOKUP = new int[BlockLog.EnumAxis.values().length];
-
-        static
-        {
-            AXIS_LOOKUP[BlockLog.EnumAxis.X.ordinal()] = 1;
-            AXIS_LOOKUP[BlockLog.EnumAxis.Z.ordinal()] = 2;
-            AXIS_LOOKUP[BlockLog.EnumAxis.NONE.ordinal()] = 3;
-        }
     }
 }
