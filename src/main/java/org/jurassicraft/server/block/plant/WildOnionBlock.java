@@ -23,7 +23,7 @@ public class WildOnionBlock extends JCBlockCrops7
     }
 
     @Override
-    protected  Item getCrop()
+    protected Item getCrop()
     {
         return JCItemRegistry.wild_onion;
     }

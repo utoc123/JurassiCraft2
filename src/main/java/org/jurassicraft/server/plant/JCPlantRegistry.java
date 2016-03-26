@@ -18,6 +18,7 @@ public class JCPlantRegistry
     public static Plant scaly_tree_fern;
     public static Plant cycad_zamites;
     public static Plant dicksonia;
+    public static Plant wild_onion;
 
     public void init()
     {
@@ -32,6 +33,7 @@ public class JCPlantRegistry
         scaly_tree_fern = new ScalyTreeFernPlant();
         cycad_zamites = new ZamitesPlant();
         dicksonia = new DicksoniaPlant();
+        wild_onion = new WildOnionPlant();
 
         registerPlant(ajuginucula_smithii);
         registerPlant(small_royal_fern);
@@ -44,6 +46,7 @@ public class JCPlantRegistry
         registerPlant(scaly_tree_fern);
         registerPlant(cycad_zamites);
         registerPlant(dicksonia);
+        registerPlant(wild_onion);
     }
 
     public static Plant getPlantById(int id)

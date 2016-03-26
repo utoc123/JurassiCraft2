@@ -273,7 +273,8 @@ public class JCRenderingRegistry
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.logs.get(type), name + "_log", "inventory");
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.stairs.get(type), name + "_stairs", "inventory");
             this.registerBlockRenderer(modelMesher, JCBlockRegistry.slabs.get(type), name + "_slab", "inventory");
-            this.registerBlockRenderer(modelMesher, JCBlockRegistry.doubleSlabs.get(type), name + "_double_sab", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.double_slabs.get(type), name + "_double_sab", "inventory");
+            this.registerBlockRenderer(modelMesher, JCBlockRegistry.petrified_logs.get(type), name + "_log_petrified", "inventory");
         }
 
         for (EnumDyeColor color : EnumDyeColor.values())
@@ -314,6 +315,8 @@ public class JCRenderingRegistry
 
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.moss, "moss", "inventory");
         this.registerBlockRenderer(modelMesher, JCBlockRegistry.clear_glass, "clear_glass", "inventory");
+
+        this.registerBlockRenderer(modelMesher, JCBlockRegistry.wild_onion, "wild_onion_plant", "inventory");
 
         BlockColors blockColors = mc.getBlockColors();
         blockColors.registerBlockColorHandler(new IBlockColor()
@@ -420,6 +423,8 @@ public class JCRenderingRegistry
         this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_seeds, "ajuginucula_smithii_seeds", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_leaves, "ajuginucula_smithii_leaves", "inventory");
         this.registerItemRenderer(modelMesher, JCItemRegistry.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
+
+        this.registerItemRenderer(modelMesher, JCItemRegistry.wild_onion, "wild_onion", "inventory");
 
         int meta = 0;
 

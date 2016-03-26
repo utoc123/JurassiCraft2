@@ -235,9 +235,13 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         {
             // Drop range of leaves and range of seeds
             if (seedDropMin > 0 && seedDropMax > 0)
+            {
                 drops.add(new ItemStack(getSeed(), MathHelper.getRandomIntegerInRange(rand, seedDropMin, seedDropMax)));
+            }
             if (cropDropMin > 0 && cropDropMax > 0)
+            {
                 drops.add(new ItemStack(getCrop(), MathHelper.getRandomIntegerInRange(rand, cropDropMin, cropDropMax)));
+            }
         }
 
         return drops;
