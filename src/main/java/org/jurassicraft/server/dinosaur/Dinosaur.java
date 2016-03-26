@@ -12,7 +12,6 @@ import org.jurassicraft.server.entity.base.EnumDiet;
 import org.jurassicraft.server.entity.base.EnumGrowthStage;
 import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Vector3d;
@@ -537,7 +536,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     {
         TabulaModelContainer model = getModelContainer(stage);
 
-        TabulaCubeContainer cube = TabulaModelHelper.getCubeByName(cubeName, model);
+        TabulaCubeContainer cube = TabulaModelHandler.INSTANCE.getCubeByName(cubeName, model);
 
         if (cube != null)
         {
@@ -551,7 +550,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     {
         TabulaModelContainer model = getModelContainer(stage);
 
-        TabulaCubeContainer cube = TabulaModelHelper.getCubeByName(cubeName, model);
+        TabulaCubeContainer cube = TabulaModelHandler.INSTANCE.getCubeByName(cubeName, model);
 
         if (cube != null)
         {
@@ -577,7 +576,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
                 parentCubes.add(cube);
             }
         }
-        while (includeParents && cube.getParentIdentifier() != null && (cube = TabulaModelHelper.getCubeByIdentifier(cube.getParentIdentifier(), model)) != null);
+        while (includeParents && cube.getParentIdentifier() != null && (cube = TabulaModelHandler.INSTANCE.getCubeByIdentifier(cube.getParentIdentifier(), model)) != null);
 
         Matrix4d mat = new Matrix4d();
         mat.setIdentity();
