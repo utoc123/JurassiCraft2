@@ -109,6 +109,7 @@ public class CleaningStationBlock extends OrientedBlock
         return new CleaningStationTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
@@ -127,6 +128,7 @@ public class CleaningStationBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {

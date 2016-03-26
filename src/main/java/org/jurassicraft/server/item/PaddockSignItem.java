@@ -16,6 +16,7 @@ public class PaddockSignItem extends Item
         this.setCreativeTab(JCCreativeTabs.items);
     }
 
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (side == EnumFacing.DOWN)

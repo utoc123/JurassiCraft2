@@ -276,6 +276,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
         return JurassiCraft.MODID + ":dna_combinator_hybridizer";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.dna_combinator_hybridizer";

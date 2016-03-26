@@ -40,6 +40,7 @@ public class ItemActionFigure extends Item
      * @param pos  The block being right-clicked
      * @param side The side being right-clicked
      */
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         pos = pos.offset(side);
@@ -69,6 +70,7 @@ public class ItemActionFigure extends Item
         return false;
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");

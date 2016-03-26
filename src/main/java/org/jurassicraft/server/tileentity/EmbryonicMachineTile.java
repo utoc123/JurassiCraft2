@@ -142,6 +142,7 @@ public class EmbryonicMachineTile extends MachineBaseTile
         return JurassiCraft.MODID + ":embryonic_machine";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.embryonic_machine";

@@ -55,6 +55,7 @@ public class CleaningStationContainer extends Container
     /**
      * Add the given Listener to the list of Listeners. Method name is for legacy.
      */
+    @Override
     public void onCraftGuiOpened(ICrafting listener)
     {
         super.onCraftGuiOpened(listener);
@@ -64,6 +65,7 @@ public class CleaningStationContainer extends Container
     /**
      * Looks for changes made in the container, sends them to every listener.
      */
+    @Override
     public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
@@ -97,12 +99,14 @@ public class CleaningStationContainer extends Container
         this.field_178153_g = this.tileCleaningStation.getField(3);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
         this.tileCleaningStation.setField(id, data);
     }
 
+    @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
         return this.tileCleaningStation.isUseableByPlayer(playerIn);
@@ -111,6 +115,7 @@ public class CleaningStationContainer extends Container
     /**
      * Take a stack from the specified inventory slot.
      */
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;

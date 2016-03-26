@@ -107,6 +107,7 @@ public abstract class OrientedBlock extends BlockContainer
         return new BlockState(this, FACING);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {

@@ -16,7 +16,11 @@ import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.lang.AdvLang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ItemDinosaurEgg extends DNAContainerItem
 {
@@ -28,6 +32,7 @@ public class ItemDinosaurEgg extends DNAContainerItem
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
@@ -40,6 +45,7 @@ public class ItemDinosaurEgg extends DNAContainerItem
         return JCEntityRegistry.getDinosaurById(stack.getMetadata());
     }
 
+    @Override
     public int getContainerId(ItemStack stack)
     {
         return JCEntityRegistry.getDinosaurId(getDinosaur(stack));

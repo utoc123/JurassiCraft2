@@ -55,6 +55,7 @@ public class JCStairsBlock extends Block
         this.setUnlocalizedName(type.name().toLowerCase().replaceAll(" ", "_") + "_stairs");
     }
 
+    @Override
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)
     {
         if (this.hasRaytraced)
@@ -67,11 +68,13 @@ public class JCStairsBlock extends Block
         }
     }
 
+    @Override
     public boolean isOpaqueCube()
     {
         return false;
     }
 
+    @Override
     public boolean isFullCube()
     {
         return false;
@@ -550,6 +553,7 @@ public class JCStairsBlock extends Block
      *
      * @param collidingEntity the Entity colliding with this Block
      */
+    @Override
     public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
     {
         this.setBaseCollisionBounds(worldIn, pos);
@@ -565,11 +569,13 @@ public class JCStairsBlock extends Block
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     }
 
+    @Override
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn)
     {
         this.modelBlock.onBlockClicked(worldIn, pos, playerIn);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
@@ -579,11 +585,13 @@ public class JCStairsBlock extends Block
     /**
      * Called when a player destroys this Block
      */
+    @Override
     public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state)
     {
         this.modelBlock.onBlockDestroyedByPlayer(worldIn, pos, state);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos)
     {
@@ -593,6 +601,7 @@ public class JCStairsBlock extends Block
     /**
      * Returns how much this block can resist explosions from the passed in entity.
      */
+    @Override
     public float getExplosionResistance(Entity exploder)
     {
         return this.modelBlock.getExplosionResistance(exploder);
@@ -601,22 +610,26 @@ public class JCStairsBlock extends Block
     /**
      * How many world ticks before ticking
      */
+    @Override
     public int tickRate(World worldIn)
     {
         return this.modelBlock.tickRate(worldIn);
     }
 
+    @Override
     public Vec3 modifyAcceleration(World worldIn, BlockPos pos, Entity entityIn, Vec3 motion)
     {
         return this.modelBlock.modifyAcceleration(worldIn, pos, entityIn, motion);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
         return this.modelBlock.getBlockLayer();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getSelectedBoundingBox(World worldIn, BlockPos pos)
     {
@@ -626,27 +639,32 @@ public class JCStairsBlock extends Block
     /**
      * Returns if this block is collidable (only used by Fire). Args: x, y, z
      */
+    @Override
     public boolean isCollidable()
     {
         return this.modelBlock.isCollidable();
     }
 
+    @Override
     public boolean canCollideCheck(IBlockState state, boolean hitIfLiquid)
     {
         return this.modelBlock.canCollideCheck(state, hitIfLiquid);
     }
 
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         return this.modelBlock.canPlaceBlockAt(worldIn, pos);
     }
 
+    @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         this.onNeighborBlockChange(worldIn, pos, this.modelState, Blocks.air);
         this.modelBlock.onBlockAdded(worldIn, pos, this.modelState);
     }
 
+    @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         this.modelBlock.breakBlock(worldIn, pos, this.modelState);
@@ -655,16 +673,19 @@ public class JCStairsBlock extends Block
     /**
      * Triggered whenever an entity collides with this block (enters into the block)
      */
+    @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, Entity entityIn)
     {
         this.modelBlock.onEntityCollidedWithBlock(worldIn, pos, entityIn);
     }
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         this.modelBlock.updateTick(worldIn, pos, state, rand);
     }
 
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         return this.modelBlock.onBlockActivated(worldIn, pos, this.modelState, playerIn, EnumFacing.DOWN, 0.0F, 0.0F, 0.0F);
@@ -673,6 +694,7 @@ public class JCStairsBlock extends Block
     /**
      * Called when this Block is destroyed by an Explosion
      */
+    @Override
     public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn)
     {
         this.modelBlock.onBlockDestroyedByExplosion(worldIn, pos, explosionIn);
@@ -681,11 +703,13 @@ public class JCStairsBlock extends Block
     /**
      * Get the MapColor for this Block and the given BlockState
      */
+    @Override
     public MapColor getMapColor(IBlockState state)
     {
         return this.modelBlock.getMapColor(this.modelState);
     }
 
+    @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         IBlockState iblockstate = super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
@@ -699,6 +723,7 @@ public class JCStairsBlock extends Block
      * @param start The start vector
      * @param end   The end vector
      */
+    @Override
     public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end)
     {
         MovingObjectPosition[] amovingobjectposition = new MovingObjectPosition[8];
@@ -754,6 +779,7 @@ public class JCStairsBlock extends Block
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState iblockstate = this.getDefaultState().withProperty(HALF, (meta & 4) > 0 ? JCStairsBlock.EnumHalf.TOP : JCStairsBlock.EnumHalf.BOTTOM);
@@ -764,6 +790,7 @@ public class JCStairsBlock extends Block
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
@@ -780,6 +807,7 @@ public class JCStairsBlock extends Block
     /**
      * Get the actual Block state of this Block at the given position. This applies properties not visible in the metadata, such as fence connections.
      */
+    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         if (this.func_176306_h(worldIn, pos))
@@ -814,6 +842,7 @@ public class JCStairsBlock extends Block
         return state;
     }
 
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, new IProperty[] { FACING, HALF, SHAPE });
@@ -829,11 +858,13 @@ public class JCStairsBlock extends Block
             this.name = name;
         }
 
+        @Override
         public String toString()
         {
             return this.name;
         }
 
+        @Override
         public String getName()
         {
             return this.name;
@@ -850,11 +881,13 @@ public class JCStairsBlock extends Block
             this.name = name;
         }
 
+        @Override
         public String toString()
         {
             return this.name;
         }
 
+        @Override
         public String getName()
         {
             return this.name;

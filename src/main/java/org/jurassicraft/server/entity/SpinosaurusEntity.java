@@ -18,9 +18,9 @@ public class SpinosaurusEntity extends AggressiveDinosaurEntity // implements IE
     {
         super(world);
 
-        for (int i = 0; i < targets.length; i++)
+        for (Class target : targets)
         {
-            this.addAIForAttackTargets(targets[i], new Random().nextInt(3) + 1);
+            this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);
         }
 
         tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.INJURED.get(), 750, getHurtSound(), 1.5F));

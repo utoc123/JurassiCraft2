@@ -25,6 +25,7 @@ public class SoftTissueItem extends Item
         this.setCreativeTab(JCCreativeTabs.dna);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");

@@ -15,11 +15,13 @@ public class IslaNublarWorldType extends WorldType
         this.generator = new IslaNublarGeneration();
     }
 
+    @Override
     public net.minecraft.world.biome.WorldChunkManager getChunkManager(World world)
     {
         return new WorldChunkManagerHeightmap(world, generator);
     }
 
+    @Override
     public net.minecraft.world.chunk.IChunkProvider getChunkGenerator(World world, String generatorOptions)
     {
         return new ChunkProviderHeightmap(world, world.getSeed(), generator);

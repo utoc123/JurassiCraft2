@@ -513,12 +513,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     @Override
     public boolean equals(Object object)
     {
-        if (object instanceof Dinosaur)
-        {
-            return ((Dinosaur) object).getName().equalsIgnoreCase(getName());
-        }
+        return object instanceof Dinosaur && ((Dinosaur) object).getName().equalsIgnoreCase(getName());
 
-        return false;
     }
 
     public void setMaximumAge(int age)

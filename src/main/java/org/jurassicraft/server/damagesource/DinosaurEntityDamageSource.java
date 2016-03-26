@@ -36,6 +36,7 @@ public class DinosaurEntityDamageSource extends DamageSource
         return this.isThornsDamage;
     }
 
+    @Override
     public Entity getEntity()
     {
         return this.damageSourceEntity;
@@ -44,6 +45,7 @@ public class DinosaurEntityDamageSource extends DamageSource
     /**
      * Gets the death message that is displayed when the player dies
      */
+    @Override
     public IChatComponent getDeathMessage(EntityLivingBase entity)
     {
         ItemStack itemstack = this.damageSourceEntity instanceof EntityLivingBase ? ((EntityLivingBase) this.damageSourceEntity).getHeldItem() : null;
@@ -55,6 +57,7 @@ public class DinosaurEntityDamageSource extends DamageSource
     /**
      * Return whether this damage source will have its damage amount scaled based on the current difficulty.
      */
+    @Override
     public boolean isDifficultyScaled()
     {
         return false;

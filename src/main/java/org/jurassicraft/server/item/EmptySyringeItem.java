@@ -23,6 +23,7 @@ public class EmptySyringeItem extends Item
      * @param pos  The block being right-clicked
      * @param side The side being right-clicked
      */
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (worldIn.getBlockState(pos).getBlock() instanceof BlockBush)

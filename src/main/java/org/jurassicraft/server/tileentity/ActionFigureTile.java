@@ -23,6 +23,7 @@ public class ActionFigureTile extends TileEntity
         this.worldObj.markBlockForUpdate(pos);
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
@@ -32,6 +33,7 @@ public class ActionFigureTile extends TileEntity
         updateEntity();
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);

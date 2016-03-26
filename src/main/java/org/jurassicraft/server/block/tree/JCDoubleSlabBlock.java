@@ -21,17 +21,20 @@ public class JCDoubleSlabBlock extends JCSlabBlock
         this.singleSlab = slab;
     }
 
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return Item.getItemFromBlock(singleSlab);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos)
     {
         return Item.getItemFromBlock(singleSlab);
     }
 
+    @Override
     public boolean isDouble()
     {
         return true;

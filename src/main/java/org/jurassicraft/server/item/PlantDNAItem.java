@@ -29,6 +29,7 @@ public class PlantDNAItem extends Item
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
@@ -101,6 +102,7 @@ public class PlantDNAItem extends Item
         return quality;
     }
 
+    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
         int quality = getDNAQuality(player, stack);

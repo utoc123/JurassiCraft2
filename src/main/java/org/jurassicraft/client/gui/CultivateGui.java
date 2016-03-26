@@ -29,6 +29,7 @@ public class CultivateGui extends GuiContainer
         this.ySize = 188;
     }
 
+    @Override
     public void updateScreen()
     {
         if (this.cultivator.isCultivating())
@@ -38,6 +39,7 @@ public class CultivateGui extends GuiContainer
         }
     }
 
+    @Override
     protected void drawGuiContainerForegroundLayer(int i, int j)
     {
         String s = this.cultivator.getDisplayName().getUnformattedText();
@@ -50,6 +52,7 @@ public class CultivateGui extends GuiContainer
         this.fontRendererObj.drawString(StatCollector.translateToLocal("cultivator.lipids.name"), 200, 126, 4210752);
     }
 
+    @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3)
     {
         mc.renderEngine.bindTexture(gui);

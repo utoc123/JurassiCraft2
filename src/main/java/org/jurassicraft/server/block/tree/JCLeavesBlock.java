@@ -172,12 +172,12 @@ public class JCLeavesBlock extends BlockLeaves
     {
         int i = 0;
 
-        if (!((Boolean) state.getValue(DECAYABLE)).booleanValue())
+        if (!(Boolean) state.getValue(DECAYABLE))
         {
             i = 4;
         }
 
-        if (!((Boolean) state.getValue(CHECK_DECAY)).booleanValue())
+        if (!(Boolean) state.getValue(CHECK_DECAY))
         {
             i = 8;
         }

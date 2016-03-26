@@ -18,6 +18,7 @@ public class ApatosaurusEntity extends DefensiveDinosaurEntity // implements IEn
         return 5;
     }
 
+    @Override
     public void onUpdate()
     {
         super.onUpdate();

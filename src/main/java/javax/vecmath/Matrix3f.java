@@ -2327,7 +2327,7 @@ public class Matrix3f implements java.io.Serializable, Cloneable
     @Override
     public Object clone()
     {
-        Matrix3f m1 = null;
+        Matrix3f m1;
         try
         {
             m1 = (Matrix3f) super.clone();

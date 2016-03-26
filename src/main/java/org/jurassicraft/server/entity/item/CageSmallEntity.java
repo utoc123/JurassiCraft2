@@ -33,6 +33,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     /**
      * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be pushable on contact, like boats or minecarts.
      */
+    @Override
     public AxisAlignedBB getCollisionBox(Entity entityIn)
     {
         return entityIn.getEntityBoundingBox();
@@ -49,6 +50,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     /**
      * Returns true if other Entities should be prevented from moving through this Entity.
      */
+    @Override
     public boolean canBeCollidedWith()
     {
         return true;
@@ -57,6 +59,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     /**
      * Returns true if this entity should push and be pushed by other entities when colliding.
      */
+    @Override
     public boolean canBePushed()
     {
         return false;
@@ -65,11 +68,11 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     @Override
     protected void entityInit()
     {
-        this.dataWatcher.addObject(25, new Integer(-1));
-        this.dataWatcher.addObject(17, new Integer(0));
-        this.dataWatcher.addObject(18, new Integer(0));
-        this.dataWatcher.addObject(19, new String(""));
-        this.dataWatcher.addObject(20, new Integer(0));
+        this.dataWatcher.addObject(25, -1);
+        this.dataWatcher.addObject(17, 0);
+        this.dataWatcher.addObject(18, 0);
+        this.dataWatcher.addObject(19, "");
+        this.dataWatcher.addObject(20, 0);
     }
 
     @Override
@@ -125,6 +128,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     /**
      * First layer of player interaction
      */
+    @Override
     public boolean interactFirst(EntityPlayer playerIn)
     {
         if (entity != null && !worldObj.isRemote)

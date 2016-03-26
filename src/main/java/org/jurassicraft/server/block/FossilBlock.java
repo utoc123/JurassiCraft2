@@ -47,6 +47,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(VARIANT, meta);
@@ -55,16 +56,19 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return (Integer) state.getValue(VARIANT);
     }
 
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, new IProperty[] { VARIANT });
     }
 
+    @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
         return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
@@ -73,6 +77,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Get the damage value that this Block should drop
      */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
@@ -81,6 +86,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
@@ -110,6 +116,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     /**
      * Queries the class of tool required to harvest this block, if null is returned we assume that anything can harvest this block.
      */
+    @Override
     public String getHarvestTool(IBlockState state)
     {
         return "pickaxe";
@@ -120,11 +127,13 @@ public class FossilBlock extends Block implements ISubBlocksBlock
      *
      * @return Harvest level, or -1 if not the specified tool type.
      */
+    @Override
     public int getHarvestLevel(IBlockState state)
     {
         return 1;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {

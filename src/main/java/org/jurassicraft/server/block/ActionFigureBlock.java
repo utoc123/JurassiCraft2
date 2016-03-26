@@ -32,6 +32,7 @@ public class ActionFigureBlock extends OrientedBlock
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
     }
 
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         return super.canPlaceBlockAt(worldIn, pos) && canBlockStay(worldIn, pos, worldIn.getBlockState(pos));
@@ -40,12 +41,14 @@ public class ActionFigureBlock extends OrientedBlock
     /**
      * Called when a neighboring block changes.
      */
+    @Override
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
         this.checkAndDropBlock(worldIn, pos, state);
     }
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         this.checkAndDropBlock(worldIn, pos, state);
@@ -84,6 +87,7 @@ public class ActionFigureBlock extends OrientedBlock
         return new ActionFigureTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
@@ -102,6 +106,7 @@ public class ActionFigureBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
@@ -128,6 +133,7 @@ public class ActionFigureBlock extends OrientedBlock
      * @param fortune Breakers fortune level
      * @return A ArrayList containing all items this block drops
      */
+    @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         List<ItemStack> ret = new java.util.ArrayList<ItemStack>();

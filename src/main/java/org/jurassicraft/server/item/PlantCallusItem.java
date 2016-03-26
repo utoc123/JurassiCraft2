@@ -18,6 +18,7 @@ public class PlantCallusItem extends Item
         super();
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         return new AdvLang("item.plant_callus.name").withProperty("plant", "plants." + JCPlantRegistry.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
@@ -29,6 +30,7 @@ public class PlantCallusItem extends Item
      * @param pos  The block being right-clicked
      * @param side The side being right-clicked
      */
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (side != EnumFacing.UP)

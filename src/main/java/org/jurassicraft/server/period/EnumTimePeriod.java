@@ -39,6 +39,7 @@ public enum EnumTimePeriod implements IStringSerializable
     /**
      * Returns the name of this time period.
      */
+    @Override
     public String getName()
     {
         return this.name;

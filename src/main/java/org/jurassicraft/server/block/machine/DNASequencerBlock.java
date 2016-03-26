@@ -102,6 +102,7 @@ public class DNASequencerBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
@@ -120,6 +121,7 @@ public class DNASequencerBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {

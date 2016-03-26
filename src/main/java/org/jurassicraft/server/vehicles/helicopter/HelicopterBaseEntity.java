@@ -245,7 +245,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         if (seat != null)
         {
             Entity riderEntity = seat.riddenByEntity;
-            boolean runEngine = false;
+            boolean runEngine;
             if (riderEntity != null) // There is a pilot!
             {
                 EntityPlayer rider = (EntityPlayer) riderEntity;
@@ -366,7 +366,6 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     @Override
     protected void collideWithNearbyEntities()
     {
-        ;
     }
 
     public void updateEngine(boolean engineState)
@@ -480,6 +479,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     /**
      * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be pushable on contact, like boats or minecarts.
      */
+    @Override
     public AxisAlignedBB getCollisionBox(Entity entityIn)
     {
         return getBoundingBox();
@@ -496,6 +496,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     /**
      * Returns true if this entity should push and be pushed by other entities when colliding.
      */
+    @Override
     public boolean canBePushed()
     {
         return false;

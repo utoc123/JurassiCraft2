@@ -42,6 +42,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Get the damage value that this Block should drop
      */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
@@ -65,14 +66,14 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * returns a subtypes of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
         EnumDyeColor[] colors = EnumDyeColor.values();
 
-        for (int j = 0; j < colors.length; ++j)
+        for (EnumDyeColor color : colors)
         {
-            EnumDyeColor color = colors[j];
             subtypes.add(new ItemStack(item, 1, color.getMetadata()));
         }
     }
@@ -92,6 +93,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Get the MapColor for this Block and the given BlockState
      */
+    @Override
     public MapColor getMapColor(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMapColor();
@@ -100,6 +102,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
@@ -108,16 +111,19 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
     }
 
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, new IProperty[] { COLOR });
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {

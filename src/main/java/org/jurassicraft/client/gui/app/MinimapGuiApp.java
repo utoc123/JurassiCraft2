@@ -279,7 +279,6 @@ public class MinimapGuiApp extends GuiApp
     {
         ScaledResolution dimensions = new ScaledResolution(mc);
         mouseX -= dimensions.getScaledWidth() / 2 - 115;
-        mouseY -= 65;
     }
 
     @Override

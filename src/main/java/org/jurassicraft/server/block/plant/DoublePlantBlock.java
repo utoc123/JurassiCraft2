@@ -31,11 +31,13 @@ public class DoublePlantBlock extends BlockBush
         this.setCreativeTab(JCCreativeTabs.plants);
     }
 
+    @Override
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)
     {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     }
 
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         return super.canPlaceBlockAt(worldIn, pos) && worldIn.isAirBlock(pos.up());
@@ -44,6 +46,7 @@ public class DoublePlantBlock extends BlockBush
     /**
      * Whether this Block can be replaced directly by other blocks (true for e.g. tall grass)
      */
+    @Override
     public boolean isReplaceable(World worldIn, BlockPos pos)
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);
@@ -51,6 +54,7 @@ public class DoublePlantBlock extends BlockBush
         return iblockstate.getBlock() != this;
     }
 
+    @Override
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         if (!this.canBlockStay(worldIn, pos, state))
@@ -78,6 +82,7 @@ public class DoublePlantBlock extends BlockBush
         }
     }
 
+    @Override
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
     {
         if (state.getBlock() != this)
@@ -100,6 +105,7 @@ public class DoublePlantBlock extends BlockBush
      *
      * @param fortune the level of the Fortune enchantment on the player's tool
      */
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         if (state.getValue(HALF) == DoublePlantBlock.EnumBlockHalf.UPPER)
@@ -115,17 +121,20 @@ public class DoublePlantBlock extends BlockBush
     /**
      * Get the damage value that this Block should drop
      */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return 0;
     }
 
+    @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
         worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, EnumBlockHalf.LOWER), 2);
         worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, DoublePlantBlock.EnumBlockHalf.UPPER), 2);
     }
 
+    @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
     {
         if (state.getValue(HALF) == DoublePlantBlock.EnumBlockHalf.UPPER)
@@ -155,6 +164,7 @@ public class DoublePlantBlock extends BlockBush
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
+    @Override
     public int getDamageValue(World worldIn, BlockPos pos)
     {
         return getMetaFromState(worldIn.getBlockState(pos));
@@ -163,6 +173,7 @@ public class DoublePlantBlock extends BlockBush
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(HALF, DoublePlantBlock.EnumBlockHalf.values()[meta]);
@@ -171,6 +182,7 @@ public class DoublePlantBlock extends BlockBush
     /**
      * Get the actual Block state of this Block at the given position. This applies properties not visible in the metadata, such as fence connections.
      */
+    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return state;
@@ -179,11 +191,13 @@ public class DoublePlantBlock extends BlockBush
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return ((DoublePlantBlock.EnumBlockHalf) state.getValue(HALF)).ordinal();
     }
 
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, new IProperty[] { HALF });
@@ -205,11 +219,13 @@ public class DoublePlantBlock extends BlockBush
     {
         UPPER, LOWER;
 
+        @Override
         public String toString()
         {
             return this.getName();
         }
 
+        @Override
         public String getName()
         {
             return this == UPPER ? "upper" : "lower";

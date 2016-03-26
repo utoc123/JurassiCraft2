@@ -259,7 +259,7 @@ public abstract class Tuple4b implements java.io.Serializable, Cloneable
     @Override
     public int hashCode()
     {
-        return ((((int) x & 0xff) << 0) |
+        return ((((int) x & 0xff)) |
                 (((int) y & 0xff) << 8) |
                 (((int) z & 0xff) << 16) |
                 (((int) w & 0xff) << 24));

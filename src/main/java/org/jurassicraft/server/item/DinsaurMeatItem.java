@@ -133,6 +133,7 @@ public class DinsaurMeatItem extends ItemFood
         return genetics;
     }
 
+    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
         int quality = getDNAQuality(player, stack);

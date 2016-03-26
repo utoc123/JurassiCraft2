@@ -45,6 +45,7 @@ public class SelectDinoGui extends GuiScreen
         this.facing = facing;
     }
 
+    @Override
     public void initGui()
     {
         super.initGui();
@@ -67,6 +68,7 @@ public class SelectDinoGui extends GuiScreen
     /**
      * Called when a mouse button is released.  Args : mouseX, mouseY, releaseButton
      */
+    @Override
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
         super.mouseReleased(mouseX, mouseY, state);
@@ -109,6 +111,7 @@ public class SelectDinoGui extends GuiScreen
         }
     }
 
+    @Override
     public void actionPerformed(GuiButton button)
     {
         int id = button.id;

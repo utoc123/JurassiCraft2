@@ -72,11 +72,13 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         return marine;
     }
 
+    @Override
     public boolean canBeCollidedWith()
     {
         return true;
     }
 
+    @Override
     public boolean interactFirst(EntityPlayer playerIn)
     {
         if (dinosaur != null && !worldObj.isRemote)

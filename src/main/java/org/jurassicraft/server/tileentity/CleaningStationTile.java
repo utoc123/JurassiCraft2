@@ -56,6 +56,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns the number of slots in the inventory.
      */
+    @Override
     public int getSizeInventory()
     {
         return this.slots.length;
@@ -64,6 +65,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns the stack in slot i
      */
+    @Override
     public ItemStack getStackInSlot(int index)
     {
         return this.slots[index];
@@ -72,6 +74,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a new stack.
      */
+    @Override
     public ItemStack decrStackSize(int index, int count)
     {
         if (this.slots[index] != null)
@@ -105,6 +108,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem - like when you close a workbench GUI.
      */
+    @Override
     public ItemStack removeStackFromSlot(int index)
     {
         if (this.slots[index] != null)
@@ -122,6 +126,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
+    @Override
     public void setInventorySlotContents(int index, ItemStack stack)
     {
         boolean flag = stack != null && stack.isItemEqual(this.slots[index]) && ItemStack.areItemStackTagsEqual(stack, this.slots[index]);
@@ -143,6 +148,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
+    @Override
     public String getName()
     {
         return this.hasCustomName() ? this.customName : "container.cleaning_station";
@@ -151,6 +157,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns true if this thing is named
      */
+    @Override
     public boolean hasCustomName()
     {
         return this.customName != null && this.customName.length() > 0;
@@ -161,6 +168,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         this.customName = customName;
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
@@ -191,6 +199,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         }
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
@@ -222,6 +231,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. *Isn't this more of a set than a get?*
      */
+    @Override
     public int getInventoryStackLimit()
     {
         return 64;
@@ -241,6 +251,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Updates the JList with a new model.
      */
+    @Override
     public void update()
     {
         boolean flag = this.isCleaning();
@@ -399,15 +410,18 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
+    @Override
     public boolean isUseableByPlayer(EntityPlayer player)
     {
         return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
+    @Override
     public void openInventory(EntityPlayer player)
     {
     }
 
+    @Override
     public void closeInventory(EntityPlayer player)
     {
     }
@@ -415,11 +429,13 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
+    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return index != 2 && (index != 1 || isItemFuel(stack));
     }
 
+    @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
         return side == EnumFacing.DOWN ? slotsBottom : (side == EnumFacing.UP ? slotsTop : slotsSides);
@@ -428,6 +444,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns true if automation can insert the given item in the given slot from the given side. Args: slot, item, side
      */
+    @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
     {
         return this.isItemValidForSlot(index, itemStackIn);
@@ -436,6 +453,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
     /**
      * Returns true if automation can extract the given item in the given slot from the given side. Args: slot, item, side
      */
+    @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
     {
         if (direction == EnumFacing.DOWN && index == 1)
@@ -451,16 +469,19 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         return true;
     }
 
+    @Override
     public String getGuiID()
     {
         return JurassiCraft.MODID + ":cleaning_station";
     }
 
+    @Override
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
         return new CleaningStationContainer(playerInventory, this);
     }
 
+    @Override
     public int getField(int id)
     {
         switch (id)
@@ -478,6 +499,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         }
     }
 
+    @Override
     public void setField(int id, int value)
     {
         switch (id)
@@ -496,11 +518,13 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         }
     }
 
+    @Override
     public int getFieldCount()
     {
         return 4;
     }
 
+    @Override
     public void clear()
     {
         for (int i = 0; i < this.slots.length; ++i)

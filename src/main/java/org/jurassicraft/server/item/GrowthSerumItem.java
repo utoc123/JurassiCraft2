@@ -15,6 +15,7 @@ public class GrowthSerumItem extends Item
         this.setCreativeTab(JCCreativeTabs.items);
     }
 
+    @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target)
     {
         if (target instanceof DinosaurEntity)

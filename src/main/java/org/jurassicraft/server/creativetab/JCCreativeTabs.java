@@ -23,6 +23,7 @@ public class JCCreativeTabs implements IContentHandler
     {
         items = new JurassiCraftTab("jurassicraft.items")
         {
+            @Override
             public Item getTabIconItem()
             {
                 return JCItemRegistry.amber;
@@ -36,6 +37,7 @@ public class JCCreativeTabs implements IContentHandler
         foods = new JurassiCraftFoodTab("jurassicraft.foods");
         blocks = new JurassiCraftTab("jurassicraft.blocks")
         {
+            @Override
             public Item getTabIconItem()
             {
                 return Item.getItemFromBlock(JCBlockRegistry.gypsum_bricks);
@@ -43,6 +45,7 @@ public class JCCreativeTabs implements IContentHandler
         };
         plants = new JurassiCraftTab("jurassicraft.plants")
         {
+            @Override
             public Item getTabIconItem()
             {
                 return Item.getItemFromBlock(JCBlockRegistry.small_royal_fern);
@@ -50,6 +53,7 @@ public class JCCreativeTabs implements IContentHandler
         };
         fossils = new JurassiCraftTab("jurassicraft.fossils")
         {
+            @Override
             public Item getTabIconItem()
             {
                 return Item.getItemFromBlock(JCBlockRegistry.encased_fossils.get(0));

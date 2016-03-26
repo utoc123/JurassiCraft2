@@ -29,6 +29,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
      */
+    @Override
     public void moveEntityWithHeading(float strafe, float forward)
     {
         if (this.isInWater())
@@ -88,6 +89,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
     /**
      * returns true if this entity is by a ladder, false otherwise
      */
+    @Override
     public boolean isOnLadder()
     {
         return false;
@@ -105,6 +107,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         /**
          * Returns whether the EntityAIBase should begin execution.
          */
+        @Override
         public boolean shouldExecute()
         {
             EntityMoveHelper moveHelper = this.dino.getMoveHelper();
@@ -126,6 +129,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
+        @Override
         public boolean continueExecuting()
         {
             return false;
@@ -134,6 +138,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         /**
          * Execute a one shot task or start executing a continuous task
          */
+        @Override
         public void startExecuting()
         {
             Random random = this.dino.getRNG();
@@ -154,6 +159,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             super(AggressiveFlyingDinosaurEntity.this);
         }
 
+        @Override
         public void onUpdateMoveHelper()
         {
             if (this.update)
@@ -215,6 +221,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         /**
          * Returns whether the EntityAIBase should begin execution.
          */
+        @Override
         public boolean shouldExecute()
         {
             return true;
@@ -223,6 +230,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         /**
          * Updates the task
          */
+        @Override
         public void updateTask()
         {
             if (this.dino.getAttackTarget() == null)

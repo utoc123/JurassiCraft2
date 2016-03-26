@@ -19,6 +19,7 @@ public class AmberItem extends Item
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         return new AdvLang("item.amber.name").withProperty("stored", "amber." + (stack.getItemDamage() == 0 ? "mosquito" : "aphid") + ".name").build();
@@ -29,6 +30,7 @@ public class AmberItem extends Item
      *
      * @param subItems The List of sub-items. This is a List of ItemStacks.
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {

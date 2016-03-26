@@ -29,29 +29,34 @@ public class MossBlock extends Block
         this.setLightOpacity(0);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor()
     {
         return ColorizerGrass.getGrassColor(0.5D, 1.0D);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor(IBlockState state)
     {
         return this.getBlockColor();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
     {
         return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
     }
 
+    @Override
     public boolean isFullCube()
     {
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
@@ -61,11 +66,13 @@ public class MossBlock extends Block
     /**
      * Used to determine ambient occlusion and culling when rebuilding chunks for render
      */
+    @Override
     public boolean isOpaqueCube()
     {
         return false;
     }
 
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         IBlockState below = worldIn.getBlockState(pos.down());
@@ -75,6 +82,7 @@ public class MossBlock extends Block
     /**
      * Called when a neighboring block changes.
      */
+    @Override
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         this.checkForDrop(worldIn, pos, state);
@@ -99,6 +107,7 @@ public class MossBlock extends Block
         return !worldIn.isAirBlock(pos.down());
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {

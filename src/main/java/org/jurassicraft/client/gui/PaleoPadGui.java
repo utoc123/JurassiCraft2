@@ -42,6 +42,7 @@ public class PaleoPadGui extends GuiScreen
     /**
      * Called when the screen is unloaded. Used to disable keyboard repeat events
      */
+    @Override
     public void onGuiClosed()
     {
         if (focus != null)

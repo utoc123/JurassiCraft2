@@ -21,6 +21,7 @@ public class MoveUnderwaterEntityAI extends EntityAIBase
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
+    @Override
     public boolean shouldExecute()
     {
         if (this.swimmingEntity.getRNG().nextFloat() < 0.50)
@@ -46,6 +47,7 @@ public class MoveUnderwaterEntityAI extends EntityAIBase
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
+    @Override
     public boolean continueExecuting()
     {
         return !this.swimmingEntity.getNavigator().noPath();
@@ -54,6 +56,7 @@ public class MoveUnderwaterEntityAI extends EntityAIBase
     /**
      * Execute a one shot task or start executing a continuous task
      */
+    @Override
     public void startExecuting()
     {
         this.swimmingEntity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, 1.0D);

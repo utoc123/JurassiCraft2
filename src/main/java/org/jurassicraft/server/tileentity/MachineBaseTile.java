@@ -25,6 +25,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     protected int[] processTime = new int[getProcessCount()];
     protected int[] totalProcessTime = new int[getProcessCount()];
 
+    @Override
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
@@ -58,6 +59,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         setSlots(slots);
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
@@ -95,6 +97,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Returns the stack in slot i
      */
+    @Override
     public ItemStack getStackInSlot(int index)
     {
         return getSlots()[index];
@@ -103,6 +106,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a new stack.
      */
+    @Override
     public ItemStack decrStackSize(int index, int count)
     {
         ItemStack[] slots = getSlots();
@@ -138,6 +142,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem - like when you close a workbench GUI.
      */
+    @Override
     public ItemStack removeStackFromSlot(int index)
     {
         ItemStack[] slots = getSlots();
@@ -157,6 +162,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
+    @Override
     public void setInventorySlotContents(int index, ItemStack stack)
     {
         ItemStack[] slots = getSlots();
@@ -211,6 +217,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Returns true if this thing is named
      */
+    @Override
     public boolean hasCustomName()
     {
         return this.customName != null && this.customName.length() > 0;
@@ -224,6 +231,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Returns the number of slots in the inventory.
      */
+    @Override
     public int getSizeInventory()
     {
         return this.getSlots().length;
@@ -243,6 +251,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Updates the JList with a new model.
      */
+    @Override
     public void update()
     {
         ItemStack[] slots = getSlots();
@@ -298,15 +307,18 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
+    @Override
     public boolean isUseableByPlayer(EntityPlayer player)
     {
         return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
+    @Override
     public void openInventory(EntityPlayer player)
     {
     }
 
+    @Override
     public void closeInventory(EntityPlayer player)
     {
     }
@@ -314,11 +326,13 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
+    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return !isOutput(index);
     }
 
+    @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
         return side == EnumFacing.DOWN ? getOutputs() : getInputs();
@@ -327,6 +341,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Returns true if automation can insert the given item in the given slot from the given side. Args: slot, item, side
      */
+    @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
     {
         return this.isItemValidForSlot(index, itemStackIn);
@@ -378,6 +393,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         return -1;
     }
 
+    @Override
     public int getField(int id)
     {
         int processCount = getProcessCount();
@@ -394,6 +410,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         return 0;
     }
 
+    @Override
     public void setField(int id, int value)
     {
         int processCount = getProcessCount();
@@ -408,11 +425,13 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         }
     }
 
+    @Override
     public int getFieldCount()
     {
         return getProcessCount() * 2;
     }
 
+    @Override
     public void clear()
     {
         ItemStack[] slots = getSlots();
@@ -426,6 +445,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     /**
      * Returns true if automation can extract the given item in the given slot from the given side. Args: slot, item, side
      */
+    @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) // TODO
     {
         if (direction == EnumFacing.DOWN && index == 1)

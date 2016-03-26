@@ -174,6 +174,7 @@ public class DNASequencerTile extends MachineBaseTile
         return JurassiCraft.MODID + ":dna_sequencer";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.dna_sequencer";

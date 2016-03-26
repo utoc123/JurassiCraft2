@@ -32,6 +32,7 @@ public class JurassiCraftFoodTab extends CreativeTabs
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack()
     {

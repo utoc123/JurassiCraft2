@@ -3113,7 +3113,6 @@ public class Matrix3d implements java.io.Serializable, Cloneable
             }
             else
             {
-                d__1 = min(fhmx, ga) / max(fhmx, ga);
             }
         }
         else
@@ -3208,10 +3207,6 @@ public class Matrix3d implements java.io.Serializable, Cloneable
 
             single_values[1] = ha;
             single_values[0] = fa;
-            clt = 1.;
-            crt = 1.;
-            slt = 0.;
-            srt = 0.;
         }
         else
         {
@@ -3269,8 +3264,6 @@ public class Matrix3d implements java.io.Serializable, Cloneable
                 {
                     r = Math.sqrt(l * l + mm);
                 }
-
-                a = (s + r) * .5;
 
                 if (ga > fa)
                 {
@@ -3432,7 +3425,6 @@ public class Matrix3d implements java.io.Serializable, Cloneable
                 r = Math.sqrt(f1 * f1 + g1 * g1);
                 cs = f1 / r;
                 sn = g1 / r;
-                i__1 = count;
                 for (i = 1; i <= count; ++i)
                 {
                     r *= safmx2;
@@ -3451,7 +3443,6 @@ public class Matrix3d implements java.io.Serializable, Cloneable
                 r = Math.sqrt(f1 * f1 + g1 * g1);
                 cs = f1 / r;
                 sn = g1 / r;
-                i__1 = count;
                 for (i = 1; i <= count; ++i)
                 {
                     r *= safmn2;
@@ -3601,7 +3592,7 @@ public class Matrix3d implements java.io.Serializable, Cloneable
     @Override
     public Object clone()
     {
-        Matrix3d m1 = null;
+        Matrix3d m1;
         try
         {
             m1 = (Matrix3d) super.clone();

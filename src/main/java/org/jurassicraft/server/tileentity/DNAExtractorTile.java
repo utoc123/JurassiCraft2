@@ -191,6 +191,7 @@ public class DNAExtractorTile extends MachineBaseTile
         return JurassiCraft.MODID + ":dna_extractor";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.dna_extractor";

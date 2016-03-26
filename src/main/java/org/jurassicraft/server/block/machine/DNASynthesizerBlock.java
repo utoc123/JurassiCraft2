@@ -108,6 +108,7 @@ public class DNASynthesizerBlock extends OrientedBlock
         return new DNASynthesizerTile();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
@@ -126,6 +127,7 @@ public class DNASynthesizerBlock extends OrientedBlock
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {

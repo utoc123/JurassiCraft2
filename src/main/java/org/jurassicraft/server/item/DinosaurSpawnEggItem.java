@@ -293,6 +293,7 @@ public class DinosaurSpawnEggItem extends Item
         return nbt;
     }
 
+    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
         lore.add(StatCollector.translateToLocal("lore.baby_dino.name"));

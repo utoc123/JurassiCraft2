@@ -16,6 +16,7 @@ public class JCMusicDiscItem extends ItemRecord
      * @param name The name of the record to play
      * @return The resource location for the audio, null to use default.
      */
+    @Override
     public net.minecraft.util.ResourceLocation getRecordResource(String name)
     {
         return new net.minecraft.util.ResourceLocation(JurassiCraft.MODID, name);

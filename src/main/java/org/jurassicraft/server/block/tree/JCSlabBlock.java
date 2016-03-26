@@ -33,6 +33,7 @@ public abstract class JCSlabBlock extends BlockSlab
         this.setDefaultState(iblockstate);
     }
 
+    @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         IBlockState iblockstate = super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
@@ -58,11 +59,13 @@ public abstract class JCSlabBlock extends BlockSlab
         return super.getUnlocalizedName();
     }
 
+    @Override
     public IProperty getVariantProperty()
     {
         return null;
     }
 
+    @Override
     public Object getVariant(ItemStack stack)
     {
         return null;
@@ -71,6 +74,7 @@ public abstract class JCSlabBlock extends BlockSlab
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState state = this.getDefaultState();
@@ -86,11 +90,13 @@ public abstract class JCSlabBlock extends BlockSlab
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return state.getValue(HALF) == BlockSlab.EnumBlockHalf.BOTTOM ? 0 : 1;
     }
 
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, new IProperty[] { HALF });
@@ -99,6 +105,7 @@ public abstract class JCSlabBlock extends BlockSlab
     /**
      * Get the damage value that this Block should drop
      */
+    @Override
     public int damageDropped(IBlockState state)
     {
         return 0;

@@ -18,6 +18,7 @@ public class EncasedFossilItemBlock extends ItemBlock
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         Dinosaur dinosaur = ((EncasedFossilBlock) block).getDinosaur(stack.getMetadata());

@@ -28,6 +28,7 @@ public class StorageDiscItem extends Item
      * @param tooltip  All lines to display in the Item's tooltip. This is a List of Strings.
      * @param advanced Whether the setting "Advanced tooltips" is enabled
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {

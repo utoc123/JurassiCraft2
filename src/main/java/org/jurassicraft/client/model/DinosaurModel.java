@@ -24,6 +24,7 @@ public class DinosaurModel extends ModelJson
         this(model, null);
     }
 
+    @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
         DinosaurEntity dinosaur = (DinosaurEntity) entity;
@@ -48,11 +49,13 @@ public class DinosaurModel extends ModelJson
         }
     }
 
+    @Override
     public List<MowzieModelRenderer> getParts()
     {
         return super.parts;
     }
 
+    @Override
     public String[] getCubeNamesArray()
     {
         Map<String, MowzieModelRenderer> nameMap; //TODO: temp fix

@@ -17,21 +17,25 @@ public class JurassicPortalBlock extends BlockPortal
         super();
     }
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
 
     }
 
+    @Override
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
     {
         return null;
     }
 
+    @Override
     public boolean isFullCube()
     {
         return false;
     }
 
+    @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
     {
 
@@ -40,15 +44,12 @@ public class JurassicPortalBlock extends BlockPortal
 
         if (world.getBlockState(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ())).getBlock() == JCBlockRegistry.gypsum_bricks || world.getBlockState(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ())).getBlock() == JCBlockRegistry.gypsum_bricks)
         {
-            b = 0;
-            b1 = 1;
         }
 
         int block;
 
         for (block = pos.getY(); world.getBlockState(new BlockPos(pos.getX(), block - 1, pos.getZ())).getBlock() == this; --block)
         {
-            ;
         }
 
         if (world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock() != JCBlockRegistry.gypsum_bricks)

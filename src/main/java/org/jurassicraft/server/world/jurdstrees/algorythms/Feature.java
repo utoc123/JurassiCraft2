@@ -29,7 +29,7 @@ public class Feature
     public enum FeatureType
     {
 
-        Trunk, Branch, Fruit, leaves, wood, TrunkLeaves;
+        Trunk, Branch, Fruit, leaves, wood, TrunkLeaves
 
     }
 

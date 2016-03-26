@@ -16,6 +16,7 @@ public class ResetControlModelJson extends ModelJson
         this.animator = animator;
     }
 
+    @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
         if (resetAllowed)

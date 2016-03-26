@@ -50,6 +50,7 @@ public class JurassiCraftFossilTab extends CreativeTabs
         return fossilDinosaurs;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack()
     {

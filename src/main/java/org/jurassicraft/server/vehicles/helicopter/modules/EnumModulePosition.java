@@ -9,6 +9,7 @@ public enum EnumModulePosition
 {
     FRONT(new Function<Vec3, Boolean>()
     {
+        @Override
         public Boolean apply(Vec3 vec)
         {
             return vec.zCoord > 0.6;
@@ -16,6 +17,7 @@ public enum EnumModulePosition
     }),
     LEFT_SIDE(new Function<Vec3, Boolean>()
     {
+        @Override
         public Boolean apply(Vec3 vec)
         {
             return vec.zCoord < 0.6 && vec.xCoord > 0;
@@ -23,6 +25,7 @@ public enum EnumModulePosition
     }),
     RIGHT_SIDE(new Function<Vec3, Boolean>()
     {
+        @Override
         public Boolean apply(Vec3 vec)
         {
             return vec.zCoord < 0.6 && vec.xCoord < 0;

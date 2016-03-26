@@ -134,6 +134,7 @@ public class DNASynthesizerTile extends MachineBaseTile
         return JurassiCraft.MODID + ":dna_synthesizer";
     }
 
+    @Override
     public String getName()
     {
         return hasCustomName() ? customName : "container.dna_synthesizer";

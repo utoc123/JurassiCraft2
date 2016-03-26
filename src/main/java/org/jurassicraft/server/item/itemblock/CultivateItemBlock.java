@@ -21,6 +21,7 @@ public class CultivateItemBlock extends ItemBlock
         return metadata;
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         EnumDyeColor color = EnumDyeColor.byMetadata(stack.getItemDamage());

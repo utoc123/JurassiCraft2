@@ -9,21 +9,23 @@ import net.minecraft.block.state.BlockState;
  */
 public abstract class JCBlockCrops7 extends JCBlockCropsBase
 {
-    private static PropertyInteger AGE = PropertyInteger.create("age", 0, 6);;
+    private static PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
     private static int MAX_AGE = 6;
 
-
+    @Override
     protected PropertyInteger getAgeProperty()
     {
         return AGE;
     }
 
+    @Override
     protected int getMaxAge()
     {
         return MAX_AGE;
     }
 
     // NOTE:  This is called on parent object construction.
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, new IProperty[] {AGE});

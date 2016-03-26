@@ -19,6 +19,7 @@ public class GypsumStoneBlock extends Block
         this.setResistance(1.5F);
     }
 
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return JCItemRegistry.gypsum_powder;
@@ -27,6 +28,7 @@ public class GypsumStoneBlock extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
+    @Override
     public int quantityDropped(Random random)
     {
         return random.nextInt(5) + 4;

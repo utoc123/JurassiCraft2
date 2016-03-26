@@ -39,6 +39,7 @@ public class ClearGlassBlock extends BlockGlass
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return 0;
@@ -48,16 +49,19 @@ public class ClearGlassBlock extends BlockGlass
      * Get the actual Block state of this Block at the given position. This applies properties not visible in the
      * metadata, such as fence connections.
      */
+    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return state.withProperty(NORTH, canConnectTo(world, pos.north())).withProperty(EAST, canConnectTo(world, pos.east())).withProperty(SOUTH, canConnectTo(world, pos.south())).withProperty(WEST, canConnectTo(world, pos.west())).withProperty(UP, canConnectTo(world, pos.up())).withProperty(DOWN, canConnectTo(world, pos.down()));
     }
 
+    @Override
     protected BlockState createBlockState()
     {
         return new BlockState(this, NORTH, EAST, WEST, SOUTH, UP, DOWN);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {
