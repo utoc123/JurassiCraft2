@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
 import org.lwjgl.opengl.GL11;
@@ -42,7 +42,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
     {
         IBlockState blockState = tileEntity.getWorld().getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == JCBlockRegistry.dna_extractor)
+        if (blockState.getBlock() == BlockHandler.INSTANCE.dna_extractor)
         {
             GlStateManager.pushMatrix();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

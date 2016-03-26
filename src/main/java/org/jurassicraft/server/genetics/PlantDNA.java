@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import org.jurassicraft.server.lang.AdvLang;
-import org.jurassicraft.server.plant.JCPlantRegistry;
+import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class PlantDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(EnumChatFormatting.DARK_AQUA + new AdvLang("lore.plant.name").withProperty("plant", "plants." + JCPlantRegistry.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
+        tooltip.add(EnumChatFormatting.DARK_AQUA + new AdvLang("lore.plant.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
 
         EnumChatFormatting colour;
 

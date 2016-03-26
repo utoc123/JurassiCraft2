@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 public class SmallCycadPlant extends Plant
 {
@@ -20,6 +20,6 @@ public class SmallCycadPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return JCBlockRegistry.small_cycad;
+        return BlockHandler.INSTANCE.small_cycad;
     }
 }

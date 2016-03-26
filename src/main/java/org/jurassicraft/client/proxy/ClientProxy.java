@@ -10,14 +10,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.event.ClientEventHandler;
-import org.jurassicraft.client.render.JCRenderingRegistry;
+import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy
 {
-    public static JCRenderingRegistry renderingRegistry = new JCRenderingRegistry();
-
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -26,7 +24,7 @@ public class ClientProxy extends ServerProxy
         ClientEventHandler eventHandler = new ClientEventHandler();
         MinecraftForge.EVENT_BUS.register(eventHandler);
 
-        renderingRegistry.preInit();
+        RenderingHandler.INSTANCE.preInit();
     }
 
     @Override
@@ -34,7 +32,7 @@ public class ClientProxy extends ServerProxy
     {
         super.init(event);
 
-        renderingRegistry.init();
+        RenderingHandler.INSTANCE.init();
     }
 
     @Override
@@ -42,7 +40,7 @@ public class ClientProxy extends ServerProxy
     {
         super.postInit(event);
 
-        renderingRegistry.postInit();
+        RenderingHandler.INSTANCE.postInit();
     }
 
     @Override

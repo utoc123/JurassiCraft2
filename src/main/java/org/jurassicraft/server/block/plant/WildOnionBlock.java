@@ -1,7 +1,7 @@
 package org.jurassicraft.server.block.plant;
 
 import net.minecraft.item.Item;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 /**
  * Copyright 2016 Timeless Modding Mod
@@ -19,13 +19,13 @@ public class WildOnionBlock extends JCBlockCrops7
     @Override
     protected Item getSeed()
     {
-        return JCItemRegistry.wild_onion;
+        return ItemHandler.INSTANCE.wild_onion;
     }
 
     @Override
     protected  Item getCrop()
     {
-        return JCItemRegistry.wild_onion;
+        return ItemHandler.INSTANCE.wild_onion;
     }
 
 }

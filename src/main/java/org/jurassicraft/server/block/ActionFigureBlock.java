@@ -14,7 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 
 import java.util.List;
@@ -71,14 +71,14 @@ public class ActionFigureBlock extends OrientedBlock
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return JCItemRegistry.action_figure;
+        return ItemHandler.INSTANCE.action_figure;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos)
     {
-        return JCItemRegistry.action_figure;
+        return ItemHandler.INSTANCE.action_figure;
     }
 
     @Override

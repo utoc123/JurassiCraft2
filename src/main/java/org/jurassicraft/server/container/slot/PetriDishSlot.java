@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class PetriDishSlot extends Slot
 {
@@ -15,6 +15,6 @@ public class PetriDishSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        return stack.getItem() == JCItemRegistry.plant_cells_petri_dish || stack.getItem() == JCItemRegistry.petri_dish;
+        return stack.getItem() == ItemHandler.INSTANCE.plant_cells_petri_dish || stack.getItem() == ItemHandler.INSTANCE.petri_dish;
     }
 }

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.genetics;
 
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 import java.util.Random;
 
@@ -9,7 +9,7 @@ public class GeneticsHelper
 {
     public static GeneticsContainer randomGenetics(Random rand, Dinosaur dinosaur, int quality)
     {
-        return randomGenetics(rand, JCEntityRegistry.getDinosaurId(dinosaur), quality);
+        return randomGenetics(rand, EntityHandler.INSTANCE.getDinosaurId(dinosaur), quality);
     }
 
     public static GeneticsContainer randomGenetics(Random rand, int dinosaur, int quality)
@@ -19,7 +19,7 @@ public class GeneticsHelper
 
     private static int getRandomOverlayTexture(Random rand, int dinosaurId)
     {
-        Dinosaur dinosaur = JCEntityRegistry.getDinosaurById(dinosaurId);
+        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(dinosaurId);
 
         if (dinosaur != null)
         {

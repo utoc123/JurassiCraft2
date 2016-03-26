@@ -10,12 +10,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -40,7 +49,7 @@ import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.UUID;
 
@@ -322,15 +331,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         for (int i = 0; i < count; ++i)
         {
-            int meta = JCEntityRegistry.getDinosaurId(dinosaur);
+            int meta = EntityHandler.INSTANCE.getDinosaurId(dinosaur);
 
             if (burning)
             {
-                entityDropItem(new ItemStack(JCItemRegistry.dino_steak, 1, meta), 0.0F);
+                entityDropItem(new ItemStack(ItemHandler.INSTANCE.dino_steak, 1, meta), 0.0F);
             }
             else
             {
-                dropStackWithGenetics(new ItemStack(JCItemRegistry.dino_meat, 1, meta));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.dino_meat, 1, meta));
             }
         }
     }
@@ -387,7 +396,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.applyEntityAttributes();
 
-        dinosaur = JCEntityRegistry.getDinosaurByClass(getClass());
+        dinosaur = EntityHandler.INSTANCE.getDinosaurByClass(getClass());
 
         getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
         updateCreatureData();
@@ -451,7 +460,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.setFullyGrown();
         this.setMale(true);
         this.ticksExisted = 4;
-        this.genetics = new GeneticsContainer(JCEntityRegistry.getDinosaurId(dinosaur), 0, 0, 0, 255, 255, 255);
+        this.genetics = new GeneticsContainer(EntityHandler.INSTANCE.getDinosaurId(dinosaur), 0, 0, 0, 255, 255, 255);
     }
 
     @Override
@@ -649,7 +658,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (rand.nextInt(10) != 0)
             {
-                dropStackWithGenetics(new ItemStack(JCItemRegistry.fresh_fossils.get(bone), 1, JCEntityRegistry.getDinosaurId(dinosaur)));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.fresh_fossils.get(bone), 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur)));
             }
         }
     }
@@ -718,7 +727,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 if (item instanceof BluePrintItem)
                 {
-                    ((BluePrintItem) item).setDinosaur(heldItem, JCEntityRegistry.getDinosaurId(getDinosaur()));
+                    ((BluePrintItem) item).setDinosaur(heldItem, EntityHandler.INSTANCE.getDinosaurId(getDinosaur()));
                 }
             }
         }

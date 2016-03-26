@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 /**
  * Copyright 2016 Timeless Modding Mod
@@ -23,6 +23,6 @@ public class AjuginuculaSmithiiPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return JCBlockRegistry.ajuginucula_smithii;
+        return BlockHandler.INSTANCE.ajuginucula_smithii;
     }
 }

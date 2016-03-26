@@ -7,7 +7,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 public class ActionFigureTile extends TileEntity
 {
@@ -47,7 +47,7 @@ public class ActionFigureTile extends TileEntity
         {
             try
             {
-                entity = JCEntityRegistry.getDinosaurById(dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(worldObj);
+                entity = EntityHandler.INSTANCE.getDinosaurById(dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(worldObj);
                 entity.applySettingsForActionFigure();
             }
             catch (Exception e)

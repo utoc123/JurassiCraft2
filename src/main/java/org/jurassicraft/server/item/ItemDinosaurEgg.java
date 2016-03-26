@@ -9,9 +9,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -27,7 +27,7 @@ public class ItemDinosaurEgg extends DNAContainerItem
     {
         super();
 
-        this.setCreativeTab(JCCreativeTabs.eggs);
+        this.setCreativeTab(TabHandler.INSTANCE.eggs);
         this.setHasSubtypes(true);
     }
 
@@ -41,26 +41,26 @@ public class ItemDinosaurEgg extends DNAContainerItem
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return JCEntityRegistry.getDinosaurById(stack.getMetadata());
+        return EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata());
     }
 
     @Override
     public int getContainerId(ItemStack stack)
     {
-        return JCEntityRegistry.getDinosaurId(getDinosaur(stack));
+        return EntityHandler.INSTANCE.getDinosaurId(getDinosaur(stack));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

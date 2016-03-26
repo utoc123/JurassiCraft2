@@ -1,59 +1,59 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.DodoEntity;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class DodoAnimator extends DinosaurAnimator
+public class DodoAnimator extends DinosaurAnimator<DodoEntity>
 {
     public DodoAnimator()
     {
-        super(JCEntityRegistry.dodo);
+        super(EntityHandler.INSTANCE.dodo);
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, DodoEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        MowzieModelRenderer head = model.getCube("Head");
+        AdvancedModelRenderer head = model.getCube("Head");
 
-        MowzieModelRenderer neck1 = model.getCube("Neck1");
-        MowzieModelRenderer neck2 = model.getCube("Neck2");
-        MowzieModelRenderer neck3 = model.getCube("Neck3");
-        MowzieModelRenderer neck4 = model.getCube("Neck4");
-        MowzieModelRenderer neck5 = model.getCube("Neck5");
-        MowzieModelRenderer neck6 = model.getCube("Neck6");
-        MowzieModelRenderer neck7 = model.getCube("Neck7");
+        AdvancedModelRenderer neck1 = model.getCube("Neck1");
+        AdvancedModelRenderer neck2 = model.getCube("Neck2");
+        AdvancedModelRenderer neck3 = model.getCube("Neck3");
+        AdvancedModelRenderer neck4 = model.getCube("Neck4");
+        AdvancedModelRenderer neck5 = model.getCube("Neck5");
+        AdvancedModelRenderer neck6 = model.getCube("Neck6");
+        AdvancedModelRenderer neck7 = model.getCube("Neck7");
 
-        MowzieModelRenderer lowerJaw = model.getCube("LowerJaw1");
-        MowzieModelRenderer upperJaw = model.getCube("UpperJaw1");
+        AdvancedModelRenderer lowerJaw = model.getCube("LowerJaw1");
+        AdvancedModelRenderer upperJaw = model.getCube("UpperJaw1");
 
-        MowzieModelRenderer body = model.getCube("Body1");
-        MowzieModelRenderer bodyFront = model.getCube("Body2");
-        MowzieModelRenderer bodyBack = model.getCube("Body3");
+        AdvancedModelRenderer body = model.getCube("Body1");
+        AdvancedModelRenderer bodyFront = model.getCube("Body2");
+        AdvancedModelRenderer bodyBack = model.getCube("Body3");
 
-        MowzieModelRenderer tail = model.getCube("Tail");
+        AdvancedModelRenderer tail = model.getCube("Tail");
 
-        MowzieModelRenderer leftWing1 = model.getCube("LeftWing1");
-        MowzieModelRenderer leftWing2 = model.getCube("LeftWing2");
+        AdvancedModelRenderer leftWing1 = model.getCube("LeftWing1");
+        AdvancedModelRenderer leftWing2 = model.getCube("LeftWing2");
 
-        MowzieModelRenderer rightWing1 = model.getCube("RightWing1");
-        MowzieModelRenderer rightWing2 = model.getCube("RightWing2");
+        AdvancedModelRenderer rightWing1 = model.getCube("RightWing1");
+        AdvancedModelRenderer rightWing2 = model.getCube("RightWing2");
 
-        MowzieModelRenderer leftLegBase = model.getCube("LeftLeg1");
-        MowzieModelRenderer leftLeg2 = model.getCube("LeftLeg2");
-        MowzieModelRenderer leftFoot = model.getCube("LeftFeet");
+        AdvancedModelRenderer leftLegBase = model.getCube("LeftLeg1");
+        AdvancedModelRenderer leftLeg2 = model.getCube("LeftLeg2");
+        AdvancedModelRenderer leftFoot = model.getCube("LeftFeet");
 
-        MowzieModelRenderer rightLegBase = model.getCube("RightLeg1");
-        MowzieModelRenderer rightLeg2 = model.getCube("RightLeg2");
-        MowzieModelRenderer rightFoot = model.getCube("RightFeet");
+        AdvancedModelRenderer rightLegBase = model.getCube("RightLeg1");
+        AdvancedModelRenderer rightLeg2 = model.getCube("RightLeg2");
+        AdvancedModelRenderer rightFoot = model.getCube("RightFeet");
 
-        MowzieModelRenderer[] neckParts = new MowzieModelRenderer[] { head, neck7, neck6, neck5, neck4, neck3, neck2, neck1 };
-        MowzieModelRenderer[] bodyParts = new MowzieModelRenderer[] { bodyFront, body, bodyBack, tail };
+        AdvancedModelRenderer[] neckParts = new AdvancedModelRenderer[] { head, neck7, neck6, neck5, neck4, neck3, neck2, neck1 };
+        AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { bodyFront, body, bodyBack, tail };
 
         // f = entity.ticksExisted;
         // f1 = 0.25F;
@@ -82,7 +82,7 @@ public class DodoAnimator extends DinosaurAnimator
         leftLegBase.rotationPointZ -= 1 * f1 * Math.cos(f * 1.0F * globalSpeed);
         rightLegBase.rotationPointZ -= -1 * f1 * Math.cos(f * 1.0F * globalSpeed);
 
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         model.chainWave(neckParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 0.25F);
         model.chainWave(bodyParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 0.25F);

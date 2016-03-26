@@ -11,10 +11,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 
@@ -30,7 +30,7 @@ public class ItemActionFigure extends Item
     {
         super();
 
-        this.setCreativeTab(JCCreativeTabs.merchandise);
+        this.setCreativeTab(TabHandler.INSTANCE.merchandise);
         this.setHasSubtypes(true);
     }
 
@@ -47,7 +47,7 @@ public class ItemActionFigure extends Item
 
         if (playerIn.canPlayerEdit(pos, side, stack))
         {
-            Block block = JCBlockRegistry.action_figure;
+            Block block = BlockHandler.INSTANCE.action_figure;
 
             if (block.canPlaceBlockAt(worldIn, pos))
             {
@@ -80,20 +80,20 @@ public class ItemActionFigure extends Item
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return JCEntityRegistry.getDinosaurById(stack.getMetadata());
+        return EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

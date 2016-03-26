@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Random;
 
@@ -32,7 +32,7 @@ public class InventoryDinosaur implements IInventory
         {
             ItemStack stack = getStackInSlot(i);
 
-            if (stack != null && stack.getItem() == JCItemRegistry.tracker)
+            if (stack != null && stack.getItem() == ItemHandler.INSTANCE.tracker)
             {
                 hasTracker = true;
             }

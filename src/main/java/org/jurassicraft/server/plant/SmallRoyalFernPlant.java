@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 public class SmallRoyalFernPlant extends Plant
 {
@@ -20,6 +20,6 @@ public class SmallRoyalFernPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return JCBlockRegistry.small_royal_fern;
+        return BlockHandler.INSTANCE.small_royal_fern;
     }
 }

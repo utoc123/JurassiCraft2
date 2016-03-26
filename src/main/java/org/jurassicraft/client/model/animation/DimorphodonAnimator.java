@@ -1,65 +1,62 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.AggressiveFlyingDinosaurEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.DimorphodonEntity;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class DimorphodonAnimator extends DinosaurAnimator
+public class DimorphodonAnimator extends DinosaurAnimator<DimorphodonEntity>
 {
     public DimorphodonAnimator()
     {
-        super(JCEntityRegistry.dimorphodon);
+        super(EntityHandler.INSTANCE.dimorphodon);
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, DimorphodonEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        MowzieModelRenderer leftThigh = model.getCube("Left thigh");
-        MowzieModelRenderer leftCalf = model.getCube("Left calf");
-        MowzieModelRenderer leftUpperFoot = model.getCube("Left upper foot");
-        MowzieModelRenderer leftFoot = model.getCube("Left foot");
-        MowzieModelRenderer rightThigh = model.getCube("Right thigh");
-        MowzieModelRenderer rightCalf = model.getCube("right calf");
-        MowzieModelRenderer rightUpperFoot = model.getCube("Right upper foot");
-        MowzieModelRenderer rightFoot = model.getCube("Right foot");
-        MowzieModelRenderer jaw = model.getCube("Lower jaw 1");
-        MowzieModelRenderer head = model.getCube("Head");
-        MowzieModelRenderer neck2 = model.getCube("Neck2");
-        MowzieModelRenderer neck1 = model.getCube("Neck");
-        MowzieModelRenderer body3 = model.getCube("Body 3");
-        MowzieModelRenderer body2 = model.getCube("Body 2");
-        MowzieModelRenderer body1 = model.getCube("Body 1");
-        MowzieModelRenderer tail1 = model.getCube("Tail 1");
-        MowzieModelRenderer tail2 = model.getCube("Tail 2");
-        MowzieModelRenderer tail3 = model.getCube("Tail 3");
-        MowzieModelRenderer leftArm1 = model.getCube("Left Arm 1");
-        MowzieModelRenderer leftArm2 = model.getCube("Left Arm 2");
-        MowzieModelRenderer leftArm3 = model.getCube("Left Arm 3");
-        MowzieModelRenderer leftArm4 = model.getCube("Left Arm 4");
-        MowzieModelRenderer rightArm1 = model.getCube("Right Arm 1");
-        MowzieModelRenderer rightArm2 = model.getCube("Right Arm 2");
-        MowzieModelRenderer rightArm3 = model.getCube("Right Arm 3");
-        MowzieModelRenderer rightArm4 = model.getCube("Right Arm 4");
+        AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
+        AdvancedModelRenderer leftCalf = model.getCube("Left calf");
+        AdvancedModelRenderer leftUpperFoot = model.getCube("Left upper foot");
+        AdvancedModelRenderer leftFoot = model.getCube("Left foot");
+        AdvancedModelRenderer rightThigh = model.getCube("Right thigh");
+        AdvancedModelRenderer rightCalf = model.getCube("right calf");
+        AdvancedModelRenderer rightUpperFoot = model.getCube("Right upper foot");
+        AdvancedModelRenderer rightFoot = model.getCube("Right foot");
+        AdvancedModelRenderer jaw = model.getCube("Lower jaw 1");
+        AdvancedModelRenderer head = model.getCube("Head");
+        AdvancedModelRenderer neck2 = model.getCube("Neck2");
+        AdvancedModelRenderer neck1 = model.getCube("Neck");
+        AdvancedModelRenderer body3 = model.getCube("Body 3");
+        AdvancedModelRenderer body2 = model.getCube("Body 2");
+        AdvancedModelRenderer body1 = model.getCube("Body 1");
+        AdvancedModelRenderer tail1 = model.getCube("Tail 1");
+        AdvancedModelRenderer tail2 = model.getCube("Tail 2");
+        AdvancedModelRenderer tail3 = model.getCube("Tail 3");
+        AdvancedModelRenderer leftArm1 = model.getCube("Left Arm 1");
+        AdvancedModelRenderer leftArm2 = model.getCube("Left Arm 2");
+        AdvancedModelRenderer leftArm3 = model.getCube("Left Arm 3");
+        AdvancedModelRenderer leftArm4 = model.getCube("Left Arm 4");
+        AdvancedModelRenderer rightArm1 = model.getCube("Right Arm 1");
+        AdvancedModelRenderer rightArm2 = model.getCube("Right Arm 2");
+        AdvancedModelRenderer rightArm3 = model.getCube("Right Arm 3");
+        AdvancedModelRenderer rightArm4 = model.getCube("Right Arm 4");
 
-        MowzieModelRenderer[] neck = new MowzieModelRenderer[] { head, neck2, neck1 };
-        MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail1, tail2, tail3 };
-        MowzieModelRenderer[] wingLeft = new MowzieModelRenderer[] { leftArm4, leftArm3, leftArm2, leftArm1 };
-        MowzieModelRenderer[] wingRight = new MowzieModelRenderer[] { rightArm4, rightArm3, rightArm2, rightArm1 };
-        MowzieModelRenderer[] legLeft = new MowzieModelRenderer[] { leftThigh, leftCalf, leftUpperFoot, leftFoot };
-        MowzieModelRenderer[] legRight = new MowzieModelRenderer[] { rightThigh, rightCalf, rightUpperFoot, rightFoot };
+        AdvancedModelRenderer[] neck = new AdvancedModelRenderer[] { head, neck2, neck1 };
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail1, tail2, tail3 };
+        AdvancedModelRenderer[] wingLeft = new AdvancedModelRenderer[] { leftArm4, leftArm3, leftArm2, leftArm1 };
+        AdvancedModelRenderer[] wingRight = new AdvancedModelRenderer[] { rightArm4, rightArm3, rightArm2, rightArm1 };
+        AdvancedModelRenderer[] legLeft = new AdvancedModelRenderer[] { leftThigh, leftCalf, leftUpperFoot, leftFoot };
+        AdvancedModelRenderer[] legRight = new AdvancedModelRenderer[] { rightThigh, rightCalf, rightUpperFoot, rightFoot };
 
         float globalSpeed = 0.8F;
         float globalDegree = 2F;
         float globalHeight = 2F;
         float frontOffset = -1.35f;
-
-        AggressiveFlyingDinosaurEntity entity = (AggressiveFlyingDinosaurEntity) parEntity;
 
 //        if (!entity.isFlying())
         {
@@ -141,7 +138,7 @@ public class DimorphodonAnimator extends DinosaurAnimator
 //            model.chainWave(neck, 0.3f, 0.4f, 4, f, f1);
 //        }
 
-        int frame = parEntity.ticksExisted;
+        int frame = entity.ticksExisted;
         model.walk(body1, 0.08f, -0.05f, false, 0, 0, frame, 0.25F);
         model.chainWave(neck, 0.08f, 0.03f, 2, frame, 0.25F);
         model.walk(leftArm1, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);

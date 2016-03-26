@@ -7,8 +7,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class JurassiCraftFossilTab extends CreativeTabs
 
         for (Dinosaur dino : fossilDinosaurs)
         {
-            metas[i] = JCEntityRegistry.getDinosaurId(dino);
+            metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
 
             i++;
         }
@@ -60,6 +60,6 @@ public class JurassiCraftFossilTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return JCItemRegistry.fossils.get("skull");
+        return ItemHandler.INSTANCE.fossils.get("skull");
     }
 }

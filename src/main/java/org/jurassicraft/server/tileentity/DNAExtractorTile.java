@@ -9,13 +9,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNAExtractorContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.genetics.PlantDNA;
-import org.jurassicraft.server.item.JCItemRegistry;
-import org.jurassicraft.server.plant.JCPlantRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.List;
 import java.util.Random;
@@ -39,7 +39,7 @@ public class DNAExtractorTile extends MachineBaseTile
         ItemStack extraction = slots[0];
         ItemStack storage = slots[1];
 
-        if (storage != null && storage.getItem() == JCItemRegistry.storage_disc && extraction != null && (extraction.getItem() == JCItemRegistry.amber || extraction.getItem() == JCItemRegistry.sea_lamprey || extraction.getItem() == JCItemRegistry.dino_meat) && (storage.getTagCompound() == null || !storage.getTagCompound().hasKey("Genetics")))
+        if (storage != null && storage.getItem() == ItemHandler.INSTANCE.storage_disc && extraction != null && (extraction.getItem() == ItemHandler.INSTANCE.amber || extraction.getItem() == ItemHandler.INSTANCE.sea_lamprey || extraction.getItem() == ItemHandler.INSTANCE.dino_meat) && (storage.getTagCompound() == null || !storage.getTagCompound().hasKey("Genetics")))
         {
             for (int i = 2; i < 6; i++)
             {
@@ -65,17 +65,17 @@ public class DNAExtractorTile extends MachineBaseTile
 
             Item item = input.getItem();
 
-            if (item == JCItemRegistry.amber || item == JCItemRegistry.sea_lamprey)
+            if (item == ItemHandler.INSTANCE.amber || item == ItemHandler.INSTANCE.sea_lamprey)
             {
                 if (input.getItemDamage() == 0)
                 {
-                    List<Dinosaur> possibleDinos = item == JCItemRegistry.amber ? JCEntityRegistry.getDinosaursFromAmber() : JCEntityRegistry.getDinosaursFromSeaLampreys();
+                    List<Dinosaur> possibleDinos = item == ItemHandler.INSTANCE.amber ? EntityHandler.INSTANCE.getDinosaursFromAmber() : EntityHandler.INSTANCE.getDinosaursFromSeaLampreys();
 
                     Dinosaur dino = possibleDinos.get(rand.nextInt(possibleDinos.size()));
 
-                    int dinosaurId = JCEntityRegistry.getDinosaurId(dino);
+                    int dinosaurId = EntityHandler.INSTANCE.getDinosaurId(dino);
 
-                    disc = new ItemStack(JCItemRegistry.storage_disc, 1, dinosaurId);
+                    disc = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, dinosaurId);
 
                     int quality = rand.nextInt(50);
 
@@ -93,12 +93,12 @@ public class DNAExtractorTile extends MachineBaseTile
                 }
                 else if (input.getItemDamage() == 1)
                 {
-                    List<Plant> possiblePlants = JCPlantRegistry.getPlants();
+                    List<Plant> possiblePlants = PlantHandler.INSTANCE.getPlants();
                     Plant plant = possiblePlants.get(rand.nextInt(possiblePlants.size()));
 
-                    int plantId = JCPlantRegistry.getPlantId(plant);
+                    int plantId = PlantHandler.INSTANCE.getPlantId(plant);
 
-                    disc = new ItemStack(JCItemRegistry.storage_disc, 1, plantId);
+                    disc = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, plantId);
 
                     int quality = rand.nextInt(50);
 
@@ -115,9 +115,9 @@ public class DNAExtractorTile extends MachineBaseTile
                     disc.setTagCompound(nbt);
                 }
             }
-            else if (item == JCItemRegistry.dino_meat)
+            else if (item == ItemHandler.INSTANCE.dino_meat)
             {
-                disc = new ItemStack(JCItemRegistry.storage_disc, 1, input.getItemDamage());
+                disc = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, input.getItemDamage());
 
                 disc.setTagCompound(input.getTagCompound());
             }

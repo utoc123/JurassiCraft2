@@ -7,7 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tileentity.IncubatorTile;
 
 public class IncubatorContainer extends Container
@@ -17,11 +17,11 @@ public class IncubatorContainer extends Container
     public IncubatorContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
         this.incubator = (IncubatorTile) tileEntity;
-        this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, JCItemRegistry.egg));
-        this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, JCItemRegistry.egg));
-        this.addSlotToContainer(new CustomSlot(incubator, 2, 79, 14, JCItemRegistry.egg));
-        this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, JCItemRegistry.egg));
-        this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, JCItemRegistry.egg));
+        this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, ItemHandler.INSTANCE.egg));
+        this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, ItemHandler.INSTANCE.egg));
+        this.addSlotToContainer(new CustomSlot(incubator, 2, 79, 14, ItemHandler.INSTANCE.egg));
+        this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, ItemHandler.INSTANCE.egg));
+        this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, ItemHandler.INSTANCE.egg));
 
         this.addSlotToContainer(new Slot(incubator, 5, 79, 49));
 

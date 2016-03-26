@@ -1,41 +1,41 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.CoelacanthEntity;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class CoelacanthAnimator extends DinosaurAnimator
+public class CoelacanthAnimator extends DinosaurAnimator<CoelacanthEntity>
 {
     public CoelacanthAnimator()
     {
-        super(JCEntityRegistry.coelacanth);
+        super(EntityHandler.INSTANCE.coelacanth);
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, CoelacanthEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         // NOTES: Because the animation does not need to be synced to the ground, global variables are not needed.
 
         // NOTES: The thing about aquatic creatures is that they are literally tails. Their whole bodies, including their heads, are single tails. Treat them as such.
         // tail
-        MowzieModelRenderer head = model.getCube("headJoint"); // NOTES: Add in joint boxes to make sure rotations are level. You'll know when you need to!
-        MowzieModelRenderer neck = model.getCube("neckJoint");
-        MowzieModelRenderer body1 = model.getCube("Body Section 1");
-        MowzieModelRenderer body2 = model.getCube("Body Section 2");
-        MowzieModelRenderer body3 = model.getCube("Body Section 3");
-        MowzieModelRenderer tail1 = model.getCube("Tail Section 1");
-        MowzieModelRenderer tail2 = model.getCube("Tail Section 2");
-        MowzieModelRenderer tail3 = model.getCube("Tail Section 3");
+        AdvancedModelRenderer head = model.getCube("headJoint"); // NOTES: Add in joint boxes to make sure rotations are level. You'll know when you need to!
+        AdvancedModelRenderer neck = model.getCube("neckJoint");
+        AdvancedModelRenderer body1 = model.getCube("Body Section 1");
+        AdvancedModelRenderer body2 = model.getCube("Body Section 2");
+        AdvancedModelRenderer body3 = model.getCube("Body Section 3");
+        AdvancedModelRenderer tail1 = model.getCube("Tail Section 1");
+        AdvancedModelRenderer tail2 = model.getCube("Tail Section 2");
+        AdvancedModelRenderer tail3 = model.getCube("Tail Section 3");
         // flipper
-        MowzieModelRenderer leftFlipper = model.getCube("Left Front Flipper");
-        MowzieModelRenderer rightFlipper = model.getCube("Right Front Flipper");
+        AdvancedModelRenderer leftFlipper = model.getCube("Left Front Flipper");
+        AdvancedModelRenderer rightFlipper = model.getCube("Right Front Flipper");
 
-        MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail3, tail2, tail1, body3, body2, body1, neck, head };
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail3, tail2, tail1, body3, body2, body1, neck, head };
 
         // NOTES: A fish's movement involves moving its head side to side, which sends a wave impulse down its tail. Its fins move back in forth and up and down in a symmetrical rythm, too.
         head.rotationPointX -= -4 * f1 * Math.sin((f + 1) * 0.6); // Head moves side to side

@@ -1,5 +1,6 @@
 package org.jurassicraft.client.render.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,7 +16,7 @@ public class IndominusRenderer extends DinosaurRenderer
 {
     public IndominusRenderer(RenderDinosaurDefinition renderDef)
     {
-        super(renderDef);
+        super(Minecraft.getMinecraft().getRenderManager(), renderDef);
 
         addLayer(new LayerIndominusCamo(this));
     }

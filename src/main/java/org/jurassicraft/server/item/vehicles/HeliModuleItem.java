@@ -3,7 +3,7 @@ package org.jurassicraft.server.item.vehicles;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterModule;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class HeliModuleItem extends Item
     {
         moduleID = helicopterModuleID;
         module = checkNotNull(HelicopterModule.registry.get(helicopterModuleID), "Invalid module id " + helicopterModuleID);
-        setCreativeTab(JCCreativeTabs.items);
+        setCreativeTab(TabHandler.INSTANCE.items);
     }
 
     @Override

@@ -21,10 +21,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class DinosaurSpawnEggItem extends Item
     {
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(JCCreativeTabs.spawnEggs);
+        this.setCreativeTab(TabHandler.INSTANCE.spawnEggs);
     }
 
     public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)
@@ -128,11 +128,11 @@ public class DinosaurSpawnEggItem extends Item
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = JCEntityRegistry.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = JCEntityRegistry.achillobator;
+            dinosaur = EntityHandler.INSTANCE.achillobator;
         }
 
         return dinosaur;
@@ -170,13 +170,13 @@ public class DinosaurSpawnEggItem extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

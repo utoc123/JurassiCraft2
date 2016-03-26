@@ -7,10 +7,10 @@ import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.server.api.IHybrid;
-import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.item.vehicles.HeliModuleItem;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
@@ -18,89 +18,89 @@ import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JCItemRegistry
+public enum ItemHandler
 {
-    public static ItemPlasterAndBandage plaster_and_bandage;
-    public static DinosaurSpawnEggItem spawn_egg;
+    INSTANCE;
 
-    public static ItemDNA dna;
-    public static ItemDinosaurEgg egg;
-    public static PaleoPadItem paleo_pad;
-    public static SoftTissueItem soft_tissue;
+    public ItemPlasterAndBandage plaster_and_bandage;
+    public DinosaurSpawnEggItem spawn_egg;
 
-    public static DinsaurMeatItem dino_meat;
-    public static DinosaurSteakItem dino_steak;
+    public ItemDNA dna;
+    public ItemDinosaurEgg egg;
+    public PaleoPadItem paleo_pad;
+    public SoftTissueItem soft_tissue;
 
-    public static BluePrintItem blue_print;
-    public static PaddockSignItem paddock_sign;
-    public static JurassiCraftSignItem jc_sign;
+    public DinsaurMeatItem dino_meat;
+    public DinosaurSteakItem dino_steak;
 
-    public static AmberItem amber;
-    public static BasicItem petri_dish;
-    public static BasicItem empty_test_tube;
+    public BluePrintItem blue_print;
+    public PaddockSignItem paddock_sign;
+    public JurassiCraftSignItem jc_sign;
 
-    public static SyringeItem syringe;
-    public static EmptySyringeItem empty_syringe;
+    public AmberItem amber;
+    public BasicItem petri_dish;
+    public BasicItem empty_test_tube;
 
-    public static StorageDiscItem storage_disc;
-    public static BasicItem dna_base;
+    public SyringeItem syringe;
+    public EmptySyringeItem empty_syringe;
 
-    public static CageItem cage_small;
+    public StorageDiscItem storage_disc;
+    public BasicItem dna_base;
 
-    public static PlantDNAItem plant_dna;
+    public CageItem cage_small;
 
-    public static BasicItem sea_lamprey;
+    public PlantDNAItem plant_dna;
 
-    public static BasicItem iron_blades;
-    public static BasicItem iron_rod;
-    public static BasicItem disc_reader;
-    public static BasicItem laser;
+    public BasicItem sea_lamprey;
 
-    public static BasicItem needle;
+    public BasicItem iron_blades;
+    public BasicItem iron_rod;
+    public BasicItem disc_reader;
+    public BasicItem laser;
 
-    public static GrowthSerumItem growth_serum;
+    public BasicItem needle;
 
-    public static BasicItem plant_cells;
-    public static PlantCallusItem plant_callus;
-    public static BasicItem plant_cells_petri_dish;
-    public static HelicopterItem helicopter_spawner;
-    public static HeliModuleItem minigun_module_adder;
+    public GrowthSerumItem growth_serum;
 
-    public static BasicItem tracker;
+    public BasicItem plant_cells;
+    public PlantCallusItem plant_callus;
+    public BasicItem plant_cells_petri_dish;
+    public HelicopterItem helicopter_spawner;
+    public HeliModuleItem minigun_module_adder;
 
-    public static JCMusicDiscItem disc_jurassicraft_theme;
-    public static JCMusicDiscItem disc_troodons_and_raptors;
-    public static JCMusicDiscItem disc_dont_move_a_muscle;
+    public BasicItem tracker;
 
-    public static ItemActionFigure action_figure;
+    public JCMusicDiscItem disc_jurassicraft_theme;
+    public JCMusicDiscItem disc_troodons_and_raptors;
+    public JCMusicDiscItem disc_dont_move_a_muscle;
 
-    public static BasicItem amber_keychain;
-    public static BasicItem amber_cane;
-    public static BasicItem mr_dna_keychain;
+    public ItemActionFigure action_figure;
 
-    public static BasicItem basic_circuit;
-    public static BasicItem advanced_circuit;
+    public BasicItem amber_keychain;
+    public BasicItem amber_cane;
+    public BasicItem mr_dna_keychain;
 
-    public static BasicItem iron_nugget;
+    public BasicItem basic_circuit;
+    public BasicItem advanced_circuit;
 
-    // Seeds and Plant Products
-    public static Item ajuginucula_smithii_seeds;
-    public static Item ajuginucula_smithii_leaves;
-    public static Item ajuginucula_smithii_oil;
+    public BasicItem iron_nugget;
 
-    public static Item wild_onion;
+    public Item ajuginucula_smithii_seeds;
+    public Item ajuginucula_smithii_leaves;
+    public Item ajuginucula_smithii_oil;
 
-    // Debug items
-    public static Item dino_scanner;
+    public Item wild_onion;
 
-    public static Map<String, FossilItem> fossils = new HashMap<String, FossilItem>();
-    public static Map<String, FossilItem> fresh_fossils = new HashMap<String, FossilItem>();
+    public Item dino_scanner;
 
-    public static BasicItem gypsum_powder;
+    public Map<String, FossilItem> fossils = new HashMap<String, FossilItem>();
+    public Map<String, FossilItem> fresh_fossils = new HashMap<String, FossilItem>();
+
+    public BasicItem gypsum_powder;
 
     // TODO more complex crafting components, eg circuit boards
 
-    public static void init()
+    public void init()
     {
         plaster_and_bandage = new ItemPlasterAndBandage();
         spawn_egg = new DinosaurSpawnEggItem();
@@ -114,33 +114,33 @@ public class JCItemRegistry
         jc_sign = new JurassiCraftSignItem();
         soft_tissue = new SoftTissueItem();
         amber = new AmberItem();
-        petri_dish = new BasicItem(JCCreativeTabs.items);
-        empty_test_tube = new BasicItem(JCCreativeTabs.items);
+        petri_dish = new BasicItem(TabHandler.INSTANCE.items);
+        empty_test_tube = new BasicItem(TabHandler.INSTANCE.items);
         syringe = new SyringeItem();
         empty_syringe = new EmptySyringeItem();
         storage_disc = new StorageDiscItem();
-        disc_reader = new BasicItem(JCCreativeTabs.items);
-        laser = new BasicItem(JCCreativeTabs.items);
-        dna_base = new BasicItem(JCCreativeTabs.items);
+        disc_reader = new BasicItem(TabHandler.INSTANCE.items);
+        laser = new BasicItem(TabHandler.INSTANCE.items);
+        dna_base = new BasicItem(TabHandler.INSTANCE.items);
         cage_small = new CageItem();
         plant_dna = new PlantDNAItem();
-        sea_lamprey = new BasicItem(JCCreativeTabs.items);
-        iron_blades = new BasicItem(JCCreativeTabs.items);
-        iron_rod = new BasicItem(JCCreativeTabs.items);
+        sea_lamprey = new BasicItem(TabHandler.INSTANCE.items);
+        iron_blades = new BasicItem(TabHandler.INSTANCE.items);
+        iron_rod = new BasicItem(TabHandler.INSTANCE.items);
         growth_serum = new GrowthSerumItem();
-        needle = new BasicItem(JCCreativeTabs.items);
-        plant_cells = new BasicItem(JCCreativeTabs.items);
+        needle = new BasicItem(TabHandler.INSTANCE.items);
+        plant_cells = new BasicItem(TabHandler.INSTANCE.items);
         plant_callus = new PlantCallusItem();
-        plant_cells_petri_dish = new BasicItem(JCCreativeTabs.items);
-        tracker = new BasicItem(JCCreativeTabs.items);
+        plant_cells_petri_dish = new BasicItem(TabHandler.INSTANCE.items);
+        tracker = new BasicItem(TabHandler.INSTANCE.items);
         action_figure = new ItemActionFigure();
         dino_scanner = new DinoScannerItem();
 
-        amber_cane = new BasicItem(JCCreativeTabs.merchandise);
+        amber_cane = new BasicItem(TabHandler.INSTANCE.merchandise);
         amber_cane.setFull3D();
         amber_cane.setMaxStackSize(1);
-        amber_keychain = new BasicItem(JCCreativeTabs.merchandise);
-        mr_dna_keychain = new BasicItem(JCCreativeTabs.merchandise);
+        amber_keychain = new BasicItem(TabHandler.INSTANCE.merchandise);
+        mr_dna_keychain = new BasicItem(TabHandler.INSTANCE.merchandise);
 
         helicopter_spawner = new HelicopterItem();
         minigun_module_adder = new HeliModuleItem("minigun");
@@ -149,21 +149,21 @@ public class JCItemRegistry
         disc_troodons_and_raptors = new JCMusicDiscItem("troodons_and_raptors");
         disc_dont_move_a_muscle = new JCMusicDiscItem("dont_move_a_muscle");
 
-        basic_circuit = new BasicItem(JCCreativeTabs.items);
-        advanced_circuit = new BasicItem(JCCreativeTabs.items);
+        basic_circuit = new BasicItem(TabHandler.INSTANCE.items);
+        advanced_circuit = new BasicItem(TabHandler.INSTANCE.items);
 
-        iron_nugget = new BasicItem(JCCreativeTabs.items);
+        iron_nugget = new BasicItem(TabHandler.INSTANCE.items);
 
-        gypsum_powder = new BasicItem(JCCreativeTabs.items);
+        gypsum_powder = new BasicItem(TabHandler.INSTANCE.items);
 
         // Seeds and plant products
-        ajuginucula_smithii_seeds = new ItemSeeds(JCBlockRegistry.ajuginucula_smithii, Blocks.farmland).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(JCCreativeTabs.plants);
-        ajuginucula_smithii_leaves = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(JCCreativeTabs.plants);
-        ajuginucula_smithii_oil = new BasicItem(JCCreativeTabs.plants);
+        ajuginucula_smithii_seeds = new ItemSeeds(BlockHandler.INSTANCE.ajuginucula_smithii, Blocks.farmland).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(TabHandler.INSTANCE.plants);
+        ajuginucula_smithii_leaves = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(TabHandler.INSTANCE.plants);
+        ajuginucula_smithii_oil = new BasicItem(TabHandler.INSTANCE.plants);
 
-        wild_onion = new ItemSeeds(JCBlockRegistry.wild_onion, Blocks.farmland).setUnlocalizedName("wild_onion").setCreativeTab(JCCreativeTabs.plants);
+        wild_onion = new ItemSeeds(BlockHandler.INSTANCE.wild_onion, Blocks.farmland).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.plants);
 
-        for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getRegisteredDinosaurs())
         {
 
             String[] boneTypes = dinosaur.getBones();
@@ -254,21 +254,21 @@ public class JCItemRegistry
 
         // registerItem(entityRemover, "Entity Remover");
 
-        // for (int i = 0; i < JCEntityRegistry.getDinosaurs().size(); i++)
+        // for (int i = 0; i < EntityHandler.INSTANCE.getDinosaurs().size(); i++)
         // {
-        // EcoAPI.registerEcologicalRoleFoodItem(EcoAPI.carnivore, new ItemStack(JCItemRegistry.dino_meat, 1, i));
-        // EcoAPI.registerEcologicalRoleFoodItem(EcoAPI.carnivore, new ItemStack(JCItemRegistry.dino_steak, 1, i));
-        // EcoAPI.registerEntityClassDropItems(JCEntityRegistry.getDinosaurs().get(i).getDinosaurClass(), new ItemStack[]{new ItemStack(JCItemRegistry.dino_meat, 1, i), new ItemStack(JCItemRegistry.dino_steak, 1, i)});
+        // EcoAPI.registerEcologicalRoleFoodItem(EcoAPI.carnivore, new ItemStack(ItemHandler.INSTANCE.dino_meat, 1, i));
+        // EcoAPI.registerEcologicalRoleFoodItem(EcoAPI.carnivore, new ItemStack(ItemHandler.INSTANCE.dino_steak, 1, i));
+        // EcoAPI.registerEntityClassDropItems(EntityHandler.INSTANCE.getDinosaurs().get(i).getDinosaurClass(), new ItemStack[]{new ItemStack(ItemHandler.INSTANCE.dino_meat, 1, i), new ItemStack(ItemHandler.INSTANCE.dino_steak, 1, i)});
         // }
     }
 
-    private static void registerItemOreDict(Item item, String name, String oreDict)
+    private void registerItemOreDict(Item item, String name, String oreDict)
     {
         registerItem(item, name);
         OreDictionary.registerOre(oreDict, item);
     }
 
-    private static void registerItem(Item item, String name)
+    private void registerItem(Item item, String name)
     {
         String formattedName = name.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
         item.setUnlocalizedName(formattedName);

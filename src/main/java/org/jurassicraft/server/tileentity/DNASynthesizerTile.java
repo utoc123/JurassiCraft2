@@ -6,7 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNASynthesizerContainer;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class DNASynthesizerTile extends MachineBaseTile
 {
@@ -28,7 +28,7 @@ public class DNASynthesizerTile extends MachineBaseTile
         ItemStack testTube = slots[1];
         ItemStack baseMaterial = slots[2];
 
-        if (storage != null && storage.getItem() == JCItemRegistry.storage_disc && testTube != null && testTube.getItem() == JCItemRegistry.empty_test_tube && baseMaterial != null && baseMaterial.getItem() == JCItemRegistry.dna_base && (storage.getTagCompound() != null && storage.getTagCompound().hasKey("DNAQuality")))
+        if (storage != null && storage.getItem() == ItemHandler.INSTANCE.storage_disc && testTube != null && testTube.getItem() == ItemHandler.INSTANCE.empty_test_tube && baseMaterial != null && baseMaterial.getItem() == ItemHandler.INSTANCE.dna_base && (storage.getTagCompound() != null && storage.getTagCompound().hasKey("DNAQuality")))
         {
             ItemStack output = null;
 
@@ -36,12 +36,12 @@ public class DNASynthesizerTile extends MachineBaseTile
             {
                 if (storage.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA"))
                 {
-                    output = new ItemStack(JCItemRegistry.dna, 1, storage.getItemDamage());
+                    output = new ItemStack(ItemHandler.INSTANCE.dna, 1, storage.getItemDamage());
                     output.setTagCompound(storage.getTagCompound());
                 }
                 else
                 {
-                    output = new ItemStack(JCItemRegistry.plant_dna, 1, storage.getItemDamage());
+                    output = new ItemStack(ItemHandler.INSTANCE.plant_dna, 1, storage.getItemDamage());
                     output.setTagCompound(storage.getTagCompound());
                 }
             }
@@ -59,7 +59,7 @@ public class DNASynthesizerTile extends MachineBaseTile
         {
             ItemStack storageDisc = slots[0];
 
-            ItemStack output = new ItemStack(storageDisc.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA") ? JCItemRegistry.dna : JCItemRegistry.plant_dna, 1, storageDisc.getItemDamage());
+            ItemStack output = new ItemStack(storageDisc.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA") ? ItemHandler.INSTANCE.dna : ItemHandler.INSTANCE.plant_dna, 1, storageDisc.getItemDamage());
             output.setTagCompound(storageDisc.getTagCompound());
 
             int emptySlot = getOutputSlot(output);

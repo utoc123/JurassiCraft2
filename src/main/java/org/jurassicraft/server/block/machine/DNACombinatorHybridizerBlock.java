@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 
 import java.util.Random;
@@ -32,7 +32,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
         this.setUnlocalizedName("dna_combinator_hybridizer");
         this.setHardness(2.0F);
         this.setStepSound(Block.soundTypeMetal);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 
     @Override
@@ -67,14 +67,14 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.dna_combinator_hybridizer);
+        return Item.getItemFromBlock(BlockHandler.INSTANCE.dna_combinator_hybridizer);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.dna_combinator_hybridizer);
+        return Item.getItemFromBlock(BlockHandler.INSTANCE.dna_combinator_hybridizer);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.world.jurdstrees.algorythms;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.Feature.FeatureType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.InsPCoord.InsPType;
@@ -43,12 +43,12 @@ public class Tree
 
     public static Block getBlocksFromCode(TreeType type)
     {
-        return JCBlockRegistry.logs.get(type);
+        return BlockHandler.INSTANCE.logs.get(type);
     }
 
     public static Block getLeavesFromCode(TreeType type)
     {
-        return JCBlockRegistry.leaves.get(type);
+        return BlockHandler.INSTANCE.leaves.get(type);
     }
 
     public Tree(TreeType type, int maxAge, int maxBranchLength, int penalty, int lbl, int mtheight)

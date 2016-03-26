@@ -15,9 +15,9 @@ import net.minecraft.world.Explosion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setStepSound(Block.soundTypeStone);
-        this.setCreativeTab(JCCreativeTabs.fossils);
+        this.setCreativeTab(TabHandler.INSTANCE.fossils);
 
         this.start = start;
 
@@ -87,7 +87,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
-        List<Dinosaur> dinosaurs = JCEntityRegistry.getDinosaurs();
+        List<Dinosaur> dinosaurs = EntityHandler.INSTANCE.getDinosaurs();
 
         for (int i = 0; i < 16; i++)
         {
@@ -107,7 +107,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
 
     public Dinosaur getDinosaur(int metadata)
     {
-        return JCEntityRegistry.getDinosaurById(start + metadata);
+        return EntityHandler.INSTANCE.getDinosaurById(start + metadata);
     }
 
     @Override

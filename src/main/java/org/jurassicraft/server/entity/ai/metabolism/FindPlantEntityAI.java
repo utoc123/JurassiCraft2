@@ -95,7 +95,7 @@ public class FindPlantEntityAI extends EntityAIBase
             Block block = world.getBlockState(pos).getBlock();
 
             if (block instanceof BlockBush || block instanceof BlockLeaves)
-//          if (FoodHelper.canDietEat(EnumDiet.HERBIVORE, block))
+//          if (FoodHandler.canDietEat(EnumDiet.HERBIVORE, block))
             {
                 target = pos;
                 break;

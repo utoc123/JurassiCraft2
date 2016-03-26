@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
-import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.food.FoodHandler;
 
 import java.util.List;
 
@@ -76,7 +76,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
                     {
                         Item item = stack.getItem();
 
-                        if (FoodHelper.canDietEat(dinosaur.getDinosaur().getDiet(), item))
+                        if (FoodHandler.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
                         {
                             double diffX = posX - e.posX;
                             double diffY = posY - e.posY;

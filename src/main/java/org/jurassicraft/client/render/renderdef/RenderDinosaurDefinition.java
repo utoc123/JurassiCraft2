@@ -7,6 +7,7 @@ import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,15 +16,14 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.render.entity.DinosaurRenderer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.IndominusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumGrowthStage;
 
 @SideOnly(Side.CLIENT)
-public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
+public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderFactory<DinosaurEntity>
 {
     private final Dinosaur dinosaur;
-    private final ITabulaModelAnimator<IndominusEntity> animator;
+    private final ITabulaModelAnimator<ENTITY> animator;
 
     private final TabulaModel modelAdult;
     private final TabulaModel modelInfant;
@@ -51,7 +51,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         }
     }
 
-    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<IndominusEntity> animator, float parShadowSize)
+    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<ENTITY> animator, float parShadowSize)
     {
         this.dinosaur = dinosaur;
         this.animator = animator;
@@ -98,7 +98,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         return eggTexture == null ? DEFAULT_EGG_TEXTURE : eggTexture;
     }
 
-    public ITabulaModelAnimator<IndominusEntity> getModelAnimator()
+    public ITabulaModelAnimator<ENTITY> getModelAnimator()
     {
         return animator;
     }

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 public class ZamitesPlant extends Plant
 {
@@ -20,6 +20,6 @@ public class ZamitesPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return JCBlockRegistry.cycad_zamites;
+        return BlockHandler.INSTANCE.cycad_zamites;
     }
 }

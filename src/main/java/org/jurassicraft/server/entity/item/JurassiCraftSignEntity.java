@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
 
@@ -135,7 +135,7 @@ public class JurassiCraftSignEntity extends EntityHanging implements IEntityAddi
                 }
             }
 
-            this.entityDropItem(new ItemStack(JCItemRegistry.jc_sign), 0.0F);
+            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.jc_sign), 0.0F);
         }
     }
 

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 
 public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMessage>
@@ -31,7 +31,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
     public PlacePaddockSignMessage(EnumFacing facing, BlockPos pos, Dinosaur dino)
     {
-        this.dino = JCEntityRegistry.getDinosaurId(dino);
+        this.dino = EntityHandler.INSTANCE.getDinosaurId(dino);
         this.pos = new BlockPos(x, y, z);
         this.x = pos.getX();
         this.y = pos.getY();

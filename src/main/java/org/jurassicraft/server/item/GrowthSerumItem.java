@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class GrowthSerumItem extends Item
@@ -12,7 +12,7 @@ public class GrowthSerumItem extends Item
     public GrowthSerumItem()
     {
         super();
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class GrowthSerumItem extends Item
 
                 if (!player.capabilities.isCreativeMode)
                 {
-                    player.inventory.addItemStackToInventory(new ItemStack(JCItemRegistry.empty_syringe));
+                    player.inventory.addItemStackToInventory(new ItemStack(ItemHandler.INSTANCE.empty_syringe));
                 }
 
                 return true;

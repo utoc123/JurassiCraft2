@@ -42,7 +42,7 @@ public class JurassicPortalBlock extends BlockPortal
         byte b = 0;
         byte b1 = 1;
 
-        if (world.getBlockState(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ())).getBlock() == JCBlockRegistry.gypsum_bricks || world.getBlockState(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ())).getBlock() == JCBlockRegistry.gypsum_bricks)
+        if (world.getBlockState(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ())).getBlock() == BlockHandler.INSTANCE.gypsum_bricks || world.getBlockState(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ())).getBlock() == BlockHandler.INSTANCE.gypsum_bricks)
         {
         }
 
@@ -52,7 +52,7 @@ public class JurassicPortalBlock extends BlockPortal
         {
         }
 
-        if (world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock() != JCBlockRegistry.gypsum_bricks)
+        if (world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock() != BlockHandler.INSTANCE.gypsum_bricks)
         {
             world.setBlockToAir(pos);
         }

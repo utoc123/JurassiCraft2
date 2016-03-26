@@ -8,10 +8,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.lang.AdvLang;
-import org.jurassicraft.server.plant.JCPlantRegistry;
 import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class PlantDNAItem extends Item
     {
         super();
 
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.setHasSubtypes(true);
     }
 
@@ -39,11 +39,11 @@ public class PlantDNAItem extends Item
 
     public Plant getPlant(ItemStack stack)
     {
-        Plant plant = JCPlantRegistry.getPlantById(stack.getItemDamage());
+        Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
 
         if (plant == null)
         {
-            plant = JCPlantRegistry.small_royal_fern;
+            plant = PlantHandler.INSTANCE.small_royal_fern;
         }
 
         return plant;
@@ -53,7 +53,7 @@ public class PlantDNAItem extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<Plant>(JCPlantRegistry.getPlants());
+        List<Plant> plants = new ArrayList<Plant>(PlantHandler.INSTANCE.getPlants());
 
         Map<Plant, Integer> ids = new HashMap<Plant, Integer>();
 

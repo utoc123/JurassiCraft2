@@ -23,7 +23,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +51,7 @@ public class JCStairsBlock extends Block
         this.setStepSound(this.modelBlock.stepSound);
         this.setHarvestLevel(this.modelBlock.getHarvestTool(this.modelState), this.modelBlock.getHarvestLevel(this.modelState));
         this.setLightOpacity(255);
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.setUnlocalizedName(type.name().toLowerCase().replaceAll(" ", "_") + "_stairs");
     }
 

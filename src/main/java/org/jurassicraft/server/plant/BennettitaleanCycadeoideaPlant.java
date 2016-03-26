@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 public class BennettitaleanCycadeoideaPlant extends Plant
 {
@@ -20,6 +20,6 @@ public class BennettitaleanCycadeoideaPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return JCBlockRegistry.bennettitalean_cycadeoidea;
+        return BlockHandler.INSTANCE.bennettitalean_cycadeoidea;
     }
 }

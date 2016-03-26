@@ -5,22 +5,24 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class StorageTypeRegistry
+public enum StorageTypeHandler
 {
-    private static Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<>();
+    INSTANCE;
 
-    public static void init()
+    private Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<>();
+
+    public void init()
     {
         register("DinoDNA", DinosaurDNAStorageType::new);
         register("PlantDNA", PlantDNAStorageType::new);
     }
 
-    private static void register(String id, Supplier<? extends IStorageType> storageType)
+    private void register(String id, Supplier<? extends IStorageType> storageType)
     {
         storageTypes.put(id, Objects.requireNonNull(storageType));
     }
 
-    public static IStorageType getStorageType(String id)
+    public IStorageType getStorageType(String id)
     {
         if (id == null || id.isEmpty())
         {

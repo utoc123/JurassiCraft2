@@ -17,19 +17,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.achievements.JCAchievements;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.achievements.AchievementHandler;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.configuration.JCConfigurations;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.handler.JCGuiHandler;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
-import org.jurassicraft.server.paleopad.AppRegistry;
-import org.jurassicraft.server.plant.JCPlantRegistry;
-import org.jurassicraft.server.recipe.JCRecipeRegistry;
-import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
+import org.jurassicraft.server.paleopad.AppHandler;
+import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.recipe.RecipeHandler;
+import org.jurassicraft.server.storagedisc.StorageTypeHandler;
 import org.jurassicraft.server.world.WorldGenerator;
 
 import java.util.Map;
@@ -40,16 +40,16 @@ public class ServerProxy
     {
         JurassiCraft.configurations.initConfig(event);
 
-        JCEntityRegistry.init();
+        EntityHandler.INSTANCE.init();
         FossilItem.init();
-        JCPlantRegistry.init();
-        JCCreativeTabs.init();
-        JCBlockRegistry.init();
-        JCItemRegistry.init();
-        JCRecipeRegistry.init();
-        AppRegistry.init();
-        JCAchievements.init();
-        StorageTypeRegistry.init();
+        PlantHandler.INSTANCE.init();
+        TabHandler.INSTANCE.init();
+        BlockHandler.INSTANCE.init();
+        ItemHandler.INSTANCE.init();
+        RecipeHandler.INSTANCE.init();
+        AppHandler.INSTANCE.init();
+        AchievementHandler.INSTANCE.init();
+        StorageTypeHandler.INSTANCE.init();
 
         // addChestGenItems();
 
@@ -65,10 +65,10 @@ public class ServerProxy
 
 //    private void addChestGenItems()
 //    {
-//        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(new ItemStack(JCItemRegistry.amber, 1, 0), 1, 2, 30));
-//        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(new ItemStack(JCItemRegistry.amber, 1, 1), 1, 2, 30));
+//        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(new ItemStack(ItemHandler.INSTANCE.amber, 1, 0), 1, 2, 30));
+//        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(new ItemStack(ItemHandler.INSTANCE.amber, 1, 1), 1, 2, 30));
 //
-//        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+//        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
 //
 //        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
 //
@@ -87,7 +87,7 @@ public class ServerProxy
 //        {
 //            if (dino.shouldRegister() && !(dino instanceof IHybrid))
 //            {
-//                ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(JCItemRegistry.skull, 1, ids.get(dino)), 1, 6, 80));
+//                ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ItemHandler.INSTANCE.skull, 1, ids.get(dino)), 1, 6, 80));
 //            }
 //        }
 //    }

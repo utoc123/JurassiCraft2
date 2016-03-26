@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.tileentity.FossilGrinderTile;
 
 import java.util.Random;
@@ -32,7 +32,7 @@ public class FossilGrinderBlock extends OrientedBlock
         this.setUnlocalizedName("fossil_grinder");
         this.setHardness(2.0F);
         this.setStepSound(Block.soundTypeMetal);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 
     @Override
@@ -67,14 +67,14 @@ public class FossilGrinderBlock extends OrientedBlock
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.fossil_grinder);
+        return Item.getItemFromBlock(BlockHandler.INSTANCE.fossil_grinder);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.fossil_grinder);
+        return Item.getItemFromBlock(BlockHandler.INSTANCE.fossil_grinder);
     }
 
     @Override

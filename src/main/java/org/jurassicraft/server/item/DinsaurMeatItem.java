@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.lang.AdvLang;
@@ -29,7 +29,7 @@ public class DinsaurMeatItem extends ItemFood
         super(3, 0.3F, true);
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(JCCreativeTabs.foods);
+        this.setCreativeTab(TabHandler.INSTANCE.foods);
     }
 
     @Override
@@ -42,11 +42,11 @@ public class DinsaurMeatItem extends ItemFood
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = JCEntityRegistry.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = JCEntityRegistry.achillobator;
+            dinosaur = EntityHandler.INSTANCE.achillobator;
         }
 
         return dinosaur;
@@ -54,20 +54,20 @@ public class DinsaurMeatItem extends ItemFood
 
     public int getContainerDinosaur(ItemStack stack)
     {
-        return JCEntityRegistry.getDinosaurId(getDinosaur(stack));
+        return EntityHandler.INSTANCE.getDinosaurId(getDinosaur(stack));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

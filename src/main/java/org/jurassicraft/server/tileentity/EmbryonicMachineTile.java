@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.item.ItemDNA;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.PlantDNAItem;
 
 public class EmbryonicMachineTile extends MachineBaseTile
@@ -30,18 +30,18 @@ public class EmbryonicMachineTile extends MachineBaseTile
         ItemStack petridish = slots[1];
         ItemStack syringe = slots[2];
 
-        if (dna != null && petridish != null && syringe != null && syringe.getItem() == JCItemRegistry.empty_syringe)
+        if (dna != null && petridish != null && syringe != null && syringe.getItem() == ItemHandler.INSTANCE.empty_syringe)
         {
             ItemStack output = null;
 
-            if (petridish.getItem() == JCItemRegistry.petri_dish && dna.getItem() instanceof ItemDNA)
+            if (petridish.getItem() == ItemHandler.INSTANCE.petri_dish && dna.getItem() instanceof ItemDNA)
             {
-                output = new ItemStack(JCItemRegistry.syringe, 1, dna.getItemDamage());
+                output = new ItemStack(ItemHandler.INSTANCE.syringe, 1, dna.getItemDamage());
                 output.setTagCompound(dna.getTagCompound());
             }
-            else if (petridish.getItem() == JCItemRegistry.plant_cells_petri_dish && dna.getItem() instanceof PlantDNAItem)
+            else if (petridish.getItem() == ItemHandler.INSTANCE.plant_cells_petri_dish && dna.getItem() instanceof PlantDNAItem)
             {
-                output = new ItemStack(JCItemRegistry.plant_callus, 1, dna.getItemDamage());
+                output = new ItemStack(ItemHandler.INSTANCE.plant_callus, 1, dna.getItemDamage());
                 output.setTagCompound(dna.getTagCompound());
             }
 
@@ -58,13 +58,13 @@ public class EmbryonicMachineTile extends MachineBaseTile
         {
             ItemStack output = null;
 
-            if (slots[0].getItem() instanceof ItemDNA && slots[1].getItem() == JCItemRegistry.petri_dish)
+            if (slots[0].getItem() instanceof ItemDNA && slots[1].getItem() == ItemHandler.INSTANCE.petri_dish)
             {
-                output = new ItemStack(JCItemRegistry.syringe, 1, slots[0].getItemDamage());
+                output = new ItemStack(ItemHandler.INSTANCE.syringe, 1, slots[0].getItemDamage());
             }
-            else if (slots[0].getItem() instanceof PlantDNAItem && slots[1].getItem() == JCItemRegistry.plant_cells_petri_dish)
+            else if (slots[0].getItem() instanceof PlantDNAItem && slots[1].getItem() == ItemHandler.INSTANCE.plant_cells_petri_dish)
             {
-                output = new ItemStack(JCItemRegistry.plant_callus, 1, slots[0].getItemDamage());
+                output = new ItemStack(ItemHandler.INSTANCE.plant_callus, 1, slots[0].getItemDamage());
             }
 
             output.setTagCompound(slots[0].getTagCompound());

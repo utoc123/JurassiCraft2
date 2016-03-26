@@ -11,7 +11,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnData
 {
@@ -149,7 +149,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
             worldObj.spawnEntityInWorld(entity);
 
             this.setDead();
-            this.entityDropItem(new ItemStack(JCItemRegistry.cage_small, 1, marine ? 1 : 0), 0.5F);
+            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.cage_small, 1, marine ? 1 : 0), 0.5F);
         }
 
         return true;
@@ -162,7 +162,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 
         if (!worldObj.isRemote)
         {
-            ItemStack stack = new ItemStack(JCItemRegistry.cage_small, 1, marine ? 1 : 0);
+            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.cage_small, 1, marine ? 1 : 0);
 
             if (entity != null)
             {

@@ -2,7 +2,7 @@ package org.jurassicraft.server.block.tree;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class JCPlanksBlock extends Block
 {
@@ -13,6 +13,6 @@ public class JCPlanksBlock extends Block
         this.setResistance(0.5F);
         this.setStepSound(Block.soundTypeWood);
         this.setUnlocalizedName(type.name().toLowerCase() + "_planks");
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
     }
 }

@@ -7,8 +7,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class JurassiCraftMerchandiseTab extends CreativeTabs
 {
@@ -17,15 +17,15 @@ public class JurassiCraftMerchandiseTab extends CreativeTabs
     public JurassiCraftMerchandiseTab(String label)
     {
         super(label);
-        this.metas = new int[JCEntityRegistry.getRegisteredDinosaurs().size()];
+        this.metas = new int[EntityHandler.INSTANCE.getRegisteredDinosaurs().size()];
 
         int i = 0;
 
-        for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
         {
             if (dino.shouldRegister())
             {
-                metas[i] = JCEntityRegistry.getDinosaurId(dino);
+                metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
 
                 i++;
             }
@@ -42,6 +42,6 @@ public class JurassiCraftMerchandiseTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return JCItemRegistry.action_figure;
+        return ItemHandler.INSTANCE.action_figure;
     }
 }

@@ -6,26 +6,28 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.item.JCItemRegistry;
-import org.jurassicraft.server.plant.JCPlantRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FoodHelper
+public enum FoodHandler
 {
-    private static final Map<FoodType, List<Item>> foodTypes = new HashMap<FoodType, List<Item>>();
-    private static final List<Item> food = new ArrayList<Item>();
+    INSTANCE;
+
+    private final Map<FoodType, List<Item>> foodTypes = new HashMap<FoodType, List<Item>>();
+    private final List<Item> food = new ArrayList<Item>();
 
     // TODO:  Add food values for each.
 
-    public static void init()
+    public void init()
     {
         registerFood(Blocks.leaves, FoodType.PLANT);
         registerFood(Blocks.leaves2, FoodType.PLANT);
@@ -43,15 +45,15 @@ public class FoodHelper
         registerFood(Blocks.red_flower, FoodType.PLANT);
         registerFood(Blocks.double_plant, FoodType.PLANT);
 
-        for (Plant plant : JCPlantRegistry.getPlants())
+        for (Plant plant : PlantHandler.INSTANCE.getPlants())
         {
             registerFood(plant.getBlock(), FoodType.PLANT);
         }
 
         for (TreeType type : TreeType.values())
         {
-            registerFood(JCBlockRegistry.leaves.get(type), FoodType.PLANT);
-            registerFood(JCBlockRegistry.saplings.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.INSTANCE.leaves.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.INSTANCE.saplings.get(type), FoodType.PLANT);
         }
 
         registerFood(Items.apple, FoodType.PLANT);
@@ -76,8 +78,8 @@ public class FoodHelper
         registerFood(Items.rabbit, FoodType.MEAT);
         registerFood(Items.cooked_rabbit, FoodType.MEAT);
 
-        registerFood(JCItemRegistry.dino_meat, FoodType.MEAT);
-        registerFood(JCItemRegistry.dino_steak, FoodType.MEAT);
+        registerFood(ItemHandler.INSTANCE.dino_meat, FoodType.MEAT);
+        registerFood(ItemHandler.INSTANCE.dino_steak, FoodType.MEAT);
 
         for (Item item : Item.itemRegistry)
         {
@@ -102,9 +104,9 @@ public class FoodHelper
         }
     }
 
-    public static void registerFood(Item food, FoodType foodType)
+    public void registerFood(Item food, FoodType foodType)
     {
-        if (!FoodHelper.food.contains(food))
+        if (!this.food.contains(food))
         {
             List<Item> foodsForType = foodTypes.get(foodType);
 
@@ -115,23 +117,23 @@ public class FoodHelper
 
             foodsForType.add(food);
 
-            FoodHelper.food.add(food);
+            this.food.add(food);
 
             foodTypes.put(foodType, foodsForType);
         }
     }
 
-    public static void registerFood(Block food, FoodType foodType)
+    public void registerFood(Block food, FoodType foodType)
     {
         registerFood(Item.getItemFromBlock(food), foodType);
     }
 
-    public static List<Item> getFoodType(FoodType type)
+    public List<Item> getFoodType(FoodType type)
     {
         return foodTypes.get(type);
     }
 
-    public static FoodType getFoodType(Item item)
+    public FoodType getFoodType(Item item)
     {
         for (FoodType foodType : FoodType.values())
         {
@@ -144,22 +146,22 @@ public class FoodHelper
         return null;
     }
 
-    public static FoodType getFoodType(Block block)
+    public FoodType getFoodType(Block block)
     {
         return getFoodType(Item.getItemFromBlock(block));
     }
 
-    public static boolean canDietEat(EnumDiet diet, Item item)
+    public boolean canDietEat(EnumDiet diet, Item item)
     {
         return getFoodsForDiet(diet).contains(item);
     }
 
-    public static boolean canDietEat(EnumDiet diet, Block block)
+    public boolean canDietEat(EnumDiet diet, Block block)
     {
         return canDietEat(diet, Item.getItemFromBlock(block));
     }
 
-    private static List<Item> getFoodsForDiet(EnumDiet diet)
+    private List<Item> getFoodsForDiet(EnumDiet diet)
     {
         List<Item> possibleItems = new ArrayList<Item>();
 

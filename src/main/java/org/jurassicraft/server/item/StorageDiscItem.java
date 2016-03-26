@@ -8,9 +8,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.storagedisc.IStorageType;
-import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
+import org.jurassicraft.server.storagedisc.StorageTypeHandler;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class StorageDiscItem extends Item
     public StorageDiscItem()
     {
         super();
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
     /**
@@ -37,7 +37,7 @@ public class StorageDiscItem extends Item
         if (nbt != null)
         {
             String storageId = nbt.getString("StorageId");
-            IStorageType type = StorageTypeRegistry.getStorageType(storageId);
+            IStorageType type = StorageTypeHandler.INSTANCE.getStorageType(storageId);
 
             if (type != null)
             {

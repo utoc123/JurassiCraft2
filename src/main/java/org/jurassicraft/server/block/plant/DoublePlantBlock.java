@@ -15,7 +15,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 import java.util.Random;
 
@@ -28,7 +28,7 @@ public class DoublePlantBlock extends BlockBush
         super(material);
         this.setHardness(0.0F);
         this.setStepSound(soundTypeGrass);
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
     }
 
     @Override

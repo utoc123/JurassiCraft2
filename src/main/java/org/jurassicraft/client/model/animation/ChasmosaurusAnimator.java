@@ -1,50 +1,50 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.ChasmosaurusEntity;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class ChasmosaurusAnimator extends DinosaurAnimator
+public class ChasmosaurusAnimator extends DinosaurAnimator<ChasmosaurusEntity>
 {
     public ChasmosaurusAnimator()
     {
-        super(JCEntityRegistry.chasmosaurus);
+        super(EntityHandler.INSTANCE.chasmosaurus);
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, ChasmosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        MowzieModelRenderer head = model.getCube("Head");
-        MowzieModelRenderer neck2 = model.getCube("Neck 2");
-        MowzieModelRenderer neck1 = model.getCube("Neck");
-        MowzieModelRenderer shoulders = model.getCube("Body shoulders");
-        MowzieModelRenderer stomach = model.getCube("Body MAIN");
-        MowzieModelRenderer waist = model.getCube("Body hips");
-        MowzieModelRenderer tail1 = model.getCube("Tail 1");
-        MowzieModelRenderer tail2 = model.getCube("Tail 2");
-        MowzieModelRenderer tail3 = model.getCube("Tail 3");
-        MowzieModelRenderer tail4 = model.getCube("Tail 4");
-        MowzieModelRenderer tail5 = model.getCube("Tail 5");
-        MowzieModelRenderer armUpperLeft = model.getCube("FrontLeg Upper Left");
-        MowzieModelRenderer armLowerLeft = model.getCube("FrontLeg MID Left");
-        MowzieModelRenderer handLeft = model.getCube("FrontLeg FOOT Left");
-        MowzieModelRenderer armUpperRight = model.getCube("FrontLeg Upper Right");
-        MowzieModelRenderer armLowerRight = model.getCube("FrontLeg MID Right");
-        MowzieModelRenderer handRight = model.getCube("FrontLeg FOOT Right");
-        MowzieModelRenderer thighLeft = model.getCube("RearLeg Upper Left");
-        MowzieModelRenderer calfLeft = model.getCube("RearLeg Middle Left");
-        MowzieModelRenderer footLeft = model.getCube("RearLeg Foot Left");
-        MowzieModelRenderer thighRight = model.getCube("RearLeg Upper Right");
-        MowzieModelRenderer calfRight = model.getCube("RearLeg Middle Right");
-        MowzieModelRenderer footRight = model.getCube("RearLeg Foot Right");
-        MowzieModelRenderer jaw = model.getCube("Jaw LOWER");
+        AdvancedModelRenderer head = model.getCube("Head");
+        AdvancedModelRenderer neck2 = model.getCube("Neck 2");
+        AdvancedModelRenderer neck1 = model.getCube("Neck");
+        AdvancedModelRenderer shoulders = model.getCube("Body shoulders");
+        AdvancedModelRenderer stomach = model.getCube("Body MAIN");
+        AdvancedModelRenderer waist = model.getCube("Body hips");
+        AdvancedModelRenderer tail1 = model.getCube("Tail 1");
+        AdvancedModelRenderer tail2 = model.getCube("Tail 2");
+        AdvancedModelRenderer tail3 = model.getCube("Tail 3");
+        AdvancedModelRenderer tail4 = model.getCube("Tail 4");
+        AdvancedModelRenderer tail5 = model.getCube("Tail 5");
+        AdvancedModelRenderer armUpperLeft = model.getCube("FrontLeg Upper Left");
+        AdvancedModelRenderer armLowerLeft = model.getCube("FrontLeg MID Left");
+        AdvancedModelRenderer handLeft = model.getCube("FrontLeg FOOT Left");
+        AdvancedModelRenderer armUpperRight = model.getCube("FrontLeg Upper Right");
+        AdvancedModelRenderer armLowerRight = model.getCube("FrontLeg MID Right");
+        AdvancedModelRenderer handRight = model.getCube("FrontLeg FOOT Right");
+        AdvancedModelRenderer thighLeft = model.getCube("RearLeg Upper Left");
+        AdvancedModelRenderer calfLeft = model.getCube("RearLeg Middle Left");
+        AdvancedModelRenderer footLeft = model.getCube("RearLeg Foot Left");
+        AdvancedModelRenderer thighRight = model.getCube("RearLeg Upper Right");
+        AdvancedModelRenderer calfRight = model.getCube("RearLeg Middle Right");
+        AdvancedModelRenderer footRight = model.getCube("RearLeg Foot Right");
+        AdvancedModelRenderer jaw = model.getCube("Jaw LOWER");
 
-        MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
 
         float sprintModifier = (float) (1 / (1 + Math.exp(30 * (-f1 + 0.92))));
         float legOffsetModifier = 2.5F;
@@ -85,7 +85,7 @@ public class ChasmosaurusAnimator extends DinosaurAnimator
 
         model.chainWave(tail, bobBase * scaleFactor, 0.03F, 1F, f, f1);
 
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         // Idling
         model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 1F);
@@ -105,6 +105,6 @@ public class ChasmosaurusAnimator extends DinosaurAnimator
         model.chainSwing(tail, 0.1F, 0.05F, 2, ticksExisted, 1F);
         model.chainWave(tail, 0.1F, -0.05F, 1, ticksExisted, 1F);
 
-        parEntity.tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

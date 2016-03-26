@@ -10,7 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
 import org.lwjgl.opengl.GL11;
@@ -43,7 +43,7 @@ public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<E
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == JCBlockRegistry.embryonic_machine)
+        if (blockState.getBlock() == BlockHandler.INSTANCE.embryonic_machine)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import org.jurassicraft.client.proxy.ClientProxy;
+import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 
@@ -51,7 +51,7 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
 
         private RenderDinosaurDefinition getRenderDef(DinosaurEggEntity entity)
         {
-            return ClientProxy.renderingRegistry.getRenderDef(entity.getDinosaur());
+            return RenderingHandler.INSTANCE.getRenderDef(entity.getDinosaur());
         }
     }
 }

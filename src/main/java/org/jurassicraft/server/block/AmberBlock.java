@@ -9,8 +9,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class AmberBlock extends Block
         super(Material.rock);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
         this.setHarvestLevel("pickaxe", 2);
     }
 
@@ -52,7 +52,7 @@ public class AmberBlock extends Block
 
         for (int i = 0; i < count + 1; i++)
         {
-            Item item = JCItemRegistry.amber;
+            Item item = ItemHandler.INSTANCE.amber;
 
             if (item != null)
             {

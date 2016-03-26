@@ -1,24 +1,23 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.ProtoceratopsEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class ProtoceratopsAnimator extends DinosaurAnimator
+public class ProtoceratopsAnimator extends DinosaurAnimator<ProtoceratopsEntity>
 {
     public ProtoceratopsAnimator()
     {
-        super(JCEntityRegistry.protoceratops);
+        super(EntityHandler.INSTANCE.protoceratops);
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, ProtoceratopsEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.5F;
         float globalHeight = 0.5F;
@@ -26,43 +25,43 @@ public class ProtoceratopsAnimator extends DinosaurAnimator
 
         float frontOffset = 1.0F;
 
-        MowzieModelRenderer head = model.getCube("Head");
+        AdvancedModelRenderer head = model.getCube("Head");
 
-        MowzieModelRenderer lowerJaw = model.getCube("Lower jaw");
+        AdvancedModelRenderer lowerJaw = model.getCube("Lower jaw");
 
-        MowzieModelRenderer neck1 = model.getCube("Neck #1");
-        MowzieModelRenderer neck2 = model.getCube("Neck #2");
-        MowzieModelRenderer neck3 = model.getCube("Neck #3");
+        AdvancedModelRenderer neck1 = model.getCube("Neck #1");
+        AdvancedModelRenderer neck2 = model.getCube("Neck #2");
+        AdvancedModelRenderer neck3 = model.getCube("Neck #3");
 
-        MowzieModelRenderer body = model.getCube("Body MAIN");
+        AdvancedModelRenderer body = model.getCube("Body MAIN");
 
-        MowzieModelRenderer tail1 = model.getCube("Tail #1");
-        MowzieModelRenderer tail2 = model.getCube("Tail #2");
-        MowzieModelRenderer tail3 = model.getCube("Tail #3");
-        MowzieModelRenderer tail4 = model.getCube("Tail #4");
+        AdvancedModelRenderer tail1 = model.getCube("Tail #1");
+        AdvancedModelRenderer tail2 = model.getCube("Tail #2");
+        AdvancedModelRenderer tail3 = model.getCube("Tail #3");
+        AdvancedModelRenderer tail4 = model.getCube("Tail #4");
 
-        MowzieModelRenderer armUpperRight = model.getCube("Arm Top RIGHT");
-        MowzieModelRenderer armLowerRight = model.getCube("Arm Mid RIGHT");
-        MowzieModelRenderer handRight = model.getCube("Arm Hand RIGHT");
+        AdvancedModelRenderer armUpperRight = model.getCube("Arm Top RIGHT");
+        AdvancedModelRenderer armLowerRight = model.getCube("Arm Mid RIGHT");
+        AdvancedModelRenderer handRight = model.getCube("Arm Hand RIGHT");
 
-        MowzieModelRenderer armUpperLeft = model.getCube("Arm Top LEFT");
-        MowzieModelRenderer armLowerLeft = model.getCube("Arm Mid LEFT");
-        MowzieModelRenderer handLeft = model.getCube("Arm Hand LEFT");
+        AdvancedModelRenderer armUpperLeft = model.getCube("Arm Top LEFT");
+        AdvancedModelRenderer armLowerLeft = model.getCube("Arm Mid LEFT");
+        AdvancedModelRenderer handLeft = model.getCube("Arm Hand LEFT");
 
-        MowzieModelRenderer thighLeft = model.getCube("Leg Top LEFT");
-        MowzieModelRenderer thighRight = model.getCube("Leg Top RIGHT");
+        AdvancedModelRenderer thighLeft = model.getCube("Leg Top LEFT");
+        AdvancedModelRenderer thighRight = model.getCube("Leg Top RIGHT");
 
-        MowzieModelRenderer thighLowerLeft = model.getCube("Leg Mid LEFT");
-        MowzieModelRenderer thighLowerRight = model.getCube("Leg Mid RIGHT");
+        AdvancedModelRenderer thighLowerLeft = model.getCube("Leg Mid LEFT");
+        AdvancedModelRenderer thighLowerRight = model.getCube("Leg Mid RIGHT");
 
-        MowzieModelRenderer footUpperLeft = model.getCube("Leg Bot LEFT");
-        MowzieModelRenderer footUpperRight = model.getCube("Leg Bot RIGHT");
+        AdvancedModelRenderer footUpperLeft = model.getCube("Leg Bot LEFT");
+        AdvancedModelRenderer footUpperRight = model.getCube("Leg Bot RIGHT");
 
-        MowzieModelRenderer footLeft = model.getCube("Leg Foot LEFT");
-        MowzieModelRenderer footRight = model.getCube("Leg Foot RIGHT");
+        AdvancedModelRenderer footLeft = model.getCube("Leg Foot LEFT");
+        AdvancedModelRenderer footRight = model.getCube("Leg Foot RIGHT");
 
-        MowzieModelRenderer[] tail = new MowzieModelRenderer[] { tail4, tail3, tail2, tail1 };
-        MowzieModelRenderer[] neck = new MowzieModelRenderer[] { head, neck3, neck2, neck1 };
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] neck = new AdvancedModelRenderer[] { head, neck3, neck2, neck1 };
 
         model.bob(body, globalSpeed * 1.0F, globalHeight * 1.0F, false, f, f1);
         model.bob(thighLeft, globalSpeed * 1.0F, globalHeight * 1.0F, false, f, f1);
@@ -88,11 +87,11 @@ public class ProtoceratopsAnimator extends DinosaurAnimator
         model.walk(armLowerRight, 1F * globalSpeed, 0.6F * globalDegree, false, frontOffset + 1F, -0.2F, f, f1);
         model.walk(handRight, 1F * globalSpeed, 0.6F * globalDegree, true, frontOffset + 2F, 0.8F, f, f1);
 
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         model.chainWave(tail, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.025F);
         model.chainWave(neck, globalSpeed * 0.25F, globalHeight * 1.0F, -3, ticksExisted, 0.025F);
 
-        ((ProtoceratopsEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

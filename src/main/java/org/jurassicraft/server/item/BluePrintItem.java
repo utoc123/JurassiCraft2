@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -17,7 +17,7 @@ public class BluePrintItem extends Item
 {
     public BluePrintItem()
     {
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
         this.setMaxStackSize(1);
     }
 
@@ -25,7 +25,7 @@ public class BluePrintItem extends Item
     public String getItemStackDisplayName(ItemStack stack)
     {
         int dinoId = getDinosaur(stack);
-        Dinosaur dino = JCEntityRegistry.getDinosaurById(dinoId);
+        Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(dinoId);
         String name = "blue_print.blank.name";
 
         if (dino != null)

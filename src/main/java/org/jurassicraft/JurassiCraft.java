@@ -6,15 +6,25 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.CommandForceAnimation;
 import org.jurassicraft.server.configuration.JCConfigurations;
-import org.jurassicraft.server.food.FoodHelper;
-import org.jurassicraft.server.message.*;
+import org.jurassicraft.server.food.FoodHandler;
+import org.jurassicraft.server.message.ChangeTemperatureMessage;
+import org.jurassicraft.server.message.HelicopterDirectionMessage;
+import org.jurassicraft.server.message.HelicopterEngineMessage;
+import org.jurassicraft.server.message.HelicopterModulesMessage;
+import org.jurassicraft.server.message.PlacePaddockSignMessage;
+import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
+import org.jurassicraft.server.message.SyncPaleoPadMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 import java.io.File;
@@ -71,7 +81,7 @@ public class JurassiCraft
         proxy.preInit(event);
         logger.debug("Finished pre-initialization for JurassiCraft!");
 
-        FoodHelper.init();
+        FoodHandler.INSTANCE.init();
 
         //bookWiki = BookWiki.create(instance, new InputStreamReader(JurassiCraft.class.getResourceAsStream("/assets/jurassicraft/bookwiki/bookwiki.json")));
     }

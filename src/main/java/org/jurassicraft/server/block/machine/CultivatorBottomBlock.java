@@ -11,8 +11,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.tileentity.CultivatorTile;
 
 public class CultivatorBottomBlock extends CultivatorBlock
@@ -20,7 +20,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
     public CultivatorBottomBlock()
     {
         super("bottom");
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
 
         if (block == Blocks.air)
         {
-            worldIn.setBlockState(topBlock, JCBlockRegistry.cultivate_top.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
+            worldIn.setBlockState(topBlock, BlockHandler.INSTANCE.cultivate_top.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
         }
     }
 
