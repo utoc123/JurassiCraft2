@@ -11,7 +11,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.JCCreativeTabs;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.lang.AdvLang;
@@ -80,10 +79,21 @@ public class ItemDinosaurEgg extends DNAContainerItem
     {
         pos = pos.offset(side);
 
+        if (side == EnumFacing.EAST || side == EnumFacing.WEST)
+        {
+            hitX = 1.0F - hitX;
+        }
+        else if (side == EnumFacing.NORTH || side == EnumFacing.SOUTH)
+        {
+            hitZ = 1.0F - hitZ;
+        }
+
         if (player.canPlayerEdit(pos, side, stack) && !world.isRemote)
         {
-            DinosaurEggEntity egg = spawnEgg(world, player, stack, pos.getX(), pos.getY(), pos.getZ());
-            egg.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            DinosaurEggEntity egg = new DinosaurEggEntity(world, getDinosaur(stack), getDNAQuality(player, stack), getGeneticCode(player, stack).toString());
+            ;
+            egg.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
+            egg.rotationYaw = player.rotationYaw;
             world.spawnEntityInWorld(egg);
 
             if (!player.capabilities.isCreativeMode)
@@ -95,27 +105,5 @@ public class ItemDinosaurEgg extends DNAContainerItem
         }
 
         return false;
-    }
-
-    public DinosaurEggEntity spawnEgg(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)
-    {
-        Dinosaur dinoInEgg = getDinosaur(stack);
-
-        if (dinoInEgg != null)
-        {
-            Class<? extends DinosaurEntity> dinoClass = dinoInEgg.getDinosaurClass();
-
-            try
-            {
-                DinosaurEntity dinosaur = dinoClass.getConstructor(World.class).newInstance(player.worldObj);
-                DinosaurEggEntity egg = new DinosaurEggEntity(world, dinosaur);
-                egg.setPosition(x, y, z);
-                return egg;
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 }
