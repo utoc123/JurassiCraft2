@@ -39,7 +39,7 @@ import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
 import org.jurassicraft.server.block.tree.JCStairsBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
@@ -162,7 +162,7 @@ public enum BlockHandler
 
         clear_glass = new ClearGlassBlock();
 
-        List<Dinosaur> dinosaurs = JCEntityRegistry.getDinosaurs();
+        List<Dinosaur> dinosaurs = EntityHandler.INSTANCE.getDinosaurs();
 
         for (int i = 0; i < (int) (Math.ceil(((float) dinosaurs.size()) / 16.0F)); i++)
         {
@@ -272,7 +272,7 @@ public enum BlockHandler
 
     public FossilBlock getFossilBlock(Dinosaur dinosaur)
     {
-        return getFossilBlock(JCEntityRegistry.getDinosaurId(dinosaur));
+        return getFossilBlock(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
     }
 
     private int getBlockId(int dinosaurId)
@@ -282,7 +282,7 @@ public enum BlockHandler
 
     public EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)
     {
-        return getEncasedFossil(JCEntityRegistry.getDinosaurId(dinosaur));
+        return getEncasedFossil(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
     }
 
     public EncasedFossilBlock getEncasedFossil(int id)
@@ -312,7 +312,7 @@ public enum BlockHandler
 
     public int getMetadata(Dinosaur dinosaur)
     {
-        return getMetadata(JCEntityRegistry.getDinosaurId(dinosaur));
+        return getMetadata(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
     }
 
     public void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name)

@@ -6,14 +6,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.CompsognathusEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class CompsognathusAnimator<ENTITY extends CompsognathusEntity> extends DinosaurAnimator<ENTITY>
 {
     public CompsognathusAnimator()
     {
-        super(JCEntityRegistry.compsognathus);
+        super(EntityHandler.INSTANCE.compsognathus);
     }
 
     @Override

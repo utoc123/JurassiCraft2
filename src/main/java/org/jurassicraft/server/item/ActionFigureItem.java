@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 
@@ -76,20 +76,20 @@ public class ActionFigureItem extends Item
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return JCEntityRegistry.getDinosaurById(stack.getMetadata());
+        return EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
+        Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

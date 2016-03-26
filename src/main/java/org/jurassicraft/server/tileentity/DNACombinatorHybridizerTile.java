@@ -12,7 +12,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.PlantDNA;
@@ -54,7 +54,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
             dinosaurs[i] = getDino(discs[i]);
         }
 
-        for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
         {
             if (dino instanceof IHybrid && dino.shouldRegister())
             {
@@ -106,7 +106,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
         {
             DinoDNA data = DinoDNA.readFromNBT(disc.getTagCompound());
 
-            return data.getDNAQuality() == 100 ? JCEntityRegistry.getDinosaurById(data.getContainer().getDinosaur()) : null;
+            return data.getDNAQuality() == 100 ? EntityHandler.INSTANCE.getDinosaurById(data.getContainer().getDinosaur()) : null;
         }
         else
         {
@@ -146,7 +146,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
 
                 NBTTagCompound nbt = new NBTTagCompound();
 
-                int dinosaurId = JCEntityRegistry.getDinosaurId(hybrid);
+                int dinosaurId = EntityHandler.INSTANCE.getDinosaurId(hybrid);
 
                 GeneticsContainer container = new GeneticsContainer(slots[0].getTagCompound().getString("Genetics"));
                 container.set(GeneticsContainer.DINOSAUR, dinosaurId);

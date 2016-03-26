@@ -13,7 +13,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.item.DinosaurEggItem;
 
@@ -75,7 +75,7 @@ public class IncubatorTile extends MachineBaseTile
         {
             ItemStack egg = slots[process];
 
-            Dinosaur dinoInEgg = JCEntityRegistry.getDinosaurById(egg.getMetadata());
+            Dinosaur dinoInEgg = EntityHandler.INSTANCE.getDinosaurById(egg.getMetadata());
 
             if (dinoInEgg != null)
             {

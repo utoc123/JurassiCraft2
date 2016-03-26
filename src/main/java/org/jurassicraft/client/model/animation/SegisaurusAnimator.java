@@ -7,14 +7,14 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.SegisaurusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class SegisaurusAnimator extends DinosaurAnimator
 {
     public SegisaurusAnimator()
     {
-        super(JCEntityRegistry.segisaurus);
+        super(EntityHandler.INSTANCE.segisaurus);
     }
 
     @Override

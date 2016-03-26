@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
 
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ public class DinosaurSteakItem extends ItemFood
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = JCEntityRegistry.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = JCEntityRegistry.achillobator;
+            dinosaur = EntityHandler.INSTANCE.achillobator;
         }
 
         return dinosaur;
@@ -52,13 +52,13 @@ public class DinosaurSteakItem extends ItemFood
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
+        Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

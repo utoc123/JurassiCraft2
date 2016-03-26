@@ -28,16 +28,16 @@ public class ServerEventHandler
     @SubscribeEvent
     public void onEntityConstruct(EntityEvent.EntityConstructing event)
     {
-        if (event.entity instanceof EntityPlayer)
+        if (event.getEntity() instanceof EntityPlayer)
         {
-            EntityDataHandler.INSTANCE.registerExtendedEntityData(event.entity, new PlayerData());
+            EntityDataHandler.INSTANCE.registerExtendedEntityData(event.getEntity(), new PlayerData());
         }
     }
 
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event)
     {
-        GameRules gameRules = event.world.getGameRules();
+        GameRules gameRules = event.getWorld().getGameRules();
 
         registerGameRule(gameRules, "dinoMetabolism", true);
         registerGameRule(gameRules, "dinoGrowth", true);
@@ -55,9 +55,9 @@ public class ServerEventHandler
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
-        if (event.entity instanceof EntityPlayer)
+        if (event.getEntity() instanceof EntityPlayer)
         {
-            EntityPlayer player = (EntityPlayer) event.entity;
+            EntityPlayer player = (EntityPlayer) event.getEntity();
             player.addStat(AchievementHandler.INSTANCE.jurassicraft, 1);
         }
     }
@@ -101,9 +101,9 @@ public class ServerEventHandler
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void decorate(DecorateBiomeEvent.Pre event)
     {
-        World world = event.world;
-        BlockPos pos = event.pos;
-        Random rand = event.rand;
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        Random rand = event.getRand();
 
         BiomeGenBase biome = world.getBiomeGenForCoords(pos);
 

@@ -5,13 +5,13 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.MegapiranhaEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 public class MegapiranhaAnimator extends DinosaurAnimator
 {
     public MegapiranhaAnimator()
     {
-        super(JCEntityRegistry.megapiranha);
+        super(EntityHandler.INSTANCE.megapiranha);
     }
 
     @Override

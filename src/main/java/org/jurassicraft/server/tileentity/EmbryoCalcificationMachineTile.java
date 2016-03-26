@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.SyringeItem;
 
@@ -33,7 +33,7 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
 
         if (input != null && input.getItem() instanceof SyringeItem && egg != null && egg.getItem() == Items.egg)
         {
-            Dinosaur dino = JCEntityRegistry.getDinosaurById(input.getItemDamage());
+            Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(input.getItemDamage());
 
             if (!dino.isMammal())
             {

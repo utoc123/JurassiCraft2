@@ -24,7 +24,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.container.CleaningStationContainer;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
 
@@ -367,7 +367,7 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         if (this.canClean())
         {
             int dinosaurId = BlockHandler.INSTANCE.getDinosaurId((EncasedFossilBlock) Block.getBlockFromItem(slots[0].getItem()), slots[0].getItemDamage());
-            String[] bones = JCEntityRegistry.getDinosaurById(dinosaurId).getBones();
+            String[] bones = EntityHandler.INSTANCE.getDinosaurById(dinosaurId).getBones();
             ItemStack fossil = new ItemStack(ItemHandler.INSTANCE.fossils.get(bones[worldObj.rand.nextInt(bones.length)]), 1, dinosaurId);
 
             int emptySlot = -1;

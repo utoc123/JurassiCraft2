@@ -7,7 +7,7 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TherizinosaurusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class TherizinosaurusAnimator extends DinosaurAnimator
@@ -15,7 +15,7 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
 
     public TherizinosaurusAnimator()
     {
-        super(JCEntityRegistry.therizinosaurus);
+        super(EntityHandler.INSTANCE.therizinosaurus);
     }
 
     @Override

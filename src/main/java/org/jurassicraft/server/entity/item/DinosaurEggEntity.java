@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
@@ -91,7 +91,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
-            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur));
+            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.egg, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("DNAQuality", dnaQuality);
             nbt.setString("Genetics", genetics);
@@ -170,7 +170,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     protected void readEntityFromNBT(NBTTagCompound compound)
     {
         hatchTime = compound.getInteger("HatchTime");
-        dinosaur = JCEntityRegistry.getDinosaurById(compound.getInteger("Dinosaur"));
+        dinosaur = EntityHandler.INSTANCE.getDinosaurById(compound.getInteger("Dinosaur"));
         dnaQuality = compound.getByte("DNAQuality");
         genetics = compound.getString("Genetics");
     }
@@ -178,7 +178,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound)
     {
-        compound.setInteger("Dinosaur", JCEntityRegistry.getDinosaurId(dinosaur));
+        compound.setInteger("Dinosaur", EntityHandler.INSTANCE.getDinosaurId(dinosaur));
         compound.setInteger("HatchTime", hatchTime);
         compound.setByte("DNAQuality", (byte) dnaQuality);
         compound.setString("Genetics", genetics);
@@ -187,7 +187,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     @Override
     public void writeSpawnData(ByteBuf buffer)
     {
-        buffer.writeInt(JCEntityRegistry.getDinosaurId(dinosaur));
+        buffer.writeInt(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
         buffer.writeByte(dnaQuality);
         ByteBufUtils.writeUTF8String(buffer, genetics);
     }
@@ -195,7 +195,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     @Override
     public void readSpawnData(ByteBuf additionalData)
     {
-        dinosaur = JCEntityRegistry.getDinosaurById(additionalData.readInt());
+        dinosaur = EntityHandler.INSTANCE.getDinosaurById(additionalData.readInt());
         dnaQuality = additionalData.readByte();
         genetics = ByteBufUtils.readUTF8String(additionalData);
     }

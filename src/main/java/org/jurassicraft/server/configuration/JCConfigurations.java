@@ -104,7 +104,7 @@ public class JCConfigurations
     @SubscribeEvent
     public void onConfigChange(OnConfigChangedEvent occe)
     {
-        if (!occe.modID.equals(JurassiCraft.MODID))
+        if (!occe.getModID().equals(JurassiCraft.MODID))
         {
             return;
         }

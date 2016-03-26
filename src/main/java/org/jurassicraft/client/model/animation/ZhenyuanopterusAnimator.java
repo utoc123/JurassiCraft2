@@ -7,14 +7,14 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.ZhenyuanopterusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class ZhenyuanopterusAnimator extends DinosaurAnimator
 {
     public ZhenyuanopterusAnimator()
     {
-        super(JCEntityRegistry.zhenyuanopterus);
+        super(EntityHandler.INSTANCE.zhenyuanopterus);
     }
 
     @Override

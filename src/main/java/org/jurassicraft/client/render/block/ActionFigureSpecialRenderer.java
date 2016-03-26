@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 
 public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureTile>
@@ -24,7 +24,7 @@ public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<Actio
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        Dinosaur dino = JCEntityRegistry.getDinosaurById(tileEntity.dinosaur);
+        Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(tileEntity.dinosaur);
 
         GlStateManager.pushMatrix();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

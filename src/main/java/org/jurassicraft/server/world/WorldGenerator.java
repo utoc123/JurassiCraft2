@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class WorldGenerator implements IWorldGenerator
             {
                 randPosY += random.nextInt(8) - 4;
 
-                List<Dinosaur> dinos = JCEntityRegistry.getDinosaursFromPeriod(period);
+                List<Dinosaur> dinos = EntityHandler.INSTANCE.getDinosaursFromPeriod(period);
 
                 if (dinos != null && dinos.size() > 0)
                 {

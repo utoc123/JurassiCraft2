@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNAExtractorContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.genetics.PlantDNA;
@@ -69,11 +69,11 @@ public class DNAExtractorTile extends MachineBaseTile
             {
                 if (input.getItemDamage() == 0)
                 {
-                    List<Dinosaur> possibleDinos = item == ItemHandler.INSTANCE.amber ? JCEntityRegistry.getDinosaursFromAmber() : JCEntityRegistry.getDinosaursFromSeaLampreys();
+                    List<Dinosaur> possibleDinos = item == ItemHandler.INSTANCE.amber ? EntityHandler.INSTANCE.getDinosaursFromAmber() : EntityHandler.INSTANCE.getDinosaursFromSeaLampreys();
 
                     Dinosaur dino = possibleDinos.get(rand.nextInt(possibleDinos.size()));
 
-                    int dinosaurId = JCEntityRegistry.getDinosaurId(dino);
+                    int dinosaurId = EntityHandler.INSTANCE.getDinosaurId(dino);
 
                     disc = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, dinosaurId);
 

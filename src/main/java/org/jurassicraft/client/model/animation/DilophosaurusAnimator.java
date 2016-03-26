@@ -6,14 +6,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.DilophosaurusEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class DilophosaurusAnimator<ENTITY extends DilophosaurusEntity> extends DinosaurAnimator<ENTITY>
 {
     public DilophosaurusAnimator()
     {
-        super(JCEntityRegistry.dilophosaurus);
+        super(EntityHandler.INSTANCE.dilophosaurus);
     }
 
     @Override

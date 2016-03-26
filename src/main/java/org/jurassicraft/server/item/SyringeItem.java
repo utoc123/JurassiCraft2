@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
 
 import java.util.ArrayList;
@@ -36,11 +36,11 @@ public class SyringeItem extends DNAContainerItem
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = JCEntityRegistry.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = JCEntityRegistry.achillobator;
+            dinosaur = EntityHandler.INSTANCE.achillobator;
         }
 
         return dinosaur;
@@ -49,20 +49,20 @@ public class SyringeItem extends DNAContainerItem
     @Override
     public int getContainerId(ItemStack stack)
     {
-        return JCEntityRegistry.getDinosaurId(getDinosaur(stack));
+        return EntityHandler.INSTANCE.getDinosaurId(getDinosaur(stack));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, JCEntityRegistry.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

@@ -6,14 +6,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.DimorphodonEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class DimorphodonAnimator<ENTITY extends DimorphodonEntity> extends DinosaurAnimator<ENTITY>
 {
     public DimorphodonAnimator()
     {
-        super(JCEntityRegistry.dimorphodon);
+        super(EntityHandler.INSTANCE.dimorphodon);
     }
 
     @Override

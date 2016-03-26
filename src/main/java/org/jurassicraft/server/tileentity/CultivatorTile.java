@@ -26,7 +26,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNASynthesizerContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.food.JCFoodNutrients;
 import org.jurassicraft.server.item.ItemHandler;
@@ -429,7 +429,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
     {
         if (slots[0] != null && slots[0].getItem() == ItemHandler.INSTANCE.syringe && waterLevel == 3)
         {
-            Dinosaur dino = JCEntityRegistry.getDinosaurById(slots[0].getItemDamage());
+            Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(slots[0].getItemDamage());
 
             if (dino != null)
             {
@@ -450,7 +450,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
     {
         if (this.canCultivate())
         {
-            Dinosaur dinoInEgg = JCEntityRegistry.getDinosaurById(slots[0].getItemDamage());
+            Dinosaur dinoInEgg = EntityHandler.INSTANCE.getDinosaurById(slots[0].getItemDamage());
 
             waterLevel = 0;
 
@@ -682,7 +682,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
     {
         if (slots[0] != null)
         {
-            return JCEntityRegistry.getDinosaurById(slots[0].getItemDamage());
+            return EntityHandler.INSTANCE.getDinosaurById(slots[0].getItemDamage());
         }
 
         return null;

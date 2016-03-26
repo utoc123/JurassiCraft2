@@ -10,7 +10,7 @@ import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.item.vehicles.HeliModuleItem;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
@@ -162,9 +162,8 @@ public enum ItemHandler
 
         wild_onion = new ItemSeeds(BlockHandler.INSTANCE.wild_onion, Blocks.farmland).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.plants);
 
-        for (Dinosaur dinosaur : JCEntityRegistry.getRegisteredDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getRegisteredDinosaurs())
         {
-
             String[] boneTypes = dinosaur.getBones();
 
             for (String boneType : boneTypes)

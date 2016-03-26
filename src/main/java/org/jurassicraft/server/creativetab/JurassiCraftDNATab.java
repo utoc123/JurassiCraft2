@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
 public class JurassiCraftDNATab extends CreativeTabs
@@ -25,16 +25,16 @@ public class JurassiCraftDNATab extends CreativeTabs
     {
         if (stacks == null)
         {
-            int dinosaurs = JCEntityRegistry.getRegisteredDinosaurs().size();
+            int dinosaurs = EntityHandler.INSTANCE.getRegisteredDinosaurs().size();
             this.stacks = new ItemStack[dinosaurs * 3];
 
             int i = 0;
 
-            for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
+            for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
             {
                 if (dino.shouldRegister())
                 {
-                    int id = JCEntityRegistry.getDinosaurId(dino);
+                    int id = EntityHandler.INSTANCE.getDinosaurId(dino);
 
                     stacks[i] = new ItemStack(ItemHandler.INSTANCE.dna, 1, id);
                     stacks[i + dinosaurs] = new ItemStack(ItemHandler.INSTANCE.soft_tissue, 1, id);

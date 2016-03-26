@@ -7,14 +7,14 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.LeaellynasauraEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class LeaellynasauraAnimator extends DinosaurAnimator
 {
     public LeaellynasauraAnimator()
     {
-        super(JCEntityRegistry.leaellynasaura);
+        super(EntityHandler.INSTANCE.leaellynasaura);
     }
 
     @Override

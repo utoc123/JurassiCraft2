@@ -7,14 +7,14 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.PteranodonEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class PteranodonAnimator extends DinosaurAnimator
 {
     public PteranodonAnimator()
     {
-        super(JCEntityRegistry.pteranodon);
+        super(EntityHandler.INSTANCE.pteranodon);
     }
 
     @Override

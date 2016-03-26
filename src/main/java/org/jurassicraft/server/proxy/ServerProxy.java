@@ -21,7 +21,7 @@ import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.handler.JCGuiHandler;
 import org.jurassicraft.server.item.ItemHandler;
@@ -40,7 +40,7 @@ public class ServerProxy
     {
         JurassiCraft.configurations.initConfig(event);
 
-        new JCEntityRegistry().init();
+        EntityHandler.INSTANCE.init();
 
         FossilItem.init();
 

@@ -7,14 +7,14 @@ import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.VelociraptorEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class VelociraptorEchoAnimator extends DinosaurAnimator
 {
     public VelociraptorEchoAnimator()
     {
-        super(JCEntityRegistry.velociraptor_echo);
+        super(EntityHandler.INSTANCE.velociraptor_echo);
     }
 
     @Override

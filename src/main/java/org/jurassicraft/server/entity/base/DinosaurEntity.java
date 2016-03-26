@@ -327,7 +327,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         for (int i = 0; i < count; ++i)
         {
-            int meta = JCEntityRegistry.getDinosaurId(dinosaur);
+            int meta = EntityHandler.INSTANCE.getDinosaurId(dinosaur);
 
             if (burning)
             {
@@ -392,7 +392,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.applyEntityAttributes();
 
-        dinosaur = JCEntityRegistry.getDinosaurByClass(getClass());
+        dinosaur = EntityHandler.INSTANCE.getDinosaurByClass(getClass());
 
         getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         updateCreatureData();
@@ -456,7 +456,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.setFullyGrown();
         this.setMale(true);
         this.ticksExisted = 4;
-        this.genetics = new GeneticsContainer(JCEntityRegistry.getDinosaurId(dinosaur), 0, 0, 0, 255, 255, 255);
+        this.genetics = new GeneticsContainer(EntityHandler.INSTANCE.getDinosaurId(dinosaur), 0, 0, 0, 255, 255, 255);
     }
 
     @Override
@@ -656,7 +656,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (rand.nextInt(10) != 0)
             {
-                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.fresh_fossils.get(bone), 1, JCEntityRegistry.getDinosaurId(dinosaur)));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.fresh_fossils.get(bone), 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur)));
             }
         }
     }
@@ -723,7 +723,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 if (item instanceof BluePrintItem)
                 {
-                    ((BluePrintItem) item).setDinosaur(stack, JCEntityRegistry.getDinosaurId(getDinosaur()));
+                    ((BluePrintItem) item).setDinosaur(stack, EntityHandler.INSTANCE.getDinosaurId(getDinosaur()));
                 }
             }
         }

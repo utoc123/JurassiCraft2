@@ -5,14 +5,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class LeptictidiumAnimator extends DinosaurAnimator
 {
     public LeptictidiumAnimator()
     {
-        super(JCEntityRegistry.leptictidium);
+        super(EntityHandler.INSTANCE.leptictidium);
     }
 
     @Override

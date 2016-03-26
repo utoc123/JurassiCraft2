@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
@@ -20,14 +20,14 @@ public class JurassiCraftSpawnEggsTab extends CreativeTabs
     {
         super(label);
 
-        List<Dinosaur> registeredDinosaurs = JCEntityRegistry.getRegisteredDinosaurs();
+        List<Dinosaur> registeredDinosaurs = EntityHandler.INSTANCE.getRegisteredDinosaurs();
         this.metas = new int[registeredDinosaurs.size()];
 
         int i = 0;
 
         for (Dinosaur dino : registeredDinosaurs)
         {
-            metas[i] = JCEntityRegistry.getDinosaurId(dino);
+            metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
 
             i++;
         }

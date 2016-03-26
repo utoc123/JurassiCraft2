@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.message.PlacePaddockSignMessage;
 import org.lwjgl.opengl.GL11;
 
@@ -59,7 +59,7 @@ public class SelectDinoGui extends GuiScreen
 
         page = 0;
 
-        dinosaurs = new ArrayList<Dinosaur>(JCEntityRegistry.getRegisteredDinosaurs());
+        dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getRegisteredDinosaurs());
 
         Collections.sort(dinosaurs);
 
@@ -180,7 +180,7 @@ public class SelectDinoGui extends GuiScreen
         {
             if (i >= signsPerPage * page && i < signsPerPage * (page + 1))
             {
-                int id = JCEntityRegistry.getDinosaurId(dinosaur);
+                int id = EntityHandler.INSTANCE.getDinosaurId(dinosaur);
 
                 GlStateManager.pushMatrix();
 

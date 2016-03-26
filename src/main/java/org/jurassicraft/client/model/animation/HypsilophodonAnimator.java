@@ -6,14 +6,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.HypsilophodonEntity;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class HypsilophodonAnimator<ENTITY extends HypsilophodonEntity> extends DinosaurAnimator<ENTITY>
 {
     public HypsilophodonAnimator()
     {
-        super(JCEntityRegistry.hypsilophodon);
+        super(EntityHandler.INSTANCE.hypsilophodon);
     }
 
     @Override

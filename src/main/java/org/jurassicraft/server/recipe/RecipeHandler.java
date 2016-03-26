@@ -11,7 +11,7 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.JCPlanksBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.JCEntityRegistry;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Map;
@@ -25,11 +25,11 @@ public enum RecipeHandler
         ItemHandler itemHandler = ItemHandler.INSTANCE;
         BlockHandler blockHandler = BlockHandler.INSTANCE;
 
-        for (Dinosaur dinosaur : JCEntityRegistry.getDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
         {
             if (dinosaur.shouldRegister())
             {
-                int meta = JCEntityRegistry.getDinosaurId(dinosaur);
+                int meta = EntityHandler.INSTANCE.getDinosaurId(dinosaur);
 
                 GameRegistry.addSmelting(new ItemStack(itemHandler.dino_meat, 1, meta), new ItemStack(itemHandler.dino_steak, 1, meta), 5F);
             }
@@ -101,7 +101,7 @@ public enum RecipeHandler
         addGrowthSerumRecipe(Items.cooked_porkchop);
         addGrowthSerumRecipe(Items.cooked_rabbit);
 
-        for (int i = 0; i < JCEntityRegistry.getDinosaurs().size(); i++)
+        for (int i = 0; i < EntityHandler.INSTANCE.getDinosaurs().size(); i++)
         {
             addGrowthSerumRecipe(new ItemStack(itemHandler.dino_steak, 1, i));
         }
