@@ -54,6 +54,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private boolean isCarcass;
     private int carcassHealth;
+    
+    private boolean isHealthy;
 
     private GeneticsContainer genetics;
     private int geneticsQuality;
@@ -80,6 +82,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private static final int WATCHER_HAS_TRACKER = 29;
 
     private final MetabolismContainer metabolism;
+    
+    private final PandorasBox condition;
 
     private boolean isSleeping;
     private boolean goBackToSleep;
@@ -95,6 +99,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         super(world);
 
         metabolism = new MetabolismContainer(this);
+        condition = new PandorasBox(this);
         inventory = new InventoryDinosaur(this);
         tailBuffer = new ChainBuffer();
 
@@ -153,6 +158,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         // and then slow at end to give sense of mass  Good for large dinos, not for mechanical
         // or light-weight entities
         setUseInertialTweens(true);
+        
+        setHealthy(true);
     }
 
     public boolean shouldSleep()
@@ -490,6 +497,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             updateGrowth();
 
             metabolism.update();
+            
+            condition.update();
 
             if (this.ticksExisted % 62 == 0)
             {
@@ -1135,5 +1144,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void setUseInertialTweens(boolean parUseInertialTweens)
     {
         useInertialTweens = parUseInertialTweens;
+    }
+    
+    public PandorasBox getCondition()
+    {
+        return condition;
+    }
+    public boolean isHealthy()
+    {
+        return isHealthy;
+    }
+    public void setHealthy(boolean isHealthy)
+    {
+        this.isHealthy = isHealthy;
     }
 }

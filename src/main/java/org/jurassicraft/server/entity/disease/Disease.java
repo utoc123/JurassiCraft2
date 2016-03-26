@@ -6,9 +6,11 @@ public abstract class Disease
     // name of the disease (Cancer etc...)
     private String name;
     // Diseases have levels that can range from 1 - 5 (5 obviously being the worst)
-    private int level;
+    private int level = 1;
     // returns true or false depending on if the disease can kill the entity
     private boolean isTerminal;
+    // returns true or false depending on if the disease can spread to another nearby entity, false by default
+    private boolean isContagious = false;
 
     public Disease(String name)
     {
@@ -58,5 +60,15 @@ public abstract class Disease
         }
     }
 
+    public boolean isContagious()
+    {
+        return isContagious;
+    }
+    
+    public void setContagious(boolean contagious)
+    {
+        isContagious = contagious;
+    }
+    
     public abstract void affects();
 }

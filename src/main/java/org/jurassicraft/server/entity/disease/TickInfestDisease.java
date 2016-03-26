@@ -2,15 +2,15 @@ package org.jurassicraft.server.entity.disease;
 
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class CancerDisease extends Disease
+public class TickInfestDisease extends Disease
 {
     private DinosaurEntity dinosaur;
     
-    public CancerDisease(DinosaurEntity dinosaur)
+    public TickInfestDisease(DinosaurEntity dinosaur)
     {
-        super("Cancer");
+        super("Tick Infestation");
         
-        this.setTerminal();
+        setTerminal(false);
         this.dinosaur = dinosaur;
     }
 

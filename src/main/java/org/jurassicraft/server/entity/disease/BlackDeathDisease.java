@@ -2,16 +2,21 @@ package org.jurassicraft.server.entity.disease;
 
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class CancerDisease extends Disease
-{
+/*
+ * Testing disease for contagious. Will probably be removed when out of prototyping
+ */
+public class BlackDeathDisease extends Disease
+{    
     private DinosaurEntity dinosaur;
     
-    public CancerDisease(DinosaurEntity dinosaur)
+    public BlackDeathDisease(DinosaurEntity dinosaur)
     {
-        super("Cancer");
+        super("Mycobacteriosis");
         
         this.setTerminal();
+        this.setContagious(true);
         this.dinosaur = dinosaur;
+        
     }
 
     @Override

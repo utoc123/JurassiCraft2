@@ -2,22 +2,21 @@ package org.jurassicraft.server.entity.disease;
 
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class CancerDisease extends Disease
+public class StomachUlcerDisease extends Disease
 {
     private DinosaurEntity dinosaur;
-    
-    public CancerDisease(DinosaurEntity dinosaur)
+
+    public StomachUlcerDisease(DinosaurEntity dinosaur)
     {
-        super("Cancer");
+        super("Stomach Ulcers");
         
-        this.setTerminal();
         this.dinosaur = dinosaur;
     }
 
     @Override
     public void affects()
     {
-
+        
     }
 
     public DinosaurEntity getDinosaur()
