@@ -97,20 +97,20 @@ public class IncubatorTile extends MachineBaseTile
 
                     List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, new AxisAlignedBB(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
 
-                    CageSmallEntity cage = null;
+                    CageSmallEntity spawnCage = null;
 
-                    for (CageSmallEntity cCage : cages)
+                    for (CageSmallEntity cage : cages)
                     {
-                        if (cCage.getEntity() == null)
+                        if (cage.getEntity() == null)
                         {
-                            cage = cCage;
+                            spawnCage = cage;
                             break;
                         }
                     }
 
-                    if (cage != null)
+                    if (spawnCage != null)
                     {
-                        cage.setEntity(dino);
+                        spawnCage.setEntity(dino);
                     }
                     else
                     {

@@ -2,7 +2,6 @@ package org.jurassicraft.server.entity.item;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,7 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
@@ -21,55 +22,62 @@ import java.util.List;
 
 public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnData
 {
-    private DinosaurEntity dinosaur;
-    private boolean marine;
+    private Dinosaur dinosaur;
+    private int dnaQuality;
+    private String genetics;
     private int hatchTime;
 
-    public DinosaurEggEntity(World world, DinosaurEntity dinosaur)
+    public DinosaurEggEntity(World world, Dinosaur dinosaur, int dnaQuality, String genetics)
     {
-        super(world);
+        this(world);
         this.dinosaur = dinosaur;
-        this.marine = dinosaur.getDinosaur().isMarineAnimal();
+        this.dnaQuality = dnaQuality;
+        this.genetics = genetics;
     }
 
     public DinosaurEggEntity(World world)
     {
         super(world);
-        this.setSize(.3F, .5F);
+        this.setSize(0.3F, 0.5F);
+        this.hatchTime = randomWithRange(200, 300);
     }
 
     @Override
     public void onUpdate()
     {
         super.onUpdate();
+
         if (!this.worldObj.isRemote)
         {
             hatchTime--;
-            if (hatchTime == 0)
+
+            if (hatchTime <= 0)
+            {
                 hatch();
-            if (!this.onGround)
+            }
+
+            if (!onGround)
             {
                 this.motionY -= 0.035D;
             }
-            this.moveEntity(0, this.motionY, 0);
+
+            motionX *= 0.85;
+            motionY *= 0.85;
+            motionZ *= 0.85;
+
+            this.moveEntity(motionX, motionY, motionZ);
         }
     }
 
     @Override
     public void entityInit()
     {
-        hatchTime = randomWithRange(200, 300);
     }
 
     @Override
     public boolean canBePushed()
     {
         return true;
-    }
-
-    public boolean isMarine()
-    {
-        return marine;
     }
 
     @Override
@@ -83,7 +91,13 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
-            this.entityDropItem(new ItemStack(JCItemRegistry.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur.getDinosaur())), 0.5F);
+            ItemStack eggStack = new ItemStack(JCItemRegistry.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur));
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setInteger("DNAQuality", dnaQuality);
+            nbt.setString("Genetics", genetics);
+            eggStack.setTagCompound(nbt);
+            this.entityDropItem(eggStack, 0.1F);
+            this.setDead();
         }
 
         return true;
@@ -91,14 +105,14 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
 
     public void hatch()
     {
-        if (!isMarine() && dinosaur.isInWater())
+        if (!dinosaur.isMarineAnimal() && isInWater())
         {
             warnPlayersWithinRadius("An egg is in the water and that animal is not aquatic!");
             hatchTime += 1000;
             return;
         }
 
-        if (isMarine() && !dinosaur.isInWater())
+        if (dinosaur.isMarineAnimal() && !isInWater())
         {
             warnPlayersWithinRadius("An aquatic animals egg is on land!");
             hatchTime += 1000;
@@ -114,21 +128,11 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
 
         try
         {
-            DinosaurEntity entity = dinosaur.getClass().getConstructor(World.class).newInstance(worldObj);
+            DinosaurEntity entity = dinosaur.getDinosaurClass().getConstructor(World.class).newInstance(worldObj);
             entity.setAge(0);
-            entity.setDNAQuality(100);
-            entity.setHealth(entity.getMaxHealth());
+            entity.setDNAQuality(dnaQuality);
+            entity.setGenetics(genetics);
             entity.setPosition(posX, posY, posZ);
-            entity.prevPosX = prevPosX;
-            entity.prevPosY = prevPosY;
-            entity.prevPosZ = prevPosZ;
-            entity.motionX = 0;
-            entity.motionY = 0;
-            entity.motionZ = 0;
-            entity.fallDistance = 0;
-            entity.deathTime = 0;
-            entity.hurtTime = 0;
-            entity.ticksExisted = 0;
             worldObj.spawnEntityInWorld(entity);
             entity.playLivingSound();
             this.setDead();
@@ -162,43 +166,42 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         return this.worldObj.isAirBlock(new BlockPos(blockX, blockY, blockZ));
     }
 
-    public int getHatchTime()
-    {
-        return hatchTime;
-    }
-
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound)
     {
-        marine = compound.getBoolean("Marine");
         hatchTime = compound.getInteger("HatchTime");
-        try
-        {
-            dinosaur = JCEntityRegistry.getDinosaurById(compound.getInteger("Dinosaur")).getDinosaurClass().getConstructor(World.class).newInstance(worldObj);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        dinosaur = JCEntityRegistry.getDinosaurById(compound.getInteger("Dinosaur"));
+        dnaQuality = compound.getByte("DNAQuality");
+        genetics = compound.getString("Genetics");
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound)
     {
-        compound.setBoolean("Marine", marine);
-        compound.setInteger("Dinosaur", JCEntityRegistry.getDinosaurId(dinosaur.getDinosaur()));
+        compound.setInteger("Dinosaur", JCEntityRegistry.getDinosaurId(dinosaur));
         compound.setInteger("HatchTime", hatchTime);
+        compound.setByte("DNAQuality", (byte) dnaQuality);
+        compound.setString("Genetics", genetics);
     }
 
     @Override
     public void writeSpawnData(ByteBuf buffer)
     {
-        buffer.writeInt(EntityList.getEntityID(dinosaur));
+        buffer.writeInt(JCEntityRegistry.getDinosaurId(dinosaur));
+        buffer.writeByte(dnaQuality);
+        ByteBufUtils.writeUTF8String(buffer, genetics);
     }
 
     @Override
     public void readSpawnData(ByteBuf additionalData)
     {
-        dinosaur = (DinosaurEntity) EntityList.createEntityByID(additionalData.readInt(), worldObj);
+        dinosaur = JCEntityRegistry.getDinosaurById(additionalData.readInt());
+        dnaQuality = additionalData.readByte();
+        genetics = ByteBufUtils.readUTF8String(additionalData);
+    }
+
+    public Dinosaur getDinosaur()
+    {
+        return dinosaur;
     }
 }
