@@ -1,10 +1,13 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
@@ -33,28 +36,28 @@ public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesM
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(HelicopterModulesMessage messageHelicopterModules, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft client, HelicopterModulesMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, messageHelicopterModules.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
         {
-            System.out.println(messageHelicopterModules.heliID);
-            HelicopterModuleSpot spot = helicopter.getModuleSpot(messageHelicopterModules.pos);
-            spot.readFromNBT(messageHelicopterModules.compound);
-            System.out.println(messageHelicopterModules.compound);
+            System.out.println(message.heliID);
+            HelicopterModuleSpot spot = helicopter.getModuleSpot(message.pos);
+            spot.readFromNBT(message.compound);
+            System.out.println(message.compound);
         }
     }
 
     @Override
-    public void handleServerMessage(HelicopterModulesMessage messageHelicopterModules, EntityPlayer entityPlayer)
+    public void onServerReceived(MinecraftServer server, HelicopterModulesMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, messageHelicopterModules.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
         {
-            System.out.println(messageHelicopterModules.heliID);
-            HelicopterModuleSpot spot = helicopter.getModuleSpot(messageHelicopterModules.pos);
-            spot.readFromNBT(messageHelicopterModules.compound);
-            System.out.println(messageHelicopterModules.compound);
+            System.out.println(message.heliID);
+            HelicopterModuleSpot spot = helicopter.getModuleSpot(message.pos);
+            spot.readFromNBT(message.compound);
+            System.out.println(message.compound);
         }
     }
 

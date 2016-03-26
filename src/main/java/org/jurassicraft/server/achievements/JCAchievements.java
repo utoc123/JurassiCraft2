@@ -1,11 +1,10 @@
 package org.jurassicraft.server.achievements;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraftforge.common.AchievementPage;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.item.JCItemRegistry;
 
-public class JCAchievements implements IContentHandler
+public class JCAchievements
 {
     public static JCAchievement jurassicraft;
     public static JCAchievement fossils;
@@ -17,8 +16,7 @@ public class JCAchievements implements IContentHandler
 
     public static AchievementPage jurassicraftPage;
 
-    @Override
-    public void init()
+    public static void init()
     {
         jurassicraft = (JCAchievement) (new JCAchievement("mod", 0, 0, JCItemRegistry.fossils.get("skull"), null)).initIndependentStat();
         paleontology = new JCAchievement("paleontology", 2, 1, JCItemRegistry.plaster_and_bandage, jurassicraft);
@@ -29,11 +27,7 @@ public class JCAchievements implements IContentHandler
         reinforcedStone = new JCAchievement("reinforcedStone", 4, -1, JCBlockRegistry.reinforced_stone, jurassicraft);
 
         jurassicraftPage = new AchievementPage("JurassiCraft", jurassicraft, paleontology, fossils, amber, cleaningStation, fossilGrinder, reinforcedStone);
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         AchievementPage.registerAchievementPage(jurassicraftPage);
     }
 }

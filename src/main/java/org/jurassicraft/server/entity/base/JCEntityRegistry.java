@@ -2,7 +2,6 @@ package org.jurassicraft.server.entity.base;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -12,66 +11,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.configuration.JCConfigurations;
-import org.jurassicraft.server.dinosaur.AchillobatorDinosaur;
-import org.jurassicraft.server.dinosaur.AnkylosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.ApatosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.BaryonyxDinosaur;
-import org.jurassicraft.server.dinosaur.BrachiosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.CarnotaurusDinosaur;
-import org.jurassicraft.server.dinosaur.CearadactylusDinosaur;
-import org.jurassicraft.server.dinosaur.ChasmosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.CoelacanthDinosaur;
-import org.jurassicraft.server.dinosaur.CompsognathusDinosaur;
-import org.jurassicraft.server.dinosaur.CorythosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.DilophosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.DimorphodonDinosaur;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.dinosaur.DodoDinosaur;
-import org.jurassicraft.server.dinosaur.DunkleosteusDinosaur;
-import org.jurassicraft.server.dinosaur.EdmontosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.GallimimusDinosaur;
-import org.jurassicraft.server.dinosaur.GiganotosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.HerrerasaurusDinosaur;
-import org.jurassicraft.server.dinosaur.HypsilophodonDinosaur;
-import org.jurassicraft.server.dinosaur.IndominusDinosaur;
-import org.jurassicraft.server.dinosaur.LambeosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.LeaellynasauraDinosaur;
-import org.jurassicraft.server.dinosaur.LeptictidiumDinosaur;
-import org.jurassicraft.server.dinosaur.LudodactylusDinosaur;
-import org.jurassicraft.server.dinosaur.MajungasaurusDinosaur;
-import org.jurassicraft.server.dinosaur.MamenchisaurusDinosaur;
-import org.jurassicraft.server.dinosaur.MegapiranhaDinosaur;
-import org.jurassicraft.server.dinosaur.MetriacanthosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.MicroceratusDinosaur;
-import org.jurassicraft.server.dinosaur.MoganopterusDinosaur;
-import org.jurassicraft.server.dinosaur.OrnithomimusDinosaur;
-import org.jurassicraft.server.dinosaur.OthnieliaDinosaur;
-import org.jurassicraft.server.dinosaur.OviraptorDinosaur;
-import org.jurassicraft.server.dinosaur.PachycephalosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.ParasaurolophusDinosaur;
-import org.jurassicraft.server.dinosaur.ProtoceratopsDinosaur;
-import org.jurassicraft.server.dinosaur.PteranodonDinosaur;
-import org.jurassicraft.server.dinosaur.RugopsDinosaur;
-import org.jurassicraft.server.dinosaur.SegisaurusDinosaur;
-import org.jurassicraft.server.dinosaur.SpinosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.StegosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.TherizinosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.TriceratopsDinosaur;
-import org.jurassicraft.server.dinosaur.TroodonDinosaur;
-import org.jurassicraft.server.dinosaur.TropeognathusDinosaur;
-import org.jurassicraft.server.dinosaur.TylosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.TyrannosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.VelociraptorBlueDinosaur;
-import org.jurassicraft.server.dinosaur.VelociraptorCharlieDinosaur;
-import org.jurassicraft.server.dinosaur.VelociraptorDeltaDinosaur;
-import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
-import org.jurassicraft.server.dinosaur.VelociraptorEchoDinosaur;
-import org.jurassicraft.server.dinosaur.ZhenyuanopterusDinosaur;
-import org.jurassicraft.server.entity.item.DinosaurEggEntity;
-import org.jurassicraft.server.entity.item.BluePrintEntity;
-import org.jurassicraft.server.entity.item.CageSmallEntity;
-import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
-import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.dinosaur.*;
+import org.jurassicraft.server.entity.item.*;
 import org.jurassicraft.server.period.EnumTimePeriod;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterSeatEntity;
@@ -80,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class JCEntityRegistry implements IContentHandler
+public class JCEntityRegistry
 {
     private static List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>();
     private static HashMap<EnumTimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<EnumTimePeriod, List<Dinosaur>>();
@@ -140,7 +81,7 @@ public class JCEntityRegistry implements IContentHandler
     public static final Dinosaur troodon = new TroodonDinosaur();
     public static final Dinosaur pachycephalosaurus = new PachycephalosaurusDinosaur();
 
-    private int entityId;
+    private static int entityId;
 
     public static List<Dinosaur> getDinosaursFromSeaLampreys()
     {
@@ -157,8 +98,7 @@ public class JCEntityRegistry implements IContentHandler
         return marineDinos;
     }
 
-    @Override
-    public void init()
+    public static void init()
     {
         registerDinosaurType(velociraptor);
         registerDinosaurType(achillobator);
@@ -214,11 +154,7 @@ public class JCEntityRegistry implements IContentHandler
         registerDinosaurType(zhenyuanopterus);
         registerDinosaurType(troodon);
         registerDinosaurType(pachycephalosaurus);
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerEntity(BluePrintEntity.class, "Blueprint");
         registerEntity(JurassiCraftSignEntity.class, "JurassiCraft Sign");
         registerEntity(CageSmallEntity.class, "Small Dinosaur Cage");
@@ -227,13 +163,10 @@ public class JCEntityRegistry implements IContentHandler
         registerEntity(HelicopterBaseEntity.class, "Helicopter base");
         registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            registerDinosaur(dinosaur);
-        }
+        dinosaurs.forEach(JCEntityRegistry::registerDinosaur);
     }
 
-    public void registerDinosaur(Dinosaur dinosaur)
+    private static void registerDinosaur(Dinosaur dinosaur)
     {
         Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
 
@@ -254,7 +187,7 @@ public class JCEntityRegistry implements IContentHandler
         }
     }
 
-    private void registerEntity(Class<? extends Entity> entity, String name)
+    private static void registerEntity(Class<? extends Entity> entity, String name)
     {
         String formattedName = name.toLowerCase().replaceAll(" ", "_");
 

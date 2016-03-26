@@ -1,14 +1,15 @@
 package org.jurassicraft.server.animation;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.animation.Animations;
 
 public abstract class AIAnimation extends EntityAIBase
 {
-    public AIAnimation(IAnimated entity)
+    public AIAnimation(IAnimatedEntity entity)
     {
         animatedEntity = entity;
         setMutexBits(7);
@@ -45,7 +46,7 @@ public abstract class AIAnimation extends EntityAIBase
     {
         if (!isAutomatic())
         {
-            Animation.sendAnimationPacket(animatedEntity, getAnimation());
+            AnimationHandler.INSTANCE.sendAnimationMessage(animatedEntity, getAnimation());
         }
         animatedEntity.setAnimationTick(0);
     }
@@ -59,8 +60,8 @@ public abstract class AIAnimation extends EntityAIBase
     @Override
     public void resetTask()
     {
-        Animation.sendAnimationPacket(animatedEntity, Animations.IDLE.get());
+        AnimationHandler.INSTANCE.sendAnimationMessage(animatedEntity, Animations.IDLE.get());
     }
 
-    private final IAnimated animatedEntity;
+    private final IAnimatedEntity animatedEntity;
 }

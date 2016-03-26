@@ -2,7 +2,6 @@ package org.jurassicraft.server.proxy;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -41,22 +40,16 @@ public class ServerProxy
     {
         JurassiCraft.configurations.initConfig(event);
 
-        initContentHandlers(new JCEntityRegistry());
-
+        JCEntityRegistry.init();
         FossilItem.init();
-
-        // NOTE!!: The block regsitry must happen before item registry because we need the blocks
-        // for some of the items.  In particular, the ItemSeeds requires the block.
-        initContentHandlers(
-                new JCPlantRegistry(),
-                new JCCreativeTabs(),
-                JurassiCraft.blockRegistry = new JCBlockRegistry(), // Must be before ItemRegistry
-                new JCItemRegistry(),
-                new JCRecipeRegistry(),
-                new AppRegistry(),
-                new JCAchievements(),
-                new StorageTypeRegistry()
-        );
+        JCPlantRegistry.init();
+        JCCreativeTabs.init();
+        JCBlockRegistry.init();
+        JCItemRegistry.init();
+        JCRecipeRegistry.init();
+        AppRegistry.init();
+        JCAchievements.init();
+        StorageTypeRegistry.init();
 
         // addChestGenItems();
 
@@ -68,26 +61,6 @@ public class ServerProxy
 
         MinecraftForge.EVENT_BUS.register(JurassiCraft.configurations);
         MinecraftForge.EVENT_BUS.register(eventHandler);
-    }
-
-    protected void initContentHandlers(IContentHandler... contentHandlers)
-    {
-        for (IContentHandler contentHandler : contentHandlers)
-        {
-            contentHandler.init();
-        }
-
-        for (IContentHandler contentHandler : contentHandlers)
-        {
-            try
-            {
-                contentHandler.gameRegistry();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 
 //    private void addChestGenItems()

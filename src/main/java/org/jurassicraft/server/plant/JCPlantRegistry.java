@@ -1,11 +1,9 @@
 package org.jurassicraft.server.plant;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class JCPlantRegistry implements IContentHandler
+public class JCPlantRegistry
 {
     private static List<Plant> plants = new ArrayList<Plant>();
 
@@ -22,8 +20,7 @@ public class JCPlantRegistry implements IContentHandler
     public static Plant dicksonia;
     public static Plant wild_onion;
 
-    @Override
-    public void init()
+    public static void init()
     {
         ajuginucula_smithii = new AjuginuculaSmithiiPlant();
         small_royal_fern = new SmallRoyalFernPlant();
@@ -37,11 +34,7 @@ public class JCPlantRegistry implements IContentHandler
         cycad_zamites = new ZamitesPlant();
         dicksonia = new DicksoniaPlant();
         wild_onion = new WildOnionPlant();
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerPlant(ajuginucula_smithii);
         registerPlant(small_royal_fern);
         registerPlant(calamites);
@@ -76,7 +69,7 @@ public class JCPlantRegistry implements IContentHandler
         return plants;
     }
 
-    public void registerPlant(Plant plant)
+    private static void registerPlant(Plant plant)
     {
         if (!plants.contains(plant))
         {

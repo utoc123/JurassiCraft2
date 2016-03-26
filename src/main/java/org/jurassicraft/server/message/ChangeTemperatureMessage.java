@@ -1,10 +1,13 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
@@ -34,18 +37,18 @@ public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureM
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(ChangeTemperatureMessage messageChangeTemperature, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft client, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        IInventory incubator = (IInventory) entityPlayer.worldObj.getTileEntity(messageChangeTemperature.pos);
-        incubator.setField(messageChangeTemperature.slot + 10, messageChangeTemperature.temp);
+        IInventory incubator = (IInventory) player.worldObj.getTileEntity(message.pos);
+        incubator.setField(message.slot + 10, message.temp);
     }
 
     @Override
-    public void handleServerMessage(ChangeTemperatureMessage messageChangeTemperature, EntityPlayer entityPlayer)
+    public void onServerReceived(MinecraftServer server, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        IInventory incubator = (IInventory) entityPlayer.worldObj.getTileEntity(messageChangeTemperature.pos);
-        incubator.setField(messageChangeTemperature.slot + 10, messageChangeTemperature.temp);
-        JurassiCraft.networkWrapper.sendToAll(new ChangeTemperatureMessage(messageChangeTemperature.pos, messageChangeTemperature.slot, messageChangeTemperature.temp));
+        IInventory incubator = (IInventory) player.worldObj.getTileEntity(message.pos);
+        incubator.setField(message.slot + 10, message.temp);
+        JurassiCraft.networkWrapper.sendToAll(new ChangeTemperatureMessage(message.pos, message.slot, message.temp));
     }
 
     @Override

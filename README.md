@@ -20,8 +20,7 @@ HoopAWolf
 Enderman_of_D00M   
 
 # Other Contributors
-CarrotJet   
-Kashmoney   
+CarrotJet
 TheJurassicAlien   
 Codyrex78117  
 Cucholololthespanishman   

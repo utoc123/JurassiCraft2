@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;

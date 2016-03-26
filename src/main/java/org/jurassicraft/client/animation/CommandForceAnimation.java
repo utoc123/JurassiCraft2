@@ -11,14 +11,10 @@
 package org.jurassicraft.client.animation;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.minecraft.command.CommandException;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
+import net.minecraft.command.*;
 import net.minecraft.command.CommandResultStats.Type;
-import net.minecraft.command.EntityNotFoundException;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerSelector;
-import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -211,7 +207,7 @@ public class CommandForceAnimation implements ICommand
         try
         {
             Animation animation = Animations.valueOf(parAnimType.toUpperCase()).get();
-            Animation.sendAnimationPacket(entity, animation);
+            AnimationHandler.INSTANCE.sendAnimationMessage(entity, animation);
         }
         catch (IllegalArgumentException iae)
         {

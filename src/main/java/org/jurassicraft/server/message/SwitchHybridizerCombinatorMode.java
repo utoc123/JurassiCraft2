@@ -1,12 +1,14 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
@@ -31,7 +33,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(SwitchHybridizerCombinatorMode message, EntityPlayer player)
+    public void onClientReceived(Minecraft client, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext)
     {
         DNACombinatorHybridizerTile tile = (DNACombinatorHybridizerTile) player.worldObj.getTileEntity(message.pos);
         tile.setMode(message.hybridizer);
@@ -45,7 +47,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
     }
 
     @Override
-    public void handleServerMessage(SwitchHybridizerCombinatorMode message, EntityPlayer player)
+    public void onServerReceived(MinecraftServer server, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext)
     {
         boolean mode = message.hybridizer;
         BlockPos pos = message.pos;

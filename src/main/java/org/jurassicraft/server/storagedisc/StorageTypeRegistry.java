@@ -1,45 +1,21 @@
 package org.jurassicraft.server.storagedisc;
 
-import com.google.common.base.Supplier;
-import net.ilexiconn.llibrary.common.content.IContentHandler;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
-public class StorageTypeRegistry implements IContentHandler
+public class StorageTypeRegistry
 {
-    private static Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<String, Supplier<? extends IStorageType>>();
+    private static Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<>();
 
-    @Override
-    public void init()
+    public static void init()
     {
-
+        register("DinoDNA", DinosaurDNAStorageType::new);
+        register("PlantDNA", PlantDNAStorageType::new);
     }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
-        register("DinoDNA", new Supplier<IStorageType>()
-        {
-            @Override
-            public DinosaurDNAStorageType get()
-            {
-                return new DinosaurDNAStorageType();
-            }
-        });
-        register("PlantDNA", new Supplier<IStorageType>()
-        {
-
-            @Override
-            public PlantDNAStorageType get()
-            {
-                return new PlantDNAStorageType();
-            }
-        });
-    }
-
-    private void register(String id, Supplier<? extends IStorageType> storageType)
+    private static void register(String id, Supplier<? extends IStorageType> storageType)
     {
         storageTypes.put(id, Objects.requireNonNull(storageType));
     }

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.animation.IAnimated;
+import net.ilexiconn.llibrary.server.animation.AnimationHandler;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
@@ -58,9 +58,9 @@ public class JCPanicEntityAI extends EntityAIBase
     public void startExecuting()
     {
         theEntityCreature.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
-        if (theEntityCreature instanceof IAnimated)
+        if (theEntityCreature instanceof IAnimatedEntity)
         {
-            Animation.sendAnimationPacket((IAnimated) theEntityCreature, Animations.HISSING.get());
+            AnimationHandler.INSTANCE.sendAnimationMessage((IAnimatedEntity) theEntityCreature, Animations.HISSING.get());
         }
 
         // DEBUG

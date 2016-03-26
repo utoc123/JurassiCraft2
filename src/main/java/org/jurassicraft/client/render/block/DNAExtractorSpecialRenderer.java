@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.block;
 
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tileentity.DNAExtractorTile;
 import org.lwjgl.opengl.GL11;
 
@@ -21,14 +21,14 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
 {
     private Minecraft mc = Minecraft.getMinecraft();
 
-    private ModelJson model;
+    private TabulaModel model;
     private ResourceLocation texture;
 
     public DNAExtractorSpecialRenderer()
     {
         try
         {
-            this.model = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/block/dna_extractor"));
+            this.model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/block/dna_extractor"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_extractor.png");
         }
         catch (Exception e)

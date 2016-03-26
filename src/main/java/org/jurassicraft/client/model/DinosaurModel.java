@@ -1,25 +1,19 @@
 package org.jurassicraft.client.model;
 
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
-import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @SideOnly(Side.CLIENT)
-public class DinosaurModel extends ModelJson
+public class DinosaurModel extends TabulaModel
 {
-    public Field nameMapField;
-
-    public DinosaurModel(JsonTabulaModel model)
+    public DinosaurModel(TabulaModelContainer model)
     {
         this(model, null);
     }
@@ -34,51 +28,24 @@ public class DinosaurModel extends ModelJson
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
     }
 
-    public DinosaurModel(JsonTabulaModel model, IModelAnimator animator)
+    public DinosaurModel(TabulaModelContainer model, ITabulaModelAnimator animator)
     {
         super(model, animator);
-
-        try
-        {
-            this.nameMapField = ModelJson.class.getDeclaredField("nameMap");
-            this.nameMapField.setAccessible(true);
-        }
-        catch (NoSuchFieldException e)
-        {
-            e.printStackTrace();
-        }
     }
 
-    @Override
-    public List<MowzieModelRenderer> getParts()
-    {
-        return super.parts;
-    }
-
-    @Override
     public String[] getCubeNamesArray()
     {
-        Map<String, MowzieModelRenderer> nameMap; //TODO: temp fix
-        try
+        String[] cubeNamesArray = new String[cubes.size()];
+        int index = 0;
+
+        Set<String> names = cubes.keySet();
+
+        for (String name : names)
         {
-            nameMap = (Map<String, MowzieModelRenderer>) nameMapField.get(this);
-            String[] cubeNamesArray = new String[nameMap.size()];
-            int index = 0;
-
-            Set<String> names = nameMap.keySet();
-
-            for (String name : names)
-            {
-                cubeNamesArray[index] = name;
-                index++;
-            }
-
-            return cubeNamesArray;
+            cubeNamesArray[index] = name;
+            index++;
         }
-        catch (IllegalAccessException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+
+        return cubeNamesArray;
     }
 }

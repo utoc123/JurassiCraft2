@@ -1,6 +1,5 @@
 package org.jurassicraft.server.block;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -8,51 +7,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.block.machine.CleaningStationBlock;
-import org.jurassicraft.server.block.machine.CultivatorBottomBlock;
-import org.jurassicraft.server.block.machine.CultivatorTopBlock;
-import org.jurassicraft.server.block.machine.DNACombinatorHybridizerBlock;
-import org.jurassicraft.server.block.machine.DNAExtractorBlock;
-import org.jurassicraft.server.block.machine.DNASequencerBlock;
-import org.jurassicraft.server.block.machine.DNASynthesizerBlock;
-import org.jurassicraft.server.block.machine.EmbryoCalcificationMachineBlock;
-import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
-import org.jurassicraft.server.block.machine.FossilGrinderBlock;
-import org.jurassicraft.server.block.machine.IncubatorBlock;
-import org.jurassicraft.server.block.plant.AjuginuculaSmithiiBlock;
-import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
-import org.jurassicraft.server.block.plant.CryPansyBlock;
-import org.jurassicraft.server.block.plant.CycadZamitesBlock;
-import org.jurassicraft.server.block.plant.DicksoniaBlock;
-import org.jurassicraft.server.block.plant.MossBlock;
-import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
-import org.jurassicraft.server.block.plant.SmallChainFernBlock;
-import org.jurassicraft.server.block.plant.SmallCycadBlock;
-import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
-import org.jurassicraft.server.block.plant.WildOnionBlock;
-import org.jurassicraft.server.block.tree.JCDoubleSlabBlock;
-import org.jurassicraft.server.block.tree.JCLeavesBlock;
-import org.jurassicraft.server.block.tree.JCLogBlock;
-import org.jurassicraft.server.block.tree.JCPlanksBlock;
-import org.jurassicraft.server.block.tree.JCSaplingBlock;
-import org.jurassicraft.server.block.tree.JCSlabBlock;
-import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
-import org.jurassicraft.server.block.tree.JCStairsBlock;
-import org.jurassicraft.server.block.tree.TreeType;
+import org.jurassicraft.server.block.machine.*;
+import org.jurassicraft.server.block.plant.*;
+import org.jurassicraft.server.block.tree.*;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
-import org.jurassicraft.server.tileentity.CultivatorTile;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
-import org.jurassicraft.server.tileentity.FossilGrinderTile;
-import org.jurassicraft.server.tileentity.IncubatorTile;
+import org.jurassicraft.server.tileentity.*;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeCompendium;
 
 import java.util.ArrayList;
@@ -60,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JCBlockRegistry implements IContentHandler
+public class JCBlockRegistry
 {
     public static Map<TreeType, JCPlanksBlock> planks = new HashMap<TreeType, JCPlanksBlock>();
     public static Map<TreeType, JCLogBlock> logs = new HashMap<TreeType, JCLogBlock>();
@@ -119,8 +80,7 @@ public class JCBlockRegistry implements IContentHandler
     public static Block ajuginucula_smithii;
     public static Block wild_onion;
 
-    @Override
-    public void init()
+    public static void init()
     {
         fossils = new ArrayList<FossilBlock>();
         encased_fossils = new ArrayList<EncasedFossilBlock>();
@@ -187,11 +147,7 @@ public class JCBlockRegistry implements IContentHandler
         {
             registerTreeType(type);
         }
-    }
 
-    @Override
-    public void gameRegistry() throws Exception
-    {
         registerBlock(amber_ore, "Amber Ore");
         registerBlock(ice_shard, "Ice Shard");
         registerBlock(gypsum_stone, "Gypsum Stone");
@@ -230,7 +186,7 @@ public class JCBlockRegistry implements IContentHandler
         registerBlockTileEntity(ActionFigureTile.class, action_figure, "Action Figure Block");
     }
 
-    private void registerTreeType(TreeType type)
+    private static void registerTreeType(TreeType type)
     {
         JCPlanksBlock planks = new JCPlanksBlock(type);
         JCLogBlock log = new JCLogBlock(type, false);
@@ -278,59 +234,59 @@ public class JCBlockRegistry implements IContentHandler
         Blocks.fire.setFireInfo(stair, 5, 20);
     }
 
-    public FossilBlock getFossilBlock(Dinosaur dinosaur)
+    public static FossilBlock getFossilBlock(Dinosaur dinosaur)
     {
         return getFossilBlock(JCEntityRegistry.getDinosaurId(dinosaur));
     }
 
-    private int getBlockId(int dinosaurId)
+    private static int getBlockId(int dinosaurId)
     {
         return (int) (Math.floor((((float) dinosaurId + 1.0F) / 16.0F) - 0.0625F));
     }
 
-    public EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)
+    public static EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)
     {
         return getEncasedFossil(JCEntityRegistry.getDinosaurId(dinosaur));
     }
 
-    public EncasedFossilBlock getEncasedFossil(int id)
+    public static EncasedFossilBlock getEncasedFossil(int id)
     {
         return encased_fossils.get(getBlockId(id));
     }
 
-    public FossilBlock getFossilBlock(int id)
+    public static FossilBlock getFossilBlock(int id)
     {
         return fossils.get(getBlockId(id));
     }
 
-    public int getDinosaurId(FossilBlock fossil, int metadata)
+    public static int getDinosaurId(FossilBlock fossil, int metadata)
     {
         return (fossils.indexOf(fossil) * 16) + metadata;
     }
 
-    public int getDinosaurId(EncasedFossilBlock fossil, int metadata)
+    public static int getDinosaurId(EncasedFossilBlock fossil, int metadata)
     {
         return (encased_fossils.indexOf(fossil) * 16) + metadata;
     }
 
-    public int getMetadata(int id)
+    public static int getMetadata(int id)
     {
         return id % 16;
     }
 
-    public int getMetadata(Dinosaur dinosaur)
+    public static int getMetadata(Dinosaur dinosaur)
     {
         return getMetadata(JCEntityRegistry.getDinosaurId(dinosaur));
     }
 
-    public void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name)
+    private static void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name)
     {
         registerBlock(block, name);
 
         GameRegistry.registerTileEntity(tileEntity, "jurassicraft:" + name.toLowerCase().replaceAll(" ", "_"));
     }
 
-    public void registerBlock(Block block, String name)
+    private static void registerBlock(Block block, String name)
     {
         name = name.toLowerCase().replaceAll(" ", "_");
 

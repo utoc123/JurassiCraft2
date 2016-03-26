@@ -1,8 +1,11 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
@@ -24,22 +27,22 @@ public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMes
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(HelicopterEngineMessage messageHelicopterEngine, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft client, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, messageHelicopterEngine.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
         {
-            helicopter.setEngineRunning(messageHelicopterEngine.engineState);
+            helicopter.setEngineRunning(message.engineState);
         }
     }
 
     @Override
-    public void handleServerMessage(HelicopterEngineMessage messageHelicopterEngine, EntityPlayer entityPlayer)
+    public void onServerReceived(MinecraftServer server, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, messageHelicopterEngine.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
         {
-            helicopter.setEngineRunning(messageHelicopterEngine.engineState);
+            helicopter.setEngineRunning(message.engineState);
         }
     }
 

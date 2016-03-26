@@ -1,8 +1,11 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.timeless.unilib.utils.MutableVec3;
@@ -26,22 +29,22 @@ public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirect
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(HelicopterDirectionMessage messageHelicopterDirection, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft client, HelicopterDirectionMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, messageHelicopterDirection.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
         {
-            helicopter.setDirection(messageHelicopterDirection.direction);
+            helicopter.setDirection(message.direction);
         }
     }
 
     @Override
-    public void handleServerMessage(HelicopterDirectionMessage messageHelicopterDirection, EntityPlayer entityPlayer)
+    public void onServerReceived(MinecraftServer server, HelicopterDirectionMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, messageHelicopterDirection.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
         {
-            helicopter.setDirection(messageHelicopterDirection.direction);
+            helicopter.setDirection(message.direction);
         }
     }
 

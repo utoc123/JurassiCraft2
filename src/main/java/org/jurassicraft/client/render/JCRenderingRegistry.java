@@ -3,15 +3,12 @@ package org.jurassicraft.client.render;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -19,73 +16,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.gui.app.GuiAppRegistry;
-import org.jurassicraft.client.model.animation.AchillobatorAnimator;
-import org.jurassicraft.client.model.animation.AnkylosaurusAnimator;
-import org.jurassicraft.client.model.animation.ApatosaurusAnimator;
-import org.jurassicraft.client.model.animation.BaryonyxAnimator;
-import org.jurassicraft.client.model.animation.BrachiosaurusAnimator;
-import org.jurassicraft.client.model.animation.CarnotaurusAnimator;
-import org.jurassicraft.client.model.animation.CearadactylusAnimator;
-import org.jurassicraft.client.model.animation.ChasmosaurusAnimator;
-import org.jurassicraft.client.model.animation.CoelacanthAnimator;
-import org.jurassicraft.client.model.animation.CompsognathusAnimator;
-import org.jurassicraft.client.model.animation.CorythosaurusAnimator;
-import org.jurassicraft.client.model.animation.DilophosaurusAnimator;
-import org.jurassicraft.client.model.animation.DimorphodonAnimator;
-import org.jurassicraft.client.model.animation.DodoAnimator;
-import org.jurassicraft.client.model.animation.DunkleosteusAnimator;
-import org.jurassicraft.client.model.animation.EdmontosaurusAnimator;
-import org.jurassicraft.client.model.animation.GallimimusAnimator;
-import org.jurassicraft.client.model.animation.GiganotosaurusAnimator;
-import org.jurassicraft.client.model.animation.HerrerasaurusAnimator;
-import org.jurassicraft.client.model.animation.HypsilophodonAnimator;
-import org.jurassicraft.client.model.animation.LambeosaurusAnimator;
-import org.jurassicraft.client.model.animation.LeaellynasauraAnimator;
-import org.jurassicraft.client.model.animation.LeptictidiumAnimator;
-import org.jurassicraft.client.model.animation.LudodactylusAnimator;
-import org.jurassicraft.client.model.animation.MajungasaurusAnimator;
-import org.jurassicraft.client.model.animation.MamenchisaurusAnimator;
-import org.jurassicraft.client.model.animation.MegapiranhaAnimator;
-import org.jurassicraft.client.model.animation.MetriacanthosaurusAnimator;
-import org.jurassicraft.client.model.animation.MicroceratusAnimator;
-import org.jurassicraft.client.model.animation.MoganopterusAnimator;
-import org.jurassicraft.client.model.animation.OrnithomimusAnimator;
-import org.jurassicraft.client.model.animation.OthnieliaAnimator;
-import org.jurassicraft.client.model.animation.OviraptorAnimator;
-import org.jurassicraft.client.model.animation.PachycephalosaurusAnimator;
-import org.jurassicraft.client.model.animation.ParasaurolophusAnimator;
-import org.jurassicraft.client.model.animation.ProtoceratopsAnimator;
-import org.jurassicraft.client.model.animation.PteranodonAnimator;
-import org.jurassicraft.client.model.animation.RugopsAnimator;
-import org.jurassicraft.client.model.animation.SegisaurusAnimator;
-import org.jurassicraft.client.model.animation.SpinosaurusAnimator;
-import org.jurassicraft.client.model.animation.StegosaurusAnimator;
-import org.jurassicraft.client.model.animation.TherizinosaurusAnimator;
-import org.jurassicraft.client.model.animation.TriceratopsAnimator;
-import org.jurassicraft.client.model.animation.TroodonAnimator;
-import org.jurassicraft.client.model.animation.TropeognathusAnimator;
-import org.jurassicraft.client.model.animation.TylosaurusAnimator;
-import org.jurassicraft.client.model.animation.TyrannosaurusAnimator;
-import org.jurassicraft.client.model.animation.VelociraptorAnimator;
-import org.jurassicraft.client.model.animation.VelociraptorBlueAnimator;
-import org.jurassicraft.client.model.animation.VelociraptorCharlieAnimator;
-import org.jurassicraft.client.model.animation.VelociraptorDeltaAnimator;
-import org.jurassicraft.client.model.animation.VelociraptorEchoAnimator;
-import org.jurassicraft.client.model.animation.ZhenyuanopterusAnimator;
-import org.jurassicraft.client.render.block.ActionFigureSpecialRenderer;
-import org.jurassicraft.client.render.block.DNACombinatorHybridizerSpecialRenderer;
-import org.jurassicraft.client.render.block.DNAExtractorSpecialRenderer;
-import org.jurassicraft.client.render.block.DNASequencerSpecialRenderer;
-import org.jurassicraft.client.render.block.DNASynthesizerSpecialRenderer;
-import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
-import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
-import org.jurassicraft.client.render.block.IncubatorSpecialRenderer;
-import org.jurassicraft.client.render.entity.BluePrintRenderer;
-import org.jurassicraft.client.render.entity.CageSmallRenderer;
-import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
-import org.jurassicraft.client.render.entity.HelicopterRenderer;
-import org.jurassicraft.client.render.entity.JurassiCraftSignRenderer;
-import org.jurassicraft.client.render.entity.PaddockSignRenderer;
+import org.jurassicraft.client.model.animation.*;
+import org.jurassicraft.client.render.block.*;
+import org.jurassicraft.client.render.entity.*;
 import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.block.EncasedFossilBlock;
@@ -94,23 +27,12 @@ import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.entity.item.BluePrintEntity;
-import org.jurassicraft.server.entity.item.CageSmallEntity;
-import org.jurassicraft.server.entity.item.DinosaurEggEntity;
-import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
-import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.entity.item.*;
 import org.jurassicraft.server.item.JCItemRegistry;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.JCPlantRegistry;
 import org.jurassicraft.server.plant.Plant;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
-import org.jurassicraft.server.tileentity.IncubatorTile;
+import org.jurassicraft.server.tileentity.*;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 
 import java.util.List;
@@ -314,19 +236,17 @@ public class JCRenderingRegistry
 
     public void postInit()
     {
-        RenderManager renderManager = mc.getRenderManager();
-
         for (Dinosaur dino : JCEntityRegistry.getDinosaurs())
         {
-            RenderingRegistry.registerEntityRenderingHandler(dino.getDinosaurClass(), renderDefs.get(dino).createRenderFor(renderManager));
+            RenderingRegistry.registerEntityRenderingHandler(dino.getDinosaurClass(), renderDefs.get(dino));
         }
 
-        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer().createRenderFor(renderManager));
+        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
@@ -448,14 +368,7 @@ public class JCRenderingRegistry
      */
     public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, final String path, final String type)
     {
-        itemModelMesher.register(item, new ItemMeshDefinition()
-        {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack)
-            {
-                return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
-            }
-        });
+        itemModelMesher.register(item, stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     /**
@@ -479,14 +392,7 @@ public class JCRenderingRegistry
      */
     public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, final String path, final String type)
     {
-        itemModelMesher.register(Item.getItemFromBlock(block), new ItemMeshDefinition()
-        {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack)
-            {
-                return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
-            }
-        });
+        itemModelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     private void registerRenderDef(RenderDinosaurDefinition renderDef)

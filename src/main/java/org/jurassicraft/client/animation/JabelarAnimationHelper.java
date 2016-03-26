@@ -1,7 +1,8 @@
 package org.jurassicraft.client.animation;
 
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.common.animation.Animation;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.util.BlockPos;
@@ -12,7 +13,6 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.fx.BloodEntityFX;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.util.Map;
 
@@ -28,9 +28,9 @@ public class JabelarAnimationHelper
 
     private final Map<Animation, int[][]> mapOfPoseSequences;
 
-    private final MowzieModelRenderer[][] arrayOfPoses;
-    private MowzieModelRenderer[] theModelRendererArray;
-    private MowzieModelRenderer[] nextModelRendererArray;
+    private final AdvancedModelRenderer[][] arrayOfPoses;
+    private AdvancedModelRenderer[] theModelRendererArray;
+    private AdvancedModelRenderer[] nextModelRendererArray;
 
     private float[][] currentRotationArray;
     private float[][] currentPositionArray;
@@ -68,7 +68,7 @@ public class JabelarAnimationHelper
             DinosaurEntity parEntity,
             DinosaurModel parModel,
             int parNumParts,
-            MowzieModelRenderer[][] parArrayOfPoses,
+            AdvancedModelRenderer[][] parArrayOfPoses,
             Map<Animation, int[][]> parMapOfSequences,
             boolean parUseInertialTweens
     )
@@ -253,11 +253,11 @@ public class JabelarAnimationHelper
         }
     }
 
-    private MowzieModelRenderer[] convertPassedInModelToModelRendererArray(DinosaurModel parModel)
+    private AdvancedModelRenderer[] convertPassedInModelToModelRendererArray(DinosaurModel parModel)
     {
         String[] partNameArray = parModel.getCubeNamesArray();
 
-        MowzieModelRenderer[] modelRendererArray = new MowzieModelRenderer[numParts];
+        AdvancedModelRenderer[] modelRendererArray = new AdvancedModelRenderer[numParts];
 
         for (int i = 0; i < numParts; i++)
         {
@@ -459,7 +459,7 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parPoseSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parPoseSequenceIndex.animationId + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
+            JurassiCraft.instance.getLogger().error("Requested an anim id " + parPoseSequenceIndex.getID() + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
         }
         else if (currentPoseSequence != Animations.IDLE.get() && currentPoseSequence == parPoseSequenceIndex) // finished sequence but no new sequence set
@@ -493,7 +493,7 @@ public class JabelarAnimationHelper
         // catch the exception so you can call method without further catching
         try
         {
-            return new DinosaurModel(TabulaModelHelper.parseModel(tabulaModel), null); // okay to use null for animator
+            return new DinosaurModel(TabulaModelHandler.INSTANCE.loadTabulaModel(tabulaModel), null); // okay to use null for animator
             // parameter as we get animator
             // from passed-in model
         }

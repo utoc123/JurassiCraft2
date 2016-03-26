@@ -1,7 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
-import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.GrowthStageGenderContainer;
@@ -58,10 +59,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private float offsetY;
     private float offsetZ;
 
-    private JsonTabulaModel modelAdult;
-    private JsonTabulaModel modelInfant;
-    private JsonTabulaModel modelJuvenile;
-    private JsonTabulaModel modelAdolescent;
+    private TabulaModelContainer modelAdult;
+    private TabulaModelContainer modelInfant;
+    private TabulaModelContainer modelJuvenile;
+    private TabulaModelContainer modelAdolescent;
 
     private boolean usePosesForWalkingAnim = false;
 
@@ -149,14 +150,14 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         }
     }
 
-    protected JsonTabulaModel parseModel(String growthStage)
+    protected TabulaModelContainer parseModel(String growthStage)
     {
         String formattedName = getName().toLowerCase().replaceAll(" ", "_");
         String modelPath = "/assets/jurassicraft/models/entities/" + formattedName + "/" + growthStage + "/" + formattedName + "_" + growthStage + "_idle";
 
         try
         {
-            return TabulaModelHelper.parseModel(modelPath);
+            return TabulaModelHandler.INSTANCE.loadTabulaModel(modelPath);
         }
         catch (Exception e)
         {
@@ -534,13 +535,13 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     public double[] getCubePosition(String cubeName, EnumGrowthStage stage)
     {
-        JsonTabulaModel model = getModelContainer(stage);
+        TabulaModelContainer model = getModelContainer(stage);
 
-        CubeInfo cube = TabulaModelHelper.getCubeByName(cubeName, model);
+        TabulaCubeContainer cube = TabulaModelHelper.getCubeByName(cubeName, model);
 
         if (cube != null)
         {
-            return cube.position;
+            return cube.getPosition();
         }
 
         return new double[] { 0.0, 0.0, 0.0 };
@@ -548,26 +549,22 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     public double[] getParentedCubePosition(String cubeName, EnumGrowthStage stage, float rot)
     {
-        JsonTabulaModel model = getModelContainer(stage);
+        TabulaModelContainer model = getModelContainer(stage);
 
-        CubeInfo cube = TabulaModelHelper.getCubeByName(cubeName, model);
+        TabulaCubeContainer cube = TabulaModelHelper.getCubeByName(cubeName, model);
 
         if (cube != null)
         {
-            CubeInfo copy = TabulaModelHelper.copy(cube);
-
-            setTransformation(copy, getParentRotationMatrix(model, copy, true, false, rot));
-
-            return copy.position;
+            return getTransformation(getParentRotationMatrix(model, cube, true, false, rot))[0];
         }
 
         return new double[] { 0.0, 0.0, 0.0 };
     }
 
-    public static Matrix4d getParentRotationMatrix(JsonTabulaModel model, CubeInfo cubeInfo, boolean includeParents, boolean ignoreSelf, float rot)
+    public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cubeInfo, boolean includeParents, boolean ignoreSelf, float rot)
     {
-        List<CubeInfo> parentCubes = new ArrayList<CubeInfo>();
-        CubeInfo cube = cubeInfo;
+        List<TabulaCubeContainer> parentCubes = new ArrayList<>();
+        TabulaCubeContainer cube = cubeInfo;
 
         do
         {
@@ -580,7 +577,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
                 parentCubes.add(cube);
             }
         }
-        while (includeParents && cube.parentIdentifier != null && (cube = TabulaModelHelper.getCubeByIdentifier(cube.parentIdentifier, model)) != null);
+        while (includeParents && cube.getParentIdentifier() != null && (cube = TabulaModelHelper.getCubeByIdentifier(cube.getParentIdentifier(), model)) != null);
 
         Matrix4d mat = new Matrix4d();
         mat.setIdentity();
@@ -590,12 +587,12 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         {
             cube = parentCubes.get(i);
             transform.setIdentity();
-            transform.setTranslation(new Vector3d(cube.position[0], cube.position[1], cube.position[2]));
+            transform.setTranslation(new Vector3d(cube.getPosition()[0], cube.getPosition()[1], cube.getPosition()[2]));
             mat.mul(transform);
 
-            double rotX = cube.rotation[0];
-            double rotY = cube.rotation[1];
-            double rotZ = cube.rotation[2];
+            double rotX = cube.getRotation()[0];
+            double rotY = cube.getRotation()[1];
+            double rotZ = cube.getRotation()[2];
 
             transform.rotZ(rotZ / 180 * Math.PI);
             mat.mul(transform);
@@ -606,13 +603,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         }
 
         return mat;
-    }
-
-    private void setTransformation(CubeInfo cubeInfo, Matrix4d matrix)
-    {
-        double[][] transformation = getTransformation(matrix);
-        cubeInfo.position = transformation[0];
-        cubeInfo.rotation = transformation[1];
     }
 
     private static double[][] getTransformation(Matrix4d matrix)
@@ -653,7 +643,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return getParentedCubePosition(getHeadCubeName(), stage, rot);
     }
 
-    public JsonTabulaModel getModelContainer(EnumGrowthStage stage)
+    public TabulaModelContainer getModelContainer(EnumGrowthStage stage)
     {
         switch (stage)
         {

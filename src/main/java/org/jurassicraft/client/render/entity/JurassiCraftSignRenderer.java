@@ -1,6 +1,5 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -24,16 +23,16 @@ public class JurassiCraftSignRenderer implements IRenderFactory<JurassiCraftSign
     @Override
     public Render<? super JurassiCraftSignEntity> createRenderFor(RenderManager manager)
     {
-        return new Renderer();
+        return new Renderer(manager);
     }
 
     public static class Renderer extends Render<JurassiCraftSignEntity>
     {
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/gentle_giants/gentle_giants.png");
 
-        public Renderer()
+        public Renderer(RenderManager manager)
         {
-            super(Minecraft.getMinecraft().getRenderManager());
+            super(manager);
         }
 
         /**

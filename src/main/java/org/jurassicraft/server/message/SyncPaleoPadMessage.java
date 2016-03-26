@@ -1,10 +1,13 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.data.JCPlayerData;
@@ -25,15 +28,15 @@ public class SyncPaleoPadMessage extends AbstractMessage<SyncPaleoPadMessage>
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(SyncPaleoPadMessage messageSyncPaleoPad, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft client, SyncPaleoPadMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        JCPlayerData.setPlayerData(null, messageSyncPaleoPad.nbt);
+        JCPlayerData.setPlayerData(null, message.nbt);
     }
 
     @Override
-    public void handleServerMessage(SyncPaleoPadMessage messageSyncPaleoPad, EntityPlayer entityPlayer)
+    public void onServerReceived(MinecraftServer server, SyncPaleoPadMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        JCPlayerData.setPlayerData(entityPlayer, messageSyncPaleoPad.nbt);
+        JCPlayerData.setPlayerData(player, message.nbt);
     }
 
     @Override

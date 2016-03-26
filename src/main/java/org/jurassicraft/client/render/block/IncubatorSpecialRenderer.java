@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.block;
 
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,21 +12,20 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tileentity.IncubatorTile;
 import org.lwjgl.opengl.GL11;
 
 public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<IncubatorTile>
 {
     private Minecraft mc = Minecraft.getMinecraft();
-    private ModelJson model;
+    private TabulaModel model;
     private ResourceLocation texture;
 
     public IncubatorSpecialRenderer()
     {
         try
         {
-            this.model = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/block/incubator"));
+            this.model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/block/incubator"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/incubator.png");
         }
         catch (Exception e)

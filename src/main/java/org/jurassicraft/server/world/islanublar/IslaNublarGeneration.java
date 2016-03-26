@@ -1,3 +1,4 @@
+/*
 package org.jurassicraft.server.world.islanublar;
 
 import net.ilexiconn.llibrary.common.world.gen.WorldHeightmapGenerator;
@@ -91,3 +92,4 @@ public class IslaNublarGeneration extends WorldHeightmapGenerator
         return false;
     }
 }
+*/

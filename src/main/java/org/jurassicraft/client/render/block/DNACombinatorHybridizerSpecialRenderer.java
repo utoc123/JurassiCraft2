@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.block;
 
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,14 +12,13 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.JCBlockRegistry;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 import org.lwjgl.opengl.GL11;
 
 public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerTile>
 {
     private Minecraft mc = Minecraft.getMinecraft();
-    private ModelJson model;
+    private TabulaModel model;
     private ResourceLocation textureCombinator;
     private ResourceLocation textureHybridizer;
 
@@ -26,7 +26,7 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
     {
         try
         {
-            this.model = new ModelJson(TabulaModelHelper.parseModel("/assets/jurassicraft/models/block/dna_combinator_hybridizer"));
+            this.model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/block/dna_combinator_hybridizer"));
             this.textureCombinator = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_combinator.png");
             this.textureHybridizer = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_hybridizer.png");
         }

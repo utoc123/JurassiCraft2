@@ -1,13 +1,12 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
@@ -32,9 +31,9 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
     public Random random;
 
-    public DinosaurRenderer(RenderDinosaurDefinition renderDef)
+    public DinosaurRenderer(RenderManager manager, RenderDinosaurDefinition renderDef)
     {
-        super(Minecraft.getMinecraft().getRenderManager(), renderDef.getModel(EnumGrowthStage.INFANT), renderDef.getShadowSize());
+        super(manager, renderDef.getModel(EnumGrowthStage.INFANT), renderDef.getShadowSize());
 
         this.dinosaur = renderDef.getDinosaur();
         this.random = new Random();
@@ -205,7 +204,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     }
 
     @SideOnly(Side.CLIENT)
-    public class LayerDinosaurVariations implements LayerRenderer
+    public class LayerDinosaurVariations implements LayerRenderer<DinosaurEntity>
     {
         private final DinosaurRenderer renderer;
         private final int index;
@@ -216,7 +215,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             this.index = index;
         }
 
-        public void render(DinosaurEntity entity, float f, float f1, float f2, float f3, float f4, float f5, float f6)
+        @Override
+        public void doRenderLayer(DinosaurEntity entity, float v, float v1, float v2, float v3, float v4, float v5, float v6)
         {
             if (!entity.isInvisible())
             {
@@ -230,8 +230,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
                     this.renderer.bindTexture(texture);
 
-                    this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
-                    this.renderer.func_177105_a(entity, f2);
+                    this.renderer.getMainModel().render(entity, v, v1, v3, v4, v5, v6);
+                    this.renderer.func_177105_a(entity, v2);
 
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 }
@@ -243,16 +243,10 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         {
             return true;
         }
-
-        @Override
-        public void doRenderLayer(EntityLivingBase entity, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_)
-        {
-            this.render((DinosaurEntity) entity, p_177141_2_, p_177141_3_, p_177141_4_, p_177141_5_, p_177141_6_, p_177141_7_, p_177141_8_);
-        }
     }
 
     @SideOnly(Side.CLIENT)
-    public class LayerEyelid implements LayerRenderer
+    public class LayerEyelid implements LayerRenderer<DinosaurEntity>
     {
         private final DinosaurRenderer renderer;
 
@@ -261,7 +255,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             this.renderer = renderer;
         }
 
-        public void render(DinosaurEntity entity, float f, float f1, float f2, float f3, float f4, float f5, float f6)
+        @Override
+        public void doRenderLayer(DinosaurEntity entity, float v, float v1, float v2, float v3, float v4, float v5, float v6)
         {
             if (!entity.isInvisible())
             {
@@ -271,8 +266,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                 {
                     this.renderer.bindTexture(texture);
 
-                    this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
-                    this.renderer.func_177105_a(entity, f2);
+                    this.renderer.getMainModel().render(entity, v, v1, v3, v4, v5, v6);
+                    this.renderer.func_177105_a(entity, v2);
                 }
             }
         }
@@ -281,12 +276,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         public boolean shouldCombineTextures()
         {
             return true;
-        }
-
-        @Override
-        public void doRenderLayer(EntityLivingBase entity, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_)
-        {
-            this.render((DinosaurEntity) entity, p_177141_2_, p_177141_3_, p_177141_4_, p_177141_5_, p_177141_6_, p_177141_7_, p_177141_8_);
         }
     }
 }

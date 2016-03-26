@@ -1,7 +1,5 @@
 package org.jurassicraft.server.recipe;
 
-import net.ilexiconn.llibrary.common.content.IContentHandler;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -18,26 +16,15 @@ import org.jurassicraft.server.item.JCItemRegistry;
 
 import java.util.Map;
 
-public class JCRecipeRegistry implements IContentHandler
+public class JCRecipeRegistry
 {
-    @Override
-    public void init()
+    public static void init()
     {
+        JCEntityRegistry.getDinosaurs().stream().filter(Dinosaur::shouldRegister).forEach(dinosaur -> {
+            int meta = JCEntityRegistry.getDinosaurId(dinosaur);
 
-    }
-
-    @Override
-    public void gameRegistry() throws Exception
-    {
-        for (Dinosaur dinosaur : JCEntityRegistry.getDinosaurs())
-        {
-            if (dinosaur.shouldRegister())
-            {
-                int meta = JCEntityRegistry.getDinosaurId(dinosaur);
-
-                GameRegistry.addSmelting(new ItemStack(JCItemRegistry.dino_meat, 1, meta), new ItemStack(JCItemRegistry.dino_steak, 1, meta), 5F);
-            }
-        }
+            GameRegistry.addSmelting(new ItemStack(JCItemRegistry.dino_meat, 1, meta), new ItemStack(JCItemRegistry.dino_steak, 1, meta), 5F);
+        });
 
         for (Map.Entry<TreeType, JCPlanksBlock> entry : JCBlockRegistry.planks.entrySet())
         {
@@ -111,12 +98,12 @@ public class JCRecipeRegistry implements IContentHandler
         }
     }
 
-    private void addGrowthSerumRecipe(Item meat)
+    private static void addGrowthSerumRecipe(Item meat)
     {
         addGrowthSerumRecipe(new ItemStack(meat));
     }
 
-    private void addGrowthSerumRecipe(ItemStack meat)
+    private static void addGrowthSerumRecipe(ItemStack meat)
     {
         GameRegistry.addShapelessRecipe(new ItemStack(JCItemRegistry.growth_serum), Items.golden_carrot, JCItemRegistry.empty_syringe, Items.water_bucket, meat);
     }

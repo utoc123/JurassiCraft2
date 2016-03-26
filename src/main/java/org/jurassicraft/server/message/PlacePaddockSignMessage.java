@@ -1,12 +1,15 @@
 package org.jurassicraft.server.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.server.network.AbstractMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -38,28 +41,28 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(PlacePaddockSignMessage messagePlacePaddockSign, EntityPlayer entityPlayer)
+    public void onClientReceived(Minecraft client, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
     {
 
     }
 
     @Override
-    public void handleServerMessage(PlacePaddockSignMessage messagePlacePaddockSign, EntityPlayer entityPlayer)
+    public void onServerReceived(MinecraftServer server, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        World world = entityPlayer.worldObj;
+        World world = player.worldObj;
 
-        EnumFacing side = messagePlacePaddockSign.facing;
-        BlockPos pos = messagePlacePaddockSign.pos;
+        EnumFacing side = message.facing;
+        BlockPos pos = message.pos;
 
-        PaddockSignEntity paddockSign = new PaddockSignEntity(world, pos, side, messagePlacePaddockSign.dino);
+        PaddockSignEntity paddockSign = new PaddockSignEntity(world, pos, side, message.dino);
 
-        if (entityPlayer.canPlayerEdit(pos, side, entityPlayer.getHeldItem()) && paddockSign.onValidSurface())
+        if (player.canPlayerEdit(pos, side, player.getHeldItem()) && paddockSign.onValidSurface())
         {
             world.spawnEntityInWorld(paddockSign);
 
-            if (!entityPlayer.capabilities.isCreativeMode)
+            if (!player.capabilities.isCreativeMode)
             {
-                InventoryPlayer inventory = entityPlayer.inventory;
+                InventoryPlayer inventory = player.inventory;
                 inventory.decrStackSize(inventory.currentItem, 1);
             }
         }

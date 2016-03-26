@@ -1,65 +1,21 @@
 package org.jurassicraft.server.tabula;
 
-import com.google.gson.Gson;
-import net.ilexiconn.llibrary.client.model.tabula.CubeGroup;
-import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
-import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeGroupContainer;
+import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class TabulaModelHelper
 {
-    private static Gson gson = new Gson();
-
-    public static JsonTabulaModel parseModel(String path) throws Exception
+    public static TabulaCubeContainer getCubeByName(String name, TabulaModelContainer model)
     {
-        if (!path.endsWith(".tbl"))
+        List<TabulaCubeContainer> allCubes = getAllCubes(model);
+
+        for (TabulaCubeContainer cube : allCubes)
         {
-            path += ".tbl";
-        }
-
-        try
-        {
-            ZipInputStream inputStream = new ZipInputStream(TabulaModelHelper.class.getResourceAsStream(path));
-            ZipEntry entry;
-            JsonTabulaModel parseTabulaModel = null;
-
-            while ((entry = inputStream.getNextEntry()) != null)
-            {
-                if (entry.getName().equals("model.json"))
-                {
-                    parseTabulaModel = parseModel(inputStream);
-                    break;
-                }
-            }
-
-            return parseTabulaModel;
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static JsonTabulaModel parseModel(InputStream stream)
-    {
-        return gson.fromJson(new InputStreamReader(stream), JsonTabulaModel.class);
-    }
-
-    public static CubeInfo getCubeByName(String name, JsonTabulaModel model)
-    {
-        List<CubeInfo> allCubes = getAllCubes(model);
-
-        for (CubeInfo cube : allCubes)
-        {
-            if (cube.name.equals(name))
+            if (cube.getName().equals(name))
             {
                 return cube;
             }
@@ -68,13 +24,13 @@ public class TabulaModelHelper
         return null;
     }
 
-    public static CubeInfo getCubeByIdentifier(String identifier, JsonTabulaModel model)
+    public static TabulaCubeContainer getCubeByIdentifier(String identifier, TabulaModelContainer model)
     {
-        List<CubeInfo> allCubes = getAllCubes(model);
+        List<TabulaCubeContainer> allCubes = getAllCubes(model);
 
-        for (CubeInfo cube : allCubes)
+        for (TabulaCubeContainer cube : allCubes)
         {
-            if (cube.identifier.equals(identifier))
+            if (cube.getIdentifier().equals(identifier))
             {
                 return cube;
             }
@@ -83,16 +39,16 @@ public class TabulaModelHelper
         return null;
     }
 
-    public static List<CubeInfo> getAllCubes(JsonTabulaModel model)
+    public static List<TabulaCubeContainer> getAllCubes(TabulaModelContainer model)
     {
-        List<CubeInfo> cubes = new ArrayList<CubeInfo>();
+        List<TabulaCubeContainer> cubes = new ArrayList<TabulaCubeContainer>();
 
-        for (CubeGroup cubeGroup : model.getCubeGroups())
+        for (TabulaCubeGroupContainer cubeGroup : model.getCubeGroups())
         {
             cubes.addAll(traverse(cubeGroup));
         }
 
-        for (CubeInfo cube : model.getCubes())
+        for (TabulaCubeContainer cube : model.getCubes())
         {
             cubes.addAll(traverse(cube));
         }
@@ -100,16 +56,16 @@ public class TabulaModelHelper
         return cubes;
     }
 
-    private static List<CubeInfo> traverse(CubeGroup group)
+    private static List<TabulaCubeContainer> traverse(TabulaCubeGroupContainer group)
     {
-        List<CubeInfo> retCubes = new ArrayList<CubeInfo>();
+        List<TabulaCubeContainer> retCubes = new ArrayList<>();
 
-        for (CubeInfo child : group.cubes)
+        for (TabulaCubeContainer child : group.getCubes())
         {
             retCubes.addAll(traverse(child));
         }
 
-        for (CubeGroup child : group.cubeGroups)
+        for (TabulaCubeGroupContainer child : group.getCubeGroups())
         {
             retCubes.addAll(traverse(child));
         }
@@ -117,39 +73,17 @@ public class TabulaModelHelper
         return retCubes;
     }
 
-    private static List<CubeInfo> traverse(CubeInfo cube)
+    private static List<TabulaCubeContainer> traverse(TabulaCubeContainer cube)
     {
-        List<CubeInfo> retCubes = new ArrayList<CubeInfo>();
+        List<TabulaCubeContainer> retCubes = new ArrayList<>();
 
         retCubes.add(cube);
 
-        for (CubeInfo child : cube.children)
+        for (TabulaCubeContainer child : cube.getChildren())
         {
             retCubes.addAll(traverse(child));
         }
 
         return retCubes;
-    }
-
-    public static CubeInfo copy(CubeInfo original)
-    {
-        CubeInfo copy = new CubeInfo();
-
-        copy.children = original.children;
-        copy.position = original.position;
-        copy.rotation = original.rotation;
-        copy.identifier = original.identifier;
-        copy.parentIdentifier = original.parentIdentifier;
-        copy.dimensions = original.dimensions;
-        copy.hidden = original.hidden;
-        copy.mcScale = original.mcScale;
-        copy.offset = original.offset;
-        copy.txOffset = original.txOffset;
-        copy.txMirror = original.txMirror;
-        copy.opacity = original.opacity;
-        copy.name = original.name;
-        copy.scale = original.scale;
-
-        return copy;
     }
 }

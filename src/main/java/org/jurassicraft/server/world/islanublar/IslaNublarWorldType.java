@@ -1,3 +1,4 @@
+/*
 package org.jurassicraft.server.world.islanublar;
 
 import net.ilexiconn.llibrary.common.world.gen.ChunkProviderHeightmap;
@@ -27,3 +28,4 @@ public class IslaNublarWorldType extends WorldType
         return new ChunkProviderHeightmap(world, world.getSeed(), generator);
     }
 }
+*/

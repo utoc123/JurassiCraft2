@@ -2,12 +2,11 @@ package org.jurassicraft.client.animation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
-import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
-import net.ilexiconn.llibrary.client.model.tabula.ModelJson;
-import net.ilexiconn.llibrary.common.animation.Animation;
-import net.ilexiconn.llibrary.common.map.ListHashMap;
-import net.minecraft.entity.Entity;
+import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
+import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.util.ListHashMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
@@ -26,16 +25,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @SideOnly(Side.CLIENT)
-public abstract class DinosaurAnimator implements IModelAnimator
+public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITabulaModelAnimator<T>
 {
     private static class PreloadedModelData
     {
@@ -44,23 +37,23 @@ public abstract class DinosaurAnimator implements IModelAnimator
             this(null, null);
         }
 
-        public PreloadedModelData(MowzieModelRenderer[][] renderers, Map<Animation, int[][]> animations)
+        public PreloadedModelData(AdvancedModelRenderer[][] renderers, Map<Animation, int[][]> animations)
         {
             if (renderers == null)
             {
-                renderers = new MowzieModelRenderer[0][];
+                renderers = new AdvancedModelRenderer[0][];
             }
 
             if (animations == null)
             {
-                animations = new LinkedHashMap<Animation, int[][]>();
+                animations = new LinkedHashMap<>();
             }
 
             this.models = renderers;
             this.animations = animations;
         }
 
-        MowzieModelRenderer[][] models;
+        AdvancedModelRenderer[][] models;
         Map<Animation, int[][]> animations;
     }
 
@@ -208,8 +201,8 @@ public abstract class DinosaurAnimator implements IModelAnimator
         }
         assert (posedModelResources.size() > 0); // anims.poses.get(Animations.IDLE.get().getId()).length
         // != 0
-        MowzieModelRenderer[][] posedCubes = new MowzieModelRenderer[posedModelResources.size()][];
-        Map<Animation, int[][]> animationSequences = new ListHashMap<Animation, int[][]>();
+        AdvancedModelRenderer[][] posedCubes = new AdvancedModelRenderer[posedModelResources.size()][];
+        Map<Animation, int[][]> animationSequences = new ListHashMap<>();
         // find all names we need
         DinosaurModel mainModel = JabelarAnimationHelper.getTabulaModel(posedModelResources.get(0), 0);
         if (mainModel == null)
@@ -227,11 +220,11 @@ public abstract class DinosaurAnimator implements IModelAnimator
             {
                 throw new IllegalArgumentException("Couldn't load the model from " + resource);
             }
-            MowzieModelRenderer[] cubes = new MowzieModelRenderer[numParts];
+            AdvancedModelRenderer[] cubes = new AdvancedModelRenderer[numParts];
             for (int partIndex = 0; partIndex < numParts; partIndex++)
             {
                 String cubeName = cubeNameArray[partIndex];
-                MowzieModelRenderer cube = theModel.getCube(cubeName);
+                AdvancedModelRenderer cube = theModel.getCube(cubeName);
                 if (cube == null)
                 {
                     throw new IllegalArgumentException("Could not retrieve cube " + cubeName + " (" + partIndex + ") from the model " + resource);
@@ -288,27 +281,18 @@ public abstract class DinosaurAnimator implements IModelAnimator
     }
 
     @Override
-    public final void setRotationAngles(ModelJson model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
+    public final void setRotationAngles(TabulaModel model, T entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        DinosaurModel theModel = (DinosaurModel) model;
-        DinosaurEntity theEntity = (DinosaurEntity) entity;
-        // assert(size == 1/16f); // Ignore the size
-
-        setRotationAngles(theModel, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, theEntity);
-    }
-
-    protected void setRotationAngles(DinosaurModel model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTick, DinosaurEntity entity)
-    {
-        getAnimationHelper(entity, model, entity.getUseInertialTweens()).performJabelarAnimations(partialTick);
+        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performJabelarAnimations(partialTicks);
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
         {
             if (entity.isSwimming())
             {
-                performMowzieSwimmingAnimations(model, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTick, entity);
+                performMowzieSwimmingAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
             }
             else
             {
-                performMowzieLandAnimations(model, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTick, entity);
+                performMowzieLandAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
             }
         }
     }
@@ -316,15 +300,15 @@ public abstract class DinosaurAnimator implements IModelAnimator
     /*
      * @Override this if you want dino to have cyclical animations.
      */
-    protected void performMowzieLandAnimations(DinosaurModel parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, T entity, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks)
     {
     }
 
     /*
      * @Override this if you want swimming dino to have different cyclical animations.
      */
-    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, DinosaurEntity parEntity)
+    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, T entity, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks)
     {
-        performMowzieLandAnimations(parModel, parLimbSwing, parLimbSwingAmount, parRotation, parRotationYaw, parRotationPitch, parPartialTicks, parEntity);
+        performMowzieLandAnimations(parModel, entity, parLimbSwing, parLimbSwingAmount, parRotation, parRotationYaw, parRotationPitch, parPartialTicks);
     }
 }
