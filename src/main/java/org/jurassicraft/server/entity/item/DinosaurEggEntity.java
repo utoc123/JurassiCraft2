@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
 
@@ -91,7 +91,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
-            ItemStack eggStack = new ItemStack(JCItemRegistry.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur));
+            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.egg, 1, JCEntityRegistry.getDinosaurId(dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("DNAQuality", dnaQuality);
             nbt.setString("Genetics", genetics);

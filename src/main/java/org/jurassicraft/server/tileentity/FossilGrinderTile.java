@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.FossilGrinderContainer;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 
 import java.util.Random;
@@ -61,7 +61,7 @@ public class FossilGrinderTile extends MachineBaseTile
 
             if (outputType == 5 || fossil.getUnlocalizedName().contains("fresh"))
             {
-                output = new ItemStack(JCItemRegistry.soft_tissue, 1, fossilStack.getItemDamage());
+                output = new ItemStack(ItemHandler.INSTANCE.soft_tissue, 1, fossilStack.getItemDamage());
                 output.setTagCompound(tag);
             }
             else if (outputType < 3)

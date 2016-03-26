@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.itemblock.CultivateItemBlock;
 import org.jurassicraft.server.tileentity.CultivatorTile;
 
@@ -48,7 +48,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        if (world.getBlockState(pos).getBlock() == JCBlockRegistry.cultivate_top)
+        if (world.getBlockState(pos).getBlock() == BlockHandler.INSTANCE.cultivate_top)
         {
             pos.add(0, -1, 0);
         }

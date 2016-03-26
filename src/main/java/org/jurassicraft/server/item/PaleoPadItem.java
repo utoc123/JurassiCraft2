@@ -10,7 +10,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.handler.JCGuiHandler;
 
@@ -20,7 +20,7 @@ public class PaleoPadItem extends Item
     {
         super();
         this.setMaxStackSize(1);
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
     @Override

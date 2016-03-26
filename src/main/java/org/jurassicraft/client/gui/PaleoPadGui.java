@@ -17,7 +17,7 @@ import org.jurassicraft.client.gui.app.GuiAppRegistry;
 import org.jurassicraft.server.data.PlayerData;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.paleopad.App;
-import org.jurassicraft.server.paleopad.AppRegistry;
+import org.jurassicraft.server.paleopad.AppHandler;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class PaleoPadGui extends GuiScreen
 
         if (focus == null)
         {
-            List<App> apps = AppRegistry.getApps();
+            List<App> apps = AppHandler.INSTANCE.getApps();
 
             for (int i = 0; i < apps.size(); i++)
             {
@@ -107,7 +107,7 @@ public class PaleoPadGui extends GuiScreen
         int scaledHeight = dimensions.getScaledHeight();
         drawTexturedModalRect(scaledWidth / 2 - 128, 40, 0, 0, 256, 256);
 
-        List<App> apps = AppRegistry.getApps();
+        List<App> apps = AppHandler.INSTANCE.getApps();
 
         double worldTime = mc.theWorld.getWorldTime() + 6000 % 24000;
 

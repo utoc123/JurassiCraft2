@@ -53,7 +53,7 @@ public class SelectDinoGui extends GuiScreen
     {
         super.initGui();
 
-        this.buttonList.add(new GuiButton(0, (this.width - 150) / 2, this.height / 5 + 150, 150, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(new GuiButton(0, (this.width - 150) / 2, this.height / 5 + 150, 150, 20, I18n.format("gui.cancel")));
         this.buttonList.add(backward = new GuiButton(1, this.width / 2 - 105, this.height / 5 + 150, 20, 20, "<"));
         this.buttonList.add(forward = new GuiButton(2, this.width / 2 + 85, this.height / 5 + 150, 20, 20, ">"));
 

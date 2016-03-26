@@ -3,11 +3,13 @@ package org.jurassicraft.server.paleopad;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppRegistry
+public enum AppHandler
 {
-    private static List<App> registeredApps = new ArrayList<App>();
-    public static App flappy_dino;
-    public static App minimap;
+    INSTANCE;
+
+    private List<App> registeredApps = new ArrayList<App>();
+    public App flappy_dino;
+    public App minimap;
 
     public void registerApp(App app)
     {
@@ -23,7 +25,7 @@ public class AppRegistry
         registerApp(minimap);
     }
 
-    public static List<App> getApps()
+    public List<App> getApps()
     {
         return registeredApps;
     }

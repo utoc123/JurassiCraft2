@@ -22,7 +22,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumDiet;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.paleopad.App;
-import org.jurassicraft.server.paleopad.AppRegistry;
+import org.jurassicraft.server.paleopad.AppHandler;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class PaleoPadViewDinosaurGui extends GuiScreen
         int scaledHeight = dimensions.getScaledHeight();
         drawTexturedModalRect(scaledWidth / 2 - 128, 40, 0, 0, 256, 256);
 
-        List<App> apps = AppRegistry.getApps();
+        List<App> apps = AppHandler.INSTANCE.getApps();
 
         double worldTime = mc.theWorld.getWorldTime() + 6000 % 24000;
 

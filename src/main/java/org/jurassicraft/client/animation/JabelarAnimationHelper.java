@@ -14,7 +14,6 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.fx.BloodEntityFX;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.util.Map;
 

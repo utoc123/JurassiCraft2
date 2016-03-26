@@ -29,7 +29,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.food.JCFoodNutrients;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
 import java.util.Random;
@@ -427,7 +427,7 @@ public class CultivatorTile extends TileEntityLockable implements ITickable, ISi
      */
     private boolean canCultivate()
     {
-        if (slots[0] != null && slots[0].getItem() == JCItemRegistry.syringe && waterLevel == 3)
+        if (slots[0] != null && slots[0].getItem() == ItemHandler.INSTANCE.syringe && waterLevel == 3)
         {
             Dinosaur dino = JCEntityRegistry.getDinosaurById(slots[0].getItemDamage());
 

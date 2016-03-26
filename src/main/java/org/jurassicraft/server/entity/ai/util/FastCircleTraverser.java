@@ -53,5 +53,4 @@ public class FastCircleTraverser implements Iterable<BlockPos>
 
     }
 
-
 }

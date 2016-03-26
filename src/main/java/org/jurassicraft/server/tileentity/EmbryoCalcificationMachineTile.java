@@ -9,7 +9,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.SyringeItem;
 
 public class EmbryoCalcificationMachineTile extends MachineBaseTile
@@ -37,7 +37,7 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
 
             if (!dino.isMammal())
             {
-                ItemStack output = new ItemStack(JCItemRegistry.egg, 1, input.getItemDamage());
+                ItemStack output = new ItemStack(ItemHandler.INSTANCE.egg, 1, input.getItemDamage());
                 output.setTagCompound(input.getTagCompound());
 
                 return hasOutputSlot(output);
@@ -52,7 +52,7 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
     {
         if (this.canProcess(process))
         {
-            ItemStack output = new ItemStack(JCItemRegistry.egg, 1, slots[0].getItemDamage());
+            ItemStack output = new ItemStack(ItemHandler.INSTANCE.egg, 1, slots[0].getItemDamage());
             output.setTagCompound(slots[0].getTagCompound());
 
             mergeStack(2, output);

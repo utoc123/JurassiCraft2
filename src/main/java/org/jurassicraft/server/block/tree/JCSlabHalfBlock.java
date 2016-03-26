@@ -1,7 +1,7 @@
 package org.jurassicraft.server.block.tree;
 
 import net.minecraft.block.state.IBlockState;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class JCSlabHalfBlock extends JCSlabBlock
 {
@@ -9,7 +9,7 @@ public class JCSlabHalfBlock extends JCSlabBlock
     {
         super(state);
         this.setUnlocalizedName(type.name().toLowerCase() + "_slab");
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
     }
 
     @Override

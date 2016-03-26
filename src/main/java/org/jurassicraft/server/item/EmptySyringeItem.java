@@ -9,14 +9,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class EmptySyringeItem extends Item
 {
     public EmptySyringeItem()
     {
         super();
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class EmptySyringeItem extends Item
     {
         if (worldIn.getBlockState(pos).getBlock() instanceof BlockBush)
         {
-            playerIn.inventory.addItemStackToInventory(new ItemStack(JCItemRegistry.plant_cells));
+            playerIn.inventory.addItemStackToInventory(new ItemStack(ItemHandler.INSTANCE.plant_cells));
             stack.stackSize--;
 
             return EnumActionResult.SUCCESS;

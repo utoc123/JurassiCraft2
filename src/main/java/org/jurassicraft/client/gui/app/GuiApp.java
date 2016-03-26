@@ -1,8 +1,6 @@
 package org.jurassicraft.client.gui.app;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;

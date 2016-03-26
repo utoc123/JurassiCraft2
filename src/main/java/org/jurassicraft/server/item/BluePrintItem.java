@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
@@ -19,7 +19,7 @@ public class BluePrintItem extends Item
 {
     public BluePrintItem()
     {
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
         this.setMaxStackSize(1);
     }
 

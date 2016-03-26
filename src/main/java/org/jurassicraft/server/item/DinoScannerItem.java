@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 /**
@@ -19,7 +19,7 @@ public class DinoScannerItem extends Item
     public DinoScannerItem()
     {
         super();
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
         this.setMaxStackSize(1);
     }
 

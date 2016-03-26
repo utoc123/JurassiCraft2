@@ -177,7 +177,6 @@ public class AIUtils
         LOGGER.info("x=" + x + ", y=" + y);
     }
 
-
     private static final Logger LOGGER = LogManager.getLogger();
 }
 

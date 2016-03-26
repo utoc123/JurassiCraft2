@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.tileentity.DNASequencerTile;
 
 public class DNASequencerBlock extends OrientedBlock
@@ -29,7 +29,7 @@ public class DNASequencerBlock extends OrientedBlock
         this.setUnlocalizedName("dna_sequencer");
         this.setHardness(2.0F);
         this.setStepSound(SoundType.METAL);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 
     @Override

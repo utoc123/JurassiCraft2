@@ -16,7 +16,7 @@ import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.PlantDNA;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +123,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
         }
         else
         {
-            if (slots[8] != null && slots[8].getItem() == JCItemRegistry.storage_disc && slots[9] != null && slots[9].getItem() == JCItemRegistry.storage_disc)
+            if (slots[8] != null && slots[8].getItem() == ItemHandler.INSTANCE.storage_disc && slots[9] != null && slots[9].getItem() == ItemHandler.INSTANCE.storage_disc)
             {
                 if (slots[8].getTagCompound() != null && slots[9].getTagCompound() != null && slots[11] == null && slots[8].getItemDamage() == slots[9].getItemDamage() && slots[8].getTagCompound().getString("StorageId").equals(slots[9].getTagCompound().getString("StorageId")))
                 {
@@ -154,7 +154,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
                 DinoDNA dna = new DinoDNA(100, container.toString());
                 dna.writeToNBT(nbt);
 
-                ItemStack output = new ItemStack(JCItemRegistry.storage_disc, 1, dinosaurId);
+                ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, dinosaurId);
                 output.setItemDamage(dna.getContainer().getDinosaur());
                 output.setTagCompound(nbt);
 
@@ -167,7 +167,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
             }
             else
             {
-                ItemStack output = new ItemStack(JCItemRegistry.storage_disc, 1, slots[8].getItemDamage());
+                ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, slots[8].getItemDamage());
 
                 String storageId = slots[8].getTagCompound().getString("StorageId");
 
@@ -312,6 +312,6 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
     @Override
     public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(hybridizerMode ? "container.dna_hybridizer" : "container.dna_combinator", new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(hybridizerMode ? "container.dna_hybridizer" : "container.dna_combinator");
     }
 }

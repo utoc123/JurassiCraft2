@@ -10,7 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
 public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>

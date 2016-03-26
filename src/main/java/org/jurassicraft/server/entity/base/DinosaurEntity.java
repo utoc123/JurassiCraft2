@@ -55,8 +55,7 @@ import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
-import org.jurassicraft.server.item.JCItemRegistry;
-import org.jurassicraft.server.item.bones.FossilItem;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.UUID;
 
@@ -332,11 +331,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (burning)
             {
-                entityDropItem(new ItemStack(JCItemRegistry.dino_steak, 1, meta), 0.0F);
+                entityDropItem(new ItemStack(ItemHandler.INSTANCE.dino_steak, 1, meta), 0.0F);
             }
             else
             {
-                dropStackWithGenetics(new ItemStack(JCItemRegistry.dino_meat, 1, meta));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.dino_meat, 1, meta));
             }
         }
     }
@@ -657,7 +656,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (rand.nextInt(10) != 0)
             {
-                dropStackWithGenetics(new ItemStack(JCItemRegistry.fresh_fossils.get(bone), 1, JCEntityRegistry.getDinosaurId(dinosaur)));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.fresh_fossils.get(bone), 1, JCEntityRegistry.getDinosaurId(dinosaur)));
             }
         }
     }

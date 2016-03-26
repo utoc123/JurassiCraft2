@@ -16,7 +16,7 @@ import net.minecraft.world.Explosion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
@@ -35,7 +35,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setStepSound(SoundType.STONE);
-        this.setCreativeTab(JCCreativeTabs.fossils);
+        this.setCreativeTab(TabHandler.INSTANCE.fossils);
 
         this.start = start;
 

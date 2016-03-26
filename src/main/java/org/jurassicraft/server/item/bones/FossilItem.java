@@ -9,7 +9,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.IHybrid;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.lang.AdvLang;
@@ -34,7 +34,7 @@ public class FossilItem extends Item
 
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(JCCreativeTabs.bones);
+        this.setCreativeTab(TabHandler.INSTANCE.bones);
     }
 
     public static void init()

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class JurassiCraftDNATab extends CreativeTabs
 {
@@ -36,9 +36,9 @@ public class JurassiCraftDNATab extends CreativeTabs
                 {
                     int id = JCEntityRegistry.getDinosaurId(dino);
 
-                    stacks[i] = new ItemStack(JCItemRegistry.dna, 1, id);
-                    stacks[i + dinosaurs] = new ItemStack(JCItemRegistry.soft_tissue, 1, id);
-                    stacks[i + (dinosaurs * 2)] = new ItemStack(JCItemRegistry.syringe, 1, id);
+                    stacks[i] = new ItemStack(ItemHandler.INSTANCE.dna, 1, id);
+                    stacks[i + dinosaurs] = new ItemStack(ItemHandler.INSTANCE.soft_tissue, 1, id);
+                    stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.INSTANCE.syringe, 1, id);
 
                     i++;
                 }
@@ -51,6 +51,6 @@ public class JurassiCraftDNATab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return JCItemRegistry.dna;
+        return ItemHandler.INSTANCE.dna;
     }
 }

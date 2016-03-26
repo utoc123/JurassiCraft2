@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.genetics.GeneticsContainer;
@@ -29,7 +29,7 @@ public class DinsaurMeatItem extends ItemFood
         super(3, 0.3F, true);
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(JCCreativeTabs.foods);
+        this.setCreativeTab(TabHandler.INSTANCE.foods);
     }
 
     @Override

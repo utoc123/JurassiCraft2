@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class ClearGlassBlock extends BlockGlass
 {
@@ -26,7 +26,7 @@ public class ClearGlassBlock extends BlockGlass
     public ClearGlassBlock()
     {
         super(Material.glass, false);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
         this.setHardness(0.3F);
         this.setStepSound(SoundType.GLASS);
         this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false).withProperty(WEST, false).withProperty(UP, false).withProperty(DOWN, false));

@@ -222,7 +222,6 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         rotorRotation += Easings.easeInCubic(time, rotorRotation, enginePower, 1f);
         rotorRotation %= 360f;
 
-
         fallDistance = 0f;
         ignoreFrustumCheck = true; // always draws the entity
         // Update seats positions
@@ -582,7 +581,6 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         }
         return seats[index];
     }
-
 
     public void setSeat(int index, HelicopterSeatEntity seat)
     {

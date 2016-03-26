@@ -98,7 +98,6 @@ public class HerdEntityAI extends EntityAIBase
     //private static final Logger LOGGER = LogManager.getLogger();
 }
 
-
 /**
  * FUTURE MODEL:
  * <p/>

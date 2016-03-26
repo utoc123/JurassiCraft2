@@ -23,7 +23,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
@@ -41,7 +41,7 @@ public class DinosaurSpawnEggItem extends Item
     {
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(JCCreativeTabs.spawnEggs);
+        this.setCreativeTab(TabHandler.INSTANCE.spawnEggs);
     }
 
     public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)

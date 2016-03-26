@@ -8,8 +8,7 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
@@ -70,17 +69,17 @@ public class WorldGenerator implements IWorldGenerator
 
                     if (dinosaur.shouldRegister())
                     {
-                        int meta = JurassiCraft.blockRegistry.getMetadata(dinosaur);
+                        int meta = BlockHandler.INSTANCE.getMetadata(dinosaur);
 
-                        new WorldGenMinable(JurassiCraft.blockRegistry.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+                        new WorldGenMinable(BlockHandler.INSTANCE.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
                     }
                 }
             }
         }
 
-        generateOre(world, chunkX, chunkZ, 20, 16, 3, JCBlockRegistry.amber_ore.getDefaultState(), random);
-        generateOre(world, chunkX, chunkZ, 64, 16, 1, JCBlockRegistry.ice_shard.getDefaultState(), random);
-        generateOre(world, chunkX, chunkZ, 128, 32, 10, JCBlockRegistry.gypsum_stone.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 20, 16, 3, BlockHandler.INSTANCE.amber_ore.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 64, 16, 1, BlockHandler.INSTANCE.ice_shard.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.gypsum_stone.getDefaultState(), random);
     }
 
     public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random)
@@ -102,7 +101,7 @@ public class WorldGenerator implements IWorldGenerator
         float rotX = (float) (rand.nextDouble() * 360.0F);
         float rotY = (float) (rand.nextDouble() * 360.0F) - 180.0F;
 
-        IBlockState state = JCBlockRegistry.petrified_logs.get(treeType).getDefaultState();
+        IBlockState state = BlockHandler.INSTANCE.petrified_logs.get(treeType).getDefaultState();
 
         float horizontal = MathHelper.cos(rotX * (float) Math.PI / 180.0F);
         float vertical = MathHelper.sin(rotX * (float) Math.PI / 180.0F);

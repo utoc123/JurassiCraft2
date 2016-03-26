@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class StorageTypeRegistry
+public enum StorageTypeRegistry
 {
-    private static Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<String, Supplier<? extends IStorageType>>();
+    INSTANCE;
+
+    private Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<String, Supplier<? extends IStorageType>>();
 
     public void init()
     {
@@ -35,7 +37,7 @@ public class StorageTypeRegistry
         storageTypes.put(id, Objects.requireNonNull(storageType));
     }
 
-    public static IStorageType getStorageType(String id)
+    public IStorageType getStorageType(String id)
     {
         if (id == null || id.isEmpty())
         {

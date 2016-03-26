@@ -9,7 +9,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNASequencerContainer;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.SoftTissueItem;
 
 import java.util.Random;
@@ -41,9 +41,9 @@ public class DNASequencerTile extends MachineBaseTile
 
         if (input != null && input.getItem() instanceof SoftTissueItem)
         {
-            if (storage != null && storage.getItem() == JCItemRegistry.storage_disc)
+            if (storage != null && storage.getItem() == ItemHandler.INSTANCE.storage_disc)
             {
-                ItemStack output = new ItemStack(JCItemRegistry.storage_disc, 1, input.getItemDamage());
+                ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, input.getItemDamage());
                 output.setTagCompound(input.getTagCompound());
 
                 if (slots[process + 6] == null || ItemStack.areItemsEqual(slots[process + 6], output) && ItemStack.areItemStackTagsEqual(slots[process + 6], output))
@@ -93,7 +93,7 @@ public class DNASequencerTile extends MachineBaseTile
                 dna.writeToNBT(nbt);
             }
 
-            ItemStack output = new ItemStack(JCItemRegistry.storage_disc, 1, dinosaur);
+            ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, dinosaur);
             output.setTagCompound(nbt);
 
             mergeStack(process + 6, output);

@@ -10,15 +10,15 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.lang.AdvLang;
-import org.jurassicraft.server.plant.JCPlantRegistry;
 import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
 
 public class PlantCallusItem extends Item
 {
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new AdvLang("item.plant_callus.name").withProperty("plant", "plants." + JCPlantRegistry.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
+        return new AdvLang("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PlantCallusItem extends Item
         {
             if (world.isAirBlock(pos.offset(side)) && world.getBlockState(pos).getBlock() == Blocks.farmland)
             {
-                Plant plant = JCPlantRegistry.getPlantById(stack.getItemDamage());
+                Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
 
                 if (plant != null)
                 {

@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 
 public class CleaningStationBlock extends OrientedBlock
@@ -30,7 +30,7 @@ public class CleaningStationBlock extends OrientedBlock
         this.setHardness(2.0F);
         this.setLightOpacity(0);
         this.setStepSound(SoundType.METAL);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 
     @Override

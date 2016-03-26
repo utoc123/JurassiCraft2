@@ -1,7 +1,7 @@
 package org.jurassicraft.server.world.jurdstrees.algorythms;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.Feature.FeatureType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.InsPCoord.InsPType;
@@ -43,12 +43,12 @@ public class Tree
 
     public static Block getBlocksFromCode(TreeType type)
     {
-        return JCBlockRegistry.logs.get(type);
+        return BlockHandler.INSTANCE.logs.get(type);
     }
 
     public static Block getLeavesFromCode(TreeType type)
     {
-        return JCBlockRegistry.leaves.get(type);
+        return BlockHandler.INSTANCE.leaves.get(type);
     }
 
     public Tree(TreeType type, int maxAge, int maxBranchLength, int penalty, int lbl, int mtheight)
@@ -83,12 +83,7 @@ public class Tree
     public boolean hasBeenGenerated()
     {
 
-        if (insPList.size() != 0)
-        {
-            return true;
-        }
-
-        return false;
+        return insPList.size() != 0;
 
     }
 
@@ -272,7 +267,7 @@ public class Tree
                 int zC = insPList.get(j).getZ() + insertp.getZ();
 
                 // if the next insert point allows for trunk, then trunk rotation does not matter, it can be random.
-                if (insertp.allowTrunk && addLeavesInsPOnly == false)
+                if (insertp.allowTrunk && !addLeavesInsPOnly)
                 {
                     // Rotation of the insert point is corrected in the Tree Compendium method that gives the rotated shape.
                     int newRotation;
@@ -307,7 +302,7 @@ public class Tree
                     else
                     {
 
-                        if (addLeavesInsPOnly == false)
+                        if (!addLeavesInsPOnly)
                         {
 
                             if (insertp.rotation == Rotation.none)

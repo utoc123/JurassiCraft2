@@ -10,9 +10,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
 import org.lwjgl.opengl.GL11;
 
@@ -44,7 +43,7 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == JCBlockRegistry.dna_combinator_hybridizer)
+        if (blockState.getBlock() == BlockHandler.INSTANCE.dna_combinator_hybridizer)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

@@ -31,11 +31,7 @@ public class HuntingEntityAI extends EntityAIBase
         {
             return false;
         }
-        if (utils.getEntitiesWithinDistance(dinosaur, 30, 10).isEmpty())
-        {
-            return false;
-        }
-        return true;
+        return !utils.getEntitiesWithinDistance(dinosaur, 30, 10).isEmpty();
     }
 
     @Override

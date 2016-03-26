@@ -383,7 +383,6 @@ public class HerdManager
         // We use linked list because we traverse and don't need random access
         private LinkedList<DinosaurEntity> dinosaurs = new LinkedList<DinosaurEntity>();
 
-
         /**
          * Gets the "center" (average) of the cluster,
          *
@@ -456,7 +455,6 @@ public class HerdManager
         {
             return dinosaurs.contains(dinosaur);
         }
-
 
         /**
          * The dinosaur to the cluster.

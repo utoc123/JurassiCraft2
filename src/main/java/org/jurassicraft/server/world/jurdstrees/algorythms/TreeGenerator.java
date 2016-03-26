@@ -4,7 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.InsPCoord.InsPType;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeBlock.Rotation;
@@ -136,10 +136,10 @@ public class TreeGenerator
 
             // this sets the skull blocks from the loaded shape.
 
-            if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getBlocksFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == JCBlockRegistry.saplings.get(tree.getTreeType()))
+            if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getBlocksFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == BlockHandler.INSTANCE.saplings.get(tree.getTreeType()))
             {
 
-                if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == JCBlockRegistry.saplings.get(tree.getTreeType()))
+                if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == BlockHandler.INSTANCE.saplings.get(tree.getTreeType()))
                 {
                     world.setBlockState(pos.add(xC, yC, zC), logs); // skull block
 

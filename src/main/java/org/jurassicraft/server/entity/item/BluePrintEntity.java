@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class BluePrintEntity extends EntityHanging implements IEntityAdditionalSpawnData
 {
@@ -87,7 +87,7 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
                 }
             }
 
-            ItemStack stack = new ItemStack(JCItemRegistry.blue_print);
+            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.blue_print);
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("Dinosaur", dinosaur);
 

@@ -15,8 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.world.jurdstrees.trees.WorldGenJCTree;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 import java.util.List;
 import java.util.Random;
@@ -35,7 +34,7 @@ public class JCSaplingBlock extends BlockBush implements IGrowable
         this.setUnlocalizedName(type.name().toLowerCase() + "_sapling");
         this.setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
         this.setStepSound(SoundType.PLANT);
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.treeType = type;
     }
 

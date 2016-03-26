@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class MossBlock extends Block
 {
@@ -25,7 +25,7 @@ public class MossBlock extends Block
         this.setHardness(0.2F);
         this.setResistance(0.0F);
         this.setTickRandomly(true);
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.setStepSound(SoundType.PLANT);
         this.setLightOpacity(0);
     }

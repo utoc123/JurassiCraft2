@@ -12,7 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 public class CultivatorTopBlock extends CultivatorBlock
 {
@@ -24,7 +24,7 @@ public class CultivatorTopBlock extends CultivatorBlock
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult result, World world, BlockPos pos, EntityPlayer player)
     {
-        Item item = Item.getItemFromBlock(JCBlockRegistry.cultivate_bottom);
+        Item item = Item.getItemFromBlock(BlockHandler.INSTANCE.cultivate_bottom);
 
         if (item == null)
         {
@@ -49,9 +49,9 @@ public class CultivatorTopBlock extends CultivatorBlock
     {
         BlockPos bottomBlock = pos.add(0, -1, 0);
 
-        if (world.getBlockState(bottomBlock).getBlock() != JCBlockRegistry.cultivate_bottom)
+        if (world.getBlockState(bottomBlock).getBlock() != BlockHandler.INSTANCE.cultivate_bottom)
         {
-            world.setBlockState(bottomBlock, JCBlockRegistry.cultivate_bottom.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
+            world.setBlockState(bottomBlock, BlockHandler.INSTANCE.cultivate_bottom.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
         }
     }
 

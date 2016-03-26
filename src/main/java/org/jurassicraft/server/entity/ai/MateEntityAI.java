@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.animation.Animations;

@@ -8,8 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 import org.jurassicraft.server.vehicles.helicopter.modules.EnumModulePosition;
 import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterModuleSpot;

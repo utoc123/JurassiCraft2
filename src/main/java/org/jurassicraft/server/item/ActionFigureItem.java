@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.lang.AdvLang;
@@ -32,7 +32,7 @@ public class ActionFigureItem extends Item
     {
         super();
 
-        this.setCreativeTab(JCCreativeTabs.merchandise);
+        this.setCreativeTab(TabHandler.INSTANCE.merchandise);
         this.setHasSubtypes(true);
     }
 
@@ -43,7 +43,7 @@ public class ActionFigureItem extends Item
 
         if (player.canPlayerEdit(pos, side, stack))
         {
-            Block block = JCBlockRegistry.action_figure;
+            Block block = BlockHandler.INSTANCE.action_figure;
 
             if (block.canPlaceBlockAt(world, pos))
             {

@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
@@ -29,10 +29,11 @@ public class DinosaurEggItem extends DNAContainerItem
     {
         super();
 
-        this.setCreativeTab(JCCreativeTabs.eggs);
+        this.setCreativeTab(TabHandler.INSTANCE.eggs);
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
@@ -45,6 +46,7 @@ public class DinosaurEggItem extends DNAContainerItem
         return JCEntityRegistry.getDinosaurById(stack.getMetadata());
     }
 
+    @Override
     public int getContainerId(ItemStack stack)
     {
         return JCEntityRegistry.getDinosaurId(getDinosaur(stack));

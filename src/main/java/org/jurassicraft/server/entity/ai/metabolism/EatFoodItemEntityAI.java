@@ -74,7 +74,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
                     {
                         Item item = stack.getItem();
 
-                        if (FoodHelper.canDietEat(dinosaur.getDinosaur().getDiet(), item))
+                        if (FoodHelper.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
                         {
                             double diffX = posX - e.posX;
                             double diffY = posY - e.posY;

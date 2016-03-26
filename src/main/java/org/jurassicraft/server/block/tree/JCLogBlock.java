@@ -7,7 +7,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class JCLogBlock extends BlockLog
 {
@@ -19,7 +19,7 @@ public class JCLogBlock extends BlockLog
         this.setHardness(2.0F);
         this.setResistance(0.5F);
         this.setStepSound(SoundType.WOOD);
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.petrified = petrified;
 
         String name = treeType.name().toLowerCase() + "_log";

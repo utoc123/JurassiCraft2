@@ -59,63 +59,65 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JCBlockRegistry
+public enum BlockHandler
 {
-    public static Map<TreeType, JCPlanksBlock> planks = new HashMap<TreeType, JCPlanksBlock>();
-    public static Map<TreeType, JCLogBlock> logs = new HashMap<TreeType, JCLogBlock>();
-    public static Map<TreeType, JCLeavesBlock> leaves = new HashMap<TreeType, JCLeavesBlock>();
-    public static Map<TreeType, JCSaplingBlock> saplings = new HashMap<TreeType, JCSaplingBlock>();
+    INSTANCE;
 
-    public static Map<TreeType, JCSlabBlock> slabs = new HashMap<TreeType, JCSlabBlock>();
-    public static Map<TreeType, JCDoubleSlabBlock> double_slabs = new HashMap<TreeType, JCDoubleSlabBlock>();
-    public static Map<TreeType, JCStairsBlock> stairs = new HashMap<TreeType, JCStairsBlock>();
+    public Map<TreeType, JCPlanksBlock> planks = new HashMap<TreeType, JCPlanksBlock>();
+    public Map<TreeType, JCLogBlock> logs = new HashMap<TreeType, JCLogBlock>();
+    public Map<TreeType, JCLeavesBlock> leaves = new HashMap<TreeType, JCLeavesBlock>();
+    public Map<TreeType, JCSaplingBlock> saplings = new HashMap<TreeType, JCSaplingBlock>();
 
-    public static Map<TreeType, JCLogBlock> petrified_logs = new HashMap<TreeType, JCLogBlock>();
+    public Map<TreeType, JCSlabBlock> slabs = new HashMap<TreeType, JCSlabBlock>();
+    public Map<TreeType, JCDoubleSlabBlock> double_slabs = new HashMap<TreeType, JCDoubleSlabBlock>();
+    public Map<TreeType, JCStairsBlock> stairs = new HashMap<TreeType, JCStairsBlock>();
 
-    public static List<FossilBlock> fossils;
-    public static List<EncasedFossilBlock> encased_fossils;
+    public Map<TreeType, JCLogBlock> petrified_logs = new HashMap<TreeType, JCLogBlock>();
 
-    public static Block cleaning_station;
-    public static Block fossil_grinder;
-    public static Block dna_sequencer;
-    public static Block dna_synthesizer;
-    public static Block embryonic_machine;
-    public static Block embryo_calcification_machine;
-    public static Block incubator;
-    public static Block dna_extractor;
+    public List<FossilBlock> fossils;
+    public List<EncasedFossilBlock> encased_fossils;
 
-    public static Block amber_ore;
-    public static Block ice_shard;
+    public Block cleaning_station;
+    public Block fossil_grinder;
+    public Block dna_sequencer;
+    public Block dna_synthesizer;
+    public Block embryonic_machine;
+    public Block embryo_calcification_machine;
+    public Block incubator;
+    public Block dna_extractor;
 
-    public static Block gypsum_cobblestone;
-    public static Block gypsum_stone;
-    public static Block gypsum_bricks;
-    public static Block dna_combinator_hybridizer;
+    public Block amber_ore;
+    public Block ice_shard;
 
-    public static Block reinforced_stone;
-    public static Block reinforced_bricks;
+    public Block gypsum_cobblestone;
+    public Block gypsum_stone;
+    public Block gypsum_bricks;
+    public Block dna_combinator_hybridizer;
 
-    public static Block small_royal_fern;
-    public static Block small_chain_fern;
-    public static Block small_cycad;
+    public Block reinforced_stone;
+    public Block reinforced_bricks;
 
-    public static Block cultivate_top;
-    public static Block cultivate_bottom;
+    public Block small_royal_fern;
+    public Block small_chain_fern;
+    public Block small_cycad;
 
-    public static Block bennettitalean_cycadeoidea;
-    public static Block cry_pansy;
-    public static Block scaly_tree_fern;
-    public static Block cycad_zamites;
-    public static Block dicksonia;
+    public Block cultivate_top;
+    public Block cultivate_bottom;
 
-    public static Block action_figure;
+    public Block bennettitalean_cycadeoidea;
+    public Block cry_pansy;
+    public Block scaly_tree_fern;
+    public Block cycad_zamites;
+    public Block dicksonia;
 
-    public static Block moss;
+    public Block action_figure;
 
-    public static Block clear_glass;
+    public Block moss;
 
-    public static Block ajuginucula_smithii;
-    public static Block wild_onion;
+    public Block clear_glass;
+
+    public Block ajuginucula_smithii;
+    public Block wild_onion;
 
     public void init()
     {
@@ -220,7 +222,7 @@ public class JCBlockRegistry
         registerBlockTileEntity(ActionFigureTile.class, action_figure, "Action Figure Block");
     }
 
-    private void registerTreeType(TreeType type)
+    public void registerTreeType(TreeType type)
     {
         JCPlanksBlock planks = new JCPlanksBlock(type);
         JCLogBlock log = new JCLogBlock(type, false);
@@ -231,14 +233,14 @@ public class JCBlockRegistry
         JCSlabHalfBlock slab = new JCSlabHalfBlock(type, planks.getDefaultState());
         JCDoubleSlabBlock double_slab = new JCDoubleSlabBlock(type, slab, planks.getDefaultState());
 
-        JCBlockRegistry.planks.put(type, planks);
-        JCBlockRegistry.logs.put(type, log);
-        JCBlockRegistry.leaves.put(type, leaves);
-        JCBlockRegistry.saplings.put(type, sapling);
-        JCBlockRegistry.stairs.put(type, stair);
-        JCBlockRegistry.slabs.put(type, slab);
-        JCBlockRegistry.double_slabs.put(type, double_slab);
-        JCBlockRegistry.petrified_logs.put(type, petrified_log);
+        this.planks.put(type, planks);
+        this.logs.put(type, log);
+        this.leaves.put(type, leaves);
+        this.saplings.put(type, sapling);
+        this.stairs.put(type, stair);
+        this.slabs.put(type, slab);
+        this.double_slabs.put(type, double_slab);
+        this.petrified_logs.put(type, petrified_log);
 
         String typeName = type.name().toLowerCase();
 

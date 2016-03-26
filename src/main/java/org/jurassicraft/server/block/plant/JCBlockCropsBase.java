@@ -206,7 +206,6 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         return state.getValue(getAgeProperty());
     }
 
-
     @Override
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
     {

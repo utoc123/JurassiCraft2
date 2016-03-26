@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class JurassiCraftFoodTab extends CreativeTabs
 {
@@ -42,6 +42,6 @@ public class JurassiCraftFoodTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return JCItemRegistry.dino_meat;
+        return ItemHandler.INSTANCE.dino_meat;
     }
 }

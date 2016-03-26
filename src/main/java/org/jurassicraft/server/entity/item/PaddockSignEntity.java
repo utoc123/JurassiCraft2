@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class PaddockSignEntity extends EntityHanging implements IEntityAdditionalSpawnData
 {
@@ -87,7 +87,7 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
                 }
             }
 
-            ItemStack stack = new ItemStack(JCItemRegistry.paddock_sign);
+            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.paddock_sign);
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("Dinosaur", dinosaur);
 

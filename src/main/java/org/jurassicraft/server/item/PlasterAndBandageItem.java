@@ -10,12 +10,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.achievements.JCAchievements;
+import org.jurassicraft.server.achievements.AchievementHandler;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
-import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class PlasterAndBandageItem extends Item
 {
@@ -23,7 +22,7 @@ public class PlasterAndBandageItem extends Item
     {
         super();
 
-        this.setCreativeTab(JCCreativeTabs.items);
+        this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
     @Override
@@ -41,18 +40,16 @@ public class PlasterAndBandageItem extends Item
 
             if (block instanceof FossilBlock)
             {
-                JCBlockRegistry blockRegistry = JurassiCraft.blockRegistry;
+                int id = BlockHandler.INSTANCE.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
 
-                int id = blockRegistry.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
-
-                world.setBlockState(pos, blockRegistry.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, blockRegistry.getMetadata(id)));
+                world.setBlockState(pos, BlockHandler.INSTANCE.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.INSTANCE.getMetadata(id)));
 
                 if (!player.capabilities.isCreativeMode)
                 {
                     stack.stackSize--;
                 }
 
-                player.addStat(JCAchievements.fossils, 1);
+                player.addStat(AchievementHandler.INSTANCE.fossils, 1);
 
                 return EnumActionResult.SUCCESS;
             }

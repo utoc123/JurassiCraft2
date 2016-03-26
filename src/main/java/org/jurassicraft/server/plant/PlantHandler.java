@@ -3,8 +3,10 @@ package org.jurassicraft.server.plant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JCPlantRegistry
+public enum PlantHandler
 {
+    INSTANCE;
+
     private static List<Plant> plants = new ArrayList<Plant>();
 
     public static Plant ajuginucula_smithii;
@@ -49,7 +51,7 @@ public class JCPlantRegistry
         registerPlant(wild_onion);
     }
 
-    public static Plant getPlantById(int id)
+    public Plant getPlantById(int id)
     {
         if (id >= plants.size() || id < 0)
         {
@@ -59,12 +61,12 @@ public class JCPlantRegistry
         return plants.get(id);
     }
 
-    public static int getPlantId(Plant plant)
+    public int getPlantId(Plant plant)
     {
         return plants.indexOf(plant);
     }
 
-    public static List<Plant> getPlants()
+    public List<Plant> getPlants()
     {
         return plants;
     }

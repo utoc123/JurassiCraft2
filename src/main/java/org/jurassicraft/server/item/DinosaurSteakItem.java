@@ -6,7 +6,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.JCEntityRegistry;
 import org.jurassicraft.server.lang.AdvLang;
@@ -25,7 +25,7 @@ public class DinosaurSteakItem extends ItemFood
 
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(JCCreativeTabs.foods);
+        this.setCreativeTab(TabHandler.INSTANCE.foods);
     }
 
     @Override

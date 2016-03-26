@@ -17,8 +17,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.block.JCBlockRegistry;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class JCLeavesBlock extends BlockLeaves
         this.setLightOpacity(1);
         this.setStepSound(SoundType.PLANT);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false));
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
     }
 
     public TreeType getTreeType()
@@ -104,7 +104,7 @@ public class JCLeavesBlock extends BlockLeaves
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(JCBlockRegistry.saplings.get(treeType));
+        return Item.getItemFromBlock(BlockHandler.INSTANCE.saplings.get(treeType));
     }
 
     @Override

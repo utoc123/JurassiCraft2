@@ -6,8 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 
 public class BennettitaleanCycadeoideaBlock extends BlockBush
 {
@@ -16,7 +15,7 @@ public class BennettitaleanCycadeoideaBlock extends BlockBush
     public BennettitaleanCycadeoideaBlock()
     {
         super();
-        this.setCreativeTab(JCCreativeTabs.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.setStepSound(SoundType.PLANT);
     }
 

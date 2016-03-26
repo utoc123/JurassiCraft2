@@ -1,7 +1,7 @@
 package org.jurassicraft.server.block.plant;
 
 import net.minecraft.item.Item;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 /**
  * Copyright 2016 Timeless Modding Mod
@@ -19,12 +19,12 @@ public class AjuginuculaSmithiiBlock extends JCBlockCrops8
     @Override
     protected Item getSeed()
     {
-        return JCItemRegistry.ajuginucula_smithii_seeds;
+        return ItemHandler.INSTANCE.ajuginucula_smithii_seeds;
     }
 
     @Override
     protected Item getCrop()
     {
-        return JCItemRegistry.ajuginucula_smithii_leaves;
+        return ItemHandler.INSTANCE.ajuginucula_smithii_leaves;
     }
 }

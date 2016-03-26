@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import org.jurassicraft.server.block.JCBlockRegistry;
+import org.jurassicraft.server.block.BlockHandler;
 
 public class CryPansyPlant extends Plant
 {
@@ -20,6 +20,6 @@ public class CryPansyPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return JCBlockRegistry.cry_pansy;
+        return BlockHandler.INSTANCE.cry_pansy;
     }
 }

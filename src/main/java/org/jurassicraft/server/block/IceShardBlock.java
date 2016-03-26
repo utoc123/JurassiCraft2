@@ -9,8 +9,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class IceShardBlock extends Block
         super(Material.rock);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
-        this.setCreativeTab(JCCreativeTabs.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.blocks);
         this.setHarvestLevel("pickaxe", 2);
     }
 
@@ -36,7 +36,7 @@ public class IceShardBlock extends Block
 
         if (rand.nextDouble() < 0.2 + ((fortune / 3.0) * 0.8))
         {
-            ret.add(new ItemStack(JCItemRegistry.sea_lamprey));
+            ret.add(new ItemStack(ItemHandler.INSTANCE.sea_lamprey));
         }
         else if (rand.nextDouble() < 0.2)
         {

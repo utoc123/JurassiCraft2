@@ -19,12 +19,8 @@ public class LookAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (animatingEntity.getRNG().nextDouble() < 0.01)
-        {
-            return true;
-        }
+        return animatingEntity.getRNG().nextDouble() < 0.01;
 
-        return false;
     }
 
     @Override

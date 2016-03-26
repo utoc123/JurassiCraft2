@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.JCCreativeTabs;
+import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class HelicopterItem extends Item
 {
     public HelicopterItem()
     {
-        setCreativeTab(JCCreativeTabs.items);
+        setCreativeTab(TabHandler.INSTANCE.items);
         setMaxStackSize(1);
     }
 

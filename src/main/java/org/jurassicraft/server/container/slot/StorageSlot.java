@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.item.JCItemRegistry;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class StorageSlot extends Slot
 {
@@ -21,11 +21,11 @@ public class StorageSlot extends Slot
     {
         if (stored)
         {
-            return stack.getItem() == JCItemRegistry.storage_disc && (stack.getTagCompound() != null && stack.getTagCompound().hasKey("DNAQuality"));
+            return stack.getItem() == ItemHandler.INSTANCE.storage_disc && (stack.getTagCompound() != null && stack.getTagCompound().hasKey("DNAQuality"));
         }
         else
         {
-            return stack.getItem() == JCItemRegistry.storage_disc && (stack.getTagCompound() == null || !stack.getTagCompound().hasKey("DNAQuality"));
+            return stack.getItem() == ItemHandler.INSTANCE.storage_disc && (stack.getTagCompound() == null || !stack.getTagCompound().hasKey("DNAQuality"));
         }
     }
 }
