@@ -17,16 +17,6 @@ Jordor
 ABMK  
 Rydog101  
 
-## Modelers
-CarrotJet  
-TheDurpiDaedric  
-Raptorek20  
-Cucholololthespanishman   
-Ma_rio11  
-codyrex78117  
-PapaWhale 
-
-
 # Contributing
 Feel free to speed up development and create pull requests. Here's a guide on how to setup your workspace.
 
