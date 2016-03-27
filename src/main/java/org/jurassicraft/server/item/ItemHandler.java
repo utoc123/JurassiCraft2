@@ -22,13 +22,14 @@ public enum ItemHandler
 {
     INSTANCE;
 
-    public ItemPlasterAndBandage plaster_and_bandage;
+    public PlasterAndBandageItem plaster_and_bandage;
     public DinosaurSpawnEggItem spawn_egg;
 
-    public ItemDNA dna;
-    public ItemDinosaurEgg egg;
+    public DNAItem dna;
+    public DinosaurEggItem egg;
     public PaleoPadItem paleo_pad;
     public SoftTissueItem soft_tissue;
+    public PlantSoftTissueItem plant_soft_tissue;
 
     public DinsaurMeatItem dino_meat;
     public DinosaurSteakItem dino_steak;
@@ -74,7 +75,7 @@ public enum ItemHandler
     public JCMusicDiscItem disc_troodons_and_raptors;
     public JCMusicDiscItem disc_dont_move_a_muscle;
 
-    public ItemActionFigure action_figure;
+    public ActionFigureItem action_figure;
 
     public BasicItem amber_keychain;
     public BasicItem amber_cane;
@@ -102,10 +103,10 @@ public enum ItemHandler
 
     public void init()
     {
-        plaster_and_bandage = new ItemPlasterAndBandage();
+        plaster_and_bandage = new PlasterAndBandageItem();
         spawn_egg = new DinosaurSpawnEggItem();
-        dna = new ItemDNA();
-        egg = new ItemDinosaurEgg();
+        dna = new DNAItem();
+        egg = new DinosaurEggItem();
         paleo_pad = new PaleoPadItem();
         dino_meat = new DinsaurMeatItem();
         dino_steak = new DinosaurSteakItem();
@@ -113,6 +114,7 @@ public enum ItemHandler
         paddock_sign = new PaddockSignItem();
         jc_sign = new JurassiCraftSignItem();
         soft_tissue = new SoftTissueItem();
+        plant_soft_tissue = new PlantSoftTissueItem();
         amber = new AmberItem();
         petri_dish = new BasicItem(TabHandler.INSTANCE.items);
         empty_test_tube = new BasicItem(TabHandler.INSTANCE.items);
@@ -133,7 +135,7 @@ public enum ItemHandler
         plant_callus = new PlantCallusItem();
         plant_cells_petri_dish = new BasicItem(TabHandler.INSTANCE.items);
         tracker = new BasicItem(TabHandler.INSTANCE.items);
-        action_figure = new ItemActionFigure();
+        action_figure = new ActionFigureItem();
         dino_scanner = new DinoScannerItem();
 
         amber_cane = new BasicItem(TabHandler.INSTANCE.merchandise);
@@ -210,6 +212,7 @@ public enum ItemHandler
         registerItem(egg, "Dino Egg");
         registerItem(paleo_pad, "Paleo Pad");
         registerItem(soft_tissue, "Soft Tissue");
+        registerItem(plant_soft_tissue, "Plant Soft Tissue");
         registerItem(syringe, "Syringe");
         registerItem(plant_dna, "Plant DNA");
         registerItem(iron_blades, "Iron Blades");

@@ -6,7 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import org.jurassicraft.server.container.slot.FossilSlot;
+import org.jurassicraft.server.container.slot.GrindableItemSlot;
 import org.jurassicraft.server.tileentity.FossilGrinderTile;
 
 public class FossilGrinderContainer extends Container
@@ -16,7 +16,7 @@ public class FossilGrinderContainer extends Container
     public FossilGrinderContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
         this.fossilGrinder = (FossilGrinderTile) tileEntity;
-        this.addSlotToContainer(new FossilSlot(fossilGrinder, 0, 50, 35));
+        this.addSlotToContainer(new GrindableItemSlot(fossilGrinder, 0, 50, 35));
 
         int i;
 

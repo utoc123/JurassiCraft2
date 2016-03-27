@@ -2,16 +2,19 @@ package org.jurassicraft.server.item.bones;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.IGrindableItem;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.AdvLang;
 
 import java.util.ArrayList;
@@ -19,8 +22,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-public class FossilItem extends Item
+public class FossilItem extends Item implements IGrindableItem
 {
     private String type;
     private boolean includeHybrids;
@@ -134,5 +138,32 @@ public class FossilItem extends Item
             lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
             lore.add(EnumChatFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", nbt.getString("Genetics")).build());
         }
+    }
+
+    @Override
+    public boolean isGrindable(ItemStack stack)
+    {
+        return true;
+    }
+
+    @Override
+    public ItemStack getGroundItem(ItemStack stack, Random random)
+    {
+        NBTTagCompound tag = stack.getTagCompound();
+
+        int outputType = random.nextInt(6);
+
+        if (outputType == 5 || stack.getUnlocalizedName().contains("fresh"))
+        {
+            ItemStack output = new ItemStack(ItemHandler.INSTANCE.soft_tissue, 1, stack.getItemDamage());
+            output.setTagCompound(tag);
+            return output;
+        }
+        else if (outputType < 3)
+        {
+            return new ItemStack(Items.dye, 1, 15);
+        }
+
+        return new ItemStack(Items.flint);
     }
 }

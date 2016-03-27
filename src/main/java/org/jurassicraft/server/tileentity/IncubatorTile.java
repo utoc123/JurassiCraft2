@@ -15,7 +15,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
-import org.jurassicraft.server.item.ItemDinosaurEgg;
+import org.jurassicraft.server.item.DinosaurEggItem;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected boolean canProcess(int process)
     {
-        return slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof ItemDinosaurEgg;
+        return slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof DinosaurEggItem;
     }
 
     @Override

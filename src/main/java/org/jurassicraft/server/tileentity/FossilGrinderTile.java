@@ -2,14 +2,11 @@ package org.jurassicraft.server.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.api.IGrindableItem;
 import org.jurassicraft.server.container.FossilGrinderContainer;
-import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.bones.FossilItem;
 
 import java.util.Random;
 
@@ -29,7 +26,11 @@ public class FossilGrinderTile extends MachineBaseTile
     @Override
     protected boolean canProcess(int process)
     {
-        if (slots[0] != null && this.slots[0].getItem() instanceof FossilItem)
+        ItemStack input = slots[0];
+
+        IGrindableItem grindableItem = IGrindableItem.getGrindableItem(input);
+
+        if (grindableItem != null && grindableItem.isGrindable(input))
         {
             for (int i = 1; i < 7; i++)
             {
@@ -46,40 +47,20 @@ public class FossilGrinderTile extends MachineBaseTile
     @Override
     protected void processItem(int process)
     {
-        if (this.canProcess(process))
+        Random rand = new Random();
+
+        ItemStack input = slots[0];
+
+        IGrindableItem grindableItem = IGrindableItem.getGrindableItem(input);
+
+        ItemStack output = grindableItem.getGroundItem(input, rand);
+
+        int emptySlot = getOutputSlot(output);
+
+        if (emptySlot != -1)
         {
-            ItemStack output;
-
-            Random rand = new Random();
-
-            ItemStack fossilStack = slots[0];
-            FossilItem fossil = (FossilItem) fossilStack.getItem();
-
-            NBTTagCompound tag = fossilStack.getTagCompound();
-
-            int outputType = rand.nextInt(6);
-
-            if (outputType == 5 || fossil.getUnlocalizedName().contains("fresh"))
-            {
-                output = new ItemStack(ItemHandler.INSTANCE.soft_tissue, 1, fossilStack.getItemDamage());
-                output.setTagCompound(tag);
-            }
-            else if (outputType < 3)
-            {
-                output = new ItemStack(Items.dye, 1, 15);
-            }
-            else
-            {
-                output = new ItemStack(Items.flint);
-            }
-
-            int emptySlot = getOutputSlot(output);
-
-            if (emptySlot != -1)
-            {
-                mergeStack(emptySlot, output);
-                decreaseStackSize(0);
-            }
+            mergeStack(emptySlot, output);
+            decreaseStackSize(0);
         }
     }
 

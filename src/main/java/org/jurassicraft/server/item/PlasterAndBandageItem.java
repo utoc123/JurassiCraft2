@@ -14,9 +14,9 @@ import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.creativetab.TabHandler;
 
-public class ItemPlasterAndBandage extends Item
+public class PlasterAndBandageItem extends Item
 {
-    public ItemPlasterAndBandage()
+    public PlasterAndBandageItem()
     {
         super();
 

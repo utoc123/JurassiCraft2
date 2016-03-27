@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemActionFigure extends Item
+public class ActionFigureItem extends Item
 {
-    public ItemActionFigure()
+    public ActionFigureItem()
     {
         super();
 

@@ -24,31 +24,25 @@ public class PlantCallusItem extends Item
         return new AdvLang("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
     }
 
-    /**
-     * Called when a Block is right-clicked with this Item
-     *
-     * @param pos  The block being right-clicked
-     * @param side The side being right-clicked
-     */
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (side != EnumFacing.UP)
         {
             return false;
         }
-        else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack))
+        else if (!player.canPlayerEdit(pos.offset(side), side, stack))
         {
             return false;
         }
-        else if (worldIn.isAirBlock(pos.up()) && worldIn.getBlockState(pos).getBlock() == Blocks.farmland)
+        else if (world.isAirBlock(pos.up()) && world.getBlockState(pos).getBlock() == Blocks.farmland)
         {
             Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
 
             if (plant != null)
             {
-                worldIn.setBlockState(pos.up(), plant.getBlock().getDefaultState());
-                worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+                world.setBlockState(pos.up(), plant.getBlock().getDefaultState());
+                world.setBlockState(pos, Blocks.dirt.getDefaultState());
                 --stack.stackSize;
                 return true;
             }

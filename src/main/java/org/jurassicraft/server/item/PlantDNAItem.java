@@ -57,13 +57,9 @@ public class PlantDNAItem extends Item
 
         Map<Plant, Integer> ids = new HashMap<Plant, Integer>();
 
-        int id = 0;
-
         for (Plant plant : plants)
         {
-            ids.put(plant, id);
-
-            id++;
+            ids.put(plant, PlantHandler.INSTANCE.getPlantId(plant));
         }
 
         Collections.sort(plants);
