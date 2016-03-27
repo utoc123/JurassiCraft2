@@ -8,11 +8,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.ISequencableItem;
 import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.genetics.DinoDNA;
-import org.jurassicraft.server.genetics.GeneticsHelper;
+import org.jurassicraft.server.genetics.PlantDNA;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,55 +20,54 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class SoftTissueItem extends Item implements ISequencableItem
+public class PlantSoftTissueItem extends Item implements ISequencableItem
 {
-    public SoftTissueItem()
+    public PlantSoftTissueItem()
     {
         this.setHasSubtypes(true);
-
-        this.setCreativeTab(TabHandler.INSTANCE.dna);
+        this.setCreativeTab(TabHandler.INSTANCE.plants);
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
+        String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
 
-        return new AdvLang("item.soft_tissue.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+        return new AdvLang("item.plant_soft_tissue.name").withProperty("plant", "plants." + plantName + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
+    public Plant getPlant(ItemStack stack)
     {
-        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
+        Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
 
-        if (dinosaur == null)
+        if (plant == null)
         {
-            dinosaur = EntityHandler.INSTANCE.achillobator;
+            plant = PlantHandler.INSTANCE.small_royal_fern;
         }
 
-        return dinosaur;
+        return plant;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Plant> plants = new ArrayList<Plant>(PlantHandler.INSTANCE.getPlants());
 
-        Map<Dinosaur, Integer> ids = new HashMap<>();
+        Map<Plant, Integer> ids = new HashMap<Plant, Integer>();
 
-        for (Dinosaur dino : dinosaurs)
+        for (Plant plant : plants)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(plant, PlantHandler.INSTANCE.getPlantId(plant));
         }
 
-        Collections.sort(dinosaurs);
+        Collections.sort(plants);
 
-        for (Dinosaur dino : dinosaurs)
+        for (Plant plant : plants)
         {
-            if (dino.shouldRegister())
+            if (plant.shouldRegister())
             {
-                subtypes.add(new ItemStack(item, 1, ids.get(dino)));
+                subtypes.add(new ItemStack(item, 1, ids.get(plant)));
             }
         }
     }
@@ -88,8 +86,7 @@ public class SoftTissueItem extends Item implements ISequencableItem
         if (nbt == null)
         {
             nbt = new NBTTagCompound();
-            int quality = ISequencableItem.randomQuality(random);
-            DinoDNA dna = new DinoDNA(quality, GeneticsHelper.randomGenetics(random, stack.getItemDamage(), quality).toString());
+            PlantDNA dna = new PlantDNA(stack.getItemDamage(), ISequencableItem.randomQuality(random));
             dna.writeToNBT(nbt);
         }
 

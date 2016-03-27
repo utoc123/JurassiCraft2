@@ -198,6 +198,7 @@ item.basic_circuit.name=Basic Circuit
 item.advanced_circuit.name=Advanced Circuit
 item.iron_nugget.name=Iron Nugget
 item.gypsum_powder.name=Gypsum Powder
+item.plant_soft_tissue.name={plant} Soft Tissue
 
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds

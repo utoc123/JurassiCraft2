@@ -4,13 +4,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.api.ISequencableItem;
 import org.jurassicraft.server.container.DNASequencerContainer;
-import org.jurassicraft.server.genetics.DinoDNA;
-import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.SoftTissueItem;
 
 import java.util.Random;
 
@@ -39,14 +36,13 @@ public class DNASequencerTile extends MachineBaseTile
         ItemStack input = slots[tissue];
         ItemStack storage = slots[tissue + 1];
 
-        if (input != null && input.getItem() instanceof SoftTissueItem)
+        ISequencableItem sequencableItem = ISequencableItem.getSequencableItem(input);
+
+        if (sequencableItem != null && sequencableItem.isSequencable(input))
         {
             if (storage != null && storage.getItem() == ItemHandler.INSTANCE.storage_disc)
             {
-                ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, input.getItemDamage());
-                output.setTagCompound(input.getTagCompound());
-
-                if (slots[process + 6] == null || ItemStack.areItemsEqual(slots[process + 6], output) && ItemStack.areItemStackTagsEqual(slots[process + 6], output))
+                if (slots[process + 6] == null)
                 {
                     return true;
                 }
@@ -59,48 +55,16 @@ public class DNASequencerTile extends MachineBaseTile
     @Override
     protected void processItem(int process)
     {
-        if (this.canProcess(process))
-        {
-            Random rand = new Random();
+        Random rand = new Random();
 
-            int tissue = process * 2;
+        int tissue = process * 2;
 
-            int quality = rand.nextInt(25) + 1;
+        ItemStack sequencableStack = slots[tissue];
 
-            if (rand.nextDouble() < 0.10)
-            {
-                quality += 25;
+        mergeStack(process + 6, ISequencableItem.getSequencableItem(sequencableStack).getSequenceOutput(sequencableStack, rand));
 
-                if (rand.nextDouble() < 0.10)
-                {
-                    quality += 25;
-
-                    if (rand.nextDouble() < 0.10)
-                    {
-                        quality += 25;
-                    }
-                }
-            }
-
-            NBTTagCompound nbt = slots[tissue].getTagCompound();
-
-            int dinosaur = slots[tissue].getItemDamage();
-
-            if (nbt == null)
-            {
-                nbt = new NBTTagCompound();
-                DinoDNA dna = new DinoDNA(quality, GeneticsHelper.randomGenetics(rand, dinosaur, quality).toString());
-                dna.writeToNBT(nbt);
-            }
-
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, dinosaur);
-            output.setTagCompound(nbt);
-
-            mergeStack(process + 6, output);
-
-            decreaseStackSize(tissue);
-            decreaseStackSize(tissue + 1);
-        }
+        decreaseStackSize(tissue);
+        decreaseStackSize(tissue + 1);
     }
 
     @Override

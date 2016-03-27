@@ -7,20 +7,20 @@ public enum PlantHandler
 {
     INSTANCE;
 
-    private static List<Plant> plants = new ArrayList<Plant>();
+    private List<Plant> plants = new ArrayList<Plant>();
 
-    public static Plant ajuginucula_smithii;
-    public static Plant small_royal_fern;
-    public static Plant calamites;
-    public static Plant small_chain_fern;
-    public static Plant small_cycad;
-    public static Plant ginkgo;
-    public static Plant bennettitalean_cycadeoidea;
-    public static Plant cry_pansy;
-    public static Plant scaly_tree_fern;
-    public static Plant cycad_zamites;
-    public static Plant dicksonia;
-    public static Plant wild_onion;
+    public Plant ajuginucula_smithii;
+    public Plant small_royal_fern;
+    public Plant calamites;
+    public Plant small_chain_fern;
+    public Plant small_cycad;
+    public Plant ginkgo;
+    public Plant bennettitalean_cycadeoidea;
+    public Plant cry_pansy;
+    public Plant scaly_tree_fern;
+    public Plant cycad_zamites;
+    public Plant dicksonia;
+    public Plant wild_onion;
 
     public void init()
     {

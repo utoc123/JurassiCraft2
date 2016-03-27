@@ -174,6 +174,7 @@ public enum RenderingHandler
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.plant_dna, new ResourceLocation("jurassicraft:dna/plants/dna_" + name));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.plant_soft_tissue, new ResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name));
         }
 
         for (EnumDyeColor color : EnumDyeColor.values())
@@ -472,6 +473,7 @@ public enum RenderingHandler
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 
             this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_dna, meta, "dna/plants/dna_" + name, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_soft_tissue, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");
 
             meta++;
         }

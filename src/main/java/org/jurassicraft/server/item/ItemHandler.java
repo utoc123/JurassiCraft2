@@ -29,6 +29,7 @@ public enum ItemHandler
     public DinosaurEggItem egg;
     public PaleoPadItem paleo_pad;
     public SoftTissueItem soft_tissue;
+    public PlantSoftTissueItem plant_soft_tissue;
 
     public DinsaurMeatItem dino_meat;
     public DinosaurSteakItem dino_steak;
@@ -113,6 +114,7 @@ public enum ItemHandler
         paddock_sign = new PaddockSignItem();
         jc_sign = new JurassiCraftSignItem();
         soft_tissue = new SoftTissueItem();
+        plant_soft_tissue = new PlantSoftTissueItem();
         amber = new AmberItem();
         petri_dish = new BasicItem(TabHandler.INSTANCE.items);
         empty_test_tube = new BasicItem(TabHandler.INSTANCE.items);
@@ -208,6 +210,7 @@ public enum ItemHandler
         registerItem(egg, "Dino Egg");
         registerItem(paleo_pad, "Paleo Pad");
         registerItem(soft_tissue, "Soft Tissue");
+        registerItem(plant_soft_tissue, "Plant Soft Tissue");
         registerItem(syringe, "Syringe");
         registerItem(plant_dna, "Plant DNA");
         registerItem(iron_blades, "Iron Blades");
