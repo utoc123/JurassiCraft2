@@ -29,14 +29,14 @@ public class WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        for (int i = 0; i < 5; i++)
+        /*for (int i = 0; i < 5; i++) wtf this shit is crashing on me
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
             int randPosY = random.nextInt(world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10);
 
             generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
-        }
+        }*/
 
         for (int i = 0; i < 32; i++)
         {
