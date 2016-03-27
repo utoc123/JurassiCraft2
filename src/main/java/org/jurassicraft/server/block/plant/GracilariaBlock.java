@@ -95,7 +95,7 @@ public class GracilariaBlock extends BlockBush
         // Make sure we have enough light.
         int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
         int light = worldIn.getLight(pos);
-        if (light >= 5 && light <= 15)
+        if (light >= 5 && light <= 11)
             spreadChance = GOOD_LIGHT_SPREAD_CHANCE;
 
         if (rand.nextInt(100) <= spreadChance)
