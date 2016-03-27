@@ -322,6 +322,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.clear_glass, "clear_glass", "inventory");
 
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.wild_onion, "wild_onion_plant", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.gracilaria, "graciliaria_seaweed", "inventory");
 
         BlockColors blockColors = mc.getBlockColors();
         blockColors.registerBlockColorHandler(new IBlockColor()
@@ -430,6 +431,7 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.wild_onion, "wild_onion", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.gracilaria, "gracilaria", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_fossil, "plant_fossil", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.twig_fossil, "twig_fossil", "inventory");
