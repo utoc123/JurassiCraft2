@@ -320,6 +320,7 @@ public enum RenderingHandler
 
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ajuginucula_smithii, "ajuginucula_smithii", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.wild_onion, "wild_onion_plant", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.gracilaria, "graciliaria_seaweed", "inventory");
 
 //        this.registerRenderSubBlock(BlockHandler.INSTANCE.bPlanks);
     }
@@ -391,6 +392,7 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.wild_onion, "wild_onion", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.gracilaria, "gracilaria", "inventory");
 
         int meta = 0;
 
