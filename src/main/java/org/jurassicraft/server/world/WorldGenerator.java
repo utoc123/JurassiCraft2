@@ -1,6 +1,8 @@
 package org.jurassicraft.server.world;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -29,14 +31,14 @@ public class WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        /*for (int i = 0; i < 5; i++) wtf this shit is crashing on me
+        for (int i = 0; i < world.getHorizon() * 0.15625; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
-            int randPosY = random.nextInt(world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10);
+            int randPosY = random.nextInt(Math.max(0, world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10));
 
             generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
-        }*/
+        }
 
         for (int i = 0; i < 32; i++)
         {
@@ -76,8 +78,8 @@ public class WorldGenerator implements IWorldGenerator
             }
         }
 
-        generateOre(world, chunkX, chunkZ, 20, 16, 3, BlockHandler.INSTANCE.amber_ore.getDefaultState(), random);
-        generateOre(world, chunkX, chunkZ, 64, 16, 1, BlockHandler.INSTANCE.ice_shard.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.INSTANCE.amber_ore.getDefaultState(), random);
+        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.INSTANCE.ice_shard.getDefaultState(), random);
         generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.gypsum_stone.getDefaultState(), random);
     }
 
@@ -108,13 +110,22 @@ public class WorldGenerator implements IWorldGenerator
         float xOffset = -MathHelper.sin(rotY * (float) Math.PI / 180.0F) * horizontal;
         float yOffset = MathHelper.cos(rotY * (float) Math.PI / 180.0F) * horizontal;
 
-        for (int i = 0; i < rand.nextInt(4) + 6; i++)
+        for (int i = 0; i < rand.nextInt(7) + 3; i++)
         {
             int blockX = x + Math.round(xOffset * i);
             int blockY = y + Math.round(vertical * i);
             int blockZ = z + Math.round(yOffset * i);
 
-            world.setBlockState(new BlockPos(blockX, blockY, blockZ), state);
+            if (blockY > 0 && blockY < 256)
+            {
+                BlockPos pos = new BlockPos(blockX, blockY, blockZ);
+                Block previousBlock = world.getBlockState(pos).getBlock();
+
+                if (previousBlock != Blocks.bedrock)
+                {
+                    world.setBlockState(pos, state);
+                }
+            }
         }
     }
 }
