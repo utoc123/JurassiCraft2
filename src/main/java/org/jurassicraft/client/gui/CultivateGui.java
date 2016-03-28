@@ -32,7 +32,7 @@ public class CultivateGui extends GuiContainer
     @Override
     public void updateScreen()
     {
-        if (this.cultivator.isCultivating())
+        if (this.cultivator.isProcessing(0))
         {
             this.mc.thePlayer.closeScreen();
             this.mc.displayGuiScreen(new CultivateProcessGui(cultivator));

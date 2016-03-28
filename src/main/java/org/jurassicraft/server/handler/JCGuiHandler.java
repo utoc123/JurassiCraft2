@@ -146,7 +146,7 @@ public class JCGuiHandler implements IGuiHandler
             }
             else if (tileEntity instanceof CultivatorTile && id == 10)
             {
-                if (((CultivatorTile) tileEntity).isCultivating())
+                if (((CultivatorTile) tileEntity).isProcessing(0))
                 {
                     return new CultivateProcessGui((CultivatorTile) tileEntity);
                 }
