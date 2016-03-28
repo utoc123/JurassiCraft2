@@ -67,7 +67,7 @@ public class GracilariaBlock extends BlockBush
     @Override
     protected boolean canPlaceBlockOn(Block ground)
     {
-        return ground == Blocks.sand || ground == Blocks.clay;
+        return ground == Blocks.sand || ground == Blocks.clay || ground == Blocks.gravel || ground == Blocks.dirt;
     }
 
     @Override
