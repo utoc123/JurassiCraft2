@@ -11,8 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -45,18 +43,12 @@ public class FossilBlock extends Block implements ISubBlocksBlock
         this.setDefaultState(blockState.getBaseState().withProperty(VARIANT, 0));
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(VARIANT, meta);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state)
     {
@@ -75,18 +67,12 @@ public class FossilBlock extends Block implements ISubBlocksBlock
         return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
     @Override
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
     }
 
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
@@ -126,35 +112,10 @@ public class FossilBlock extends Block implements ISubBlocksBlock
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public BlockRenderLayer getBlockLayer()
-    {
-        return BlockRenderLayer.SOLID;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isFullCube(IBlockState state)
-    {
-        return true;
-    }
-
     @Override
     public boolean canDropFromExplosion(Explosion explosion)
     {
         return false;
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
-        return EnumBlockRenderType.MODEL;
     }
 
     @Override

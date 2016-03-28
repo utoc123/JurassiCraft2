@@ -267,6 +267,8 @@ public enum RenderingHandler
             i++;
         }
 
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.plant_fossil, "plant_fossil_block", "inventory");
+
         for (TreeType type : TreeType.values())
         {
             String name = type.name().toLowerCase();
@@ -428,6 +430,9 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.wild_onion, "wild_onion", "inventory");
+
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_fossil, "plant_fossil", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.twig_fossil, "twig_fossil", "inventory");
 
         int meta = 0;
 
