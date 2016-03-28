@@ -2,7 +2,7 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -12,12 +12,14 @@ import org.jurassicraft.server.container.slot.TestTubeSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
 
-public class EmbryonicMachineContainer extends Container
+public class EmbryonicMachineContainer extends SyncedFieldContainer
 {
     private EmbryonicMachineTile embryonicMachine;
 
     public EmbryonicMachineContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
+
         this.embryonicMachine = (EmbryonicMachineTile) tileEntity;
         this.addSlotToContainer(new TestTubeSlot(embryonicMachine, 0, 24, 49));
         this.addSlotToContainer(new PetriDishSlot(embryonicMachine, 1, 50, 49));

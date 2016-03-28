@@ -2,7 +2,7 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -10,12 +10,14 @@ import org.jurassicraft.server.container.slot.SequencableItemSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
 import org.jurassicraft.server.tileentity.DNASequencerTile;
 
-public class DNASequencerContainer extends Container
+public class DNASequencerContainer extends SyncedFieldContainer
 {
     private DNASequencerTile dnaSequencer;
 
     public DNASequencerContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
+
         this.dnaSequencer = (DNASequencerTile) tileEntity;
 
         this.addSlotToContainer(new SequencableItemSlot(dnaSequencer, 0, 44, 16));

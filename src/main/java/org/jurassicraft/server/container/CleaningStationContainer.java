@@ -2,29 +2,23 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.container.slot.CleanableItemSlot;
 import org.jurassicraft.server.container.slot.FossilSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 
-public class CleaningStationContainer extends Container
+public class CleaningStationContainer extends SyncedFieldContainer
 {
     private final IInventory tileCleaningStation;
-    private int field_178152_f;
-    private int field_178153_g;
-    private int field_178154_h;
-    private int field_178155_i;
 
     public CleaningStationContainer(InventoryPlayer invPlayer, IInventory cleaningStation)
     {
+        super(cleaningStation);
         this.tileCleaningStation = cleaningStation;
         this.addSlotToContainer(new CleanableItemSlot(cleaningStation, 0, 56, 17));
         this.addSlotToContainer(new WaterBucketSlot(cleaningStation, 1, 56, 53));
@@ -53,58 +47,11 @@ public class CleaningStationContainer extends Container
         }
     }
 
-    /**
-     * Add the given Listener to the list of Listeners. Method name is for legacy.
-     */
     @Override
     public void onCraftGuiOpened(ICrafting listener)
     {
         super.onCraftGuiOpened(listener);
         listener.sendAllWindowProperties(this, this.tileCleaningStation);
-    }
-
-    /**
-     * Looks for changes made in the container, sends them to every listener.
-     */
-    @Override
-    public void detectAndSendChanges()
-    {
-        super.detectAndSendChanges();
-
-        for (ICrafting icrafting : this.crafters)
-        {
-            if (this.field_178152_f != this.tileCleaningStation.getField(2))
-            {
-                icrafting.sendProgressBarUpdate(this, 2, this.tileCleaningStation.getField(2));
-            }
-
-            if (this.field_178154_h != this.tileCleaningStation.getField(0))
-            {
-                icrafting.sendProgressBarUpdate(this, 0, this.tileCleaningStation.getField(0));
-            }
-
-            if (this.field_178155_i != this.tileCleaningStation.getField(1))
-            {
-                icrafting.sendProgressBarUpdate(this, 1, this.tileCleaningStation.getField(1));
-            }
-
-            if (this.field_178153_g != this.tileCleaningStation.getField(3))
-            {
-                icrafting.sendProgressBarUpdate(this, 3, this.tileCleaningStation.getField(3));
-            }
-        }
-
-        this.field_178152_f = this.tileCleaningStation.getField(2);
-        this.field_178154_h = this.tileCleaningStation.getField(0);
-        this.field_178155_i = this.tileCleaningStation.getField(1);
-        this.field_178153_g = this.tileCleaningStation.getField(3);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data)
-    {
-        this.tileCleaningStation.setField(id, data);
     }
 
     @Override

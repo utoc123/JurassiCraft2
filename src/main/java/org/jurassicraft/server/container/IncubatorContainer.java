@@ -2,7 +2,7 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -10,12 +10,14 @@ import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tileentity.IncubatorTile;
 
-public class IncubatorContainer extends Container
+public class IncubatorContainer extends SyncedFieldContainer
 {
     private IncubatorTile incubator;
 
     public IncubatorContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
+
         this.incubator = (IncubatorTile) tileEntity;
         this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, ItemHandler.INSTANCE.egg));
         this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, ItemHandler.INSTANCE.egg));
