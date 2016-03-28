@@ -7,13 +7,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.Explosion;
+import org.jurassicraft.server.api.ICleanableItem;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Random;
 
-public class PlantFossilBlock extends Block
+public class PlantFossilBlock extends Block implements ICleanableItem
 {
     public PlantFossilBlock()
     {
@@ -34,19 +36,36 @@ public class PlantFossilBlock extends Block
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        double v = rand.nextDouble();
+        return getRandomOutput(rand, 1.0);
+    }
+
+    @Override
+    public boolean isCleanable(ItemStack stack)
+    {
+        return true;
+    }
+
+    @Override
+    public ItemStack getCleanedItem(ItemStack stack, Random random)
+    {
+        return new ItemStack(getRandomOutput(random, 2.0));
+    }
+
+    private Item getRandomOutput(Random rand, double luck)
+    {
+        double v = rand.nextDouble() / luck;
 
         if (v < 0.35)
         {
             return ItemHandler.INSTANCE.plant_fossil;
         }
-        else if (v < 0.60)
+        else if (v < 0.50)
         {
-            return Items.coal;
+            return ItemHandler.INSTANCE.twig_fossil;
         }
         else if (v < 0.75)
         {
-            return ItemHandler.INSTANCE.twig_fossil;
+            return Items.coal;
         }
         else if (v < 0.85)
         {
