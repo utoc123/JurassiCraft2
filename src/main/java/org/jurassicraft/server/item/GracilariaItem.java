@@ -15,7 +15,7 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 
 /**
- * Copyright 2016 Andrew O. Mellinger
+ * Copyright 2016 Timeless Modding Team
  */
 public class GracilariaItem extends Item implements IPlantable
 {
@@ -68,6 +68,6 @@ public class GracilariaItem extends Item implements IPlantable
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos)
     {
-        return null;
+        return this.seaweedBlock.getDefaultState();
     }
 }
