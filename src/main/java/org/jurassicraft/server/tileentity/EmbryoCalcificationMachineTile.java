@@ -14,8 +14,8 @@ import org.jurassicraft.server.item.SyringeItem;
 
 public class EmbryoCalcificationMachineTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1 };
-    private int[] outputs = new int[] { 2 };
+    private static final int[] INPUTS = new int[] { 0, 1 };
+    private static final int[] OUTPUTS = new int[] { 2 };
 
     private ItemStack[] slots = new ItemStack[3];
 
@@ -82,7 +82,7 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override

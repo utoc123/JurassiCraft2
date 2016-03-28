@@ -13,12 +13,12 @@ import java.util.Random;
 
 public class DNASequencerTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1, 2, 3, 4, 5 };
-    private int[] inputsProcess1 = new int[] { 0, 1 };
-    private int[] inputsProcess2 = new int[] { 2, 3 };
-    private int[] inputsProcess3 = new int[] { 4, 5 };
+    private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4, 5 };
+    private static final int[] INPUTS_PROCESS_1 = new int[] { 0, 1 };
+    private static final int[] INPUTS_PROCESS_2 = new int[] { 2, 3 };
+    private static final int[] INPUTS_PROCESS_3 = new int[] { 4, 5 };
 
-    private int[] outputs = new int[] { 6, 7, 8 };
+    private static final int[] OUTPUTS = new int[] { 6, 7, 8 };
 
     private ItemStack[] slots = new ItemStack[9];
 
@@ -88,7 +88,7 @@ public class DNASequencerTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -96,20 +96,20 @@ public class DNASequencerTile extends MachineBaseTile
     {
         if (process == 0)
         {
-            return inputsProcess1;
+            return INPUTS_PROCESS_1;
         }
         else if (process == 1)
         {
-            return inputsProcess2;
+            return INPUTS_PROCESS_2;
         }
 
-        return inputsProcess3;
+        return INPUTS_PROCESS_3;
     }
 
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override

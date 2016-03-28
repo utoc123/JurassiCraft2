@@ -7,7 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
-import org.jurassicraft.server.container.slot.StorageSlot;
+import org.jurassicraft.server.container.slot.SynthesizableItemSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tileentity.DNASynthesizerTile;
 
@@ -20,7 +20,7 @@ public class DNASynthesizerContainer extends SyncedFieldContainer
         super((IInventory) tileEntity);
 
         this.dnaSynthesizer = (DNASynthesizerTile) tileEntity;
-        this.addSlotToContainer(new StorageSlot(dnaSynthesizer, 0, 38, 22, true));
+        this.addSlotToContainer(new SynthesizableItemSlot(dnaSynthesizer, 0, 38, 22));
         this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 1, 24, 49, ItemHandler.INSTANCE.empty_test_tube));
         this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 2, 50, 49, ItemHandler.INSTANCE.dna_base));
 

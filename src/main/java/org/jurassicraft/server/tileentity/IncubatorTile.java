@@ -21,9 +21,10 @@ import java.util.List;
 
 public class IncubatorTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1, 2, 3, 4 };
-    private int[] other = new int[5];
-    private int[] outputs = new int[0];
+    private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4 };
+    private static final int[] OTHER = new int[] { 5 };
+    private static final int[] OUTPUTS = new int[0];
+
     private int[] temperature = new int[5];
 
     private ItemStack[] slots = new ItemStack[6];
@@ -65,7 +66,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return side == EnumFacing.DOWN ? getInputs() : other;
+        return side == EnumFacing.DOWN ? getInputs() : OTHER;
     }
 
     @Override
@@ -152,7 +153,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -164,7 +165,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override

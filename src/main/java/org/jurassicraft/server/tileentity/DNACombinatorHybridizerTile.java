@@ -23,10 +23,10 @@ import java.util.List;
 
 public class DNACombinatorHybridizerTile extends MachineBaseTile
 {
-    private int[] inputsHybridizer = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
-    private int[] inputsCombinator = new int[] { 8, 9 };
-    private int[] outputsHybridizer = new int[] { 10 };
-    private int[] outputsCombinator = new int[] { 11 };
+    private static final int[] HYBRIDIZER_INPUTS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+    private static final int[] COMBINATOR_INPUTS = new int[] { 8, 9 };
+    private static final int[] HYBRIDIZER_OUTPUTS = new int[] { 10 };
+    private static final int[] COMBINATOR_OUTPUTS = new int[] { 11 };
 
     private ItemStack[] slots = new ItemStack[12];
 
@@ -237,7 +237,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return hybridizerMode ? inputsHybridizer : inputsCombinator;
+        return hybridizerMode ? HYBRIDIZER_INPUTS : COMBINATOR_INPUTS;
     }
 
     @Override
@@ -249,7 +249,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return hybridizerMode ? outputsHybridizer : outputsCombinator;
+        return hybridizerMode ? HYBRIDIZER_OUTPUTS : COMBINATOR_OUTPUTS;
     }
 
     @Override

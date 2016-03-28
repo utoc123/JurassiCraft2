@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class FossilGrinderTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0 };
-    private int[] outputs = new int[] { 1, 2, 3, 4, 5, 6 };
+    private static final int[] INPUTS = new int[] { 0 };
+    private static final int[] OUTPUTS = new int[] { 1, 2, 3, 4, 5, 6 };
 
     private ItemStack[] slots = new ItemStack[7];
 
@@ -85,7 +85,7 @@ public class FossilGrinderTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class FossilGrinderTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override

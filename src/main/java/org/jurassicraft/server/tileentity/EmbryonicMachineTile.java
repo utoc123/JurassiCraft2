@@ -12,8 +12,8 @@ import org.jurassicraft.server.item.PlantDNAItem;
 
 public class EmbryonicMachineTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1, 2 };
-    private int[] outputs = new int[] { 3, 4, 5, 6 };
+    private static final int[] INPUTS = new int[] { 0, 1, 2 };
+    private static final int[] OUTPUTS = new int[] { 3, 4, 5, 6 };
 
     private ItemStack[] slots = new ItemStack[7];
 
@@ -103,7 +103,7 @@ public class EmbryonicMachineTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class EmbryonicMachineTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override
