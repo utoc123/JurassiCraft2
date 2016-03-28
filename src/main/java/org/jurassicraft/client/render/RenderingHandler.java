@@ -3,12 +3,14 @@ package org.jurassicraft.client.render;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -458,7 +460,14 @@ public enum RenderingHandler
      */
     public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, final String path, final String type)
     {
-        itemModelMesher.register(item, stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
+        itemModelMesher.register(item, new ItemMeshDefinition()
+        {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
+                return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
+            }
+        });
     }
 
     /**
@@ -482,7 +491,14 @@ public enum RenderingHandler
      */
     public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, final String path, final String type)
     {
-        itemModelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
+        itemModelMesher.register(Item.getItemFromBlock(block), new ItemMeshDefinition()
+        {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
+                return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
+            }
+        });
     }
 
     private void registerRenderDef(RenderDinosaurDefinition renderDef)
