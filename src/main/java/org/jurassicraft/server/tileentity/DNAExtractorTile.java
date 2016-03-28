@@ -22,8 +22,8 @@ import java.util.Random;
 
 public class DNAExtractorTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1 };
-    private int[] outputs = new int[] { 2, 3, 4, 5 };
+    private static final int[] INPUTS = new int[] { 0, 1 };
+    private static final int[] OUTPUTS = new int[] { 2, 3, 4, 5 };
 
     private ItemStack[] slots = new ItemStack[6];
 
@@ -152,7 +152,7 @@ public class DNAExtractorTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -164,7 +164,7 @@ public class DNAExtractorTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override

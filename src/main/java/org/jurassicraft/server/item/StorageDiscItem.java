@@ -8,13 +8,15 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.ISynthesizableItem;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.storagedisc.IStorageType;
 import org.jurassicraft.server.storagedisc.StorageTypeHandler;
 
 import java.util.List;
+import java.util.Random;
 
-public class StorageDiscItem extends Item
+public class StorageDiscItem extends Item implements ISynthesizableItem
 {
     public StorageDiscItem()
     {
@@ -51,4 +53,29 @@ public class StorageDiscItem extends Item
         }
     }
 
+    @Override
+    public boolean isSynthesizable(ItemStack stack)
+    {
+        NBTTagCompound tagCompound = stack.getTagCompound();
+        return tagCompound != null && tagCompound.hasKey("DNAQuality") && tagCompound.getInteger("DNAQuality") == 100;
+    }
+
+    @Override
+    public ItemStack getSynthesizedItem(ItemStack stack, Random random)
+    {
+        ItemStack output;
+
+        if (stack.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA"))
+        {
+            output = new ItemStack(ItemHandler.INSTANCE.dna, 1, stack.getItemDamage());
+        }
+        else
+        {
+            output = new ItemStack(ItemHandler.INSTANCE.plant_dna, 1, stack.getItemDamage());
+        }
+
+        output.setTagCompound(stack.getTagCompound());
+
+        return output;
+    }
 }

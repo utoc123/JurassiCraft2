@@ -5,13 +5,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.api.ISynthesizableItem;
 import org.jurassicraft.server.container.DNASynthesizerContainer;
 import org.jurassicraft.server.item.ItemHandler;
 
+import java.util.Random;
+
 public class DNASynthesizerTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1, 2 };
-    private int[] outputs = new int[] { 3, 4, 5, 6 };
+    private static final int[] INPUTS = new int[] { 0, 1, 2 };
+    private static final int[] OUTPUTS = new int[] { 3, 4, 5, 6 };
 
     private ItemStack[] slots = new ItemStack[7];
 
@@ -28,23 +31,11 @@ public class DNASynthesizerTile extends MachineBaseTile
         ItemStack testTube = slots[1];
         ItemStack baseMaterial = slots[2];
 
-        if (storage != null && storage.getItem() == ItemHandler.INSTANCE.storage_disc && testTube != null && testTube.getItem() == ItemHandler.INSTANCE.empty_test_tube && baseMaterial != null && baseMaterial.getItem() == ItemHandler.INSTANCE.dna_base && (storage.getTagCompound() != null && storage.getTagCompound().hasKey("DNAQuality")))
-        {
-            ItemStack output = null;
+        ISynthesizableItem synthesizableItem = ISynthesizableItem.getSynthesizableItem(storage);
 
-            if (storage.getTagCompound().getInteger("DNAQuality") == 100)
-            {
-                if (storage.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA"))
-                {
-                    output = new ItemStack(ItemHandler.INSTANCE.dna, 1, storage.getItemDamage());
-                    output.setTagCompound(storage.getTagCompound());
-                }
-                else
-                {
-                    output = new ItemStack(ItemHandler.INSTANCE.plant_dna, 1, storage.getItemDamage());
-                    output.setTagCompound(storage.getTagCompound());
-                }
-            }
+        if (synthesizableItem != null && synthesizableItem.isSynthesizable(storage) && testTube != null && testTube.getItem() == ItemHandler.INSTANCE.empty_test_tube && baseMaterial != null && baseMaterial.getItem() == ItemHandler.INSTANCE.dna_base && (storage.getTagCompound() != null && storage.getTagCompound().hasKey("DNAQuality")))
+        {
+            ItemStack output = synthesizableItem.getSynthesizedItem(storage, new Random(0));
 
             return output != null && hasOutputSlot(output);
         }
@@ -55,22 +46,18 @@ public class DNASynthesizerTile extends MachineBaseTile
     @Override
     protected void processItem(int process)
     {
-        if (this.canProcess(process))
+        ItemStack storageDisc = slots[0];
+
+        ItemStack output = ISynthesizableItem.getSynthesizableItem(storageDisc).getSynthesizedItem(storageDisc, new Random());
+
+        int emptySlot = getOutputSlot(output);
+
+        if (emptySlot != -1)
         {
-            ItemStack storageDisc = slots[0];
+            mergeStack(emptySlot, output);
 
-            ItemStack output = new ItemStack(storageDisc.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA") ? ItemHandler.INSTANCE.dna : ItemHandler.INSTANCE.plant_dna, 1, storageDisc.getItemDamage());
-            output.setTagCompound(storageDisc.getTagCompound());
-
-            int emptySlot = getOutputSlot(output);
-
-            if (emptySlot != -1)
-            {
-                mergeStack(emptySlot, output);
-
-                decreaseStackSize(1);
-                decreaseStackSize(2);
-            }
+            decreaseStackSize(1);
+            decreaseStackSize(2);
         }
     }
 
@@ -95,7 +82,7 @@ public class DNASynthesizerTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
@@ -107,7 +94,7 @@ public class DNASynthesizerTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override

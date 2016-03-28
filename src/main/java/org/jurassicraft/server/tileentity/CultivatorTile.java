@@ -24,8 +24,8 @@ import java.util.Random;
 
 public class CultivatorTile extends MachineBaseTile
 {
-    private int[] inputs = new int[] { 0, 1, 2, 3 };
-    private int[] outputs = new int[] { 4 };
+    private static final int[] INPUTS = new int[] { 0, 1, 2, 3 };
+    private static final int[] OUTPUTS = new int[] { 4 };
 
     private ItemStack[] slots = new ItemStack[5];
 
@@ -36,7 +36,7 @@ public class CultivatorTile extends MachineBaseTile
     private int minerals;
     private int vitamins;
 
-    private int maxNutrients = 3000;
+    private static final int MAX_NUTRIENTS = 3000;
 
     @Override
     protected int getProcess(int slot)
@@ -169,7 +169,7 @@ public class CultivatorTile extends MachineBaseTile
 
             if (slots[1] != null && JCFoodNutrients.FOODLIST.containsKey(slots[1].getItem()))
             {
-                if ((proximates < maxNutrients) || (minerals < maxNutrients) || (vitamins < maxNutrients) || (lipids < maxNutrients))
+                if ((proximates < MAX_NUTRIENTS) || (minerals < MAX_NUTRIENTS) || (vitamins < MAX_NUTRIENTS) || (lipids < MAX_NUTRIENTS))
                 {
                     consumeNutrients();
                     sync = true;
@@ -204,43 +204,43 @@ public class CultivatorTile extends MachineBaseTile
 
         Random random = new Random();
 
-        if (proximates < maxNutrients)
+        if (proximates < MAX_NUTRIENTS)
         {
             proximates = (short) (proximates + (800 + random.nextInt(201)) * nutrients.getProximate());
 
-            if (proximates > maxNutrients)
+            if (proximates > MAX_NUTRIENTS)
             {
-                proximates = (short) maxNutrients;
+                proximates = (short) MAX_NUTRIENTS;
             }
         }
 
-        if (minerals < maxNutrients)
+        if (minerals < MAX_NUTRIENTS)
         {
             minerals = (short) (minerals + (900 + random.nextInt(101)) * nutrients.getMinerals());
 
-            if (minerals > maxNutrients)
+            if (minerals > MAX_NUTRIENTS)
             {
-                minerals = (short) maxNutrients;
+                minerals = (short) MAX_NUTRIENTS;
             }
         }
 
-        if (vitamins < maxNutrients)
+        if (vitamins < MAX_NUTRIENTS)
         {
             vitamins = (short) (vitamins + (900 + random.nextInt(101)) * nutrients.getVitamins());
 
-            if (vitamins > maxNutrients)
+            if (vitamins > MAX_NUTRIENTS)
             {
-                vitamins = (short) maxNutrients;
+                vitamins = (short) MAX_NUTRIENTS;
             }
         }
 
-        if (lipids < maxNutrients)
+        if (lipids < MAX_NUTRIENTS)
         {
             lipids = (short) (lipids + (980 + random.nextInt(101)) * nutrients.getLipids());
 
-            if (lipids > maxNutrients)
+            if (lipids > MAX_NUTRIENTS)
             {
-                lipids = (short) maxNutrients;
+                lipids = (short) MAX_NUTRIENTS;
             }
         }
     }
@@ -290,19 +290,19 @@ public class CultivatorTile extends MachineBaseTile
     @Override
     protected int[] getInputs()
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
     protected int[] getInputs(int process)
     {
-        return inputs;
+        return INPUTS;
     }
 
     @Override
     protected int[] getOutputs()
     {
-        return outputs;
+        return OUTPUTS;
     }
 
     @Override
@@ -342,7 +342,7 @@ public class CultivatorTile extends MachineBaseTile
 
     public int getMaxNutrients()
     {
-        return maxNutrients;
+        return MAX_NUTRIENTS;
     }
 
     public int getProximates()
@@ -387,14 +387,12 @@ public class CultivatorTile extends MachineBaseTile
                 case 0:
                     return waterLevel;
                 case 1:
-                    return maxNutrients;
-                case 2:
                     return proximates;
-                case 3:
+                case 2:
                     return minerals;
-                case 4:
+                case 3:
                     return vitamins;
-                case 5:
+                case 4:
                     return lipids;
             }
         }
@@ -425,18 +423,15 @@ public class CultivatorTile extends MachineBaseTile
                     waterLevel = value;
                     break;
                 case 1:
-                    maxNutrients = value;
-                    break;
-                case 2:
                     proximates = value;
                     break;
-                case 3:
+                case 2:
                     minerals = value;
                     break;
-                case 4:
+                case 3:
                     vitamins = value;
                     break;
-                case 5:
+                case 4:
                     lipids = value;
                     break;
             }
@@ -446,7 +441,7 @@ public class CultivatorTile extends MachineBaseTile
     @Override
     public int getFieldCount()
     {
-        return getProcessCount() * 2 + 6;
+        return getProcessCount() * 2 + 5;
     }
 
     public Dinosaur getDinosaur()
