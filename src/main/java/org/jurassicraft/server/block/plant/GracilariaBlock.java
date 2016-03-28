@@ -72,9 +72,9 @@ public class GracilariaBlock extends BlockBush
     // | |_) | | (_) | (__|   <| |_) | |_| \__ \ | | |
     // |____/|_|\___/ \___|_|\_\____/ \__,_|___/_| |_|
 
-    private boolean canPlaceBlockOn(Block down)
+    private boolean canPlaceBlockOn(Block ground)
     {
-        return down == Blocks.sand || down == Blocks.clay;
+        return ground == Blocks.sand || ground == Blocks.clay || ground == Blocks.gravel || ground == Blocks.dirt;
     }
 
     @Override
