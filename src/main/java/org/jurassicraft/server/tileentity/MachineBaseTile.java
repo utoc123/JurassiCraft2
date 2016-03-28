@@ -384,7 +384,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         {
             ItemStack stack = slots[slot];
 
-            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.stackSize + output.stackSize <= stack.getMaxStackSize()) && stack.getItem() == output.getItem()))
+            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.stackSize + output.stackSize <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage()))
             {
                 return slot;
             }

@@ -1,7 +1,9 @@
 package org.jurassicraft.server.world;
 
+import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -77,15 +79,18 @@ public class WorldGenerator implements IWorldGenerator
                 }
             }
         }
+        generateOre(world, chunkX, chunkZ, 64, 128, 3, BlockHandler.INSTANCE.plant_fossil.getDefaultState(), random, BlockHelper.forBlock(Blocks.coal_ore));
 
-        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.INSTANCE.amber_ore.getDefaultState(), random);
-        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.INSTANCE.ice_shard.getDefaultState(), random);
-        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.gypsum_stone.getDefaultState(), random);
+        Predicate<IBlockState> defaultPredicate = BlockHelper.forBlock(Blocks.stone);
+
+        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.INSTANCE.amber_ore.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.INSTANCE.ice_shard.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.gypsum_stone.getDefaultState(), random, defaultPredicate);
     }
 
-    public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random)
+    public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random, Predicate<IBlockState> predicate)
     {
-        WorldGenMinable worldGenMinable = new WorldGenMinable(state, veinSize);
+        WorldGenMinable worldGenMinable = new WorldGenMinable(state, veinSize, predicate);
 
         for (int i = 0; i < veinsPerChunk; i++)
         {

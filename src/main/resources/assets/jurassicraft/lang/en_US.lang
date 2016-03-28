@@ -199,6 +199,8 @@ item.advanced_circuit.name=Advanced Circuit
 item.iron_nugget.name=Iron Nugget
 item.gypsum_powder.name=Gypsum Powder
 item.plant_soft_tissue.name={plant} Soft Tissue
+item.plant_fossil.name=Plant Fossil
+item.twig_fossil.name=Twig Fossil
 
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
@@ -209,6 +211,7 @@ item.wild_onion.name=Wild Onion
 //Blocks ==================================================
 tile.fossil_block.name={period} Fossil
 tile.encased_fossil.name=Encased {period} Fossil
+tile.plant_fossil_block.name=Plant Fossil
 tile.amber_ore.name=Amber Ore
 tile.ice_shard.name=Ice Shard Ore
 tile.moss.name=Moss

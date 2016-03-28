@@ -12,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,18 +43,12 @@ public class FossilBlock extends Block implements ISubBlocksBlock
         this.setDefaultState(blockState.getBaseState().withProperty(VARIANT, 0));
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(VARIANT, meta);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state)
     {
@@ -74,18 +67,12 @@ public class FossilBlock extends Block implements ISubBlocksBlock
         return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
     @Override
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
     }
 
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
@@ -113,20 +100,12 @@ public class FossilBlock extends Block implements ISubBlocksBlock
         return EntityHandler.INSTANCE.getDinosaurById(start + metadata);
     }
 
-    /**
-     * Queries the class of tool required to harvest this block, if null is returned we assume that anything can harvest this block.
-     */
     @Override
     public String getHarvestTool(IBlockState state)
     {
         return "pickaxe";
     }
 
-    /**
-     * Queries the harvest level of this item stack for the specified tool class, Returns -1 if this tool is not of the specified type
-     *
-     * @return Harvest level, or -1 if not the specified tool type.
-     */
     @Override
     public int getHarvestLevel(IBlockState state)
     {
@@ -134,34 +113,9 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.SOLID;
-    }
-
-    @Override
-    public boolean isOpaqueCube()
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isFullCube()
-    {
-        return true;
-    }
-
-    @Override
     public boolean canDropFromExplosion(Explosion explosion)
     {
         return false;
-    }
-
-    @Override
-    public int getRenderType()
-    {
-        return 3;
     }
 
     @Override

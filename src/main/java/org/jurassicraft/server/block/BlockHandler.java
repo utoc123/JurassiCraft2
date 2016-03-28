@@ -77,6 +77,8 @@ public enum BlockHandler
     public List<FossilBlock> fossils;
     public List<EncasedFossilBlock> encased_fossils;
 
+    public Block plant_fossil;
+
     public Block cleaning_station;
     public Block fossil_grinder;
     public Block dna_sequencer;
@@ -116,14 +118,14 @@ public enum BlockHandler
 
     public Block clear_glass;
 
-    // Cro
     public Block ajuginucula_smithii;
     public Block wild_onion;
 
     public void init()
     {
-        fossils = new ArrayList<FossilBlock>();
-        encased_fossils = new ArrayList<EncasedFossilBlock>();
+        fossils = new ArrayList<>();
+        encased_fossils = new ArrayList<>();
+        plant_fossil = new PlantFossilBlock();
 
         cleaning_station = new CleaningStationBlock();
         fossil_grinder = new FossilGrinderBlock();
@@ -164,9 +166,7 @@ public enum BlockHandler
 
         clear_glass = new ClearGlassBlock();
 
-        List<Dinosaur> dinosaurs = EntityHandler.INSTANCE.getDinosaurs();
-
-        for (int i = 0; i < (int) (Math.ceil(((float) dinosaurs.size()) / 16.0F)); i++)
+        for (int i = 0; i < (int) Math.ceil(EntityHandler.INSTANCE.getDinosaurs().size() / 16.0F); i++)
         {
             FossilBlock fossil = new FossilBlock(i * 16);
             EncasedFossilBlock encasedFossil = new EncasedFossilBlock(i * 16);
@@ -179,6 +179,8 @@ public enum BlockHandler
 
             OreDictionary.registerOre("fossil", fossil);
         }
+
+        registerBlock(plant_fossil, "Plant Fossil Block");
 
         TreeCompendium.addShapesToCompendium();
         TreeCompendium.registerTrees();
@@ -279,9 +281,9 @@ public enum BlockHandler
         return getFossilBlock(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
     }
 
-    private int getBlockId(int dinosaurId)
+    private int getBlockId(int id)
     {
-        return (int) (Math.floor((((float) dinosaurId + 1.0F) / 16.0F) - 0.0625F));
+        return (int) (Math.floor((((float) id + 1.0F) / 16.0F) - 0.0625F));
     }
 
     public EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)

@@ -94,6 +94,9 @@ public enum ItemHandler
 
     public Item dino_scanner;
 
+    public Item plant_fossil;
+    public Item twig_fossil;
+
     public Map<String, FossilItem> fossils = new HashMap<String, FossilItem>();
     public Map<String, FossilItem> fresh_fossils = new HashMap<String, FossilItem>();
 
@@ -137,6 +140,8 @@ public enum ItemHandler
         tracker = new BasicItem(TabHandler.INSTANCE.items);
         action_figure = new ActionFigureItem();
         dino_scanner = new DinoScannerItem();
+        plant_fossil = new PlantFossilItem();
+        twig_fossil = new TwigFossilItem();
 
         amber_cane = new BasicItem(TabHandler.INSTANCE.merchandise);
         amber_cane.setFull3D();
@@ -227,6 +232,9 @@ public enum ItemHandler
 
         registerItem(dino_meat, "Dinosaur Meat");
         registerItem(dino_steak, "Dinosaur Steak");
+
+        registerItem(plant_fossil, "Plant Fossil");
+        registerItem(twig_fossil, "Twig Fossil");
 
         registerItem(helicopter_spawner, "Helicopter Spawner");
         registerItem(minigun_module_adder, "Helicopter Minigun");
