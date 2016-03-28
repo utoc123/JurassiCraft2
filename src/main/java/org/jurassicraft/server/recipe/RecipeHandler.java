@@ -53,7 +53,7 @@ public enum RecipeHandler
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.reinforced_stone, 8), "PPP", "PWP", "PPP", 'P', Blocks.stone, 'W', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.reinforced_bricks, 8), "PPP", "PWP", "PPP", 'P', Blocks.stonebrick, 'W', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.reinforced_bricks, 4), "SS", "SS", 'S', BlockHandler.INSTANCE.reinforced_stone);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.empty_test_tube), "I", "G", "G", 'G', Blocks.glass_pane, 'I', Items.iron_ingot);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.empty_test_tube, 8), "G", "G", 'G', Blocks.glass);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.petri_dish), "G G", "GGG", 'G', Blocks.glass_pane);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.blue_print), "BBB", "BPB", "BBB", 'B', new ItemStack(Items.dye, 1, 4), 'P', Items.paper);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.empty_syringe), "  N", "IG ", "II ", 'G', Blocks.glass_pane, 'I', Items.iron_ingot, 'N', ItemHandler.INSTANCE.needle);
@@ -61,8 +61,8 @@ public enum RecipeHandler
         GameRegistry.addSmelting(new ItemStack(Items.potionitem, 1, 0), new ItemStack(ItemHandler.INSTANCE.dna_base), 1.0F);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.needle), "GIG", "GIG", " I ", 'G', Blocks.glass_pane, 'I', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_extractor), "III", "INI", "RSR", 'S', BlockHandler.INSTANCE.dna_sequencer, 'I', Items.iron_ingot, 'R', Items.redstone, 'N', ItemHandler.INSTANCE.needle);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_sequencer), "RDR", "GNG", "III", 'G', Items.gold_ingot, 'I', Items.iron_ingot, 'N', ItemHandler.INSTANCE.needle, 'D', ItemHandler.INSTANCE.disc_reader, 'R', Items.redstone);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_synthesizer), "GDG", "RBR", "ITI", 'G', Items.gold_ingot, 'I', Items.iron_ingot, 'B', Items.bucket, 'R', Items.redstone, 'D', ItemHandler.INSTANCE.disc_reader);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_sequencer), "IAI", "SAI", "HAK", 'I', Items.iron_ingot, 'A', ItemHandler.INSTANCE.dna_analyzer, 'S', ItemHandler.INSTANCE.computer_screen, "H", ItemHandler.INSTANCE.disc_reader, 'K', ItemHandler.INSTANCE.keyboard);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_synthesizer), "IIS", "ICD", "IIC", 'I', Items.iron_ingot, 'S', ItemHandler.INSTANCE.computer_screen, 'C', ItemHandler.INSTANCE.advanced_circuit, 'D', ItemHandler.INSTANCE.disc_reader);
 
         for (int i = 0; i < 16; i++)
         {
@@ -72,7 +72,7 @@ public enum RecipeHandler
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.embryonic_machine), "GIG", "GIG", "III", 'G', Blocks.glass_pane, 'I', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.embryo_calcification_machine), "GIG", "GSG", "III", 'G', Blocks.glass_pane, 'I', Items.iron_ingot, 'S', ItemHandler.INSTANCE.needle);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.incubator), "GGG", "RRR", "III", 'I', Items.iron_ingot, 'R', Items.redstone, 'G', Blocks.glass);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_combinator_hybridizer), "IRI", "GIG", "IRI", 'G', Blocks.glass, 'I', Items.iron_ingot, 'R', Items.redstone);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_combinator_hybridizer), "SCS", "IDI", " K ", 'S', ItemHandler.INSTANCE.computer_screen, 'C', ItemHandler.INSTANCE.basic_circuit, 'I', Items.iron_ingot, 'D', ItemHandler.INSTANCE.disc_reader, 'L', ItemHandler.INSTANCE.keyboard);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.INSTANCE.plant_cells_petri_dish), ItemHandler.INSTANCE.plant_cells, ItemHandler.INSTANCE.petri_dish);
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.iron_nugget, 9), "i", 'i', Items.iron_ingot);
@@ -86,6 +86,11 @@ public enum RecipeHandler
 
         GameRegistry.addRecipe(new ItemStack(Blocks.mossy_cobblestone, 4), "MCM", "CMC", "MCM", 'M', BlockHandler.INSTANCE.moss, 'C', Blocks.cobblestone);
         GameRegistry.addRecipe(new ItemStack(Blocks.stonebrick, 4, 1), "MCM", "CMC", "MCM", 'M', BlockHandler.INSTANCE.moss, 'C', new ItemStack(Blocks.stonebrick, 1, 0));
+
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.computer_screen), "IGI", "RPB", "CQI", 'I', Items.iron_ingot, 'G', new ItemStack(Items.dye, 1, 2), 'R', new ItemStack(Items.dye, 1, 1), 'P', Blocks.glass_pane, 'B', new ItemStack(Items.dye, 1, 4), 'C', ItemHandler.INSTANCE.basic_circuit, 'Q', Items.quartz);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.keyboard), "bbb", "bbb", "psc", 'b', Blocks.stone_button, 'p', Blocks.stone_pressure_plate, 's', Blocks.stone_slab, 'c', ItemHandler.INSTANCE.basic_circuit);
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.dna_analyzer), "iGi", "CLi", "iii", 'i', "nuggetIron", 'G', Blocks.glass, 'C', ItemHandler.INSTANCE.advanced_circuit, 'L', ItemHandler.INSTANCE.laser));
 
         addGrowthSerumRecipe(Items.cooked_beef);
         addGrowthSerumRecipe(Items.cooked_chicken);

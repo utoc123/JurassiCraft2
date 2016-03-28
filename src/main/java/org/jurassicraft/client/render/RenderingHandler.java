@@ -399,6 +399,10 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_fossil, "plant_fossil", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.twig_fossil, "twig_fossil", "inventory");
 
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.keyboard, "keyboard", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.computer_screen, "computer_screen", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dna_analyzer, "dna_analyzer", "inventory");
+
         int meta = 0;
 
         for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())

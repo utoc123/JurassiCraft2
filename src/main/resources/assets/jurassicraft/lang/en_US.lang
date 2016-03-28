@@ -201,6 +201,9 @@ item.gypsum_powder.name=Gypsum Powder
 item.plant_soft_tissue.name={plant} Soft Tissue
 item.plant_fossil.name=Plant Fossil
 item.twig_fossil.name=Twig Fossil
+item.keyboard.name=Keyboard
+item.computer_screen.name=Computer Screen
+item.dna_analyzer.name=DNA Analyzer
 
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds

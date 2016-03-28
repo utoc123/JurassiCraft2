@@ -104,7 +104,10 @@ public enum ItemHandler
 
     public BasicItem gypsum_powder;
 
-    // TODO more complex crafting components, eg circuit boards
+    public BasicItem keyboard;
+    public BasicItem computer_screen;
+
+    public BasicItem dna_analyzer;
 
     public void init()
     {
@@ -160,6 +163,10 @@ public enum ItemHandler
 
         basic_circuit = new BasicItem(TabHandler.INSTANCE.items);
         advanced_circuit = new BasicItem(TabHandler.INSTANCE.items);
+
+        computer_screen = new BasicItem(TabHandler.INSTANCE.items);
+        keyboard = new BasicItem(TabHandler.INSTANCE.items);
+        dna_analyzer = new BasicItem(TabHandler.INSTANCE.items);
 
         iron_nugget = new BasicItem(TabHandler.INSTANCE.items);
 
@@ -232,6 +239,9 @@ public enum ItemHandler
         registerItem(basic_circuit, "Basic Circuit");
         registerItem(advanced_circuit, "Advanced Circuit");
         registerItemOreDict(iron_nugget, "Iron Nugget", "nuggetIron");
+        registerItem(keyboard, "Keyboard");
+        registerItem(computer_screen, "Computer Screen");
+        registerItem(dna_analyzer, "DNA Analyzer");
 
         registerItem(dino_meat, "Dinosaur Meat");
         registerItem(dino_steak, "Dinosaur Steak");
