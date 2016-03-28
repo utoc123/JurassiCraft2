@@ -15,21 +15,21 @@ import org.jurassicraft.server.item.ItemHandler;
 import java.util.Random;
 
 /**
- * Copyright 2016 Andrew O. Mellinger
+ * Copyright 2016 Timeless Modding Team
  */
 public class GracilariaBlock extends BlockBush
 {
     /**
      * DESIGN:
      *
-     * This stuff spreads like mushrooms.  It grows on sand or clay and periodically
-     * will spread to some more sand or clay.  It will not spread if it reaches a
-     * certain density within a 9x9 area.
+     * This stuff spreads like mushrooms.  It grows on a variety of special surfaces.
+     * It will spread to other surfaces within the radius until it reaches the specified
+     * density.
      *
      * It will spread quickly if within 5-11 range, slowly otherwise.
      */
 
-    private static final int DENSITY_PER_4X4 = 8;
+    private static final int DENSITY_PER_AREA = 8;
     private static final int GOOD_LIGHT_SPREAD_CHANCE = 25;
     private static final int BAD_LIGHT_SPREAD_CHANCE = 2;
     private static final int SPREAD_RADIUS = 4;
@@ -103,7 +103,7 @@ public class GracilariaBlock extends BlockBush
         if (rand.nextInt(100) <= spreadChance)
         {
             // Density check
-            int i = DENSITY_PER_4X4;
+            int i = DENSITY_PER_AREA;
 
             // We only allow so many around us before we move one.
             for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-SPREAD_RADIUS, -3, -SPREAD_RADIUS), pos.add(SPREAD_RADIUS, 3, SPREAD_RADIUS)))
