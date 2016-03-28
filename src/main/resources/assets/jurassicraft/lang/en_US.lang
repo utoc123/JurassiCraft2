@@ -207,6 +207,7 @@ item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
 item.ajuginucula_smithii_leaves.name=Ajuginucula Smithii Leaves
 item.ajuginucula_smithii_oil.name=Ajuginucula Smithii Oil
 item.wild_onion.name=Wild Onion
+item.gracilaria.name=Gracilaria
 
 //Blocks ==================================================
 tile.fossil_block.name={period} Fossil
@@ -275,6 +276,7 @@ tile.clear_glass.name=Clear Glass
 // Crops ========================================
 tile.ajuginucula_smithii.name=Ajuginucula Smithii
 tile.wild_onion_plant.name=Wild Onion Plant
+tile.gracilaria_seaweed.name=Gracilaria Plant
 
 //Plants =========================================
 plants.small_royal_fern.name=Small Royal Fern
