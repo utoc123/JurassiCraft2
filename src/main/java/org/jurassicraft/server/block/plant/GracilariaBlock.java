@@ -10,6 +10,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Random;
@@ -179,4 +181,10 @@ public class GracilariaBlock extends BlockBush
         return null;
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Block.EnumOffsetType getOffsetType()
+    {
+        return EnumOffsetType.XZ;
+    }
 }

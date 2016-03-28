@@ -17,6 +17,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.TabHandler;
 
 import java.util.Random;
@@ -210,6 +212,13 @@ public class DoublePlantBlock extends BlockBush
         }
 
         return world.setBlockToAir(pos);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Block.EnumOffsetType getOffsetType()
+    {
+        return EnumOffsetType.XZ;
     }
 
     enum EnumBlockHalf implements IStringSerializable
