@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "jurassicraft:gracilaria_seaweed" }
+    "normal": {
+      "model": "jurassicraft:gracilaria_seaweed"
+    }
   }
 }

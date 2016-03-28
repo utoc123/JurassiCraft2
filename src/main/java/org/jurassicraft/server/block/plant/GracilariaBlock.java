@@ -6,7 +6,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import org.jurassicraft.server.item.ItemHandler;
 
@@ -19,11 +21,11 @@ public class GracilariaBlock extends BlockBush
 {
     /**
      * DESIGN:
-     *
+     * <p>
      * This stuff spreads like mushrooms.  It grows on sand or clay and periodically
      * will spread to some more sand or clay.  It will not spread if it reaches a
      * certain density within a 9x9 area.
-     *
+     * <p>
      * It will spread quickly if within 5-11 range, slowly otherwise.
      */
 
@@ -32,13 +34,19 @@ public class GracilariaBlock extends BlockBush
     private static final int BAD_LIGHT_SPREAD_CHANCE = 2;
     private static final int SPREAD_RADIUS = 4;
 
+    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.8F, 0.4F, 0.8F);
+
     public GracilariaBlock()
     {
         super(Material.coral);
         this.setCreativeTab(null);
-        float f = 0.2F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
         this.setTickRandomly(true);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return BOUNDS;
     }
 
     //  ____  _            _
@@ -62,10 +70,9 @@ public class GracilariaBlock extends BlockBush
     // | |_) | | (_) | (__|   <| |_) | |_| \__ \ | | |
     // |____/|_|\___/ \___|_|\_\____/ \__,_|___/_| |_|
 
-    @Override
-    protected boolean canPlaceBlockOn(Block ground)
+    private boolean canPlaceBlockOn(Block down)
     {
-        return ground == Blocks.sand || ground == Blocks.clay;
+        return down == Blocks.sand || down == Blocks.clay;
     }
 
     @Override
@@ -95,8 +102,10 @@ public class GracilariaBlock extends BlockBush
         // Make sure we have enough light.
         int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
         int light = worldIn.getLight(pos);
-        if (light >= 5 && light <= 15)
+        if (light >= 5 && light <= 11)
+        {
             spreadChance = GOOD_LIGHT_SPREAD_CHANCE;
+        }
 
         if (rand.nextInt(100) <= spreadChance)
         {
@@ -125,14 +134,16 @@ public class GracilariaBlock extends BlockBush
             {
                 // Chose a random location
                 int doubleRadius = SPREAD_RADIUS * 2;
-                BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, - SPREAD_RADIUS,
+                BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS,
                         rand.nextInt(doubleRadius) - SPREAD_RADIUS);
                 nextPos = findGround(worldIn, tmp);
                 --placementAttempts;
             }
 
             if (nextPos != null)
+            {
                 worldIn.setBlockState(nextPos, this.getDefaultState());
+            }
         }
     }
 
@@ -150,17 +161,19 @@ public class GracilariaBlock extends BlockBush
         // Search a column
         Block down = worldIn.getBlockState(pos.down()).getBlock();
         Block here = worldIn.getBlockState(pos).getBlock();
-        Block up   = worldIn.getBlockState(pos.up()).getBlock();
+        Block up = worldIn.getBlockState(pos.up()).getBlock();
 
         for (int i = 0; i < 8; ++i)
         {
             if (canPlaceBlockOn(down) && here == Blocks.water && up == Blocks.water)
+            {
                 return pos;
+            }
 
             down = here;
             here = up;
-            pos  = pos.up();
-            up   = worldIn.getBlockState(pos.up()).getBlock();
+            pos = pos.up();
+            up = worldIn.getBlockState(pos.up()).getBlock();
         }
 
         return null;
