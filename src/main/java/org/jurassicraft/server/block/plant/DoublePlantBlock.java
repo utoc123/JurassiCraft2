@@ -1,5 +1,6 @@
 package org.jurassicraft.server.block.plant;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -15,6 +16,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.TabHandler;
 
 import java.util.Random;
@@ -213,6 +216,13 @@ public class DoublePlantBlock extends BlockBush
             world.setBlockToAir(pos.up());
         }
         return world.setBlockToAir(pos);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Block.EnumOffsetType getOffsetType()
+    {
+        return EnumOffsetType.XZ;
     }
 
     static enum EnumBlockHalf implements IStringSerializable
