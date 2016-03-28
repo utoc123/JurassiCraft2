@@ -22,7 +22,7 @@ configFile.withReader {
 version = getVersionFromJava()
 group = "org.jurassicraft"
 archivesBaseName = "JurassiCraft"
-sourceCompatibility = targetCompatibility = "1.6"
+sourceCompatibility = targetCompatibility = "1.8"
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version
