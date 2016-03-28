@@ -65,7 +65,7 @@ public enum RecipeHandler
         GameRegistry.addSmelting(new ItemStack(Items.potionitem, 1, 0), new ItemStack(ItemHandler.INSTANCE.dna_base), 1.0F);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.needle), "GIG", "GIG", " I ", 'G', Blocks.glass_pane, 'I', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_extractor), "III", "INI", "RSR", 'S', BlockHandler.INSTANCE.dna_sequencer, 'I', Items.iron_ingot, 'R', Items.redstone, 'N', ItemHandler.INSTANCE.needle);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_sequencer), "IAI", "SAI", "HAK", 'I', Items.iron_ingot, 'A', ItemHandler.INSTANCE.dna_analyzer, 'S', ItemHandler.INSTANCE.computer_screen, "H", ItemHandler.INSTANCE.disc_reader, 'K', ItemHandler.INSTANCE.keyboard);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_sequencer), "IAI", "SAI", "HAK", 'I', Items.iron_ingot, 'A', ItemHandler.INSTANCE.dna_analyzer, 'S', ItemHandler.INSTANCE.computer_screen, 'H', ItemHandler.INSTANCE.disc_reader, 'K', ItemHandler.INSTANCE.keyboard);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.dna_synthesizer), "IIS", "ICD", "IIC", 'I', Items.iron_ingot, 'S', ItemHandler.INSTANCE.computer_screen, 'C', ItemHandler.INSTANCE.advanced_circuit, 'D', ItemHandler.INSTANCE.disc_reader);
 
         for (int i = 0; i < 16; i++)
