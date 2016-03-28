@@ -1,6 +1,5 @@
 package org.jurassicraft.server.tileentity;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -21,12 +20,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.block.EncasedFossilBlock;
+import org.jurassicraft.server.api.ICleanableItem;
 import org.jurassicraft.server.container.CleaningStationContainer;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
+
+import java.util.Random;
 
 public class CleaningStationTile extends TileEntityLockable implements ITickable, ISidedInventory
 {
@@ -340,12 +337,11 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         return 200;
     }
 
-    /**
-     * Returns true if the cleaning station can smelt an item, i.e. has a source item, destination stack isn't full, etc.
-     */
     private boolean canClean()
     {
-        if (this.slots[0] != null && this.slots[0].getItem() instanceof EncasedFossilItemBlock)
+        ICleanableItem cleanableItem = ICleanableItem.getCleanableItem(this.slots[0]);
+
+        if (cleanableItem != null && cleanableItem.isCleanable(this.slots[0]))
         {
             for (int i = 2; i < 8; i++)
             {
@@ -359,25 +355,25 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         return false;
     }
 
-    /**
-     * Turn one item from the cleaning station source stack into the appropriate cleaned item in the cleaning station result stack
-     */
     public void cleanItem()
     {
         if (this.canClean())
         {
-            int dinosaurId = BlockHandler.INSTANCE.getDinosaurId((EncasedFossilBlock) Block.getBlockFromItem(slots[0].getItem()), slots[0].getItemDamage());
-            String[] bones = EntityHandler.INSTANCE.getDinosaurById(dinosaurId).getBones();
-            ItemStack fossil = new ItemStack(ItemHandler.INSTANCE.fossils.get(bones[worldObj.rand.nextInt(bones.length)]), 1, dinosaurId);
+            ICleanableItem cleanableItem = ICleanableItem.getCleanableItem(slots[0]);
+
+            Random rand = new Random();
+
+            ItemStack output = cleanableItem.getCleanedItem(slots[0], rand);
 
             int emptySlot = -1;
 
             for (int i = 2; i < 8; i++)
             {
-                if (this.slots[i] == null || (ItemStack.areItemsEqual(slots[i], fossil) && ItemStack.areItemStackTagsEqual(slots[i], fossil)))
+                ItemStack slot = slots[i];
+
+                if (slot == null || (ItemStack.areItemsEqual(slot, output) && ItemStack.areItemStackTagsEqual(slot, output) && slot.getItemDamage() == output.getItemDamage()))
                 {
                     emptySlot = i;
-
                     break;
                 }
             }
@@ -386,11 +382,11 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
             {
                 if (this.slots[emptySlot] == null)
                 {
-                    this.slots[emptySlot] = fossil;
+                    this.slots[emptySlot] = output;
                 }
-                else if (this.slots[emptySlot].getItem() == fossil.getItem() && ItemStack.areItemStackTagsEqual(this.slots[emptySlot], fossil))
+                else if (this.slots[emptySlot].getItem() == output.getItem() && ItemStack.areItemStackTagsEqual(this.slots[emptySlot], output))
                 {
-                    this.slots[emptySlot].stackSize += fossil.stackSize;
+                    this.slots[emptySlot].stackSize += output.stackSize;
                 }
 
                 this.slots[0].stackSize--;

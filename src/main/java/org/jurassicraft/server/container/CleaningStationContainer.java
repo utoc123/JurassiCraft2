@@ -9,6 +9,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.container.slot.CleanableItemSlot;
 import org.jurassicraft.server.container.slot.FossilSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
@@ -25,7 +26,7 @@ public class CleaningStationContainer extends Container
     public CleaningStationContainer(InventoryPlayer invPlayer, IInventory cleaningStation)
     {
         this.tileCleaningStation = cleaningStation;
-        this.addSlotToContainer(new Slot(cleaningStation, 0, 56, 17));
+        this.addSlotToContainer(new CleanableItemSlot(cleaningStation, 0, 56, 17));
         this.addSlotToContainer(new WaterBucketSlot(cleaningStation, 1, 56, 53));
 
         int i;
