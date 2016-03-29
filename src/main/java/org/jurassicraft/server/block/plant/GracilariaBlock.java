@@ -3,6 +3,8 @@ package org.jurassicraft.server.block.plant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -38,9 +40,17 @@ public class GracilariaBlock extends BlockBush
 
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.8F, 0.4F, 0.8F);
 
+    // This is needed because we user material of water so it doesn't have the block boundaries.
+    public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
+
     public GracilariaBlock()
     {
-        super(Material.coral);
+        // Setting our material state to "water" is the trick to not having "walls" and air.
+        // However, when we are water we alos need to have the LEVEL property.
+        super(Material.water);
+        this.setDefaultState(blockState.getBaseState().withProperty(LEVEL, 0));
+
+        // Not tab because we are accessed in play via the item.
         this.setCreativeTab(null);
         this.setTickRandomly(true);
     }
@@ -57,13 +67,32 @@ public class GracilariaBlock extends BlockBush
     // | |_) | | (_) | (__|   <
     // |____/|_|\___/ \___|_|\_\
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return ItemHandler.INSTANCE.gracilaria;
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        // This is necessary because we are "water"
+        return state.getValue(LEVEL);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState()
+    {
+        // This is necessary because we are "water"
+        return new BlockStateContainer(this, LEVEL);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Block.EnumOffsetType getOffsetType()
+    {
+        // This is so that it isn't always placed exactly at block center.
+        return EnumOffsetType.XZ;
     }
 
     //  ____  _            _    ____            _
@@ -179,12 +208,5 @@ public class GracilariaBlock extends BlockBush
         }
 
         return null;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Block.EnumOffsetType getOffsetType()
-    {
-        return EnumOffsetType.XZ;
     }
 }

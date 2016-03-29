@@ -1,7 +1,6 @@
 {
   "variants": {
-    "normal": {
-      "model": "jurassicraft:gracilaria_seaweed"
-    }
+    "level=0": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=1": { "model": "jurassicraft:gracilaria_seaweed" }
   }
 }
