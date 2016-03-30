@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "jurassicraft:blocks/log_calamites_petrified"
-    }
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "jurassicraft:blocks/log_calamites_petrified"
+  }
 }
