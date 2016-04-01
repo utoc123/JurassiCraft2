@@ -4,10 +4,12 @@ import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -20,6 +22,7 @@ import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.data.PlayerData;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.world.WorldGenCoal;
 
 import java.util.Random;
 
@@ -104,6 +107,16 @@ public class ServerEventHandler
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         Random rand = event.getRand();
+
+        for (BiomeGenBase biome : BiomeGenBase.biomeRegistry)
+        {
+            BiomeDecorator decorator = biome.theBiomeDecorator;
+
+            if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal))
+            {
+                decorator.coalGen = new WorldGenCoal(Blocks.coal_ore.getDefaultState(), decorator.chunkProviderSettings.coalSize);
+            }
+        }
 
         BiomeGenBase biome = world.getBiomeGenForCoords(pos);
 

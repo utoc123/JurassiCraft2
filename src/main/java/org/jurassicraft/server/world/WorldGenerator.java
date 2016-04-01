@@ -21,8 +21,10 @@ import org.jurassicraft.server.period.EnumTimePeriod;
 import java.util.List;
 import java.util.Random;
 
-public class WorldGenerator implements IWorldGenerator
+public enum WorldGenerator implements IWorldGenerator
 {
+    INSTANCE;
+
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
     {
@@ -34,7 +36,7 @@ public class WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        for (int i = 0; i < world.getHorizon() * 0.15625; i++)
+        for (int i = 0; i < world.getHorizon() * 0.078125; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
@@ -80,8 +82,6 @@ public class WorldGenerator implements IWorldGenerator
                 }
             }
         }
-
-        generateOre(world, chunkX, chunkZ, 64, 128, 3, BlockHandler.INSTANCE.plant_fossil.getDefaultState(), random, BlockMatcher.forBlock(Blocks.coal_ore));
 
         Predicate<IBlockState> defaultPredicate = BlockMatcher.forBlock(Blocks.stone);
 
