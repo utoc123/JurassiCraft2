@@ -53,7 +53,7 @@ public class ServerProxy
 
         // addChestGenItems();
 
-        GameRegistry.registerWorldGenerator(new WorldGenerator(), 0);
+        GameRegistry.registerWorldGenerator(WorldGenerator.INSTANCE, 0);
 
         NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.instance, new JCGuiHandler());
 
