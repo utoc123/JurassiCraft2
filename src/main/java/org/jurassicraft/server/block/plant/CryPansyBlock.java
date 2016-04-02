@@ -13,7 +13,7 @@ public class CryPansyBlock extends BlockBush
     {
         super();
         this.setCreativeTab(TabHandler.INSTANCE.plants);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
     }
 
     @Override

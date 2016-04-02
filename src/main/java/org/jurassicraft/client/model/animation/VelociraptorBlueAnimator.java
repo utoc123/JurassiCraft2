@@ -3,11 +3,10 @@ package org.jurassicraft.client.model.animation;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.VelociraptorEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.VelociraptorBlueEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
-public class VelociraptorBlueAnimator extends DinosaurAnimator
+public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueEntity>
 {
     public VelociraptorBlueAnimator()
     {
@@ -15,10 +14,8 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel parModel, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, VelociraptorBlueEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        VelociraptorEntity velociraptor = (VelociraptorEntity) parEntity;
-
         AdvancedModelRenderer waist = parModel.getCube("body3");
         AdvancedModelRenderer chest = parModel.getCube("body2");
         AdvancedModelRenderer shoulders = parModel.getCube("body1");
@@ -63,7 +60,7 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator
         // }
         // else
         // {
-        int frame = velociraptor.ticksExisted;
+        int frame = entity.ticksExisted;
 
         // f = entity.ticksExisted;
         // f1 = 1F;
@@ -78,7 +75,7 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator
         float speed = 0.75F;
         float height = 2F * f1;
 
-        float dontLeanProgress = velociraptor.dontLean.getAnimationProgressSinSqrt();
+        float dontLeanProgress = entity.dontLean.getAnimationProgressSinSqrt();
 
         parModel.bob(waist, 1F * speed, height, false, f, f1);
         parModel.bob(leftThigh, 1F * speed, height, false, f, f1);
@@ -114,10 +111,10 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator
         parModel.chainWave(leftArmParts, 1F * speed, -0.3F, 4, f, f1);
 
         // Idling
-        parModel.chainWave(tailParts, 0.1F, 0.05F, 2, parEntity.ticksExisted, 0.25F);
-        parModel.chainWave(bodyParts, 0.1F, -0.03F, 5, parEntity.ticksExisted, 0.25F);
-        parModel.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
-        parModel.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
+        parModel.chainWave(tailParts, 0.1F, 0.05F, 2, entity.ticksExisted, 0.25F);
+        parModel.chainWave(bodyParts, 0.1F, -0.03F, 5, entity.ticksExisted, 0.25F);
+        parModel.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        parModel.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
 
         // float sittingProgress =
         // raptor.sittingProgress.getAnimationProgressSin();

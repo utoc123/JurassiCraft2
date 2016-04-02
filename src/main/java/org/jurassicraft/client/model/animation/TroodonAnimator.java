@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TroodonEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class TroodonAnimator extends DinosaurAnimator
+public class TroodonAnimator extends DinosaurAnimator<TroodonEntity>
 {
     public TroodonAnimator()
     {
@@ -18,10 +17,8 @@ public class TroodonAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, TroodonEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        TroodonEntity entity = (TroodonEntity) parEntity;
-
         AdvancedModelRenderer head = model.getCube("head UPPER");
         AdvancedModelRenderer neck1 = model.getCube("neck1");
         AdvancedModelRenderer neck2 = model.getCube("neck2");

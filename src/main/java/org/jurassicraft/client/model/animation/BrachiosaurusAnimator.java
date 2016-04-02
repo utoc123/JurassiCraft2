@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.BrachiosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class BrachiosaurusAnimator<ENTITY extends BrachiosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class BrachiosaurusAnimator extends DinosaurAnimator<BrachiosaurusEntity>
 {
     public BrachiosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class BrachiosaurusAnimator<ENTITY extends BrachiosaurusEntity> extends D
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, BrachiosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, BrachiosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         // f = entity.ticksExisted;
         // f1 = 0.5F;

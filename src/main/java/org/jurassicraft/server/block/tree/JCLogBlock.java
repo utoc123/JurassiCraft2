@@ -26,7 +26,7 @@ public class JCLogBlock extends BlockLog implements IGrindableItem
         this.setDefaultState(getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
         this.setHardness(2.0F);
         this.setResistance(0.5F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.petrified = petrified;
         this.type = treeType;

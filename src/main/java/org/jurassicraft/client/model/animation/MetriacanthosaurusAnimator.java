@@ -5,11 +5,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.MetriacanthosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class MetriacanthosaurusAnimator extends DinosaurAnimator
+public class MetriacanthosaurusAnimator extends DinosaurAnimator<MetriacanthosaurusEntity>
 {
     public MetriacanthosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class MetriacanthosaurusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, MetriacanthosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.65F;
         float globalDegree = 0.4F;
@@ -112,12 +112,12 @@ public class MetriacanthosaurusAnimator extends DinosaurAnimator
         model.walk(rightFoot, 0.5F * globalSpeed, 1.5F * globalDegree, false, 0.5F, 0.1F, f, f1);
 
         // idling
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
         model.chainWave(tailParts, 0.1F, 0.05F, 2, ticksExisted, 0.25F);
         model.chainWave(bodyParts, 0.1F, -0.03F, 4, ticksExisted, 0.25F);
         model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticksExisted, 0.25F);
         model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticksExisted, 0.25F);
 
-        parEntity.tailBuffer.applyChainSwingBuffer(tailParts);
+        entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }
 }

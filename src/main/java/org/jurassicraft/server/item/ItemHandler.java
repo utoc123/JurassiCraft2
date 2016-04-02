@@ -4,8 +4,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeeds;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.creativetab.TabHandler;
@@ -284,6 +286,6 @@ public enum ItemHandler
         String formattedName = name.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
         item.setUnlocalizedName(formattedName);
 
-        GameRegistry.registerItem(item, formattedName);
+        GameRegistry.register(item, new ResourceLocation(JurassiCraft.MODID, name));
     }
 }

@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.ChasmosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class ChasmosaurusAnimator<ENTITY extends ChasmosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class ChasmosaurusAnimator extends DinosaurAnimator<ChasmosaurusEntity>
 {
     public ChasmosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class ChasmosaurusAnimator<ENTITY extends ChasmosaurusEntity> extends Din
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, ChasmosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, ChasmosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("Head");
         AdvancedModelRenderer neck2 = model.getCube("Neck 2");

@@ -289,24 +289,16 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     @Override
     public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        DinosaurModel theModel = (DinosaurModel) model;
-        // assert(size == 1/16f); // Ignore the size
-
-        setRotationAngles(theModel, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
-    }
-
-    protected void setRotationAngles(DinosaurModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTick)
-    {
-        getAnimationHelper(entity, model, entity.getUseInertialTweens()).performJabelarAnimations(partialTick);
+        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performJabelarAnimations(partialTicks);
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
         {
             if (entity.isSwimming())
             {
-                performMowzieSwimmingAnimations(model, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTick, entity);
+                performMowzieSwimmingAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
             }
             else
             {
-                performMowzieLandAnimations(model, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTick, entity);
+                performMowzieLandAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
             }
         }
     }
@@ -314,15 +306,15 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     /*
      * @Override this if you want dino to have cyclical animations.
      */
-    protected void performMowzieLandAnimations(DinosaurModel parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, ENTITY parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, ENTITY entity, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks)
     {
     }
 
     /*
      * @Override this if you want swimming dino to have different cyclical animations.
      */
-    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks, ENTITY parEntity)
+    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, ENTITY entity, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks)
     {
-        performMowzieLandAnimations(parModel, parLimbSwing, parLimbSwingAmount, parRotation, parRotationYaw, parRotationPitch, parPartialTicks, parEntity);
+        performMowzieLandAnimations(parModel, entity, parLimbSwing, parLimbSwingAmount, parRotation, parRotationYaw, parRotationPitch, parPartialTicks);
     }
 }

@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.MicroceratusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class MicroceratusAnimator extends DinosaurAnimator
+public class MicroceratusAnimator extends DinosaurAnimator<MicroceratusEntity>
 {
     public MicroceratusAnimator()
     {
@@ -18,7 +17,7 @@ public class MicroceratusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel parModel, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, MicroceratusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer body = parModel.getCube("Body MAIN");
 
@@ -85,11 +84,11 @@ public class MicroceratusAnimator extends DinosaurAnimator
         parModel.walk(thighMidRight, globalSpeed * 1.0F, globalDegree * 1.0F, false, 1.0F, 0.2F, f, f1);
         parModel.walk(footRight, globalSpeed * 1.0F, globalDegree * 1.0F, true, -0.25F, -0.2F, f, f1);
 
-        int frame = parEntity.ticksExisted;
+        int frame = entity.ticksExisted;
 
         parModel.chainWave(tail, globalSpeed * 0.2F, globalHeight * 0.05F, 2, frame, 0.25F);
         parModel.chainWave(neck, globalSpeed * 0.2F, globalHeight * 0.05F, 3, frame, 0.25F);
 
-        ((MicroceratusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

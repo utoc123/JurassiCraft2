@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.HerrerasaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class HerrerasaurusAnimator<ENTITY extends HerrerasaurusEntity> extends DinosaurAnimator<ENTITY>
+public class HerrerasaurusAnimator extends DinosaurAnimator<HerrerasaurusEntity>
 {
     public HerrerasaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class HerrerasaurusAnimator<ENTITY extends HerrerasaurusEntity> extends D
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, HerrerasaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, HerrerasaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float scaleFactor = 0.77F;
         float height = 2F * f1;

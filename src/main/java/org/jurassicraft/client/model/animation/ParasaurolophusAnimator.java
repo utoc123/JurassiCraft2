@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.ParasaurolophusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class ParasaurolophusAnimator extends DinosaurAnimator
+public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEntity>
 {
     public ParasaurolophusAnimator()
     {
@@ -18,7 +17,7 @@ public class ParasaurolophusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, ParasaurolophusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 
@@ -123,7 +122,7 @@ public class ParasaurolophusAnimator extends DinosaurAnimator
         model.chainSwing(tail, 0.5F * scaleFactor, 0.1F, 2, f, f1);
 
         // Idle
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 0.25F);
         model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 0.25F);
@@ -137,6 +136,6 @@ public class ParasaurolophusAnimator extends DinosaurAnimator
 
         model.chainWave(tail, 0.1F, -0.02F, 2, ticksExisted, 1F);
 
-        ((ParasaurolophusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

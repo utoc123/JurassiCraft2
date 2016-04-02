@@ -63,7 +63,7 @@ public class JCSlabItemBlock extends ItemBlock
 
                     if (collisionBox != Block.NULL_AABB && world.checkNoEntityCollision(collisionBox.offset(pos)) && world.setBlockState(pos, doubleSlabState, 11))
                     {
-                        SoundType sound = this.doubleSlab.getStepSound();
+                        SoundType sound = this.doubleSlab.getSoundType();
                         world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
                         --stack.stackSize;
                     }
@@ -112,7 +112,7 @@ public class JCSlabItemBlock extends ItemBlock
 
             if (collisionBounds != Block.NULL_AABB && world.checkNoEntityCollision(collisionBounds.offset(pos)) && world.setBlockState(pos, state, 11))
             {
-                SoundType soundtype = this.doubleSlab.getStepSound();
+                SoundType soundtype = this.doubleSlab.getSoundType();
                 world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 --stack.stackSize;
             }

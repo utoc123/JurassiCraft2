@@ -28,7 +28,7 @@ public class ClearGlassBlock extends BlockGlass
         super(Material.glass, false);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
         this.setHardness(0.3F);
-        this.setStepSound(SoundType.GLASS);
+        this.setSoundType(SoundType.GLASS);
         this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false).withProperty(WEST, false).withProperty(UP, false).withProperty(DOWN, false));
     }
 

@@ -27,7 +27,7 @@ public abstract class JCSlabBlock extends BlockSlab
 
         this.setHardness(block.getBlockHardness(state, null, null));
         this.setResistance((block.getExplosionResistance(null) * 5.0F) / 3.0F);
-        this.setStepSound(block.getStepSound());
+        this.setSoundType(block.getSoundType());
         this.setHarvestLevel(block.getHarvestTool(state), block.getHarvestLevel(state));
 
         this.setDefaultState(state);

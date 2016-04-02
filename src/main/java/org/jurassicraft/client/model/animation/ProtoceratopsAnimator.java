@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.ProtoceratopsEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class ProtoceratopsAnimator extends DinosaurAnimator
+public class ProtoceratopsAnimator extends DinosaurAnimator<ProtoceratopsEntity>
 {
     public ProtoceratopsAnimator()
     {
@@ -18,7 +17,7 @@ public class ProtoceratopsAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, ProtoceratopsEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.5F;
         float globalHeight = 0.5F;
@@ -88,11 +87,11 @@ public class ProtoceratopsAnimator extends DinosaurAnimator
         model.walk(armLowerRight, 1F * globalSpeed, 0.6F * globalDegree, false, frontOffset + 1F, -0.2F, f, f1);
         model.walk(handRight, 1F * globalSpeed, 0.6F * globalDegree, true, frontOffset + 2F, 0.8F, f, f1);
 
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         model.chainWave(tail, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.025F);
         model.chainWave(neck, globalSpeed * 0.25F, globalHeight * 1.0F, -3, ticksExisted, 0.025F);
 
-        ((ProtoceratopsEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

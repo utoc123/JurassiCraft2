@@ -28,7 +28,7 @@ public class EmbryoCalcificationMachineBlock extends OrientedBlock
         super(Material.iron);
         this.setUnlocalizedName("embryo_calcification_machine");
         this.setHardness(2.0F);
-        this.setStepSound(SoundType.METAL);
+        this.setSoundType(SoundType.METAL);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 

@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.HypsilophodonEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class HypsilophodonAnimator<ENTITY extends HypsilophodonEntity> extends DinosaurAnimator<ENTITY>
+public class HypsilophodonAnimator extends DinosaurAnimator<HypsilophodonEntity>
 {
     public HypsilophodonAnimator()
     {
@@ -17,7 +17,7 @@ public class HypsilophodonAnimator<ENTITY extends HypsilophodonEntity> extends D
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, HypsilophodonEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, HypsilophodonEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         int ticksExisted = entity.ticksExisted;
 

@@ -115,7 +115,7 @@ public class IncubatorTile extends MachineBaseTile
                     }
                     else
                     {
-                        dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapAngleTo180_float(worldObj.rand.nextFloat() * 360.0F), 0.0F);
+                        dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(worldObj.rand.nextFloat() * 360.0F), 0.0F);
                         dino.rotationYawHead = dino.rotationYaw;
                         dino.renderYawOffset = dino.rotationYaw;
 

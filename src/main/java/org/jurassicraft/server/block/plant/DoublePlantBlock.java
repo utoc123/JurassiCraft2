@@ -33,7 +33,7 @@ public class DoublePlantBlock extends BlockBush
     {
         super(material);
         this.setHardness(0.0F);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(TabHandler.INSTANCE.plants);
     }
 

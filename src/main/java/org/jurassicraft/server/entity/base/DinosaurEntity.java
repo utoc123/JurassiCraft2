@@ -380,11 +380,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.entityInit();
 
-        dataWatcher.register(WATCHER_IS_CARCASS, false);
-        dataWatcher.register(WATCHER_AGE, 0);
-        dataWatcher.register(WATCHER_GROWTH_OFFSET, 0);
-        dataWatcher.register(WATCHER_IS_SLEEPING, false);
-        dataWatcher.register(WATCHER_HAS_TRACKER, false);
+        dataManager.register(WATCHER_IS_CARCASS, false);
+        dataManager.register(WATCHER_AGE, 0);
+        dataManager.register(WATCHER_GROWTH_OFFSET, 0);
+        dataManager.register(WATCHER_IS_SLEEPING, false);
+        dataManager.register(WATCHER_HAS_TRACKER, false);
     }
 
     @Override
@@ -543,21 +543,21 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!worldObj.isRemote)
         {
-            dataWatcher.set(WATCHER_AGE, dinosaurAge);
-            dataWatcher.set(WATCHER_GROWTH_OFFSET, growthSpeedOffset);
-            dataWatcher.set(WATCHER_IS_SLEEPING, isSleeping);
-            dataWatcher.set(WATCHER_IS_CARCASS, isCarcass);
-            dataWatcher.set(WATCHER_HAS_TRACKER, hasTracker);
+            dataManager.set(WATCHER_AGE, dinosaurAge);
+            dataManager.set(WATCHER_GROWTH_OFFSET, growthSpeedOffset);
+            dataManager.set(WATCHER_IS_SLEEPING, isSleeping);
+            dataManager.set(WATCHER_IS_CARCASS, isCarcass);
+            dataManager.set(WATCHER_HAS_TRACKER, hasTracker);
         }
         else
         {
             updateTailBuffer();
 
-            dinosaurAge = dataWatcher.get(WATCHER_AGE);
-            growthSpeedOffset = dataWatcher.get(WATCHER_GROWTH_OFFSET);
-            isSleeping = dataWatcher.get(WATCHER_IS_SLEEPING);
-            isCarcass = dataWatcher.get(WATCHER_IS_CARCASS);
-            hasTracker = dataWatcher.get(WATCHER_HAS_TRACKER);
+            dinosaurAge = dataManager.get(WATCHER_AGE);
+            growthSpeedOffset = dataManager.get(WATCHER_GROWTH_OFFSET);
+            isSleeping = dataManager.get(WATCHER_IS_SLEEPING);
+            isCarcass = dataManager.get(WATCHER_IS_CARCASS);
+            hasTracker = dataManager.get(WATCHER_HAS_TRACKER);
         }
 
         if (ticksExisted % 16 == 0)
@@ -1007,7 +1007,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         metabolism.writeSpawnData(buffer);
 
-        ByteBufUtils.writeUTF8String(buffer, genetics.toString()); //TODO do we need to add the things that are on the datawatcher?
+        ByteBufUtils.writeUTF8String(buffer, genetics.toString()); //TODO do we need to add the things that are on the dataManager?
     }
 
     @Override

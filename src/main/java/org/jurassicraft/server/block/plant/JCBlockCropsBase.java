@@ -39,7 +39,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         // NOTE: No tab because the seeds are placed not the plant.
         this.setCreativeTab(null);
         this.setHardness(0.0F);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.disableStats();
     }
 
@@ -67,7 +67,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
      * is the block grass, dirt or farmland
      */
     @Override
-    protected boolean func_185514_i(IBlockState ground)
+    protected boolean canSustainBush(IBlockState ground)
     {
         return ground == Blocks.farmland;
     }

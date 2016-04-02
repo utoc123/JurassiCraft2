@@ -4,8 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.ISubBlocksBlock;
 import org.jurassicraft.server.block.machine.CleaningStationBlock;
 import org.jurassicraft.server.block.machine.CultivatorBottomBlock;
@@ -251,12 +253,12 @@ public enum BlockHandler
 
         String typeName = type.name().toLowerCase();
 
-        GameRegistry.registerBlock(planks, typeName + "_planks");
-        GameRegistry.registerBlock(log, typeName + "_log");
-        GameRegistry.registerBlock(petrified_log, typeName + "_log_petrified");
-        GameRegistry.registerBlock(leaves, typeName + "_leaves");
-        GameRegistry.registerBlock(sapling, typeName + "_sapling");
-        GameRegistry.registerBlock(stair, typeName + "_stairs");
+        GameRegistry.register(planks, new ResourceLocation(JurassiCraft.MODID, typeName + "_planks"));
+        GameRegistry.register(log, new ResourceLocation(JurassiCraft.MODID, typeName + "_log"));
+        GameRegistry.register(petrified_log, new ResourceLocation(JurassiCraft.MODID, typeName + "_log_petrified"));
+        GameRegistry.register(leaves, new ResourceLocation(JurassiCraft.MODID, typeName + "_leaves"));
+        GameRegistry.register(sapling, new ResourceLocation(JurassiCraft.MODID, typeName + "_sapling"));
+        GameRegistry.register(stair, new ResourceLocation(JurassiCraft.MODID, typeName + "_stairs"));
         GameRegistry.registerBlock(slab, JCSlabItemBlock.class, typeName + "_slab", slab, double_slab);
         GameRegistry.registerBlock(double_slab, JCSlabItemBlock.class, typeName + "_double_slab", slab, double_slab);
 
@@ -341,7 +343,7 @@ public enum BlockHandler
         }
         else
         {
-            GameRegistry.registerBlock(block, name);
+            GameRegistry.register(block, new ResourceLocation(JurassiCraft.MODID, name));
         }
     }
 }

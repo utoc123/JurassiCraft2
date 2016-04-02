@@ -40,7 +40,7 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     {
         super.entityInit();
 
-        this.dataWatcher.register(DATA_WATCHER_IS_CAMOUFLAGING, false);
+        this.dataManager.register(DATA_WATCHER_IS_CAMOUFLAGING, false);
     }
 
     @Override
@@ -68,12 +68,12 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
 
         if (worldObj.isRemote)
         {
-            isCamouflaging = this.dataWatcher.get(DATA_WATCHER_IS_CAMOUFLAGING);
+            isCamouflaging = this.dataManager.get(DATA_WATCHER_IS_CAMOUFLAGING);
             changeSkinColor();
         }
         else
         {
-            this.dataWatcher.set(DATA_WATCHER_IS_CAMOUFLAGING, isCamouflaging);
+            this.dataManager.set(DATA_WATCHER_IS_CAMOUFLAGING, isCamouflaging);
         }
     }
 

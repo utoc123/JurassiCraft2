@@ -78,7 +78,7 @@ public abstract class ProvokableDinosaurEntity extends DinosaurEntity
     public void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.register(DATA_WATCHER_ANGRY, false);
+        this.dataManager.register(DATA_WATCHER_ANGRY, false);
     }
 
     /**
@@ -86,7 +86,7 @@ public abstract class ProvokableDinosaurEntity extends DinosaurEntity
      */
     public boolean isAngry()
     {
-        return this.dataWatcher.get(DATA_WATCHER_ANGRY);
+        return this.dataManager.get(DATA_WATCHER_ANGRY);
     }
 
     /**
@@ -94,6 +94,6 @@ public abstract class ProvokableDinosaurEntity extends DinosaurEntity
      */
     public void setAngry(boolean angry)
     {
-        this.dataWatcher.set(DATA_WATCHER_ANGRY, angry);
+        this.dataManager.set(DATA_WATCHER_ANGRY, angry);
     }
 }

@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.EdmontosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class EdmontosaurusAnimator<ENTITY extends EdmontosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class EdmontosaurusAnimator extends DinosaurAnimator<EdmontosaurusEntity>
 {
     public EdmontosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class EdmontosaurusAnimator<ENTITY extends EdmontosaurusEntity> extends D
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, EdmontosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, EdmontosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 

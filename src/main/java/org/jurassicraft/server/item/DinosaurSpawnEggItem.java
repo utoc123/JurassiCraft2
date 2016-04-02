@@ -75,7 +75,7 @@ public class DinosaurSpawnEggItem extends Item
                 }
 
                 dino.setPosition(x, y, z);
-                dino.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+                dino.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
                 dino.rotationYawHead = dino.rotationYaw;
                 dino.renderYawOffset = dino.rotationYaw;
                 return dino;

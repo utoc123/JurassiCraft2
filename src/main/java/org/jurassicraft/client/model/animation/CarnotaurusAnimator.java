@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.CarnotaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class CarnotaurusAnimator<ENTITY extends CarnotaurusEntity> extends DinosaurAnimator<ENTITY>
+public class CarnotaurusAnimator extends DinosaurAnimator<CarnotaurusEntity>
 {
     public CarnotaurusAnimator()
     {
@@ -17,11 +17,8 @@ public class CarnotaurusAnimator<ENTITY extends CarnotaurusEntity> extends Dinos
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, CarnotaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, CarnotaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        // f = entity.ticksExisted / 2;
-        // f1 = 1F;
-
         float globalSpeed = 0.8F;
         float globalDegree = 0.6F;
         float globalHeight = 1.0F;
@@ -113,5 +110,7 @@ public class CarnotaurusAnimator<ENTITY extends CarnotaurusEntity> extends Dinos
         model.chainWave(body, 0.1F, 0.03F, 5, ticksExisted, 0.25F);
         model.chainWave(armRight, 0.1F, 0.1F, 4, ticksExisted, 0.25F);
         model.chainWave(armLeft, 0.1F, 0.1F, 4, ticksExisted, 0.25F);
+
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

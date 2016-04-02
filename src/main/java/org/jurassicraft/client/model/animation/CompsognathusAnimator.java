@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.CompsognathusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class CompsognathusAnimator<ENTITY extends CompsognathusEntity> extends DinosaurAnimator<ENTITY>
+public class CompsognathusAnimator extends DinosaurAnimator<CompsognathusEntity>
 {
     public CompsognathusAnimator()
     {
@@ -17,7 +17,7 @@ public class CompsognathusAnimator<ENTITY extends CompsognathusEntity> extends D
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, CompsognathusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, CompsognathusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer abdomen = model.getCube("abdomen");
         AdvancedModelRenderer upperBody = model.getCube("Upper body");

@@ -162,7 +162,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         @Override
         public void onUpdateMoveHelper()
         {
-            if (this.field_188491_h == EntityMoveHelper.Action.MOVE_TO)
+            if (this.action == EntityMoveHelper.Action.MOVE_TO)
             {
                 double distanceX = this.posX - this.parentEntity.posX;
                 double distanceY = this.posY - this.parentEntity.posY;
@@ -182,15 +182,12 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
                     }
                     else
                     {
-                        this.field_188491_h = EntityMoveHelper.Action.WAIT;
+                        this.action = EntityMoveHelper.Action.WAIT;
                     }
                 }
             }
         }
 
-        /**
-         * Checks if entity bounding box is not colliding with terrain
-         */
         private boolean isNotColliding(double x, double y, double z, double distance)
         {
             double d0 = (x - this.parentEntity.posX) / distance;
@@ -202,7 +199,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             {
                 axisalignedbb = axisalignedbb.offset(d0, d1, d2);
 
-                if (!this.parentEntity.worldObj.getCubes(this.parentEntity, axisalignedbb).isEmpty())
+                if (!this.parentEntity.worldObj.getCollisionBoxes(this.parentEntity, axisalignedbb).isEmpty())
                 {
                     return false;
                 }

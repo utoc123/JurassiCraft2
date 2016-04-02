@@ -22,7 +22,7 @@ import org.jurassicraft.server.entity.base.EnumGrowthStage;
 public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 {
     private final Dinosaur dinosaur;
-    private final ITabulaModelAnimator<DinosaurEntity> animator;
+    private final ITabulaModelAnimator<? extends DinosaurEntity> animator;
 
     private final TabulaModel modelAdult;
     private final TabulaModel modelInfant;
@@ -50,7 +50,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         }
     }
 
-    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<DinosaurEntity> animator, float parShadowSize)
+    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<? extends DinosaurEntity> animator, float parShadowSize)
     {
         this.dinosaur = dinosaur;
         this.animator = animator;
@@ -97,7 +97,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
         return eggTexture == null ? DEFAULT_EGG_TEXTURE : eggTexture;
     }
 
-    public ITabulaModelAnimator<DinosaurEntity> getModelAnimator()
+    public ITabulaModelAnimator<? extends DinosaurEntity> getModelAnimator()
     {
         return animator;
     }

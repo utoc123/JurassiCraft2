@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.DilophosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class DilophosaurusAnimator<ENTITY extends DilophosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
 {
     public DilophosaurusAnimator()
     {
@@ -17,9 +17,9 @@ public class DilophosaurusAnimator<ENTITY extends DilophosaurusEntity> extends D
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DilophosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        boolean frillsExtended = false;
+        boolean scary = false;
 
         AdvancedModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
         AdvancedModelRenderer frillLeftTop = model.getCube("Frill Upper Left");
@@ -27,10 +27,10 @@ public class DilophosaurusAnimator<ENTITY extends DilophosaurusEntity> extends D
         AdvancedModelRenderer frillRightBottom = model.getCube("Frill Lower Right");
         AdvancedModelRenderer frillRightTop = model.getCube("Frill Upper Right");
 
-        frillLeftBottom.showModel = frillsExtended;
-        frillLeftTop.showModel = frillsExtended;
-        frillRightBottom.showModel = frillsExtended;
-        frillRightTop.showModel = frillsExtended;
+        frillLeftBottom.showModel = scary;
+        frillLeftTop.showModel = scary;
+        frillRightBottom.showModel = scary;
+        frillRightTop.showModel = scary;
 
         frillLeftTop.rotateAngleY = (float) Math.toRadians(180);
         frillLeftTop.rotationPointX += 10F;
@@ -128,6 +128,6 @@ public class DilophosaurusAnimator<ENTITY extends DilophosaurusEntity> extends D
         model.chainWave(armLeft, 0.15F, -0.1F, 4, ticksExisted, 0.25F);
         model.chainSwing(tail, 0.15F, -0.1F, 3, ticksExisted, 0.25F);
 
-        entity.tailBuffer.applyChainSwingBuffer(tail);
+        ((DilophosaurusEntity) entity).tailBuffer.applyChainSwingBuffer(tail);
     }
 }

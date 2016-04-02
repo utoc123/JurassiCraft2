@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.DimorphodonEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class DimorphodonAnimator<ENTITY extends DimorphodonEntity> extends DinosaurAnimator<ENTITY>
+public class DimorphodonAnimator extends DinosaurAnimator<DimorphodonEntity>
 {
     public DimorphodonAnimator()
     {
@@ -17,7 +17,7 @@ public class DimorphodonAnimator<ENTITY extends DimorphodonEntity> extends Dinos
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DimorphodonEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, DimorphodonEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
         AdvancedModelRenderer leftCalf = model.getCube("Left calf");

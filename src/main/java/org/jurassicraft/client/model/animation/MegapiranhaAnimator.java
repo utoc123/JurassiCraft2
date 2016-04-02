@@ -4,10 +4,9 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.MegapiranhaEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
-public class MegapiranhaAnimator extends DinosaurAnimator
+public class MegapiranhaAnimator extends DinosaurAnimator<MegapiranhaEntity>
 {
     public MegapiranhaAnimator()
     {
@@ -15,10 +14,8 @@ public class MegapiranhaAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, MegapiranhaEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        MegapiranhaEntity dino = (MegapiranhaEntity) parEntity;
-
         AdvancedModelRenderer head = model.getCube("Neck ");
         AdvancedModelRenderer body1 = model.getCube("Body Section 1");
         AdvancedModelRenderer body2 = model.getCube("Body Section 2");
@@ -42,7 +39,7 @@ public class MegapiranhaAnimator extends DinosaurAnimator
         model.flap(leftFlipper, 0.6F, 0.6F, false, 0.0F, 0.8F, f, f1);
         model.flap(rightFlipper, 0.6F, 0.6F, true, 0.0F, -0.8F, f, f1);
 
-        int ticksExisted = dino.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
         model.bob(head, 0.04F, 2.0F, false, ticksExisted, 0.25F);
         model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
         model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);

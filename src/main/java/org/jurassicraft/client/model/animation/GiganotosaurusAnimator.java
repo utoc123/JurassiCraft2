@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.GiganotosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class GiganotosaurusAnimator<ENTITY extends GiganotosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class GiganotosaurusAnimator extends DinosaurAnimator<GiganotosaurusEntity>
 {
     public GiganotosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class GiganotosaurusAnimator<ENTITY extends GiganotosaurusEntity> extends
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, GiganotosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, GiganotosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.45F;
         float globalDegree = 0.45F;

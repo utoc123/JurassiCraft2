@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.AnkylosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class AnkylosaurusAnimator<ENTITY extends AnkylosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class AnkylosaurusAnimator extends DinosaurAnimator<AnkylosaurusEntity>
 {
     public AnkylosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class AnkylosaurusAnimator<ENTITY extends AnkylosaurusEntity> extends Din
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, AnkylosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, AnkylosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("head ");
         AdvancedModelRenderer headback = model.getCube("head back");

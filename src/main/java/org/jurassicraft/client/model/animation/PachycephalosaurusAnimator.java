@@ -5,11 +5,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.PachycephalosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class PachycephalosaurusAnimator extends DinosaurAnimator
+public class PachycephalosaurusAnimator extends DinosaurAnimator<PachycephalosaurusEntity>
 {
     public PachycephalosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class PachycephalosaurusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, PachycephalosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer waist = model.getCube("Body Rear");
         AdvancedModelRenderer chest = model.getCube("Body Middle");
@@ -92,11 +92,11 @@ public class PachycephalosaurusAnimator extends DinosaurAnimator
         neck2.rotateAngleX += f1 * 0.05F;
         head.rotateAngleX += f1 * 0.075F;
 
-        model.chainWave(tailParts, 0.1F, 0.025F, 2, parEntity.ticksExisted, 0.25F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 4, parEntity.ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.1F, 0.025F, 2, entity.ticksExisted, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 4, entity.ticksExisted, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
 
-        parEntity.tailBuffer.applyChainSwingBuffer(tailParts);
+        entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }
 }

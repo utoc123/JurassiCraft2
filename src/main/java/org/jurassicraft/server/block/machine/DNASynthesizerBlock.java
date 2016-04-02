@@ -28,7 +28,7 @@ public class DNASynthesizerBlock extends OrientedBlock
         super(Material.iron);
         this.setUnlocalizedName("dna_synthesizer");
         this.setHardness(2.0F);
-        this.setStepSound(SoundType.METAL);
+        this.setSoundType(SoundType.METAL);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 

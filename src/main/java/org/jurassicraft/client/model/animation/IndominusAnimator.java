@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.IndominusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class IndominusAnimator<ENTITY extends IndominusEntity> extends DinosaurAnimator<ENTITY>
+public class IndominusAnimator extends DinosaurAnimator<IndominusEntity>
 {
     public IndominusAnimator()
     {
@@ -17,7 +17,7 @@ public class IndominusAnimator<ENTITY extends IndominusEntity> extends DinosaurA
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, IndominusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, IndominusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.5F;
         float globalDegree = 0.4F;

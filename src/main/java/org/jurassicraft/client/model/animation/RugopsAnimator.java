@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.RugopsEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class RugopsAnimator extends DinosaurAnimator
+public class RugopsAnimator extends DinosaurAnimator<RugopsEntity>
 {
     public RugopsAnimator()
     {
@@ -18,7 +17,7 @@ public class RugopsAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, RugopsEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.45F;
         float globalDegree = 0.4F;
@@ -104,11 +103,11 @@ public class RugopsAnimator extends DinosaurAnimator
         model.walk(rightFoot, 0.5F * globalSpeed, 1.5F * globalDegree, false, 0.5F, -0.1F, f, f1);
 
         // idling
-        model.chainWave(tailParts, 0.1F, 0.05F, 2, parEntity.ticksExisted, 0.25F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 5, parEntity.ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, parEntity.ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.1F, 0.05F, 2, entity.ticksExisted, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 5, entity.ticksExisted, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
 
-        ((RugopsEntity) parEntity).tailBuffer.applyChainSwingBuffer(tailParts);
+        entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }
 }

@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TropeognathusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class TropeognathusAnimator extends DinosaurAnimator
+public class TropeognathusAnimator extends DinosaurAnimator<TropeognathusEntity>
 {
     public TropeognathusAnimator()
     {
@@ -18,10 +17,8 @@ public class TropeognathusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, TropeognathusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        TropeognathusEntity entity = (TropeognathusEntity) parEntity;
-
         AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
         AdvancedModelRenderer leftCalf = model.getCube("Left calf");
         AdvancedModelRenderer leftUpperFoot = model.getCube("Left upper foot");

@@ -143,7 +143,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     protected void entityInit()
     {
         super.entityInit();
-        dataWatcher.register(DATA_WATCHER_ENGINE_RUNNING, false);
+        dataManager.register(DATA_WATCHER_ENGINE_RUNNING, false);
     }
 
     @Override

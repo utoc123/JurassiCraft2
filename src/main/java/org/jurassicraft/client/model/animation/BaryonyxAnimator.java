@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.BaryonyxEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class BaryonyxAnimator<ENTITY extends BaryonyxEntity> extends DinosaurAnimator<ENTITY>
+public class BaryonyxAnimator extends DinosaurAnimator<BaryonyxEntity>
 {
     public BaryonyxAnimator()
     {
@@ -17,7 +17,7 @@ public class BaryonyxAnimator<ENTITY extends BaryonyxEntity> extends DinosaurAni
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, BaryonyxEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, BaryonyxEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float scaleFactor = 0.62F;
         float height = 2F * f1;

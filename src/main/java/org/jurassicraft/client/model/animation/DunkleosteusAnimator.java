@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.DunkleosteusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class DunkleosteusAnimator<ENTITY extends DunkleosteusEntity> extends DinosaurAnimator<ENTITY>
+public class DunkleosteusAnimator extends DinosaurAnimator<DunkleosteusEntity>
 {
     public DunkleosteusAnimator()
     {
@@ -17,7 +17,7 @@ public class DunkleosteusAnimator<ENTITY extends DunkleosteusEntity> extends Din
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DunkleosteusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, DunkleosteusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         // tail
         AdvancedModelRenderer tail1 = model.getCube("Tail Section 1");

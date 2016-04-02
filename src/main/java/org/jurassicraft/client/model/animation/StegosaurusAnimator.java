@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.StegosaurusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class StegosaurusAnimator extends DinosaurAnimator
+public class StegosaurusAnimator extends DinosaurAnimator<StegosaurusEntity>
 {
     public StegosaurusAnimator()
     {
@@ -18,7 +17,7 @@ public class StegosaurusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, StegosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 
@@ -91,7 +90,7 @@ public class StegosaurusAnimator extends DinosaurAnimator
         model.walk(handLeft, 1F * scaleFactor, 0.8F, true, frontOffset + 1.5F, 0F, f, f1);
 
         // Idling
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         model.walk(neck1, 0.1F, 0.04F, false, -1F, 0F, ticksExisted, 1F);
         model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 1F);
@@ -111,6 +110,6 @@ public class StegosaurusAnimator extends DinosaurAnimator
         model.chainSwing(tail, 0.1F, 0.2F, 3, ticksExisted, 1.0F);
         model.chainWave(tail, 0.1F, -0.05F, 1, ticksExisted, 1.0F);
 
-        ((StegosaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

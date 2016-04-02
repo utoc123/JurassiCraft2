@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.LambeosaurusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class LambeosaurusAnimator<ENTITY extends LambeosaurusEntity> extends DinosaurAnimator<ENTITY>
+public class LambeosaurusAnimator extends DinosaurAnimator<LambeosaurusEntity>
 {
     public LambeosaurusAnimator()
     {
@@ -17,7 +17,7 @@ public class LambeosaurusAnimator<ENTITY extends LambeosaurusEntity> extends Din
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, LambeosaurusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, LambeosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 

@@ -34,7 +34,7 @@ public class JCLeavesBlock extends BlockLeaves
         this.setUnlocalizedName(type.name().toLowerCase() + "_leaves");
         this.setHardness(0.2F);
         this.setLightOpacity(1);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false));
         this.setCreativeTab(TabHandler.INSTANCE.plants);
     }

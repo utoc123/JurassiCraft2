@@ -11,7 +11,7 @@ import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
 public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterBaseEntity>
 {
     @Override
-    public void setRotationAngles(TabulaModel model, HelicopterBaseEntity entity, float v, float v1, float v2, float v3, float v4, float v5)
+    public void setRotationAngles(TabulaModel model, HelicopterBaseEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer rotor = model.getCube("rotorbase_rotatehere");
         AdvancedModelRenderer tailrotor = model.getCube("tailrotor_rotatehere");

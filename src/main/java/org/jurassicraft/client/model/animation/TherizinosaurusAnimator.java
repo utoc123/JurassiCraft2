@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TherizinosaurusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class TherizinosaurusAnimator extends DinosaurAnimator
+public class TherizinosaurusAnimator extends DinosaurAnimator<TherizinosaurusEntity>
 {
 
     public TherizinosaurusAnimator()
@@ -19,7 +18,7 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, TherizinosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer rightThigh = model.getCube("Right Thigh");
         AdvancedModelRenderer bodyHips = model.getCube("Body hips");
@@ -109,13 +108,13 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
         AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { lowerArmLeft, lowerArmLeft1, leftHand };
         AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { lowerArmRight, lowerArmRight1, rightHand };
 
-        int frame = parEntity.ticksExisted;
+        int frame = entity.ticksExisted;
 
         // The tail must always be up when the neck is down
         float speed = 0.75F;
         float height = 3F;
 
-        if (parEntity.getDinosaur().getUsePosesForWalkAnim())
+        if (entity.getDinosaur().getUsePosesForWalkAnim())
         {
             // TO-DO
             // Call jabelar walking animation helper for walking animation
@@ -164,6 +163,6 @@ public class TherizinosaurusAnimator extends DinosaurAnimator
         model.chainWave(armRight, 0.1F, -0.1F, 4, frame, 0.25F);
         model.chainWave(armLeft, 0.1F, -0.1F, 4, frame, 0.25F);
 
-        ((TherizinosaurusEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

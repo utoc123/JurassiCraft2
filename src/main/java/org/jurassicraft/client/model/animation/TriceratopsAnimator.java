@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TriceratopsEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class TriceratopsAnimator extends DinosaurAnimator
+public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity>
 {
     public TriceratopsAnimator()
     {
@@ -18,7 +17,7 @@ public class TriceratopsAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, TriceratopsEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         AdvancedModelRenderer head = model.getCube("Head");
         AdvancedModelRenderer neck3 = model.getCube("Neck 3");
@@ -94,7 +93,7 @@ public class TriceratopsAnimator extends DinosaurAnimator
 
         model.chainWave(tail, bobBase * scaleFactor, 0.03F, 1F, f, f1);
 
-        int ticksExisted = parEntity.ticksExisted;
+        int ticksExisted = entity.ticksExisted;
 
         // Idling
         model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 1F);
@@ -122,6 +121,6 @@ public class TriceratopsAnimator extends DinosaurAnimator
         // model.bob(waist, 1 * globalSpeed, height, false, f, f1);
         // model.walk(waist, 1 * globalSpeed, 0.1F * height, true, -1.5F, 0.05F, f, f1);
 
-        ((TriceratopsEntity) parEntity).tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

@@ -12,7 +12,7 @@ public class JCPlanksBlock extends Block
         super(Material.wood);
         this.setHardness(2.0F);
         this.setResistance(0.5F);
-        this.setStepSound(SoundType.WOOD);
+        this.setSoundType(SoundType.WOOD);
         this.setUnlocalizedName(treeType.name().toLowerCase() + "_planks");
         this.setCreativeTab(TabHandler.INSTANCE.plants);
     }

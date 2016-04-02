@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.SegisaurusEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class SegisaurusAnimator extends DinosaurAnimator
+public class SegisaurusAnimator extends DinosaurAnimator<SegisaurusEntity>
 {
     public SegisaurusAnimator()
     {
@@ -18,10 +17,8 @@ public class SegisaurusAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, SegisaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        SegisaurusEntity entity = (SegisaurusEntity) parEntity;
-
         AdvancedModelRenderer head = model.getCube("head");
         AdvancedModelRenderer neck1 = model.getCube("neck1");
         AdvancedModelRenderer neck2 = model.getCube("neck2");

@@ -110,7 +110,7 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         @Override
         public void onUpdateMoveHelper()
         {
-            if (this.field_188491_h == EntityMoveHelper.Action.MOVE_TO && !this.swimmingEntity.getNavigator().noPath())
+            if (this.action == EntityMoveHelper.Action.MOVE_TO && !this.swimmingEntity.getNavigator().noPath())
             {
                 double distanceX = this.posX - this.swimmingEntity.posX;
                 double distanceY = this.posY - this.swimmingEntity.posY;

@@ -33,7 +33,7 @@ public class JCSaplingBlock extends BlockBush implements IGrowable
         super();
         this.setUnlocalizedName(type.name().toLowerCase() + "_sapling");
         this.setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.treeType = type;
     }

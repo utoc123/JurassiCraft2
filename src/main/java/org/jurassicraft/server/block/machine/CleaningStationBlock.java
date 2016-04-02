@@ -29,7 +29,7 @@ public class CleaningStationBlock extends OrientedBlock
         this.setUnlocalizedName("cleaning_station");
         this.setHardness(2.0F);
         this.setLightOpacity(0);
-        this.setStepSound(SoundType.METAL);
+        this.setSoundType(SoundType.METAL);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 

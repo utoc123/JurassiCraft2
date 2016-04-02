@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -185,6 +184,18 @@ public enum RenderingHandler
         ModelBakery.registerItemVariants(ItemHandler.INSTANCE.amber, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
 
         ModelBakery.registerItemVariants(ItemHandler.INSTANCE.cage_small, new ResourceLocation("jurassicraft:cage_small"), new ResourceLocation("jurassicraft:cage_small_marine"));
+
+        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
+        {
+            RenderingRegistry.registerEntityRenderingHandler(dino.getDinosaurClass(), renderDefs.get(dino));
+        }
+
+        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
     }
 
     public void init()
@@ -352,20 +363,6 @@ public enum RenderingHandler
 
     public void postInit()
     {
-        RenderManager renderManager = mc.getRenderManager();
-
-        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
-        {
-            RenderingRegistry.registerEntityRenderingHandler(dino.getDinosaurClass(), renderDefs.get(dino).createRenderFor(renderManager));
-        }
-
-        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer().createRenderFor(renderManager));
-        RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer().createRenderFor(renderManager));
-
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerTile.class, new DNASequencerSpecialRenderer());

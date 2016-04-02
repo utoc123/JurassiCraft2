@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.VelociraptorEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class VelociraptorAnimator extends DinosaurAnimator
+public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
 {
     public VelociraptorAnimator()
     {
@@ -18,10 +17,8 @@ public class VelociraptorAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, VelociraptorEntity entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        VelociraptorEntity velociraptor = (VelociraptorEntity) entity;
-
         AdvancedModelRenderer waist = model.getCube("body3");
         AdvancedModelRenderer chest = model.getCube("body2");
         AdvancedModelRenderer shoulders = model.getCube("body1");
@@ -57,12 +54,12 @@ public class VelociraptorAnimator extends DinosaurAnimator
         AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { waist, chest, shoulders, neck4, neck3, neck2, neck1, head };
 
-        int frame = velociraptor.ticksExisted;
+        int frame = entity.ticksExisted;
 
         float speed = 0.75F;
         float height = 2F * limbSwingAmount;
 
-        float dontLeanProgress = velociraptor.dontLean.getAnimationProgressSinSqrt();
+        float dontLeanProgress = entity.dontLean.getAnimationProgressSinSqrt();
 
         model.bob(waist, 1F * speed, height, false, limbSwing, limbSwingAmount);
         model.bob(leftThigh, 1F * speed, height, false, limbSwing, limbSwingAmount);
@@ -103,6 +100,6 @@ public class VelociraptorAnimator extends DinosaurAnimator
         model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
         model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
 
-        velociraptor.tailBuffer.applyChainSwingBuffer(tailParts);
+        entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }
 }

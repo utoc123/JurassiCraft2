@@ -64,7 +64,7 @@ public class SleepEntityAI extends EntityAIBase
 
         AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + dinosaur.width, y + dinosaur.height, z + dinosaur.width);
 
-        return dinosaur.worldObj.getCubes(dinosaur, boundingBox).isEmpty();
+        return dinosaur.worldObj.getCollisionBoxes(dinosaur, boundingBox).isEmpty();
     }
 
     @Override

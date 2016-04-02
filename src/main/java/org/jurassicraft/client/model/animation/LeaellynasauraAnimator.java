@@ -6,11 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.LeaellynasauraEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class LeaellynasauraAnimator extends DinosaurAnimator
+public class LeaellynasauraAnimator extends DinosaurAnimator<LeaellynasauraEntity>
 {
     public LeaellynasauraAnimator()
     {
@@ -18,13 +17,8 @@ public class LeaellynasauraAnimator extends DinosaurAnimator
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, DinosaurEntity parEntity)
+    protected void performMowzieLandAnimations(DinosaurModel model, LeaellynasauraEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        LeaellynasauraEntity entity = (LeaellynasauraEntity) parEntity;
-
-        // f = entity.ticksExisted;
-        // f1 = 0.4F;
-
         float globalSpeed = 0.4F;
         float globalHeight = 0.8F;
         float globalDegree = 0.8F;

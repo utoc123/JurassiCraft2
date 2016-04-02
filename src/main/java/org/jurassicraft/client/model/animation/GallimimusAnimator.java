@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.GallimimusEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class GallimimusAnimator<ENTITY extends GallimimusEntity> extends DinosaurAnimator<ENTITY>
+public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity>
 {
     public GallimimusAnimator()
     {
@@ -17,7 +17,7 @@ public class GallimimusAnimator<ENTITY extends GallimimusEntity> extends Dinosau
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, GallimimusEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, GallimimusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float globalSpeed = 0.8F;
         float globalDegree = 1.0F;

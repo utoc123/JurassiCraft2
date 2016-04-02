@@ -61,11 +61,11 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
     @Override
     protected void entityInit()
     {
-        this.dataWatcher.register(DATA_WATCHER_ENTITY_ID, -1);
-        this.dataWatcher.register(DATA_WATCHER_AGE, 0);
-        this.dataWatcher.register(DATA_WATCHER_DNA_QUALITY, 0);
-        this.dataWatcher.register(DATA_WATCHER_GENETICS, "");
-        this.dataWatcher.register(DATA_WATCHER_GENDER, false);
+        this.dataManager.register(DATA_WATCHER_ENTITY_ID, -1);
+        this.dataManager.register(DATA_WATCHER_AGE, 0);
+        this.dataManager.register(DATA_WATCHER_DNA_QUALITY, 0);
+        this.dataManager.register(DATA_WATCHER_GENETICS, "");
+        this.dataManager.register(DATA_WATCHER_GENDER, false);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 
         if (worldObj.isRemote)
         {
-            int id = dataWatcher.get(DATA_WATCHER_ENTITY_ID);
+            int id = dataManager.get(DATA_WATCHER_ENTITY_ID);
 
             if (id != -1)
             {
@@ -83,10 +83,10 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 
                 if (entity != null)
                 {
-                    entity.setMale(dataWatcher.get(DATA_WATCHER_GENDER));
-                    entity.setAge(dataWatcher.get(DATA_WATCHER_AGE));
-                    entity.setDNAQuality(dataWatcher.get(DATA_WATCHER_DNA_QUALITY));
-                    entity.setGenetics(dataWatcher.get(DATA_WATCHER_GENETICS));
+                    entity.setMale(dataManager.get(DATA_WATCHER_GENDER));
+                    entity.setAge(dataManager.get(DATA_WATCHER_AGE));
+                    entity.setDNAQuality(dataManager.get(DATA_WATCHER_DNA_QUALITY));
+                    entity.setGenetics(dataManager.get(DATA_WATCHER_GENETICS));
                 }
             }
             else
@@ -105,15 +105,15 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
         {
             if (entity != null)
             {
-                dataWatcher.set(DATA_WATCHER_ENTITY_ID, EntityList.getEntityID(entity));
-                dataWatcher.set(DATA_WATCHER_AGE, entity.getDinosaurAge());
-                dataWatcher.set(DATA_WATCHER_DNA_QUALITY, entity.getDNAQuality());
-                dataWatcher.set(DATA_WATCHER_GENETICS, entity.getGenetics().toString());
-                dataWatcher.set(DATA_WATCHER_GENDER, entity.isMale());
+                dataManager.set(DATA_WATCHER_ENTITY_ID, EntityList.getEntityID(entity));
+                dataManager.set(DATA_WATCHER_AGE, entity.getDinosaurAge());
+                dataManager.set(DATA_WATCHER_DNA_QUALITY, entity.getDNAQuality());
+                dataManager.set(DATA_WATCHER_GENETICS, entity.getGenetics().toString());
+                dataManager.set(DATA_WATCHER_GENDER, entity.isMale());
             }
             else
             {
-                dataWatcher.set(DATA_WATCHER_ENTITY_ID, -1);
+                dataManager.set(DATA_WATCHER_ENTITY_ID, -1);
             }
         }
     }

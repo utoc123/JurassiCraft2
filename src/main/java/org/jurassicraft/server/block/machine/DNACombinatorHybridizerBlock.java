@@ -28,7 +28,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
         super(Material.iron);
         this.setUnlocalizedName("dna_combinator_hybridizer");
         this.setHardness(2.0F);
-        this.setStepSound(SoundType.METAL);
+        this.setSoundType(SoundType.METAL);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
     }
 

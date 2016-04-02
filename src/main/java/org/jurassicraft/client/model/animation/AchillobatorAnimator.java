@@ -9,7 +9,7 @@ import org.jurassicraft.server.entity.AchillobatorEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
-public class AchillobatorAnimator<ENTITY extends AchillobatorEntity> extends DinosaurAnimator<ENTITY>
+public class AchillobatorAnimator extends DinosaurAnimator<AchillobatorEntity>
 {
     public AchillobatorAnimator()
     {
@@ -17,7 +17,7 @@ public class AchillobatorAnimator<ENTITY extends AchillobatorEntity> extends Din
     }
 
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks, AchillobatorEntity entity)
+    protected void performMowzieLandAnimations(DinosaurModel model, AchillobatorEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
         float speed = 0.75F;
         float height = 2F * f1;
