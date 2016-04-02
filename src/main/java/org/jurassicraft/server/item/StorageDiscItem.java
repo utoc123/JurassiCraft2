@@ -65,7 +65,7 @@ public class StorageDiscItem extends Item implements ISynthesizableItem
     {
         ItemStack output;
 
-        if (stack.getTagCompound().getString("StorageId").equalsIgnoreCase("DinoDNA"))
+        if (!stack.getTagCompound().getString("StorageId").equalsIgnoreCase("PlantDNA"))
         {
             output = new ItemStack(ItemHandler.INSTANCE.dna, 1, stack.getItemDamage());
         }
