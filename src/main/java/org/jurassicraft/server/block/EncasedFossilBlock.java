@@ -103,9 +103,9 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock, IClean
     }
 
     @Override
-    public Class<? extends ItemBlock> getItemBlockClass()
+    public ItemBlock getItemBlock()
     {
-        return EncasedFossilItemBlock.class;
+        return new EncasedFossilItemBlock(this);
     }
 
     @Override

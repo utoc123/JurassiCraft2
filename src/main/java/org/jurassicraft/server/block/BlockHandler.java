@@ -3,6 +3,7 @@ package org.jurassicraft.server.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -37,13 +38,11 @@ import org.jurassicraft.server.block.tree.JCLeavesBlock;
 import org.jurassicraft.server.block.tree.JCLogBlock;
 import org.jurassicraft.server.block.tree.JCPlanksBlock;
 import org.jurassicraft.server.block.tree.JCSaplingBlock;
-import org.jurassicraft.server.block.tree.JCSlabBlock;
 import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
 import org.jurassicraft.server.block.tree.JCStairsBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
 import org.jurassicraft.server.tileentity.ActionFigureTile;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 import org.jurassicraft.server.tileentity.CultivatorTile;
@@ -66,16 +65,16 @@ public enum BlockHandler
 {
     INSTANCE;
 
-    public Map<TreeType, JCPlanksBlock> planks = new HashMap<TreeType, JCPlanksBlock>();
-    public Map<TreeType, JCLogBlock> logs = new HashMap<TreeType, JCLogBlock>();
-    public Map<TreeType, JCLeavesBlock> leaves = new HashMap<TreeType, JCLeavesBlock>();
-    public Map<TreeType, JCSaplingBlock> saplings = new HashMap<TreeType, JCSaplingBlock>();
+    public Map<TreeType, JCPlanksBlock> planks = new HashMap<>();
+    public Map<TreeType, JCLogBlock> logs = new HashMap<>();
+    public Map<TreeType, JCLeavesBlock> leaves = new HashMap<>();
+    public Map<TreeType, JCSaplingBlock> saplings = new HashMap<>();
 
-    public Map<TreeType, JCSlabBlock> slabs = new HashMap<TreeType, JCSlabBlock>();
-    public Map<TreeType, JCDoubleSlabBlock> double_slabs = new HashMap<TreeType, JCDoubleSlabBlock>();
-    public Map<TreeType, JCStairsBlock> stairs = new HashMap<TreeType, JCStairsBlock>();
+    public Map<TreeType, JCSlabHalfBlock> slabs = new HashMap<>();
+    public Map<TreeType, JCDoubleSlabBlock> double_slabs = new HashMap<>();
+    public Map<TreeType, JCStairsBlock> stairs = new HashMap<>();
 
-    public Map<TreeType, JCLogBlock> petrified_logs = new HashMap<TreeType, JCLogBlock>();
+    public Map<TreeType, JCLogBlock> petrified_logs = new HashMap<>();
 
     public List<FossilBlock> fossils;
     public List<EncasedFossilBlock> encased_fossils;
@@ -251,16 +250,16 @@ public enum BlockHandler
         this.double_slabs.put(type, double_slab);
         this.petrified_logs.put(type, petrified_log);
 
-        String typeName = type.name().toLowerCase();
+        String typeName = type.name();
 
-        GameRegistry.register(planks, new ResourceLocation(JurassiCraft.MODID, typeName + "_planks"));
-        GameRegistry.register(log, new ResourceLocation(JurassiCraft.MODID, typeName + "_log"));
-        GameRegistry.register(petrified_log, new ResourceLocation(JurassiCraft.MODID, typeName + "_log_petrified"));
-        GameRegistry.register(leaves, new ResourceLocation(JurassiCraft.MODID, typeName + "_leaves"));
-        GameRegistry.register(sapling, new ResourceLocation(JurassiCraft.MODID, typeName + "_sapling"));
-        GameRegistry.register(stair, new ResourceLocation(JurassiCraft.MODID, typeName + "_stairs"));
-        GameRegistry.registerBlock(slab, JCSlabItemBlock.class, typeName + "_slab", slab, double_slab);
-        GameRegistry.registerBlock(double_slab, JCSlabItemBlock.class, typeName + "_double_slab", slab, double_slab);
+        registerBlock(planks, typeName + " Planks");
+        registerBlock(log, typeName + " Log");
+        registerBlock(petrified_log, typeName + " Log Petrified");
+        registerBlock(leaves, typeName + " Leaves");
+        registerBlock(sapling, typeName + " Sapling");
+        registerBlock(stair, typeName + " Stairs");
+        registerBlock(slab, typeName + " Slab");
+        registerBlock(double_slab, typeName + " Double Slab");
 
         OreDictionary.registerOre("logWood", log);
         OreDictionary.registerOre("logWood", petrified_log);
@@ -268,7 +267,7 @@ public enum BlockHandler
         OreDictionary.registerOre("treeLeaves", leaves);
         OreDictionary.registerOre("treeSapling", sapling);
         OreDictionary.registerOre("slabWood", slab);
-        OreDictionary.registerOre("stairkWood", stair);
+        OreDictionary.registerOre("stairWood", stair);
 
         Blocks.fire.setFireInfo(leaves, 30, 60);
         Blocks.fire.setFireInfo(planks, 5, 20);
@@ -337,13 +336,17 @@ public enum BlockHandler
 
         block.setUnlocalizedName(name);
 
+        ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
+
         if (block instanceof ISubBlocksBlock)
         {
-            GameRegistry.registerBlock(block, ((ISubBlocksBlock) block).getItemBlockClass(), name);
+            GameRegistry.register(block, resource);
+            GameRegistry.register(((ISubBlocksBlock) block).getItemBlock(), resource);
         }
         else
         {
-            GameRegistry.register(block, new ResourceLocation(JurassiCraft.MODID, name));
+            GameRegistry.register(block, resource);
+            GameRegistry.register(new ItemBlock(block), resource);
         }
     }
 }

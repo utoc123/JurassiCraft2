@@ -6,16 +6,23 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jurassicraft.server.api.ISubBlocksBlock;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
 
-public abstract class JCSlabBlock extends BlockSlab
+public abstract class JCSlabBlock extends BlockSlab implements ISubBlocksBlock
 {
-    public JCSlabBlock(IBlockState referenceState)
+    private TreeType type;
+
+    public JCSlabBlock(TreeType type, IBlockState referenceState)
     {
         super(referenceState.getBlock().getMaterial(referenceState));
+        this.type = type;
         IBlockState state = this.blockState.getBaseState();
 
         if (!this.isDouble())
@@ -103,5 +110,11 @@ public abstract class JCSlabBlock extends BlockSlab
     public IProperty<?> getVariantProperty()
     {
         return null;
+    }
+
+    @Override
+    public ItemBlock getItemBlock()
+    {
+        return new JCSlabItemBlock(this, BlockHandler.INSTANCE.slabs.get(type), BlockHandler.INSTANCE.double_slabs.get(type));
     }
 }

@@ -286,6 +286,6 @@ public enum ItemHandler
         String formattedName = name.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
         item.setUnlocalizedName(formattedName);
 
-        GameRegistry.register(item, new ResourceLocation(JurassiCraft.MODID, name));
+        GameRegistry.register(item, new ResourceLocation(JurassiCraft.MODID, formattedName));
     }
 }

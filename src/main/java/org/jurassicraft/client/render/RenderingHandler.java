@@ -185,21 +185,6 @@ public enum RenderingHandler
 
         ModelBakery.registerItemVariants(ItemHandler.INSTANCE.cage_small, new ResourceLocation("jurassicraft:cage_small"), new ResourceLocation("jurassicraft:cage_small_marine"));
 
-        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
-        {
-            RenderingRegistry.registerEntityRenderingHandler(dino.getDinosaurClass(), renderDefs.get(dino));
-        }
-
-        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
-    }
-
-    public void init()
-    {
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.achillobator, new AchillobatorAnimator(), 0.65F));
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.anklyosaurus, new AnkylosaurusAnimator(), 0.85F));
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.brachiosaurus, new BrachiosaurusAnimator(), 1.5F));
@@ -255,6 +240,16 @@ public enum RenderingHandler
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.troodon, new TroodonAnimator(), 0.65F));
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.pachycephalosaurus, new PachycephalosaurusAnimator(), 0.65F));
 
+        RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
+    }
+
+    public void init()
+    {
         GuiAppRegistry.register();
 
         // Blocks
@@ -568,6 +563,7 @@ public enum RenderingHandler
     private void registerRenderDef(RenderDinosaurDefinition renderDef)
     {
         renderDefs.put(renderDef.getDinosaur(), renderDef);
+        RenderingRegistry.registerEntityRenderingHandler(renderDef.getDinosaur().getDinosaurClass(), renderDef);
     }
 
     public RenderDinosaurDefinition getRenderDef(Dinosaur dino)

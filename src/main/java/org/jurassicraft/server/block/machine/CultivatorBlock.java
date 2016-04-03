@@ -77,9 +77,9 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     }
 
     @Override
-    public Class<? extends ItemBlock> getItemBlockClass()
+    public ItemBlock getItemBlock()
     {
-        return CultivateItemBlock.class;
+        return new CultivateItemBlock(this);
     }
 
     @Override

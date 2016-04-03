@@ -7,7 +7,7 @@ public class JCSlabHalfBlock extends JCSlabBlock
 {
     public JCSlabHalfBlock(TreeType type, IBlockState state)
     {
-        super(state);
+        super(type, state);
         this.setUnlocalizedName(type.name().toLowerCase() + "_slab");
         this.setCreativeTab(TabHandler.INSTANCE.plants);
     }

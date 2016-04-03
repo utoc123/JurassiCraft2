@@ -119,9 +119,9 @@ public class FossilBlock extends Block implements ISubBlocksBlock
     }
 
     @Override
-    public Class<? extends ItemBlock> getItemBlockClass()
+    public ItemBlock getItemBlock()
     {
-        return FossilItemBlock.class;
+        return new FossilItemBlock(this);
     }
 
     @Override
