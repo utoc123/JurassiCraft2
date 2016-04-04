@@ -52,11 +52,4 @@ public class CallAnimationAI extends EntityAIBase
         AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, Animations.CALLING.get());
         animatingEntity.getNavigator().clearPathEntity();
     }
-
-    @Override
-    public void resetTask()
-    {
-        super.resetTask();
-        animatingEntity.currentAnim = null;
-    }
 }

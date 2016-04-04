@@ -1,41 +1,37 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
-import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.Vec3;
 import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class JCPanicEntityAI extends EntityAIBase
 {
-    private final EntityCreature theEntityCreature;
+    private final DinosaurEntity dinosaur;
     protected double speed;
     private double randPosX;
     private double randPosY;
     private double randPosZ;
 
-    public JCPanicEntityAI(EntityCreature creature, double speedIn)
+    public JCPanicEntityAI(DinosaurEntity dinosaur, double speed)
     {
-        theEntityCreature = creature;
-        speed = speedIn;
+        this.dinosaur = dinosaur;
+        this.speed = speed;
         setMutexBits(1);
     }
 
-    /**
-     * Returns whether the EntityAIBase should begin execution.
-     */
     @Override
     public boolean shouldExecute()
     {
-        if (theEntityCreature.getAITarget() == null && !theEntityCreature.isBurning())
+        if (dinosaur.getAITarget() == null && !dinosaur.isBurning())
         {
             return false;
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(theEntityCreature, 5, 4);
+            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(dinosaur, 5, 4);
 
             if (vec3 == null)
             {
@@ -57,14 +53,11 @@ public class JCPanicEntityAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        theEntityCreature.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
-        if (theEntityCreature instanceof IAnimatedEntity)
-        {
-            AnimationHandler.INSTANCE.sendAnimationMessage((IAnimatedEntity) theEntityCreature, Animations.HISSING.get());
-        }
+        dinosaur.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
+        AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.HISSING.get());
 
         // DEBUG
-        System.out.println("Starting panic AI for entity " + theEntityCreature.getEntityId());
+        System.out.println("Starting panic AI for entity " + dinosaur.getEntityId());
 
     }
 
@@ -74,6 +67,6 @@ public class JCPanicEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        return !theEntityCreature.getNavigator().noPath();
+        return !dinosaur.getNavigator().noPath();
     }
 }

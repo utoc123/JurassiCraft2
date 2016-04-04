@@ -1,6 +1,7 @@
 package org.jurassicraft.client.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 
 /**
  * @author jabelar
@@ -39,11 +40,12 @@ public enum Animations //TODO if continuing movement of specific cube, dont slow
 
     public static Animation[] getAnimations()
     {
-        Animation[] animations = new Animation[values().length];
-        for (int i = 0; i < animations.length; i++)
+        Animation[] animations = new Animation[values().length + 1];
+        for (int i = 1; i < animations.length; i++)
         {
-            animations[i] = values()[i].get();
+            animations[i] = values()[i - 1].get();
         }
+        animations[0] = IAnimatedEntity.NO_ANIMATION;
         return animations;
     }
 

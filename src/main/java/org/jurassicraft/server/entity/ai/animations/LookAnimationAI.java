@@ -34,11 +34,4 @@ public class LookAnimationAI extends EntityAIBase
         AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, animatingEntity.getRNG().nextBoolean() ? Animations.LOOKING_LEFT.get() : Animations.LOOKING_RIGHT.get());
         animatingEntity.getNavigator().clearPathEntity();
     }
-
-    @Override
-    public void resetTask()
-    {
-        super.resetTask();
-        animatingEntity.currentAnim = null;
-    }
 }

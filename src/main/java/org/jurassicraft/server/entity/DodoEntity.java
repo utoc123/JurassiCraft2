@@ -12,7 +12,7 @@ public class DodoEntity extends DinosaurEntity // implements IEntityAICreature, 
     {
         super(world);
 
-        tasks.addTask(2, new JCAutoAnimBase(this, 18, Animations.EATING.get()));
+        tasks.addTask(2, new JCAutoAnimBase(this, Animations.EATING.get()));
         tasks.addTask(1, new FindPlantEntityAI(this));
     }
 

@@ -1,16 +1,16 @@
 package org.jurassicraft.server.entity.ai.animations;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
+import net.ilexiconn.llibrary.server.animation.AnimationAI;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
 import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.animation.AIAnimation;
 import org.jurassicraft.server.entity.GallimimusEntity;
 import org.jurassicraft.server.entity.TyrannosaurusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class BiteAnimationAI extends AIAnimation
+public class BiteAnimationAI extends AnimationAI
 {
     private final DinosaurEntity entityBiting;
     private EntityLivingBase entityTarget;
@@ -24,7 +24,7 @@ public class BiteAnimationAI extends AIAnimation
         this.entityBiting = dino;
         this.entityTarget = null;
         this.duration = duration;
-        eat = false;
+        this.eat = false;
         this.animation = Animations.ATTACKING.get();
     }
 
@@ -38,12 +38,6 @@ public class BiteAnimationAI extends AIAnimation
     public boolean isAutomatic()
     {
         return true;
-    }
-
-    @Override
-    public int getDuration()
-    {
-        return this.duration;
     }
 
     @Override

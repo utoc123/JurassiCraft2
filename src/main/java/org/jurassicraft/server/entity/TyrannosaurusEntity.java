@@ -23,7 +23,7 @@ public class TyrannosaurusEntity extends AggressiveDinosaurEntity
     {
         super(world);
 
-        tasks.addTask(2, new JCNonAutoAnimBase(this, 75, Animations.INJURED.get(), 750));
+        tasks.addTask(2, new JCNonAutoAnimBase(this, Animations.INJURED.get(), 750));
 
         for (Class target : targets)
         {
