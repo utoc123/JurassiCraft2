@@ -11,6 +11,6 @@ public class HypsilophodonEntity extends DefensiveDinosaurEntity // implements I
     {
         super(world);
 
-        tasks.addTask(2, new JCNonAutoAnimBase(this, Animations.SCRATCHING.get(), 60)); // Scratch Animation
+        animationTasks.addTask(2, new JCNonAutoAnimBase(this, Animations.SCRATCHING.get(), 60)); // Scratch Animation
     }
 }

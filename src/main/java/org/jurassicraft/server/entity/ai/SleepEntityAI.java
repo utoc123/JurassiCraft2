@@ -2,6 +2,8 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,11 +13,12 @@ public class SleepEntityAI extends EntityAIBase
 {
     protected DinosaurEntity dinosaur;
 
-    protected BlockPos sleepPos;
+    protected PathEntity path;
 
     public SleepEntityAI(DinosaurEntity dinosaur)
     {
         this.dinosaur = dinosaur;
+        this.setMutexBits(1);
     }
 
     @Override
@@ -23,7 +26,7 @@ public class SleepEntityAI extends EntityAIBase
     {
         World world = dinosaur.worldObj;
 
-        if (!world.isRemote && dinosaur.shouldSleep() && !dinosaur.isSleeping() && dinosaur.shouldGoBackToSleep())
+        if (!world.isRemote && dinosaur.shouldSleep() && !dinosaur.isSleeping() && dinosaur.shouldContinueSleeping())
         {
             int range = 16;
 
@@ -40,15 +43,14 @@ public class SleepEntityAI extends EntityAIBase
                     {
                         if (canFit(possiblePos) && !world.canSeeSky(possiblePos) && dinosaur.setSleepLocation(possiblePos, true))
                         {
-                            sleepPos = possiblePos;
+                            path = dinosaur.getNavigator().getPath();
                             return true;
                         }
                     }
                 }
             }
 
-            dinosaur.setSleepLocation(dinosaur.getPosition(), false); //Sleep right where you are
-            sleepPos = dinosaur.getPosition();
+            dinosaur.setSleepLocation(dinosaur.getPosition(), false);
 
             return true;
         }
@@ -64,31 +66,41 @@ public class SleepEntityAI extends EntityAIBase
 
         AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + dinosaur.width, y + dinosaur.height, z + dinosaur.width);
 
-        return dinosaur.worldObj.getCollisionBoxes(dinosaur, boundingBox).isEmpty();
+        return dinosaur.worldObj.getCollisionBoxes(dinosaur, boundingBox).isEmpty() && dinosaur.worldObj.getEntitiesWithinAABBExcludingEntity(dinosaur, boundingBox).isEmpty();
     }
 
     @Override
     public void updateTask()
     {
-        if (dinosaur.shouldGoBackToSleep())
-        {
-            int x = sleepPos.getX();
-            int y = sleepPos.getY();
-            int z = sleepPos.getZ();
+        PathEntity currentPath = dinosaur.getNavigator().getPath();
 
-            if ((dinosaur.getDistanceSq(x, y, z) / 16) <= dinosaur.width)
+        if (this.path != null)
+        {
+            PathPoint finalPathPoint = this.path.getFinalPathPoint();
+
+            if (currentPath == null || !currentPath.getFinalPathPoint().equals(finalPathPoint))
             {
-                dinosaur.setSleeping(true);
+                PathEntity path = dinosaur.getNavigator().getPathToXYZ(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord);
+                dinosaur.getNavigator().setPath(path, 1.0);
+                this.path = path;
             }
+        }
+
+        if (dinosaur.shouldContinueSleeping() && (this.path == null || this.path.isFinished()))
+        {
+            dinosaur.setSleeping(true);
         }
     }
 
-    /**
-     * Returns whether an in-progress EntityAIBase should continue executing
-     */
     @Override
     public boolean continueExecuting()
     {
-        return dinosaur != null && !dinosaur.isCarcass() && sleepPos != null && !dinosaur.isSleeping() && dinosaur.shouldSleep();
+        return dinosaur != null && !dinosaur.isCarcass() && !dinosaur.isSleeping() && dinosaur.shouldSleep();
+    }
+
+    @Override
+    public void resetTask()
+    {
+        dinosaur.setSleeping(true);
     }
 }

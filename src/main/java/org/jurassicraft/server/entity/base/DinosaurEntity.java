@@ -10,7 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -90,7 +95,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private final MetabolismContainer metabolism;
 
     private boolean isSleeping;
-    private boolean goBackToSleep;
+    private boolean continueSleeping;
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -98,9 +103,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private boolean useInertialTweens;
 
+    protected EntityAITasks animationTasks;
+
     public DinosaurEntity(World world)
     {
         super(world);
+
+        animationTasks = new EntityAITasks(world != null ? world.theProfiler : null);
 
         metabolism = new MetabolismContainer(this);
         inventory = new InventoryDinosaur(this);
@@ -115,12 +124,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         // This one make them move around
-        tasks.addTask(0, new SleepEntityAI(this));
+        animationTasks.addTask(0, new SleepEntityAI(this));
 
         // WARNING: Do not enable, under development
-        tasks.addTask(1, new DrinkEntityAI(this));
-        tasks.addTask(1, new MateEntityAI(this));
-        tasks.addTask(1, new EatFoodItemEntityAI(this));
+        animationTasks.addTask(1, new DrinkEntityAI(this));
+        animationTasks.addTask(1, new MateEntityAI(this));
+        animationTasks.addTask(1, new EatFoodItemEntityAI(this));
 
         if (dinosaur.getDiet().doesEatPlants())
         {
@@ -131,9 +140,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         tasks.addTask(2, new HerdEntityAI(this));
 
-        tasks.addTask(3, new CallAnimationAI(this));
-        tasks.addTask(3, new LookAnimationAI(this));
-        tasks.addTask(3, new HeadCockAnimationAI(this));
+        animationTasks.addTask(3, new CallAnimationAI(this));
+        animationTasks.addTask(3, new LookAnimationAI(this));
+        animationTasks.addTask(3, new HeadCockAnimationAI(this));
 
         setFullyGrown();
 
@@ -143,7 +152,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         animTick = 0;
         setAnimation(Animations.IDLE.get());
 
-        goBackToSleep = true;
+        continueSleeping = true;
 
         ignoreFrustumCheck = true; // stops dino disappearing when hitbox goes off screen
 
@@ -169,18 +178,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setSleeping(boolean sleeping)
     {
-        if (this.isSleeping != sleeping)
-        {
-            if (sleeping)
-            {
-                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SLEEPING.get());
-            }
-            else
-            {
-                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
-            }
-        }
-
         this.isSleeping = sleeping;
     }
 
@@ -280,7 +277,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 if (isSleeping)
                 {
                     isSleeping = false;
-                    dontGoBackToSleep();
+                    disturbSleep();
                 }
 
                 return super.attackEntityFrom(damageSource, amount);
@@ -575,15 +572,24 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 isSleeping = false;
             }
         }
-
-        if (!shouldSleep() && !isSleeping)
+        else if (getAnimation() == Animations.SLEEPING.get())
         {
-            goBackToSleep = true;
+            AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
+        }
+
+        if (!shouldSleep() && !isSleeping && !continueSleeping)
+        {
+            continueSleeping = true;
         }
 
         if (getAnimation() != Animations.IDLE.get())
         {
             animTick++;
+        }
+
+        if (this.isServerWorld())
+        {
+            animationTasks.onUpdateTasks();
         }
 
         prevAge = dinosaurAge;
@@ -946,6 +952,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setBoolean("IsMale", isMale);
         nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
         nbt.setByte("RareVariant", (byte) rareVariant);
+        nbt.setBoolean("ContinueSleeping", continueSleeping);
 
         metabolism.writeToNBT(nbt);
 
@@ -968,6 +975,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         isMale = nbt.getBoolean("IsMale");
         growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
         rareVariant = nbt.getByte("RareVariant");
+        continueSleeping = nbt.getBoolean("ContinueSleeping");
 
         metabolism.readFromNBT(nbt);
 
@@ -1024,16 +1032,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public boolean setSleepLocation(BlockPos sleepLocation, boolean moveTo)
     {
-        if (moveTo)
-        {
-            int x = sleepLocation.getX();
-            int y = sleepLocation.getY();
-            int z = sleepLocation.getZ();
-
-            return getNavigator().tryMoveToXYZ(x, y, z, 1.0);
-        }
-
-        return true;
+        return !moveTo || getNavigator().tryMoveToXYZ(sleepLocation.getX(), sleepLocation.getY(), sleepLocation.getZ(), 1.0);
     }
 
     public boolean isSleeping()
@@ -1041,14 +1040,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return isSleeping;
     }
 
-    public boolean shouldGoBackToSleep()
+    public boolean shouldContinueSleeping()
     {
-        return goBackToSleep;
+        return continueSleeping;
     }
 
-    public void dontGoBackToSleep()
+    public void disturbSleep()
     {
-        this.goBackToSleep = false;
+        this.continueSleeping = false;
     }
 
     /**
@@ -1069,7 +1068,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 ", isDead=" + isDead +
                 ", isCarcass=" + isCarcass +
                 ", isSleeping=" + isSleeping +
-                ", goBackToSleep=" + goBackToSleep +
+                ", continueSleeping=" + continueSleeping +
                 "\n    " +
                 ", dinosaurAge=" + dinosaurAge +
                 ", prevAge=" + prevAge +
