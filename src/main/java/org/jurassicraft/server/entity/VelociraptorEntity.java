@@ -27,15 +27,15 @@ public class VelociraptorEntity extends AggressiveDinosaurEntity // implements I
     {
         super(world);
 
-        tasks.addTask(2, new JCAutoAnimBase(this, Animations.IDLE.get())); // Call
+        animationTasks.addTask(2, new JCAutoAnimBase(this, Animations.IDLE.get())); // Call
         tasks.addTask(4, new EntityAIOpenDoor(this, true));
 
         // tasks.addTask(2, new JCAutoAnimBase(this, 25, 2)); //Attack
         // tasks.addTask(2, new JCAutoAnimBase(this, 25, 3)); //Die
         // tasks.addTask(2, new JCAutoAnimBase(this, 6, 4)); //Hurt
-        tasks.addTask(2, new JCNonAutoAnimBase(this, Animations.LOOKING_RIGHT.get(), 100)); // Head twitch right
-        tasks.addTask(2, new JCNonAutoAnimBase(this, Animations.LOOKING_LEFT.get(), 100)); // Head twitch left
-        tasks.addTask(2, new JCNonAutoAnimBase(this, Animations.SNIFFING.get(), 150)); // Sniff
+        animationTasks.addTask(2, new JCNonAutoAnimBase(this, Animations.LOOKING_RIGHT.get(), 100)); // Head twitch right
+        animationTasks.addTask(2, new JCNonAutoAnimBase(this, Animations.LOOKING_LEFT.get(), 100)); // Head twitch left
+        animationTasks.addTask(2, new JCNonAutoAnimBase(this, Animations.SNIFFING.get(), 150)); // Sniff
 
         for (Class target : targets)
         {

@@ -6,12 +6,12 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 /**
  * @author jabelar
  */
-public enum Animations //TODO if continuing movement of specific cube, dont slow down
+public enum Animations
 {
-    IDLE(false, false), ATTACKING(false, false), INJURED(false, false), HEAD_COCKING, CALLING, HISSING, POUNCING(false, false), SNIFFING, EATING, DRINKING, MATING(false, false), SLEEPING(true, true), RESTING(true, false), ROARING, LIVING_SOUND(false, false),
+    IDLE(false, false), ATTACKING(false, false), INJURED(false, false), HEAD_COCKING, CALLING, HISSING, POUNCING(false, false), SNIFFING, EATING, DRINKING, MATING(false, false), SLEEPING(true, false), RESTING(true, false), ROARING, LIVING_SOUND(false, false),
     SCRATCHING,
     LOOKING_LEFT, LOOKING_RIGHT, BEGGING,
-    DYING(true, true),
+    DYING(true, false),
     WALKING(false, false), SWIMMING(false, false), FLYING(false, false);
 
     private Animation animation;

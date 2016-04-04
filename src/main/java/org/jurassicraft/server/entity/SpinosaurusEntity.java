@@ -2,8 +2,6 @@ package org.jurassicraft.server.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimSoundBase;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
 import java.util.Random;
@@ -22,8 +20,6 @@ public class SpinosaurusEntity extends AggressiveDinosaurEntity // implements IE
         {
             this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);
         }
-
-        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, Animations.INJURED.get(), 750, getHurtSound(), 1.5F));
     }
 
     @Override

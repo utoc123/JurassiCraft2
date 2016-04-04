@@ -11,7 +11,7 @@ public class CompsognathusEntity extends AggressiveDinosaurEntity // implements 
     {
         super(world);
 
-        tasks.addTask(2, new JCAutoAnimBase(this, Animations.BEGGING.get())); // Beg
+        animationTasks.addTask(2, new JCAutoAnimBase(this, Animations.BEGGING.get())); // Beg
     }
 
     @Override

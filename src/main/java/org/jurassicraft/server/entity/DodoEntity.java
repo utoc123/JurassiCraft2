@@ -3,7 +3,6 @@ package org.jurassicraft.server.entity;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.ai.animations.JCAutoAnimBase;
-import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DodoEntity extends DinosaurEntity // implements IEntityAICreature, IHerbivore
@@ -12,8 +11,7 @@ public class DodoEntity extends DinosaurEntity // implements IEntityAICreature, 
     {
         super(world);
 
-        tasks.addTask(2, new JCAutoAnimBase(this, Animations.EATING.get()));
-        tasks.addTask(1, new FindPlantEntityAI(this));
+        animationTasks.addTask(2, new JCAutoAnimBase(this, Animations.EATING.get()));
     }
 
     @Override
