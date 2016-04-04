@@ -33,7 +33,7 @@ public class ServerEventHandler
     {
         if (event.getEntity() instanceof EntityPlayer)
         {
-            EntityDataHandler.INSTANCE.registerExtendedEntityData(event.getEntity(), new PlayerData());
+            EntityDataHandler.INSTANCE.registerExtendedEntityData((EntityPlayer) event.getEntity(), new PlayerData());
         }
     }
 

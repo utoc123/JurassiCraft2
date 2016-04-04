@@ -10,6 +10,6 @@ public class ParasaurolophusEntity extends DefensiveDinosaurEntity // implements
     public ParasaurolophusEntity(World world)
     {
         super(world);
-        tasks.addTask(2, new JCNonAutoAnimBase(this, 60, Animations.CALLING.get(), 100)); // Call
+        tasks.addTask(2, new JCNonAutoAnimBase(this, Animations.CALLING.get(), 100)); // Call
     }
 }

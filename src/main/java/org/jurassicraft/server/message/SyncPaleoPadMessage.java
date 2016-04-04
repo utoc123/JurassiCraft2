@@ -21,19 +21,19 @@ public class SyncPaleoPadMessage extends AbstractMessage<SyncPaleoPadMessage>
     public SyncPaleoPadMessage(EntityPlayer player)
     {
         nbt = new NBTTagCompound();
-        PlayerData.get(player).writeToNBT(nbt);
+        PlayerData.get(player).saveNBTData(nbt);
     }
 
     @Override
     public void onClientReceived(Minecraft minecraft, SyncPaleoPadMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        PlayerData.get(player).readFromNBT(message.nbt);
+        PlayerData.get(player).loadNBTData(message.nbt);
     }
 
     @Override
     public void onServerReceived(MinecraftServer minecraftServer, SyncPaleoPadMessage message, EntityPlayer player, MessageContext messageContext)
     {
-        PlayerData.get(player).readFromNBT(message.nbt);
+        PlayerData.get(player).loadNBTData(message.nbt);
     }
 
     @Override

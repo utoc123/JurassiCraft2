@@ -26,7 +26,7 @@ public class SpinosaurusEntity extends AggressiveDinosaurEntity // implements IE
             this.addAIForAttackTargets(target, new Random().nextInt(3) + 1);
         }
 
-        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, 75, Animations.INJURED.get(), 750, getHurtSound(), 1.5F));
+        tasks.addTask(2, new JCNonAutoAnimSoundBase(this, Animations.INJURED.get(), 750, getHurtSound(), 1.5F));
     }
 
     @Override

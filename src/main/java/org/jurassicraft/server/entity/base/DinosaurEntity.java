@@ -40,7 +40,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.animation.AIAnimation;
 import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
@@ -75,7 +74,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private boolean isMale;
 
     // For animation AI system
-    public AIAnimation currentAnim = null;
     private Animation animation;
     private int animTick;
 

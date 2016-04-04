@@ -2,9 +2,10 @@ package org.jurassicraft.server.data;
 
 import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.ilexiconn.llibrary.server.capability.IEntityData;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.World;
 import org.jurassicraft.server.paleopad.App;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerData implements IEntityData
+public class PlayerData implements IEntityData<EntityPlayer>
 {
     public static final String IDENTIFIER = "jurassicraft:playerdata";
 
@@ -20,7 +21,12 @@ public class PlayerData implements IEntityData
     private List<App> openApps = new ArrayList<App>();
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public void init(EntityPlayer player, World world)
+    {
+    }
+
+    @Override
+    public void saveNBTData(NBTTagCompound nbt)
     {
         NBTTagList appDataList = new NBTTagList();
 
@@ -38,7 +44,7 @@ public class PlayerData implements IEntityData
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt)
+    public void loadNBTData(NBTTagCompound nbt)
     {
         appdata.clear();
 
@@ -53,7 +59,7 @@ public class PlayerData implements IEntityData
     }
 
     @Override
-    public String getIdentifier()
+    public String getID()
     {
         return IDENTIFIER;
     }
@@ -90,8 +96,8 @@ public class PlayerData implements IEntityData
         openApps.remove(app);
     }
 
-    public static PlayerData get(Entity entity)
+    public static PlayerData get(EntityPlayer player)
     {
-        return ((PlayerData) EntityDataHandler.getManager(entity, IDENTIFIER));
+        return ((PlayerData) EntityDataHandler.INSTANCE.getEntityData(player, IDENTIFIER));
     }
 }

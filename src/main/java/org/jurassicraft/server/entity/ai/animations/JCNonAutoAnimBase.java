@@ -1,26 +1,23 @@
 package org.jurassicraft.server.entity.ai.animations;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
-import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.ilexiconn.llibrary.server.animation.AnimationAI;
 import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.animation.AIAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 /**
  * Created by jnad325 on 7/23/15.
  */
-public class JCNonAutoAnimBase extends AIAnimation
+public class JCNonAutoAnimBase extends AnimationAI
 {
     protected DinosaurEntity animatingEntity;
-    protected int duration;
     protected Animation animation;
     protected int chance;
 
-    public JCNonAutoAnimBase(IAnimatedEntity entity, int duration, Animation animation, int chance)
+    public JCNonAutoAnimBase(DinosaurEntity entity, Animation animation, int chance)
     {
         super(entity);
-        this.duration = duration;
-        animatingEntity = (DinosaurEntity) entity;
+        this.animatingEntity = entity;
         this.animation = animation;
         this.chance = chance;
     }
@@ -38,28 +35,8 @@ public class JCNonAutoAnimBase extends AIAnimation
     }
 
     @Override
-    public int getDuration()
-    {
-        return duration;
-    }
-
-    @Override
     public boolean shouldExecute()
     {
         return animatingEntity.getAnimation() == Animations.IDLE.get() && animatingEntity.getRNG().nextInt(chance) == 0;
-    }
-
-    @Override
-    public void startExecuting()
-    {
-        super.startExecuting();
-        animatingEntity.currentAnim = this;
-    }
-
-    @Override
-    public void resetTask()
-    {
-        super.resetTask();
-        animatingEntity.currentAnim = null;
     }
 }

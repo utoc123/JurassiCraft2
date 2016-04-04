@@ -1,6 +1,7 @@
 package org.jurassicraft.client.render.entity;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,9 +14,9 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 @SideOnly(Side.CLIENT)
 public class IndominusRenderer extends DinosaurRenderer
 {
-    public IndominusRenderer(RenderDinosaurDefinition renderDef)
+    public IndominusRenderer(RenderDinosaurDefinition renderDef, RenderManager manager)
     {
-        super(renderDef);
+        super(renderDef, manager);
 
         addLayer(new LayerIndominusCamo(this));
     }

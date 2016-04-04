@@ -34,11 +34,4 @@ public class HeadCockAnimationAI extends EntityAIBase
         AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, Animations.HEAD_COCKING.get());
         animatingEntity.getNavigator().clearPathEntity();
     }
-
-    @Override
-    public void resetTask()
-    {
-        super.resetTask();
-        animatingEntity.currentAnim = null;
-    }
 }

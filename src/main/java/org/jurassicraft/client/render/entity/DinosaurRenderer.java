@@ -1,10 +1,10 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,9 +32,9 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
     public Random random;
 
-    public DinosaurRenderer(RenderDinosaurDefinition renderDef)
+    public DinosaurRenderer(RenderDinosaurDefinition renderDef, RenderManager renderManager)
     {
-        super(Minecraft.getMinecraft().getRenderManager(), renderDef.getModel(EnumGrowthStage.INFANT), renderDef.getShadowSize());
+        super(renderManager, renderDef.getModel(EnumGrowthStage.INFANT), renderDef.getShadowSize());
 
         this.dinosaur = renderDef.getDinosaur();
         this.random = new Random();

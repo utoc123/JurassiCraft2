@@ -1,22 +1,21 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
-import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class JCPanicEntityAI extends EntityAIBase
 {
-    private final EntityCreature theEntityCreature;
+    private final DinosaurEntity theEntityCreature;
     protected double speed;
     private double randPosX;
     private double randPosY;
     private double randPosZ;
 
-    public JCPanicEntityAI(EntityCreature creature, double speedIn)
+    public JCPanicEntityAI(DinosaurEntity creature, double speedIn)
     {
         theEntityCreature = creature;
         speed = speedIn;
@@ -59,10 +58,7 @@ public class JCPanicEntityAI extends EntityAIBase
     {
         theEntityCreature.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
 
-        if (theEntityCreature instanceof IAnimatedEntity)
-        {
-            AnimationHandler.INSTANCE.sendAnimationMessage((IAnimatedEntity) theEntityCreature, Animations.HISSING.get());
-        }
+        AnimationHandler.INSTANCE.sendAnimationMessage(theEntityCreature, Animations.HISSING.get());
 
         // DEBUG
         System.out.println("Starting panic AI for entity " + theEntityCreature.getEntityId());
