@@ -582,6 +582,9 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         mat.setIdentity();
         Matrix4d transform = new Matrix4d();
 
+        transform.rotY(rot / 180 * Math.PI);
+        mat.mul(transform);
+
         for (int i = parentCubes.size() - 1; i >= 0; i--)
         {
             cube = parentCubes.get(i);

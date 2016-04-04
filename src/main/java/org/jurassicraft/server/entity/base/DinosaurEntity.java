@@ -10,11 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,7 +20,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -534,10 +529,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onUpdate()
     {
         super.onUpdate();
-
-        Vec3d eyes = getHeadPos();
-
-        worldObj.spawnParticle(EnumParticleTypes.FLAME, eyes.xCoord, eyes.yCoord, eyes.zCoord, 0, 0, 0);
 
         if (!worldObj.isRemote)
         {
@@ -1116,17 +1107,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 " }";
     }
 
-    public Vec3d getHeadPos() //TODO not working correctly
+    public Vec3d getHeadPos()
     {
         double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 
-        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), rotationYaw);
+        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), ((360 - (rotationYawHead))) % 360 - 180);
 
         double headX = ((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale;
-        double headY = ((headPos[1] * 0.0625F) - dinosaur.getOffsetY()) * scale;
+        double headY = (((24 - headPos[1]) * 0.0625F) - dinosaur.getOffsetY()) * scale;
         double headZ = ((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale;
 
-        return new Vec3d(posX + headX, posY + headY, posZ + headZ);
+        return new Vec3d(posX + headX, posY + (headY), posZ + headZ);
     }
 
     public boolean areEyelidsClosed()
