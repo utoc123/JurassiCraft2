@@ -10,21 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -540,10 +531,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onUpdate()
     {
         super.onUpdate();
-
-        Vec3 eyes = getHeadPos();
-
-        worldObj.spawnParticle(EnumParticleTypes.FLAME, eyes.xCoord, eyes.yCoord, eyes.zCoord, 0, 0, 0);
 
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
 
@@ -1120,17 +1107,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 " }";
     }
 
-    public Vec3 getHeadPos() //TODO not working correctly
+    public Vec3 getHeadPos()
     {
         double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 
-        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), rotationYaw);
+        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), ((360 - (rotationYawHead))) % 360 - 180);
 
         double headX = ((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale;
-        double headY = ((headPos[1] * 0.0625F) - dinosaur.getOffsetY()) * scale;
+        double headY = (((24 - headPos[1]) * 0.0625F) - dinosaur.getOffsetY()) * scale;
         double headZ = ((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale;
 
-        return new Vec3(posX + headX, posY + headY, posZ + headZ);
+        return new Vec3(posX + headX, posY + (headY), posZ + headZ);
     }
 
     public boolean areEyelidsClosed()
