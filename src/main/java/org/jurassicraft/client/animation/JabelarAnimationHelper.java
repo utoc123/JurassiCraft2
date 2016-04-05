@@ -140,7 +140,7 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.toString() + " that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
+            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.getID() + " (" + Animations.getAnimation(parSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + theEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
             theEntity.setAnimation(Animations.IDLE.get());
         }

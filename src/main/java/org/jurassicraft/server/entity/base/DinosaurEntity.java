@@ -263,13 +263,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float amount)
     {
+        boolean canHarmInCreative = damageSource.canHarmInCreative();
+
         if (!isCarcass())
         {
             if (getHealth() - amount <= 0.0F)
             {
-                this.setHealth(getMaxHealth());
-                this.setCarcass(true);
-                return false;
+                if (!canHarmInCreative)
+                {
+                    this.setHealth(getMaxHealth());
+                    this.setCarcass(true);
+                    return false;
+                }
+
+                return super.attackEntityFrom(damageSource, amount);
             }
             else
             {
@@ -289,6 +296,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
         else if (!worldObj.isRemote)
         {
+            if (canHarmInCreative)
+            {
+                return super.attackEntityFrom(damageSource, amount);
+            }
+
             carcassHealth--;
 
             if (!dead && carcassHealth >= 0 && worldObj.getGameRules().getBoolean("doMobLoot"))
@@ -365,6 +377,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         if (getAnimation() == Animations.IDLE.get())
         {
+            AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SPEAK.get());
             super.playLivingSound();
         }
     }
@@ -957,6 +970,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
         nbt.setByte("RareVariant", (byte) rareVariant);
         nbt.setBoolean("ContinueSleeping", continueSleeping);
+        nbt.setBoolean("IsSleeping", isSleeping);
 
         metabolism.writeToNBT(nbt);
 
@@ -980,6 +994,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
         rareVariant = nbt.getByte("RareVariant");
         continueSleeping = nbt.getBoolean("ContinueSleeping");
+        isSleeping = nbt.getBoolean("IsSleeping");
 
         metabolism.readFromNBT(nbt);
 
