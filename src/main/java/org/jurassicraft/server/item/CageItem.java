@@ -29,11 +29,6 @@ public class CageItem extends Item
         this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     *
-     * @param subItems The List of sub-items. This is a List of ItemStacks.
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
@@ -42,12 +37,6 @@ public class CageItem extends Item
         subItems.add(new ItemStack(itemIn, 1, 1));
     }
 
-    /**
-     * allows items to add custom lines of information to the mouseover description
-     *
-     * @param tooltip  All lines to display in the Item's tooltip. This is a List of Strings.
-     * @param advanced Whether the setting "Advanced tooltips" is enabled
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
@@ -71,11 +60,11 @@ public class CageItem extends Item
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         pos = pos.offset(side);
 
-        if (player.canPlayerEdit(pos, side, stack) && !world.isRemote)
+        if (!world.isRemote && player.canPlayerEdit(pos, side, stack))
         {
             CageSmallEntity cage = new CageSmallEntity(world, stack.getMetadata() == 1);
             cage.setEntity(getCaged(stack));

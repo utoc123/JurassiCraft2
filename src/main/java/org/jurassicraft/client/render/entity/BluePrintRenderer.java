@@ -1,6 +1,5 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -24,16 +23,16 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
     @Override
     public Render<? super BluePrintEntity> createRenderFor(RenderManager manager)
     {
-        return new Renderer();
+        return new Renderer(manager);
     }
 
     public static class Renderer extends Render<BluePrintEntity>
     {
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/blueprints/blueprints.png");
 
-        public Renderer()
+        public Renderer(RenderManager manager)
         {
-            super(Minecraft.getMinecraft().getRenderManager());
+            super(manager);
         }
 
         /**

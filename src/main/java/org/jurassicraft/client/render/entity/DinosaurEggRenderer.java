@@ -1,6 +1,5 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,14 +14,14 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
     @Override
     public Render<? super DinosaurEggEntity> createRenderFor(RenderManager manager)
     {
-        return new Renderer();
+        return new Renderer(manager);
     }
 
     public static class Renderer extends Render<DinosaurEggEntity>
     {
-        public Renderer()
+        public Renderer(RenderManager manager)
         {
-            super(Minecraft.getMinecraft().getRenderManager());
+            super(manager);
         }
 
         @Override

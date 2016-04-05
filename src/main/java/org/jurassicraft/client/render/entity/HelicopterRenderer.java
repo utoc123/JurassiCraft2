@@ -3,7 +3,6 @@ package org.jurassicraft.client.render.entity;
 import com.google.common.collect.Maps;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -26,7 +25,7 @@ public class HelicopterRenderer implements IRenderFactory<HelicopterBaseEntity>
     @Override
     public Render<? super HelicopterBaseEntity> createRenderFor(RenderManager manager)
     {
-        return new Renderer();
+        return new Renderer(manager);
     }
 
     public static class Renderer extends Render<HelicopterBaseEntity>
@@ -36,9 +35,9 @@ public class HelicopterRenderer implements IRenderFactory<HelicopterBaseEntity>
         private final Map<String, ResourceLocation> moduleTextures;
         private TabulaModel baseModel;
 
-        public Renderer()
+        public Renderer(RenderManager manager)
         {
-            super(Minecraft.getMinecraft().getRenderManager());
+            super(manager);
             moduleMap = Maps.newHashMap();
             moduleTextures = Maps.newHashMap();
             try

@@ -17,7 +17,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
     @Override
     public Render<? super CageSmallEntity> createRenderFor(RenderManager manager)
     {
-        return new Renderer();
+        return new Renderer(manager);
     }
 
     public static class Renderer extends Render<CageSmallEntity>
@@ -26,11 +26,12 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
         private static final ResourceLocation texture_marine = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small_marine.png");
         private TabulaModel model;
 
-        public Renderer()
+        public Renderer(RenderManager manager)
         {
-            super(Minecraft.getMinecraft().getRenderManager());
+            super(manager);
 
             String modelLoc = "/assets/jurassicraft/models/entities/cage_small/cage_small";
+
             try
             {
                 model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel(modelLoc));

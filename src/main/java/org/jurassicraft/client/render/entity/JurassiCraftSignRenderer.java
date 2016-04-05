@@ -1,6 +1,5 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -24,21 +23,18 @@ public class JurassiCraftSignRenderer implements IRenderFactory<JurassiCraftSign
     @Override
     public Render<? super JurassiCraftSignEntity> createRenderFor(RenderManager manager)
     {
-        return new Renderer();
+        return new Renderer(manager);
     }
 
     public static class Renderer extends Render<JurassiCraftSignEntity>
     {
         private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/gentle_giants/gentle_giants.png");
 
-        public Renderer()
+        public Renderer(RenderManager manager)
         {
-            super(Minecraft.getMinecraft().getRenderManager());
+            super(manager);
         }
 
-        /**
-         * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic (Render<T extends Entity>) and this method has signature public void func_76986_a(T entity, double d, double d1, double d2, float f, float f1). But JAD is pre 1.5 so doe
-         */
         @Override
         public void doRender(JurassiCraftSignEntity entity, double x, double y, double z, float yaw, float partialTicks)
         {
