@@ -3,6 +3,20 @@
     "poses": {
         "IDLE": [
             {"pose": "velociraptor_adult_idle", "time": 20}
+        ],
+        "HEAD_COCKING": [
+            {
+                "pose": "velociraptor_adult_head_cocking",
+                "time": 5
+            },
+            {
+                "pose": "velociraptor_adult_head_cocking",
+                "time": 30
+            },
+            {
+                "pose": "velociraptor_adult_idle",
+                "time": 5
+            }
         ]
      }
 }

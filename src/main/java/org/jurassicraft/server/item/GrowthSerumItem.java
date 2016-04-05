@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -15,7 +16,8 @@ public class GrowthSerumItem extends Item
         this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target)
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand)
     {
         if (target instanceof DinosaurEntity)
         {
@@ -24,7 +26,6 @@ public class GrowthSerumItem extends Item
             if (!dinosaur.isCarcass())
             {
                 dinosaur.increaseGrowthSpeed();
-                // dinosaur.setAge(dinosaur.getDinosaurAge() + 750);
 
                 stack.stackSize--;
 

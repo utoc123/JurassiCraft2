@@ -65,14 +65,7 @@ public class JabelarAnimationHelper
      * @param parMapOfSequences    maps from an {@link Animations} to the sequence of (pose-index, tween-length)
      * @param parUseInertialTweens
      */
-    public JabelarAnimationHelper(
-            DinosaurEntity parEntity,
-            DinosaurModel parModel,
-            int parNumParts,
-            AdvancedModelRenderer[][] parArrayOfPoses,
-            Map<Animation, int[][]> parMapOfSequences,
-            boolean parUseInertialTweens
-    )
+    public JabelarAnimationHelper(DinosaurEntity parEntity, DinosaurModel parModel, int parNumParts, AdvancedModelRenderer[][] parArrayOfPoses, Map<Animation, int[][]> parMapOfSequences, boolean parUseInertialTweens)
     {
         // transfer static animation info from constructor parameters to instance
         animatedEntity = parEntity;
@@ -141,7 +134,7 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.toString() + " that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
+            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.getID() + " (" + Animations.getAnimation(parSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
             animatedEntity.setAnimation(Animations.IDLE.get());
         }
