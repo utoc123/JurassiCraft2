@@ -17,6 +17,12 @@
                 "pose": "velociraptor_adult_idle",
                 "time": 5
             }
+        ],
+        "DYING": [
+            {
+                "pose": "velociraptor_adult_death",
+                "time": 10
+            }
         ]
      }
 }
