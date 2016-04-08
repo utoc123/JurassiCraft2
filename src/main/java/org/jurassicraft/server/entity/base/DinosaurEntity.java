@@ -971,6 +971,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setByte("RareVariant", (byte) rareVariant);
         nbt.setBoolean("ContinueSleeping", continueSleeping);
         nbt.setBoolean("IsSleeping", isSleeping);
+        nbt.setInteger("CarcassHealth", carcassHealth);
 
         metabolism.writeToNBT(nbt);
 
@@ -995,6 +996,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         rareVariant = nbt.getByte("RareVariant");
         continueSleeping = nbt.getBoolean("ContinueSleeping");
         isSleeping = nbt.getBoolean("IsSleeping");
+        carcassHealth = nbt.getInteger("CarcassHealth");
 
         metabolism.readFromNBT(nbt);
 
