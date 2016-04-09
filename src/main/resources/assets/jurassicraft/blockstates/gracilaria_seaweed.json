@@ -1,10 +1,20 @@
 {
   "variants": {
-    "level=0": {
-      "model": "jurassicraft:gracilaria_seaweed"
-    },
-    "level=1": {
-      "model": "jurassicraft:gracilaria_seaweed"
-    }
+    "level=0": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=1": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=2": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=3": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=4": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=5": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=6": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=7": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=8": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=9": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=10": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=11": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=12": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=13": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=14": { "model": "jurassicraft:gracilaria_seaweed" },
+    "level=15": { "model": "jurassicraft:gracilaria_seaweed" }
   }
 }

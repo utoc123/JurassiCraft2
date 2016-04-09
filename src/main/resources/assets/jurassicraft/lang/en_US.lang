@@ -211,6 +211,7 @@ item.ajuginucula_smithii_leaves.name=Ajuginucula Smithii Leaves
 item.ajuginucula_smithii_oil.name=Ajuginucula Smithii Oil
 item.wild_onion.name=Wild Onion
 item.gracilaria.name=Gracilaria
+item.liquid_agar.name=Liquid Agar
 
 //Blocks ==================================================
 tile.fossil_block.name={period} Fossil

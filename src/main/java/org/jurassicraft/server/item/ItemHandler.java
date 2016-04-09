@@ -95,6 +95,7 @@ public enum ItemHandler
     public Item wild_onion;
 
     public Item gracilaria;
+    public Item liquid_agar;
 
     public Item dino_scanner;
 
@@ -180,6 +181,7 @@ public enum ItemHandler
 
         wild_onion = new ItemSeeds(BlockHandler.INSTANCE.wild_onion, Blocks.farmland).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.plants);
         gracilaria = new GracilariaItem(BlockHandler.INSTANCE.gracilaria).setCreativeTab(TabHandler.INSTANCE.plants);
+        liquid_agar = new BasicItem(TabHandler.INSTANCE.items);
 
         for (Dinosaur dinosaur : EntityHandler.INSTANCE.getRegisteredDinosaurs())
         {
@@ -273,6 +275,7 @@ public enum ItemHandler
         registerItem(wild_onion, "Wild Onion");
 
         registerItem(gracilaria, "Gracilaria");
+        registerItem(liquid_agar, "Liquid Agar");
     }
 
     public void registerItemOreDict(Item item, String name, String oreDict)
