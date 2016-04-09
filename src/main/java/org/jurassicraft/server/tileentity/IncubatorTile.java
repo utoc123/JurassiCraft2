@@ -54,7 +54,14 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected int getProcess(int slot)
     {
-        return slot;
+        if (slot == 5)
+        {
+            return 0;
+        }
+        else
+        {
+            return slot;
+        }
     }
 
     @Override
