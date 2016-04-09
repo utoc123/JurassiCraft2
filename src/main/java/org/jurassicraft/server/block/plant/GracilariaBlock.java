@@ -33,7 +33,7 @@ public class GracilariaBlock extends BlockBush
 
     private static final int DENSITY_PER_AREA = 8;
     private static final int GOOD_LIGHT_SPREAD_CHANCE = 25;
-    private static final int BAD_LIGHT_SPREAD_CHANCE = 2;
+    private static final int BAD_LIGHT_SPREAD_CHANCE = 1;
     private static final int SPREAD_RADIUS = 4;
 
     // This is needed because we user material of water so it doesn't have the block boundaries.
