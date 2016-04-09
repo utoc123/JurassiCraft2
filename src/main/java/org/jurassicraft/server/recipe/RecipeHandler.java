@@ -92,6 +92,9 @@ public enum RecipeHandler
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.dna_analyzer), "iGi", "CLi", "iii", 'i', "nuggetIron", 'G', Blocks.glass, 'C', ItemHandler.INSTANCE.advanced_circuit, 'L', ItemHandler.INSTANCE.laser));
 
+//        GameRegistry.addSmelting(BlockHandler.INSTANCE.gracilaria, new ItemStack(ItemHandler.INSTANCE.liquid_agar), 0);
+        GameRegistry.addSmelting(ItemHandler.INSTANCE.gracilaria, new ItemStack(ItemHandler.INSTANCE.liquid_agar), 0);
+
         addGrowthSerumRecipe(Items.cooked_beef);
         addGrowthSerumRecipe(Items.cooked_chicken);
         addGrowthSerumRecipe(Items.cooked_fish);

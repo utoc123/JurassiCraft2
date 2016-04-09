@@ -397,6 +397,7 @@ public enum RenderingHandler
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.wild_onion, "wild_onion", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.gracilaria, "gracilaria", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.liquid_agar, "liquid_agar", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_fossil, "plant_fossil", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.twig_fossil, "twig_fossil", "inventory");
