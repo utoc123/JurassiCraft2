@@ -16,6 +16,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -50,6 +51,7 @@ import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.ItemHandler;
 
+import java.util.Random;
 import java.util.UUID;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity
@@ -346,6 +348,33 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
     }
 
+    @Override
+    public EntityItem entityDropItem(ItemStack stack, float offsetY)
+    {
+        if (stack.stackSize != 0 && stack.getItem() != null)
+        {
+            Random rand = new Random();
+
+            EntityItem item = new EntityItem(this.worldObj, this.posX + ((rand.nextFloat() * width) - width / 2), this.posY + (double) offsetY, this.posZ + ((rand.nextFloat() * width) - width / 2), stack);
+            item.setDefaultPickupDelay();
+
+            if (captureDrops)
+            {
+                this.capturedDrops.add(item);
+            }
+            else
+            {
+                this.worldObj.spawnEntityInWorld(item);
+            }
+
+            return item;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     // Need to override because vanilla knockback makes big dinos get knocked into air
     @Override
     public void knockBack(Entity entity, float p_70653_2_, double motionX, double motionZ)
@@ -433,7 +462,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private void adjustHitbox()
     {
-        setSize((float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX()), (float) transitionFromAge(dinosaur.getBabySizeY(), dinosaur.getAdultSizeY()));
+        float width = (float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX());
+        float height = (float) transitionFromAge(dinosaur.getBabySizeY(), dinosaur.getAdultSizeY());
+
+        if (isCarcass)
+        {
+            setSize(height, width);
+        }
+        else
+        {
+            setSize(width, height);
+        }
     }
 
     public double transitionFromAge(double baby, double adult)

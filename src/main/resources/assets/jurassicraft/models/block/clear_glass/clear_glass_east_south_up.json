@@ -1,22 +1,9 @@
 {
     "textures": {
-        "0": "jurassicraft:blocks/clear_glass/clear_glass",
-        "1": "jurassicraft:blocks/clear_glass/clear_glass_bottom",
-        "2": "jurassicraft:blocks/clear_glass/clear_glass_bottom_left",
-        "3": "jurassicraft:blocks/clear_glass/clear_glass_bottom_left_right",
-        "4": "jurassicraft:blocks/clear_glass/clear_glass_bottom_right",
-        "5": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top",
-        "6": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_left",
-        "7": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_left_right",
-        "8": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_right",
-        "9": "jurassicraft:blocks/clear_glass/clear_glass_left",
-        "10": "jurassicraft:blocks/clear_glass/clear_glass_left_right",
-        "11": "jurassicraft:blocks/clear_glass/clear_glass_right",
-        "12": "jurassicraft:blocks/clear_glass/clear_glass_top",
-        "13": "jurassicraft:blocks/clear_glass/clear_glass_top_left",
-        "14": "jurassicraft:blocks/clear_glass/clear_glass_top_left_right",
-        "15": "jurassicraft:blocks/clear_glass/clear_glass_top_right",
-        "particle": "jurassicraft:blocks/clear_glass/clear_glass"
+       "15": "jurassicraft:blocks/clear_glass/clear_glass_top_right",
+       "13": "jurassicraft:blocks/clear_glass/clear_glass_top_left",
+       "4": "jurassicraft:blocks/clear_glass/clear_glass_bottom_right",
+       "particle": "jurassicraft:blocks/clear_glass/clear_glass"
     },
     "elements": [
         {
@@ -30,7 +17,7 @@
                "south": { "texture": "#15", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "south" },
                "west": { "texture": "#15", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "west" },
                "up": { "texture": "#4", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "up" },
-               "down": { "texture": "#4", "uv": [ 0.0, 0.0, 16.0, 16.0], "cullface": "down" }
+               "down": { "texture": "#15", "uv": [ 0.0, 0.0, 16.0, 16.0], "cullface": "down" }
             }
         }
     ]
