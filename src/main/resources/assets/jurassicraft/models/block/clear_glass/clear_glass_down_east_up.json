@@ -1,10 +1,10 @@
 {
     "textures": {
-        "5": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top",
-        "6": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_left",
-        "8": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_right",
-        "11": "jurassicraft:blocks/clear_glass/clear_glass_right",
-        "particle": "jurassicraft:blocks/clear_glass/clear_glass"
+      "6": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_left",
+      "11": "jurassicraft:blocks/clear_glass/clear_glass_right",
+      "8": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top_right",
+      "5": "jurassicraft:blocks/clear_glass/clear_glass_bottom_top",
+      "particle": "jurassicraft:blocks/clear_glass/clear_glass"
     },
     "elements": [
         {
@@ -13,11 +13,53 @@
             "to": [ 16.0, 16.0, 16.0 ],
             "shade": false,
             "faces": {
-               "north": { "texture": "#6", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-               "east": { "texture": "#5", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "east" },
-               "south": { "texture": "#8", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-               "west": { "texture": "#5", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-               "up": { "texture": "#11", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "up" },
+              "north": {
+                "texture": "#6",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "east": {
+                "texture": "#5",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "east"
+              },
+              "south": {
+                "texture": "#8",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "west": {
+                "texture": "#5",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "up": {
+                "texture": "#11",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "up"
+              },
                "down": { "texture": "#11", "uv": [ 0.0, 0.0, 16.0, 16.0], "cullface": "down" }
             }
         }
