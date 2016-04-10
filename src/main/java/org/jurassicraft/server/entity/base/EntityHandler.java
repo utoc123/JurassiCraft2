@@ -251,7 +251,7 @@ public enum EntityHandler
     {
         String formattedName = name.toLowerCase().replaceAll(" ", "_");
 
-        EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.instance, 1024, 1, true);
+        EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }
 
     public void registerDinosaurType(Dinosaur dinosaur)

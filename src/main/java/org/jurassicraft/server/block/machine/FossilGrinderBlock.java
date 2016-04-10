@@ -94,7 +94,7 @@ public class FossilGrinderBlock extends OrientedBlock
 
                 if (cleaningStation.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 1, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 1, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

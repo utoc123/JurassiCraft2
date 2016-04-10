@@ -100,7 +100,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
 
                 if (embryonicMachine.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 7, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 7, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

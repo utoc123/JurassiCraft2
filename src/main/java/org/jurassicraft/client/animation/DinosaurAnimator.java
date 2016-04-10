@@ -25,7 +25,13 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITabulaModelAnimator<T>
@@ -81,7 +87,7 @@ public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITab
         }
         catch (URISyntaxException urise)
         {
-            JurassiCraft.instance.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", urise);
+            JurassiCraft.INSTANCE.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", urise);
             return;
         }
 
@@ -110,7 +116,7 @@ public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITab
                 // TODO: should this be caught here? We can't continue, because
                 // it breaks the contract that every ...
                 // model has at least the IDLE sequence defined
-                JurassiCraft.instance.getLogger().fatal("Failed to parse growth state " + growth + " for dinosaur " + name, e);
+                JurassiCraft.INSTANCE.getLogger().fatal("Failed to parse growth state " + growth + " for dinosaur " + name, e);
                 this.modelData.put(growth, new PreloadedModelData());
             }
         }
@@ -141,7 +147,7 @@ public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITab
             Reader reader = new InputStreamReader(dinoDef);
             AnimationsDTO rawAnimations = GSON.fromJson(reader, AnimationsDTO.class);
             PreloadedModelData data = getPosedModels(growthSensitiveDir, rawAnimations);
-            JurassiCraft.instance.getLogger().debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);
+            JurassiCraft.INSTANCE.getLogger().debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);
 
             reader.close();
 

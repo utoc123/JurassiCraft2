@@ -1,5 +1,6 @@
 package org.jurassicraft;
 
+import net.ilexiconn.llibrary.server.network.NetworkWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.common.config.Configuration;
@@ -11,9 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.CommandForceAnimation;
 import org.jurassicraft.server.configuration.JCConfigurations;
@@ -29,22 +28,25 @@ import org.jurassicraft.server.proxy.ServerProxy;
 
 import java.io.File;
 
-@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[1.1.0,)")
+@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.CONFIG.GUIFactory", dependencies = "required-after:llibrary@[1.2.1,)")
 public class JurassiCraft
 {
     @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")
-    public static ServerProxy proxy;
+    public static ServerProxy PROXY;
 
     public static final String MODID = "jurassicraft";
     public static final String MODNAME = "JurassiCraft";
-    public static final String VERSION = "2.0.0-pre";
+    public static final String VERSION = "2.0.0-dev";
 
     @Instance(JurassiCraft.MODID)
-    public static JurassiCraft instance;
-    public static long timerTicks;
-    public static SimpleNetworkWrapper networkWrapper;
+    public static JurassiCraft INSTANCE;
 
-    private Logger logger;
+    public static long timerTicks;
+
+    @NetworkWrapper({ SyncPaleoPadMessage.class, PlacePaddockSignMessage.class, ChangeTemperatureMessage.class, HelicopterEngineMessage.class, HelicopterDirectionMessage.class, HelicopterModulesMessage.class, SwitchHybridizerCombinatorMode.class })
+    public static SimpleNetworkWrapper NETWORK_WRAPPER;
+
+    private Logger LOGGER;
 
     public static JCConfigurations configurations = new JCConfigurations();
 
@@ -52,34 +54,18 @@ public class JurassiCraft
 
     // set up configuration properties (will be read from config file in preInit)
     public static File configFile;
-    public static Configuration config;
+    public static Configuration CONFIG;
 
     //public static BookWiki bookWiki;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        logger = event.getModLog();
-        logger.info("Loading JurassiCraft...");
+        LOGGER = event.getModLog();
+        LOGGER.info("Loading JurassiCraft...");
 
-        int id = 0;
-        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("jurassicraft");
-        networkWrapper.registerMessage(SyncPaleoPadMessage.class, SyncPaleoPadMessage.class, id++, Side.CLIENT);
-        networkWrapper.registerMessage(SyncPaleoPadMessage.class, SyncPaleoPadMessage.class, id++, Side.SERVER);
-        networkWrapper.registerMessage(PlacePaddockSignMessage.class, PlacePaddockSignMessage.class, id++, Side.SERVER);
-        networkWrapper.registerMessage(ChangeTemperatureMessage.class, ChangeTemperatureMessage.class, id++, Side.CLIENT);
-        networkWrapper.registerMessage(ChangeTemperatureMessage.class, ChangeTemperatureMessage.class, id++, Side.SERVER);
-        networkWrapper.registerMessage(HelicopterEngineMessage.class, HelicopterEngineMessage.class, id++, Side.CLIENT);
-        networkWrapper.registerMessage(HelicopterEngineMessage.class, HelicopterEngineMessage.class, id++, Side.SERVER);
-        networkWrapper.registerMessage(HelicopterDirectionMessage.class, HelicopterDirectionMessage.class, id++, Side.CLIENT);
-        networkWrapper.registerMessage(HelicopterDirectionMessage.class, HelicopterDirectionMessage.class, id++, Side.SERVER);
-        networkWrapper.registerMessage(HelicopterModulesMessage.class, HelicopterModulesMessage.class, id++, Side.CLIENT);
-        networkWrapper.registerMessage(HelicopterModulesMessage.class, HelicopterModulesMessage.class, id++, Side.SERVER);
-        networkWrapper.registerMessage(SwitchHybridizerCombinatorMode.class, SwitchHybridizerCombinatorMode.class, id++, Side.CLIENT);
-        networkWrapper.registerMessage(SwitchHybridizerCombinatorMode.class, SwitchHybridizerCombinatorMode.class, id++, Side.SERVER);
-
-        proxy.preInit(event);
-        logger.debug("Finished pre-initialization for JurassiCraft!");
+        PROXY.preInit(event);
+        LOGGER.debug("Finished pre-initialization for JurassiCraft!");
 
         FoodHandler.INSTANCE.init();
 
@@ -89,15 +75,15 @@ public class JurassiCraft
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-        proxy.init(event);
-        logger.debug("Finished initialization for JurassiCraft");
+        PROXY.init(event);
+        LOGGER.debug("Finished initialization for JurassiCraft");
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        proxy.postInit(event);
-        logger.info("Finished loading JurassiCraft");
+        PROXY.postInit(event);
+        LOGGER.info("Finished loading JurassiCraft");
     }
 
     @Mod.EventHandler
@@ -126,6 +112,6 @@ public class JurassiCraft
 
     public Logger getLogger()
     {
-        return logger;
+        return LOGGER;
     }
 }

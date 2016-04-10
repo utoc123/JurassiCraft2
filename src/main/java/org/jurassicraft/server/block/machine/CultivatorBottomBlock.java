@@ -62,7 +62,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
 
                 if (cultivator.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 10, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 10, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

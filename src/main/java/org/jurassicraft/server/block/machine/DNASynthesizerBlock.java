@@ -94,7 +94,7 @@ public class DNASynthesizerBlock extends OrientedBlock
 
                 if (dnaSynthesizer.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 5, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 5, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

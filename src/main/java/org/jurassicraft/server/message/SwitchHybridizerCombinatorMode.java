@@ -55,7 +55,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
         DNACombinatorHybridizerTile tile = (DNACombinatorHybridizerTile) player.worldObj.getTileEntity(pos);
 
         tile.setMode(mode);
-        JurassiCraft.networkWrapper.sendToAll(new SwitchHybridizerCombinatorMode(pos, mode));
+        JurassiCraft.NETWORK_WRAPPER.sendToAll(new SwitchHybridizerCombinatorMode(pos, mode));
 
         Container openContainer = player.openContainer;
 

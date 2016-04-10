@@ -48,7 +48,7 @@ public class PaleoPadGui extends GuiScreen
         if (focus != null)
         {
             JCPlayerDataClient.getPlayerData().closeApp(focus.getApp());
-            // JurassiCraft.networkWrapper.sendToServer(new MessageSyncoPad(mc.thePlayer));
+            // JurassiCraft.NETWORK_WRAPPER.sendToServer(new MessageSyncoPad(mc.thePlayer));
         }
     }
 

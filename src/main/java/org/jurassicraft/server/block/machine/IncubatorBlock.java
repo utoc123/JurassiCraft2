@@ -100,7 +100,7 @@ public class IncubatorBlock extends OrientedBlock
 
                 if (embryonicMachine.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 6, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 6, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

@@ -13,8 +13,13 @@ package org.jurassicraft.client.animation;
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats.Type;
+import net.minecraft.command.EntityNotFoundException;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerSelector;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -154,11 +159,11 @@ public class CommandForceAnimation implements ICommand
 
         if (theWorld.isRemote)
         {
-            JurassiCraft.instance.getLogger().debug("Not processing on Client side");
+            JurassiCraft.INSTANCE.getLogger().debug("Not processing on Client side");
         }
         else
         {
-            JurassiCraft.instance.getLogger().debug("Processing on Server side");
+            JurassiCraft.INSTANCE.getLogger().debug("Processing on Server side");
             if (argString.length < 1)
             {
                 throw new WrongUsageException("Missing the animation to set");

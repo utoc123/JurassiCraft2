@@ -55,7 +55,7 @@ public class ServerProxy
 
         GameRegistry.registerWorldGenerator(WorldGenerator.INSTANCE, 0);
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.instance, new JCGuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.INSTANCE, new JCGuiHandler());
 
         ServerEventHandler eventHandler = new ServerEventHandler();
 

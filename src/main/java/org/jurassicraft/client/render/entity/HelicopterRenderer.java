@@ -55,7 +55,7 @@ public class HelicopterRenderer implements IRenderFactory<HelicopterBaseEntity>
             }
             catch (Exception e)
             {
-                JurassiCraft.instance.getLogger().fatal("Failed to load the models for the Helicopter", e);
+                JurassiCraft.INSTANCE.getLogger().fatal("Failed to load the models for the Helicopter", e);
             }
         }
 

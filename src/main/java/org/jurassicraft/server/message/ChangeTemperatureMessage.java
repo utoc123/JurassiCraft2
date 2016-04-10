@@ -48,7 +48,7 @@ public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureM
     {
         IInventory incubator = (IInventory) player.worldObj.getTileEntity(message.pos);
         incubator.setField(message.slot + 10, message.temp);
-        JurassiCraft.networkWrapper.sendToAll(new ChangeTemperatureMessage(message.pos, message.slot, message.temp));
+        JurassiCraft.NETWORK_WRAPPER.sendToAll(new ChangeTemperatureMessage(message.pos, message.slot, message.temp));
     }
 
     @Override
