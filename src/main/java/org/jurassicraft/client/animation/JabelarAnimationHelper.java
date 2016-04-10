@@ -134,7 +134,7 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parSequenceIndex.getID() + " (" + Animations.getAnimation(parSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
+            JurassiCraft.INSTANCE.getLogger().error("Requested an anim id " + parSequenceIndex.getID() + " (" + Animations.getAnimation(parSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
             animatedEntity.setAnimation(Animations.IDLE.get());
         }
@@ -186,7 +186,7 @@ public class JabelarAnimationHelper
         // filter out illegal values in array
         if (numTicksInTween < 1)
         {
-            JurassiCraft.instance.getLogger().error("Array of sequences has sequence with num ticks illegal value (< 1)");
+            JurassiCraft.INSTANCE.getLogger().error("Array of sequences has sequence with num ticks illegal value (< 1)");
             numTicksInTween = 1;
         }
 
@@ -206,7 +206,7 @@ public class JabelarAnimationHelper
         // filter out illegal values in array
         if (numTicksInTween < 1)
         {
-            JurassiCraft.instance.getLogger().error("Array of sequences has sequence with num ticks illegal value (< 1)");
+            JurassiCraft.INSTANCE.getLogger().error("Array of sequences has sequence with num ticks illegal value (< 1)");
             numTicksInTween = 1;
         }
         currentTickInTween = 0;
@@ -294,15 +294,15 @@ public class JabelarAnimationHelper
         {
             if (nextModelRendererArray == null)
             {
-                JurassiCraft.instance.getLogger().error("Trying to tween to a null next pose array");
+                JurassiCraft.INSTANCE.getLogger().error("Trying to tween to a null next pose array");
             }
             else if (nextModelRendererArray[partIndex] == null)
             {
-                JurassiCraft.instance.getLogger().error("The part index " + partIndex + " in next pose is null");
+                JurassiCraft.INSTANCE.getLogger().error("The part index " + partIndex + " in next pose is null");
             }
             else if (currentRotationArray == null)
             {
-                JurassiCraft.instance.getLogger().error("Trying to tween from a null current rotation array");
+                JurassiCraft.INSTANCE.getLogger().error("Trying to tween from a null current rotation array");
             }
             else
             {
@@ -368,12 +368,12 @@ public class JabelarAnimationHelper
 
     private void playSound()
     {
-        JurassiCraft.instance.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
+        JurassiCraft.INSTANCE.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
 
         // only play sounds in first tick in tween
         if (currentTickInTween > 0)
         {
-            JurassiCraft.instance.getLogger().info("Don't play sound cause currentTickInTween > 0");
+            JurassiCraft.INSTANCE.getLogger().info("Don't play sound cause currentTickInTween > 0");
 
             return;
         }
@@ -384,7 +384,7 @@ public class JabelarAnimationHelper
             return;
         }
 
-        JurassiCraft.instance.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
+        JurassiCraft.INSTANCE.getLogger().info("playSound in state " + animatedEntity.getAnimation() + " for " + animatedEntity.getDinosaur().getName());
 
         SoundEvent sound = animatedEntity.getSoundForAnimation(animatedEntity.getAnimation());
 
@@ -453,7 +453,7 @@ public class JabelarAnimationHelper
         // handle case where animation sequence isn't available
         if (mapOfPoseSequences.get(parPoseSequenceIndex) == null)
         {
-            JurassiCraft.instance.getLogger().error("Requested an anim id " + parPoseSequenceIndex.getID() + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
+            JurassiCraft.INSTANCE.getLogger().error("Requested an anim id " + parPoseSequenceIndex.getID() + " (" + Animations.getAnimation(parPoseSequenceIndex).toString() + ") that doesn't have animation sequence in map for entity " + animatedEntity.getEntityId());
             currentPoseSequence = Animations.IDLE.get();
         }
         else if (currentPoseSequence != Animations.IDLE.get() && currentPoseSequence == parPoseSequenceIndex) // finished sequence but no new sequence set
@@ -493,7 +493,7 @@ public class JabelarAnimationHelper
         }
         catch (Exception e)
         {
-            JurassiCraft.instance.getLogger().error("Could not load Tabula model = " + tabulaModel);
+            JurassiCraft.INSTANCE.getLogger().error("Could not load Tabula model = " + tabulaModel);
         }
 
         return null;

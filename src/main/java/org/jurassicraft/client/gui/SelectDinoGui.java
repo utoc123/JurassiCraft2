@@ -158,7 +158,7 @@ public class SelectDinoGui extends GuiScreen
             inventory.decrStackSize(inventory.currentItem, 1);
         }
 
-        JurassiCraft.networkWrapper.sendToServer(new PlacePaddockSignMessage(hand, facing, pos, dinosaur));
+        JurassiCraft.NETWORK_WRAPPER.sendToServer(new PlacePaddockSignMessage(hand, facing, pos, dinosaur));
     }
 
     @Override

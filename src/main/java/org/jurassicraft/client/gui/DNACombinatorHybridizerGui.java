@@ -49,7 +49,7 @@ public class DNACombinatorHybridizerGui extends GuiContainer
             boolean mode = !inventory.getMode();
             container.updateSlots(mode);
             inventory.setMode(mode);
-            JurassiCraft.networkWrapper.sendToServer(new SwitchHybridizerCombinatorMode(inventory.getPos(), mode));
+            JurassiCraft.NETWORK_WRAPPER.sendToServer(new SwitchHybridizerCombinatorMode(inventory.getPos(), mode));
         }
     }
 

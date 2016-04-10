@@ -87,7 +87,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
         }
         catch (URISyntaxException urise)
         {
-            JurassiCraft.instance.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", urise);
+            JurassiCraft.INSTANCE.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", urise);
             return;
         }
 
@@ -116,7 +116,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
                 // TODO: should this be caught here? We can't continue, because
                 // it breaks the contract that every ...
                 // model has at least the IDLE sequence defined
-                JurassiCraft.instance.getLogger().fatal("Failed to parse growth state " + growth + " for dinosaur " + name, e);
+                JurassiCraft.INSTANCE.getLogger().fatal("Failed to parse growth state " + growth + " for dinosaur " + name, e);
                 this.modelData.put(growth, new PreloadedModelData());
             }
         }
@@ -147,7 +147,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
             Reader reader = new InputStreamReader(dinoDef);
             AnimationsDTO rawAnimations = GSON.fromJson(reader, AnimationsDTO.class);
             PreloadedModelData data = getPosedModels(growthSensitiveDir, rawAnimations);
-            JurassiCraft.instance.getLogger().debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);
+            JurassiCraft.INSTANCE.getLogger().debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);
 
             reader.close();
 

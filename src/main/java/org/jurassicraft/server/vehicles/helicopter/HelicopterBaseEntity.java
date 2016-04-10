@@ -211,7 +211,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         {
             for (HelicopterModuleSpot spot : moduleSpots)
             {
-                JurassiCraft.networkWrapper.sendToAll(new HelicopterModulesMessage(getEntityId(), spot.getPosition(), spot));
+                JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterModulesMessage(getEntityId(), spot.getPosition(), spot));
             }
             modulesSynced = true;
         }
@@ -318,11 +318,11 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     {
         if (worldObj.isRemote)
         {
-            JurassiCraft.networkWrapper.sendToServer(new HelicopterDirectionMessage(getEntityId(), direction));
+            JurassiCraft.NETWORK_WRAPPER.sendToServer(new HelicopterDirectionMessage(getEntityId(), direction));
         }
         else
         {
-            JurassiCraft.networkWrapper.sendToAll(new HelicopterDirectionMessage(getEntityId(), direction));
+            JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterDirectionMessage(getEntityId(), direction));
         }
     }
 
@@ -366,11 +366,11 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     {
         if (worldObj.isRemote)
         {
-            JurassiCraft.networkWrapper.sendToServer(new HelicopterEngineMessage(getEntityId(), engineState));
+            JurassiCraft.NETWORK_WRAPPER.sendToServer(new HelicopterEngineMessage(getEntityId(), engineState));
         }
         else
         {
-            JurassiCraft.networkWrapper.sendToAll(new HelicopterEngineMessage(getEntityId(), engineState));
+            JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterEngineMessage(getEntityId(), engineState));
         }
     }
 

@@ -78,7 +78,7 @@ public class EmbryonicMachineBlock extends OrientedBlock
 
                 if (embryonicMachine.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 3, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 3, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

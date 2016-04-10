@@ -84,7 +84,7 @@ public class DNAExtractorBlock extends OrientedBlock
 
                 if (dnaExtractor.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 9, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 9, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

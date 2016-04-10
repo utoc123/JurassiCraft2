@@ -78,7 +78,7 @@ public class DNASequencerBlock extends OrientedBlock
 
                 if (dnaSequencer.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.instance, 2, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, 2, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

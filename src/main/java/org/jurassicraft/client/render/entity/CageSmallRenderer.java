@@ -38,7 +38,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
             }
             catch (Exception e)
             {
-                JurassiCraft.instance.getLogger().fatal("Couldn't load the model " + modelLoc, e);
+                JurassiCraft.INSTANCE.getLogger().fatal("Couldn't load the model " + modelLoc, e);
             }
         }
 

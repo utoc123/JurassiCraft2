@@ -813,7 +813,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void setAnimation(Animation newAnimation)
     {
-        JurassiCraft.instance.getLogger().debug("Setting anim id for entity " + getEntityId() + " to " + newAnimation);
+        JurassiCraft.INSTANCE.getLogger().debug("Setting anim id for entity " + getEntityId() + " to " + newAnimation);
 
         if (newAnimation != animation) // only process changes
         {
@@ -855,7 +855,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         // Living sounds don't need to be synced to animations, so let this method
         // return a sound
-        JurassiCraft.instance.getLogger().info("getLivingSound for " + this.getDinosaur().getName());
+        JurassiCraft.INSTANCE.getLogger().info("getLivingSound for " + this.getDinosaur().getName());
         return getSoundForAnimation(Animations.IDLE.get());
     }
 

@@ -162,11 +162,11 @@ public class CommandForceAnimation implements ICommand
 
         if (theWorld.isRemote)
         {
-            JurassiCraft.instance.getLogger().debug("Not processing on Client side");
+            JurassiCraft.INSTANCE.getLogger().debug("Not processing on Client side");
         }
         else
         {
-            JurassiCraft.instance.getLogger().debug("Processing on Server side");
+            JurassiCraft.INSTANCE.getLogger().debug("Processing on Server side");
             if (args.length < 1)
             {
                 throw new WrongUsageException("Missing the animation to set");
