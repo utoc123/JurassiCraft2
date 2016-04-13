@@ -868,14 +868,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public String getHurtSound()
     {
         // To better aid syncing animations to sounds, the getInjuredSound() method is used instead
-        // called from JabelarAnimationHelper
+        // called from JabelarAnimationHandler
         return getSoundForAnimation(Animations.INJURED.get());
     }
 
     public String getSoundForAnimation(Animation animation)
     {
         // To better aid syncing animations to sounds, the getDyingSound() method is used instead
-        // called from JabelarAnimationHelper
+        // called from JabelarAnimationHandler
         if (animation == Animations.INJURED.get())
         {
             return getSound("hurt");
