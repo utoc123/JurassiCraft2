@@ -3,6 +3,7 @@ package org.jurassicraft.client.model;
 import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,7 +24,14 @@ public class DinosaurModel extends TabulaModel
     {
         DinosaurEntity dinosaur = (DinosaurEntity) entity;
 
-        this.setMovementScale(dinosaur.isSleeping() ? 0.5F : 1.0F);
+        if (dinosaur.isCarcass())
+        {
+            this.setMovementScale(0.0F);
+        }
+        else
+        {
+            this.setMovementScale(dinosaur.isSleeping() ? 0.5F : 1.0F);
+        }
 
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
     }
@@ -47,5 +55,19 @@ public class DinosaurModel extends TabulaModel
         }
 
         return cubeNamesArray;
+    }
+
+    @Override
+    public void faceTarget(float yaw, float pitch, float rotationDivisor, AdvancedModelRenderer... boxes)
+    {
+        float actualRotationDivisor = rotationDivisor * boxes.length;
+        float yawAmount = yaw / (180.0F / (float) Math.PI) / actualRotationDivisor;
+        float pitchAmount = pitch / (180.0F / (float) Math.PI) / actualRotationDivisor;
+
+        for (AdvancedModelRenderer box : boxes)
+        {
+            box.rotateAngleY += yawAmount;
+            box.rotateAngleX += pitchAmount;
+        }
     }
 }

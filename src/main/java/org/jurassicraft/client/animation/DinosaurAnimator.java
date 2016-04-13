@@ -66,7 +66,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DinosaurRenderDefDTO.class, new DinosaurRenderDefDTO.DinosaurDeserializer()).create();
 
     private Map<EnumGrowthStage, PreloadedModelData> modelData;
-    protected Map<Integer, Map<EnumGrowthStage, JabelarAnimationHelper>> entityIDToAnimation = new HashMap<Integer, Map<EnumGrowthStage, JabelarAnimationHelper>>();
+    protected Map<Integer, Map<EnumGrowthStage, JabelarAnimationHandler>> entityIDToAnimation = new HashMap<Integer, Map<EnumGrowthStage, JabelarAnimationHandler>>();
 
     /**
      * Loads the model, etc... for the dinosaur given.
@@ -210,7 +210,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
         AdvancedModelRenderer[][] posedCubes = new AdvancedModelRenderer[posedModelResources.size()][];
         Map<Animation, int[][]> animationSequences = new ListHashMap<Animation, int[][]>();
         // find all names we need
-        DinosaurModel mainModel = JabelarAnimationHelper.getTabulaModel(posedModelResources.get(0), 0);
+        DinosaurModel mainModel = JabelarAnimationHandler.getTabulaModel(posedModelResources.get(0), 0);
         if (mainModel == null)
         {
             throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
@@ -221,7 +221,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
         for (int i = 0; i < posedModelResources.size(); i++)
         {
             String resource = posedModelResources.get(i);
-            DinosaurModel theModel = JabelarAnimationHelper.getTabulaModel(resource, 0);
+            DinosaurModel theModel = JabelarAnimationHandler.getTabulaModel(resource, 0);
             if (theModel == null)
             {
                 throw new IllegalArgumentException("Couldn't load the model from " + resource);
@@ -261,25 +261,24 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
         return uri.toString();
     }
 
-    private JabelarAnimationHelper getAnimationHelper(DinosaurEntity entity, DinosaurModel model, boolean useInertialTweens)
+    private JabelarAnimationHandler getAnimationHelper(DinosaurEntity entity, DinosaurModel model, boolean useInertialTweens)
     {
         Integer id = entity.getEntityId();
         EnumGrowthStage growth = entity.getGrowthStage();
-        Map<EnumGrowthStage, JabelarAnimationHelper> growthToRender = entityIDToAnimation.get(id);
+        Map<EnumGrowthStage, JabelarAnimationHandler> growthToRender = entityIDToAnimation.get(id);
 
         if (growthToRender == null)
         {
-            growthToRender = new EnumMap<EnumGrowthStage, JabelarAnimationHelper>(EnumGrowthStage.class);
+            growthToRender = new EnumMap<>(EnumGrowthStage.class);
             entityIDToAnimation.put(id, growthToRender);
         }
 
-        JabelarAnimationHelper render = growthToRender.get(growth);
+        JabelarAnimationHandler render = growthToRender.get(growth);
 
         if (render == null)
         {
             PreloadedModelData growthModel = modelData.get(growth);
-            int cubes = growthModel.models.length > 0 ? growthModel.models[0].length : 0;
-            render = new JabelarAnimationHelper(entity, model, cubes, growthModel.models, growthModel.animations, useInertialTweens);
+            render = new JabelarAnimationHandler(entity, model, growthModel.models, growthModel.animations, useInertialTweens);
             growthToRender.put(growth, render);
         }
 
@@ -289,7 +288,8 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     @Override
     public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performJabelarAnimations(partialTicks);
+        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
+
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
         {
             if (entity.isSwimming())
