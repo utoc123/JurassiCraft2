@@ -27,13 +27,19 @@ public class FindPlantEntityAI extends EntityAIBase
     public static final double SHOULD_EAT_THRESHOLD = 0.82;
 
     // How far to eat the thing
-    public static final int EAT_RADIUS = 25;
+    public static final int EAT_RADIUS = 6;// was 25
 
     // This is how fast we are to break grass
     public static final double EAT_BREAK_SPEED = 1.0;
-
     // The minimum time to eat.
     public static final double MIN_BREAK_TIME_SEC = 3.0;
+
+    // Used to animate block breaking
+    protected BlockBreaker breaker = null;
+
+    private int counter;
+    //Time at which animal will cease attempting to eat a block
+    private static final int GIVE_UP_TIME = 140;// 7*20 counter = 7 ticks (ish?
 
     // How many block away the critter will look for plants.
     // TODO: Add eyesight/smell attribute for finding plants.
@@ -42,8 +48,13 @@ public class FindPlantEntityAI extends EntityAIBase
     // The animal we are tracking for.
     protected DinosaurEntity dinosaur;
 
+    private World world;
+
     // The target block to feed on, other null if currently not targeting anything
-    protected BlockPos target = null;
+    protected BlockPos target;
+    private BlockPos = previousTarget;
+
+    private Vec3 targetVec;
 
     public FindPlantEntityAI(DinosaurEntity dinosaur)
     {
@@ -76,10 +87,10 @@ public class FindPlantEntityAI extends EntityAIBase
     public void startExecuting()
     {
         // This gets called once to initiate.  Here's where we find the plant and start movement
-        BlockPos head = getHeadPos();
+        BlockPos head = new BlockPos(dinosaur.getHeadPos().xCoord, dinosaur.getHeadPos().yCoord, dinosaur.getHeadPos().zCoord);
 
         //world the animal currently inhabits
-        World world = dinosaur.worldObj;
+        world = dinosaur.worldObj;
 
         MetabolismContainer metabolism = dinosaur.getMetabolism();
         double food = metabolism.getFood();
@@ -94,10 +105,11 @@ public class FindPlantEntityAI extends EntityAIBase
         {
             Block block = world.getBlockState(pos).getBlock();
 
-            if (block instanceof BlockBush || block instanceof BlockLeaves)
-//          if (FoodHandler.canDietEat(EnumDiet.HERBIVORE, block))
+            if (block instanceof BlockBush || block instanceof BlockLeaves && pos != previousTarget)
+//          if (FoodHandler.canDietEat(EnumDiet.HERBIVORE, block)) // TODO returns true for air blocks
             {
                 target = pos;
+                targetVec = new Vec3(target.getX(), target.getY(), target.getZ());
                 break;
             }
         }
@@ -105,7 +117,7 @@ public class FindPlantEntityAI extends EntityAIBase
         if (target != null && food <= (maxFood * MUST_EAT_THRESHOLD))
         {
 //          LOGGER.info("Running towards found plant food pos = " + target);
-            dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 1.4);
+            dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 1.2);
         }
 
         else if (target != null && food <= (maxFood * SHOULD_EAT_THRESHOLD))
@@ -118,41 +130,58 @@ public class FindPlantEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
+        if(target != null && world.isAirBlock(target))
+        {
+            terminateTask();
+            return false;
+        }
         return target != null;
     }
 
     @Override
     public void updateTask()
     {
-        if (dinosaur.getNavigator().noPath())
+        if (target != null)
         {
-//            TODO: Head is above ground, so we need to compute this differently.  Ideally it can bend down
-//            if (getHeadPos().distanceSq(target) < EAT_RADIUS)
-//            {               
-            if (target != null)
+            Vec3 headVec = new Vec3(dinosaur.getHeadPos().xCoord, target.getY(), dinosaur.getHeadPos().zCoord);
+            if (headVec.squareDistanceto(targetVec) < EAT_RADIUS)
             {
-                // Start the animation
-                AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.EATING.get());
+                dinosaur.getNavigator().clearPathEntity();
 
+                // TODO inadequate method for looking at block
                 dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 0, dinosaur.getVerticalFaceSpeed());
 
-                if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
-                {
-                    dinosaur.worldObj.destroyBlock(target, false);
-                }
+                AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.EATING.get());
 
-                // TODO:  Add food value & food heal value to food helper
-                dinosaur.getMetabolism().increaseFood(2000);
-                dinosaur.heal(4.0F);
+                // TODO reimplement BlockBreaker
+                breaker = new BlockBreaker(dinosaur, EAT_BREAK_SPEED, target, MIN_BREAK_TIME_SEC);
 
-                //Now that we have finished stop the animation
-                TerminateTask();
+//                if (breaker.tickUpdate()){
+                    if (world.getGameRules().getBoolean("mobGriefing"))
+                    {
+                        world.destroyBlock(target, false);
+                    }
+
+                    // TODO:  Add food value & food heal value to food helper
+                    dinosaur.getMetabolism().increaseFood(2000);
+                    dinosaur.heal(4.0F);
+
+                    previousTarget = null;
+                    terminateTask();
+//                }
             }
-//            }
-//            else
-//            {
-//              // TODO If animal cannot reach location, try again or end task  
-//            }
+            else
+            {
+                counter++;
+                if(counter >= GIVE_UP_TIME)
+                {
+                    // TODO perhaps some sort of visual/audiatory display to showcase animal cannot reach food?
+                    LOGGER.info("Targeted food block was too far, seeking another target...");
+                    counter = 0;
+                    previousTarget = target;
+                    terminateTask();
+                }
+            }
         }
     }
 
@@ -161,16 +190,6 @@ public class FindPlantEntityAI extends EntityAIBase
         dinosaur.getNavigator().clearPathEntity();
         target = null;
         AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.IDLE.get());
-    }
-
-    //=========================================================================
-
-    private BlockPos getHeadPos()
-    {
-        // TODO:  Use getHeadPos() from DinosaurEntity once working correctly
-        return dinosaur.getPosition().
-                offset(dinosaur.getHorizontalFacing(), (int) dinosaur.width).
-                offset(EnumFacing.UP, (int) dinosaur.getEyeHeight());
     }
 
     private static final Logger LOGGER = LogManager.getLogger();
