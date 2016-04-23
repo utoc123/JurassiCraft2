@@ -5,12 +5,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.server.entity.ai.util.BlockBreaker;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
@@ -52,9 +53,9 @@ public class FindPlantEntityAI extends EntityAIBase
 
     // The target block to feed on, other null if currently not targeting anything
     protected BlockPos target;
-    private BlockPos = previousTarget;
+    private BlockPos previousTarget;
 
-    private Vec3 targetVec;
+    private Vec3d targetVec;
 
     public FindPlantEntityAI(DinosaurEntity dinosaur)
     {
@@ -105,16 +106,11 @@ public class FindPlantEntityAI extends EntityAIBase
         {
             Block block = world.getBlockState(pos).getBlock();
 
-<<<<<<< HEAD
-            if (block instanceof BlockBush || block instanceof BlockLeaves)
-//          if (FoodHelper.canDietEat(EnumDiet.HERBIVORE, block))
-=======
             if (block instanceof BlockBush || block instanceof BlockLeaves && pos != previousTarget)
 //          if (FoodHandler.canDietEat(EnumDiet.HERBIVORE, block)) // TODO returns true for air blocks
->>>>>>> 24bf681... I'm not dead
             {
                 target = pos;
-                targetVec = new Vec3(target.getX(), target.getY(), target.getZ());
+                targetVec = new Vec3d(target.getX(), target.getY(), target.getZ());
                 break;
             }
         }
@@ -135,7 +131,7 @@ public class FindPlantEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        if(target != null && world.isAirBlock(target))
+        if (target != null && world.isAirBlock(target))
         {
             terminateTask();
             return false;
@@ -148,8 +144,8 @@ public class FindPlantEntityAI extends EntityAIBase
     {
         if (target != null)
         {
-            Vec3 headVec = new Vec3(dinosaur.getHeadPos().xCoord, target.getY(), dinosaur.getHeadPos().zCoord);
-            if (headVec.squareDistanceto(targetVec) < EAT_RADIUS)
+            Vec3d headVec = new Vec3d(dinosaur.getHeadPos().xCoord, target.getY(), dinosaur.getHeadPos().zCoord);
+            if (headVec.squareDistanceTo(targetVec) < EAT_RADIUS)
             {
                 dinosaur.getNavigator().clearPathEntity();
 
@@ -162,23 +158,23 @@ public class FindPlantEntityAI extends EntityAIBase
                 breaker = new BlockBreaker(dinosaur, EAT_BREAK_SPEED, target, MIN_BREAK_TIME_SEC);
 
 //                if (breaker.tickUpdate()){
-                    if (world.getGameRules().getBoolean("mobGriefing"))
-                    {
-                        world.destroyBlock(target, false);
-                    }
+                if (world.getGameRules().getBoolean("mobGriefing"))
+                {
+                    world.destroyBlock(target, false);
+                }
 
-                    // TODO:  Add food value & food heal value to food helper
-                    dinosaur.getMetabolism().increaseFood(2000);
-                    dinosaur.heal(4.0F);
+                // TODO:  Add food value & food heal value to food helper
+                dinosaur.getMetabolism().increaseFood(2000);
+                dinosaur.heal(4.0F);
 
-                    previousTarget = null;
-                    terminateTask();
+                previousTarget = null;
+                terminateTask();
 //                }
             }
             else
             {
                 counter++;
-                if(counter >= GIVE_UP_TIME)
+                if (counter >= GIVE_UP_TIME)
                 {
                     // TODO perhaps some sort of visual/audiatory display to showcase animal cannot reach food?
                     LOGGER.info("Targeted food block was too far, seeking another target...");
@@ -190,7 +186,7 @@ public class FindPlantEntityAI extends EntityAIBase
         }
     }
 
-    private void TerminateTask()
+    private void terminateTask()
     {
         dinosaur.getNavigator().clearPathEntity();
         target = null;
