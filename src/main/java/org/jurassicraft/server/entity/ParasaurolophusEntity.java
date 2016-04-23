@@ -1,8 +1,6 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.world.World;
-import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.entity.ai.animations.JCNonAutoAnimBase;
 import org.jurassicraft.server.entity.base.DefensiveDinosaurEntity;
 
 public class ParasaurolophusEntity extends DefensiveDinosaurEntity // implements IEntityAICreature, IHerbivore
@@ -10,6 +8,5 @@ public class ParasaurolophusEntity extends DefensiveDinosaurEntity // implements
     public ParasaurolophusEntity(World world)
     {
         super(world);
-        animationTasks.addTask(2, new JCNonAutoAnimBase(this, Animations.CALLING.get(), 100)); // Call
     }
 }

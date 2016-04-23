@@ -381,6 +381,32 @@
 			"jurassicraft:dinosaurs/hypsilophodon/hypsilophodon_living_4"
         ]
     },
+    "parasaurolophus_living": {
+        "category": "hostile",
+        "sounds": [
+            "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_living_1",
+            "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_living_2"
+        ]
+    },
+    "parasaurolophus_call": {
+        "category": "hostile",
+        "sounds": [
+            "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_call_1",
+            "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_call_2"
+        ]
+    },
+    "parasaurolophus_death": {
+        "category": "hostile",
+        "sounds": [
+            "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_death_1"
+        ]
+    },
+    "parasaurolophus_hurt": {
+        "category": "hostile",
+        "sounds": [
+            "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_hurt_1"
+        ]
+    },
     "page-flip": {
         "category": "master",
         "sounds": [
