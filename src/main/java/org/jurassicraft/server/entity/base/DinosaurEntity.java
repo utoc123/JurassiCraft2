@@ -8,23 +8,27 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -37,6 +41,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
@@ -51,6 +56,7 @@ import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.ItemHandler;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -95,7 +101,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private final PandorasBox condition;
 
     private boolean isSleeping;
-    private boolean continueSleeping;
+    private int stayAwakeTime;
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -109,54 +115,48 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super(world);
 
-        animationTasks = new EntityAITasks(world != null ? world.theProfiler : null);
+        this.animationTasks = new EntityAITasks(world != null ? world.theProfiler : null);
 
-        metabolism = new MetabolismContainer(this);
-        condition = new PandorasBox(this);
-        inventory = new InventoryDinosaur(this);
-        tailBuffer = new ChainBuffer();
+        this.metabolism = new MetabolismContainer(this);
+        this.inventory = new InventoryDinosaur(this);
+        this.condition = new PandorasBox(this);
+        this.tailBuffer = new ChainBuffer();
 
         // SetupAI
         //tasks.addTask(0, new EscapeBlockEntityAI(this));
 
         if (!dinosaur.isMarineAnimal())
         {
-            tasks.addTask(0, new EntityAISwimming(this));
-//            tasks.addTask(0, new AdvancedSwimEntityAI(this));
+            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
         }
 
-        // This one make them move around
-        animationTasks.addTask(0, new SleepEntityAI(this));
+        this.animationTasks.addTask(0, new SleepEntityAI(this));
 
-        // WARNING: Do not enable, under development
-        animationTasks.addTask(1, new DrinkEntityAI(this));
-        animationTasks.addTask(1, new MateEntityAI(this));
-        animationTasks.addTask(1, new EatFoodItemEntityAI(this));
+        this.animationTasks.addTask(1, new DrinkEntityAI(this));
+        this.animationTasks.addTask(1, new MateEntityAI(this));
+        this.animationTasks.addTask(1, new EatFoodItemEntityAI(this));
 
         if (dinosaur.getDiet().doesEatPlants())
         {
-            tasks.addTask(1, new FindPlantEntityAI(this));
+            this.tasks.addTask(1, new FindPlantEntityAI(this));
         }
 
-        tasks.addTask(2, new EntityAIWander(this, 0.8));
+        this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
+        this.tasks.addTask(2, new HerdEntityAI(this));
 
-        tasks.addTask(2, new HerdEntityAI(this));
+        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
+        this.animationTasks.addTask(3, new CallAnimationAI(this));
+        this.animationTasks.addTask(3, new LookAnimationAI(this));
+        this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
 
-        animationTasks.addTask(3, new CallAnimationAI(this));
-        animationTasks.addTask(3, new LookAnimationAI(this));
-        animationTasks.addTask(3, new HeadCockAnimationAI(this));
+        this.setFullyGrown();
 
-        setFullyGrown();
+        this.genetics = GeneticsHelper.randomGenetics(rand, getDinosaur(), getDNAQuality());
+        this.isMale = rand.nextBoolean();
 
-        genetics = GeneticsHelper.randomGenetics(rand, getDinosaur(), getDNAQuality());
-        isMale = rand.nextBoolean();
-
-        animTick = 0;
-        setAnimation(Animations.IDLE.get());
-
-        continueSleeping = true;
-
-        ignoreFrustumCheck = true; // stops dino disappearing when hitbox goes off screen
+        this.animTick = 0;
+        this.setAnimation(Animations.IDLE.get());
 
         int rareVariantCount = dinosaur.getRareVariants().length;
 
@@ -164,20 +164,40 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (rand.nextInt(100) < 2)
             {
-                rareVariant = rand.nextInt(rareVariantCount) + 1;
+                this.rareVariant = rand.nextInt(rareVariantCount) + 1;
             }
         }
         // animations have inertia, meaning that they start slow then go fast 
         // and then slow at end to give sense of mass  Good for large dinos, not for mechanical
         // or light-weight entities
-        setUseInertialTweens(true);
+        this.setUseInertialTweens(true);
 
-        setHealthy(true);
+        this.setHealthy(true);
     }
 
     public boolean shouldSleep()
     {
-        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime();
+        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators();
+    }
+
+    private boolean hasPredators()
+    {
+        for (EntityLiving predator : this.getEntitiesWithinDistance(EntityLiving.class, 10.0F, 5.0F))
+        {
+            if (this.getLastAttacker() == predator || predator.getAttackTarget() == this)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private <T extends Entity> List<T> getEntitiesWithinDistance(Class<T> entity, double width, double height)
+    {
+        List<T> entities = this.worldObj.getEntitiesWithinAABB(entity, new AxisAlignedBB(this.posX - width, this.posY - height, this.posZ - width, this.posX + width, this.posY + height, this.posZ + width));
+        entities.remove(this);
+        return entities;
     }
 
     public void setSleeping(boolean sleeping)
@@ -289,7 +309,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 if (isSleeping)
                 {
-                    isSleeping = false;
                     disturbSleep();
                 }
 
@@ -416,11 +435,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.entityInit();
 
-        dataWatcher.addObject(WATCHER_IS_CARCASS, 0);
-        dataWatcher.addObject(WATCHER_AGE, 0);
-        dataWatcher.addObject(WATCHER_GROWTH_OFFSET, 0);
-        dataWatcher.addObject(WATCHER_IS_SLEEPING, 0);
-        dataWatcher.addObject(WATCHER_HAS_TRACKER, 0);
+        this.dataWatcher.addObject(WATCHER_IS_CARCASS, 0);
+        this.dataWatcher.addObject(WATCHER_AGE, 0);
+        this.dataWatcher.addObject(WATCHER_GROWTH_OFFSET, 0);
+        this.dataWatcher.addObject(WATCHER_IS_SLEEPING, 0);
+        this.dataWatcher.addObject(WATCHER_HAS_TRACKER, 0);
     }
 
     @Override
@@ -473,6 +492,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             setSize(width, height);
         }
+
+        this.stepHeight = Math.max(0.5F, height / 2.5F);
     }
 
     public double transitionFromAge(double baby, double adult)
@@ -626,6 +647,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SLEEPING.get());
             }
 
+            if (ticksExisted % 20 == 0)
+            {
+                if (stayAwakeTime <= 0 && this.hasPredators())
+                {
+                    this.disturbSleep();
+                }
+            }
+
             if (!shouldSleep() && !worldObj.isRemote)
             {
                 isSleeping = false;
@@ -636,9 +665,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
         }
 
-        if (!shouldSleep() && !isSleeping && !continueSleeping)
+        if (!shouldSleep() && !isSleeping && stayAwakeTime > 0)
         {
-            continueSleeping = true;
+            stayAwakeTime = 0;
         }
 
         if (getAnimation() != Animations.IDLE.get())
@@ -649,6 +678,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (this.isServerWorld())
         {
             animationTasks.onUpdateTasks();
+        }
+
+        if (stayAwakeTime > 0)
+        {
+            stayAwakeTime--;
         }
 
         prevAge = dinosaurAge;
@@ -818,12 +852,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void setAnimation(Animation newAnimation)
     {
-        JurassiCraft.INSTANCE.getLogger().debug("Setting anim id for entity " + getEntityId() + " to " + newAnimation);
-
-        if (newAnimation != animation) // only process changes
-        {
-            animation = newAnimation;
-        }
+        this.animation = newAnimation;
     }
 
     @Override
@@ -860,7 +889,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         // Living sounds don't need to be synced to animations, so let this method
         // return a sound
-        JurassiCraft.INSTANCE.getLogger().info("getLivingSound for " + this.getDinosaur().getName());
         return getSoundForAnimation(Animations.IDLE.get());
     }
 
@@ -1008,7 +1036,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setBoolean("IsMale", isMale);
         nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
         nbt.setByte("RareVariant", (byte) rareVariant);
-        nbt.setBoolean("ContinueSleeping", continueSleeping);
+        nbt.setInteger("StayAwakeTime", stayAwakeTime);
         nbt.setBoolean("IsSleeping", isSleeping);
         nbt.setInteger("CarcassHealth", carcassHealth);
 
@@ -1033,7 +1061,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         isMale = nbt.getBoolean("IsMale");
         growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
         rareVariant = nbt.getByte("RareVariant");
-        continueSleeping = nbt.getBoolean("ContinueSleeping");
+        stayAwakeTime = nbt.getInteger("StayAwakeTime");
         isSleeping = nbt.getBoolean("IsSleeping");
         carcassHealth = nbt.getInteger("CarcassHealth");
 
@@ -1048,8 +1076,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         inventory.readFromNBT(nbt);
 
-        updateCreatureData();
-        adjustHitbox();
+        this.updateCreatureData();
+        this.adjustHitbox();
     }
 
     @Override
@@ -1100,19 +1128,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return isSleeping;
     }
 
-    public boolean shouldContinueSleeping()
+    public int getStayAwakeTime()
     {
-        return continueSleeping;
+        return stayAwakeTime;
     }
 
     public void disturbSleep()
     {
-        this.continueSleeping = false;
+        this.isSleeping = false;
+        this.stayAwakeTime = 400;
     }
 
-    /**
-     * Write all the stats about this dino to the log.  There are too many to write to chat.
-     */
     public void writeStatsToLog()
     {
         LOGGER.info(this);
@@ -1128,7 +1154,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 ", isDead=" + isDead +
                 ", isCarcass=" + isCarcass +
                 ", isSleeping=" + isSleeping +
-                ", continueSleeping=" + continueSleeping +
+                ", stayAwakeTime=" + stayAwakeTime +
                 "\n    " +
                 ", dinosaurAge=" + dinosaurAge +
                 ", prevAge=" + prevAge +
@@ -1170,7 +1196,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 
-        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), ((360 - (rotationYawHead))) % 360 - 180);
+        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), ((360 - rotationYawHead)) % 360 - 180);
 
         double headX = ((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale;
         double headY = (((24 - headPos[1]) * 0.0625F) - dinosaur.getOffsetY()) * scale;
@@ -1197,6 +1223,24 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void setUseInertialTweens(boolean parUseInertialTweens)
     {
         useInertialTweens = parUseInertialTweens;
+    }
+
+    @Override
+    public ItemStack getPickedResult(MovingObjectPosition target)
+    {
+        return new ItemStack(ItemHandler.INSTANCE.spawn_egg, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+    }
+
+    @Override
+    public void applyEntityCollision(Entity entity)
+    {
+        if (!entity.noClip && !this.noClip)
+        {
+            if (entity.getClass() != this.getClass())
+            {
+                this.disturbSleep();
+            }
+        }
     }
 
     public PandorasBox getCondition()

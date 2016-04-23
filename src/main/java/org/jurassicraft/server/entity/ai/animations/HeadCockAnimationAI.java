@@ -13,20 +13,24 @@ public class HeadCockAnimationAI extends EntityAIBase
     public HeadCockAnimationAI(IAnimatedEntity entity)
     {
         super();
-        animatingEntity = (DinosaurEntity) entity;
+        this.animatingEntity = (DinosaurEntity) entity;
     }
 
     @Override
     public boolean shouldExecute()
     {
-        return animatingEntity.getRNG().nextDouble() < 0.01;
+        return animatingEntity.getRNG().nextDouble() < 0.003;
     }
 
     @Override
     public void startExecuting()
     {
-        super.startExecuting();
         AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, Animations.HEAD_COCKING.get());
-        animatingEntity.getNavigator().clearPathEntity();
+    }
+
+    @Override
+    public boolean continueExecuting()
+    {
+        return false;
     }
 }

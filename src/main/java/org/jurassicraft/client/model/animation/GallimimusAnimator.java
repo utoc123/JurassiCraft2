@@ -120,6 +120,8 @@ public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity>
         model.chainWave(armRight, 0.1F, -0.15F, 4, frame, 0.25F);
         model.chainWave(armLeft, 0.1F, -0.15F, 4, frame, 0.25F);
 
+        model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, neck3, neck4, head);
+
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

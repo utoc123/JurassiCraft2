@@ -6,11 +6,12 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.server.entity.ai.util.BlockBreaker;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
@@ -52,7 +53,7 @@ public class FindPlantEntityAI extends EntityAIBase
 
     // The target block to feed on, other null if currently not targeting anything
     protected BlockPos target;
-    private BlockPos = previousTarget;
+    private BlockPos previousTarget;
 
     private Vec3 targetVec;
 
@@ -65,9 +66,7 @@ public class FindPlantEntityAI extends EntityAIBase
     public boolean shouldExecute()
     {
         //We don't want to eat if we are dead or not supposed to
-        if (dinosaur.isDead ||
-                dinosaur.isCarcass() ||
-                !dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
+        if (dinosaur.isDead || dinosaur.isCarcass() || !dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
             return false;
         }
@@ -144,7 +143,7 @@ public class FindPlantEntityAI extends EntityAIBase
         if (target != null)
         {
             Vec3 headVec = new Vec3(dinosaur.getHeadPos().xCoord, target.getY(), dinosaur.getHeadPos().zCoord);
-            if (headVec.squareDistanceto(targetVec) < EAT_RADIUS)
+            if (headVec.squareDistanceTo(targetVec) < EAT_RADIUS)
             {
                 dinosaur.getNavigator().clearPathEntity();
 
@@ -185,7 +184,7 @@ public class FindPlantEntityAI extends EntityAIBase
         }
     }
 
-    private void TerminateTask()
+    private void terminateTask()
     {
         dinosaur.getNavigator().clearPathEntity();
         target = null;

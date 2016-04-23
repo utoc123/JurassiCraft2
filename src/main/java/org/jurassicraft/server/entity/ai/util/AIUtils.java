@@ -1,9 +1,9 @@
 package org.jurassicraft.server.entity.ai.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
@@ -94,8 +94,7 @@ public class AIUtils
 
         // Move up
         int depth = 0;
-        while (world.getBlockState(pos).getBlock().equals(Blocks.water) ||
-                world.getBlockState(pos).getBlock().equals(Blocks.flowing_water))
+        while (world.getBlockState(pos).getBlock() instanceof BlockLiquid)
         {
             pos = pos.up();
             ++depth;
@@ -105,8 +104,7 @@ public class AIUtils
         pos = entity.getPosition().down();
 
         // Move down
-        while (world.getBlockState(pos).getBlock().equals(Blocks.water) ||
-                world.getBlockState(pos).getBlock().equals(Blocks.flowing_water))
+        while (world.getBlockState(pos).getBlock() instanceof BlockLiquid)
         {
             pos = pos.down();
             ++depth;
@@ -128,7 +126,7 @@ public class AIUtils
             {
                 IBlockState state = world.getBlockState(center);
                 Block block = state.getBlock();
-                if (block != Blocks.water && block != Blocks.flowing_water && block != Blocks.lava)
+                if (!(block instanceof BlockLiquid))
                 {
                     return pos;
                 }

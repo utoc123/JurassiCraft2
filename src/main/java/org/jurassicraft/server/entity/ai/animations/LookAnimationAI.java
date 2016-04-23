@@ -13,25 +13,24 @@ public class LookAnimationAI extends EntityAIBase
     public LookAnimationAI(IAnimatedEntity entity)
     {
         super();
-        animatingEntity = (DinosaurEntity) entity;
+        this.animatingEntity = (DinosaurEntity) entity;
     }
 
     @Override
     public boolean shouldExecute()
     {
-        if (animatingEntity.getRNG().nextDouble() < 0.01)
-        {
-            return true;
-        }
-
-        return false;
+        return animatingEntity.getRNG().nextDouble() < 0.003;
     }
 
     @Override
     public void startExecuting()
     {
-        super.startExecuting();
         AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, animatingEntity.getRNG().nextBoolean() ? Animations.LOOKING_LEFT.get() : Animations.LOOKING_RIGHT.get());
-        animatingEntity.getNavigator().clearPathEntity();
+    }
+
+    @Override
+    public boolean continueExecuting()
+    {
+        return false;
     }
 }
