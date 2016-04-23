@@ -121,6 +121,8 @@ public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity>
         // model.bob(waist, 1 * globalSpeed, height, false, f, f1);
         // model.walk(waist, 1 * globalSpeed, 0.1F * height, true, -1.5F, 0.05F, f, f1);
 
+        model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, neck3, head);
+
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

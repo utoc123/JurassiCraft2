@@ -136,6 +136,8 @@ public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEnt
 
         model.chainWave(tail, 0.1F, -0.02F, 2, ticksExisted, 1F);
 
+        model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, head);
+
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

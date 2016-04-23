@@ -8,7 +8,6 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class HuntingEntityAI extends EntityAIBase
 {
-
     protected final DinosaurEntity dinosaur;
     private BlockPos pos;
     private Entity target;
@@ -23,15 +22,7 @@ public class HuntingEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (!dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
-        {
-            return false;
-        }
-        if (dinosaur.getMetabolism().getFood() > (dinosaur.getMetabolism().getMaxFood() / 3 * 2))
-        {
-            return false;
-        }
-        return !utils.getEntitiesWithinDistance(dinosaur, 30, 10).isEmpty();
+        return dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism") && dinosaur.getMetabolism().getFood() <= (dinosaur.getMetabolism().getMaxFood() / 3 * 2) && !utils.getEntitiesWithinDistance(dinosaur, 30, 10).isEmpty();
     }
 
     @Override

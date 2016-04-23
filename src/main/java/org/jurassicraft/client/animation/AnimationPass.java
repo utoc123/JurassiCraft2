@@ -69,7 +69,7 @@ public class AnimationPass
         {
             this.posesInAnimation = pose.length;
 
-            if (Animations.getAnimation(animation).shouldHold())
+            if (animation == Animations.DYING.get())
             {
                 this.currentPoseIndex = this.posesInAnimation - 1;
             }
@@ -123,7 +123,6 @@ public class AnimationPass
         {
             if (this.poseSequences.get(animation) == null)
             {
-                JurassiCraft.INSTANCE.getLogger().error("Requested an anim id " + animation.getID() + " (" + Animations.getAnimation(animation).toString() + ") that doesn't have animation sequence in map for entity " + entity.getEntityId());
                 this.animation = Animations.IDLE.get();
                 this.entity.setAnimation(Animations.IDLE.get());
             }
@@ -327,14 +326,10 @@ public class AnimationPass
 
     protected void playSound()
     {
-        JurassiCraft.INSTANCE.getLogger().info("playSound in state " + Animations.getAnimation(entity.getAnimation()) + " for " + entity.getDinosaur().getName());
-
         if (entity.getAnimation() == Animations.IDLE.get() || tweenTick > 0)
         {
             return;
         }
-
-        JurassiCraft.INSTANCE.getLogger().info("playSound in state " + Animations.getAnimation(entity.getAnimation()) + " for " + entity.getDinosaur().getName());
 
         SoundEvent sound = entity.getSoundForAnimation(entity.getAnimation());
 

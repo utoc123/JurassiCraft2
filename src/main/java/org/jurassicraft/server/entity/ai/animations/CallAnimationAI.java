@@ -17,7 +17,7 @@ public class CallAnimationAI extends EntityAIBase
     public CallAnimationAI(IAnimatedEntity entity)
     {
         super();
-        animatingEntity = (DinosaurEntity) entity;
+        this.animatingEntity = (DinosaurEntity) entity;
     }
 
     public List<Entity> getEntitiesWithinDistance(Entity entity, double width, double height)
@@ -30,13 +30,13 @@ public class CallAnimationAI extends EntityAIBase
     {
         if (animatingEntity.getRNG().nextDouble() < 0.003)
         {
-            List<Entity> entities = getEntitiesWithinDistance(animatingEntity, 50, 10);
+            List<Entity> entities = this.getEntitiesWithinDistance(animatingEntity, 50, 10);
 
             for (Entity entity : entities)
             {
-                if (animatingEntity.getClass().isInstance(entity))
+                if (this.animatingEntity.getClass().isInstance(entity))
                 {
-                    animatingEntity.playSound(animatingEntity.getSoundForAnimation(Animations.CALLING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
+                    this.animatingEntity.playSound(animatingEntity.getSoundForAnimation(Animations.CALLING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
                     return true;
                 }
             }
@@ -48,8 +48,12 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        super.startExecuting();
         AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, Animations.CALLING.get());
-        animatingEntity.getNavigator().clearPathEntity();
+    }
+
+    @Override
+    public boolean continueExecuting()
+    {
+        return false;
     }
 }
