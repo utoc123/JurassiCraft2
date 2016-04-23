@@ -23,6 +23,12 @@
                 "pose": "velociraptor_adult_death",
                 "time": 10
             }
+        ],
+        "SLEEPING": [
+            {
+                "pose": "velociraptor_adult_sleeping",
+                "time": 10
+            }
         ]
      }
 }

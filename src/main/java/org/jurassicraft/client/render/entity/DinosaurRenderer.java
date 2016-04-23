@@ -14,7 +14,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.VelociraptorEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EnumGrowthStage;
 import org.lwjgl.opengl.GL11;
@@ -60,39 +59,37 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
         String name = entity.getCustomNameTag();
 
-        if (entity instanceof VelociraptorEntity && (name.equals("iLexiconn") || name.equals("JTGhawk137")))
+        switch (name)
         {
-            GlStateManager.scale(scale - 0.86F, scale, scale);
-        }
-        else if (name.equals("Gegy"))
-        {
-            int ticksExisted = entity.ticksExisted / 25 + entity.getEntityId();
-            int colorTypes = EnumDyeColor.values().length;
-            int k = ticksExisted % colorTypes;
-            int l = (ticksExisted + 1) % colorTypes;
-            float time = ((float) (entity.ticksExisted % 25) + 2) / 25.0F;
-            float[] colors = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(k));
-            float[] colors2 = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(l));
-            GlStateManager.color(colors[0] * (1.0F - time) + colors2[0] * time, colors[1] * (1.0F - time) + colors2[1] * time, colors[2] * (1.0F - time) + colors2[2] * time);
-
-            if (time > 0.5F)
-            {
-                time = 1 - time;
-            }
-
-            GlStateManager.scale(scale * (0.5F + time * 0.5F), scale * (1 + time * 0.5F), scale * (0.9F + time * 0.25F));
-        }
-        else if (name.equals("Notch") || name.equals("Jumbo"))
-        {
-            GlStateManager.scale(scale * 2, scale * 2, scale * 2);
-        }
-        else if (name.equals("jglrxavpok"))
-        {
-            GlStateManager.scale(scale, scale, scale * -1);
-        }
-        else
-        {
-            GlStateManager.scale(scale, scale, scale);
+            case "iLexiconn":
+            case "JTGhawk137":
+                GlStateManager.scale(0.1F, scale, scale);
+                break;
+            case "Gegy":
+                int ticksExisted = entity.ticksExisted / 25 + entity.getEntityId();
+                int colorTypes = EnumDyeColor.values().length;
+                int k = ticksExisted % colorTypes;
+                int l = (ticksExisted + 1) % colorTypes;
+                float time = ((float) (entity.ticksExisted % 25) + 2) / 25.0F;
+                float[] colors = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(k));
+                float[] colors2 = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(l));
+                GlStateManager.color(colors[0] * (1.0F - time) + colors2[0] * time, colors[1] * (1.0F - time) + colors2[1] * time, colors[2] * (1.0F - time) + colors2[2] * time);
+                if (time > 0.5F)
+                {
+                    time = 1 - time;
+                }
+                GlStateManager.scale(scale * (0.5F + time * 0.5F), scale * (1 + time * 0.5F), scale * (0.9F + time * 0.25F));
+                break;
+            case "Notch":
+            case "Jumbo":
+                GlStateManager.scale(scale * 2, scale * 2, scale * 2);
+                break;
+            case "jglrxavpok":
+                GlStateManager.scale(scale, scale, scale * -1);
+                break;
+            default:
+                GlStateManager.scale(scale, scale, scale);
+                break;
         }
     }
 
