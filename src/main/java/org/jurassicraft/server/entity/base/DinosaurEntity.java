@@ -13,8 +13,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -45,7 +48,15 @@ import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
+import org.jurassicraft.server.entity.ai.HerdEntityAI;
+import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
+import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
+import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
@@ -121,23 +132,23 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.animationTasks.addTask(0, new SleepEntityAI(this));
 
-//        this.animationTasks.addTask(1, new DrinkEntityAI(this));
-//        this.animationTasks.addTask(1, new MateEntityAI(this));
-//        this.animationTasks.addTask(1, new EatFoodItemEntityAI(this));
-//
-//        if (dinosaur.getDiet().doesEatPlants())
-//        {
-//            this.tasks.addTask(1, new FindPlantEntityAI(this));
-//        }
-//
-//        this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
-//        this.tasks.addTask(2, new HerdEntityAI(this));
-//
-//        this.tasks.addTask(3, new EntityAILookIdle(this));
-//        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
-//        this.animationTasks.addTask(3, new CallAnimationAI(this));
-//        this.animationTasks.addTask(3, new LookAnimationAI(this));
-//        this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
+        this.animationTasks.addTask(1, new DrinkEntityAI(this));
+        this.animationTasks.addTask(1, new MateEntityAI(this));
+        this.animationTasks.addTask(1, new EatFoodItemEntityAI(this));
+
+        if (dinosaur.getDiet().doesEatPlants())
+        {
+            this.tasks.addTask(1, new FindPlantEntityAI(this));
+        }
+
+        this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
+        this.tasks.addTask(2, new HerdEntityAI(this));
+
+        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
+        this.animationTasks.addTask(3, new CallAnimationAI(this));
+        this.animationTasks.addTask(3, new LookAnimationAI(this));
+        this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
 
         this.setFullyGrown();
 
