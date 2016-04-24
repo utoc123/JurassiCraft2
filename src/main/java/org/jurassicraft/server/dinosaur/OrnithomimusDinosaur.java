@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.OrnithomimusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class OrnithomimusDinosaur extends Dinosaur
@@ -22,7 +22,7 @@ public class OrnithomimusDinosaur extends Dinosaur
         this.setEyeHeight(0.58F, 1.95F);
         this.setSizeX(0.2F, 1.0F);
         this.setSizeY(0.45F, 1.55F);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "skull", "tail_vertebrae");
         this.setHeadCubeName("Head Base");
         this.setScale(0.9F, 0.25F);

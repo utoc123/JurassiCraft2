@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.entity.base.GrowthStage;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
@@ -33,7 +33,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
     public DinosaurRenderer(RenderDinosaurDefinition renderDef, RenderManager renderManager)
     {
-        super(renderManager, renderDef.getModel(EnumGrowthStage.INFANT), renderDef.getShadowSize());
+        super(renderManager, renderDef.getModel(GrowthStage.INFANT), renderDef.getShadowSize());
 
         this.dinosaur = renderDef.getDinosaur();
         this.random = new Random();

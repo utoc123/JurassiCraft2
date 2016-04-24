@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.MetriacanthosaurusEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class MetriacanthosaurusAnimator extends DinosaurAnimator<MetriacanthosaurusEntity>
 {
-    public MetriacanthosaurusAnimator()
-    {
-        super(EntityHandler.INSTANCE.metriacanthosaurus);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, MetriacanthosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

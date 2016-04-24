@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.AggressiveSwimmingDinosaurEntity;
 
-public class CoelacanthEntity extends AggressiveSwimmingDinosaurEntity // implements IEntityAISwimmingCreature, ICarnivore
+public class CoelacanthEntity extends AggressiveSwimmingDinosaurEntity
 {
     public CoelacanthEntity(World world)
     {

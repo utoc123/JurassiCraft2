@@ -5,12 +5,13 @@ import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.animation.PoseHandler;
 import org.jurassicraft.server.api.GrowthStageGenderContainer;
 import org.jurassicraft.server.api.IHybrid;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
-import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
+import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
@@ -23,11 +24,11 @@ import java.util.Map;
 
 public abstract class Dinosaur implements Comparable<Dinosaur>
 {
-    private final Map<EnumGrowthStage, List<ResourceLocation>> overlays = new HashMap<EnumGrowthStage, List<ResourceLocation>>();
-    private final Map<EnumGrowthStage, ResourceLocation> maleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
-    private final Map<EnumGrowthStage, ResourceLocation> femaleTextures = new HashMap<EnumGrowthStage, ResourceLocation>();
+    private final Map<GrowthStage, List<ResourceLocation>> overlays = new HashMap<GrowthStage, List<ResourceLocation>>();
+    private final Map<GrowthStage, ResourceLocation> maleTextures = new HashMap<GrowthStage, ResourceLocation>();
+    private final Map<GrowthStage, ResourceLocation> femaleTextures = new HashMap<GrowthStage, ResourceLocation>();
     private final Map<GrowthStageGenderContainer, ResourceLocation> eyelidTextures = new HashMap<GrowthStageGenderContainer, ResourceLocation>();
-    private final Map<EnumGrowthStage, List<ResourceLocation>> rareVariantTextures = new HashMap<EnumGrowthStage, List<ResourceLocation>>();
+    private final Map<GrowthStage, List<ResourceLocation>> rareVariantTextures = new HashMap<GrowthStage, List<ResourceLocation>>();
 
     private String name;
     private Class<? extends DinosaurEntity> dinoClazz;
@@ -46,8 +47,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private boolean isMammal;
     private int storage;
     private int overlayCount;
-    private EnumDiet diet;
-    private EnumSleepingSchedule sleepingSchedule = EnumSleepingSchedule.DIURNAL;
+    private Diet diet;
+    private SleepingSchedule sleepingSchedule = SleepingSchedule.DIURNAL;
     private String[] bones;
     private int maximumAge;
     private String headCubeName;
@@ -67,6 +68,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private boolean usePosesForWalkingAnim = false;
 
     private String[] rareVariants = new String[0];
+    private PoseHandler poseHandler;
 
     public void init()
     {
@@ -88,19 +90,19 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
         String baseTextures = "textures/entities/" + formattedName + "/";
 
-        for (EnumGrowthStage growthStage : EnumGrowthStage.values())
+        for (GrowthStage growthStage : GrowthStage.values())
         {
             String growthStageName = growthStage.name().toLowerCase();
 
             if (!useAllGrowthStages())
             {
-                if (growthStage == EnumGrowthStage.ADOLESCENT)
+                if (growthStage == GrowthStage.ADOLESCENT)
                 {
-                    growthStageName = EnumGrowthStage.ADULT.name().toLowerCase();
+                    growthStageName = GrowthStage.ADULT.name().toLowerCase();
                 }
-                else if (growthStage == EnumGrowthStage.JUVENILE)
+                else if (growthStage == GrowthStage.JUVENILE)
                 {
-                    growthStageName = EnumGrowthStage.INFANT.name().toLowerCase();
+                    growthStageName = GrowthStage.INFANT.name().toLowerCase();
                 }
             }
 
@@ -148,6 +150,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
             overlays.put(growthStage, overlaysForGrowthStage);
         }
+
+        this.poseHandler = new PoseHandler(this);
     }
 
     protected TabulaModelContainer parseModel(String growthStage)
@@ -260,12 +264,12 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.overlayCount = count;
     }
 
-    public void setDiet(EnumDiet diet)
+    public void setDiet(Diet diet)
     {
         this.diet = diet;
     }
 
-    public void setSleepingSchedule(EnumSleepingSchedule sleepingSchedule)
+    public void setSleepingSchedule(SleepingSchedule sleepingSchedule)
     {
         this.sleepingSchedule = sleepingSchedule;
     }
@@ -385,12 +389,12 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return maximumAge;
     }
 
-    public ResourceLocation getMaleTexture(EnumGrowthStage stage)
+    public ResourceLocation getMaleTexture(GrowthStage stage)
     {
         return maleTextures.get(stage);
     }
 
-    public ResourceLocation getFemaleTexture(EnumGrowthStage stage)
+    public ResourceLocation getFemaleTexture(GrowthStage stage)
     {
         return femaleTextures.get(stage);
     }
@@ -476,7 +480,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return storage;
     }
 
-    public ResourceLocation getOverlayTexture(EnumGrowthStage stage, int overlay)
+    public ResourceLocation getOverlayTexture(GrowthStage stage, int overlay)
     {
         return overlay != -1 && overlay != 255 && overlays.containsKey(stage) ? overlays.get(stage).get(overlay) : null;
     }
@@ -496,12 +500,12 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return false;
     }
 
-    public EnumDiet getDiet()
+    public Diet getDiet()
     {
         return diet;
     }
 
-    public EnumSleepingSchedule getSleepingSchedule()
+    public SleepingSchedule getSleepingSchedule()
     {
         return sleepingSchedule;
     }
@@ -533,7 +537,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return headCubeName;
     }
 
-    public double[] getCubePosition(String cubeName, EnumGrowthStage stage)
+    public double[] getCubePosition(String cubeName, GrowthStage stage)
     {
         TabulaModelContainer model = getModelContainer(stage);
 
@@ -547,7 +551,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return new double[] { 0.0, 0.0, 0.0 };
     }
 
-    public double[] getParentedCubePosition(String cubeName, EnumGrowthStage stage, float rot)
+    public double[] getParentedCubePosition(String cubeName, GrowthStage stage, float rot)
     {
         TabulaModelContainer model = getModelContainer(stage);
 
@@ -640,12 +644,12 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return x < 0 ? x > -0.0001 ? 0 : x : x < 0.0001 ? 0 : x;
     }
 
-    public double[] getHeadPosition(EnumGrowthStage stage, float rot)
+    public double[] getHeadPosition(GrowthStage stage, float rot)
     {
         return getParentedCubePosition(getHeadCubeName(), stage, rot);
     }
 
-    public TabulaModelContainer getModelContainer(EnumGrowthStage stage)
+    public TabulaModelContainer getModelContainer(GrowthStage stage)
     {
         switch (stage)
         {
@@ -703,8 +707,13 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return rareVariants;
     }
 
-    public ResourceLocation getRareVariantTexture(int rareVariant, EnumGrowthStage growthStage)
+    public ResourceLocation getRareVariantTexture(int rareVariant, GrowthStage growthStage)
     {
         return rareVariantTextures.get(growthStage).get(rareVariant - 1);
+    }
+
+    public PoseHandler getPoseHandler()
+    {
+        return poseHandler;
     }
 }

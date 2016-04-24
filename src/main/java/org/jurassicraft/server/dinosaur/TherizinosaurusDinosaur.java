@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.TherizinosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
+import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class TherizinosaurusDinosaur extends Dinosaur
@@ -24,8 +24,8 @@ public class TherizinosaurusDinosaur extends Dinosaur
         this.setSizeX(0.65F, 2.25F);
         this.setSizeY(1.0F, 5.95F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.HERBIVORE);
-        this.setSleepingSchedule(EnumSleepingSchedule.DIURNAL);
+        this.setDiet(Diet.HERBIVORE);
+        this.setSleepingSchedule(SleepingSchedule.DIURNAL);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
         this.setUsePosesForWalkingAnim(false);

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.CearadactylusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class CearadactylusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class CearadactylusDinosaur extends Dinosaur
         this.setSizeX(0.35F, 1.5F);
         this.setSizeY(0.45F, 1.55F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "teeth", "wing_bones", "tail_vertebrae", "leg_bones", "pelvis");
         this.setHeadCubeName("Head");
         this.setScale(1.0F, 0.45F);

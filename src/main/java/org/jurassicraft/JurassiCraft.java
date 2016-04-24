@@ -47,7 +47,6 @@ public class JurassiCraft
 
     public static JCConfigurations configurations = new JCConfigurations();
 
-    // set up configuration properties (will be read from config file in preInit)
     public static File configFile;
     public static Configuration CONFIG;
 

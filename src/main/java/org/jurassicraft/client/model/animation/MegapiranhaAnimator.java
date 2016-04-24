@@ -4,15 +4,9 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.MegapiranhaEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 public class MegapiranhaAnimator extends DinosaurAnimator<MegapiranhaEntity>
 {
-    public MegapiranhaAnimator()
-    {
-        super(EntityHandler.INSTANCE.megapiranha);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, MegapiranhaEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

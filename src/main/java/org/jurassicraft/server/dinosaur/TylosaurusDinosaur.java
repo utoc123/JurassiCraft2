@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.TylosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class TylosaurusDinosaur extends Dinosaur
@@ -25,7 +25,7 @@ public class TylosaurusDinosaur extends Dinosaur
         this.setMarineAnimal(true);
         this.setMammal(true);
         this.setStorage(54);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("front_flipper", "hind_flipper", "inner_teeth", "ribcage", "skull", "spine", "tail_fluke", "tail_vertebrae", "tooth");
         this.setHeadCubeName("Main head");
         this.setScale(2.2F, 0.45F);

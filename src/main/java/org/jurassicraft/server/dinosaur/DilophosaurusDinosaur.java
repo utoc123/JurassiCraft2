@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.DilophosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
+import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class DilophosaurusDinosaur extends Dinosaur
@@ -24,8 +24,8 @@ public class DilophosaurusDinosaur extends Dinosaur
         this.setSizeX(0.3F, 1.25F);
         this.setSizeY(0.5F, 2.5F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.CARNIVORE);
-        this.setSleepingSchedule(EnumSleepingSchedule.CREPUSCULAR);
+        this.setDiet(Diet.CARNIVORE);
+        this.setSleepingSchedule(SleepingSchedule.CREPUSCULAR);
         this.setBones("skull", "tooth", "arm_bones", "leg_bones", "neck", "pelvis", "ribcage", "shoulder", "tail_vertebrae");
         this.setHeadCubeName("Head");
         this.setScale(0.95F, 0.22F);

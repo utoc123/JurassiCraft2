@@ -34,11 +34,11 @@ public class DinoScannerItem extends Item
             // Command key on mac
             if (GuiScreen.isCtrlKeyDown())
             {
-                int food = dinosaur.getMetabolism().getFood();
-                dinosaur.getMetabolism().setFood(food - 5000);
-                LOGGER.info("food: " + dinosaur.getMetabolism().getFood() + "/" + dinosaur.getMetabolism().getMaxFood() +
-                        "(" + (dinosaur.getMetabolism().getMaxFood() * 0.875) + "/" +
-                        (dinosaur.getMetabolism().getMaxFood() * 0.25) + ")");
+                int food = dinosaur.getMetabolism().getEnergy();
+                dinosaur.getMetabolism().setEnergy(food - 5000);
+                LOGGER.info("food: " + dinosaur.getMetabolism().getEnergy() + "/" + dinosaur.getMetabolism().getMaxEnergy() +
+                        "(" + (dinosaur.getMetabolism().getMaxEnergy() * 0.875) + "/" +
+                        (dinosaur.getMetabolism().getMaxEnergy() * 0.25) + ")");
             }
             else
             {

@@ -18,9 +18,6 @@ public class MoveUnderwaterEntityAI extends EntityAIBase
         this.setMutexBits(3);
     }
 
-    /**
-     * Returns whether the EntityAIBase should begin execution.
-     */
     @Override
     public boolean shouldExecute()
     {
@@ -44,18 +41,12 @@ public class MoveUnderwaterEntityAI extends EntityAIBase
         }
     }
 
-    /**
-     * Returns whether an in-progress EntityAIBase should continue executing
-     */
     @Override
     public boolean continueExecuting()
     {
         return !this.swimmingEntity.getNavigator().noPath();
     }
 
-    /**
-     * Execute a one shot task or start executing a continuous task
-     */
     @Override
     public void startExecuting()
     {

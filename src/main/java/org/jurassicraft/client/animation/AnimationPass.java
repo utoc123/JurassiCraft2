@@ -58,7 +58,7 @@ public class AnimationPass
 
         this.updatePreviousPose();
 
-        this.initIncrements(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+        this.initIncrements(0.0F);
     }
 
     public void initPoseModel()
@@ -82,7 +82,7 @@ public class AnimationPass
         }
     }
 
-    protected void initIncrements(float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void initIncrements(float partialTicks)
     {
         float inertiaFactor = calculateInertiaFactor(partialTicks);
 
@@ -150,14 +150,14 @@ public class AnimationPass
         return (float) inertiaFactor;
     }
 
-    public void performAnimations(float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    public void performAnimations(float partialTicks)
     {
         if (entity.getAnimation() != animation && animation != Animations.DYING.get() && this.doesUpdateEntityAnimations())
         {
             this.setNextSequence(entity.getAnimation());
         }
 
-        this.performNextTween(limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
+        this.performNextTween(partialTicks);
     }
 
     /**
@@ -184,9 +184,9 @@ public class AnimationPass
         }
     }
 
-    protected void calculateTween(float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void calculateTween(float partialTicks)
     {
-        this.initIncrements(limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
+        this.initIncrements(partialTicks);
 
         for (int partIndex = 0; partIndex < parts.length; partIndex++)
         {
@@ -200,14 +200,14 @@ public class AnimationPass
             }
             else
             {
-                this.applyTweenRotations(partIndex, limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
-                this.applyTweenTranslations(partIndex, limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
-                this.applyTweenOffsets(partIndex, limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
+                this.applyTweenRotations(partIndex);
+                this.applyTweenTranslations(partIndex);
+                this.applyTweenOffsets(partIndex);
             }
         }
     }
 
-    protected void applyTweenRotations(int partIndex, float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void applyTweenRotations(int partIndex)
     {
         AdvancedModelRenderer part = this.parts[partIndex];
 
@@ -218,7 +218,7 @@ public class AnimationPass
         part.rotateAngleZ += (rotationIncrements[2] + prevRotationIncrements[partIndex][2]);
     }
 
-    protected void applyTweenTranslations(int partIndex, float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void applyTweenTranslations(int partIndex)
     {
         AdvancedModelRenderer part = this.parts[partIndex];
 
@@ -229,7 +229,7 @@ public class AnimationPass
         part.rotationPointZ += (translationIncrements[2] + prevPositionIncrements[partIndex][2]);
     }
 
-    protected void applyTweenOffsets(int partIndex, float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void applyTweenOffsets(int partIndex)
     {
         AdvancedModelRenderer part = this.parts[partIndex];
 
@@ -293,9 +293,9 @@ public class AnimationPass
         this.updateTween();
     }
 
-    protected void performNextTween(float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performNextTween(float partialTicks)
     {
-        this.calculateTween(limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
+        this.calculateTween(partialTicks);
 
         for (int i = 0; i < entity.ticksExisted - prevTicksExisted; i++)
         {
@@ -384,9 +384,10 @@ public class AnimationPass
             {
                 animation = Animations.IDLE.get();
             }
+
+            this.entity.setAnimation(animation);
         }
 
-        this.entity.setAnimation(animation);
         this.setNextPoseModel(0);
 
         this.startNextTween();

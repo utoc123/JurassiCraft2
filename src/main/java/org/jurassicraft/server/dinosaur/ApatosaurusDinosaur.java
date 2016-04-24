@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.ApatosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class ApatosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class ApatosaurusDinosaur extends Dinosaur
         this.setSizeX(0.9F, 6.5F);
         this.setSizeY(1.0F, 6.8F);
         this.setStorage(54);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(2.0F, 0.25F);

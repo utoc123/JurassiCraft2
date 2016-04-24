@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.BrachiosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class BrachiosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class BrachiosaurusDinosaur extends Dinosaur
         this.setSizeX(0.9F, 6.5F);
         this.setSizeY(1.5F, 10.8F);
         this.setStorage(54);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones");
         this.setHeadCubeName("head");
         this.setScale(2.5F, 0.3F);

@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.base.DefensiveDinosaurEntity;
 
-public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements IEntityAICreature, IHerbivore
+public class BrachiosaurusEntity extends DefensiveDinosaurEntity
 {
     private int stepCount = 0;
 
@@ -20,7 +20,6 @@ public class BrachiosaurusEntity extends DefensiveDinosaurEntity // implements I
     {
         super.onUpdate();
 
-        /** Step Sound */
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
             this.playSound(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "stomp")), (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());

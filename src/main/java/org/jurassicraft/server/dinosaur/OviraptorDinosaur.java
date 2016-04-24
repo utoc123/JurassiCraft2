@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.OviraptorEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class OviraptorDinosaur extends Dinosaur
@@ -24,7 +24,7 @@ public class OviraptorDinosaur extends Dinosaur
         this.setSizeY(0.32F, 0.95F);
         this.disableRegistry();
         this.setStorage(9);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones();
         this.setHeadCubeName("Head");
         this.setScale(0.65F, 0.18F);

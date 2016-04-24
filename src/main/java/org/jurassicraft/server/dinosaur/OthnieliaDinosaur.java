@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.OthnieliaEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class OthnieliaDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class OthnieliaDinosaur extends Dinosaur
         this.setSizeX(0.15F, 0.4F);
         this.setSizeY(0.25F, 0.55F);
         this.setStorage(9);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head ");
         this.setScale(0.35F, 0.15F);

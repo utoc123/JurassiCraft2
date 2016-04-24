@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.CompsognathusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class CompsognathusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class CompsognathusDinosaur extends Dinosaur
         this.setSizeX(0.1F, 0.3F);
         this.setSizeY(0.25F, 0.55F);
         this.setStorage(9);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "teeth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "arm_bones");
         this.setHeadCubeName("Head");
         this.setScale(0.1F, 0.04F);

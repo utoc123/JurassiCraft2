@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
@@ -58,7 +57,7 @@ public class JCPanicEntityAI extends EntityAIBase
     {
         theEntityCreature.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
 
-        AnimationHandler.INSTANCE.sendAnimationMessage(theEntityCreature, Animations.HISSING.get());
+        theEntityCreature.setAnimation(Animations.HISSING.get());
 
         // DEBUG
         System.out.println("Starting panic AI for entity " + theEntityCreature.getEntityId());

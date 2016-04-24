@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.VelociraptorEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class VelociraptorDinosaur extends Dinosaur
@@ -24,7 +24,7 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setSizeX(0.5F, 1.0F);
         this.setSizeY(0.5F, 1.8F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("claw", "tooth", "skull");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.3F);

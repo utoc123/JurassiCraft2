@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.LeptictidiumEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class LeptictidiumDinosaur extends Dinosaur
@@ -24,7 +24,7 @@ public class LeptictidiumDinosaur extends Dinosaur
         this.setSizeY(0.25F, 0.75F);
         this.setMammal(true);
         this.disableRegistry();
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones();
         this.setScale(0.6F, 0.25F);
         this.disableRegistry();

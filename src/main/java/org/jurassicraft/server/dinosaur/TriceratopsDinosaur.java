@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.TriceratopsEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class TriceratopsDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setSizeX(0.35F, 2.5F);
         this.setSizeY(0.6F, 2.8F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("front_leg_bones", "hind_leg_bones", "horn", "neck_vertebrae", "pelvis", "ribcage", "shoulder_bone", "skull", "tail_vertebrae", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.8F, 0.325F);

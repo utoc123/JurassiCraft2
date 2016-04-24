@@ -1,19 +1,19 @@
 package org.jurassicraft.server.api;
 
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.entity.base.GrowthStage;
 
 public class GrowthStageGenderContainer
 {
-    public EnumGrowthStage growthStage;
+    public GrowthStage growthStage;
     public boolean isMale;
 
-    public GrowthStageGenderContainer(EnumGrowthStage stage, boolean isMale)
+    public GrowthStageGenderContainer(GrowthStage stage, boolean isMale)
     {
         this.growthStage = stage;
         this.isMale = isMale;
     }
 
-    public EnumGrowthStage getGrowthStage()
+    public GrowthStage getGrowthStage()
     {
         return growthStage;
     }

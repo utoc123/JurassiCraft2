@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
@@ -21,12 +20,6 @@ import org.jurassicraft.server.entity.base.MetabolismContainer;
  */
 public class FindPlantEntityAI extends EntityAIBase
 {
-    // We always want to eat if below this.
-    public static final double MUST_EAT_THRESHOLD = 0.25;
-
-    // If we are awake, then we want to eat below this threshold
-    public static final double SHOULD_EAT_THRESHOLD = 0.82;
-
     // How far to eat the thing
     public static final int EAT_RADIUS = 6;// was 25
 
@@ -66,22 +59,7 @@ public class FindPlantEntityAI extends EntityAIBase
     public boolean shouldExecute()
     {
         //We don't want to eat if we are dead or not supposed to
-        if (dinosaur.isDead ||
-                dinosaur.isCarcass() ||
-                !dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
-        {
-            return false;
-        }
-
-        // Now, let's see if we are hungry
-        MetabolismContainer metabolism = dinosaur.getMetabolism();
-        double food = metabolism.getFood();
-        int maxFood = metabolism.getMaxFood();
-
-        return ((food < (maxFood * MUST_EAT_THRESHOLD)) ||
-                ((food < (maxFood * SHOULD_EAT_THRESHOLD)) &&
-                        dinosaur.getDinosaur().getSleepingSchedule()
-                                .isWithinEatingTime(dinosaur.getDinosaurTime(), dinosaur.getRNG())));
+        return !(dinosaur.isDead || dinosaur.isCarcass() || !dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) && dinosaur.getMetabolism().isHungry();
     }
 
     @Override
@@ -94,8 +72,6 @@ public class FindPlantEntityAI extends EntityAIBase
         world = dinosaur.worldObj;
 
         MetabolismContainer metabolism = dinosaur.getMetabolism();
-        double food = metabolism.getFood();
-        int maxFood = metabolism.getMaxFood();
 
         // Look in increasing layers (e.g. boxes) around the head. Traversers... are like ogres?
         OnionTraverser traverser = new OnionTraverser(head, LOOK_RADIUS);
@@ -107,7 +83,7 @@ public class FindPlantEntityAI extends EntityAIBase
             Block block = world.getBlockState(pos).getBlock();
 
             if (block instanceof BlockBush || block instanceof BlockLeaves && pos != previousTarget)
-//          if (FoodHandler.canDietEat(EnumDiet.HERBIVORE, block)) // TODO returns true for air blocks
+//          if (FoodHandler.canDietEat(Diet.HERBIVORE, block)) // TODO returns true for air blocks
             {
                 target = pos;
                 targetVec = new Vec3d(target.getX(), target.getY(), target.getZ());
@@ -115,15 +91,12 @@ public class FindPlantEntityAI extends EntityAIBase
             }
         }
 
-        if (target != null && food <= (maxFood * MUST_EAT_THRESHOLD))
+        if (target != null && metabolism.isStarving())
         {
-//          LOGGER.info("Running towards found plant food pos = " + target);
             dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 1.2);
         }
-
-        else if (target != null && food <= (maxFood * SHOULD_EAT_THRESHOLD))
+        else if (target != null)
         {
-//          LOGGER.info("Walking towards found plant food pos = " + target);
             dinosaur.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(), 0.7);
         }
     }
@@ -152,7 +125,7 @@ public class FindPlantEntityAI extends EntityAIBase
                 // TODO inadequate method for looking at block
                 dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 0, dinosaur.getVerticalFaceSpeed());
 
-                AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.EATING.get());
+                dinosaur.setAnimation(Animations.EATING.get());
 
                 // TODO reimplement BlockBreaker
                 breaker = new BlockBreaker(dinosaur, EAT_BREAK_SPEED, target, MIN_BREAK_TIME_SEC);
@@ -164,7 +137,7 @@ public class FindPlantEntityAI extends EntityAIBase
                 }
 
                 // TODO:  Add food value & food heal value to food helper
-                dinosaur.getMetabolism().increaseFood(2000);
+                dinosaur.getMetabolism().increaseDigestingFood(500);
                 dinosaur.heal(4.0F);
 
                 previousTarget = null;
@@ -190,7 +163,7 @@ public class FindPlantEntityAI extends EntityAIBase
     {
         dinosaur.getNavigator().clearPathEntity();
         target = null;
-        AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.IDLE.get());
+        dinosaur.setAnimation(Animations.IDLE.get());
     }
 
     private static final Logger LOGGER = LogManager.getLogger();

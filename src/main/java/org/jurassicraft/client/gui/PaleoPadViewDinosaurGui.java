@@ -18,8 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.paleopad.App;
 import org.jurassicraft.server.paleopad.AppHandler;
@@ -75,7 +75,7 @@ public class PaleoPadViewDinosaurGui extends GuiScreen
         Dinosaur dinoDef = this.dinosaur.getDinosaur();
         drawScaledText("Viewing: " + this.dinosaur.getName(), 5, 5, 1.0F, this.dinosaur.isMale() ? dinoDef.getEggPrimaryColorMale() : dinoDef.getEggPrimaryColorFemale());
         drawScaledText("Age: " + this.dinosaur.getDaysExisted() + " days", 5, 20, 1.0F, 0x808080);
-        drawScaledText("Hunger: " + this.dinosaur.getMetabolism().getFood() + "/" + this.dinosaur.getMetabolism().getMaxFood(), 5, 35, 1.0F, 0x808080);
+        drawScaledText("Hunger: " + this.dinosaur.getMetabolism().getEnergy() + "/" + this.dinosaur.getMetabolism().getMaxEnergy(), 5, 35, 1.0F, 0x808080);
         drawScaledText("Thirst: " + this.dinosaur.getMetabolism().getWater() + "/" + this.dinosaur.getMetabolism().getMaxWater(), 5, 50, 1.0F, 0x808080);
 
         drawScaledRect(0, 0, 458, 2, 0.5F, 0x404040);
@@ -85,7 +85,7 @@ public class PaleoPadViewDinosaurGui extends GuiScreen
         this.zLevel = -100;
         drawEntityOnScreen(115, 140, (int) (70 / dinoDef.getAdultSizeY()), this.dinosaur);
 
-        EnumDiet diet = dinoDef.getDiet();
+        Diet diet = dinoDef.getDiet();
         drawScaledEndText((this.dinosaur.isMale() ? "MALE" : "FEMALE"), 225, 5, 1.0F, 0xFFFF00);
         drawScaledEndText(diet.toString(), 225, 35, 1.0F, diet.getColor());
         drawScaledEndText(dinoDef.getSleepingSchedule().toString(), 225, 20, 1.0F, 0xAAAAAA);

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.AnkylosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class AnkylosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class AnkylosaurusDinosaur extends Dinosaur
         this.setSizeX(0.8F, 3.0F);
         this.setSizeY(0.6F, 3.0F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "tail_club", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones", "armor_plating");
         this.setHeadCubeName("head ");
         this.setScale(2.3F, 0.45F);

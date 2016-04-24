@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.entity.base.GrowthStage;
 
 import java.lang.reflect.Type;
 import java.util.EnumMap;
@@ -28,8 +28,8 @@ public class DinosaurRenderDefDTO
             JsonObject def = json.getAsJsonObject();
             DinosaurRenderDefDTO built = new DinosaurRenderDefDTO();
             built.version = def.get("version") == null ? 0 : def.get("version").getAsInt();
-            built.perStage = new EnumMap<EnumGrowthStage, GrowthRenderDef>(EnumGrowthStage.class);
-            for (EnumGrowthStage g : EnumGrowthStage.values)
+            built.perStage = new EnumMap<GrowthStage, GrowthRenderDef>(GrowthStage.class);
+            for (GrowthStage g : GrowthStage.values)
             {
                 JsonElement perhaps = def.get(g.name());
                 GrowthRenderDef renderDef = perhaps == null ? new GrowthRenderDef() : context.<GrowthRenderDef>deserialize(perhaps, GrowthRenderDef.class);
@@ -44,5 +44,5 @@ public class DinosaurRenderDefDTO
     }
 
     public int version;
-    public Map<EnumGrowthStage, GrowthRenderDef> perStage;
+    public Map<GrowthStage, GrowthRenderDef> perStage;
 }

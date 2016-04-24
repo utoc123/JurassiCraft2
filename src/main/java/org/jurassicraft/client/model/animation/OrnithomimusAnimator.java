@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.OrnithomimusEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class OrnithomimusAnimator extends DinosaurAnimator<OrnithomimusEntity>
 {
-    public OrnithomimusAnimator()
-    {
-        super(EntityHandler.INSTANCE.ornithomimus);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, OrnithomimusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

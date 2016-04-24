@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.SegisaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
+import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class SegisaurusDinosaur extends Dinosaur
@@ -24,8 +24,8 @@ public class SegisaurusDinosaur extends Dinosaur
         this.setSizeX(0.3F, 0.5F);
         this.setSizeY(0.4F, 0.85F);
         this.setStorage(9);
-        this.setDiet(EnumDiet.CARNIVORE);
-        this.setSleepingSchedule(EnumSleepingSchedule.NOCTURNAL);
+        this.setDiet(Diet.CARNIVORE);
+        this.setSleepingSchedule(SleepingSchedule.NOCTURNAL);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("head");
         this.setScale(0.55F, 0.2F);

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.BaryonyxEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class BaryonyxDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class BaryonyxDinosaur extends Dinosaur
         this.setSizeX(0.35F, 1.5F);
         this.setSizeY(0.55F, 2.95F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "leg_vertebrae", "leg_bones", "claw", "arm_bones");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.25F);

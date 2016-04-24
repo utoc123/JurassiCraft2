@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.MajungasaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class MajungasaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class MajungasaurusDinosaur extends Dinosaur
         this.setSizeX(0.5F, 2.25F);
         this.setSizeY(0.8F, 3.0F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.6F, 0.4F);

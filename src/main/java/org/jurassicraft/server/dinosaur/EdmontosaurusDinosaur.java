@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.EdmontosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class EdmontosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class EdmontosaurusDinosaur extends Dinosaur
         this.setSizeX(0.5F, 2.8F);
         this.setSizeY(0.8F, 4.25F);
         this.setStorage(45);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("cheek_teeth");
         this.setHeadCubeName("Head");
         this.setScale(2.65F, 0.45F);

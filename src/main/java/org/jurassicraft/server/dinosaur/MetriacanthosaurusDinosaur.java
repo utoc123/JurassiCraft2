@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.MetriacanthosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class MetriacanthosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class MetriacanthosaurusDinosaur extends Dinosaur
         this.setSizeX(0.25F, 1.15F);
         this.setSizeY(0.35F, 1.95F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.0F, 0.25F);
