@@ -4,15 +4,9 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.VelociraptorBlueEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueEntity>
 {
-    public VelociraptorBlueAnimator()
-    {
-        super(EntityHandler.INSTANCE.velociraptor_blue);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel parModel, VelociraptorBlueEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
@@ -72,43 +66,43 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // if (raptor.getAnimationId() == JurassiCraftAnimationIDs.LEAP.animID()
         // && raptor.getAnimationTick() >= 6)
         // limbSwingAmount = 0;
-        float speed = 0.75F;
-        float height = 2F * f1;
-
-        float dontLeanProgress = entity.dontLean.getAnimationProgressSinSqrt();
-
-        parModel.bob(waist, 1F * speed, height, false, f, f1);
-        parModel.bob(leftThigh, 1F * speed, height, false, f, f1);
-        parModel.bob(rightThigh, 1F * speed, height, false, f, f1);
-        parModel.walk(shoulders, 1F * speed, 0.2F, true, 1, 0, f, f1);
-        parModel.walk(chest, 1F * speed, 0.2F, false, 0.5F, 0, f, f1);
-
-        parModel.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, f, f1);
-        parModel.walk(leftShin, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, f, f1);
-        parModel.walk(leftUpperFoot, 0.5F * speed, 0.8F, false, -1F, -0.1F, f, f1);
-        parModel.walk(leftFoot, 0.5F * speed, 1.5F, true, -1F, 1F, f, f1);
-
-        parModel.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, f, f1);
-        parModel.walk(rightShin, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, f, f1);
-        parModel.walk(rightUpperFoot, 0.5F * speed, 0.8F, true, -1F, -0.1F, f, f1);
-        parModel.walk(rightFoot, 0.5F * speed, 1.5F, false, -1F, 1F, f, f1);
-
-        shoulders.rotationPointY -= 0.5 * f1 * dontLeanProgress;
-        shoulders.rotationPointZ -= 0.5 * f1 * dontLeanProgress;
-        shoulders.rotateAngleX += 0.6 * f1 * dontLeanProgress;
-        chest.rotateAngleX += 0.1 * f1 * dontLeanProgress;
-        neck1.rotateAngleX += 0.1 * f1 * dontLeanProgress;
-        neck2.rotateAngleX += 0.1 * f1 * dontLeanProgress;
-        neck3.rotateAngleX -= 0.2 * f1 * dontLeanProgress;
-        neck4.rotateAngleX -= 0.2 * f1 * dontLeanProgress;
-        head.rotateAngleX -= 0.3 * f1 * dontLeanProgress;
-
-        parModel.chainSwing(tailParts, 0.5F * speed, -0.1F, 2, f, f1);
-        parModel.chainWave(tailParts, 1F * speed, -0.1F, 2.5F, f, f1);
-        parModel.chainWave(bodyParts, 1F * speed, -0.1F, 4, f, f1);
-
-        parModel.chainWave(rightArmParts, 1F * speed, -0.3F, 4, f, f1);
-        parModel.chainWave(leftArmParts, 1F * speed, -0.3F, 4, f, f1);
+//        float speed = 0.75F;
+//        float height = 2F * f1;
+//
+//        float dontLeanProgress = entity.dontLean.getAnimationProgressSinSqrt();
+//
+//        parModel.bob(waist, 1F * speed, height, false, f, f1);
+//        parModel.bob(leftThigh, 1F * speed, height, false, f, f1);
+//        parModel.bob(rightThigh, 1F * speed, height, false, f, f1);
+//        parModel.walk(shoulders, 1F * speed, 0.2F, true, 1, 0, f, f1);
+//        parModel.walk(chest, 1F * speed, 0.2F, false, 0.5F, 0, f, f1);
+//
+//        parModel.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, f, f1);
+//        parModel.walk(leftShin, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, f, f1);
+//        parModel.walk(leftUpperFoot, 0.5F * speed, 0.8F, false, -1F, -0.1F, f, f1);
+//        parModel.walk(leftFoot, 0.5F * speed, 1.5F, true, -1F, 1F, f, f1);
+//
+//        parModel.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, f, f1);
+//        parModel.walk(rightShin, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, f, f1);
+//        parModel.walk(rightUpperFoot, 0.5F * speed, 0.8F, true, -1F, -0.1F, f, f1);
+//        parModel.walk(rightFoot, 0.5F * speed, 1.5F, false, -1F, 1F, f, f1);
+//
+//        shoulders.rotationPointY -= 0.5 * f1 * dontLeanProgress;
+//        shoulders.rotationPointZ -= 0.5 * f1 * dontLeanProgress;
+//        shoulders.rotateAngleX += 0.6 * f1 * dontLeanProgress;
+//        chest.rotateAngleX += 0.1 * f1 * dontLeanProgress;
+//        neck1.rotateAngleX += 0.1 * f1 * dontLeanProgress;
+//        neck2.rotateAngleX += 0.1 * f1 * dontLeanProgress;
+//        neck3.rotateAngleX -= 0.2 * f1 * dontLeanProgress;
+//        neck4.rotateAngleX -= 0.2 * f1 * dontLeanProgress;
+//        head.rotateAngleX -= 0.3 * f1 * dontLeanProgress;
+//
+//        parModel.chainSwing(tailParts, 0.5F * speed, -0.1F, 2, f, f1);
+//        parModel.chainWave(tailParts, 1F * speed, -0.1F, 2.5F, f, f1);
+//        parModel.chainWave(bodyParts, 1F * speed, -0.1F, 4, f, f1);
+//
+//        parModel.chainWave(rightArmParts, 1F * speed, -0.3F, 4, f, f1);
+//        parModel.chainWave(leftArmParts, 1F * speed, -0.3F, 4, f, f1);
 
         // Idling
         parModel.chainWave(tailParts, 0.1F, 0.05F, 2, entity.ticksExisted, 0.25F);

@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.BaryonyxEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class BaryonyxAnimator extends DinosaurAnimator<BaryonyxEntity>
 {
-    public BaryonyxAnimator()
-    {
-        super(EntityHandler.INSTANCE.baryonyx);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, BaryonyxEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

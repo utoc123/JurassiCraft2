@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.DunkleosteusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
+import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class DunkleosteusDinosaur extends Dinosaur
@@ -25,8 +25,8 @@ public class DunkleosteusDinosaur extends Dinosaur
         this.setSizeY(0.5F, 2.0F);
         this.setMarineAnimal(true);
         this.setStorage(27);
-        this.setDiet(EnumDiet.CARNIVORE);
-        this.setSleepingSchedule(EnumSleepingSchedule.DIURNAL);
+        this.setDiet(Diet.CARNIVORE);
+        this.setSleepingSchedule(SleepingSchedule.DIURNAL);
         this.setBones("skull", "mouth_plates");
         this.setHeadCubeName("Main head");
         this.setScale(2.1F, 0.55F);

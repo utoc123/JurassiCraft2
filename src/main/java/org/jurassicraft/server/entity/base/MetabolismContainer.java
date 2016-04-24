@@ -6,12 +6,17 @@ import net.minecraft.util.DamageSource;
 
 public class MetabolismContainer
 {
-    // Basically this is ticks of food and ticks of water.  Specia actions like mating/healing
+    public static final double STARVING_THRESHOLD = 0.1;
+
+    public static final int MAX_DIGESTION_AMOUNT = 3000;
+
+    // Basically this is ticks of energy and ticks of water.  Specia actions like mating/healing
     // cause them to loose faster.
-    private final int MAX_FOOD;
+    private final int MAX_ENERGY;
     private final int MAX_WATER;
 
-    private int food;
+    private int energy;
+    private int digestingFood;
     private int water;
 
     private DinosaurEntity dinosaur;
@@ -20,24 +25,30 @@ public class MetabolismContainer
     {
         this.dinosaur = dinosaur;
 
-        // Each 24000 is one day!  So an adult dino (like an apatosaur) has like 8 days of food?
-        MAX_FOOD = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
+        // Each 24000 is one day!  So an adult dino (like an apatosaur) has like 8 days of energy?
+        MAX_ENERGY = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
         MAX_WATER = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
 
-        food = MAX_FOOD;
-        water = MAX_WATER;
+        this.energy = MAX_ENERGY;
+        this.water = MAX_WATER;
     }
 
     public void update()
     {
         if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
-            decreaseFood(1);
-            decreaseWater(1);
+            this.decreaseEnergy(1);
+            this.decreaseWater(1);
 
             if (dinosaur.isWet())
             {
                 water = MAX_WATER;
+            }
+
+            if (digestingFood > 0)
+            {
+                increaseEnergy(2);
+                digestingFood--;
             }
         }
     }
@@ -47,18 +58,23 @@ public class MetabolismContainer
         return water;
     }
 
-    public int getFood()
+    public int getEnergy()
     {
-        return food;
+        return energy;
     }
 
-    public void decreaseFood(int amount)
+    public int getDigestingFood()
     {
-        food -= amount;
+        return digestingFood;
+    }
 
-        if (food <= 0)
+    public void decreaseEnergy(int amount)
+    {
+        energy -= amount;
+
+        if (energy <= 0)
         {
-            dinosaur.attackEntityFrom(DamageSource.outOfWorld, 1.0F);
+            dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
         }
     }
 
@@ -68,7 +84,7 @@ public class MetabolismContainer
 
         if (water <= 0)
         {
-            dinosaur.attackEntityFrom(DamageSource.outOfWorld, 1.0F);
+            dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
         }
     }
 
@@ -77,38 +93,47 @@ public class MetabolismContainer
         this.water = Math.min(water, MAX_WATER);
     }
 
-    public void setFood(int food)
+    public void setEnergy(int energy)
     {
-        this.food = Math.min(food, MAX_FOOD);
+        this.energy = Math.min(energy, MAX_ENERGY);
+    }
+
+    public void setDigestingFoodAmount(int digesting)
+    {
+        this.digestingFood = Math.min(digesting, MAX_DIGESTION_AMOUNT);
     }
 
     public void readFromNBT(NBTTagCompound nbt)
     {
         this.water = nbt.getInteger("Water");
-        this.food = nbt.getInteger("Food");
+        this.energy = nbt.getInteger("Energy");
+        this.digestingFood = nbt.getInteger("DigestingFood");
     }
 
     public void writeToNBT(NBTTagCompound nbt)
     {
         nbt.setInteger("Water", water);
-        nbt.setInteger("Food", food);
+        nbt.setInteger("Energy", energy);
+        nbt.setInteger("DigestingFood", digestingFood);
     }
 
     public void writeSpawnData(ByteBuf buf)
     {
         buf.writeInt(water);
-        buf.writeInt(food);
+        buf.writeInt(energy);
+        buf.writeInt(digestingFood);
     }
 
     public void readSpawnData(ByteBuf buf)
     {
         water = buf.readInt();
-        food = buf.readInt();
+        energy = buf.readInt();
+        digestingFood = buf.readInt();
     }
 
-    public int getMaxFood()
+    public int getMaxEnergy()
     {
-        return MAX_FOOD;
+        return MAX_ENERGY;
     }
 
     public int getMaxWater()
@@ -116,13 +141,38 @@ public class MetabolismContainer
         return MAX_WATER;
     }
 
-    public void increaseFood(int amount)
+    public void increaseEnergy(int amount)
     {
-        setFood(food + amount);
+        this.setEnergy(energy + amount);
+    }
+
+    public void increaseDigestingFood(int amount)
+    {
+        this.setDigestingFoodAmount(digestingFood + amount);
     }
 
     public void increaseWater(int amount)
     {
-        setWater(water + amount);
+        this.setWater(water + amount);
+    }
+
+    public boolean isStarving()
+    {
+        return (double) this.energy / MAX_ENERGY < STARVING_THRESHOLD;
+    }
+
+    public boolean isDehydrated()
+    {
+        return (double) this.water / MAX_WATER < STARVING_THRESHOLD;
+    }
+
+    public boolean isHungry()
+    {
+        return (this.energy + (digestingFood * 2) < MAX_ENERGY * 0.9 || isStarving()) && digestingFood < MAX_DIGESTION_AMOUNT;
+    }
+
+    public boolean isThirsty()
+    {
+        return this.water < MAX_WATER * 0.5;
     }
 }

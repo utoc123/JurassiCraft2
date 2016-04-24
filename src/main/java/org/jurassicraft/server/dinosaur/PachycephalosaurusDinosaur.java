@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.PachycephalosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class PachycephalosaurusDinosaur extends Dinosaur
@@ -22,7 +22,7 @@ public class PachycephalosaurusDinosaur extends Dinosaur
         this.setSizeX(0.25F, 1.25F);
         this.setSizeY(0.5F, 2.3F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(0.9F, 0.2F);

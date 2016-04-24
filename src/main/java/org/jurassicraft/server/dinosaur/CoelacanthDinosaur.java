@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.CoelacanthEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class CoelacanthDinosaur extends Dinosaur
@@ -24,7 +24,7 @@ public class CoelacanthDinosaur extends Dinosaur
         this.setSizeY(0.3F, 1.0F);
         this.setMarineAnimal(true);
         this.setStorage(18);
-        this.setDiet(EnumDiet.PISCIVORE);
+        this.setDiet(Diet.PISCIVORE);
         this.setBones("skull", "teeth", "spine", "second_dorsal_fin", "pelvic_fin_bones", "pectoral_fin_bones", "first_dorsal_fin", "caudal_fin", "anal_fin");
         this.setHeadCubeName("Head joint");
         this.setScale(2.1F, 0.55F);

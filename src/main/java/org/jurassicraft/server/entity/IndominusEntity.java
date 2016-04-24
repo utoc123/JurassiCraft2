@@ -1,7 +1,6 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -9,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
-public class IndominusEntity extends AggressiveDinosaurEntity // implements ICarnivore, IEntityAICreature
+public class IndominusEntity extends AggressiveDinosaurEntity
 {
     private float[] newSkinColor = new float[3];
     private float[] skinColor = new float[3];
@@ -21,9 +20,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     public IndominusEntity(World world)
     {
         super(world);
-
-        this.addAIForAttackTargets(EntityLivingBase.class, 0);
-        this.defendFromAttacker(EntityLivingBase.class, 0);
     }
 
     @Override
@@ -54,7 +50,6 @@ public class IndominusEntity extends AggressiveDinosaurEntity // implements ICar
     {
         super.onUpdate();
 
-        /** Step Sound */
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
             this.playSound("jurassicraft:stomp", (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());

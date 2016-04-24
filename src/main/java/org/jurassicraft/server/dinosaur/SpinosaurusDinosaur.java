@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.SpinosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class SpinosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class SpinosaurusDinosaur extends Dinosaur
         this.setSizeX(0.6F, 3.0F);
         this.setSizeY(0.8F, 4.8F);
         this.setStorage(54);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(2.37F, 0.3F);

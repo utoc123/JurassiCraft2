@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -11,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.MetabolismContainer;
 import org.jurassicraft.server.food.FoodHandler;
 
 import java.util.List;
@@ -21,6 +19,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
     protected DinosaurEntity dinosaur;
 
     protected EntityItem item;
+    protected boolean eaten;
 
     public EatFoodItemEntityAI(DinosaurEntity dinosaur)
     {
@@ -30,30 +29,9 @@ public class EatFoodItemEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        MetabolismContainer metabolism = dinosaur.getMetabolism();
-
-        if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.ticksExisted % 4 == 0 && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
+        if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
-            //LOGGER.info("EatFoodItemEntityAI executing: " + dinosaur.getName());
-            double food = metabolism.getFood();
-
-            boolean execute = false;
-
-            int maxFood = metabolism.getMaxFood();
-
-            if (food / maxFood * 100 < 25)
-            {
-                execute = true;
-            }
-            else
-            {
-                if (food < maxFood - (maxFood / 8) && dinosaur.getDinosaur().getSleepingSchedule().isWithinEatingTime(dinosaur.getDinosaurTime(), dinosaur.getRNG()))
-                {
-                    execute = true;
-                }
-            }
-
-            if (execute)
+            if (dinosaur.getMetabolism().isHungry())
             {
                 double posX = dinosaur.posX;
                 double posY = dinosaur.posY;
@@ -113,7 +91,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
     {
         if (dinosaur.getEntityBoundingBox().intersectsWith(item.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
         {
-            AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.EATING.get());
+            dinosaur.setAnimation(Animations.EATING.get());
 
             if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
             {
@@ -127,18 +105,17 @@ public class EatFoodItemEntityAI extends EntityAIBase
                 }
             }
 
-            dinosaur.getMetabolism().increaseFood(2000);
+            dinosaur.getMetabolism().increaseDigestingFood(500);
             dinosaur.heal(4.0F);
+
+            eaten = true;
         }
     }
 
-    /**
-     * Returns whether an in-progress EntityAIBase should continue executing
-     */
     @Override
     public boolean continueExecuting()
     {
-        return dinosaur != null && !this.dinosaur.getNavigator().noPath() && item != null && !item.isDead;
+        return dinosaur != null && !this.dinosaur.getNavigator().noPath() && item != null && !item.isDead && !eaten;
     }
 
     private static final Logger LOGGER = LogManager.getLogger();

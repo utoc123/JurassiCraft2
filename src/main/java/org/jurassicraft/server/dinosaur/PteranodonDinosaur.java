@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.PteranodonEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class PteranodonDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class PteranodonDinosaur extends Dinosaur
         this.setSizeX(0.8F, 2.0F);
         this.setSizeY(0.6F, 1.8F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("leg_bones", "neck_vertebrae", "pelvis", "ribcage", "skull", "tail_vertebrae", "wing_bones");
         this.setHeadCubeName("Head");
         this.setScale(1.2F, 0.3F);

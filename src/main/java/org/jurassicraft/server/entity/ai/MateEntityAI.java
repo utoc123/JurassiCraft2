@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -20,7 +19,7 @@ public class MateEntityAI extends EntityAIBase
     {
         // int minEnergy = 12000;
         //
-        // if (dinosaur.getFood() > minEnergy)
+        // if (dinosaur.getEnergy() > minEnergy)
         // {
         // World world = dinosaur.worldObj;
         //
@@ -32,7 +31,7 @@ public class MateEntityAI extends EntityAIBase
         //
         // for (DinosaurEntity entity : entities)
         // {
-        // if (entity.isMale() != dinosaur.isMale() && entity.getFood() > minEnergy)
+        // if (entity.isMale() != dinosaur.isMale() && entity.getEnergy() > minEnergy)
         // {
         // dinosaur.getNavigator().tryMoveToEntityLiving(entity, 1.0D);
         // mate = entity;
@@ -50,9 +49,9 @@ public class MateEntityAI extends EntityAIBase
     {
         if (dinosaur.getEntityBoundingBox().intersectsWith(mate.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
         {
-            AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.MATING.get());
+            dinosaur.setAnimation(Animations.MATING.get());
 
-            dinosaur.getMetabolism().decreaseFood(1000);
+            dinosaur.getMetabolism().decreaseEnergy(1000);
         }
     }
 

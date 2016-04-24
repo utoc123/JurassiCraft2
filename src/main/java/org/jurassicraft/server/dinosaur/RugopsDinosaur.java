@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.RugopsEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class RugopsDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class RugopsDinosaur extends Dinosaur
         this.setSizeX(0.50F, 1.5F);
         this.setSizeY(0.8F, 2.6F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(1.0F, 0.3F);

@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.CoelacanthEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class CoelacanthAnimator extends DinosaurAnimator<CoelacanthEntity>
 {
-    public CoelacanthAnimator()
-    {
-        super(EntityHandler.INSTANCE.coelacanth);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, CoelacanthEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

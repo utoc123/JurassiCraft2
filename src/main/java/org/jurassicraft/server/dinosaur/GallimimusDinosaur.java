@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.GallimimusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class GallimimusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class GallimimusDinosaur extends Dinosaur
         this.setSizeX(0.3F, 1.5F);
         this.setSizeY(0.65F, 3.25F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
         this.setHeadCubeName("Head Base");
         this.setScale(1.2F, 0.25F);

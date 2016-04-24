@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.MamenchisaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class MamenchisaurusDinosaur extends Dinosaur
@@ -18,7 +18,7 @@ public class MamenchisaurusDinosaur extends Dinosaur
         this.setHealth(40, 120);
         this.setSpeed(0.32, 0.25);
         this.setStorage(52);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setStrength(20, 60);
         this.setMaximumAge(fromDays(95));
         this.setEyeHeight(1.55F, 13.95F);

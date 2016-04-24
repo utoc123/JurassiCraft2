@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.ProtoceratopsEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class ProtoceratopsDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class ProtoceratopsDinosaur extends Dinosaur
         this.setSizeX(0.3F, 1.0F);
         this.setSizeY(0.4F, 1.25F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(1.2F, 0.35F);

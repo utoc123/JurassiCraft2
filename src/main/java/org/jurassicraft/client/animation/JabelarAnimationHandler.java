@@ -52,11 +52,11 @@ public class JabelarAnimationHandler
         this.DEFAULT_PASS.init(modelParts);
     }
 
-    public void performAnimations(float limbSwing, float limbSwingAmount, float age, float rotationYaw, float rotationPitch, float partialTicks)
+    public void performAnimations(float partialTicks)
     {
         this.performHurtAnimation();
 
-        this.DEFAULT_PASS.performAnimations(limbSwing, limbSwingAmount, age, rotationYaw, rotationPitch, partialTicks);
+        this.DEFAULT_PASS.performAnimations(partialTicks);
     }
 
     private AdvancedModelRenderer[] getModelParts(DinosaurModel model)

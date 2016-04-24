@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.DodoEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class DodoDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class DodoDinosaur extends Dinosaur
         this.setSizeX(0.25F, 0.5F);
         this.setSizeY(0.35F, 0.95F);
         this.setStorage(9);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull");
         this.setHeadCubeName("Head");
         this.setScale(0.8F, 0.3F);

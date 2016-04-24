@@ -17,7 +17,7 @@ import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.render.entity.DinosaurRenderer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.entity.base.GrowthStage;
 
 @SideOnly(Side.CLIENT)
 public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderFactory<DinosaurEntity>
@@ -57,10 +57,10 @@ public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderF
         this.animator = animator;
         this.shadowSize = parShadowSize;
 
-        this.modelAdult = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.ADULT));
-        this.modelInfant = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.INFANT));
-        this.modelJuvenile = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.JUVENILE));
-        this.modelAdolescent = getTabulaModel(dinosaur.getModelContainer(EnumGrowthStage.ADOLESCENT));
+        this.modelAdult = getTabulaModel(dinosaur.getModelContainer(GrowthStage.ADULT));
+        this.modelInfant = getTabulaModel(dinosaur.getModelContainer(GrowthStage.INFANT));
+        this.modelJuvenile = getTabulaModel(dinosaur.getModelContainer(GrowthStage.JUVENILE));
+        this.modelAdolescent = getTabulaModel(dinosaur.getModelContainer(GrowthStage.ADOLESCENT));
 
         try
         {
@@ -73,7 +73,7 @@ public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderF
         }
     }
 
-    public ModelBase getModel(EnumGrowthStage stage)
+    public ModelBase getModel(GrowthStage stage)
     {
         switch (stage)
         {

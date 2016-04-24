@@ -1,8 +1,6 @@
 package org.jurassicraft.server.entity.base;
 
-import java.util.Random;
-
-public enum EnumSleepingSchedule
+public enum SleepingSchedule
 {
     DIURNAL(fromTimeToTicks(6, 00), fromTimeToTicks(22, 00)),
     NOCTURNAL(fromTimeToTicks(18, 00), fromTimeToTicks(6, 00)),
@@ -11,7 +9,7 @@ public enum EnumSleepingSchedule
     private int wakeUpTime;
     private int sleepTime;
 
-    EnumSleepingSchedule(int wakeUpTime, int sleepTime)
+    SleepingSchedule(int wakeUpTime, int sleepTime)
     {
         this.wakeUpTime = wakeUpTime;
         this.sleepTime = sleepTime;
@@ -38,28 +36,6 @@ public enum EnumSleepingSchedule
         return wakeUpTime > sleepTime;
     }
 
-    public int getBreakfastTime()
-    {
-        return 1000;
-    }
-
-    public int getLunchTime()
-    {
-        return (getDinnerTime() - getBreakfastTime()) / 2;
-    }
-
-    public int getDinnerTime()
-    {
-        return getAwakeTime() - 1000;
-    }
-
-    public boolean isWithinEatingTime(int dinosaurTime, Random rand)
-    {
-        dinosaurTime += (rand.nextInt(320) - 160);
-
-        return isWithinEatTime(dinosaurTime, getBreakfastTime()) || isWithinEatTime(dinosaurTime, getLunchTime()) || isWithinEatTime(dinosaurTime, getDinnerTime());
-    }
-
     public int getAwakeTime()
     {
         int newSleepTime = sleepTime;
@@ -70,10 +46,5 @@ public enum EnumSleepingSchedule
         }
 
         return newSleepTime - wakeUpTime;
-    }
-
-    public boolean isWithinEatTime(int time, int eatTime)
-    {
-        return time > eatTime - 500 && time < eatTime + 500;
     }
 }

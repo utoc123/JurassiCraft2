@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.ParasaurolophusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class ParasaurolophusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class ParasaurolophusDinosaur extends Dinosaur
         this.setSizeX(0.5F, 2.5F);
         this.setSizeY(0.8F, 3.5F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("ribcage", "front_leg_bones", "hind_leg_bones", "neck_vertebrae", "pelvis", "shoulder_bone", "skull", "tail_vertebrae", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(1.9F, 0.4F);

@@ -11,10 +11,8 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -41,7 +39,6 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
@@ -127,7 +124,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!dinosaur.isMarineAnimal())
         {
-            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
+            this.tasks.addTask(0, new EntityAISwimming(this));
+//            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
         }
 
         this.animationTasks.addTask(0, new SleepEntityAI(this));
@@ -167,9 +165,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 this.rareVariant = rand.nextInt(rareVariantCount) + 1;
             }
         }
-        // animations have inertia, meaning that they start slow then go fast 
-        // and then slow at end to give sense of mass  Good for large dinos, not for mechanical
-        // or light-weight entities
+
         this.setUseInertialTweens(true);
 
         this.setHealthy(true);
@@ -177,7 +173,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public boolean shouldSleep()
     {
-        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators();
+        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving();
     }
 
     private boolean hasPredators()
@@ -207,7 +203,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public int getDinosaurTime()
     {
-        EnumSleepingSchedule sleepingSchedule = getDinosaur().getSleepingSchedule();
+        SleepingSchedule sleepingSchedule = getDinosaur().getSleepingSchedule();
 
         long time = (worldObj.getWorldTime() % 24000) - sleepingSchedule.getWakeUpTime();
 
@@ -244,7 +240,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean attackEntityAsMob(Entity entity)
     {
-        AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.ATTACKING.get());
+        this.setAnimation(Animations.ATTACKING.get());
 
         float damage = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
         int knockback = 0;
@@ -255,19 +251,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             knockback += EnchantmentHelper.getKnockbackModifier(this);
         }
 
-        boolean attackSuccesful = entity.attackEntityFrom(new DinosaurEntityDamageSource("mob", this), damage);
-
-        if (entity instanceof EntityLivingBase)
-        {
-            EntityLivingBase theEntityLivingBase = (EntityLivingBase) entity;
-            // if attacked entity is killed, stop attacking animation
-            if (theEntityLivingBase.getHealth() < 0.0F)
-            {
-                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
-            }
-        }
-
-        if (attackSuccesful)
+        if (entity.attackEntityFrom(new DinosaurEntityDamageSource("mob", this), damage))
         {
             if (knockback > 0)
             {
@@ -276,10 +260,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 motionZ *= 0.6D;
             }
 
-            applyEnchantments(this, entity);
+            this.applyEnchantments(this, entity);
+
+            return true;
         }
 
-        return attackSuccesful;
+        return false;
     }
 
     @Override
@@ -304,7 +290,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             {
                 if (getAnimation() == Animations.IDLE.get())
                 {
-                    AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.INJURED.get());
+                    this.setAnimation(Animations.INJURED.get());
                 }
 
                 if (isSleeping)
@@ -322,17 +308,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 return super.attackEntityFrom(damageSource, amount);
             }
 
-            carcassHealth--;
-
-            if (!dead && carcassHealth >= 0 && worldObj.getGameRules().getBoolean("doMobLoot"))
+            if (damageSource != DamageSource.drown)
             {
-                dropMeat(damageSource.getEntity());
-            }
+                carcassHealth--;
 
-            if (carcassHealth < 0)
-            {
-                this.onDeath(damageSource);
-                this.setDead();
+                if (!dead && carcassHealth >= 0 && worldObj.getGameRules().getBoolean("doMobLoot"))
+                {
+                    dropMeat(damageSource.getEntity());
+                }
+
+                if (carcassHealth < 0)
+                {
+                    this.onDeath(damageSource);
+                    this.setDead();
+                }
             }
         }
 
@@ -394,13 +383,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
     }
 
-    // Need to override because vanilla knockback makes big dinos get knocked into air
     @Override
     public void knockBack(Entity entity, float p_70653_2_, double motionX, double motionZ)
     {
         if (rand.nextDouble() >= getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue())
         {
-            isAirBorne = true;
+            this.isAirBorne = true;
             float distance = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
             float multiplier = 0.4F;
             this.motionX /= 2.0D;
@@ -417,7 +405,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @SideOnly(Side.CLIENT)
     public void performHurtAnimation()
     {
-        AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.INJURED.get());
+        this.setAnimation(Animations.INJURED.get());
     }
 
     @Override
@@ -425,7 +413,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         if (getAnimation() == Animations.IDLE.get())
         {
-            AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SPEAK.get());
+            this.setAnimation(Animations.SPEAK.get());
             super.playLivingSound();
         }
     }
@@ -492,8 +480,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             setSize(width, height);
         }
-
-        this.stepHeight = Math.max(0.5F, height / 2.5F);
     }
 
     public double transitionFromAge(double baby, double adult)
@@ -508,9 +494,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return (adult - baby) / maxAge * dinosaurAge + baby;
     }
 
-    /**
-     * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge length * 64 * renderDistanceWeight Args: distance
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isInRangeToRenderDist(double distance)
@@ -586,7 +569,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             if (worldObj.getGameRules().getBoolean("dinoGrowth"))
             {
                 dinosaurAge += Math.min(growthSpeedOffset, 960) + 1;
-                metabolism.decreaseFood((int) ((Math.min(growthSpeedOffset, 960) + 1) * 0.1));
+                metabolism.decreaseEnergy((int) ((Math.min(growthSpeedOffset, 960) + 1) * 0.1));
             }
 
             if (growthSpeedOffset > 0)
@@ -607,6 +590,24 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         super.onUpdate();
 
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
+
+        if (!worldObj.isRemote && animation != null && animation != Animations.IDLE.get())
+        {
+            int animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
+
+            if (animTick < animationLength)
+            {
+                if (!Animations.getAnimation(animation).shouldHold() || animTick < animationLength - 1)
+                {
+                    animTick++;
+                }
+            }
+            else
+            {
+                animTick = 0;
+                animation = Animations.IDLE.get();
+            }
+        }
 
         if (!worldObj.isRemote)
         {
@@ -636,7 +637,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (getAnimation() != Animations.DYING.get())
             {
-                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.DYING.get());
+                this.setAnimation(Animations.DYING.get());
             }
         }
 
@@ -644,7 +645,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (getAnimation() != Animations.SLEEPING.get())
             {
-                AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.SLEEPING.get());
+                this.setAnimation(Animations.SLEEPING.get());
             }
 
             if (ticksExisted % 20 == 0)
@@ -662,7 +663,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
         else if (getAnimation() == Animations.SLEEPING.get())
         {
-            AnimationHandler.INSTANCE.sendAnimationMessage(this, Animations.IDLE.get());
+            this.setAnimation(Animations.IDLE.get());
         }
 
         if (!shouldSleep() && !isSleeping && stayAwakeTime > 0)
@@ -691,7 +692,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean isMovementBlocked()
     {
-        Animation animation = getAnimation();
         return isCarcass() || isSleeping() || (animation != null && Animations.getAnimation(animation).doesBlockMovement());
     }
 
@@ -816,27 +816,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return false;
     }
 
-    // NOTE: This adds an attack target. Class should be the entity class for the target, lower prio get executed
-    // earlier
-    protected void addAIForAttackTargets(Class<? extends EntityLivingBase> entity, int prio)
-    {
-        tasks.addTask(0, new EntityAIAttackOnCollide(this, entity, dinosaur.getAttackSpeed(), false));
-        targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, entity, false));
-    }
-
     @Override
     public boolean allowLeashing()
     {
         return !getLeashed() && (width < 1.5);
-    }
-
-    // NOTE: This registers which attackers to defend from. Class should be the entity class for the attacker, lower
-    // prio get executed earlier (Should be based upon attacker's strength and health to decide whether to defend or
-    // flee)
-    protected void defendFromAttacker(Class entity, int prio)
-    {
-        // targetTasks.addTask(prio, new EntityAIJCShouldDefend(this, true, entity));
-        targetTasks.addTask(prio, new EntityAIHurtByTarget(this, true, entity));
     }
 
     public int getDNAQuality()
@@ -852,7 +835,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void setAnimation(Animation newAnimation)
     {
+        Animation oldAnimation = animation;
+
         this.animation = newAnimation;
+
+        if (oldAnimation != newAnimation)
+        {
+            AnimationHandler.INSTANCE.sendAnimationMessage(this, newAnimation);
+        }
     }
 
     @Override
@@ -887,23 +877,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public String getLivingSound()
     {
-        // Living sounds don't need to be synced to animations, so let this method
-        // return a sound
         return getSoundForAnimation(Animations.IDLE.get());
     }
 
     @Override
     public String getHurtSound()
     {
-        // To better aid syncing animations to sounds, the getInjuredSound() method is used instead
-        // called from JabelarAnimationHandler
         return getSoundForAnimation(Animations.INJURED.get());
     }
 
     public String getSoundForAnimation(Animation animation)
     {
-        // To better aid syncing animations to sounds, the getDyingSound() method is used instead
-        // called from JabelarAnimationHandler
         if (animation == Animations.INJURED.get())
         {
             return getSound("hurt");
@@ -989,23 +973,23 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
     }
 
-    public EnumGrowthStage getGrowthStage()
+    public GrowthStage getGrowthStage()
     {
-        EnumGrowthStage stage = EnumGrowthStage.INFANT;
+        GrowthStage stage = GrowthStage.INFANT;
 
         int percent = getAgePercentage();
 
         if (percent > 75)
         {
-            stage = EnumGrowthStage.ADULT;
+            stage = GrowthStage.ADULT;
         }
         else if (percent > 50)
         {
-            stage = EnumGrowthStage.ADOLESCENT;
+            stage = GrowthStage.ADOLESCENT;
         }
         else if (percent > 25)
         {
-            stage = EnumGrowthStage.JUVENILE;
+            stage = GrowthStage.JUVENILE;
         }
 
         return stage;
@@ -1164,8 +1148,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 ", isMale=" + isMale +
                 ", growthSpeedOffset=" + growthSpeedOffset +
                 "\n    " +
-                ", food=" + metabolism.getFood() + " / " + metabolism.getMaxFood() + " (" + metabolism.getMaxFood() * 0.875 + ")" +
+                ", food=" + metabolism.getEnergy() + " / " + metabolism.getMaxEnergy() + " (" + metabolism.getMaxEnergy() * 0.875 + ")" +
                 ", water=" + metabolism.getWater() + " / " + metabolism.getMaxWater() + " (" + metabolism.getMaxWater() * 0.875 + ")" +
+                ", digestingFood=" + metabolism.getDigestingFood() + " / " + MetabolismContainer.MAX_DIGESTION_AMOUNT +
                 ", health=" + getHealth() + " / " + getMaxHealth() +
                 "\n    " +
                 ", pos=" + getPosition() +
@@ -1234,11 +1219,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void applyEntityCollision(Entity entity)
     {
-        if (!entity.noClip && !this.noClip)
+        if (this.isSleeping)
         {
-            if (entity.getClass() != this.getClass())
+            if (!entity.noClip && !this.noClip)
             {
-                this.disturbSleep();
+                if (entity.getClass() != this.getClass())
+                {
+                    this.disturbSleep();
+                }
             }
         }
     }

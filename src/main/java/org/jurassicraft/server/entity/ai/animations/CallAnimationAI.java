@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai.animations;
 
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -48,7 +47,7 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        AnimationHandler.INSTANCE.sendAnimationMessage(animatingEntity, Animations.CALLING.get());
+        animatingEntity.setAnimation(Animations.CALLING.get());
     }
 
     @Override

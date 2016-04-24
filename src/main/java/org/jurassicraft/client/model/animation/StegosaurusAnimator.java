@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.StegosaurusEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class StegosaurusAnimator extends DinosaurAnimator<StegosaurusEntity>
 {
-    public StegosaurusAnimator()
-    {
-        super(EntityHandler.INSTANCE.stegosaurus);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, StegosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

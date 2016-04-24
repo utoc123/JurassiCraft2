@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.ChasmosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class ChasmosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class ChasmosaurusDinosaur extends Dinosaur
         this.setSizeX(0.35F, 1.75F);
         this.setSizeY(0.45F, 2.35F);
         this.setStorage(27);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones");
         this.setHeadCubeName("Head");
         this.setScale(1.55F, 0.3F);

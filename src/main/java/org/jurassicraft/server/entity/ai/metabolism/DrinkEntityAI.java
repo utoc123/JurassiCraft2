@@ -1,9 +1,9 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
@@ -14,7 +14,8 @@ public class DrinkEntityAI extends EntityAIBase
 {
     protected DinosaurEntity dinosaur;
 
-    protected int x, y, z;
+    protected PathEntity path;
+    protected BlockPos pos;
 
     public DrinkEntityAI(DinosaurEntity dinosaur)
     {
@@ -24,40 +25,16 @@ public class DrinkEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        MetabolismContainer metabolism = dinosaur.getMetabolism();
-
         if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.ticksExisted % 4 == 0 && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
-            double water = metabolism.getWater();
-
-            boolean execute = false;
-
-            int maxWater = metabolism.getMaxWater();
-
-            if (water / maxWater * 100 < 25)
-            {
-                execute = true;
-            }
-            else
-            {
-                if (water < maxWater - (maxWater / 8) && dinosaur.getDinosaur().getSleepingSchedule().isWithinEatingTime(dinosaur.getDinosaurTime(), dinosaur.getRNG()))
-                {
-                    execute = true;
-                }
-            }
-
-            if (execute)
+            if (dinosaur.getMetabolism().isThirsty())
             {
                 int posX = (int) dinosaur.posX;
                 int posY = (int) dinosaur.posY;
                 int posZ = (int) dinosaur.posZ;
 
                 int closestDist = Integer.MAX_VALUE;
-                int closestX = 0;
-                int closestY = 0;
-                int closestZ = 0;
-
-                boolean found = false;
+                BlockPos closestPos = null;
 
                 World world = dinosaur.worldObj;
 
@@ -88,11 +65,7 @@ public class DrinkEntityAI extends EntityAIBase
                                             if (dist < closestDist)
                                             {
                                                 closestDist = dist;
-                                                closestX = landX;
-                                                closestY = y;
-                                                closestZ = landZ;
-
-                                                found = true;
+                                                closestPos = new BlockPos(landX, y, landZ);
                                             }
                                         }
                                     }
@@ -102,14 +75,11 @@ public class DrinkEntityAI extends EntityAIBase
                     }
                 }
 
-                if (found)
+                if (closestPos != null)
                 {
-                    this.x = closestX;
-                    this.y = closestY;
-                    this.z = closestZ;
-                    dinosaur.getNavigator().tryMoveToXYZ(x, y, z, 1.0);
-
-                    return true;
+                    this.pos = closestPos;
+                    this.path = dinosaur.getNavigator().getPathToXYZ(closestPos.getX(), closestPos.getY(), closestPos.getZ());
+                    return this.dinosaur.getNavigator().setPath(path, 1.0);
                 }
             }
         }
@@ -120,11 +90,11 @@ public class DrinkEntityAI extends EntityAIBase
     @Override
     public void updateTask()
     {
-        if ((dinosaur.getDistanceSq(x, y, z) / 16) <= dinosaur.width)
+        if (path.isFinished())
         {
             if (dinosaur.getAnimation() != Animations.DRINKING.get())
             {
-                AnimationHandler.INSTANCE.sendAnimationMessage(dinosaur, Animations.DRINKING.get());
+                dinosaur.setAnimation(Animations.DRINKING.get());
             }
 
             MetabolismContainer metabolism = dinosaur.getMetabolism();
@@ -132,14 +102,11 @@ public class DrinkEntityAI extends EntityAIBase
         }
     }
 
-    /**
-     * Returns whether an in-progress EntityAIBase should continue executing
-     */
     @Override
     public boolean continueExecuting()
     {
-        Block block = dinosaur.worldObj.getBlockState(new BlockPos(x, y, z)).getBlock();
+        Block block = dinosaur.worldObj.getBlockState(pos).getBlock();
 
-        return dinosaur != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.water || block == Blocks.flowing_water);
+        return dinosaur != null && path != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.water || block == Blocks.flowing_water);
     }
 }

@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.ChasmosaurusEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class ChasmosaurusAnimator extends DinosaurAnimator<ChasmosaurusEntity>
 {
-    public ChasmosaurusAnimator()
-    {
-        super(EntityHandler.INSTANCE.chasmosaurus);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, ChasmosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

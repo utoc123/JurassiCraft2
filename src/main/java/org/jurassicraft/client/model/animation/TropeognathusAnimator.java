@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.TropeognathusEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class TropeognathusAnimator extends DinosaurAnimator<TropeognathusEntity>
 {
-    public TropeognathusAnimator()
-    {
-        super(EntityHandler.INSTANCE.tropeognathus);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, TropeognathusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

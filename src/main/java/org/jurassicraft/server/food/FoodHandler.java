@@ -8,7 +8,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
@@ -151,17 +151,17 @@ public enum FoodHandler
         return getFoodType(Item.getItemFromBlock(block));
     }
 
-    public boolean canDietEat(EnumDiet diet, Item item)
+    public boolean canDietEat(Diet diet, Item item)
     {
         return getFoodsForDiet(diet).contains(item);
     }
 
-    public boolean canDietEat(EnumDiet diet, Block block)
+    public boolean canDietEat(Diet diet, Block block)
     {
         return canDietEat(diet, Item.getItemFromBlock(block));
     }
 
-    private List<Item> getFoodsForDiet(EnumDiet diet)
+    private List<Item> getFoodsForDiet(Diet diet)
     {
         List<Item> possibleItems = new ArrayList<Item>();
 

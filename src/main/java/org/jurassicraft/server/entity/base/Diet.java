@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.base;
 
-public enum EnumDiet
+public enum Diet
 {
     HERBIVORE(false, true, false, 0x007F0E), CARNIVORE(true, false, true, 0xB70000), OMNIVORE(true, true, true, 0xB77F0E), PISCIVORE(false, false, true, 0x437EA8);
 
@@ -10,7 +10,7 @@ public enum EnumDiet
 
     private int color;
 
-    EnumDiet(boolean eatsMeat, boolean eatsPlants, boolean eatsFish, int color)
+    Diet(boolean eatsMeat, boolean eatsPlants, boolean eatsFish, int color)
     {
         this.eatsMeat = eatsMeat;
         this.eatsPlants = eatsPlants;

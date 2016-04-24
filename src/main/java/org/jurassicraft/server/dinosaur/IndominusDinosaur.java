@@ -3,8 +3,8 @@ package org.jurassicraft.server.dinosaur;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.entity.IndominusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumGrowthStage;
+import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.GrowthStage;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class IndominusDinosaur extends Dinosaur implements IHybrid
@@ -30,7 +30,7 @@ public class IndominusDinosaur extends Dinosaur implements IHybrid
         this.setSizeX(0.4F, 4.0F);
         this.setSizeY(0.7F, 6.0F);
         this.setStorage(54);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
         this.setHeadCubeName("Head");
         this.setScale(3.4F, 0.4F);
@@ -48,18 +48,18 @@ public class IndominusDinosaur extends Dinosaur implements IHybrid
     }
 
     @Override
-    public ResourceLocation getMaleTexture(EnumGrowthStage stage)
+    public ResourceLocation getMaleTexture(GrowthStage stage)
     {
         return texture;
     }
 
     @Override
-    public ResourceLocation getFemaleTexture(EnumGrowthStage stage)
+    public ResourceLocation getFemaleTexture(GrowthStage stage)
     {
         return texture;
     }
 
-    public ResourceLocation getCamoTexture(EnumGrowthStage stage)
+    public ResourceLocation getCamoTexture(GrowthStage stage)
     {
         return overlayTexture;
     }

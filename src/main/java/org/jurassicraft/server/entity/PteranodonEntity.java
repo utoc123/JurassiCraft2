@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.AggressiveFlyingDinosaurEntity;
 
-public class PteranodonEntity extends AggressiveFlyingDinosaurEntity // implements IEntityAIFlyingCreature, ICarnivore
+public class PteranodonEntity extends AggressiveFlyingDinosaurEntity
 {
     public PteranodonEntity(World world)
     {

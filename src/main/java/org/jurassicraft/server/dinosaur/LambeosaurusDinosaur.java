@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.LambeosaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class LambeosaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class LambeosaurusDinosaur extends Dinosaur
         this.setSizeX(0.5F, 2.8F);
         this.setSizeY(0.8F, 4.25F);
         this.setStorage(45);
-        this.setDiet(EnumDiet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE);
         this.setBones("skull", "cheek_teeth", "shoulder", "tail_vertebrae", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones");
         this.setHeadCubeName("Head");
         this.setScale(2.5F, 0.45F);

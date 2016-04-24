@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.HerrerasaurusEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class HerrerasaurusDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class HerrerasaurusDinosaur extends Dinosaur
         this.setSizeX(0.4F, 1.8F);
         this.setSizeY(0.55F, 2.55F);
         this.setStorage(36);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.25F);

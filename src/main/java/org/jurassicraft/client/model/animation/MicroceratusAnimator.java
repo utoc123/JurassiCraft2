@@ -6,16 +6,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.MicroceratusEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 
 @SideOnly(Side.CLIENT)
 public class MicroceratusAnimator extends DinosaurAnimator<MicroceratusEntity>
 {
-    public MicroceratusAnimator()
-    {
-        super(EntityHandler.INSTANCE.microceratus);
-    }
-
     @Override
     protected void performMowzieLandAnimations(DinosaurModel parModel, MicroceratusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {

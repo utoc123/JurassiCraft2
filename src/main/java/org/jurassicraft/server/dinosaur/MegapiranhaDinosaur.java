@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.MegapiranhaEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class MegapiranhaDinosaur extends Dinosaur
@@ -24,7 +24,7 @@ public class MegapiranhaDinosaur extends Dinosaur
         this.setSizeY(0.15F, 0.7F);
         this.setMarineAnimal(true);
         this.setStorage(18);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("anal_fin", "body_fins", "caudal_fin", "dorsal_fin", "skull", "spine", "teeth");
         this.setHeadCubeName("Neck ");
         this.setScale(1.0F, 0.15F);

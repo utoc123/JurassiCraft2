@@ -1,7 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.DimorphodonEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
+import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class DimorphodonDinosaur extends Dinosaur
@@ -23,7 +23,7 @@ public class DimorphodonDinosaur extends Dinosaur
         this.setSizeX(0.25F, 0.5F);
         this.setSizeY(0.25F, 0.75F);
         this.setStorage(9);
-        this.setDiet(EnumDiet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE);
         this.setBones("skull", "teeth", "leg_bones", "neck", "ribs_and_spine", "shoulder_blade", "tail_vertebrae", "wing_bones");
         this.setHeadCubeName("Head");
         this.setScale(0.5F, 0.15F);

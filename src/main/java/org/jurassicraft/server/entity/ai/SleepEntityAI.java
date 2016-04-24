@@ -18,7 +18,6 @@ public class SleepEntityAI extends EntityAIBase
     public SleepEntityAI(DinosaurEntity dinosaur)
     {
         this.dinosaur = dinosaur;
-        this.setMutexBits(1);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class SleepEntityAI extends EntityAIBase
 
         if (!world.isRemote && dinosaur.shouldSleep() && !dinosaur.isSleeping() && dinosaur.getStayAwakeTime() <= 0)
         {
-            int range = 16;
+            int range = 8;
 
             int posX = (int) dinosaur.posX;
             int posZ = (int) dinosaur.posZ;

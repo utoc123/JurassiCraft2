@@ -14,7 +14,6 @@ public class AdvancedSwimEntityAI extends EntityAIBase
     public AdvancedSwimEntityAI(DinosaurEntity entity)
     {
         this.entity = entity;
-        this.setMutexBits(4);
         ((PathNavigateGround) entity.getNavigator()).setCanSwim(true);
     }
 

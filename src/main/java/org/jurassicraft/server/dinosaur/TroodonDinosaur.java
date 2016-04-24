@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
 import org.jurassicraft.server.entity.TroodonEntity;
-import org.jurassicraft.server.entity.base.EnumDiet;
-import org.jurassicraft.server.entity.base.EnumSleepingSchedule;
+import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.period.EnumTimePeriod;
 
 public class TroodonDinosaur extends Dinosaur
@@ -24,8 +24,8 @@ public class TroodonDinosaur extends Dinosaur
         this.setSizeX(0.3F, 0.7F);
         this.setSizeY(0.4F, 0.95F);
         this.setStorage(18);
-        this.setDiet(EnumDiet.CARNIVORE);
-        this.setSleepingSchedule(EnumSleepingSchedule.NOCTURNAL);
+        this.setDiet(Diet.CARNIVORE);
+        this.setSleepingSchedule(SleepingSchedule.NOCTURNAL);
         this.setBones("arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "skull", "tail_vertebrae", "tooth");
         this.setHeadCubeName("head UPPER");
         this.setScale(0.75F, 0.25F);

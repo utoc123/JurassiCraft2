@@ -11,8 +11,6 @@
 package org.jurassicraft.client.animation;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.server.animation.Animation;
-import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats.Type;
 import net.minecraft.command.EntityNotFoundException;
@@ -211,8 +209,7 @@ public class CommandForceAnimation implements ICommand
     {
         try
         {
-            Animation animation = Animations.valueOf(parAnimType.toUpperCase()).get();
-            AnimationHandler.INSTANCE.sendAnimationMessage(entity, animation);
+            entity.setAnimation(Animations.valueOf(parAnimType.toUpperCase()).get());
         }
         catch (IllegalArgumentException iae)
         {
