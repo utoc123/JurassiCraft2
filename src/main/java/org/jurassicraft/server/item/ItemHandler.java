@@ -183,7 +183,7 @@ public enum ItemHandler
         gracilaria = new GracilariaItem(BlockHandler.INSTANCE.gracilaria).setCreativeTab(TabHandler.INSTANCE.plants);
         liquid_agar = new BasicItem(TabHandler.INSTANCE.items);
 
-        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getRegisteredDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
         {
             String[] boneTypes = dinosaur.getBones();
 

@@ -372,11 +372,7 @@ public class AnimationPass
          */
         if (this.doesUpdateEntityAnimations())
         {
-            if (poseSequences.get(requestedAnimation) == null)
-            {
-                JurassiCraft.INSTANCE.getLogger().error("Requested an anim id " + requestedAnimation.getID() + " (" + Animations.getAnimation(requestedAnimation).toString() + ") that doesn't have animation sequence in map for entity " + entity.getEntityId());
-            }
-            else if (!(animation != Animations.IDLE.get() && animation == requestedAnimation))
+            if (poseSequences.get(requestedAnimation) != null && !(animation != Animations.IDLE.get() && animation == requestedAnimation))
             {
                 animation = requestedAnimation;
             }
