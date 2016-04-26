@@ -84,7 +84,7 @@ public class DNAExtractorTile extends MachineBaseTile
                         quality += 50;
                     }
 
-                    DinoDNA dna = new DinoDNA(quality, GeneticsHelper.randomGenetics(rand, dinosaurId, quality).toString());
+                    DinoDNA dna = new DinoDNA(dino, quality, GeneticsHelper.randomGenetics(rand));
 
                     NBTTagCompound nbt = new NBTTagCompound();
                     dna.writeToNBT(nbt);

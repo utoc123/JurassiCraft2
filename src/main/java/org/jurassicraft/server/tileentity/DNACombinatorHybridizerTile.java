@@ -14,7 +14,6 @@ import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.DinoDNA;
-import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.PlantDNA;
 import org.jurassicraft.server.item.ItemHandler;
 
@@ -106,7 +105,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
         {
             DinoDNA data = DinoDNA.readFromNBT(disc.getTagCompound());
 
-            return data.getDNAQuality() == 100 ? EntityHandler.INSTANCE.getDinosaurById(data.getContainer().getDinosaur()) : null;
+            return data.getDNAQuality() == 100 ? data.getDinosaur() : null;
         }
         else
         {
@@ -146,16 +145,11 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
 
                 NBTTagCompound nbt = new NBTTagCompound();
 
-                int dinosaurId = EntityHandler.INSTANCE.getDinosaurId(hybrid);
-
-                GeneticsContainer container = new GeneticsContainer(slots[0].getTagCompound().getString("Genetics"));
-                container.set(GeneticsContainer.DINOSAUR, dinosaurId);
-
-                DinoDNA dna = new DinoDNA(100, container.toString());
+                DinoDNA dna = new DinoDNA(hybrid, 100, slots[0].getTagCompound().getString("Genetics"));
                 dna.writeToNBT(nbt);
 
-                ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, dinosaurId);
-                output.setItemDamage(dna.getContainer().getDinosaur());
+                ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, EntityHandler.INSTANCE.getDinosaurId(hybrid));
+                output.setItemDamage(EntityHandler.INSTANCE.getDinosaurId(dna.getDinosaur()));
                 output.setTagCompound(nbt);
 
                 mergeStack(getOutputSlot(output), output);
@@ -183,7 +177,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
                         newQuality = 100;
                     }
 
-                    DinoDNA newDNA = new DinoDNA(newQuality, dna1.toString());
+                    DinoDNA newDNA = new DinoDNA(dna1.getDinosaur(), newQuality, dna1.getGenetics());
 
                     NBTTagCompound outputTag = new NBTTagCompound();
                     newDNA.writeToNBT(outputTag);

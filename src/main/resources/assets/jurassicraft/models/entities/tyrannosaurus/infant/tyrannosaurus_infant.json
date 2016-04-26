@@ -3,6 +3,12 @@
     "poses": {
         "IDLE": [
             {"pose": "tyrannosaurus_infant_idle", "time": 20}
+        ],
+        "SLEEPING": [
+            {
+                "pose": "tyrannosaurus_infant_sleeping",
+                "time": 20
+            }
         ]
     }
 }

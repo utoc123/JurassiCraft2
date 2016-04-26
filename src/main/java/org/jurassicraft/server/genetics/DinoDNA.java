@@ -3,6 +3,7 @@ package org.jurassicraft.server.genetics;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -11,19 +12,22 @@ import java.util.List;
 public class DinoDNA
 {
     private int quality;
-    private GeneticsContainer genetics;
+    private String genetics;
+    private Dinosaur dinosaur;
 
-    public DinoDNA(int quality, String genetics)
+    public DinoDNA(Dinosaur dinosaur, int quality, String genetics)
     {
         this.quality = quality;
-        this.genetics = new GeneticsContainer(genetics);
+        this.genetics = genetics;
+        this.dinosaur = dinosaur;
     }
 
     public void writeToNBT(NBTTagCompound nbt)
     {
         nbt.setInteger("DNAQuality", quality);
-        nbt.setString("Genetics", genetics.toString());
+        nbt.setString("Genetics", genetics);
         nbt.setString("StorageId", "DinoDNA");
+        nbt.setInteger("Dinosaur", EntityHandler.INSTANCE.getDinosaurId(dinosaur));
     }
 
     public static DinoDNA fromStack(ItemStack stack)
@@ -33,7 +37,7 @@ public class DinoDNA
 
     public static DinoDNA readFromNBT(NBTTagCompound nbt)
     {
-        return new DinoDNA(nbt.getInteger("DNAQuality"), nbt.getString("Genetics"));
+        return new DinoDNA(EntityHandler.INSTANCE.getDinosaurById(nbt.getInteger("Dinosaur")), nbt.getInteger("DNAQuality"), nbt.getString("Genetics"));
     }
 
     public int getDNAQuality()
@@ -41,20 +45,19 @@ public class DinoDNA
         return quality;
     }
 
-    @Override
-    public String toString()
-    {
-        return genetics.toString();
-    }
-
-    public GeneticsContainer getContainer()
+    public String getGenetics()
     {
         return genetics;
     }
 
+    public Dinosaur getDinosaur()
+    {
+        return dinosaur;
+    }
+
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(EnumChatFormatting.DARK_AQUA + new AdvLang("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + EntityHandler.INSTANCE.getDinosaurById(genetics.getDinosaur()).getName().toLowerCase() + ".name").build());
+        tooltip.add(EnumChatFormatting.DARK_AQUA + new AdvLang("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build());
 
         EnumChatFormatting colour;
 

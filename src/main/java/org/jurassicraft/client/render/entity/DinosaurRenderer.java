@@ -41,11 +41,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         this.random = new Random();
         this.renderDef = renderDef;
 
-        for (int i = 0; i < dinosaur.getOverlayCount(); i++)
-        {
-            addLayer(new LayerDinosaurVariations(this, i));
-        }
-
         addLayer(new LayerEyelid(this));
     }
 
@@ -201,48 +196,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     public RenderDinosaurDefinition getRenderDef()
     {
         return renderDef;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public class LayerDinosaurVariations implements LayerRenderer<DinosaurEntity>
-    {
-        private final DinosaurRenderer renderer;
-        private final int index;
-
-        public LayerDinosaurVariations(DinosaurRenderer renderer, int index)
-        {
-            this.renderer = renderer;
-            this.index = index;
-        }
-
-        @Override
-        public void doRenderLayer(DinosaurEntity entity, float v, float v1, float v2, float v3, float v4, float v5, float v6)
-        {
-            if (!entity.isInvisible())
-            {
-                ResourceLocation texture = renderer.dinosaur.getOverlayTexture(entity.getGrowthStage(), entity.getOverlay(index));
-
-                if (texture != null)
-                {
-                    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                    GL11.glEnable(GL11.GL_BLEND);
-                    GlStateManager.color(entity.getOverlayR() / 255.0F, entity.getOverlayG() / 255.0F, entity.getOverlayB() / 255.0F, 0.2F);
-
-                    this.renderer.bindTexture(texture);
-
-                    this.renderer.getMainModel().render(entity, v, v1, v3, v4, v5, v6);
-                    this.renderer.func_177105_a(entity, v2);
-
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                }
-            }
-        }
-
-        @Override
-        public boolean shouldCombineTextures()
-        {
-            return true;
-        }
     }
 
     @SideOnly(Side.CLIENT)

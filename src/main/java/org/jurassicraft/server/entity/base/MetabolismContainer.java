@@ -168,7 +168,7 @@ public class MetabolismContainer
 
     public boolean isHungry()
     {
-        return (this.energy + (digestingFood * 2) < MAX_ENERGY * 0.9 || isStarving()) && digestingFood < MAX_DIGESTION_AMOUNT;
+        return (this.energy + (digestingFood * 2) < MAX_ENERGY * 0.9 || isStarving()) && digestingFood + 500 < MAX_DIGESTION_AMOUNT;
     }
 
     public boolean isThirsty()
