@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
-import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -43,13 +42,11 @@ public class DNAContainerItem extends Item
         return quality;
     }
 
-    public GeneticsContainer getGeneticCode(EntityPlayer player, ItemStack stack)
+    public String getGeneticCode(EntityPlayer player, ItemStack stack)
     {
-        int quality = getDNAQuality(player, stack);
-
         NBTTagCompound nbt = stack.getTagCompound();
 
-        GeneticsContainer genetics = GeneticsHelper.randomGenetics(player.worldObj.rand, getContainerId(stack), quality);
+        String genetics = GeneticsHelper.randomGenetics(player.worldObj.rand);
 
         if (nbt == null)
         {
@@ -58,11 +55,11 @@ public class DNAContainerItem extends Item
 
         if (nbt.hasKey("Genetics"))
         {
-            genetics = new GeneticsContainer(nbt.getString("Genetics"));
+            genetics = nbt.getString("Genetics");
         }
         else
         {
-            nbt.setString("Genetics", genetics.toString());
+            nbt.setString("Genetics", genetics);
         }
 
         stack.setTagCompound(nbt);

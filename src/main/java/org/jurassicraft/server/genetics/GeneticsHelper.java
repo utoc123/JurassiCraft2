@@ -1,41 +1,36 @@
 package org.jurassicraft.server.genetics;
 
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
-
 import java.util.Random;
 
 public class GeneticsHelper
 {
-    public static GeneticsContainer randomGenetics(Random rand, Dinosaur dinosaur, int quality)
-    {
-        return randomGenetics(rand, EntityHandler.INSTANCE.getDinosaurId(dinosaur), quality);
-    }
+    public static final int GENETICS_LENGTH = 10;
 
-    public static GeneticsContainer randomGenetics(Random rand, int dinosaur, int quality)
+    public static String randomGenetics(Random random)
     {
-        return new GeneticsContainer(dinosaur, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256), getRandomOverlayTexture(rand, dinosaur), getRandomOverlayTexture(rand, dinosaur), getRandomOverlayTexture(rand, dinosaur)); //TODO
-    }
+        String genetics = "";
 
-    private static int getRandomOverlayTexture(Random rand, int dinosaurId)
-    {
-        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(dinosaurId);
-
-        if (dinosaur != null)
+        for (int i = 0; i < GENETICS_LENGTH; i++)
         {
-            int overlayCount = dinosaur.getOverlayCount();
+            int character = random.nextInt(4);
 
-            if (rand.nextBoolean() && overlayCount > 0)
+            switch (character)
             {
-                return rand.nextInt(overlayCount);
+                case 0:
+                    genetics += "A";
+                    break;
+                case 1:
+                    genetics += "C";
+                    break;
+                case 2:
+                    genetics += "G";
+                    break;
+                case 3:
+                    genetics += "T";
+                    break;
             }
         }
 
-        return 255;
-    }
-
-    private static int rand(Random rand, int range, int quality)
-    {
-        return rand.nextInt(range) + ((100 - quality) / 10);
+        return genetics;
     }
 }

@@ -482,7 +482,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     public ResourceLocation getOverlayTexture(GrowthStage stage, int overlay)
     {
-        return overlay != -1 && overlay != 255 && overlays.containsKey(stage) ? overlays.get(stage).get(overlay) : null;
+        return overlays.containsKey(stage) ? overlays.get(stage).get(overlay) : null;
     }
 
     public int getOverlayCount()

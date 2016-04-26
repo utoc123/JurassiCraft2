@@ -42,11 +42,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         this.random = new Random();
         this.renderDef = renderDef;
 
-        for (int i = 0; i < dinosaur.getOverlayCount(); i++)
-        {
-            addLayer(new LayerDinosaurVariations(this, i));
-        }
-
         addLayer(new LayerEyelid(this));
     }
 
@@ -202,53 +197,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     public RenderDinosaurDefinition getRenderDef()
     {
         return renderDef;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public class LayerDinosaurVariations implements LayerRenderer
-    {
-        private final DinosaurRenderer renderer;
-        private final int index;
-
-        public LayerDinosaurVariations(DinosaurRenderer renderer, int index)
-        {
-            this.renderer = renderer;
-            this.index = index;
-        }
-
-        public void render(DinosaurEntity entity, float f, float f1, float f2, float f3, float f4, float f5, float f6)
-        {
-            if (!entity.isInvisible())
-            {
-                ResourceLocation texture = renderer.dinosaur.getOverlayTexture(entity.getGrowthStage(), entity.getOverlay(index));
-
-                if (texture != null)
-                {
-                    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                    GL11.glEnable(GL11.GL_BLEND);
-                    GlStateManager.color(entity.getOverlayR() / 255.0F, entity.getOverlayG() / 255.0F, entity.getOverlayB() / 255.0F, 0.2F);
-
-                    this.renderer.bindTexture(texture);
-
-                    this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
-                    this.renderer.setLightmap(entity, f2);
-
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                }
-            }
-        }
-
-        @Override
-        public boolean shouldCombineTextures()
-        {
-            return true;
-        }
-
-        @Override
-        public void doRenderLayer(EntityLivingBase entity, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_)
-        {
-            this.render((DinosaurEntity) entity, p_177141_2_, p_177141_3_, p_177141_4_, p_177141_5_, p_177141_6_, p_177141_7_, p_177141_8_);
-        }
     }
 
     @SideOnly(Side.CLIENT)

@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -42,19 +41,7 @@ public class DinsaurMeatItem extends ItemFood
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
-
-        if (dinosaur == null)
-        {
-            dinosaur = EntityHandler.INSTANCE.achillobator;
-        }
-
-        return dinosaur;
-    }
-
-    public int getContainerDinosaur(ItemStack stack)
-    {
-        return EntityHandler.INSTANCE.getDinosaurId(getDinosaur(stack));
+        return EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
     }
 
     @Override
@@ -106,13 +93,11 @@ public class DinsaurMeatItem extends ItemFood
         return quality;
     }
 
-    public GeneticsContainer getGeneticCode(EntityPlayer player, ItemStack stack)
+    public String getGeneticCode(EntityPlayer player, ItemStack stack)
     {
-        int quality = getDNAQuality(player, stack);
-
         NBTTagCompound nbt = stack.getTagCompound();
 
-        GeneticsContainer genetics = GeneticsHelper.randomGenetics(player.worldObj.rand, getContainerDinosaur(stack), quality);
+        String genetics = GeneticsHelper.randomGenetics(player.worldObj.rand);
 
         if (nbt == null)
         {
@@ -121,11 +106,11 @@ public class DinsaurMeatItem extends ItemFood
 
         if (nbt.hasKey("Genetics"))
         {
-            genetics = new GeneticsContainer(nbt.getString("Genetics"));
+            genetics = nbt.getString("Genetics");
         }
         else
         {
-            nbt.setString("Genetics", genetics.toString());
+            nbt.setString("Genetics", genetics);
         }
 
         stack.setTagCompound(nbt);
@@ -158,6 +143,6 @@ public class DinsaurMeatItem extends ItemFood
         }
 
         lore.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack).toString()).build());
+        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
     }
 }

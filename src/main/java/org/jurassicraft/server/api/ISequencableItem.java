@@ -44,23 +44,6 @@ public interface ISequencableItem
 
     static int randomQuality(Random rand)
     {
-        int quality = rand.nextInt(25) + 1;
-
-        if (rand.nextDouble() < 0.10)
-        {
-            quality += 25;
-
-            if (rand.nextDouble() < 0.10)
-            {
-                quality += 25;
-
-                if (rand.nextDouble() < 0.10)
-                {
-                    quality += 25;
-                }
-            }
-        }
-
-        return quality;
+        return (rand.nextInt(20) + 1) * 5;
     }
 }

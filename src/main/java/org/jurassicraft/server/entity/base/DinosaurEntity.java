@@ -54,7 +54,6 @@ import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
 import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
-import org.jurassicraft.server.genetics.GeneticsContainer;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.ItemHandler;
@@ -74,7 +73,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private boolean isCarcass;
     private int carcassHealth;
 
-    private GeneticsContainer genetics;
+    private String genetics;
     private int geneticsQuality;
     private boolean isMale;
 
@@ -150,7 +149,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.setFullyGrown();
 
-        this.genetics = GeneticsHelper.randomGenetics(rand, getDinosaur(), getDNAQuality());
+        this.genetics = GeneticsHelper.randomGenetics(rand);
         this.isMale = rand.nextBoolean();
 
         this.animTick = 0;
@@ -501,7 +500,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.setFullyGrown();
         this.setMale(true);
         this.ticksExisted = 4;
-        this.genetics = new GeneticsContainer(EntityHandler.INSTANCE.getDinosaurId(dinosaur), 0, 0, 0, 255, 255, 255);
     }
 
     @Override
@@ -524,10 +522,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setGenetics(String genetics)
     {
-        this.genetics = new GeneticsContainer(genetics);
+        this.genetics = genetics;
     }
 
-    public GeneticsContainer getGenetics()
+    public String getGenetics()
     {
         return genetics;
     }
@@ -745,7 +743,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("DNAQuality", geneticsQuality);
-        nbt.setString("Genetics", genetics.toString());
+        nbt.setString("Genetics", genetics);
         stack.setTagCompound(nbt);
 
         entityDropItem(stack, 0.0F);
@@ -938,36 +936,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return age != 0 ? age * 100 / getDinosaur().getMaximumAge() : 0;
     }
 
-    public int getOverlayR()
-    {
-        return genetics.getOverlayR();
-    }
-
-    public int getOverlayG()
-    {
-        return genetics.getOverlayG();
-    }
-
-    public int getOverlayB()
-    {
-        return genetics.getOverlayB();
-    }
-
-    public int getOverlay(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                return genetics.getOverlay1();
-            case 1:
-                return genetics.getOverlay2();
-            case 2:
-                return genetics.getOverlay3();
-            default:
-                return -1;
-        }
-    }
-
     public GrowthStage getGrowthStage()
     {
         GrowthStage stage = GrowthStage.INFANT;
@@ -1011,7 +979,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setDouble("DinosaurAge", dinosaurAge);
         nbt.setBoolean("IsCarcass", isCarcass);
         nbt.setInteger("DNAQuality", geneticsQuality);
-        nbt.setString("Genetics", genetics.toString());
+        nbt.setString("Genetics", genetics);
         nbt.setBoolean("IsMale", isMale);
         nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
         nbt.setByte("RareVariant", (byte) rareVariant);
@@ -1036,7 +1004,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         dinosaurAge = nbt.getInteger("DinosaurAge");
         isCarcass = nbt.getBoolean("IsCarcass");
         geneticsQuality = nbt.getInteger("DNAQuality");
-        genetics = new GeneticsContainer(nbt.getString("Genetics"));
+        genetics = nbt.getString("Genetics");
         isMale = nbt.getBoolean("IsMale");
         growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
         rareVariant = nbt.getByte("RareVariant");
@@ -1071,7 +1039,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         metabolism.writeSpawnData(buffer);
 
-        ByteBufUtils.writeUTF8String(buffer, genetics.toString()); //TODO do we need to add the things that are on the dataManager?
+        ByteBufUtils.writeUTF8String(buffer, genetics); //TODO do we need to add the things that are on the dataManager?
     }
 
     @Override
@@ -1086,7 +1054,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         metabolism.readSpawnData(additionalData);
 
-        genetics = new GeneticsContainer(ByteBufUtils.readUTF8String(additionalData));
+        genetics = ByteBufUtils.readUTF8String(additionalData);
 
         updateCreatureData();
         adjustHitbox();
