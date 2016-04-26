@@ -43,7 +43,7 @@ public class FossilItem extends Item implements IGrindableItem
 
     public static void init()
     {
-        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getRegisteredDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
         {
             String[] boneTypes = dinosaur.getBones();
 

@@ -1,5 +1,6 @@
 package org.jurassicraft.client.render.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -7,6 +8,8 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
@@ -261,10 +264,15 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
                 if (texture != null && entity.areEyelidsClosed())
                 {
-                    this.renderer.bindTexture(texture);
+                    ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
 
-                    this.renderer.getMainModel().render(entity, v, v1, v3, v4, v5, v6);
-                    this.renderer.func_177105_a(entity, v2);
+                    if (textureObject != TextureUtil.missingTexture)
+                    {
+                        this.renderer.bindTexture(texture);
+
+                        this.renderer.getMainModel().render(entity, v, v1, v3, v4, v5, v6);
+                        this.renderer.func_177105_a(entity, v2);
+                    }
                 }
             }
         }
