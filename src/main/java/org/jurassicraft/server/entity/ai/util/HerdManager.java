@@ -6,11 +6,11 @@ import org.apache.logging.log4j.Logger;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Copyright 2016 TimelessModdingTeam
@@ -29,7 +29,7 @@ public class HerdManager
 
     // For now we have one Herd per class of critter.  This needs to change when we have
     // different herds because of different herd leaders.
-    private final Map<Class, Herd> herds = new HashMap<Class, Herd>();
+    private final Map<Class, Herd> herds = new WeakHashMap<>();
     private long nextRebalance = 0;
 
     //===============================================

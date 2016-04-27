@@ -27,6 +27,11 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
+        if (animatingEntity.isDead)
+        {
+            return false;
+        }
+
         if (animatingEntity.getRNG().nextDouble() < 0.003)
         {
             List<Entity> entities = this.getEntitiesWithinDistance(animatingEntity, 50, 10);

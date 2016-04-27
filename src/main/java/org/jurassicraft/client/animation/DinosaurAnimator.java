@@ -15,25 +15,25 @@ import java.util.WeakHashMap;
 @SideOnly(Side.CLIENT)
 public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements ITabulaModelAnimator<ENTITY>
 {
-    protected Map<DinosaurEntity, Map<GrowthStage, JabelarAnimationHandler>> animationHandlers = new WeakHashMap<>();
+    protected EnumMap<GrowthStage, Map<DinosaurEntity, JabelarAnimationHandler>> animationHandlers = new EnumMap<>(GrowthStage.class);
 
     private JabelarAnimationHandler getAnimationHelper(DinosaurEntity entity, DinosaurModel model, boolean useInertialTweens)
     {
         GrowthStage growth = entity.getGrowthStage();
-        Map<GrowthStage, JabelarAnimationHandler> growthToRender = animationHandlers.get(entity);
+        Map<DinosaurEntity, JabelarAnimationHandler> growthToRender = animationHandlers.get(growth);
 
         if (growthToRender == null)
         {
-            growthToRender = new EnumMap<>(GrowthStage.class);
-            animationHandlers.put(entity, growthToRender);
+            growthToRender = new WeakHashMap<>();
+            animationHandlers.put(growth, growthToRender);
         }
 
-        JabelarAnimationHandler render = growthToRender.get(growth);
+        JabelarAnimationHandler render = growthToRender.get(entity);
 
         if (render == null)
         {
             render = entity.getDinosaur().getPoseHandler().createAnimationHandler(entity, model, growth, useInertialTweens);
-            growthToRender.put(growth, render);
+            growthToRender.put(entity, render);
         }
 
         return render;
@@ -42,7 +42,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     @Override
     public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(partialTicks);
+        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, partialTicks);
 
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
         {
