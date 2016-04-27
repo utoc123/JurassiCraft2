@@ -24,12 +24,9 @@ public class JabelarAnimationHandler
 {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
-    private final DinosaurEntity entity;
-
     private final AnimationPass DEFAULT_PASS;
 
     /**
-     * @param entity            the entity to animate from
      * @param model             the model to animate
      * @param poses             for each pose(-index) an array of posed Renderers
      * @param poseSequences     maps from an {@link Animations} to the sequence of (pose-index, tween-length)
@@ -37,26 +34,24 @@ public class JabelarAnimationHandler
      */
     public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, AdvancedModelRenderer[][] poses, Map<Animation, int[][]> poseSequences, boolean useInertialTweens)
     {
-        this.entity = entity;
+        this.DEFAULT_PASS = new AnimationPass(poseSequences, poses, useInertialTweens);
 
-        this.DEFAULT_PASS = new AnimationPass(entity, poseSequences, poses, useInertialTweens);
-
-        this.init(model);
+        this.init(entity, model);
     }
 
-    private void init(DinosaurModel model)
+    private void init(DinosaurEntity entity, DinosaurModel model)
     {
         AdvancedModelRenderer[] modelParts = this.getModelParts(model);
 
-        this.DEFAULT_PASS.initSequence(entity.getAnimation());
-        this.DEFAULT_PASS.init(modelParts);
+        this.DEFAULT_PASS.initSequence(entity, entity.getAnimation());
+        this.DEFAULT_PASS.init(entity, modelParts);
     }
 
-    public void performAnimations(float partialTicks)
+    public void performAnimations(DinosaurEntity entity, float partialTicks)
     {
-        this.performHurtAnimation();
+        this.performHurtAnimation(entity);
 
-        this.DEFAULT_PASS.performAnimations(partialTicks);
+        this.DEFAULT_PASS.performAnimations(entity, partialTicks);
     }
 
     private AdvancedModelRenderer[] getModelParts(DinosaurModel model)
@@ -95,7 +90,7 @@ public class JabelarAnimationHandler
         return getTabulaModel(tabulaModel, 0);
     }
 
-    private void performHurtAnimation()
+    private void performHurtAnimation(DinosaurEntity entity)
     {
         double posX = entity.posX;
         double posY = entity.posY;

@@ -25,7 +25,7 @@ public class SleepEntityAI extends EntityAIBase
     {
         World world = dinosaur.worldObj;
 
-        if (!world.isRemote && dinosaur.shouldSleep() && !dinosaur.isSleeping() && dinosaur.getStayAwakeTime() <= 0)
+        if (!dinosaur.isDead && !world.isRemote && dinosaur.shouldSleep() && !dinosaur.isSleeping() && dinosaur.getStayAwakeTime() <= 0)
         {
             int range = 8;
 

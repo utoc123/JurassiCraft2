@@ -20,7 +20,7 @@ public class HerdEntityAI extends EntityAIBase
     public HerdEntityAI(DinosaurEntity entity)
     {
         dinosaur = entity;
-        if (!entity.getEntityWorld().isRemote)
+        if (dinosaur.worldObj.getGameRules().getBoolean("dinoHerding") && !entity.getEntityWorld().isRemote)
         {
             HerdManager.getInstance().add(entity);
         }

@@ -27,7 +27,6 @@ public class AnimationPass
     protected AdvancedModelRenderer[] parts;
     protected AdvancedModelRenderer[] nextParts;
 
-    protected final DinosaurEntity entity;
     protected final Map<Animation, int[][]> poseSequences;
     protected final AdvancedModelRenderer[][] poses;
 
@@ -35,17 +34,17 @@ public class AnimationPass
 
     protected boolean useInertialTweens;
 
-    public AnimationPass(DinosaurEntity entity, Map<Animation, int[][]> poseSequences, AdvancedModelRenderer[][] poses, boolean useIntertialTweens)
+    public AnimationPass(Map<Animation, int[][]> poseSequences, AdvancedModelRenderer[][] poses, boolean useIntertialTweens)
     {
-        this.entity = entity;
         this.poseSequences = poseSequences;
         this.poses = poses;
-        this.prevTicksExisted = entity.ticksExisted;
         this.useInertialTweens = useIntertialTweens;
     }
 
-    public void init(AdvancedModelRenderer[] parts)
+    public void init(DinosaurEntity entity, AdvancedModelRenderer[] parts)
     {
+        this.prevTicksExisted = entity.ticksExisted;
+
         this.parts = parts;
 
         this.initPoseModel();
@@ -108,7 +107,7 @@ public class AnimationPass
         }
     }
 
-    public void initSequence(Animation animation)
+    public void initSequence(DinosaurEntity entity, Animation animation)
     {
         /**
          * TODO:
@@ -123,12 +122,12 @@ public class AnimationPass
             if (this.poseSequences.get(animation) == null)
             {
                 this.animation = Animations.IDLE.get();
-                this.entity.setAnimation(Animations.IDLE.get());
+                entity.setAnimation(Animations.IDLE.get());
             }
             else if (this.animation != Animations.IDLE.get() && this.animation == animation) // finished sequence but no new sequence set
             {
                 this.animation = Animations.IDLE.get();
-                this.entity.setAnimation(Animations.IDLE.get());
+                entity.setAnimation(Animations.IDLE.get());
             }
             else if (entity.isCarcass())
             {
@@ -149,14 +148,14 @@ public class AnimationPass
         return (float) inertiaFactor;
     }
 
-    public void performAnimations(float partialTicks)
+    public void performAnimations(DinosaurEntity entity, float partialTicks)
     {
         if (entity.getAnimation() != animation && animation != Animations.DYING.get() && this.doesUpdateEntityAnimations())
         {
-            this.setNextSequence(entity.getAnimation());
+            this.setNextSequence(entity, entity.getAnimation());
         }
 
-        this.performNextTween(partialTicks);
+        this.performNextTween(entity, partialTicks);
     }
 
     /**
@@ -292,7 +291,7 @@ public class AnimationPass
         this.updateTween();
     }
 
-    protected void performNextTween(float partialTicks)
+    protected void performNextTween(DinosaurEntity entity, float partialTicks)
     {
         this.calculateTween(partialTicks);
 
@@ -300,14 +299,14 @@ public class AnimationPass
         {
             if (this.incrementTweenTick())
             {
-                this.handleFinishedPose();
+                this.handleFinishedPose(entity);
             }
         }
 
         this.prevTicksExisted = entity.ticksExisted;
     }
 
-    protected void handleFinishedPose()
+    protected void handleFinishedPose(DinosaurEntity entity)
     {
 //        this.initIncrements(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
@@ -315,15 +314,15 @@ public class AnimationPass
 
         if (this.incrementCurrentPoseIndex())
         {
-            this.setNextSequence(entity.getAnimation());
+            this.setNextSequence(entity, entity.getAnimation());
         }
 
         this.setNextPoseModel();
 
-        this.playSound();
+        this.playSound(entity);
     }
 
-    protected void playSound()
+    protected void playSound(DinosaurEntity entity)
     {
         if (entity.getAnimation() == Animations.IDLE.get() || tweenTick > 0)
         {
@@ -362,7 +361,7 @@ public class AnimationPass
         return finishedSequence;
     }
 
-    protected void setNextSequence(Animation requestedAnimation)
+    protected void setNextSequence(DinosaurEntity entity, Animation requestedAnimation)
     {
         /**
          * TODO:
@@ -380,7 +379,7 @@ public class AnimationPass
                 animation = Animations.IDLE.get();
             }
 
-            this.entity.setAnimation(animation);
+            entity.setAnimation(animation);
         }
 
         this.setNextPoseModel(0);
