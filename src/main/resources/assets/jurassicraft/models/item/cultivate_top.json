@@ -1,5 +1,5 @@
 {
-    "parent": "jurassicraft:block/cultivate_top",
+    "parent": "jurassicraft:block/cultivator/top/cultivate_top_black",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

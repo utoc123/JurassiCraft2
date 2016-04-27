@@ -50,7 +50,6 @@ import org.jurassicraft.client.model.animation.MicroceratusAnimator;
 import org.jurassicraft.client.model.animation.MoganopterusAnimator;
 import org.jurassicraft.client.model.animation.OrnithomimusAnimator;
 import org.jurassicraft.client.model.animation.OthnieliaAnimator;
-import org.jurassicraft.client.model.animation.OviraptorAnimator;
 import org.jurassicraft.client.model.animation.PachycephalosaurusAnimator;
 import org.jurassicraft.client.model.animation.ParasaurolophusAnimator;
 import org.jurassicraft.client.model.animation.ProtoceratopsAnimator;
@@ -87,6 +86,7 @@ import org.jurassicraft.client.render.entity.JurassiCraftSignRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
+import org.jurassicraft.server.api.IHybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
@@ -150,7 +150,6 @@ public enum RenderingHandler
         registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.dodo, new DodoAnimator(), 0.5F));
         registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.leptictidium, new LeptictidiumAnimator(), 0.45F));
         registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.microceratus, new MicroceratusAnimator(), 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.oviraptor, new OviraptorAnimator(), 0.55F));
         registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.apatosaurus, new ApatosaurusAnimator(), 1.5F));
         registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.othnielia, new OthnieliaAnimator(), 0.65F));
         registerRenderDef(new RenderDinosaurDefinition<>(EntityHandler.INSTANCE.dimorphodon, new DimorphodonAnimator(), 0.65F));
@@ -196,13 +195,16 @@ public enum RenderingHandler
         {
             String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.fossils.entrySet())
+            if (!(dino instanceof IHybrid))
             {
-                List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
-
-                if (dinosaursForType.contains(dino))
+                for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.fossils.entrySet())
                 {
-                    ModelBakery.registerItemVariants(entry.getValue(), new ResourceLocation("jurassicraft:bones/" + dinoName + "_" + entry.getKey()));
+                    List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
+
+                    if (dinosaursForType.contains(dino))
+                    {
+                        ModelBakery.registerItemVariants(entry.getValue(), new ResourceLocation("jurassicraft:bones/" + dinoName + "_" + entry.getKey()));
+                    }
                 }
             }
 
@@ -217,7 +219,12 @@ public enum RenderingHandler
             }
 
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.dna, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.egg, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
+
+            if (!dino.isMammal())
+            {
+                ModelBakery.registerItemVariants(ItemHandler.INSTANCE.egg, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
+            }
+
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.dino_meat, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.dino_steak, new ResourceLocation("jurassicraft:meat/steak_" + dinoName));
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.soft_tissue, new ResourceLocation("jurassicraft:soft_tissue/soft_tissue_" + dinoName));
@@ -301,7 +308,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.reinforced_bricks, "reinforced_bricks", "inventory");
 
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cultivate_bottom, "cultivate_bottom", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cultivate_top, "cultivate_top", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cultivate_top, "cultivate_bottom", "inventory");
 
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.amber_ore, "amber_ore", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ice_shard, "ice_shard", "inventory");

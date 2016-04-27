@@ -45,7 +45,6 @@ import org.jurassicraft.server.dinosaur.MicroceratusDinosaur;
 import org.jurassicraft.server.dinosaur.MoganopterusDinosaur;
 import org.jurassicraft.server.dinosaur.OrnithomimusDinosaur;
 import org.jurassicraft.server.dinosaur.OthnieliaDinosaur;
-import org.jurassicraft.server.dinosaur.OviraptorDinosaur;
 import org.jurassicraft.server.dinosaur.PachycephalosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.ParasaurolophusDinosaur;
 import org.jurassicraft.server.dinosaur.ProtoceratopsDinosaur;
@@ -111,7 +110,6 @@ public enum EntityHandler
     public final Dinosaur velociraptor = new VelociraptorDinosaur();
     public final Dinosaur leptictidium = new LeptictidiumDinosaur();
     public final Dinosaur microceratus = new MicroceratusDinosaur();
-    public final Dinosaur oviraptor = new OviraptorDinosaur();
     public final Dinosaur apatosaurus = new ApatosaurusDinosaur();
     public final Dinosaur othnielia = new OthnieliaDinosaur();
     public final Dinosaur dimorphodon = new DimorphodonDinosaur();
@@ -185,7 +183,6 @@ public enum EntityHandler
         registerDinosaurType(dodo);
         registerDinosaurType(leptictidium);
         registerDinosaurType(microceratus);
-        registerDinosaurType(oviraptor);
         registerDinosaurType(apatosaurus);
         registerDinosaurType(othnielia);
         registerDinosaurType(dimorphodon);
