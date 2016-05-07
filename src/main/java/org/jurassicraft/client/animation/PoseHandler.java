@@ -189,7 +189,7 @@ public class PoseHandler
                 AdvancedModelRenderer cube = theModel.getCube(cubeName);
                 if (cube == null)
                 {
-                    throw new IllegalArgumentException("Could not retrieve cube " + cubeName + " (" + partIndex + ") from the model " + resource);
+                    JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + cubeName + " (" + partIndex + ") from the model " + resource);
                 }
                 cubes[partIndex] = cube;
             }
