@@ -78,11 +78,11 @@ import org.jurassicraft.client.render.block.DNASynthesizerSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
 import org.jurassicraft.client.render.block.IncubatorSpecialRenderer;
+import org.jurassicraft.client.render.entity.AttractionSignRenderer;
 import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.CageSmallRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
-import org.jurassicraft.client.render.entity.JurassiCraftSignRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
@@ -93,10 +93,10 @@ import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
-import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
@@ -187,7 +187,7 @@ public enum RenderingHandler
         RenderingRegistry.registerEntityRenderingHandler(CageSmallEntity.class, new CageSmallRenderer());
         RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer());
         RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(JurassiCraftSignEntity.class, new JurassiCraftSignRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
         RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
 
@@ -243,6 +243,11 @@ public enum RenderingHandler
         for (EnumDyeColor color : EnumDyeColor.values())
         {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.INSTANCE.cultivate_bottom), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase()));
+        }
+
+        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
+        {
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.attraction_sign, new ResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase()));
         }
 
         ModelBakery.registerItemVariants(ItemHandler.INSTANCE.amber, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
@@ -368,7 +373,12 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.paleo_pad, "paleo_pad", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.blue_print, "blue_print", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.paddock_sign, "paddock_sign", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.jc_sign, "jurassicraft_sign", "inventory");
+
+        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
+        {
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.attraction_sign, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(), "inventory");
+        }
+
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.empty_test_tube, "empty_test_tube", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.empty_syringe, "empty_syringe", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.storage_disc, "storage_disc", "inventory");
