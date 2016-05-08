@@ -38,7 +38,7 @@ public enum ItemHandler
 
     public BluePrintItem blue_print;
     public PaddockSignItem paddock_sign;
-    public JurassiCraftSignItem jc_sign;
+    public AttractionSignItem attraction_sign;
 
     public AmberItem amber;
     public BasicItem petri_dish;
@@ -123,7 +123,7 @@ public enum ItemHandler
         dino_steak = new DinosaurSteakItem();
         blue_print = new BluePrintItem();
         paddock_sign = new PaddockSignItem();
-        jc_sign = new JurassiCraftSignItem();
+        attraction_sign = new AttractionSignItem();
         soft_tissue = new SoftTissueItem();
         plant_soft_tissue = new PlantSoftTissueItem();
         amber = new AmberItem();
@@ -223,7 +223,7 @@ public enum ItemHandler
         registerItem(blue_print, "Blue Print");
         registerItem(paddock_sign, "Paddock Sign");
         registerItem(cage_small, "Cage Small");
-        // registerItem(jc_sign, "JurassiCraft Sign");
+        registerItem(attraction_sign, "Attraction Sign");
         registerItem(spawn_egg, "Dino Spawn Egg");
         registerItem(dna, "DNA");
         registerItem(egg, "Dino Egg");

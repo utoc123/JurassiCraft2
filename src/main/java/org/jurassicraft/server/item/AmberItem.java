@@ -25,16 +25,11 @@ public class AmberItem extends Item
         return new AdvLang("item.amber.name").withProperty("stored", "amber." + (stack.getItemDamage() == 0 ? "mosquito" : "aphid") + ".name").build();
     }
 
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     *
-     * @param subItems The List of sub-items. This is a List of ItemStacks.
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems)
     {
-        subItems.add(new ItemStack(itemIn, 1, 0));
-        subItems.add(new ItemStack(itemIn, 1, 1));
+        subItems.add(new ItemStack(item, 1, 0));
+        subItems.add(new ItemStack(item, 1, 1));
     }
 }

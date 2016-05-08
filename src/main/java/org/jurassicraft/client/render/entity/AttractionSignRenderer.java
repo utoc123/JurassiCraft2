@@ -15,27 +15,24 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.entity.item.BluePrintEntity;
+import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
+public class AttractionSignRenderer implements IRenderFactory<AttractionSignEntity>
 {
     @Override
-    public Render<? super BluePrintEntity> createRenderFor(RenderManager manager)
+    public Render<? super AttractionSignEntity> createRenderFor(RenderManager manager)
     {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<BluePrintEntity>
+    public static class Renderer extends Render<AttractionSignEntity>
     {
-        private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
-        private final Map<Integer, Integer> DISPLAY_LISTS = new HashMap<>();
+        private final Map<AttractionSignEntity.AttractionSignType, Integer> DISPLAY_LISTS = new HashMap<>();
 
         public Renderer(RenderManager manager)
         {
@@ -43,25 +40,21 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
         }
 
         @Override
-        public void doRender(BluePrintEntity entity, double x, double y, double z, float yaw, float partialTicks)
+        public void doRender(AttractionSignEntity entity, double x, double y, double z, float yaw, float partialTicks)
         {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
             GlStateManager.enableRescaleNormal();
-            int id = entity.getDinosaur();
 
-            Integer displayList = DISPLAY_LISTS.get(id);
+            AttractionSignEntity.AttractionSignType type = entity.type;
 
-            ResourceLocation texture = TEXTURES.get(id);
+            this.bindTexture(type.texture);
 
-            if (texture == null)
-            {
-                texture = new ResourceLocation(JurassiCraft.MODID, "textures/blueprints/" + EntityHandler.INSTANCE.getDinosaurById(id).getName().toLowerCase() + ".png");
-                TEXTURES.put(id, texture);
-            }
+            float scale = 0.0625F;
+            GlStateManager.scale(scale, scale, scale);
 
-            this.bindTexture(texture);
+            Integer displayList = DISPLAY_LISTS.get(type);
 
             if (displayList != null)
             {
@@ -71,14 +64,15 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
             {
                 displayList = GLAllocation.generateDisplayLists(1);
                 GlStateManager.glNewList(displayList, GL11.GL_COMPILE);
-                float scale = 0.0625F;
-                GlStateManager.scale(scale, scale, scale);
-
-                this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), entity.getWidthPixels(), entity.getHeightPixels());
+                this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), type.sizeX, type.sizeY);
                 GlStateManager.glEndList();
 
-                DISPLAY_LISTS.put(id, displayList);
+                DISPLAY_LISTS.put(type, displayList);
             }
+
+            this.bindTexture(type.texturePopout);
+
+            GlStateManager.callList(displayList);
 
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
@@ -86,17 +80,17 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(BluePrintEntity bluePrint)
+        protected ResourceLocation getEntityTexture(AttractionSignEntity entity)
         {
-            return null;
+            return entity.type.texture;
         }
 
-        private void renderLayer(BluePrintEntity entity, int width, int height, int textureWidth, int textureHeight)
+        private void renderLayer(AttractionSignEntity entity, int width, int height, int textureWidth, int textureHeight)
         {
             float centerWidth = (float) -textureWidth / 2.0F;
-            float centerHeight = (float) -textureHeight / 2.0F;
+            float centerHeight = (float) -textureHeight;
             float pixelSize = 0.0625F;
-            float depth = 1.0F;
+            float depth = 1.5F;
             GlStateManager.translate(0.0F, 0.0F, -depth + 0.5F);
 
             GlStateManager.disableCull();
@@ -128,11 +122,18 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
                     buffer.pos(maxX, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                     tessellator.draw();
 
-                    for (float i = minX; i < maxX; i += 0.25F)
+                    for (float i = minX; i < maxX; i++)
                     {
                         maxTextureX = (centerWidth - i) / textureWidth;
                         minTextureX = (centerWidth - (i - pixelSize)) / textureWidth;
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                        buffer.pos(i, minY, 0.0F).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i, minY, depth).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i, maxY, 0.0F).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        float offsetX = i + pixelSize;
+                        maxTextureX = (centerWidth - offsetX) / textureWidth;
+                        minTextureX = (centerWidth - (offsetX - pixelSize)) / textureWidth;
                         buffer.pos(i, minY, 0.0F).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(i, minY, depth).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(i, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
@@ -143,15 +144,19 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
                     maxTextureX = (textureWidth - x / pixelSize) / textureWidth;
                     minTextureX = (textureWidth - (x + 1) / pixelSize) / textureWidth;
 
-                    for (float i = minY; i < maxY; i += 0.25F)
+                    for (float i = minY; i < maxY; i++)
                     {
-                        maxTextureY = (textureHeight - (i)) / (textureHeight);
-                        minTextureY = (textureHeight - (i + 0.25F)) / (textureHeight);
+                        minTextureY = ((height - i + 1.0F) / textureHeight) + 1.0F;
+                        maxTextureY = ((height - i) / textureHeight) + 1.0F;
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
                         buffer.pos(minX, i, 0.0F).tex(maxTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(minX, i, depth).tex(maxTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(maxX, i, depth).tex(minTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(maxX, i, 0.0F).tex(minTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(minX, i - 1.0F, 0.0F).tex(maxTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(minX, i - 1.0F, depth).tex(maxTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(maxX, i - 1.0F, depth).tex(minTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(maxX, i - 1.0F, 0.0F).tex(minTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
                         tessellator.draw();
                     }
                 }
@@ -160,7 +165,7 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
             GlStateManager.enableCull();
         }
 
-        private void setLightmap(BluePrintEntity sign, float xzOffset, float yOffset)
+        private void setLightmap(AttractionSignEntity sign, float xzOffset, float yOffset)
         {
             int posX = MathHelper.floor_double(sign.posX);
             int posY = MathHelper.floor_double(sign.posY + (yOffset / 16.0F));

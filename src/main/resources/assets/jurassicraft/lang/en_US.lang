@@ -70,6 +70,16 @@ entity.jurassicraft.pachycephalosaurus.name=Pachycephalosaurus
 item.rock_pick.name=Rock Pick
 item.plaster_and_bandage.name=Plaster and Bandage
 
+item.attraction_sign.name={type} Attraction Sign
+attraction_sign.aquarium.name=Aquarium
+attraction_sign.aquarium_coral.name=Aquarium With Coral
+attraction_sign.aviary.name=Aviary
+attraction_sign.aviary_plants.name=Aviary With Plants
+attraction_sign.gallimimus_valley.name=Gallimimus Valley
+attraction_sign.gallimimus_valley_plants.name=Gallimimus Valley With Plants
+attraction_sign.gentle_giants.name=Gentle Giants
+attraction_sign.gentle_giants_plants.name=Gentle Giants With Plants
+
 item.skull_fresh.name=Fresh {dino} Skull
 item.tooth_fresh.name=Fresh {dino} Tooth
 item.anal_fin_fresh.name=Fresh {dino} Anal Fin

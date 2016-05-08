@@ -66,10 +66,10 @@ import org.jurassicraft.server.dinosaur.VelociraptorDeltaDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorEchoDinosaur;
 import org.jurassicraft.server.dinosaur.ZhenyuanopterusDinosaur;
+import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
-import org.jurassicraft.server.entity.item.JurassiCraftSignEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.period.EnumTimePeriod;
 import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
@@ -214,7 +214,7 @@ public enum EntityHandler
         registerDinosaur(pachycephalosaurus);
 
         registerEntity(BluePrintEntity.class, "Blueprint");
-        registerEntity(JurassiCraftSignEntity.class, "JurassiCraft Sign");
+        registerEntity(AttractionSignEntity.class, "JurassiCraft Sign");
         registerEntity(CageSmallEntity.class, "Small Dinosaur Cage");
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
 
