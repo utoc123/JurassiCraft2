@@ -35,7 +35,8 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
     public static class Renderer extends Render<BluePrintEntity>
     {
         private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
-        private final Map<Integer, Integer> DISPLAY_LISTS = new HashMap<>();
+        private static int DISPLAY_LIST = -1;
+        private static boolean HAS_COMPILED = false;
 
         public Renderer(RenderManager manager)
         {
@@ -51,8 +52,6 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
             GlStateManager.enableRescaleNormal();
             int id = entity.getDinosaur();
 
-            Integer displayList = DISPLAY_LISTS.get(id);
-
             ResourceLocation texture = TEXTURES.get(id);
 
             if (texture == null)
@@ -63,21 +62,21 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
 
             this.bindTexture(texture);
 
-            if (displayList != null)
+            if (HAS_COMPILED)
             {
-                GlStateManager.callList(displayList);
+                GlStateManager.callList(DISPLAY_LIST);
             }
             else
             {
-                displayList = GLAllocation.generateDisplayLists(1);
-                GL11.glNewList(displayList, GL11.GL_COMPILE);
+                DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
+                GL11.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
                 float scale = 0.0625F;
                 GlStateManager.scale(scale, scale, scale);
 
                 this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), entity.getWidthPixels(), entity.getHeightPixels());
                 GL11.glEndList();
 
-                DISPLAY_LISTS.put(id, displayList);
+                HAS_COMPILED = true;
             }
 
             GlStateManager.disableRescaleNormal();
