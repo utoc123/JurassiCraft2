@@ -15,7 +15,12 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
@@ -28,16 +33,15 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
 
     public static class Renderer extends Render<PaddockSignEntity>
     {
-        private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/paddock_signs.png");
+        private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
+        private static int DISPLAY_LIST = -1;
+        private static boolean HAS_COMPILED = false;
 
         public Renderer(RenderManager manager)
         {
             super(manager);
         }
 
-        /**
-         * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic (Render<T extends Entity>) and this method has signature public void func_76986_a(T entity, double d, double d1, double d2, float f, float f1). But JAD is pre 1.5 so doe
-         */
         @Override
         public void doRender(PaddockSignEntity entity, double x, double y, double z, float yaw, float partialTicks)
         {
@@ -47,11 +51,35 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
             GlStateManager.enableRescaleNormal();
             this.bindEntityTexture(entity);
 
+            int id = entity.getDinosaur();
+
+            ResourceLocation texture = TEXTURES.get(id);
+
+            if (texture == null)
+            {
+                texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.INSTANCE.getDinosaurById(id).getName().toLowerCase() + ".png");
+                TEXTURES.put(id, texture);
+            }
+
+            this.bindTexture(texture);
+
+//            if (HAS_COMPILED)
+//            {
+//                GlStateManager.callList(DISPLAY_LIST);
+//            }
+//            else
+//            {
+//                DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
+//                GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
             float scale = 0.0625F;
             GlStateManager.scale(scale, scale, scale);
 
-            int id = entity.getDinosaur();
-            this.render(entity, 16, 16, ((id) % 16) * 16, (int) Math.floor((id) / 16) * 16); // 8x16 art
+            this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), entity.getWidthPixels(), entity.getHeightPixels());
+//                GlStateManager.glEndList();
+//
+//                HAS_COMPILED = true;
+//            }
+
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, yaw, partialTicks);
@@ -60,103 +88,111 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
         @Override
         protected ResourceLocation getEntityTexture(PaddockSignEntity sign)
         {
-            return texture;
+            return null;
         }
 
-        private void render(PaddockSignEntity entity, int width, int height, int textureU, int textureV)
+        private void renderLayer(PaddockSignEntity entity, int width, int height, int textureWidth, int textureHeight)
         {
-            float f = (float) (-width) / 2.0F;
-            float f1 = (float) (-height) / 2.0F;
-            float f2 = 0.001F;
-            float f3 = 0.75F;
-            float f4 = 0.8125F;
-            float f5 = 0.0F;
-            float f6 = 0.0625F;
-            float f7 = 0.75F;
-            float f8 = 0.8125F;
-            float f9 = 0.001953125F;
-            float f10 = 0.001953125F;
-            float f11 = 0.7519531F;
-            float f12 = 0.7519531F;
-            float f13 = 0.0F;
-            float f14 = 0.0625F;
+            float centerWidth = (float) -textureWidth / 2.0F;
+            float centerHeight = (float) -textureHeight / 2.0F;
+            float pixelSize = 0.0625F;
+            float depth = 1.0F;
+            GlStateManager.translate(0.0F, 0.0F, -depth + 0.5F);
 
-            for (int x = 0; x < width / 16; ++x)
+            GlStateManager.disableCull();
+
+            for (int x = 0; x < textureWidth * pixelSize; x++)
             {
-                for (int y = 0; y < height / 16; ++y)
+                for (int y = 0; y < textureHeight * pixelSize; y++)
                 {
-                    float f15 = f + (float) ((x + 1) * 16);
-                    float f16 = f + (float) (x * 16);
-                    float f17 = f1 + (float) ((y + 1) * 16);
-                    float f18 = f1 + (float) (y * 16);
-                    this.setLightmap(entity, (f15 + f16) / 2.0F, (f17 + f18) / 2.0F);
-                    float f19 = (float) (textureU + width - x * 16) / 256.0F;
-                    float f20 = (float) (textureU + width - (x + 1) * 16) / 256.0F;
-                    float f21 = (float) (textureV + height - y * 16) / 256.0F;
-                    float f22 = (float) (textureV + height - (y + 1) * 16) / 256.0F;
+                    float maxX = centerWidth + (x + 1) / pixelSize;
+                    float minX = centerWidth + x / pixelSize;
+                    float maxY = centerHeight + (y + 1) / pixelSize;
+                    float minY = centerHeight + y / pixelSize;
+                    this.setLightmap(entity, (maxX + minX) / 2.0F, (maxY + minY) / 2.0F);
+                    float maxTextureX = (textureWidth - x / pixelSize) / textureWidth;
+                    float minTextureX = (textureWidth - (x + 1) / pixelSize) / textureWidth;
+                    float maxTextureY = (textureHeight - y / pixelSize) / textureHeight;
+                    float minTextureY = (textureHeight - (y + 1) / pixelSize) / textureHeight;
                     Tessellator tessellator = Tessellator.getInstance();
-                    VertexBuffer vertexBuffer = tessellator.getBuffer();
-                    vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-                    vertexBuffer.pos((double) f15, (double) f18, (double) (-f2)).tex((double) f20, (double) f21).normal(0.0F, 0.0F, -1.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f18, (double) (-f2)).tex((double) f19, (double) f21).normal(0.0F, 0.0F, -1.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f17, (double) (-f2)).tex((double) f19, (double) f22).normal(0.0F, 0.0F, -1.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f17, (double) (-f2)).tex((double) f20, (double) f22).normal(0.0F, 0.0F, -1.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f17, (double) f2).tex((double) f3, (double) f5).normal(0.0F, 0.0F, 1.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f17, (double) f2).tex((double) f4, (double) f5).normal(0.0F, 0.0F, 1.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f18, (double) f2).tex((double) f4, (double) f6).normal(0.0F, 0.0F, 1.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f18, (double) f2).tex((double) f3, (double) f6).normal(0.0F, 0.0F, 1.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f17, (double) (-f2)).tex((double) f7, (double) f9).normal(0.0F, 1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f17, (double) (-f2)).tex((double) f8, (double) f9).normal(0.0F, 1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f17, (double) f2).tex((double) f8, (double) f10).normal(0.0F, 1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f17, (double) f2).tex((double) f7, (double) f10).normal(0.0F, 1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f18, (double) f2).tex((double) f7, (double) f9).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f18, (double) f2).tex((double) f8, (double) f9).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f18, (double) (-f2)).tex((double) f8, (double) f10).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f18, (double) (-f2)).tex((double) f7, (double) f10).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f17, (double) f2).tex((double) f12, (double) f13).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f18, (double) f2).tex((double) f12, (double) f14).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f18, (double) (-f2)).tex((double) f11, (double) f14).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f15, (double) f17, (double) (-f2)).tex((double) f11, (double) f13).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f17, (double) (-f2)).tex((double) f12, (double) f13).normal(1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f18, (double) (-f2)).tex((double) f12, (double) f14).normal(1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f18, (double) f2).tex((double) f11, (double) f14).normal(1.0F, 0.0F, 0.0F).endVertex();
-                    vertexBuffer.pos((double) f16, (double) f17, (double) f2).tex((double) f11, (double) f13).normal(1.0F, 0.0F, 0.0F).endVertex();
+                    VertexBuffer buffer = tessellator.getBuffer();
+
+                    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                    buffer.pos(maxX, minY, 0.0F).tex(minTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(minX, minY, 0.0F).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(minX, maxY, 0.0F).tex(maxTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(maxX, maxY, 0.0F).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(maxX, minY, depth).tex(minTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(minX, minY, depth).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(minX, maxY, depth).tex(maxTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                    buffer.pos(maxX, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                     tessellator.draw();
+
+                    for (float i = minX; i < maxX; i += 0.125F)
+                    {
+                        maxTextureX = (centerWidth - i) / textureWidth;
+                        minTextureX = (centerWidth - (i - pixelSize)) / textureWidth;
+                        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                        buffer.pos(i, minY, 0.0F).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i, minY, depth).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i, maxY, 0.0F).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        tessellator.draw();
+                    }
+
+                    maxTextureX = (textureWidth - x / pixelSize) / textureWidth;
+                    minTextureX = (textureWidth - (x + 1) / pixelSize) / textureWidth;
+
+                    for (float i = minY; i < maxY; i += 0.125F)
+                    {
+                        maxTextureY = (textureHeight - (i)) / (textureHeight);
+                        minTextureY = (textureHeight - (i + 0.125F)) / (textureHeight);
+                        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                        buffer.pos(minX, i, 0.0F).tex(maxTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(minX, i, depth).tex(maxTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(maxX, i, depth).tex(minTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(maxX, i, 0.0F).tex(minTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        tessellator.draw();
+                        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                        buffer.pos(minX, i + 0.125F, 0.0F).tex(maxTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(minX, i + 0.125F, depth).tex(maxTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(maxX, i + 0.125F, depth).tex(minTextureX, minTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(maxX, i + 0.125F, 0.0F).tex(minTextureX, maxTextureY + 0.5F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        tessellator.draw();
+                    }
                 }
             }
+
+            GlStateManager.enableCull();
         }
 
-        private void setLightmap(PaddockSignEntity entity, float p_77008_2_, float p_77008_3_)
+        private void setLightmap(PaddockSignEntity sign, float xzOffset, float yOffset)
         {
-            int i = MathHelper.floor_double(entity.posX);
-            int j = MathHelper.floor_double(entity.posY + (double) (p_77008_3_ / 16.0F));
-            int k = MathHelper.floor_double(entity.posZ);
-            EnumFacing enumfacing = entity.facingDirection;
+            int posX = MathHelper.floor_double(sign.posX);
+            int posY = MathHelper.floor_double(sign.posY + (yOffset / 16.0F));
+            int posZ = MathHelper.floor_double(sign.posZ);
 
-            if (enumfacing == EnumFacing.NORTH)
+            EnumFacing direction = sign.facingDirection;
+
+            if (direction == EnumFacing.NORTH)
             {
-                i = MathHelper.floor_double(entity.posX + (double) (p_77008_2_ / 16.0F));
+                posX = MathHelper.floor_double(sign.posX + (xzOffset / 16.0F));
+            }
+            else if (direction == EnumFacing.WEST)
+            {
+                posZ = MathHelper.floor_double(sign.posZ - (xzOffset / 16.0F));
+            }
+            else if (direction == EnumFacing.SOUTH)
+            {
+                posX = MathHelper.floor_double(sign.posX - (xzOffset / 16.0F));
+            }
+            else if (direction == EnumFacing.EAST)
+            {
+                posZ = MathHelper.floor_double(sign.posZ + (xzOffset / 16.0F));
             }
 
-            if (enumfacing == EnumFacing.WEST)
-            {
-                k = MathHelper.floor_double(entity.posZ - (double) (p_77008_2_ / 16.0F));
-            }
-
-            if (enumfacing == EnumFacing.SOUTH)
-            {
-                i = MathHelper.floor_double(entity.posX - (double) (p_77008_2_ / 16.0F));
-            }
-
-            if (enumfacing == EnumFacing.EAST)
-            {
-                k = MathHelper.floor_double(entity.posZ + (double) (p_77008_2_ / 16.0F));
-            }
-
-            int l = this.renderManager.worldObj.getCombinedLight(new BlockPos(i, j, k), 0);
-            int i1 = l % 65536;
-            int j1 = l / 65536;
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) i1, (float) j1);
+            int combinedLight = this.renderManager.worldObj.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, combinedLight % 65536, combinedLight / 65536.0F);
             GlStateManager.color(1.0F, 1.0F, 1.0F);
         }
     }

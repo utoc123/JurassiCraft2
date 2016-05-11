@@ -18,9 +18,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.lwjgl.opengl.GL11;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @SideOnly(Side.CLIENT)
 public class AttractionSignRenderer implements IRenderFactory<AttractionSignEntity>
 {
@@ -32,7 +29,8 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
 
     public static class Renderer extends Render<AttractionSignEntity>
     {
-        private final Map<AttractionSignEntity.AttractionSignType, Integer> DISPLAY_LISTS = new HashMap<>();
+        private static int DISPLAY_LIST = -1;
+        private static boolean HAS_COMPILED = false;
 
         public Renderer(RenderManager manager)
         {
@@ -54,25 +52,23 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
             float scale = 0.0625F;
             GlStateManager.scale(scale, scale, scale);
 
-            Integer displayList = DISPLAY_LISTS.get(type);
-
-            if (displayList != null)
+            if (HAS_COMPILED)
             {
-                GlStateManager.callList(displayList);
+                GlStateManager.callList(DISPLAY_LIST);
             }
             else
             {
-                displayList = GLAllocation.generateDisplayLists(1);
-                GlStateManager.glNewList(displayList, GL11.GL_COMPILE);
+                DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
+                GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
                 this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), type.sizeX, type.sizeY);
                 GlStateManager.glEndList();
 
-                DISPLAY_LISTS.put(type, displayList);
+                HAS_COMPILED = true;
             }
 
             this.bindTexture(type.texturePopout);
 
-            GlStateManager.callList(displayList);
+            GlStateManager.callList(DISPLAY_LIST);
 
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();

@@ -20,11 +20,13 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SelectDinoGui extends GuiScreen
 {
-    private static final ResourceLocation paddock_sign = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/paddock_signs.png");
+    private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
 
     private int page;
     private int pageCount;
@@ -59,7 +61,7 @@ public class SelectDinoGui extends GuiScreen
 
         page = 0;
 
-        dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getRegisteredDinosaurs());
+        dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getRegisteredDinosaurs());
 
         Collections.sort(dinosaurs);
 
@@ -184,9 +186,17 @@ public class SelectDinoGui extends GuiScreen
 
                 GlStateManager.pushMatrix();
 
-                mc.getTextureManager().bindTexture(paddock_sign);
+                ResourceLocation texture = TEXTURES.get(id);
 
-                float scale = 3F;
+                if (texture == null)
+                {
+                    texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.INSTANCE.getDinosaurById(id).getName().toLowerCase() + ".png");
+                    TEXTURES.put(id, texture);
+                }
+
+                mc.getTextureManager().bindTexture(texture);
+
+                float scale = 3.0F;
 
                 GlStateManager.scale(scale, scale, scale);
 
@@ -201,7 +211,7 @@ public class SelectDinoGui extends GuiScreen
                     drawBoxOutline(x - 1, y - 1, 18, 17, 1, 0x60606060);
                 }
 
-                drawTexturedModalRect(x, y, ((id) % 16) * 16, (int) Math.floor((id) / 16) * 16, 16, 16);
+                drawTexturedModalRect(x, y, 0, 0, 16, 16, 16, 16);
 
                 float textScale = 0.22F;
 
@@ -224,9 +234,6 @@ public class SelectDinoGui extends GuiScreen
         }
     }
 
-    /**
-     * Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height
-     */
     public void drawScaledRect(int x, int y, int width, int height, int colour)
     {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -260,6 +267,18 @@ public class SelectDinoGui extends GuiScreen
         drawScaledRect(x + sizeX, y, borderSize, sizeY + borderSize, colour);
         drawScaledRect(x, y + borderSize, borderSize, sizeY, colour);
         drawScaledRect(x + borderSize, y + sizeY, sizeX - borderSize, borderSize, colour);
+    }
+
+    public void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height, int textureWidth, int textureHeight)
+    {
+        Tessellator tessellator = Tessellator.getInstance();
+        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        vertexbuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        vertexbuffer.pos(x, y + height, this.zLevel).tex(textureX / textureWidth, (textureY + height) / textureHeight).endVertex();
+        vertexbuffer.pos(x + width, y + height, this.zLevel).tex((textureX + width) / textureWidth, (textureY + height) / textureHeight).endVertex();
+        vertexbuffer.pos(x + width, y, this.zLevel).tex((textureX + width) / textureWidth, textureY / textureHeight).endVertex();
+        vertexbuffer.pos(x, y, this.zLevel).tex(textureX / width, textureY / textureHeight).endVertex();
+        tessellator.draw();
     }
 
     @Override
