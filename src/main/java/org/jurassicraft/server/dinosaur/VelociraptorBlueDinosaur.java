@@ -22,10 +22,4 @@ public class VelociraptorBlueDinosaur extends VelociraptorDinosaur implements IH
     {
         return new Class[] { VelociraptorDinosaur.class };
     }
-
-    @Override
-    public boolean useAllGrowthStages()
-    {
-        return false;
-    }
 }

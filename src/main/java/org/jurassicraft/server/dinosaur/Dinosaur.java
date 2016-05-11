@@ -75,17 +75,20 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         String formattedName = getName().toLowerCase().replaceAll(" ", "_");
 
         this.modelAdult = parseModel("adult");
-        this.modelInfant = parseModel("infant");
 
-        if (useAllGrowthStages())
+        for (GrowthStage stage : GrowthStage.values())
         {
-            this.modelJuvenile = parseModel("juvenile");
-            this.modelAdolescent = parseModel("adolescent");
-        }
-        else
-        {
-            this.modelJuvenile = modelInfant;
-            this.modelAdolescent = modelAdult;
+            if (stage != GrowthStage.ADULT)
+            {
+                if (this.doesSupportGrowthStage(stage))
+                {
+                    this.setModelContainer(stage, parseModel(stage.name().toLowerCase()));
+                }
+                else
+                {
+                    this.setModelContainer(stage, this.modelAdult);
+                }
+            }
         }
 
         String baseTextures = "textures/entities/" + formattedName + "/";
@@ -94,16 +97,9 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         {
             String growthStageName = growthStage.name().toLowerCase();
 
-            if (!useAllGrowthStages())
+            if (!this.doesSupportGrowthStage(growthStage))
             {
-                if (growthStage == GrowthStage.ADOLESCENT)
-                {
-                    growthStageName = GrowthStage.ADULT.name().toLowerCase();
-                }
-                else if (growthStage == GrowthStage.JUVENILE)
-                {
-                    growthStageName = GrowthStage.INFANT.name().toLowerCase();
-                }
+                growthStageName = GrowthStage.ADULT.name().toLowerCase();
             }
 
             if (this instanceof IHybrid)
@@ -131,7 +127,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
             if (variantsForGrowthStage == null)
             {
-                variantsForGrowthStage = new ArrayList<ResourceLocation>();
+                variantsForGrowthStage = new ArrayList<>();
             }
 
             for (String variant : getRareVariants())
@@ -141,7 +137,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
             rareVariantTextures.put(growthStage, variantsForGrowthStage);
 
-            List<ResourceLocation> overlaysForGrowthStage = new ArrayList<ResourceLocation>();
+            List<ResourceLocation> overlaysForGrowthStage = new ArrayList<>();
 
             for (int i = 1; i <= getOverlayCount(); i++)
             {
@@ -495,11 +491,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return eyelidTextures.get(new GrowthStageGenderContainer(entity.getGrowthStage(), entity.isMale()));
     }
 
-    public boolean useAllGrowthStages()
-    {
-        return false;
-    }
-
     public Diet getDiet()
     {
         return diet;
@@ -664,6 +655,21 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         }
     }
 
+    private void setModelContainer(GrowthStage stage, TabulaModelContainer model)
+    {
+        switch (stage)
+        {
+            case INFANT:
+                modelInfant = model;
+            case JUVENILE:
+                modelJuvenile = model;
+            case ADOLESCENT:
+                modelAdolescent = model;
+            default:
+                modelAdult = model;
+        }
+    }
+
     public void setScale(float scaleAdult, float scaleInfant)
     {
         this.scaleInfant = scaleInfant;
@@ -715,5 +721,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public PoseHandler getPoseHandler()
     {
         return poseHandler;
+    }
+
+    public boolean doesSupportGrowthStage(GrowthStage stage)
+    {
+        return stage == GrowthStage.ADULT;
     }
 }

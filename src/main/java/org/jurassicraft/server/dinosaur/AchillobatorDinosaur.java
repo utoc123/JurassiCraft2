@@ -29,10 +29,4 @@ public class AchillobatorDinosaur extends Dinosaur
         this.setScale(1.1F, 0.325F);
         this.disableRegistry();
     }
-
-    @Override
-    public boolean useAllGrowthStages()
-    {
-        return true;
-    }
 }

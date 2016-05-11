@@ -79,9 +79,9 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
             case INFANT:
                 return modelInfant;
             case JUVENILE:
-                return dinosaur.useAllGrowthStages() ? modelJuvenile : modelInfant;
+                return modelJuvenile;
             case ADOLESCENT:
-                return dinosaur.useAllGrowthStages() ? modelAdolescent : modelAdult;
+                return modelAdolescent;
             default:
                 return modelAdult;
         }
