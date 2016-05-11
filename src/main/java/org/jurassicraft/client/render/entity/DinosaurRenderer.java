@@ -165,12 +165,19 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     {
         int rareVariant = entity.getRareVariant();
 
-        if (rareVariant != 0)
+        GrowthStage growthStage = entity.getGrowthStage();
+
+        if (!dinosaur.doesSupportGrowthStage(growthStage))
         {
-            return dinosaur.getRareVariantTexture(rareVariant, entity.getGrowthStage());
+            growthStage = GrowthStage.ADULT;
         }
 
-        return entity.isMale() ? dinosaur.getMaleTexture(entity.getGrowthStage()) : dinosaur.getFemaleTexture(entity.getGrowthStage());
+        if (rareVariant != 0)
+        {
+            return dinosaur.getRareVariantTexture(rareVariant, growthStage);
+        }
+
+        return entity.isMale() ? dinosaur.getMaleTexture(growthStage) : dinosaur.getFemaleTexture(growthStage);
     }
 
     @Override

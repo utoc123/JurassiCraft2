@@ -22,10 +22,4 @@ public class VelociraptorDeltaDinosaur extends VelociraptorDinosaur implements I
     {
         return new Class[] { VelociraptorDinosaur.class };
     }
-
-    @Override
-    public boolean useAllGrowthStages()
-    {
-        return false;
-    }
 }

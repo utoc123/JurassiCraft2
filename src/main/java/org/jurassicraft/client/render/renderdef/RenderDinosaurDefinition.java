@@ -80,9 +80,9 @@ public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderF
             case INFANT:
                 return modelInfant;
             case JUVENILE:
-                return dinosaur.useAllGrowthStages() ? modelJuvenile : modelInfant;
+                return modelJuvenile;
             case ADOLESCENT:
-                return dinosaur.useAllGrowthStages() ? modelAdolescent : modelAdult;
+                return modelAdolescent;
             default:
                 return modelAdult;
         }

@@ -30,10 +30,4 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setScale(1.3F, 0.3F);
         this.setRareVariants("the_big_one");
     }
-
-    @Override
-    public boolean useAllGrowthStages()
-    {
-        return true;
-    }
 }

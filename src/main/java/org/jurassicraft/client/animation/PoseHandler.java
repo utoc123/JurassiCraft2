@@ -56,16 +56,9 @@ public class PoseHandler
             {
                 GrowthStage fileGrowthStage = growth;
 
-                if (!dinosaur.useAllGrowthStages())
+                if (!dinosaur.doesSupportGrowthStage(fileGrowthStage))
                 {
-                    if (growth == GrowthStage.ADOLESCENT)
-                    {
-                        fileGrowthStage = GrowthStage.ADULT;
-                    }
-                    else if (growth == GrowthStage.JUVENILE)
-                    {
-                        fileGrowthStage = GrowthStage.INFANT;
-                    }
+                    fileGrowthStage = GrowthStage.ADULT;
                 }
 
                 this.modelData.put(growth, loadDinosaur(dinoDirURI, name, fileGrowthStage));
@@ -217,9 +210,15 @@ public class PoseHandler
         return uri.toString();
     }
 
-    public JabelarAnimationHandler createAnimationHandler(DinosaurEntity entity, DinosaurModel model, GrowthStage growth, boolean useInertialTweens)
+    public JabelarAnimationHandler createAnimationHandler(DinosaurEntity entity, DinosaurModel model, GrowthStage growthStage, boolean useInertialTweens)
     {
-        PreloadedModelData growthModel = modelData.get(growth);
+        PreloadedModelData growthModel = modelData.get(growthStage);
+
+        if (!entity.getDinosaur().doesSupportGrowthStage(growthStage))
+        {
+            growthModel = modelData.get(growthStage);
+        }
+
         return new JabelarAnimationHandler(entity, model, growthModel.models, growthModel.animations, useInertialTweens);
     }
 
