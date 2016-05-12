@@ -97,7 +97,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
             float centerWidth = (float) -textureWidth / 2.0F;
             float centerHeight = (float) -textureHeight / 2.0F;
             float pixelSize = 0.0625F;
-            float depth = 1.0F;
+            float depth = 0.5F;
             GlStateManager.translate(0.0F, 0.0F, -depth + 0.5F);
 
             GlStateManager.disableCull();
@@ -139,6 +139,12 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
                         buffer.pos(i, minY, depth).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(i, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                         buffer.pos(i, maxY, 0.0F).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        tessellator.draw();
+                        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                        buffer.pos(i - 0.125F, minY, 0.0F).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i - 0.125F, minY, depth).tex(maxTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i - 0.125F, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
+                        buffer.pos(i - 0.125F, maxY, 0.0F).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                         tessellator.draw();
                     }
 
