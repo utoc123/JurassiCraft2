@@ -8,7 +8,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.entity.data.JCPlayerData;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
@@ -24,15 +22,6 @@ import java.util.Random;
 
 public class ServerEventHandler
 {
-    @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void entityConstructing(EntityConstructing event)
-    {
-        if (event.entity instanceof EntityPlayer)
-        {
-            event.entity.registerExtendedProperties(JCPlayerData.identifier, new JCPlayerData());
-        }
-    }
-
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {

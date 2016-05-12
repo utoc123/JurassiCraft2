@@ -7,7 +7,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.handler.JCGuiHandler;
+import org.jurassicraft.server.handler.GuiHandler;
 
 public class PaddockSignItem extends Item
 {
@@ -39,27 +39,8 @@ public class PaddockSignItem extends Item
             {
                 if (player.worldObj.isRemote)
                 {
-                    JCGuiHandler.openSelectDino(player, placePos, side);
+                    GuiHandler.openSelectDino(player, placePos, side);
                 }
-
-//                int dinosaur = getDinosaur(stack);
-//
-//                if (dinosaur != -1)
-//                {
-//                    PaddockSignEntity paddockSign = new PaddockSignEntity(world, placePos, side, dinosaur);
-//
-//                    if (paddockSign.onValidSurface())
-//                    {
-//                        if (!world.isRemote)
-//                        {
-//                            world.spawnEntityInWorld(paddockSign);
-//                        }
-//
-//                        --stack.stackSize;
-//
-//                        return true;
-//                    }
-//                }
             }
         }
 

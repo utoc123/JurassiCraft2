@@ -63,9 +63,6 @@ public class MossBlock extends Block
         return EnumWorldBlockLayer.TRANSLUCENT;
     }
 
-    /**
-     * Used to determine ambient occlusion and culling when rebuilding chunks for render
-     */
     @Override
     public boolean isOpaqueCube()
     {
@@ -79,21 +76,18 @@ public class MossBlock extends Block
         return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos) && (below != null && below.getBlock().isFullCube());
     }
 
-    /**
-     * Called when a neighboring block changes.
-     */
     @Override
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
     {
-        this.checkForDrop(worldIn, pos, state);
+        this.checkForDrop(world, pos, state);
     }
 
-    private boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
+    private boolean checkForDrop(World world, BlockPos pos, IBlockState state)
     {
-        if (!this.canBlockStay(worldIn, pos))
+        if (!this.canBlockStay(world, pos))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(world, pos, state, 0);
+            world.setBlockToAir(pos);
             return false;
         }
         else
@@ -102,15 +96,15 @@ public class MossBlock extends Block
         }
     }
 
-    private boolean canBlockStay(World worldIn, BlockPos pos)
+    private boolean canBlockStay(World world, BlockPos pos)
     {
-        return !worldIn.isAirBlock(pos.down());
+        return !world.isAirBlock(pos.down());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    public boolean shouldSideBeRendered(IBlockAccess world, BlockPos pos, EnumFacing side)
     {
-        return side == EnumFacing.UP || super.shouldSideBeRendered(worldIn, pos, side);
+        return side == EnumFacing.UP || super.shouldSideBeRendered(world, pos, side);
     }
 }

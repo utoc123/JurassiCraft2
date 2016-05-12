@@ -20,8 +20,6 @@ import org.jurassicraft.client.gui.EmbryoCalcificationMachineGui;
 import org.jurassicraft.client.gui.EmbryonicMachineGui;
 import org.jurassicraft.client.gui.FossilGrinderGui;
 import org.jurassicraft.client.gui.IncubatorGui;
-import org.jurassicraft.client.gui.PaleoPadGui;
-import org.jurassicraft.client.gui.PaleoPadViewDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
@@ -33,7 +31,6 @@ import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.tileentity.CleaningStationTile;
 import org.jurassicraft.server.tileentity.CultivatorTile;
 import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
@@ -45,7 +42,7 @@ import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
 import org.jurassicraft.server.tileentity.FossilGrinderTile;
 import org.jurassicraft.server.tileentity.IncubatorTile;
 
-public class JCGuiHandler implements IGuiHandler
+public class GuiHandler implements IGuiHandler
 {
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
@@ -160,16 +157,6 @@ public class JCGuiHandler implements IGuiHandler
         return null;
     }
 
-    public static void openPaleoPad(EntityPlayer player)
-    {
-        if (player.worldObj.isRemote)
-        {
-            displayPaleoPadGUIClient();
-        }
-        // else
-        // JurassiCraft.NETWORK_WRAPPER.sendTo(new SyncPaleoPadMessage(player), (EntityPlayerMP) player);
-    }
-
     public static void openSelectDino(EntityPlayer player, BlockPos pos, EnumFacing facing)
     {
         if (player.worldObj.isRemote)
@@ -179,28 +166,8 @@ public class JCGuiHandler implements IGuiHandler
     }
 
     @SideOnly(Side.CLIENT)
-    private static void displayPaleoPadGUIClient()
-    {
-        Minecraft.getMinecraft().displayGuiScreen(new PaleoPadGui());
-    }
-
-    @SideOnly(Side.CLIENT)
     private static void displayOpenSelectDino(BlockPos pos, EnumFacing facing)
     {
         Minecraft.getMinecraft().displayGuiScreen(new SelectDinoGui(pos, facing));
-    }
-
-    public static void openViewDinosaur(DinosaurEntity dinosaur)
-    {
-        if (dinosaur.worldObj.isRemote)
-        {
-            displayViewDinosaurClient(dinosaur);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    private static void displayViewDinosaurClient(DinosaurEntity dinosaur)
-    {
-        Minecraft.getMinecraft().displayGuiScreen(new PaleoPadViewDinosaurGui(dinosaur));
     }
 }

@@ -17,7 +17,6 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.gui.app.GuiAppRegistry;
 import org.jurassicraft.client.model.animation.AchillobatorAnimator;
 import org.jurassicraft.client.model.animation.AnkylosaurusAnimator;
 import org.jurassicraft.client.model.animation.ApatosaurusAnimator;
@@ -257,8 +256,6 @@ public enum RenderingHandler
 
     public void init()
     {
-        GuiAppRegistry.register();
-
         // Blocks
         ItemModelMesher modelMesher = mc.getRenderItem().getItemModelMesher();
 
@@ -370,7 +367,6 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.amber, "amber", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plaster_and_bandage, "plaster_and_bandage", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.spawn_egg, "dino_spawn_egg", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.paleo_pad, "paleo_pad", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.blue_print, "blue_print", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.paddock_sign, "paddock_sign", "inventory");
 
