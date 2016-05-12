@@ -1,6 +1,5 @@
 package org.jurassicraft.server.event;
 
-import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
@@ -11,7 +10,6 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -20,7 +18,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.data.PlayerData;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
@@ -28,15 +25,6 @@ import java.util.Random;
 
 public class ServerEventHandler
 {
-    @SubscribeEvent
-    public void onEntityConstruct(EntityEvent.EntityConstructing event)
-    {
-        if (event.getEntity() instanceof EntityPlayer)
-        {
-            EntityDataHandler.INSTANCE.registerExtendedEntityData((EntityPlayer) event.getEntity(), new PlayerData());
-        }
-    }
-
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event)
     {

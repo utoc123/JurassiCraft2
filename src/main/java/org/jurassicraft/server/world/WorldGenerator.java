@@ -36,7 +36,7 @@ public enum WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        for (int i = 0; i < world.getHorizon() * 0.078125; i++)
+        for (int i = 0; i < world.getHorizon() * 0.025; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);

@@ -29,7 +29,6 @@ public enum ItemHandler
 
     public DNAItem dna;
     public DinosaurEggItem egg;
-    public PaleoPadItem paleo_pad;
     public SoftTissueItem soft_tissue;
     public PlantSoftTissueItem plant_soft_tissue;
 
@@ -118,7 +117,6 @@ public enum ItemHandler
         spawn_egg = new DinosaurSpawnEggItem();
         dna = new DNAItem();
         egg = new DinosaurEggItem();
-        paleo_pad = new PaleoPadItem();
         dino_meat = new DinsaurMeatItem();
         dino_steak = new DinosaurSteakItem();
         blue_print = new BluePrintItem();
@@ -227,7 +225,6 @@ public enum ItemHandler
         registerItem(spawn_egg, "Dino Spawn Egg");
         registerItem(dna, "DNA");
         registerItem(egg, "Dino Egg");
-        registerItem(paleo_pad, "Paleo Pad");
         registerItem(soft_tissue, "Soft Tissue");
         registerItem(plant_soft_tissue, "Plant Soft Tissue");
         registerItem(syringe, "Syringe");

@@ -37,12 +37,6 @@ public class MossBlock extends Block
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
-    {
-        return NULL_AABB;
-    }
-
-    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;

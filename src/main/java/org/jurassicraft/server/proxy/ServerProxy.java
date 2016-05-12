@@ -23,10 +23,9 @@ import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
-import org.jurassicraft.server.handler.JCGuiHandler;
+import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
-import org.jurassicraft.server.paleopad.AppHandler;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.recipe.RecipeHandler;
 import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
@@ -50,13 +49,12 @@ public class ServerProxy
         BlockHandler.INSTANCE.init();
         ItemHandler.INSTANCE.init();
         RecipeHandler.INSTANCE.init();
-        AppHandler.INSTANCE.init();
         AchievementHandler.INSTANCE.init();
         StorageTypeRegistry.INSTANCE.init();
 
         GameRegistry.registerWorldGenerator(WorldGenerator.INSTANCE, 0);
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.INSTANCE, new JCGuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.INSTANCE, new GuiHandler());
 
         ServerEventHandler eventHandler = new ServerEventHandler();
 

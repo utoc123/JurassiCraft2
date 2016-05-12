@@ -9,7 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.handler.JCGuiHandler;
+import org.jurassicraft.server.handler.GuiHandler;
 
 public class PaddockSignItem extends Item
 {
@@ -27,7 +27,7 @@ public class PaddockSignItem extends Item
 
             if (player.worldObj.isRemote && player.canPlayerEdit(offset, side, stack))
             {
-                JCGuiHandler.openSelectDino(player, offset, side, hand);
+                GuiHandler.openSelectDino(player, offset, side, hand);
             }
         }
 
