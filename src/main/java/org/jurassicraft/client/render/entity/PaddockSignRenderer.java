@@ -1,5 +1,6 @@
 package org.jurassicraft.client.render.entity;
 
+import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -63,22 +64,22 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
 
             this.bindTexture(texture);
 
-//            if (HAS_COMPILED)
-//            {
-//                GlStateManager.callList(DISPLAY_LIST);
-//            }
-//            else
-//            {
-//                DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
-//                GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
-            float scale = 0.0625F;
-            GlStateManager.scale(scale, scale, scale);
+            if (HAS_COMPILED)
+            {
+                GlStateManager.callList(DISPLAY_LIST);
+            }
+            else
+            {
+                DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
+                GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
+                float scale = 0.0625F;
+                GlStateManager.scale(scale, scale, scale);
 
-            this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), entity.getWidthPixels(), entity.getHeightPixels());
-//                GlStateManager.glEndList();
-//
-//                HAS_COMPILED = true;
-//            }
+                this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), entity.getWidthPixels(), entity.getHeightPixels());
+                GlStateManager.glEndList();
+
+                HAS_COMPILED = true;
+            }
 
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
