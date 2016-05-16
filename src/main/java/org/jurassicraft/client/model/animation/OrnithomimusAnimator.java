@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.OrnithomimusEntity;
 public class OrnithomimusAnimator extends DinosaurAnimator<OrnithomimusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, OrnithomimusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, OrnithomimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.6F;
         float globalDegree = 1.0F;
@@ -107,12 +107,10 @@ public class OrnithomimusAnimator extends DinosaurAnimator<OrnithomimusEntity>
         model.chainWave(tail, 1 * globalSpeed, -0.05F, 1, f, f1);
         model.chainSwing(tail, 0.5F * globalSpeed, 0.1F, 2, f, f1);
 
-        int frame = entity.ticksExisted;
-
-        model.chainWave(tail, 0.1F, 0.05F, 1, frame, 0.25F);
-        model.chainWave(body, 0.1F, -0.05F, 4, frame, 0.25F);
-        model.chainWave(armRight, 0.1F, -0.15F, 4, frame, 0.25F);
-        model.chainWave(armLeft, 0.1F, -0.15F, 4, frame, 0.25F);
+        model.chainWave(tail, 0.1F, 0.05F, 1, ticks, 0.25F);
+        model.chainWave(body, 0.1F, -0.05F, 4, ticks, 0.25F);
+        model.chainWave(armRight, 0.1F, -0.15F, 4, ticks, 0.25F);
+        model.chainWave(armLeft, 0.1F, -0.15F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

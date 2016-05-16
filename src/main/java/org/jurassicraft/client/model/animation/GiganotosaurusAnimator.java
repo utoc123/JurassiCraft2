@@ -11,13 +11,13 @@ import org.jurassicraft.server.entity.GiganotosaurusEntity;
 public class GiganotosaurusAnimator extends DinosaurAnimator<GiganotosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, GiganotosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, GiganotosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.45F;
         float globalDegree = 0.45F;
         float height = 1.0F;
 
-        // f = entity.ticksExisted;
+        // f = ticks;
         // f1 = 1.0F;
 
         AdvancedModelRenderer neck = model.getCube("Neck 1");
@@ -61,8 +61,6 @@ public class GiganotosaurusAnimator extends DinosaurAnimator<GiganotosaurusEntit
 
         // TODO:Arms
 
-        int ticksExisted = entity.ticksExisted;
-
         head.rotateAngleX -= f1 * 0.35F;
 
         // body3.rotateAngleX += f1 * 0.15F;
@@ -96,8 +94,8 @@ public class GiganotosaurusAnimator extends DinosaurAnimator<GiganotosaurusEntit
         leftThigh.rotationPointY += 2 * f1 * Math.cos(f * 0.5F * globalSpeed);
         rightThigh.rotationPointY -= 2 * f1 * Math.cos(f * 0.5F * globalSpeed);
 
-        model.chainWave(tail, 0.1F, -0.05F, 2, ticksExisted, 0.25F);
-        model.chainWave(body, 0.1F, 0.03F, 4, ticksExisted, 0.25F);
+        model.chainWave(tail, 0.1F, -0.05F, 2, ticks, 0.25F);
+        model.chainWave(body, 0.1F, 0.03F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

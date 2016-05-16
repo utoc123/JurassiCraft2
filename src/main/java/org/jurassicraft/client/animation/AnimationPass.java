@@ -80,9 +80,9 @@ public class AnimationPass
         }
     }
 
-    protected void initIncrements(float partialTicks)
+    protected void initIncrements(float scale)
     {
-        float inertiaFactor = calculateInertiaFactor(partialTicks);
+        float inertiaFactor = calculateInertiaFactor(scale);
 
         for (int partIndex = 0; partIndex < parts.length; partIndex++)
         {
@@ -136,9 +136,9 @@ public class AnimationPass
         }
     }
 
-    protected float calculateInertiaFactor(float partialTicks)
+    protected float calculateInertiaFactor(float scale)
     {
-        double inertiaFactor = (tweenTick + partialTicks) / ticksInTween;
+        double inertiaFactor = (tweenTick + scale) / ticksInTween;
 
         if (useInertialTweens)
         {
@@ -148,14 +148,14 @@ public class AnimationPass
         return (float) inertiaFactor;
     }
 
-    public void performAnimations(DinosaurEntity entity, float partialTicks)
+    public void performAnimations(DinosaurEntity entity, float scale)
     {
         if (entity.getAnimation() != animation && animation != Animations.DYING.get() && this.doesUpdateEntityAnimations())
         {
             this.setNextSequence(entity, entity.getAnimation());
         }
 
-        this.performNextTween(entity, partialTicks);
+        this.performNextTween(entity, scale);
     }
 
     /**
@@ -182,9 +182,9 @@ public class AnimationPass
         }
     }
 
-    protected void calculateTween(float partialTicks)
+    protected void calculateTween(float scale)
     {
-        this.initIncrements(partialTicks);
+        this.initIncrements(scale);
 
         for (int partIndex = 0; partIndex < parts.length; partIndex++)
         {
@@ -291,9 +291,9 @@ public class AnimationPass
         this.updateTween();
     }
 
-    protected void performNextTween(DinosaurEntity entity, float partialTicks)
+    protected void performNextTween(DinosaurEntity entity, float scale)
     {
-        this.calculateTween(partialTicks);
+        this.calculateTween(scale);
 
         for (int i = 0; i < entity.ticksExisted - prevTicksExisted; i++)
         {

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.LambeosaurusEntity;
 public class LambeosaurusAnimator extends DinosaurAnimator<LambeosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, LambeosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, LambeosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 
@@ -115,20 +115,17 @@ public class LambeosaurusAnimator extends DinosaurAnimator<LambeosaurusEntity>
         model.chainWave(tail, 1F * scaleFactor, -0.1F, 2, f, f1);
         model.chainSwing(tail, 0.5F * scaleFactor, 0.1F, 2, f, f1);
 
-        // Idle
-        int ticksExisted = entity.ticksExisted;
+        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticks, 0.25F);
+        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticks, 0.25F);
+        model.walk(waist, 0.1F, 0.04F, false, 0F, 0F, ticks, 0.25F);
+        model.walk(upperArmRight, 0.1F, 0.1F, false, -1F, 0F, ticks, 0.25F);
+        model.walk(upperArmLeft, 0.1F, 0.1F, false, -1F, 0F, ticks, 0.25F);
+        model.walk(lowerArmRight, 0.1F, 0.1F, true, -1.5F, 0F, ticks, 0.25F);
+        model.walk(lowerArmLeft, 0.1F, 0.1F, true, -1.5F, 0F, ticks, 0.25F);
+        model.walk(rightHand, 0.1F, 0.1F, false, -2F, 0F, ticks, 0.25F);
+        model.walk(leftHand, 0.1F, 0.1F, false, -2F, 0F, ticks, 0.25F);
 
-        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 0.25F);
-        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(waist, 0.1F, 0.04F, false, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(upperArmRight, 0.1F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
-        model.walk(upperArmLeft, 0.1F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
-        model.walk(lowerArmRight, 0.1F, 0.1F, true, -1.5F, 0F, ticksExisted, 0.25F);
-        model.walk(lowerArmLeft, 0.1F, 0.1F, true, -1.5F, 0F, ticksExisted, 0.25F);
-        model.walk(rightHand, 0.1F, 0.1F, false, -2F, 0F, ticksExisted, 0.25F);
-        model.walk(leftHand, 0.1F, 0.1F, false, -2F, 0F, ticksExisted, 0.25F);
-
-        model.chainWave(tail, 0.1F, -0.02F, 2, ticksExisted, 1F);
+        model.chainWave(tail, 0.1F, -0.02F, 2, ticks, 1F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

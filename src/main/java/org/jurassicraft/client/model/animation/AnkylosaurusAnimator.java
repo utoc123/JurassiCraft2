@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.AnkylosaurusEntity;
 public class AnkylosaurusAnimator extends DinosaurAnimator<AnkylosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, AnkylosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, AnkylosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("head ");
         AdvancedModelRenderer headback = model.getCube("head back");
@@ -79,28 +79,24 @@ public class AnkylosaurusAnimator extends DinosaurAnimator<AnkylosaurusEntity>
         model.chainWave(tail, 2 * globalSpeed, -0.12F, 2, f, f1);
         model.chainSwing(tail, 1 * globalSpeed, 0.3F, 3, f, f1);
 
-        // Idle
-
-        int ticksExisted = entity.ticksExisted;
-
-        model.walk(neck1, 0.1F, 0.05F, false, -1F, 0F, ticksExisted, 1F);
-        model.walk(headback, 0.1F, 0.05F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(waist, 0.1F, 0.025F, false, 0F, 0F, ticksExisted, 1F);
-        model.walk(legleftthigh, 0.1F, 0.025F, true, 0F, 0F, ticksExisted, 1F);
-        model.walk(legrightthigh, 0.1F, 0.025F, true, 0F, 0F, ticksExisted, 1F);
+        model.walk(neck1, 0.1F, 0.05F, false, -1F, 0F, ticks, 1F);
+        model.walk(headback, 0.1F, 0.05F, true, 0F, 0F, ticks, 1F);
+        model.walk(waist, 0.1F, 0.025F, false, 0F, 0F, ticks, 1F);
+        model.walk(legleftthigh, 0.1F, 0.025F, true, 0F, 0F, ticks, 1F);
+        model.walk(legrightthigh, 0.1F, 0.025F, true, 0F, 0F, ticks, 1F);
 
         float inverseKinematicsConstant = 0.4F;
-        model.walk(armleftthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armleftcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armleftfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armrightthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armrightcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armrightfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticksExisted, 0.25F);
-        armleftthigh.rotationPointZ -= 0.5 * inverseKinematicsConstant * Math.cos(ticksExisted * 0.1F);
-        armrightthigh.rotationPointZ -= 0.5 * inverseKinematicsConstant * Math.cos(ticksExisted * 0.1F);
+        model.walk(armleftthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticks, 0.25F);
+        model.walk(armleftcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticks, 0.25F);
+        model.walk(armleftfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticks, 0.25F);
+        model.walk(armrightthigh, 0.1F, 0.1F * inverseKinematicsConstant, false, 0F, 0F, ticks, 0.25F);
+        model.walk(armrightcalf, 0.1F, 0.3F * inverseKinematicsConstant, true, 0F, 0F, ticks, 0.25F);
+        model.walk(armrightfoot, 0.1F, 0.175F * inverseKinematicsConstant, false, 0F, 0F, ticks, 0.25F);
+        armleftthigh.rotationPointZ -= 0.5 * inverseKinematicsConstant * Math.cos(ticks * 0.1F);
+        armrightthigh.rotationPointZ -= 0.5 * inverseKinematicsConstant * Math.cos(ticks * 0.1F);
 
-        model.chainSwing(tail, 0.1F, 0.05F, 2, ticksExisted, 1F);
-        model.chainWave(tail, 0.1F, -0.05F, 1, ticksExisted, 1F);
+        model.chainSwing(tail, 0.1F, 0.05F, 2, ticks, 1F);
+        model.chainWave(tail, 0.1F, -0.05F, 1, ticks, 1F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

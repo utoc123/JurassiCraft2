@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.CoelacanthEntity;
 public class CoelacanthAnimator extends DinosaurAnimator<CoelacanthEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CoelacanthEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, CoelacanthEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         // NOTES: Because the animation does not need to be synced to the ground, global variables are not needed.
 
@@ -41,11 +41,10 @@ public class CoelacanthAnimator extends DinosaurAnimator<CoelacanthEntity>
         model.flap(leftFlipper, 0.6F, 0.6F, false, 0.0F, 0.8F, f, f1);
         model.flap(rightFlipper, 0.6F, 0.6F, true, 0.0F, -0.8F, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-        model.bob(head, 0.04F, 2.0F, false, ticksExisted, 0.25F);
-        model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
-        model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticksExisted, 0.25F);
-        model.chainSwing(tail, 0.05F, -0.075F, 1.5D, ticksExisted, 0.25F);
+        model.bob(head, 0.04F, 2.0F, false, ticks, 0.25F);
+        model.walk(leftFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticks, 0.25F);
+        model.walk(rightFlipper, 0.2F, 0.25F, false, 1.0F, 0.1F, ticks, 0.25F);
+        model.chainSwing(tail, 0.05F, -0.075F, 1.5D, ticks, 0.25F);
         // ((CoelacanthEntity)entity).tailBuffer.applyChainSwingBuffer(this.bodyParts); //Tail buffer does not exist right now. Apply once added.
     }
 }

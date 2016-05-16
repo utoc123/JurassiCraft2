@@ -11,10 +11,8 @@ import org.jurassicraft.server.entity.HypsilophodonEntity;
 public class HypsilophodonAnimator extends DinosaurAnimator<HypsilophodonEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, HypsilophodonEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, HypsilophodonEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
-        int ticksExisted = entity.ticksExisted;
-
         float scaleFactor = 1F;
         float height = 12F * f1;
 
@@ -76,16 +74,15 @@ public class HypsilophodonAnimator extends DinosaurAnimator<HypsilophodonEntity>
         model.walk(armright, 1 * scaleFactor, 0.3F, false, 1, -0.2F, f, f1);
         model.walk(armleft, 1 * scaleFactor, 0.3F, false, 1, -0.2F, f, f1);
 
-        // Idling
-        model.chainWave(tailParts, 0.2F, -0.05F, 2, ticksExisted, 0.25F);
-        model.walk(neck, 0.2F, 0.1F, false, -1F, 0F, ticksExisted, 0.25F);
-        model.walk(head, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(body1, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(body2, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(shoulderright, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(shoulderleft, 0.2F, 0.1F, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armright, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(armleft, 0.2F, 0.1F, false, 0F, 0F, ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.2F, -0.05F, 2, ticks, 0.25F);
+        model.walk(neck, 0.2F, 0.1F, false, -1F, 0F, ticks, 0.25F);
+        model.walk(head, 0.2F, 0.1F, true, 0F, 0F, ticks, 0.25F);
+        model.walk(body1, 0.2F, 0.1F, true, 0F, 0F, ticks, 0.25F);
+        model.walk(body2, 0.2F, 0.1F, false, 0F, 0F, ticks, 0.25F);
+        model.walk(shoulderright, 0.2F, 0.1F, true, 0F, 0F, ticks, 0.25F);
+        model.walk(shoulderleft, 0.2F, 0.1F, true, 0F, 0F, ticks, 0.25F);
+        model.walk(armright, 0.2F, 0.1F, false, 0F, 0F, ticks, 0.25F);
+        model.walk(armleft, 0.2F, 0.1F, false, 0F, 0F, ticks, 0.25F);
 
         model.chainWave(tailParts, 1F * scaleFactor, 0.15F, 2, f, f1);
 
