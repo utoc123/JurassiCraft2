@@ -40,19 +40,19 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     }
 
     @Override
-    public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
-        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, partialTicks);
+        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, scale);
 
         if (entity.getAnimation() != Animations.DYING.get()) // still alive
         {
             if (entity.isSwimming())
             {
-                performMowzieSwimmingAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
+                performMowzieSwimmingAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
             }
             else
             {
-                performMowzieLandAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks);
+                performMowzieLandAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
             }
         }
     }
@@ -60,15 +60,15 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     /*
      * @Override this if you want dino to have cyclical animations.
      */
-    protected void performMowzieLandAnimations(DinosaurModel parModel, ENTITY entity, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
     }
 
     /*
      * @Override this if you want swimming dino to have different cyclical animations.
      */
-    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, ENTITY entity, float parLimbSwing, float parLimbSwingAmount, float parRotation, float parRotationYaw, float parRotationPitch, float parPartialTicks)
+    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
-        performMowzieLandAnimations(parModel, entity, parLimbSwing, parLimbSwingAmount, parRotation, parRotationYaw, parRotationPitch, parPartialTicks);
+        performMowzieLandAnimations(parModel, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
     }
 }

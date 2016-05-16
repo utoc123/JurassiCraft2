@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.ProtoceratopsEntity;
 public class ProtoceratopsAnimator extends DinosaurAnimator<ProtoceratopsEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, ProtoceratopsEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, ProtoceratopsEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.5F;
         float globalHeight = 0.5F;
@@ -81,10 +81,8 @@ public class ProtoceratopsAnimator extends DinosaurAnimator<ProtoceratopsEntity>
         model.walk(armLowerRight, 1F * globalSpeed, 0.6F * globalDegree, false, frontOffset + 1F, -0.2F, f, f1);
         model.walk(handRight, 1F * globalSpeed, 0.6F * globalDegree, true, frontOffset + 2F, 0.8F, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticksExisted, 0.025F);
-        model.chainWave(neck, globalSpeed * 0.25F, globalHeight * 1.0F, -3, ticksExisted, 0.025F);
+        model.chainWave(tail, globalSpeed * 0.25F, globalHeight * 1.0F, 3, ticks, 0.025F);
+        model.chainWave(neck, globalSpeed * 0.25F, globalHeight * 1.0F, -3, ticks, 0.025F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

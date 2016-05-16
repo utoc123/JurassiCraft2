@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.LeaellynasauraEntity;
 public class LeaellynasauraAnimator extends DinosaurAnimator<LeaellynasauraEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, LeaellynasauraEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, LeaellynasauraEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.4F;
         float globalHeight = 0.8F;
@@ -84,9 +84,7 @@ public class LeaellynasauraAnimator extends DinosaurAnimator<LeaellynasauraEntit
         model.walk(calf2Right, 1.0F * globalSpeed, globalDegree * 0.5F, true, 0F, 0F, f, f1);
         model.walk(footRight, 1.0F * globalSpeed, globalDegree * 1.5F, false, 0.5F, 1F, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, globalSpeed * 0.5F, globalHeight * 0.8F, 3, ticksExisted, 0.025F);
-        model.chainWave(neck, globalSpeed * 0.5F, globalHeight * 0.4F, -3, ticksExisted, 0.025F);
+        model.chainWave(tail, globalSpeed * 0.5F, globalHeight * 0.8F, 3, ticks, 0.025F);
+        model.chainWave(neck, globalSpeed * 0.5F, globalHeight * 0.4F, -3, ticks, 0.025F);
     }
 }

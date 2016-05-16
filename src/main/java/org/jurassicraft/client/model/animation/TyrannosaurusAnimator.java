@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.TyrannosaurusEntity;
 public class TyrannosaurusAnimator extends DinosaurAnimator<TyrannosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TyrannosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, TyrannosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         // Walking-dependent animation
         float globalSpeed = 0.45F;
@@ -84,11 +84,11 @@ public class TyrannosaurusAnimator extends DinosaurAnimator<TyrannosaurusEntity>
         model.chainWave(rightArmParts, 1F * globalSpeed, 0.2F, 1, f, f1);
 
         // Idling
-        model.chainWave(bodyParts, 0.1F, -0.03F, 3, entity.ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, -0.1F, 0.2F, 4, entity.ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, -0.1F, 0.2F, 4, entity.ticksExisted, 0.25F);
-        model.chainSwing(tailParts, 0.1F, 0.05F - (0.05F), 1, entity.ticksExisted, 0.1F);
-        model.chainWave(tailParts, 0.1F, -0.1F, 2, entity.ticksExisted, 0.1F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 3, ticks, 0.25F);
+        model.chainWave(rightArmParts, -0.1F, 0.2F, 4, ticks, 0.25F);
+        model.chainWave(leftArmParts, -0.1F, 0.2F, 4, ticks, 0.25F);
+        model.chainSwing(tailParts, 0.1F, 0.05F - (0.05F), 1, ticks, 0.1F);
+        model.chainWave(tailParts, 0.1F, -0.1F, 2, ticks, 0.1F);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

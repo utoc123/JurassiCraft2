@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.SegisaurusEntity;
 public class SegisaurusAnimator extends DinosaurAnimator<SegisaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, SegisaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, SegisaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("head");
         AdvancedModelRenderer neck1 = model.getCube("neck1");
@@ -96,10 +96,10 @@ public class SegisaurusAnimator extends DinosaurAnimator<SegisaurusEntity>
         model.chainWave(leftArmParts, 1F * globalSpeed, -0.3F, 4, f, f1);
 
         // Idling
-        model.chainWave(tailParts, 0.1F, 0.05F, 2, entity.ticksExisted, 0.25F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 5, entity.ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

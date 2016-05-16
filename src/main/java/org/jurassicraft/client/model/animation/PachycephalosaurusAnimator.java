@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.PachycephalosaurusEntity;
 public class PachycephalosaurusAnimator extends DinosaurAnimator<PachycephalosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, PachycephalosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, PachycephalosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = model.getCube("Body Rear");
         AdvancedModelRenderer chest = model.getCube("Body Middle");
@@ -86,10 +86,10 @@ public class PachycephalosaurusAnimator extends DinosaurAnimator<Pachycephalosau
         neck2.rotateAngleX += f1 * 0.05F;
         head.rotateAngleX += f1 * 0.075F;
 
-        model.chainWave(tailParts, 0.1F, 0.025F, 2, entity.ticksExisted, 0.25F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 4, entity.ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.1F, 0.025F, 2, ticks, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 4, ticks, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

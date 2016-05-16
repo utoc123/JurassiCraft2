@@ -8,7 +8,7 @@ import org.jurassicraft.server.entity.VelociraptorBlueEntity;
 public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel parModel, VelociraptorBlueEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, VelociraptorBlueEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = parModel.getCube("body3");
         AdvancedModelRenderer chest = parModel.getCube("body2");
@@ -54,12 +54,11 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // }
         // else
         // {
-        int frame = entity.ticksExisted;
 
-        // f = entity.ticksExisted;
+        // f = ticks;
         // f1 = 1F;
-        // f1 = (float) (Math.sin(velociraptor.ticksExisted * 0.01) *
-        // Math.sin(velociraptor.ticksExisted * 0.01));
+        // f1 = (float) (Math.sin(velociraptor.ticks * 0.01) *
+        // Math.sin(velociraptor.ticks * 0.01));
 
         // if (raptor.leaping)
         // limbSwingAmount = 0;
@@ -105,10 +104,10 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
 //        parModel.chainWave(leftArmParts, 1F * speed, -0.3F, 4, f, f1);
 
         // Idling
-        parModel.chainWave(tailParts, 0.1F, 0.05F, 2, entity.ticksExisted, 0.25F);
-        parModel.chainWave(bodyParts, 0.1F, -0.03F, 5, entity.ticksExisted, 0.25F);
-        parModel.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
-        parModel.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        parModel.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.25F);
+        parModel.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.25F);
+        parModel.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        parModel.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
 
         // float sittingProgress =
         // raptor.sittingProgress.getAnimationProgressSin();
@@ -183,17 +182,17 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // Left_Claw_1.rotateAngleX += 0.7F * sittingProgress;
         //
         // //Idling
-        // model.chainWave(tailParts, 0.1F, -0.05F, 2, entity.ticksExisted, 1.0F
+        // model.chainWave(tailParts, 0.1F, -0.05F, 2, ticks, 1.0F
         // - 0.5F * sittingProgress);
-        // model.walk(Neck, 0.1F, 0.07F, false, -1F, 0F, entity.ticksExisted, 1F
+        // model.walk(Neck, 0.1F, 0.07F, false, -1F, 0F, ticks, 1F
         // - 0.3F * sittingProgress);
-        // model.walk(Head, 0.1F, 0.07F, true, 0F, 0F, entity.ticksExisted, 1F -
+        // model.walk(Head, 0.1F, 0.07F, true, 0F, 0F, ticks, 1F -
         // 0.3F * sittingProgress);
-        // model.walk(Body_1, 0.1F, 0.05F, false, 0F, 0F, entity.ticksExisted,
+        // model.walk(Body_1, 0.1F, 0.05F, false, 0F, 0F, ticks,
         // 1.0F - 0.7F * sittingProgress);
-        // model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted,
+        // model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks,
         // 1.0F - 0.5F * sittingProgress);
-        // model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted,
+        // model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks,
         // 1.0F - 0.5F * sittingProgress);
         // }
         // else

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.DodoEntity;
 public class DodoAnimator extends DinosaurAnimator<DodoEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, DodoEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, DodoEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 
@@ -49,7 +49,7 @@ public class DodoAnimator extends DinosaurAnimator<DodoEntity>
         AdvancedModelRenderer[] neckParts = new AdvancedModelRenderer[] { head, neck7, neck6, neck5, neck4, neck3, neck2, neck1 };
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { bodyFront, body, bodyBack, tail };
 
-        // f = entity.ticksExisted;
+        // f = ticks;
         // f1 = 0.25F;
 
         float globalSpeed = 1.0F;
@@ -76,9 +76,7 @@ public class DodoAnimator extends DinosaurAnimator<DodoEntity>
         leftLegBase.rotationPointZ -= 1 * f1 * Math.cos(f * 1.0F * globalSpeed);
         rightLegBase.rotationPointZ -= -1 * f1 * Math.cos(f * 1.0F * globalSpeed);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(neckParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 0.25F);
-        model.chainWave(bodyParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticksExisted, 0.25F);
+        model.chainWave(neckParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticks, 0.25F);
+        model.chainWave(bodyParts, globalSpeed * 0.125F, globalHeight * 0.05F, 3, ticks, 0.25F);
     }
 }

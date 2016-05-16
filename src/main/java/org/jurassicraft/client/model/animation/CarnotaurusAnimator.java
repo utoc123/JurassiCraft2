@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.CarnotaurusEntity;
 public class CarnotaurusAnimator extends DinosaurAnimator<CarnotaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CarnotaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, CarnotaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.8F;
         float globalDegree = 0.6F;
@@ -98,12 +98,10 @@ public class CarnotaurusAnimator extends DinosaurAnimator<CarnotaurusEntity>
         leftThigh.rotationPointY -= 2 * f1 * Math.cos(f * 0.5F * globalSpeed);
         rightThigh.rotationPointY -= 2 * f1 * Math.cos(f * 0.5F * globalSpeed);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, 0.1F, -0.05F, 2, ticksExisted, 0.25F);
-        model.chainWave(body, 0.1F, 0.03F, 5, ticksExisted, 0.25F);
-        model.chainWave(armRight, 0.1F, 0.1F, 4, ticksExisted, 0.25F);
-        model.chainWave(armLeft, 0.1F, 0.1F, 4, ticksExisted, 0.25F);
+        model.chainWave(tail, 0.1F, -0.05F, 2, ticks, 0.25F);
+        model.chainWave(body, 0.1F, 0.03F, 5, ticks, 0.25F);
+        model.chainWave(armRight, 0.1F, 0.1F, 4, ticks, 0.25F);
+        model.chainWave(armLeft, 0.1F, 0.1F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

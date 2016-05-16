@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.ZhenyuanopterusEntity;
 public class ZhenyuanopterusAnimator extends DinosaurAnimator<ZhenyuanopterusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, ZhenyuanopterusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, ZhenyuanopterusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
         AdvancedModelRenderer leftCalf = model.getCube("Left calf");
@@ -84,7 +84,7 @@ public class ZhenyuanopterusAnimator extends DinosaurAnimator<ZhenyuanopterusEnt
         }
 //        else
 //        {
-//            f = entity.ticksExisted;
+//            f = ticks;
 //            f1 = 1.0f;
 //
 //            body1.rotateAngleX += 0.3;
@@ -133,18 +133,17 @@ public class ZhenyuanopterusAnimator extends DinosaurAnimator<ZhenyuanopterusEnt
 //            model.chainWave(neck, 0.3f, 0.4f, 4, f, f1);
 //        }
 
-        int frame = entity.ticksExisted;
-        model.walk(body1, 0.08f, -0.05f, false, 0, 0, frame, 0.25F);
-        model.chainWave(neck, 0.08f, 0.03f, 2, frame, 0.25F);
-        model.walk(leftArm1, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
-        model.walk(rightArm1, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
-        model.walk(leftArm2, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
-        model.walk(rightArm2, 0.08f, 0.1f, false, 0, 0, frame, 0.25F);
-        model.walk(leftArm3, 0.08f, 0.2f, true, 0, 0, frame, 0.25F);
-        model.walk(rightArm3, 0.08f, 0.2f, true, 0, 0, frame, 0.25F);
-        model.flap(leftArm1, 0.08f, 0.03f, false, 0, 0, frame, 0.25F);
-        model.flap(rightArm1, 0.08f, 0.03f, true, 0, 0, frame, 0.25F);
-        leftArm1.rotationPointZ -= 1 * Math.cos(frame * 0.08);
-        rightArm1.rotationPointZ -= 1 * Math.cos(frame * 0.08);
+        model.walk(body1, 0.08f, -0.05f, false, 0, 0, ticks, 0.25F);
+        model.chainWave(neck, 0.08f, 0.03f, 2, ticks, 0.25F);
+        model.walk(leftArm1, 0.08f, 0.1f, false, 0, 0, ticks, 0.25F);
+        model.walk(rightArm1, 0.08f, 0.1f, false, 0, 0, ticks, 0.25F);
+        model.walk(leftArm2, 0.08f, 0.1f, false, 0, 0, ticks, 0.25F);
+        model.walk(rightArm2, 0.08f, 0.1f, false, 0, 0, ticks, 0.25F);
+        model.walk(leftArm3, 0.08f, 0.2f, true, 0, 0, ticks, 0.25F);
+        model.walk(rightArm3, 0.08f, 0.2f, true, 0, 0, ticks, 0.25F);
+        model.flap(leftArm1, 0.08f, 0.03f, false, 0, 0, ticks, 0.25F);
+        model.flap(rightArm1, 0.08f, 0.03f, true, 0, 0, ticks, 0.25F);
+        leftArm1.rotationPointZ -= 1 * Math.cos(ticks * 0.08);
+        rightArm1.rotationPointZ -= 1 * Math.cos(ticks * 0.08);
     }
 }

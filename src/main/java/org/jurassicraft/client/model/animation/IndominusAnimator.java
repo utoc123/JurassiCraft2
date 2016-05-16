@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.IndominusEntity;
 public class IndominusAnimator extends DinosaurAnimator<IndominusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, IndominusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, IndominusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.5F;
         float globalDegree = 0.4F;
@@ -94,62 +94,11 @@ public class IndominusAnimator extends DinosaurAnimator<IndominusEntity>
         model.chainWave(armRight, globalSpeed * 1F, globalHeight * 0.2F, 3, f, f1);
         model.chainWave(armLeft, globalSpeed * 1F, globalHeight * 0.2F, 3, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, 0.1F, -0.025F, 2, ticksExisted, 0.25F);
-        model.chainWave(body, 0.1F, 0.03F, 5, ticksExisted, 0.25F);
-        model.chainWave(armRight, -0.1F, 0.1F, 4, ticksExisted, 0.25F);
-        model.chainWave(armLeft, -0.1F, 0.1F, 4, ticksExisted, 0.25F);
-
-        // parModel.faceTarget(bodyMid, 6.0F, rotationYaw, rotationPitch);
-        // parModel.faceTarget(bodyFront, 6.0F, rotationYaw, rotationPitch);
-        // parModel.faceTarget(head, 3.0F, rotationYaw, rotationPitch);
-        // parModel.faceTarget(neck1, 3.0F, rotationYaw, rotationPitch);
+        model.chainWave(tail, 0.1F, -0.025F, 2, ticks, 0.25F);
+        model.chainWave(body, 0.1F, 0.03F, 5, ticks, 0.25F);
+        model.chainWave(armRight, -0.1F, 0.1F, 4, ticks, 0.25F);
+        model.chainWave(armLeft, -0.1F, 0.1F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
-
-        // animator.setAnim(Animations.IDLE);
-        // animator.startPhase(15);
-        // animator.move(bodyRear, 0, -3, -5);
-        // animator.move(rightThigh, 0, -3, -5);
-        // animator.move(leftThigh, 0, -3, -5);
-        // animator.rotate(bodyRear, -0.3F, 0, 0);
-        // animator.rotate(head, 0.3F, 0, 0);
-        // animator.rotate(rightThigh, 0.3F, 0, 0);
-        // animator.rotate(rightCalf1, -0.4F, 0, 0);
-        // animator.rotate(rightCalf2, 0.4F, 0, 0);
-        // animator.rotate(rightFoot, -0.3F, 0, 0);
-        // animator.rotate(leftThigh, -0.7F, 0, 0);
-        // animator.rotate(leftCalf1, 0.7F, 0, 0);
-        // animator.rotate(leftCalf2, -0.5F, 0, 0);
-        // animator.rotate(leftFoot, 0.7F, 0, 0);
-        // animator.endPhase();
-        // animator.startPhase(10);
-        // animator.move(bodyRear, 0, 3, -10);
-        // animator.move(rightThigh, 0, 3, -10);
-        // animator.move(leftThigh, 0, 3, -10);
-        // animator.move(head, 0, 1, 2);
-        // animator.move(lowerJaw, 0, 0, 1);
-        // animator.rotate(bodyRear, 0.2F, 0, 0);
-        // animator.rotate(neck1, 0.2F, 0, 0);
-        // animator.rotate(neck2, 0.2F, 0, 0);
-        // animator.rotate(neck3, -0.2F, 0, 0);
-        // animator.rotate(neck4, -0.2F, 0, 0);
-        // animator.move(throat1, 0, -0.5F, 0);
-        // animator.move(throat2, 0, -1, 0);
-        // animator.rotate(head, -0.5F, 0, 0);
-        // animator.move(head, 0, 1, 0);
-        // animator.rotate(lowerJaw, 0.9F, 0, 0);
-        // animator.rotate(rightThigh, 0.6F, 0, 0);
-        // animator.rotate(rightCalf1, 0.05F, 0, 0);
-        // animator.rotate(rightCalf2, -0.3F, 0, 0);
-        // animator.rotate(rightFoot, -0.3F, 0, 0);
-        // animator.rotate(leftThigh, -0.3F, 0, 0);
-        // animator.rotate(leftCalf1, 0.2F, 0, 0);
-        // animator.rotate(leftCalf2, -0.2F, 0, 0);
-        // animator.rotate(leftFoot, 0.3F, 0, 0);
-        // animator.endPhase();
-        // animator.setStationaryPhase(35);
-        // animator.resetPhase(15);
     }
 }

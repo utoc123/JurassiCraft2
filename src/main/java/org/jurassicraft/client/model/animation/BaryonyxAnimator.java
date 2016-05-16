@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.BaryonyxEntity;
 public class BaryonyxAnimator extends DinosaurAnimator<BaryonyxEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, BaryonyxEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, BaryonyxEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float scaleFactor = 0.62F;
         float height = 2F * f1;
@@ -84,16 +84,13 @@ public class BaryonyxAnimator extends DinosaurAnimator<BaryonyxEntity>
         model.chainWave(rightArmParts, 1F * scaleFactor, -0.3F, 4, f, f1);
         model.chainWave(leftArmParts, 1F * scaleFactor, -0.3F, 4, f, f1);
 
-        // Idling
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tailParts, 0.1F, -0.05F, 2, ticksExisted, 0.25F);
-        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticksExisted, 0.25F);
-        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticksExisted, 0.25F);
-        model.walk(waist, 0.1F, 0.05F, false, 0F, 0F, ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticksExisted, 0.25F);
-        model.chainSwing(tailParts, 0.1F, -0.1F, 3, ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.1F, -0.05F, 2, ticks, 0.25F);
+        model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticks, 0.25F);
+        model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticks, 0.25F);
+        model.walk(waist, 0.1F, 0.05F, false, 0F, 0F, ticks, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainSwing(tailParts, 0.1F, -0.1F, 3, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

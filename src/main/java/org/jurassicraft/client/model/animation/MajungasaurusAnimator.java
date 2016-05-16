@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.MajungasaurusEntity;
 public class MajungasaurusAnimator extends DinosaurAnimator<MajungasaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, MajungasaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, MajungasaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer tail1 = model.getCube("Tail Base");
         AdvancedModelRenderer tail2 = model.getCube("Tail 2");
@@ -95,12 +95,10 @@ public class MajungasaurusAnimator extends DinosaurAnimator<MajungasaurusEntity>
         model.walk(neck3, 1F * globalSpeed, 0.03F, false, 0F, 0.04F, f, f1);
         model.walk(neck4, 1F * globalSpeed, 0.03F, false, 0F, 0.04F, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, 0.1F, 0.05F, -2, ticksExisted, 0.25F);
-        model.chainWave(body, 0.1F, 0.03F, -5, ticksExisted, 0.25F);
-        model.chainWave(armRight, 0.1F, 0.1F, -4, ticksExisted, 0.25F);
-        model.chainWave(armLeft, 0.1F, 0.1F, -4, ticksExisted, 0.25F);
+        model.chainWave(tail, 0.1F, 0.05F, -2, ticks, 0.25F);
+        model.chainWave(body, 0.1F, 0.03F, -5, ticks, 0.25F);
+        model.chainWave(armRight, 0.1F, 0.1F, -4, ticks, 0.25F);
+        model.chainWave(armLeft, 0.1F, 0.1F, -4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

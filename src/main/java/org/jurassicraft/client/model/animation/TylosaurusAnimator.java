@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.TylosaurusEntity;
 public class TylosaurusAnimator extends DinosaurAnimator<TylosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TylosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, TylosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Main head");
         AdvancedModelRenderer neck = model.getCube("Neck ");
@@ -33,7 +33,7 @@ public class TylosaurusAnimator extends DinosaurAnimator<TylosaurusEntity>
 
         float scaleFactor = 0.3F;
 
-        // f = entity.ticksExisted;
+        // f = ticks;
         // f1 = 0.4F;
 
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { head, neck, body1, body2, body3, tail1, tail2, tail3, tail4 };
@@ -45,14 +45,12 @@ public class TylosaurusAnimator extends DinosaurAnimator<TylosaurusEntity>
         model.walk(leftBackFlipper, 1 * scaleFactor, 0.6F, false, -1F, 0F, f, f1);
         model.walk(rightBackFlipper, 1 * scaleFactor, 0.6F, false, -1F, 0F, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
+        model.bob(head, 0.25F * scaleFactor, 5F, false, ticks, 0.1F);
 
-        model.bob(head, 0.25F * scaleFactor, 5F, false, ticksExisted, 0.1F);
-
-        model.walk(rightFrontFlipper, 0.25F * scaleFactor, 1.5F, false, 0F, 0F, ticksExisted, 0.025F);
-        model.walk(leftFrontFlipper, 0.25F * scaleFactor, 1.5F, false, 0F, 0F, ticksExisted, 0.025F);
-        model.walk(leftBackFlipper, 0.25F * scaleFactor, 1.5F, false, -1F, 0F, ticksExisted, 0.025F);
-        model.walk(rightBackFlipper, 0.25F * scaleFactor, 1.5F, false, -1F, 0F, ticksExisted, 0.025F);
+        model.walk(rightFrontFlipper, 0.25F * scaleFactor, 1.5F, false, 0F, 0F, ticks, 0.025F);
+        model.walk(leftFrontFlipper, 0.25F * scaleFactor, 1.5F, false, 0F, 0F, ticks, 0.025F);
+        model.walk(leftBackFlipper, 0.25F * scaleFactor, 1.5F, false, -1F, 0F, ticks, 0.025F);
+        model.walk(rightBackFlipper, 0.25F * scaleFactor, 1.5F, false, -1F, 0F, ticks, 0.025F);
 
         entity.tailBuffer.applyChainSwingBuffer(bodyParts);
     }

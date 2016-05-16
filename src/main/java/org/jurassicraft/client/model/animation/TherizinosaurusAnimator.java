@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.TherizinosaurusEntity;
 public class TherizinosaurusAnimator extends DinosaurAnimator<TherizinosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TherizinosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, TherizinosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer rightThigh = model.getCube("Right Thigh");
         AdvancedModelRenderer bodyHips = model.getCube("Body hips");
@@ -101,8 +101,6 @@ public class TherizinosaurusAnimator extends DinosaurAnimator<TherizinosaurusEnt
         AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { lowerArmLeft, lowerArmLeft1, leftHand };
         AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { lowerArmRight, lowerArmRight1, rightHand };
 
-        int frame = entity.ticksExisted;
-
         // The tail must always be up when the neck is down
         float speed = 0.75F;
         float height = 3F;
@@ -143,18 +141,15 @@ public class TherizinosaurusAnimator extends DinosaurAnimator<TherizinosaurusEnt
             model.chainWave(tail, 1F * speed, -0.02F, 2.5F, f, f1);
             model.chainSwing(neck, 0.5F * speed, 0.02F, 2, f, f1);
             model.chainWave(neck, 1.0F * speed, 0.02F, 0.5F, f, f1);
-            // model.chainWave(bodyParts, 1F * speed, -0.1F, 4, f, f1);
 
             model.chainWave(armRight, 1F * speed, -0.3F, 4, f, f1);
             model.chainWave(armLeft, 1F * speed, -0.3F, 4, f, f1);
         }
 
-        // Idling
-        model.chainWave(tail, 0.1F, 0.02F, 2, frame, 0.25F);
-        model.chainWave(neck, 0.1F, 0.02F, 2, frame, 0.25F);
-        // model.chainWave(bodyParts, 0.1F, -0.03F, 5, frame, 0.25F);
-        model.chainWave(armRight, 0.1F, -0.1F, 4, frame, 0.25F);
-        model.chainWave(armLeft, 0.1F, -0.1F, 4, frame, 0.25F);
+        model.chainWave(tail, 0.1F, 0.02F, 2, ticks, 0.25F);
+        model.chainWave(neck, 0.1F, 0.02F, 2, ticks, 0.25F);
+        model.chainWave(armRight, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(armLeft, 0.1F, -0.1F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.DilophosaurusEntity;
 public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         boolean scary = false;
 
@@ -35,9 +35,6 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
         float globalSpeed = 0.6F;
         float globalDegree = 0.77F;
         float globalHeight = 2F;
-
-        // f = entity.ticksExisted;
-        // f1 = 1F;
 
         AdvancedModelRenderer head = model.getCube("Head");
 
@@ -114,13 +111,11 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
         model.chainWave(armRight, 1F * globalSpeed, 0.2F, 3, f, f1);
         model.chainWave(armLeft, 1F * globalSpeed, 0.2F, 3, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, 0.15F, -0.03F, 2, ticksExisted, 0.25F);
-        model.chainWave(body, 0.15F, 0.03F, 3.5F, ticksExisted, 0.25F);
-        model.chainWave(armRight, 0.15F, -0.1F, 4, ticksExisted, 0.25F);
-        model.chainWave(armLeft, 0.15F, -0.1F, 4, ticksExisted, 0.25F);
-        model.chainSwing(tail, 0.15F, -0.1F, 3, ticksExisted, 0.25F);
+        model.chainWave(tail, 0.15F, -0.03F, 2, ticks, 0.25F);
+        model.chainWave(body, 0.15F, 0.03F, 3.5F, ticks, 0.25F);
+        model.chainWave(armRight, 0.15F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(armLeft, 0.15F, -0.1F, 4, ticks, 0.25F);
+        model.chainSwing(tail, 0.15F, -0.1F, 3, ticks, 0.25F);
 
         model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, neck3, neck4, head);
 

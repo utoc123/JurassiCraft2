@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.CompsognathusEntity;
 public class CompsognathusAnimator extends DinosaurAnimator<CompsognathusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CompsognathusEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, CompsognathusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer abdomen = model.getCube("abdomen");
         AdvancedModelRenderer upperBody = model.getCube("Upper body");
@@ -55,7 +55,7 @@ public class CompsognathusAnimator extends DinosaurAnimator<CompsognathusEntity>
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] neck = new AdvancedModelRenderer[] { head, neck7, neck6, neck5, neck4, neck3, neck2, neck1, upperBody };
 
-        // f = entity.ticksExisted;
+        // f = ticks;
         // f1 = 0.4F;
 
         float globalSpeed = 1.8F;
@@ -78,10 +78,8 @@ public class CompsognathusAnimator extends DinosaurAnimator<CompsognathusEntity>
         model.walk(rightShin, 0.5F * globalSpeed, globalDegree * 0.8F, true, -1F, -0.1F, f, f1);
         model.walk(rightFoot, 0.5F * globalSpeed, globalDegree * 1.5F, false, -1F, 1F, f, f1);
 
-        int ticksExisted = entity.ticksExisted;
-
-        model.chainWave(tail, 0.125F * globalSpeed, globalHeight * 0.125F, 2, ticksExisted, 0.0625F);
-        model.chainWave(neck, 0.125F * globalSpeed, globalHeight * 0.125F, -2, ticksExisted, 0.0625F);
+        model.chainWave(tail, 0.125F * globalSpeed, globalHeight * 0.125F, 2, ticks, 0.0625F);
+        model.chainWave(neck, 0.125F * globalSpeed, globalHeight * 0.125F, -2, ticks, 0.0625F);
 
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }

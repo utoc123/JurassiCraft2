@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.RugopsEntity;
 public class RugopsAnimator extends DinosaurAnimator<RugopsEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, RugopsEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, RugopsEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.45F;
         float globalDegree = 0.4F;
@@ -97,10 +97,10 @@ public class RugopsAnimator extends DinosaurAnimator<RugopsEntity>
         model.walk(rightFoot, 0.5F * globalSpeed, 1.5F * globalDegree, false, 0.5F, -0.1F, f, f1);
 
         // idling
-        model.chainWave(tailParts, 0.1F, 0.05F, 2, entity.ticksExisted, 0.25F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 5, entity.ticksExisted, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, entity.ticksExisted, 0.25F);
+        model.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }

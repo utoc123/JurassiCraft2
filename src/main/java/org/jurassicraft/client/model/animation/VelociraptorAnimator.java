@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.VelociraptorEntity;
 public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, VelociraptorEntity entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
+    protected void performMowzieLandAnimations(DinosaurModel model, VelociraptorEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = model.getCube("body3");
         AdvancedModelRenderer chest = model.getCube("body2");
@@ -47,8 +47,6 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
         AdvancedModelRenderer[] leftArmParts = new AdvancedModelRenderer[] { Hand_Left, lowerArmLeft, upperArmLeft };
         AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { waist, chest, shoulders, neck4, neck3, neck2, neck1, head };
-
-        int frame = entity.ticksExisted;
 
         float speed = 0.75F;
         float height = 2F * limbSwingAmount;
@@ -86,10 +84,10 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
         model.chainWave(rightArmParts, 1F * speed, -0.3F, 4, limbSwing, limbSwingAmount);
         model.chainWave(leftArmParts, 1F * speed, -0.3F, 4, limbSwing, limbSwingAmount);
 
-        model.chainWave(tailParts, 0.1F, 0.05F, 2, frame, 0.25F);
-        model.chainWave(bodyParts, 0.1F, -0.03F, 5, frame, 0.25F);
-        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, frame, 0.25F);
-        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, frame, 0.25F);
+        model.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.25F);
+        model.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.25F);
+        model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
+        model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
 
         model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, neck3, neck4, head);
 
