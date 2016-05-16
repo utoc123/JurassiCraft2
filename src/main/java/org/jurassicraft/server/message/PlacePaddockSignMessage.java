@@ -5,6 +5,7 @@ import net.ilexiconn.llibrary.server.network.AbstractMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMessage>
 {
@@ -55,14 +57,19 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
         PaddockSignEntity paddockSign = new PaddockSignEntity(world, pos, side, message.dino);
 
-        if (player.canPlayerEdit(pos, side, player.getHeldItem(message.hand)) && paddockSign.onValidSurface())
-        {
-            world.spawnEntityInWorld(paddockSign);
+        ItemStack heldItem = player.getHeldItem(message.hand);
 
-            if (!player.capabilities.isCreativeMode)
+        if (heldItem != null && heldItem.getItem() == ItemHandler.INSTANCE.paddock_sign)
+        {
+            if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface())
             {
-                InventoryPlayer inventory = player.inventory;
-                inventory.decrStackSize(inventory.currentItem, 1);
+                world.spawnEntityInWorld(paddockSign);
+
+                if (!player.capabilities.isCreativeMode)
+                {
+                    InventoryPlayer inventory = player.inventory;
+                    inventory.decrStackSize(inventory.currentItem, 1);
+                }
             }
         }
     }
