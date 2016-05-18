@@ -44,14 +44,14 @@ public class JabelarAnimationHandler
         AdvancedModelRenderer[] modelParts = this.getModelParts(model);
 
         this.DEFAULT_PASS.initSequence(entity, entity.getAnimation());
-        this.DEFAULT_PASS.init(entity, modelParts);
+        this.DEFAULT_PASS.init(modelParts);
     }
 
-    public void performAnimations(DinosaurEntity entity, float scale)
+    public void performAnimations(DinosaurEntity entity, float ticks)
     {
         this.performHurtAnimation(entity);
 
-        this.DEFAULT_PASS.performAnimations(entity, scale);
+        this.DEFAULT_PASS.performAnimations(entity, ticks);
     }
 
     private AdvancedModelRenderer[] getModelParts(DinosaurModel model)
