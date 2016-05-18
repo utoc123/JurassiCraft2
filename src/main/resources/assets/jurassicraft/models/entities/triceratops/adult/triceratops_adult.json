@@ -6,6 +6,32 @@
         ],
 		"SLEEPING": [
 			{"pose": "triceratops_adult_sleeping", "time": 20}
+		],
+		"EATING": [
+			{
+			"pose": "triceratops_adult_eating1",
+			"time": 20
+			},
+			{
+			"pose": "triceratops_adult_eating2",
+			"time": 10
+			},
+			{
+			"pose": "triceratops_adult_eating1",
+			"time": 10
+			},
+			{
+			"pose": "triceratops_adult_eating2",
+			"time": 10
+			},
+			{
+			"pose": "triceratops_adult_eating1",
+			"time": 10
+			},
+			{
+			"pose": "triceratops_adult_idle",
+			"time": 20
+			}
 		]
      }
 }
