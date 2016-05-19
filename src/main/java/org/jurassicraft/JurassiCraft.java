@@ -27,7 +27,7 @@ import org.jurassicraft.server.proxy.ServerProxy;
 
 import java.io.File;
 
-@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.CONFIG.GUIFactory", dependencies = "required-after:llibrary@[1.2.1,)")
+@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[1.2.1,)")
 public class JurassiCraft
 {
     @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")

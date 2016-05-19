@@ -9,20 +9,17 @@ import java.util.Map;
 
 public class AnimationPass
 {
-    protected float[][][] rotationIncrements;
-    protected float[][][] positionIncrements;
-    protected float[][][] offsetIncrements;
+    protected float[][] rotationIncrements;
+    protected float[][] positionIncrements;
 
     protected float[][] prevRotationIncrements;
     protected float[][] prevPositionIncrements;
-    protected float[][] prevOffsetIncrements;
 
     protected int posesInAnimation;
     protected int currentPoseIndex;
-    protected int ticksInTween;
-    protected int tweenTick;
-
-    protected int prevTicksExisted;
+    protected int tweenLength;
+    protected float tick;
+    protected float prevTicks;
 
     protected AdvancedModelRenderer[] parts;
     protected AdvancedModelRenderer[] nextParts;
@@ -34,6 +31,8 @@ public class AnimationPass
 
     protected boolean useInertialTweens;
 
+    protected float inertiaFactor;
+
     public AnimationPass(Map<Animation, int[][]> poseSequences, AdvancedModelRenderer[][] poses, boolean useIntertialTweens)
     {
         this.poseSequences = poseSequences;
@@ -41,22 +40,19 @@ public class AnimationPass
         this.useInertialTweens = useIntertialTweens;
     }
 
-    public void init(DinosaurEntity entity, AdvancedModelRenderer[] parts)
+    public void init(AdvancedModelRenderer[] parts)
     {
-        this.prevTicksExisted = entity.ticksExisted;
-
         this.parts = parts;
+
+        this.prevRotationIncrements = new float[parts.length][3];
+        this.prevPositionIncrements = new float[parts.length][3];
 
         this.initPoseModel();
         this.initTweenTicks();
 
-        this.prevRotationIncrements = new float[parts.length][3];
-        this.prevPositionIncrements = new float[parts.length][3];
-        this.prevOffsetIncrements = new float[parts.length][3];
-
         this.updatePreviousPose();
 
-        this.initIncrements(0.0F);
+        this.initIncrements();
     }
 
     public void initPoseModel()
@@ -80,30 +76,23 @@ public class AnimationPass
         }
     }
 
-    protected void initIncrements(float scale)
+    protected void initIncrements()
     {
-        float inertiaFactor = calculateInertiaFactor(scale);
-
         for (int partIndex = 0; partIndex < parts.length; partIndex++)
         {
             AdvancedModelRenderer part = parts[partIndex];
             AdvancedModelRenderer nextPart = nextParts[partIndex];
 
-            float[] rotationIncrements = this.rotationIncrements[tweenTick][partIndex];
-            float[] positionIncrements = this.positionIncrements[tweenTick][partIndex];
-            float[] offsetIncrements = this.offsetIncrements[tweenTick][partIndex];
+            float[] rotationIncrements = this.rotationIncrements[partIndex];
+            float[] positionIncrements = this.positionIncrements[partIndex];
 
-            rotationIncrements[0] = (nextPart.rotateAngleX - (part.defaultRotationX + prevRotationIncrements[partIndex][0])) * inertiaFactor;
-            rotationIncrements[1] = (nextPart.rotateAngleY - (part.defaultRotationY + prevRotationIncrements[partIndex][1])) * inertiaFactor;
-            rotationIncrements[2] = (nextPart.rotateAngleZ - (part.defaultRotationZ + prevRotationIncrements[partIndex][2])) * inertiaFactor;
+            rotationIncrements[0] = (nextPart.rotateAngleX - (part.defaultRotationX + prevRotationIncrements[partIndex][0]));
+            rotationIncrements[1] = (nextPart.rotateAngleY - (part.defaultRotationY + prevRotationIncrements[partIndex][1]));
+            rotationIncrements[2] = (nextPart.rotateAngleZ - (part.defaultRotationZ + prevRotationIncrements[partIndex][2]));
 
-            positionIncrements[0] = (nextPart.rotationPointX - (part.defaultPositionX + prevPositionIncrements[partIndex][0])) * inertiaFactor;
-            positionIncrements[1] = (nextPart.rotationPointY - (part.defaultPositionY + prevPositionIncrements[partIndex][1])) * inertiaFactor;
-            positionIncrements[2] = (nextPart.rotationPointZ - (part.defaultPositionZ + prevPositionIncrements[partIndex][2])) * inertiaFactor;
-
-            offsetIncrements[0] = (nextPart.offsetX - (part.defaultOffsetX + prevOffsetIncrements[partIndex][0])) * inertiaFactor;
-            offsetIncrements[1] = (nextPart.offsetY - (part.defaultOffsetY + prevOffsetIncrements[partIndex][1])) * inertiaFactor;
-            offsetIncrements[2] = (nextPart.offsetZ - (part.defaultOffsetZ + prevOffsetIncrements[partIndex][2])) * inertiaFactor;
+            positionIncrements[0] = (nextPart.rotationPointX - (part.defaultPositionX + prevPositionIncrements[partIndex][0]));
+            positionIncrements[1] = (nextPart.rotationPointY - (part.defaultPositionY + prevPositionIncrements[partIndex][1]));
+            positionIncrements[2] = (nextPart.rotationPointZ - (part.defaultPositionZ + prevPositionIncrements[partIndex][2]));
         }
     }
 
@@ -136,55 +125,56 @@ public class AnimationPass
         }
     }
 
-    protected float calculateInertiaFactor(float scale)
+    protected float calculateInertiaFactor()
     {
-        double inertiaFactor = (tweenTick + scale) / ticksInTween;
+        float inertiaFactor = tick / tweenLength;
 
         if (useInertialTweens)
         {
-            inertiaFactor = 0.5D + 0.5D * Math.sin((Math.PI * ((inertiaFactor) - 0.5D)));
+            inertiaFactor = (float) (Math.sin(Math.PI * (inertiaFactor - 0.5D)) * 0.5D + 0.5D);
         }
 
-        return (float) inertiaFactor;
+        return inertiaFactor;
     }
 
-    public void performAnimations(DinosaurEntity entity, float scale)
+    public void performAnimations(DinosaurEntity entity, float ticks)
     {
         if (entity.getAnimation() != animation && animation != Animations.DYING.get() && this.doesUpdateEntityAnimations())
         {
             this.setNextSequence(entity, entity.getAnimation());
         }
 
-        this.performNextTween(entity, scale);
+        this.performNextTween(entity, ticks);
     }
 
-    /**
-     * Increments the current tween tick.
-     *
-     * @return whether this animation has completed
-     */
-    public boolean incrementTweenTick()
+    public boolean incrementTweenTick(float ticks)
     {
+        float incrementAmount = ticks - this.prevTicks;
+
         if (!Animations.getAnimation(animation).shouldHold())
         {
-            tweenTick++;
+            this.tick += incrementAmount;
 
-            return tweenTick >= ticksInTween;
+            return tick >= tweenLength;
         }
         else
         {
-            if (tweenTick < ticksInTween - 1)
+            if (tick < tweenLength - 1)
             {
-                tweenTick++;
+                this.tick += incrementAmount;
+            }
+            else
+            {
+                this.tick = tweenLength;
             }
 
             return false;
         }
     }
 
-    protected void calculateTween(float scale)
+    protected void calculateTween()
     {
-        this.initIncrements(scale);
+        this.inertiaFactor = this.calculateInertiaFactor();
 
         for (int partIndex = 0; partIndex < parts.length; partIndex++)
         {
@@ -200,7 +190,6 @@ public class AnimationPass
             {
                 this.applyTweenRotations(partIndex);
                 this.applyTweenTranslations(partIndex);
-                this.applyTweenOffsets(partIndex);
             }
         }
     }
@@ -209,41 +198,26 @@ public class AnimationPass
     {
         AdvancedModelRenderer part = this.parts[partIndex];
 
-        float[] rotationIncrements = this.rotationIncrements[tweenTick][partIndex];
+        float[] rotationIncrements = this.rotationIncrements[partIndex];
 
-        part.rotateAngleX += (rotationIncrements[0] + prevRotationIncrements[partIndex][0]);
-        part.rotateAngleY += (rotationIncrements[1] + prevRotationIncrements[partIndex][1]);
-        part.rotateAngleZ += (rotationIncrements[2] + prevRotationIncrements[partIndex][2]);
+        part.rotateAngleX += (rotationIncrements[0] * inertiaFactor + prevRotationIncrements[partIndex][0]);
+        part.rotateAngleY += (rotationIncrements[1] * inertiaFactor + prevRotationIncrements[partIndex][1]);
+        part.rotateAngleZ += (rotationIncrements[2] * inertiaFactor + prevRotationIncrements[partIndex][2]);
     }
 
     protected void applyTweenTranslations(int partIndex)
     {
         AdvancedModelRenderer part = this.parts[partIndex];
 
-        float[] translationIncrements = this.positionIncrements[tweenTick][partIndex];
+        float[] translationIncrements = this.positionIncrements[partIndex];
 
-        part.rotationPointX += (translationIncrements[0] + prevPositionIncrements[partIndex][0]);
-        part.rotationPointY += (translationIncrements[1] + prevPositionIncrements[partIndex][1]);
-        part.rotationPointZ += (translationIncrements[2] + prevPositionIncrements[partIndex][2]);
-    }
-
-    protected void applyTweenOffsets(int partIndex)
-    {
-        AdvancedModelRenderer part = this.parts[partIndex];
-
-        float[] offsetIncrements = this.offsetIncrements[tweenTick][partIndex];
-
-        part.offsetX += (offsetIncrements[0] + prevOffsetIncrements[partIndex][0]);
-        part.offsetY += (offsetIncrements[1] + prevOffsetIncrements[partIndex][1]);
-        part.offsetZ += (offsetIncrements[2] + prevOffsetIncrements[partIndex][2]);
+        part.rotationPointX += (translationIncrements[0] * inertiaFactor + prevPositionIncrements[partIndex][0]);
+        part.rotationPointY += (translationIncrements[1] * inertiaFactor + prevPositionIncrements[partIndex][1]);
+        part.rotationPointZ += (translationIncrements[2] * inertiaFactor + prevPositionIncrements[partIndex][2]);
     }
 
     protected void setNextPoseModel(int poseIndex)
     {
-        this.prevRotationIncrements = new float[parts.length][3];
-        this.prevPositionIncrements = new float[parts.length][3];
-        this.prevOffsetIncrements = new float[parts.length][3];
-
         this.posesInAnimation = poseSequences.get(animation).length;
         this.currentPoseIndex = poseIndex;
         this.nextParts = poses[poseSequences.get(animation)[currentPoseIndex][0]];
@@ -255,11 +229,11 @@ public class AnimationPass
 
         if (Animations.getAnimation(animation).shouldHold())
         {
-            this.tweenTick = this.ticksInTween - 1;
+            this.tick = this.tweenLength - 1;
         }
         else
         {
-            this.tweenTick = 0;
+            this.tick = 0;
         }
     }
 
@@ -269,15 +243,15 @@ public class AnimationPass
 
         if (pose != null)
         {
-            this.ticksInTween = pose[currentPoseIndex][1];
+            this.tweenLength = pose[currentPoseIndex][1];
 
-            if (this.ticksInTween < 1)
+            if (this.tweenLength < 1)
             {
                 JurassiCraft.INSTANCE.getLogger().error("Array of sequences has sequence with num ticks illegal value (< 1)");
-                this.ticksInTween = 1;
+                this.tweenLength = 1;
             }
 
-            this.tweenTick = 0;
+            this.tick = 0;
 
             this.updateTween();
         }
@@ -286,30 +260,26 @@ public class AnimationPass
     protected void setNextPoseModel()
     {
         this.nextParts = poses[poseSequences.get(animation)[currentPoseIndex][0]];
-        this.ticksInTween = poseSequences.get(animation)[currentPoseIndex][1];
-        this.tweenTick = 0;
+        this.tweenLength = poseSequences.get(animation)[currentPoseIndex][1];
+        this.tick = 0;
+        this.prevTicks = 0;
         this.updateTween();
     }
 
-    protected void performNextTween(DinosaurEntity entity, float scale)
+    protected void performNextTween(DinosaurEntity entity, float ticks)
     {
-        this.calculateTween(scale);
+        this.calculateTween();
 
-        for (int i = 0; i < entity.ticksExisted - prevTicksExisted; i++)
+        if (this.incrementTweenTick(ticks))
         {
-            if (this.incrementTweenTick())
-            {
-                this.handleFinishedPose(entity);
-            }
+            this.handleFinishedPose(entity);
         }
 
-        this.prevTicksExisted = entity.ticksExisted;
+        this.prevTicks = ticks;
     }
 
     protected void handleFinishedPose(DinosaurEntity entity)
     {
-//        this.initIncrements(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-
         this.updatePreviousPose();
 
         if (this.incrementCurrentPoseIndex())
@@ -324,7 +294,7 @@ public class AnimationPass
 
     protected void playSound(DinosaurEntity entity)
     {
-        if (entity.getAnimation() == Animations.IDLE.get() || tweenTick > 0)
+        if (entity.getAnimation() == Animations.IDLE.get() || tick > 0)
         {
             return;
         }
@@ -363,6 +333,9 @@ public class AnimationPass
 
     protected void setNextSequence(DinosaurEntity entity, Animation requestedAnimation)
     {
+        this.prevRotationIncrements = new float[parts.length][3];
+        this.prevPositionIncrements = new float[parts.length][3];
+
         /**
          * TODO:
          * Should control here which animations are interruptible, in which priority
@@ -389,28 +362,23 @@ public class AnimationPass
 
     protected void updateTween()
     {
-        this.rotationIncrements = new float[ticksInTween][parts.length][3];
-        this.positionIncrements = new float[ticksInTween][parts.length][3];
-        this.offsetIncrements = new float[ticksInTween][parts.length][3];
+        this.rotationIncrements = new float[parts.length][3];
+        this.positionIncrements = new float[parts.length][3];
+
+        this.initIncrements();
     }
 
     protected void updatePreviousPose()
     {
-        int tween = ticksInTween - 1;
-
         for (int partIndex = 0; partIndex < parts.length; partIndex++)
         {
-            prevRotationIncrements[partIndex][0] += rotationIncrements[tween][partIndex][0];
-            prevRotationIncrements[partIndex][1] += rotationIncrements[tween][partIndex][1];
-            prevRotationIncrements[partIndex][2] += rotationIncrements[tween][partIndex][2];
+            prevRotationIncrements[partIndex][0] += rotationIncrements[partIndex][0] * inertiaFactor;
+            prevRotationIncrements[partIndex][1] += rotationIncrements[partIndex][1] * inertiaFactor;
+            prevRotationIncrements[partIndex][2] += rotationIncrements[partIndex][2] * inertiaFactor;
 
-            prevPositionIncrements[partIndex][0] += positionIncrements[tween][partIndex][0];
-            prevPositionIncrements[partIndex][1] += positionIncrements[tween][partIndex][1];
-            prevPositionIncrements[partIndex][2] += positionIncrements[tween][partIndex][2];
-
-            prevOffsetIncrements[partIndex][0] += offsetIncrements[tween][partIndex][0];
-            prevOffsetIncrements[partIndex][1] += offsetIncrements[tween][partIndex][1];
-            prevOffsetIncrements[partIndex][2] += offsetIncrements[tween][partIndex][2];
+            prevPositionIncrements[partIndex][0] += positionIncrements[partIndex][0] * inertiaFactor;
+            prevPositionIncrements[partIndex][1] += positionIncrements[partIndex][1] * inertiaFactor;
+            prevPositionIncrements[partIndex][2] += positionIncrements[partIndex][2] * inertiaFactor;
         }
     }
 
