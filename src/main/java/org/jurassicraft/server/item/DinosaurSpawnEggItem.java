@@ -114,7 +114,7 @@ public class DinosaurSpawnEggItem extends Item
             player.addChatMessage(new TextComponentString(new AdvLang("spawnegg.genderchange.name").withProperty("mode", I18n.translateToLocal("gender." + modeString + ".name")).build()));
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
