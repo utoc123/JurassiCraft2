@@ -9,6 +9,36 @@
                 "pose": "tyrannosaurus_adult_sleeping",
                 "time": 20
             }
+        ],
+		"CALLING": [
+            {
+                "pose": "tyrannosaurus_adult_roar1",
+                "time": 15
+            },
+			{
+                "pose": "tyrannosaurus_adult_roar2",
+                "time": 10
+            },
+            {
+                "pose": "tyrannosaurus_adult_shake1",
+                "time": 15
+            },
+            {
+                "pose": "tyrannosaurus_adult_shake2",
+                "time": 15
+            },
+            {
+                "pose": "tyrannosaurus_adult_shake1",
+                "time": 15
+            },
+            {
+                "pose": "tyrannosaurus_adult_shake2",
+                "time": 15
+            },
+            {
+                "pose": "tyrannosaurus_adult_idle",
+                "time": 20
+            }
         ]
     }
 }
