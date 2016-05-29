@@ -101,6 +101,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private boolean isSleeping;
     private int stayAwakeTime;
 
+    private HerdEntityAI herdEntityAI;
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     private int rareVariant;
@@ -139,7 +141,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
-        this.tasks.addTask(2, new HerdEntityAI(this));
+        herdEntityAI = new HerdEntityAI(this);
+        this.tasks.addTask(2, herdEntityAI);
 
         this.tasks.addTask(3, new EntityAILookIdle(this));
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
@@ -682,6 +685,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private void updateTailBuffer()
     {
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
+    }
+
+    @Override
+    public void onDeath(DamageSource cause)
+    {
+        herdEntityAI.terminate(this);
+        super.onDeath(cause);
     }
 
     @Override
