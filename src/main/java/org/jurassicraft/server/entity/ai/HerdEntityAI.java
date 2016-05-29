@@ -29,6 +29,12 @@ public class HerdEntityAI extends EntityAIBase
         setMutexBits(1);
     }
 
+    public void terminate(DinosaurEntity entity)
+    {
+        if (!entity.getEntityWorld().isRemote)
+            HerdManager.getInstance().remove(entity);
+    }
+
     @Override
     public boolean shouldExecute()
     {
