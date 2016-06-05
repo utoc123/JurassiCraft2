@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class MossBlock extends Block
 {
@@ -20,7 +20,7 @@ public class MossBlock extends Block
 
     public MossBlock()
     {
-        super(Material.leaves);
+        super(Material.LEAVES);
 
         this.setHardness(0.2F);
         this.setResistance(0.0F);
@@ -49,9 +49,6 @@ public class MossBlock extends Block
         return BlockRenderLayer.TRANSLUCENT;
     }
 
-    /**
-     * Used to determine ambient occlusion and culling when rebuilding chunks for render
-     */
     @Override
     public boolean isOpaqueCube(IBlockState state)
     {
@@ -62,24 +59,22 @@ public class MossBlock extends Block
     public boolean canPlaceBlockAt(World world, BlockPos pos)
     {
         IBlockState below = world.getBlockState(pos.down());
-        return super.canPlaceBlockAt(world, pos) && this.canBlockStay(world, pos) && (below != null && below.getBlock().isFullCube(below));
+        return super.canPlaceBlockAt(world, pos) && this.canBlockStay(world, pos) && (below.isFullCube());
     }
 
-    /**
-     * Called when a neighboring block changes.
-     */
     @Override
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
     {
-        this.checkForDrop(worldIn, pos, state);
+        super.neighborChanged(state, world, pos, block);
+        this.checkForDrop(world, pos, state);
     }
 
-    private boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
+    private boolean checkForDrop(World world, BlockPos pos, IBlockState state)
     {
-        if (!this.canBlockStay(worldIn, pos))
+        if (!this.canBlockStay(world, pos))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+            this.dropBlockAsItem(world, pos, state, 0);
+            world.setBlockToAir(pos);
             return false;
         }
         else
@@ -88,9 +83,9 @@ public class MossBlock extends Block
         }
     }
 
-    private boolean canBlockStay(World worldIn, BlockPos pos)
+    private boolean canBlockStay(World world, BlockPos pos)
     {
-        return !worldIn.isAirBlock(pos.down());
+        return !world.isAirBlock(pos.down());
     }
 
     @Override

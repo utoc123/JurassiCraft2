@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.MoganopterusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.MoganopterusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class MoganopterusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class MoganopterusDinosaur extends Dinosaur
 
         this.setName("Moganopterus");
         this.setDinosaurClass(MoganopterusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xE6E2D8, 0xD67F5C);
         this.setEggColorFemale(0xE0DED3, 0xD37B58);
         this.setHealth(1, 10);

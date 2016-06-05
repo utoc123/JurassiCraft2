@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.RugopsEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.RugopsEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class RugopsDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class RugopsDinosaur extends Dinosaur
 
         this.setName("Rugops");
         this.setDinosaurClass(RugopsEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xB5F75D, 0x202022);
         this.setEggColorFemale(0xE1A857, 0x5A2108);
         this.setHealth(10, 40);

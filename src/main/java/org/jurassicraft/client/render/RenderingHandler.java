@@ -93,14 +93,15 @@ import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.renderdef.IndominusRenderDef;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
-import org.jurassicraft.server.api.IHybrid;
+import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
-import org.jurassicraft.server.block.tree.JCLeavesBlock;
+import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
@@ -111,15 +112,14 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
-import org.jurassicraft.server.tileentity.IncubatorTile;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.tile.ActionFigureTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASynthesizerTile;
+import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.List;
 import java.util.Map;
@@ -138,9 +138,9 @@ public enum RenderingHandler
         {
             String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
 
-            if (!(dino instanceof IHybrid))
+            if (!(dino instanceof Hybrid))
             {
-                for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.fossils.entrySet())
+                for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.FOSSILS.entrySet())
                 {
                     List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
@@ -151,7 +151,7 @@ public enum RenderingHandler
                 }
             }
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.fresh_fossils.entrySet())
+            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.FRESH_FOSSILS.entrySet())
             {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
@@ -161,41 +161,41 @@ public enum RenderingHandler
                 }
             }
 
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.dna, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.DNA, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
 
             if (!dino.isMammal())
             {
-                ModelBakery.registerItemVariants(ItemHandler.INSTANCE.egg, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
+                ModelBakery.registerItemVariants(ItemHandler.INSTANCE.EGG, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
             }
 
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.dino_meat, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.dino_steak, new ResourceLocation("jurassicraft:meat/steak_" + dinoName));
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.soft_tissue, new ResourceLocation("jurassicraft:soft_tissue/soft_tissue_" + dinoName));
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.syringe, new ResourceLocation("jurassicraft:syringe/syringe_" + dinoName));
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.action_figure, new ResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.DINOSAUR_MEAT, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.DINOSAUR_STEAK, new ResourceLocation("jurassicraft:meat/steak_" + dinoName));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.SOFT_TISSUE, new ResourceLocation("jurassicraft:soft_tissue/soft_tissue_" + dinoName));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.SYRINGE, new ResourceLocation("jurassicraft:syringe/syringe_" + dinoName));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.ACTION_FIGURE, new ResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName));
         }
 
         for (Plant plant : PlantHandler.INSTANCE.getPlants())
         {
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.plant_dna, new ResourceLocation("jurassicraft:dna/plants/dna_" + name));
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.plant_soft_tissue, new ResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.PLANT_DNA, new ResourceLocation("jurassicraft:dna/plants/dna_" + name));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.PLANT_SOFT_TISSUE, new ResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name));
         }
 
         for (EnumDyeColor color : EnumDyeColor.values())
         {
-            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.INSTANCE.cultivate_bottom), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase()));
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.INSTANCE.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase()));
         }
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
         {
-            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.attraction_sign, new ResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase()));
+            ModelBakery.registerItemVariants(ItemHandler.INSTANCE.ATTRACTION_SIGN, new ResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase()));
         }
 
-        ModelBakery.registerItemVariants(ItemHandler.INSTANCE.amber, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
+        ModelBakery.registerItemVariants(ItemHandler.INSTANCE.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
 
-        ModelBakery.registerItemVariants(ItemHandler.INSTANCE.cage_small, new ResourceLocation("jurassicraft:cage_small"), new ResourceLocation("jurassicraft:cage_small_marine"));
+        ModelBakery.registerItemVariants(ItemHandler.INSTANCE.CAGE_SMALL, new ResourceLocation("jurassicraft:cage_small"), new ResourceLocation("jurassicraft:cage_small_marine"));
 
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.achillobator, new AchillobatorAnimator(), 0.65F));
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.INSTANCE.anklyosaurus, new AnkylosaurusAnimator(), 0.85F));
@@ -266,7 +266,7 @@ public enum RenderingHandler
 
         int i = 0;
 
-        for (EncasedFossilBlock fossil : BlockHandler.INSTANCE.encased_fossils)
+        for (EncasedFossilBlock fossil : BlockHandler.INSTANCE.ENCASED_FOSSILS)
         {
             this.registerBlockRenderer(modelMesher, fossil, "encased_fossil_" + i, "inventory");
 
@@ -275,69 +275,69 @@ public enum RenderingHandler
 
         i = 0;
 
-        for (FossilBlock fossil : BlockHandler.INSTANCE.fossils)
+        for (FossilBlock fossil : BlockHandler.INSTANCE.FOSSILS)
         {
             this.registerBlockRenderer(modelMesher, fossil, "fossil_block_" + i, "inventory");
 
             i++;
         }
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.plant_fossil, "plant_fossil_block", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PLANT_FOSSIL, "plant_fossil_block", "inventory");
 
         for (TreeType type : TreeType.values())
         {
             String name = type.name().toLowerCase();
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.leaves.get(type), name + "_leaves", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.saplings.get(type), name + "_sapling", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.planks.get(type), name + "_planks", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.logs.get(type), name + "_log", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.stairs.get(type), name + "_stairs", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.slabs.get(type), name + "_slab", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.double_slabs.get(type), name + "_double_sab", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.petrified_logs.get(type), name + "_log_petrified", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_LEAVES.get(type), name + "_leaves", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(type), name + "_sapling", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_PLANKS.get(type), name + "_planks", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_LOGS.get(type), name + "_log", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_STAIRS.get(type), name + "_stairs", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_SLABS.get(type), name + "_slab", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ANCIENT_DOUBLE_SLABS.get(type), name + "_double_sab", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PETRIFIED_LOGS.get(type), name + "_log_petrified", "inventory");
         }
 
         for (EnumDyeColor color : EnumDyeColor.values())
         {
-            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cultivate_bottom, color.ordinal(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(), "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CULTIVATOR_BOTTOM, color.ordinal(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(), "inventory");
         }
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.scaly_tree_fern, "scaly_tree_fern", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.small_royal_fern, "small_royal_fern", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.small_chain_fern, "small_chain_fern", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.small_cycad, "small_cycad", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.bennettitalean_cycadeoidea, "bennettitalean_cycadeoidea", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cry_pansy, "cry_pansy", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cycad_zamites, "cycad_zamites", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.dicksonia, "dicksonia", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.SCALY_TREE_FERN, "scaly_tree_fern", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.SMALL_ROYAL_FERN, "small_royal_fern", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.SMALL_CHAIN_FERN, "small_chain_fern", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.SMALL_CYCAD, "small_cycad", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CYCADEOIDEA, "bennettitalean_cycadeoidea", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CRY_PANSY, "cry_pansy", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ZAMITES, "cycad_zamites", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DICKSONIA, "dicksonia", "inventory");
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.reinforced_stone, "reinforced_stone", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.reinforced_bricks, "reinforced_bricks", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.REINFORCED_STONE, "reinforced_stone", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.REINFORCED_BRICKS, "reinforced_bricks", "inventory");
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cultivate_bottom, "cultivate_bottom", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cultivate_top, "cultivate_bottom", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CULTIVATOR_BOTTOM, "cultivate_bottom", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CULTIVATOR_TOP, "cultivate_bottom", "inventory");
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.amber_ore, "amber_ore", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ice_shard, "ice_shard", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.cleaning_station, "cleaning_station", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.fossil_grinder, "fossil_grinder", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.dna_sequencer, "dna_sequencer", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.dna_combinator_hybridizer, "dna_combinator_hybridizer", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.dna_synthesizer, "dna_synthesizer", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.embryonic_machine, "embryonic_machine", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.embryo_calcification_machine, "embryo_calcification_machine", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.incubator, "incubator", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.dna_extractor, "dna_extractor", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.gypsum_stone, "gypsum_stone", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.gypsum_cobblestone, "gypsum_cobblestone", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.gypsum_bricks, "gypsum_bricks", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.action_figure, "action_figure_block", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.AMBER_ORE, "amber_ore", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ICE_SHARD, "ice_shard", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CLEANING_STATION, "cleaning_station", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.FOSSIL_GRINDER, "fossil_grinder", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DNA_SEQUENCER, "dna_sequencer", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DNA_COMBINATOR_HYBRIDIZER, "dna_combinator_hybridizer", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DNA_SYNTHESIZER, "dna_synthesizer", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.EMBRYONIC_MACHINE, "embryonic_machine", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.EMBRYO_CALCIFICATION_MACHINE, "embryo_calcification_machine", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.INCUBATOR, "incubator", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DNA_EXTRACTOR, "dna_extractor", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.GYPSUM_STONE, "gypsum_stone", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.GYPSUM_COBBLESTONE, "gypsum_cobblestone", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.GYPSUM_BRICKS, "gypsum_bricks", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ACTION_FIGURE, "action_figure_block", "inventory");
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.moss, "moss", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.clear_glass, "clear_glass", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.MOSS, "moss", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.CLEAR_GLASS, "clear_glass", "inventory");
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.wild_onion, "wild_onion_plant", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.gracilaria, "graciliaria_seaweed", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.WILD_ONION, "wild_onion_plant", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.GRACILARIA, "graciliaria_seaweed", "inventory");
 
         BlockColors blockColors = mc.getBlockColors();
         blockColors.registerBlockColorHandler(new IBlockColor()
@@ -347,22 +347,22 @@ public enum RenderingHandler
             {
                 return BiomeColorHelper.getGrassColorAtPos(access, pos);
             }
-        }, BlockHandler.INSTANCE.moss);
+        }, BlockHandler.INSTANCE.MOSS);
 
-        for (Map.Entry<TreeType, JCLeavesBlock> entry : BlockHandler.INSTANCE.leaves.entrySet())
+        for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.INSTANCE.ANCIENT_LEAVES.entrySet())
         {
             blockColors.registerBlockColorHandler(new IBlockColor()
             {
                 @Override
                 public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
                 {
-                    JCLeavesBlock block = (JCLeavesBlock) (state.getBlock());
+                    AncientLeavesBlock block = (AncientLeavesBlock) (state.getBlock());
                     return block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
                 }
             }, entry.getValue());
         }
 
-        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.ajuginucula_smithii, "ajuginucula_smithii", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.AJUGINUCULA_SMITHII, "ajuginucula_smithii", "inventory");
     }
 
     public void postInit()
@@ -380,71 +380,71 @@ public enum RenderingHandler
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();
 
         // Items
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.tracker, "tracker", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_cells_petri_dish, "plant_cells_petri_dish", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_cells, "plant_cells", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_callus, "plant_callus", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.needle, "needle", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.growth_serum, "growth_serum", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.iron_rod, "iron_rod", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.iron_blades, "iron_blades", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.cage_small, 0, "cage_small", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.cage_small, 1, "cage_small_marine", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.petri_dish, "petri_dish", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.amber, "amber", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plaster_and_bandage, "plaster_and_bandage", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.spawn_egg, "dino_spawn_egg", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.blue_print, "blue_print", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.paddock_sign, "paddock_sign", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.TRACKER, "tracker", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLANT_CELLS_PETRI_DISH, "plant_cells_petri_dish", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLANT_CELLS, "plant_cells", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLANT_CALLUS, "plant_callus", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.NEEDLE, "needle", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.GROWTH_SERUM, "growth_serum", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.IRON_RODE, "iron_rod", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.IRON_BLADES, "iron_blades", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.CAGE_SMALL, 0, "cage_small", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.CAGE_SMALL, 1, "cage_small_marine", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PETRI_DISH, "petri_dish", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AMBER, "amber", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLASTER_AND_BANDAGE, "plaster_and_bandage", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.SPAWN_EGG, "dino_spawn_egg", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.BLUEPRINT, "blue_print", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PADDOCK_SIGN, "paddock_sign", "inventory");
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
         {
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.attraction_sign, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(), "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ATTRACTION_SIGN, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(), "inventory");
         }
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.empty_test_tube, "empty_test_tube", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.empty_syringe, "empty_syringe", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.storage_disc, "storage_disc", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.disc_reader, "disc_reader", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.laser, "laser", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dna_base, "dna_base_material", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.sea_lamprey, "sea_lamprey", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.EMPTY_TEST_TUBE, "empty_test_tube", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.EMPTY_SYRINGE, "empty_syringe", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.STORAGE_DISC, "storage_disc", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DISC_DRIVE, "disc_reader", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.LASER, "laser", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DNA_NUCLEOTIDES, "dna_base_material", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.SEA_LAMPREY, "sea_lamprey", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.amber, 0, "amber_mosquito", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.amber, 1, "amber_aphid", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AMBER, 0, "amber_mosquito", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AMBER, 1, "amber_aphid", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.helicopter_spawner, "helicopter_spawner", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.HELICOPTER, "helicopter_spawner", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.disc_jurassicraft_theme, "disc_jurassicraft_theme", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.disc_dont_move_a_muscle, "disc_dont_move_a_muscle", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.disc_troodons_and_raptors, "disc_troodons_and_raptors", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.JURASSICRAFT_THEME_DISC, "disc_jurassicraft_theme", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DONT_MOVE_A_MUSCLE_DISC, "disc_dont_move_a_muscle", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.TROODONS_AND_RAPTORS_DISC, "disc_troodons_and_raptors", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.amber_keychain, "amber_keychain", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.amber_cane, "amber_cane", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.mr_dna_keychain, "mr_dna_keychain", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AMBER_KEYCHAIN, "amber_keychain", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AMBER_CANE, "amber_cane", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.MR_DNA_KEYCHAIN, "mr_dna_keychain", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dino_scanner, "dino_scanner", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DINO_SCANNER, "dino_scanner", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.basic_circuit, "basic_circuit", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.advanced_circuit, "advanced_circuit", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.iron_nugget, "iron_nugget", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.BASIC_CIRCUIT, "basic_circuit", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ADVANCED_CIRCUIT, "advanced_circuit", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.IRON_NUGGET, "iron_nugget", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.gypsum_powder, "gypsum_powder", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.GYPSUM_POWDER, "gypsum_powder", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ajuginucula_smithii_seeds, "ajuginucula_smithii_seeds", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ajuginucula_smithii_leaves, "ajuginucula_smithii_leaves", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ajuginucula_smithii_oil, "ajuginucula_smithii_oil", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_SEEDS, "ajuginucula_smithii_seeds", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES, "ajuginucula_smithii_leaves", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_OIL, "ajuginucula_smithii_oil", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.wild_onion, "wild_onion", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.gracilaria, "gracilaria", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.liquid_agar, "liquid_agar", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.WILD_ONION, "wild_onion", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.GRACILARIA, "gracilaria", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.LIQUID_AGAR, "liquid_agar", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_fossil, "plant_fossil", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.twig_fossil, "twig_fossil", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLANT_FOSSIL, "plant_fossil", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.TWIG_FOSSIL, "twig_fossil", "inventory");
 
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.keyboard, "keyboard", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.computer_screen, "computer_screen", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dna_analyzer, "dna_analyzer", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.KEYBOARD, "keyboard", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.COMPUTER_SCREEN, "computer_screen", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DNA_ANALYZER, "dna_analyzer", "inventory");
 
         int meta = 0;
 
@@ -452,7 +452,7 @@ public enum RenderingHandler
         {
             String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.fossils.entrySet())
+            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.FOSSILS.entrySet())
             {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
@@ -462,7 +462,7 @@ public enum RenderingHandler
                 }
             }
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.fresh_fossils.entrySet())
+            for (Map.Entry<String, FossilItem> entry : ItemHandler.INSTANCE.FRESH_FOSSILS.entrySet())
             {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
@@ -472,13 +472,13 @@ public enum RenderingHandler
                 }
             }
 
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dna, meta, "dna/dna_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.egg, meta, "egg/egg_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dino_meat, meta, "meat/meat_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.dino_steak, meta, "meat/steak_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.soft_tissue, meta, "soft_tissue/soft_tissue_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.syringe, meta, "syringe/syringe_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.action_figure, meta, "action_figure/action_figure_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DNA, meta, "dna/dna_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.EGG, meta, "egg/egg_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DINOSAUR_MEAT, meta, "meat/meat_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DINOSAUR_STEAK, meta, "meat/steak_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.SYRINGE, meta, "syringe/syringe_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.ACTION_FIGURE, meta, "action_figure/action_figure_" + dinoName, "inventory");
 
             meta++;
         }
@@ -489,8 +489,8 @@ public enum RenderingHandler
         {
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_dna, meta, "dna/plants/dna_" + name, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.plant_soft_tissue, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLANT_DNA, meta, "dna/plants/dna_" + name, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");
 
             meta++;
         }
@@ -525,7 +525,7 @@ public enum RenderingHandler
 
                 return 0xFFFFFF;
             }
-        }, ItemHandler.INSTANCE.spawn_egg);
+        }, ItemHandler.INSTANCE.SPAWN_EGG);
     }
 
     /**

@@ -24,7 +24,7 @@ public class CultivatorTopBlock extends CultivatorBlock
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult result, World world, BlockPos pos, EntityPlayer player)
     {
-        Item item = Item.getItemFromBlock(BlockHandler.INSTANCE.cultivate_bottom);
+        Item item = Item.getItemFromBlock(BlockHandler.INSTANCE.CULTIVATOR_BOTTOM);
 
         if (item == null)
         {
@@ -49,16 +49,16 @@ public class CultivatorTopBlock extends CultivatorBlock
     {
         BlockPos bottomBlock = pos.add(0, -1, 0);
 
-        if (world.getBlockState(bottomBlock).getBlock() != BlockHandler.INSTANCE.cultivate_bottom)
+        if (world.getBlockState(bottomBlock).getBlock() != BlockHandler.INSTANCE.CULTIVATOR_BOTTOM)
         {
-            world.setBlockState(bottomBlock, BlockHandler.INSTANCE.cultivate_bottom.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
+            world.setBlockState(bottomBlock, BlockHandler.INSTANCE.CULTIVATOR_BOTTOM.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
         }
     }
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        world.setBlockState(pos.add(0, -1, 0), Blocks.air.getDefaultState());
+        world.setBlockState(pos.add(0, -1, 0), Blocks.AIR.getDefaultState());
         super.breakBlock(world, pos, state);
     }
 }

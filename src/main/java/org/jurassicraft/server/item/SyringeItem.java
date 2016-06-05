@@ -5,10 +5,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,9 +56,9 @@ public class SyringeItem extends DNAContainerItem
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
+        Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {

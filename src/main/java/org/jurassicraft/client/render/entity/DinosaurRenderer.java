@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
@@ -182,11 +181,11 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     }
 
     @Override
-    protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float p_77043_4_)
+    protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
         if (!(entity.deathTime > 0))
         {
-            super.rotateCorpse(entity, p_77043_2_, p_77043_3_, p_77043_4_);
+            super.rotateCorpse(entity, p_77043_2_, p_77043_3_, partialTicks);
         }
         else
         {
@@ -207,7 +206,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     }
 
     @SideOnly(Side.CLIENT)
-    public class LayerEyelid implements LayerRenderer
+    public class LayerEyelid implements LayerRenderer<DinosaurEntity>
     {
         private final DinosaurRenderer renderer;
 
@@ -216,7 +215,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
             this.renderer = renderer;
         }
 
-        public void render(DinosaurEntity entity, float f, float f1, float f2, float f3, float f4, float f5, float f6)
+        @Override
+        public void doRenderLayer(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, float scale)
         {
             if (!entity.isInvisible())
             {
@@ -226,12 +226,12 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                 {
                     ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
 
-                    if (textureObject != TextureUtil.missingTexture)
+                    if (textureObject != TextureUtil.MISSING_TEXTURE)
                     {
                         this.renderer.bindTexture(texture);
 
-                        this.renderer.getMainModel().render(entity, f, f1, f3, f4, f5, f6);
-                        this.renderer.setLightmap(entity, f2);
+                        this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
+                        this.renderer.setLightmap(entity, partialTicks);
                     }
                 }
             }
@@ -241,12 +241,6 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         public boolean shouldCombineTextures()
         {
             return true;
-        }
-
-        @Override
-        public void doRenderLayer(EntityLivingBase entity, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_)
-        {
-            this.render((DinosaurEntity) entity, p_177141_2_, p_177141_3_, p_177141_4_, p_177141_5_, p_177141_6_, p_177141_7_, p_177141_8_);
         }
     }
 }

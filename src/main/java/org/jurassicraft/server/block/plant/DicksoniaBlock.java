@@ -6,6 +6,6 @@ public class DicksoniaBlock extends DoublePlantBlock
 {
     public DicksoniaBlock()
     {
-        super(Material.vine);
+        super(Material.VINE);
     }
 }

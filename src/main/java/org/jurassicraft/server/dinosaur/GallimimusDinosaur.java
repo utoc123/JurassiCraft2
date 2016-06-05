@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.GallimimusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.GallimimusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class GallimimusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class GallimimusDinosaur extends Dinosaur
 
         this.setName("Gallimimus");
         this.setDinosaurClass(GallimimusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xC57B5F, 0x985E54);
         this.setEggColorFemale(0xDAC0AC, 0x966943);
         this.setHealth(5, 25);

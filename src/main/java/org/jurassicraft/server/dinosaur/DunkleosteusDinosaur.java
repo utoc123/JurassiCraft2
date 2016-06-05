@@ -1,9 +1,9 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.DunkleosteusEntity;
 import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.SleepingSchedule;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.DunkleosteusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class DunkleosteusDinosaur extends Dinosaur
 {
@@ -13,7 +13,7 @@ public class DunkleosteusDinosaur extends Dinosaur
 
         this.setName("Dunkleosteus");
         this.setDinosaurClass(DunkleosteusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.DEVONIAN);
+        this.setTimePeriod(TimePeriod.DEVONIAN);
         this.setEggColorMale(0xA89B8C, 0x753A28);
         this.setEggColorFemale(0xA6A588, 0x785F2A);
         this.setHealth(15, 60);

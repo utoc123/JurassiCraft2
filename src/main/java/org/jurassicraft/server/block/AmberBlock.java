@@ -9,8 +9,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class AmberBlock extends Block
 {
     public AmberBlock()
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
@@ -30,7 +30,7 @@ public class AmberBlock extends Block
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        List<ItemStack> ret = new ArrayList<ItemStack>();
+        List<ItemStack> ret = new ArrayList<>();
 
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
@@ -43,7 +43,7 @@ public class AmberBlock extends Block
 
         for (int i = 0; i < count + 1; i++)
         {
-            Item item = ItemHandler.INSTANCE.amber;
+            Item item = ItemHandler.INSTANCE.AMBER;
 
             if (item != null)
             {

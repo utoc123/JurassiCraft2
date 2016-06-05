@@ -20,7 +20,7 @@ public class WorldGenCoal extends WorldGenMinable
 
     public WorldGenCoal(IBlockState state, int blockCount)
     {
-        this(state, blockCount, BlockMatcher.forBlock(Blocks.stone));
+        this(state, blockCount, BlockMatcher.forBlock(Blocks.STONE));
     }
 
     public WorldGenCoal(IBlockState state, int blockCount, Predicate<IBlockState> predicate)
@@ -84,7 +84,7 @@ public class WorldGenCoal extends WorldGenMinable
                                     {
                                         if (rand.nextInt(10) == 0)
                                         {
-                                            world.setBlockState(pos, BlockHandler.INSTANCE.plant_fossil.getDefaultState());
+                                            world.setBlockState(pos, BlockHandler.INSTANCE.PLANT_FOSSIL.getDefaultState());
                                         }
                                         else
                                         {

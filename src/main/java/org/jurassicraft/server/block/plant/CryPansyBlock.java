@@ -5,7 +5,7 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class CryPansyBlock extends BlockBush
 {

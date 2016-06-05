@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.SequencableItemSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
 
 public class DNASequencerContainer extends SyncedFieldContainer
 {

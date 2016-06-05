@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.api.ISequencableItem;
+import org.jurassicraft.server.api.SequencableItem;
 
 public class SequencableItemSlot extends Slot
 {
@@ -15,7 +15,7 @@ public class SequencableItemSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        ISequencableItem sequencableItem = ISequencableItem.getSequencableItem(stack);
+        SequencableItem sequencableItem = SequencableItem.getSequencableItem(stack);
         return sequencableItem != null && sequencableItem.isSequencable(stack);
     }
 }

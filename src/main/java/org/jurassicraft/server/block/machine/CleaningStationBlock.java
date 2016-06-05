@@ -18,14 +18,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.tile.CleaningStationTile;
 
 public class CleaningStationBlock extends OrientedBlock
 {
     public CleaningStationBlock()
     {
-        super(Material.iron);
+        super(Material.IRON);
         this.setUnlocalizedName("cleaning_station");
         this.setHardness(2.0F);
         this.setLightOpacity(0);

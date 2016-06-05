@@ -36,9 +36,6 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
         this.dinosaur = dinosaur;
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     @Override
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
@@ -46,9 +43,6 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
         super.writeEntityToNBT(tagCompound);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     @Override
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
@@ -69,9 +63,6 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
         return 16;
     }
 
-    /**
-     * Called when this entity is broken. Entity parameter may be null.
-     */
     @Override
     public void onBroken(Entity entity)
     {
@@ -87,34 +78,31 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
                 }
             }
 
-            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.paddock_sign);
-            NBTTagCompound nbt = new NBTTagCompound();
-            nbt.setInteger("Dinosaur", dinosaur);
+            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.PADDOCK_SIGN);
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger("Dinosaur", dinosaur);
 
             this.entityDropItem(stack, 0.0F);
         }
     }
 
     @Override
-    public void func_184523_o()
+    public void playPlaceSound()
     {
-    }
-
-    /**
-     * Sets the location and Yaw/Pitch of an entity in the world
-     */
-    @Override
-    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
-    {
-        BlockPos blockpos = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
-        BlockPos blockpos1 = this.hangingPosition.add(blockpos);
-        this.setPosition(blockpos1.getX(), blockpos1.getY(), blockpos1.getZ());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
+    }
+
+    @Override
+    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
+    {
+        BlockPos positionOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
+        BlockPos newPosition = this.hangingPosition.add(positionOffset);
+        this.setPosition(newPosition.getX(), newPosition.getY(), newPosition.getZ());
     }
 
     @Override

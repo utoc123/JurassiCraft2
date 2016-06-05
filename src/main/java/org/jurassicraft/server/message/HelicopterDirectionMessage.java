@@ -6,8 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.timeless.unilib.utils.MutableVec3;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.util.MutableVec3;
 
 public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirectionMessage>
 {

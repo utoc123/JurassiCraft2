@@ -92,6 +92,6 @@ public class DNAContainerItem extends Item
         }
 
         lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack).toString()).build());
+        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
     }
 }

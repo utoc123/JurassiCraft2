@@ -9,8 +9,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class IceShardBlock extends Block
 {
     public IceShardBlock()
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
@@ -30,17 +30,17 @@ public class IceShardBlock extends Block
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        List<ItemStack> ret = new ArrayList<ItemStack>();
+        List<ItemStack> ret = new ArrayList<>();
 
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
         if (rand.nextDouble() < 0.2 + ((fortune / 3.0) * 0.8))
         {
-            ret.add(new ItemStack(ItemHandler.INSTANCE.sea_lamprey));
+            ret.add(new ItemStack(ItemHandler.INSTANCE.SEA_LAMPREY));
         }
         else if (rand.nextDouble() < 0.2)
         {
-            ret.add(new ItemStack(Blocks.ice));
+            ret.add(new ItemStack(Blocks.ICE));
         }
 
         return ret;

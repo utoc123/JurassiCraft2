@@ -26,15 +26,12 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         // TODO slow itself down when landing, if falling too fast, take damage
     }
 
-    /**
-     * Moves the entity based on the specified heading.  Args: strafe, forward
-     */
     @Override
     public void moveEntityWithHeading(float strafe, float forward)
     {
         if (this.isInWater())
         {
-            this.moveFlying(strafe, forward, 0.02F);
+            this.moveRelative(strafe, forward, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.800000011920929D;
@@ -42,7 +39,7 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         }
         else if (this.isInLava())
         {
-            this.moveFlying(strafe, forward, 0.02F);
+            this.moveRelative(strafe, forward, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.5D;
             this.motionY *= 0.5D;
@@ -50,45 +47,42 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
         }
         else
         {
-            float f2 = 0.91F;
+            float friction = 0.91F;
 
             if (this.onGround)
             {
-                f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                friction = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
             }
 
-            float f3 = 0.16277136F / (f2 * f2 * f2);
-            this.moveFlying(strafe, forward, this.onGround ? 0.1F * f3 : 0.02F);
-            f2 = 0.91F;
+            float f3 = 0.16277136F / (friction * friction * friction);
+            this.moveRelative(strafe, forward, this.onGround ? f3 * 0.1F : 0.02F);
+            friction = 0.91F;
 
             if (this.onGround)
             {
-                f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                friction = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
             }
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= (double) f2;
-            this.motionY *= (double) f2;
-            this.motionZ *= (double) f2;
+            this.motionX *= (double) friction;
+            this.motionY *= (double) friction;
+            this.motionZ *= (double) friction;
         }
 
         this.prevLimbSwingAmount = this.limbSwingAmount;
-        double d1 = this.posX - this.prevPosX;
-        double d0 = this.posZ - this.prevPosZ;
-        float f4 = MathHelper.sqrt_double(d1 * d1 + d0 * d0) * 4.0F;
+        double moveX = this.posX - this.prevPosX;
+        double moveZ = this.posZ - this.prevPosZ;
+        float dist = MathHelper.sqrt_double(moveX * moveX + moveZ * moveZ) * 4.0F;
 
-        if (f4 > 1.0F)
+        if (dist > 1.0F)
         {
-            f4 = 1.0F;
+            dist = 1.0F;
         }
 
-        this.limbSwingAmount += (f4 - this.limbSwingAmount) * 0.4F;
+        this.limbSwingAmount += (dist - this.limbSwingAmount) * 0.4F;
         this.limbSwing += this.limbSwingAmount;
     }
 
-    /**
-     * returns true if this entity is by a ladder, false otherwise
-     */
     @Override
     public boolean isOnLadder()
     {
@@ -104,9 +98,6 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             this.setMutexBits(1);
         }
 
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
         @Override
         public boolean shouldExecute()
         {
@@ -118,34 +109,28 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             }
             else
             {
-                double d0 = moveHelper.getX() - this.dino.posX;
-                double d1 = moveHelper.getY() - this.dino.posY;
-                double d2 = moveHelper.getZ() - this.dino.posZ;
-                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                return d3 < 1.0D || d3 > 3600.0D;
+                double moveX = moveHelper.getX() - this.dino.posX;
+                double moveY = moveHelper.getY() - this.dino.posY;
+                double moveZ = moveHelper.getZ() - this.dino.posZ;
+                double distance = moveX * moveX + moveY * moveY + moveZ * moveZ;
+                return distance < 1.0D || distance > 3600.0D;
             }
         }
 
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
         @Override
         public boolean continueExecuting()
         {
             return false;
         }
 
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
         @Override
         public void startExecuting()
         {
             Random random = this.dino.getRNG();
-            double d0 = this.dino.posX + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            double d1 = this.dino.posY + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            double d2 = this.dino.posZ + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.dino.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
+            double destinationX = this.dino.posX + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double destinationY = this.dino.posY + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            double destinationZ = this.dino.posZ + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.dino.getMoveHelper().setMoveTo(destinationX, destinationY, destinationZ, 1.0D);
         }
     }
 
@@ -193,13 +178,13 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             double d0 = (x - this.parentEntity.posX) / distance;
             double d1 = (y - this.parentEntity.posY) / distance;
             double d2 = (z - this.parentEntity.posZ) / distance;
-            AxisAlignedBB axisalignedbb = this.parentEntity.getEntityBoundingBox();
+            AxisAlignedBB bounds = this.parentEntity.getEntityBoundingBox();
 
             for (int i = 1; (double) i < distance; ++i)
             {
-                axisalignedbb = axisalignedbb.offset(d0, d1, d2);
+                bounds = bounds.offset(d0, d1, d2);
 
-                if (!this.parentEntity.worldObj.getCollisionBoxes(this.parentEntity, axisalignedbb).isEmpty())
+                if (!this.parentEntity.worldObj.getCollisionBoxes(this.parentEntity, bounds).isEmpty())
                 {
                     return false;
                 }
@@ -218,18 +203,12 @@ public abstract class AggressiveFlyingDinosaurEntity extends AggressiveDinosaurE
             this.setMutexBits(2);
         }
 
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
         @Override
         public boolean shouldExecute()
         {
             return true;
         }
 
-        /**
-         * Updates the task
-         */
         @Override
         public void updateTask()
         {

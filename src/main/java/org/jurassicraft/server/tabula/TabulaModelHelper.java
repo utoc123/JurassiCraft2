@@ -41,7 +41,7 @@ public class TabulaModelHelper
 
     public static List<TabulaCubeContainer> getAllCubes(TabulaModelContainer model)
     {
-        List<TabulaCubeContainer> cubes = new ArrayList<TabulaCubeContainer>();
+        List<TabulaCubeContainer> cubes = new ArrayList<>();
 
         for (TabulaCubeGroupContainer cubeGroup : model.getCubeGroups())
         {
@@ -58,7 +58,7 @@ public class TabulaModelHelper
 
     private static List<TabulaCubeContainer> traverse(TabulaCubeGroupContainer group)
     {
-        List<TabulaCubeContainer> retCubes = new ArrayList<TabulaCubeContainer>();
+        List<TabulaCubeContainer> retCubes = new ArrayList<>();
 
         for (TabulaCubeContainer child : group.getCubes())
         {
@@ -75,7 +75,7 @@ public class TabulaModelHelper
 
     private static List<TabulaCubeContainer> traverse(TabulaCubeContainer cube)
     {
-        List<TabulaCubeContainer> retCubes = new ArrayList<TabulaCubeContainer>();
+        List<TabulaCubeContainer> retCubes = new ArrayList<>();
 
         retCubes.add(cube);
 

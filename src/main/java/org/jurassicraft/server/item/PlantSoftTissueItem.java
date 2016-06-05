@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ISequencableItem;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.api.SequencableItem;
 import org.jurassicraft.server.genetics.PlantDNA;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class PlantSoftTissueItem extends Item implements ISequencableItem
+public class PlantSoftTissueItem extends Item implements SequencableItem
 {
     public PlantSoftTissueItem()
     {
@@ -52,9 +52,9 @@ public class PlantSoftTissueItem extends Item implements ISequencableItem
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<Plant>(PlantHandler.INSTANCE.getPlants());
+        List<Plant> plants = new ArrayList<>(PlantHandler.INSTANCE.getPlants());
 
-        Map<Plant, Integer> ids = new HashMap<Plant, Integer>();
+        Map<Plant, Integer> ids = new HashMap<>();
 
         for (Plant plant : plants)
         {
@@ -86,11 +86,11 @@ public class PlantSoftTissueItem extends Item implements ISequencableItem
         if (nbt == null)
         {
             nbt = new NBTTagCompound();
-            PlantDNA dna = new PlantDNA(stack.getItemDamage(), ISequencableItem.randomQuality(random));
+            PlantDNA dna = new PlantDNA(stack.getItemDamage(), SequencableItem.randomQuality(random));
             dna.writeToNBT(nbt);
         }
 
-        ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, stack.getItemDamage());
+        ItemStack output = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, stack.getItemDamage());
         output.setTagCompound(nbt);
 
         return output;

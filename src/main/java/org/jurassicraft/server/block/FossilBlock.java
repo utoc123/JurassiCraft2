@@ -16,15 +16,15 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.itemblock.FossilItemBlock;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
 
-public class FossilBlock extends Block implements ISubBlocksBlock
+public class FossilBlock extends Block implements SubBlocksBlock
 {
     public static final PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
 
@@ -32,7 +32,7 @@ public class FossilBlock extends Block implements ISubBlocksBlock
 
     public FossilBlock(int start)
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setSoundType(SoundType.STONE);

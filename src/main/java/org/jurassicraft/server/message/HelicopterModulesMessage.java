@@ -8,14 +8,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
-import org.jurassicraft.server.vehicles.helicopter.modules.EnumModulePosition;
-import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterModuleSpot;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.modules.HelicopterModuleSpot;
+import org.jurassicraft.server.entity.helicopter.modules.ModulePosition;
 
 public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesMessage>
 {
     private NBTTagCompound compound;
-    private EnumModulePosition pos;
+    private ModulePosition pos;
     private HelicopterModuleSpot spot;
     private int heliID;
 
@@ -23,7 +23,7 @@ public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesM
     {
     }
 
-    public HelicopterModulesMessage(int heliID, EnumModulePosition pos, HelicopterModuleSpot spot)
+    public HelicopterModulesMessage(int heliID, ModulePosition pos, HelicopterModuleSpot spot)
     {
         this.heliID = heliID;
         this.pos = pos;
@@ -62,7 +62,7 @@ public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesM
     public void fromBytes(ByteBuf buf)
     {
         heliID = buf.readInt();
-        pos = EnumModulePosition.values()[buf.readInt()];
+        pos = ModulePosition.values()[buf.readInt()];
         compound = ByteBufUtils.readTag(buf);
     }
 

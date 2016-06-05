@@ -1,13 +1,13 @@
 package org.jurassicraft.server.dinosaur;
 
 import net.minecraft.util.ResourceLocation;
-import org.jurassicraft.server.api.IHybrid;
-import org.jurassicraft.server.entity.IndominusEntity;
+import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.GrowthStage;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.IndominusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
-public class IndominusDinosaur extends Dinosaur implements IHybrid
+public class IndominusDinosaur extends Dinosaur implements Hybrid
 {
     private ResourceLocation texture;
 
@@ -19,7 +19,7 @@ public class IndominusDinosaur extends Dinosaur implements IHybrid
 
         this.setName("Indominus");
         this.setDinosaurClass(IndominusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS); //TODO, it's a hybrid, what do you do here?
+        this.setTimePeriod(TimePeriod.CRETACEOUS); //TODO, it's a hybrid, what do you do here?
         this.setEggColorMale(0xBEBABB, 0x95949A);
         this.setEggColorFemale(0xBEBABB, 0x95949A);
         this.setHealth(20, 100);

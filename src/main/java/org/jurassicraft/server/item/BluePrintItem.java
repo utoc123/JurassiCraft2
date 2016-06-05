@@ -9,11 +9,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class BluePrintItem extends Item
 {

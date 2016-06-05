@@ -29,7 +29,7 @@ public class Tree
     private int maxBranchLevel;
     private int maxTrunkHeight;
 
-    private ArrayList<InsPCoord> insPList = new ArrayList<InsPCoord>();
+    private ArrayList<InsPCoord> insPList = new ArrayList<>();
 
     public Tree(TreeType type, int maxAge, int maxBranchLength)
     {
@@ -43,12 +43,12 @@ public class Tree
 
     public static Block getBlocksFromCode(TreeType type)
     {
-        return BlockHandler.INSTANCE.logs.get(type);
+        return BlockHandler.INSTANCE.ANCIENT_LOGS.get(type);
     }
 
     public static Block getLeavesFromCode(TreeType type)
     {
-        return BlockHandler.INSTANCE.leaves.get(type);
+        return BlockHandler.INSTANCE.ANCIENT_LEAVES.get(type);
     }
 
     public Tree(TreeType type, int maxAge, int maxBranchLength, int penalty, int lbl, int mtheight)

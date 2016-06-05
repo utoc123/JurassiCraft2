@@ -7,16 +7,16 @@ import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.animation.PoseHandler;
 import org.jurassicraft.server.api.GrowthStageGenderContainer;
-import org.jurassicraft.server.api.IHybrid;
+import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.GrowthStage;
 import org.jurassicraft.server.entity.base.SleepingSchedule;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.period.TimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
-import javax.vecmath.Matrix4d;
-import javax.vecmath.Vector3d;
+import javax.vecmathimpl.Matrix4d;
+import javax.vecmathimpl.Vector3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,17 +24,17 @@ import java.util.Map;
 
 public abstract class Dinosaur implements Comparable<Dinosaur>
 {
-    private final Map<GrowthStage, List<ResourceLocation>> overlays = new HashMap<GrowthStage, List<ResourceLocation>>();
-    private final Map<GrowthStage, ResourceLocation> maleTextures = new HashMap<GrowthStage, ResourceLocation>();
-    private final Map<GrowthStage, ResourceLocation> femaleTextures = new HashMap<GrowthStage, ResourceLocation>();
-    private final Map<GrowthStageGenderContainer, ResourceLocation> eyelidTextures = new HashMap<GrowthStageGenderContainer, ResourceLocation>();
-    private final Map<GrowthStage, List<ResourceLocation>> rareVariantTextures = new HashMap<GrowthStage, List<ResourceLocation>>();
+    private final Map<GrowthStage, List<ResourceLocation>> overlays = new HashMap<>();
+    private final Map<GrowthStage, ResourceLocation> maleTextures = new HashMap<>();
+    private final Map<GrowthStage, ResourceLocation> femaleTextures = new HashMap<>();
+    private final Map<GrowthStageGenderContainer, ResourceLocation> eyelidTextures = new HashMap<>();
+    private final Map<GrowthStage, List<ResourceLocation>> rareVariantTextures = new HashMap<>();
 
     private String name;
     private Class<? extends DinosaurEntity> dinoClazz;
     private int primaryEggColorMale, primaryEggColorFemale;
     private int secondaryEggColorMale, secondaryEggColorFemale;
-    private EnumTimePeriod timePeriod;
+    private TimePeriod timePeriod;
     private double babyHealth, adultHealth;
     private double babyStrength, adultStrength;
     private double babySpeed, adultSpeed;
@@ -102,7 +102,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
                 growthStageName = GrowthStage.ADULT.name().toLowerCase();
             }
 
-            if (this instanceof IHybrid)
+            if (this instanceof Hybrid)
             {
                 String baseName = baseTextures + formattedName + "_" + growthStageName;
 
@@ -189,7 +189,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.secondaryEggColorFemale = secondary;
     }
 
-    public void setTimePeriod(EnumTimePeriod timePeriod)
+    public void setTimePeriod(TimePeriod timePeriod)
     {
         this.timePeriod = timePeriod;
     }
@@ -315,7 +315,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return secondaryEggColorFemale;
     }
 
-    public EnumTimePeriod getPeriod()
+    public TimePeriod getPeriod()
     {
         return timePeriod;
     }
@@ -558,7 +558,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)
     {
-        List<TabulaCubeContainer> parentCubes = new ArrayList<TabulaCubeContainer>();
+        List<TabulaCubeContainer> parentCubes = new ArrayList<>();
 
         do
         {

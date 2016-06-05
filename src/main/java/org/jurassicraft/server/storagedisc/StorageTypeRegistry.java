@@ -10,34 +10,20 @@ public enum StorageTypeRegistry
 {
     INSTANCE;
 
-    private Map<String, Supplier<? extends IStorageType>> storageTypes = new HashMap<String, Supplier<? extends IStorageType>>();
+    private Map<String, Supplier<? extends StorageType>> storageTypes = new HashMap<>();
 
     public void init()
     {
-        register("DinoDNA", new Supplier<IStorageType>()
-        {
-            @Override
-            public DinosaurDNAStorageType get()
-            {
-                return new DinosaurDNAStorageType();
-            }
-        });
-        register("PlantDNA", new Supplier<IStorageType>()
-        {
-            @Override
-            public PlantDNAStorageType get()
-            {
-                return new PlantDNAStorageType();
-            }
-        });
+        register("DinoDNA", DinosaurDNAStorageType::new);
+        register("PlantDNA", PlantDNAStorageType::new);
     }
 
-    private void register(String id, Supplier<? extends IStorageType> storageType)
+    private void register(String id, Supplier<? extends StorageType> storageType)
     {
         storageTypes.put(id, Objects.requireNonNull(storageType));
     }
 
-    public IStorageType getStorageType(String id)
+    public StorageType getStorageType(String id)
     {
         if (id == null || id.isEmpty())
         {

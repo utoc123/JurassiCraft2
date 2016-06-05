@@ -1,13 +1,12 @@
 package org.jurassicraft.server.proxy;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
-import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -20,7 +19,6 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.configuration.JCConfigurations;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.handler.GuiHandler;
@@ -29,6 +27,7 @@ import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.recipe.RecipeHandler;
 import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
+import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.world.WorldGenerator;
 
 import java.util.Map;
@@ -64,43 +63,36 @@ public class ServerProxy
 
     public void postInit(FMLPostInitializationEvent event)
     {
-        /*
-         * Remove null entries from biomeList.
-         */
-        BiomeGenBase[] allBiomes = Iterators.toArray(Iterators.filter(BiomeGenBase.biomeRegistry.iterator(), Predicates.notNull()), BiomeGenBase.class);
+        Biome[] allBiomes = Iterators.toArray(Biome.REGISTRY.iterator(), Biome.class);
 
-        for (Object object : EntityList.classToStringMapping.entrySet())
+        for (Map.Entry<Class<? extends Entity>, String> entry : EntityList.CLASS_TO_NAME.entrySet())
         {
-            Map.Entry<Class, String> entry = (Map.Entry<Class, String>) object;
-
-            Class entityClass = entry.getKey();
-            if (entityClass == null)
+            if (EntityLiving.class.isAssignableFrom(entry.getKey()))
             {
-                continue; // Avoid potential NPE if entityClass is null
-            }
+                Class<? extends EntityLiving> entity = (Class<? extends EntityLiving>) entry.getKey();
+                String name = entry.getValue();
 
-            String clazzName = entityClass.toString();
-
-            if (!clazzName.contains("jurassicraft"))
-            {
-                if (clazzName.contains("minecraft"))
+                if (!name.contains(JurassiCraft.MODID))
                 {
-                    if (!JCConfigurations.spawnVanillaMobsNaturally())
+                    if (name.contains("minecraft"))
                     {
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.AMBIENT, allBiomes);
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.CREATURE, allBiomes);
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.MONSTER, allBiomes);
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.WATER_CREATURE, allBiomes);
+                        if (!JCConfigurations.spawnVanillaMobsNaturally())
+                        {
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.AMBIENT, allBiomes);
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.CREATURE, allBiomes);
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.MONSTER, allBiomes);
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.WATER_CREATURE, allBiomes);
+                        }
                     }
-                }
-                else
-                {
-                    if (!JCConfigurations.spawnOtherMobsModsNaturally())
+                    else
                     {
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.AMBIENT, allBiomes);
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.CREATURE, allBiomes);
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.MONSTER, allBiomes);
-                        EntityRegistry.removeSpawn(entityClass, EnumCreatureType.WATER_CREATURE, allBiomes);
+                        if (!JCConfigurations.spawnModMobsNaturally())
+                        {
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.AMBIENT, allBiomes);
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.CREATURE, allBiomes);
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.MONSTER, allBiomes);
+                            EntityRegistry.removeSpawn(entity, EnumCreatureType.WATER_CREATURE, allBiomes);
+                        }
                     }
                 }
             }
@@ -123,16 +115,5 @@ public class ServerProxy
     public EntityPlayer getPlayerEntityFromContext(MessageContext ctx)
     {
         return ctx.getServerHandler().playerEntity;
-    }
-
-    public void registerRenderSubBlock(Block block)
-    {
-
-    }
-
-    public void scheduleTask(MessageContext ctx, Runnable runnable)
-    {
-        WorldServer worldObj = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
-        worldObj.addScheduledTask(runnable);
     }
 }

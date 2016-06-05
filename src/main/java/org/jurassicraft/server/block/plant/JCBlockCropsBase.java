@@ -63,13 +63,10 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
 
     //============================================
 
-    /**
-     * is the block grass, dirt or farmland
-     */
     @Override
     protected boolean canSustainBush(IBlockState ground)
     {
-        return ground == Blocks.farmland;
+        return ground == Blocks.FARMLAND;
     }
 
     @Override
@@ -189,9 +186,9 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     }
 
     @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public void grow(World world, Random rand, BlockPos pos, IBlockState state)
     {
-        this.grow(worldIn, pos, state);
+        this.grow(world, pos, state);
     }
 
     @Override
@@ -221,7 +218,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     @Override
     public List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        List<ItemStack> drops = new ArrayList<ItemStack>();
+        List<ItemStack> drops = new ArrayList<>();
 
         int age = state.getValue(getAgeProperty());
         Random rand = world instanceof World ? ((World) world).rand : new Random();

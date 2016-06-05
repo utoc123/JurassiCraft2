@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
 import org.lwjgl.opengl.GL11;
 
 public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerTile>
@@ -65,7 +65,7 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
             GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
 
             GlStateManager.scale(0.75F * 0.5F, 0.75F * 0.5F, 0.75F * 0.5F);
-            mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
             RenderItem renderItem = mc.getRenderItem();
 

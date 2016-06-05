@@ -45,7 +45,7 @@ public class JCConfigurations
 
     private static Property spawnOtherMobsModsNaturally;
 
-    public static boolean spawnOtherMobsModsNaturally()
+    public static boolean spawnModMobsNaturally()
     {
         checkInit();
         return spawnVanillaMobsNaturally.getBoolean(true);
@@ -53,21 +53,15 @@ public class JCConfigurations
 
     public static List<IConfigElement> getAllConfigurableOptions()
     {
-        List<IConfigElement> list = new ArrayList<IConfigElement>();
+        List<IConfigElement> list = new ArrayList<>();
         list.add(new ConfigElement(spawnJurassiCraftMobsNaturally));
         list.add(new ConfigElement(spawnVanillaMobsNaturally));
         list.add(new ConfigElement(spawnOtherMobsModsNaturally));
         return list;
     }
 
-    /**
-     * Process the configuration
-     *
-     * @param event
-     */
     public void initConfig(FMLPreInitializationEvent event)
     {
-        // might need to use suggestedConfigFile (event.getSuggestedConfigFile) location to publish
         JurassiCraft.configFile = event.getSuggestedConfigurationFile();
         JurassiCraft.INSTANCE.getLogger().debug(JurassiCraft.MODNAME + " config path = " + JurassiCraft.configFile.getAbsolutePath());
         JurassiCraft.INSTANCE.getLogger().debug("Config file exists = " + JurassiCraft.configFile.canRead());

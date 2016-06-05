@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.tab.TabHandler;
 
 /**
  * Copyright 2016 Andrew O. Mellinger

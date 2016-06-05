@@ -20,6 +20,6 @@ public class BennettitaleanCycadeoideaPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.bennettitalean_cycadeoidea;
+        return BlockHandler.INSTANCE.CYCADEOIDEA;
     }
 }

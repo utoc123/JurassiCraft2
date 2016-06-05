@@ -1,14 +1,14 @@
 package org.jurassicraft.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.CultivateContainer;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tile.CultivatorTile;
 
 @SideOnly(Side.CLIENT)
 public class CultivateGui extends GuiContainer
@@ -46,10 +46,10 @@ public class CultivateGui extends GuiContainer
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 45, 10, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 
-        this.fontRendererObj.drawString(I18n.translateToLocal("cultivator.proximates.name"), 200, 48, 4210752);
-        this.fontRendererObj.drawString(I18n.translateToLocal("cultivator.minerals.name"), 200, 74, 4210752);
-        this.fontRendererObj.drawString(I18n.translateToLocal("cultivator.vitamins.name"), 200, 100, 4210752);
-        this.fontRendererObj.drawString(I18n.translateToLocal("cultivator.lipids.name"), 200, 126, 4210752);
+        this.fontRendererObj.drawString(I18n.format("cultivator.proximates.name"), 200, 48, 4210752);
+        this.fontRendererObj.drawString(I18n.format("cultivator.minerals.name"), 200, 74, 4210752);
+        this.fontRendererObj.drawString(I18n.format("cultivator.vitamins.name"), 200, 100, 4210752);
+        this.fontRendererObj.drawString(I18n.format("cultivator.lipids.name"), 200, 126, 4210752);
     }
 
     @Override

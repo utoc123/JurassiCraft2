@@ -10,7 +10,7 @@ import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.PetriDishSlot;
 import org.jurassicraft.server.container.slot.TestTubeSlot;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
 public class EmbryonicMachineContainer extends SyncedFieldContainer
 {
@@ -23,7 +23,7 @@ public class EmbryonicMachineContainer extends SyncedFieldContainer
         this.embryonicMachine = (EmbryonicMachineTile) tileEntity;
         this.addSlotToContainer(new TestTubeSlot(embryonicMachine, 0, 24, 49));
         this.addSlotToContainer(new PetriDishSlot(embryonicMachine, 1, 50, 49));
-        this.addSlotToContainer(new CustomSlot(embryonicMachine, 2, 50, 13, ItemHandler.INSTANCE.empty_syringe));
+        this.addSlotToContainer(new CustomSlot(embryonicMachine, 2, 50, 13, ItemHandler.INSTANCE.EMPTY_SYRINGE));
 
         int i;
 

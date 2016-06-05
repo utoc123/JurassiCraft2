@@ -130,7 +130,7 @@ public class CommandForceAnimation implements ICommand
 
     public CommandForceAnimation()
     {
-        aliases = new ArrayList<String>();
+        aliases = new ArrayList<>();
         aliases.add("animate");
         aliases.add("anim");
     }

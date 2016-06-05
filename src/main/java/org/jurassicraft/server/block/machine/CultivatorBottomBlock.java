@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.tile.CultivatorTile;
 
 public class CultivatorBottomBlock extends CultivatorBlock
 {
@@ -79,16 +79,16 @@ public class CultivatorBottomBlock extends CultivatorBlock
 
         Block block = world.getBlockState(topBlock).getBlock();
 
-        if (block == Blocks.air)
+        if (block == Blocks.AIR)
         {
-            world.setBlockState(topBlock, BlockHandler.INSTANCE.cultivate_top.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
+            world.setBlockState(topBlock, BlockHandler.INSTANCE.CULTIVATOR_TOP.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
         }
     }
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        worldIn.setBlockState(pos.add(0, 1, 0), Blocks.air.getDefaultState());
+        worldIn.setBlockState(pos.add(0, 1, 0), Blocks.AIR.getDefaultState());
         super.breakBlock(worldIn, pos, state);
     }
 }

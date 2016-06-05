@@ -15,7 +15,7 @@ import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.tileentity.IncubatorTile;
+import org.jurassicraft.server.tile.IncubatorTile;
 import org.lwjgl.opengl.GL11;
 
 public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<IncubatorTile>

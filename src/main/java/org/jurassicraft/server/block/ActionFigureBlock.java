@@ -18,8 +18,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
+import org.jurassicraft.server.tile.ActionFigureTile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class ActionFigureBlock extends OrientedBlock
 
     public ActionFigureBlock()
     {
-        super(Material.wood);
+        super(Material.WOOD);
         this.setTickRandomly(true);
         this.setHardness(0.0F);
         this.setResistance(0.0F);
@@ -44,57 +45,58 @@ public class ActionFigureBlock extends OrientedBlock
     @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos)
     {
-        return BOUNDS;
+        return BOUNDS.offset(pos);
     }
 
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    public boolean canPlaceBlockAt(World world, BlockPos pos)
     {
-        return super.canPlaceBlockAt(worldIn, pos) && canBlockStay(worldIn, pos, worldIn.getBlockState(pos));
+        return super.canPlaceBlockAt(world, pos) && canBlockStay(world, pos);
     }
 
     @Override
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
     {
-        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
-        this.checkAndDropBlock(worldIn, pos, state);
+        super.neighborChanged(state, world, pos, block);
+
+        this.checkAndDropBlock(world, pos, world.getBlockState(pos));
     }
 
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
-        this.checkAndDropBlock(worldIn, pos, state);
+        this.checkAndDropBlock(world, pos, state);
     }
 
-    protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
+    protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state)
     {
-        if (!this.canBlockStay(worldIn, pos, state))
+        if (!this.canBlockStay(world, pos))
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
+            this.dropBlockAsItem(world, pos, state, 0);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
 
-    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
+    public boolean canBlockStay(World world, BlockPos pos)
     {
-        return worldIn.getBlockState(pos.down()).getBlock().isOpaqueCube(state);
+        return world.getBlockState(pos.down()).isOpaqueCube();
     }
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.action_figure;
+        return ItemHandler.INSTANCE.ACTION_FIGURE;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
-        return new ItemStack(ItemHandler.INSTANCE.action_figure);
+        return new ItemStack(ItemHandler.INSTANCE.ACTION_FIGURE);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
+    public TileEntity createNewTileEntity(World world, int meta)
     {
         return new ActionFigureTile();
     }
@@ -130,19 +132,10 @@ public class ActionFigureBlock extends OrientedBlock
         return (ActionFigureTile) world.getTileEntity(pos);
     }
 
-    /**
-     * This returns a complete list of items dropped from this block.
-     *
-     * @param world   The current world
-     * @param pos     Block position in world
-     * @param state   Current state
-     * @param fortune Breakers fortune level
-     * @return A ArrayList containing all items this block drops
-     */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        List<ItemStack> drops = new java.util.ArrayList<ItemStack>();
+        List<ItemStack> drops = new ArrayList<>();
 
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 

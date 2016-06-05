@@ -2,7 +2,7 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,7 @@ import org.jurassicraft.server.container.slot.CleanableItemSlot;
 import org.jurassicraft.server.container.slot.FossilSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
+import org.jurassicraft.server.tile.CleaningStationTile;
 
 public class CleaningStationContainer extends SyncedFieldContainer
 {
@@ -48,31 +48,28 @@ public class CleaningStationContainer extends SyncedFieldContainer
     }
 
     @Override
-    public void onCraftGuiOpened(ICrafting listener)
+    public void addListener(IContainerListener listener)
     {
-        super.onCraftGuiOpened(listener);
+        super.addListener(listener);
         listener.sendAllWindowProperties(this, this.tileCleaningStation);
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.tileCleaningStation.isUseableByPlayer(playerIn);
+        return this.tileCleaningStation.isUseableByPlayer(player);
     }
 
-    /**
-     * Take a stack from the specified inventory slot.
-     */
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
-        ItemStack itemstack = null;
+        ItemStack stack = null;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
         {
             ItemStack transferFrom = slot.getStack();
-            itemstack = transferFrom.copy();
+            stack = transferFrom.copy();
 
             if (index == 2)
             {
@@ -81,7 +78,7 @@ public class CleaningStationContainer extends SyncedFieldContainer
                     return null;
                 }
 
-                slot.onSlotChange(transferFrom, itemstack);
+                slot.onSlotChange(transferFrom, stack);
             }
             else if (index != 1 && index != 0)
             {
@@ -125,14 +122,14 @@ public class CleaningStationContainer extends SyncedFieldContainer
                 slot.onSlotChanged();
             }
 
-            if (transferFrom.stackSize == itemstack.stackSize)
+            if (transferFrom.stackSize == stack.stackSize)
             {
                 return null;
             }
 
-            slot.onPickupFromSlot(playerIn, transferFrom);
+            slot.onPickupFromSlot(player, transferFrom);
         }
 
-        return itemstack;
+        return stack;
     }
 }

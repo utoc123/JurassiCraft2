@@ -47,7 +47,7 @@ public class GracilariaBlock extends BlockBush
     {
         // Setting our material state to "water" is the trick to not having "walls" and air.
         // However, when we are water we alos need to have the LEVEL property.
-        super(Material.water);
+        super(Material.WATER);
         this.setDefaultState(blockState.getBaseState().withProperty(LEVEL, 0));
 
         // Not tab because we are accessed in play via the item.
@@ -70,7 +70,7 @@ public class GracilariaBlock extends BlockBush
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.gracilaria;
+        return ItemHandler.INSTANCE.GRACILARIA;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class GracilariaBlock extends BlockBush
 
     private boolean canPlaceBlockOn(Block ground)
     {
-        return ground == Blocks.sand || ground == Blocks.clay || ground == Blocks.gravel || ground == Blocks.dirt;
+        return ground == Blocks.SAND || ground == Blocks.CLAY || ground == Blocks.GRAVEL || ground == Blocks.DIRT;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class GracilariaBlock extends BlockBush
         Block here = worldIn.getBlockState(pos).getBlock();
         Block up = worldIn.getBlockState(pos.up()).getBlock();
 
-        return canPlaceBlockOn(down) && here == Blocks.water && up == Blocks.water;
+        return canPlaceBlockOn(down) && here == Blocks.WATER && up == Blocks.WATER;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class GracilariaBlock extends BlockBush
         Block down = worldIn.getBlockState(pos.down()).getBlock();
         Block up = worldIn.getBlockState(pos.up()).getBlock();
 
-        return canPlaceBlockOn(down) && up == Blocks.water;
+        return canPlaceBlockOn(down) && up == Blocks.WATER;
     }
 
     @Override
@@ -196,7 +196,7 @@ public class GracilariaBlock extends BlockBush
 
         for (int i = 0; i < 8; ++i)
         {
-            if (canPlaceBlockOn(down) && here == Blocks.water && up == Blocks.water)
+            if (canPlaceBlockOn(down) && here == Blocks.WATER && up == Blocks.WATER)
             {
                 return pos;
             }

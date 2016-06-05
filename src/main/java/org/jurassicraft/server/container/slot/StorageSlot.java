@@ -21,11 +21,11 @@ public class StorageSlot extends Slot
     {
         if (stored)
         {
-            return stack.getItem() == ItemHandler.INSTANCE.storage_disc && (stack.getTagCompound() != null && stack.getTagCompound().hasKey("DNAQuality"));
+            return stack.getItem() == ItemHandler.INSTANCE.STORAGE_DISC && (stack.getTagCompound() != null && stack.getTagCompound().hasKey("DNAQuality"));
         }
         else
         {
-            return stack.getItem() == ItemHandler.INSTANCE.storage_disc && (stack.getTagCompound() == null || !stack.getTagCompound().hasKey("DNAQuality"));
+            return stack.getItem() == ItemHandler.INSTANCE.STORAGE_DISC && (stack.getTagCompound() == null || !stack.getTagCompound().hasKey("DNAQuality"));
         }
     }
 }

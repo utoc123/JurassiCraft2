@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 @SideOnly(Side.CLIENT)
 public class DNACombinatorHybridizerGui extends GuiContainer

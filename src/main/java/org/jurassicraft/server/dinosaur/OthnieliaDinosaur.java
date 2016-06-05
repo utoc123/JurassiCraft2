@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.OthnieliaEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.OthnieliaEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class OthnieliaDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class OthnieliaDinosaur extends Dinosaur
 
         this.setName("Othnielia");
         this.setDinosaurClass(OthnieliaEntity.class);
-        this.setTimePeriod(EnumTimePeriod.JURASSIC);
+        this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x3EA999, 0x584F41);
         this.setEggColorFemale(0xC9AC95, 0x46342E);
         this.setHealth(3, 10);

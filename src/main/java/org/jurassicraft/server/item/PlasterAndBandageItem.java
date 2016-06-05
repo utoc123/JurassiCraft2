@@ -14,7 +14,7 @@ import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class PlasterAndBandageItem extends Item
 {

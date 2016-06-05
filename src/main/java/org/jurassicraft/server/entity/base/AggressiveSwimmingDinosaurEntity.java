@@ -18,9 +18,6 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         this.navigator = new PathNavigateSwimmer(this, world);
     }
 
-    /**
-     * Gets called every tick from main Entity class
-     */
     @Override
     public void onEntityUpdate()
     {
@@ -44,9 +41,6 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         }
     }
 
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-     */
     @Override
     public void onLivingUpdate()
     {
@@ -63,9 +57,6 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         }
     }
 
-    /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to prevent them from trampling crops
-     */
     @Override
     protected boolean canTriggerWalking()
     {
@@ -78,15 +69,12 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         return this.height * 0.5F;
     }
 
-    /**
-     * Moves the entity based on the specified heading. Args: strafe, forward
-     */
     @Override
     public void moveEntityWithHeading(float strafe, float forward)
     {
         if (this.isServerWorld() && this.isInWater())
         {
-            this.moveFlying(strafe, forward, 0.1F);
+            this.moveRelative(strafe, forward, 0.1F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.7D;
             this.motionY *= 0.7D;

@@ -7,7 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.GrindableItemSlot;
-import org.jurassicraft.server.tileentity.FossilGrinderTile;
+import org.jurassicraft.server.tile.FossilGrinderTile;
 
 public class FossilGrinderContainer extends SyncedFieldContainer
 {

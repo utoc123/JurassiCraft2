@@ -18,14 +18,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.tile.DNASynthesizerTile;
 
 public class DNASynthesizerBlock extends OrientedBlock
 {
     public DNASynthesizerBlock()
     {
-        super(Material.iron);
+        super(Material.IRON);
         this.setUnlocalizedName("dna_synthesizer");
         this.setHardness(2.0F);
         this.setSoundType(SoundType.METAL);

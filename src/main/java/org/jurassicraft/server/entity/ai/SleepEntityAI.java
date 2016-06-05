@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +13,7 @@ public class SleepEntityAI extends EntityAIBase
 {
     protected DinosaurEntity dinosaur;
 
-    protected PathEntity path;
+    protected Path path;
 
     public SleepEntityAI(DinosaurEntity dinosaur)
     {
@@ -38,7 +38,7 @@ public class SleepEntityAI extends EntityAIBase
                 {
                     BlockPos possiblePos = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
 
-                    if (world.isAirBlock(possiblePos) && world.getBlockState(possiblePos.add(0, -1, 0)).getBlock() != Blocks.water)
+                    if (world.isAirBlock(possiblePos) && world.getBlockState(possiblePos.add(0, -1, 0)).getBlock() != Blocks.WATER)
                     {
                         if (canFit(possiblePos) && !world.canSeeSky(possiblePos) && dinosaur.setSleepLocation(possiblePos, true))
                         {
@@ -71,7 +71,7 @@ public class SleepEntityAI extends EntityAIBase
     @Override
     public void updateTask()
     {
-        PathEntity currentPath = dinosaur.getNavigator().getPath();
+        Path currentPath = dinosaur.getNavigator().getPath();
 
         if (this.path != null)
         {
@@ -79,7 +79,7 @@ public class SleepEntityAI extends EntityAIBase
 
             if (currentPath == null || !currentPath.getFinalPathPoint().equals(finalPathPoint))
             {
-                PathEntity path = dinosaur.getNavigator().getPathToXYZ(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord);
+                Path path = dinosaur.getNavigator().getPathToXYZ(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord);
                 dinosaur.getNavigator().setPath(path, 1.0);
                 this.path = path;
             }

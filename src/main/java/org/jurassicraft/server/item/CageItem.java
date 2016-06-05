@@ -1,5 +1,6 @@
 package org.jurassicraft.server.item;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +12,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
 
@@ -46,16 +46,16 @@ public class CageItem extends Item
 
         if (caged != -1)
         {
-            tooltip.add(TextFormatting.BLUE + I18n.translateToLocal("entity.jurassicraft." + EntityList.classToStringMapping.get(EntityList.idToClassMapping.get(caged)) + ".name"));
+            tooltip.add(TextFormatting.BLUE + I18n.format("entity.jurassicraft." + EntityList.CLASS_TO_NAME.get(EntityList.ID_TO_CLASS.get(caged)) + ".name"));
 
             if (data != null)
             {
-                tooltip.add(TextFormatting.RED + I18n.translateToLocal("gender." + (data.getBoolean("IsMale") ? "male" : "female") + ".name"));
+                tooltip.add(TextFormatting.RED + I18n.format("gender." + (data.getBoolean("IsMale") ? "male" : "female") + ".name"));
             }
         }
         else
         {
-            tooltip.add(TextFormatting.RED + I18n.translateToLocal("cage.empty.name"));
+            tooltip.add(TextFormatting.RED + I18n.format("cage.empty.name"));
         }
     }
 

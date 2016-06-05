@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.api.ISubBlocksBlock;
+import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.machine.CleaningStationBlock;
 import org.jurassicraft.server.block.machine.CultivatorBottomBlock;
 import org.jurassicraft.server.block.machine.CultivatorTopBlock;
@@ -33,27 +33,27 @@ import org.jurassicraft.server.block.plant.SmallChainFernBlock;
 import org.jurassicraft.server.block.plant.SmallCycadBlock;
 import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
 import org.jurassicraft.server.block.plant.WildOnionBlock;
-import org.jurassicraft.server.block.tree.JCDoubleSlabBlock;
-import org.jurassicraft.server.block.tree.JCLeavesBlock;
-import org.jurassicraft.server.block.tree.JCLogBlock;
-import org.jurassicraft.server.block.tree.JCPlanksBlock;
-import org.jurassicraft.server.block.tree.JCSaplingBlock;
-import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
-import org.jurassicraft.server.block.tree.JCStairsBlock;
+import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
+import org.jurassicraft.server.block.tree.AncientLeavesBlock;
+import org.jurassicraft.server.block.tree.AncientLogBlock;
+import org.jurassicraft.server.block.tree.AncientPlanksBlock;
+import org.jurassicraft.server.block.tree.AncientSaplingBlock;
+import org.jurassicraft.server.block.tree.AncientSlabHalfBlock;
+import org.jurassicraft.server.block.tree.AncientStairsBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
-import org.jurassicraft.server.tileentity.CultivatorTile;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
-import org.jurassicraft.server.tileentity.FossilGrinderTile;
-import org.jurassicraft.server.tileentity.IncubatorTile;
+import org.jurassicraft.server.tile.ActionFigureTile;
+import org.jurassicraft.server.tile.CleaningStationTile;
+import org.jurassicraft.server.tile.CultivatorTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASynthesizerTile;
+import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.FossilGrinderTile;
+import org.jurassicraft.server.tile.IncubatorTile;
 import org.jurassicraft.server.world.jurdstrees.algorythms.TreeCompendium;
 
 import java.util.ArrayList;
@@ -65,117 +65,117 @@ public enum BlockHandler
 {
     INSTANCE;
 
-    public Map<TreeType, JCPlanksBlock> planks = new HashMap<>();
-    public Map<TreeType, JCLogBlock> logs = new HashMap<>();
-    public Map<TreeType, JCLeavesBlock> leaves = new HashMap<>();
-    public Map<TreeType, JCSaplingBlock> saplings = new HashMap<>();
+    public Map<TreeType, AncientPlanksBlock> ANCIENT_PLANKS = new HashMap<>();
+    public Map<TreeType, AncientLogBlock> ANCIENT_LOGS = new HashMap<>();
+    public Map<TreeType, AncientLeavesBlock> ANCIENT_LEAVES = new HashMap<>();
+    public Map<TreeType, AncientSaplingBlock> ANCIENT_SAPLINGS = new HashMap<>();
 
-    public Map<TreeType, JCSlabHalfBlock> slabs = new HashMap<>();
-    public Map<TreeType, JCDoubleSlabBlock> double_slabs = new HashMap<>();
-    public Map<TreeType, JCStairsBlock> stairs = new HashMap<>();
+    public Map<TreeType, AncientSlabHalfBlock> ANCIENT_SLABS = new HashMap<>();
+    public Map<TreeType, AncientDoubleSlabBlock> ANCIENT_DOUBLE_SLABS = new HashMap<>();
+    public Map<TreeType, AncientStairsBlock> ANCIENT_STAIRS = new HashMap<>();
 
-    public Map<TreeType, JCLogBlock> petrified_logs = new HashMap<>();
+    public Map<TreeType, AncientLogBlock> PETRIFIED_LOGS = new HashMap<>();
 
-    public List<FossilBlock> fossils;
-    public List<EncasedFossilBlock> encased_fossils;
+    public List<FossilBlock> FOSSILS;
+    public List<EncasedFossilBlock> ENCASED_FOSSILS;
 
-    public Block plant_fossil;
+    public Block PLANT_FOSSIL;
 
-    public Block cleaning_station;
-    public Block fossil_grinder;
-    public Block dna_sequencer;
-    public Block dna_synthesizer;
-    public Block embryonic_machine;
-    public Block embryo_calcification_machine;
-    public Block incubator;
-    public Block dna_extractor;
+    public Block CLEANING_STATION;
+    public Block FOSSIL_GRINDER;
+    public Block DNA_SEQUENCER;
+    public Block DNA_SYNTHESIZER;
+    public Block EMBRYONIC_MACHINE;
+    public Block EMBRYO_CALCIFICATION_MACHINE;
+    public Block INCUBATOR;
+    public Block DNA_EXTRACTOR;
+    public Block DNA_COMBINATOR_HYBRIDIZER;
 
-    public Block amber_ore;
-    public Block ice_shard;
+    public Block AMBER_ORE;
+    public Block ICE_SHARD;
 
-    public Block gypsum_cobblestone;
-    public Block gypsum_stone;
-    public Block gypsum_bricks;
-    public Block dna_combinator_hybridizer;
+    public Block GYPSUM_COBBLESTONE;
+    public Block GYPSUM_STONE;
+    public Block GYPSUM_BRICKS;
 
-    public Block reinforced_stone;
-    public Block reinforced_bricks;
+    public Block REINFORCED_STONE;
+    public Block REINFORCED_BRICKS;
 
-    public Block small_royal_fern;
-    public Block small_chain_fern;
-    public Block small_cycad;
+    public Block SMALL_ROYAL_FERN;
+    public Block SMALL_CHAIN_FERN;
+    public Block SMALL_CYCAD;
 
-    public Block cultivate_top;
-    public Block cultivate_bottom;
+    public Block CULTIVATOR_TOP;
+    public Block CULTIVATOR_BOTTOM;
 
-    public Block bennettitalean_cycadeoidea;
-    public Block cry_pansy;
-    public Block scaly_tree_fern;
-    public Block cycad_zamites;
-    public Block dicksonia;
+    public Block CYCADEOIDEA;
+    public Block CRY_PANSY;
+    public Block SCALY_TREE_FERN;
+    public Block ZAMITES;
+    public Block DICKSONIA;
 
-    public Block action_figure;
+    public Block ACTION_FIGURE;
 
-    public Block moss;
+    public Block MOSS;
 
-    public Block clear_glass;
+    public Block CLEAR_GLASS;
 
-    public Block ajuginucula_smithii;
-    public Block wild_onion;
-    public Block gracilaria;
+    public Block AJUGINUCULA_SMITHII;
+    public Block WILD_ONION;
+    public Block GRACILARIA;
 
     public void init()
     {
-        fossils = new ArrayList<>();
-        encased_fossils = new ArrayList<>();
-        plant_fossil = new PlantFossilBlock();
+        FOSSILS = new ArrayList<>();
+        ENCASED_FOSSILS = new ArrayList<>();
+        PLANT_FOSSIL = new PlantFossilBlock();
 
-        cleaning_station = new CleaningStationBlock();
-        fossil_grinder = new FossilGrinderBlock();
-        dna_sequencer = new DNASequencerBlock();
-        dna_synthesizer = new DNASynthesizerBlock();
-        embryonic_machine = new EmbryonicMachineBlock();
-        embryo_calcification_machine = new EmbryoCalcificationMachineBlock();
-        incubator = new IncubatorBlock();
-        dna_extractor = new DNAExtractorBlock();
-        dna_combinator_hybridizer = new DNACombinatorHybridizerBlock();
-        cultivate_bottom = new CultivatorBottomBlock();
-        cultivate_top = new CultivatorTopBlock();
+        CLEANING_STATION = new CleaningStationBlock();
+        FOSSIL_GRINDER = new FossilGrinderBlock();
+        DNA_SEQUENCER = new DNASequencerBlock();
+        DNA_SYNTHESIZER = new DNASynthesizerBlock();
+        EMBRYONIC_MACHINE = new EmbryonicMachineBlock();
+        EMBRYO_CALCIFICATION_MACHINE = new EmbryoCalcificationMachineBlock();
+        INCUBATOR = new IncubatorBlock();
+        DNA_EXTRACTOR = new DNAExtractorBlock();
+        DNA_COMBINATOR_HYBRIDIZER = new DNACombinatorHybridizerBlock();
+        CULTIVATOR_BOTTOM = new CultivatorBottomBlock();
+        CULTIVATOR_TOP = new CultivatorTopBlock();
 
-        amber_ore = new AmberBlock();
-        ice_shard = new IceShardBlock();
+        AMBER_ORE = new AmberBlock();
+        ICE_SHARD = new IceShardBlock();
 
-        gypsum_stone = new GypsumStoneBlock();
-        gypsum_cobblestone = new BasicBlock(Material.rock).setHardness(1.5F).setResistance(1.5F);
-        gypsum_bricks = new BasicBlock(Material.rock).setHardness(1.5F).setResistance(1.5F);
-        reinforced_stone = new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F);
-        reinforced_bricks = new BasicBlock(Material.rock).setHardness(2.0F).setResistance(15.0F);
+        GYPSUM_STONE = new GypsumStoneBlock();
+        GYPSUM_COBBLESTONE = new BasicBlock(Material.ROCK).setHardness(1.5F).setResistance(1.5F);
+        GYPSUM_BRICKS = new BasicBlock(Material.ROCK).setHardness(1.5F).setResistance(1.5F);
+        REINFORCED_STONE = new BasicBlock(Material.ROCK).setHardness(2.0F).setResistance(15.0F);
+        REINFORCED_BRICKS = new BasicBlock(Material.ROCK).setHardness(2.0F).setResistance(15.0F);
 
-        ajuginucula_smithii = new AjuginuculaSmithiiBlock();
-        small_royal_fern = new SmallRoyalFernBlock();
-        small_chain_fern = new SmallChainFernBlock();
-        small_cycad = new SmallCycadBlock();
-        bennettitalean_cycadeoidea = new BennettitaleanCycadeoideaBlock();
-        cry_pansy = new CryPansyBlock();
-        scaly_tree_fern = new ScalyTreeFernBlock();
-        cycad_zamites = new CycadZamitesBlock();
-        dicksonia = new DicksoniaBlock();
-        wild_onion = new WildOnionBlock();
-        gracilaria = new GracilariaBlock();
+        AJUGINUCULA_SMITHII = new AjuginuculaSmithiiBlock();
+        SMALL_ROYAL_FERN = new SmallRoyalFernBlock();
+        SMALL_CHAIN_FERN = new SmallChainFernBlock();
+        SMALL_CYCAD = new SmallCycadBlock();
+        CYCADEOIDEA = new BennettitaleanCycadeoideaBlock();
+        CRY_PANSY = new CryPansyBlock();
+        SCALY_TREE_FERN = new ScalyTreeFernBlock();
+        ZAMITES = new CycadZamitesBlock();
+        DICKSONIA = new DicksoniaBlock();
+        WILD_ONION = new WildOnionBlock();
+        GRACILARIA = new GracilariaBlock();
 
-        action_figure = new ActionFigureBlock();
+        ACTION_FIGURE = new ActionFigureBlock();
 
-        moss = new MossBlock();
+        MOSS = new MossBlock();
 
-        clear_glass = new ClearGlassBlock();
+        CLEAR_GLASS = new ClearGlassBlock();
 
         for (int i = 0; i < (int) Math.ceil(EntityHandler.INSTANCE.getDinosaurs().size() / 16.0F); i++)
         {
             FossilBlock fossil = new FossilBlock(i * 16);
             EncasedFossilBlock encasedFossil = new EncasedFossilBlock(i * 16);
 
-            fossils.add(fossil);
-            encased_fossils.add(encasedFossil);
+            FOSSILS.add(fossil);
+            ENCASED_FOSSILS.add(encasedFossil);
 
             registerBlock(fossil, "Fossil Block " + i);
             registerBlock(encasedFossil, "Encased Fossil " + i);
@@ -183,7 +183,7 @@ public enum BlockHandler
             OreDictionary.registerOre("fossil", fossil);
         }
 
-        registerBlock(plant_fossil, "Plant Fossil Block");
+        registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
 
         TreeCompendium.addShapesToCompendium();
         TreeCompendium.registerTrees();
@@ -193,62 +193,62 @@ public enum BlockHandler
             registerTreeType(type);
         }
 
-        registerBlock(amber_ore, "Amber Ore");
-        registerBlock(ice_shard, "Ice Shard");
-        registerBlock(gypsum_stone, "Gypsum Stone");
-        registerBlock(gypsum_cobblestone, "Gypsum Cobblestone");
-        registerBlock(gypsum_bricks, "Gypsum Bricks");
-        registerBlock(reinforced_stone, "Reinforced Stone");
-        registerBlock(reinforced_bricks, "Reinforced Bricks");
+        registerBlock(AMBER_ORE, "Amber Ore");
+        registerBlock(ICE_SHARD, "Ice Shard");
+        registerBlock(GYPSUM_STONE, "Gypsum Stone");
+        registerBlock(GYPSUM_COBBLESTONE, "Gypsum Cobblestone");
+        registerBlock(GYPSUM_BRICKS, "Gypsum Bricks");
+        registerBlock(REINFORCED_STONE, "Reinforced Stone");
+        registerBlock(REINFORCED_BRICKS, "Reinforced Bricks");
 
-        registerBlock(ajuginucula_smithii, "Ajuginucula Smithii");
-        registerBlock(small_royal_fern, "Small Royal Fern");
-        registerBlock(small_chain_fern, "Small Chain Fern");
-        registerBlock(small_cycad, "Small Cycad");
-        registerBlock(bennettitalean_cycadeoidea, "Bennettitalean Cycadeoidea");
-        registerBlock(cry_pansy, "Cry Pansy");
-        registerBlock(scaly_tree_fern, "Scaly Tree Fern");
-        registerBlock(cycad_zamites, "Cycad Zamites");
-        registerBlock(dicksonia, "Dicksonia");
-        registerBlock(wild_onion, "Wild Onion Plant");
-        registerBlock(gracilaria, "Gracilaria Seaweed");
+        registerBlock(AJUGINUCULA_SMITHII, "Ajuginucula Smithii");
+        registerBlock(SMALL_ROYAL_FERN, "Small Royal Fern");
+        registerBlock(SMALL_CHAIN_FERN, "Small Chain Fern");
+        registerBlock(SMALL_CYCAD, "Small Cycad");
+        registerBlock(CYCADEOIDEA, "Bennettitalean Cycadeoidea");
+        registerBlock(CRY_PANSY, "Cry Pansy");
+        registerBlock(SCALY_TREE_FERN, "Scaly Tree Fern");
+        registerBlock(ZAMITES, "Cycad Zamites");
+        registerBlock(DICKSONIA, "Dicksonia");
+        registerBlock(WILD_ONION, "Wild Onion Plant");
+        registerBlock(GRACILARIA, "Gracilaria Seaweed");
 
-        registerBlock(moss, "Moss");
-        registerBlock(clear_glass, "Clear Glass");
+        registerBlock(MOSS, "Moss");
+        registerBlock(CLEAR_GLASS, "Clear Glass");
 
-        registerBlockTileEntity(CultivatorTile.class, cultivate_bottom, "Cultivate Bottom");
-        registerBlock(cultivate_top, "Cultivate Top");
-        registerBlockTileEntity(CleaningStationTile.class, cleaning_station, "Cleaning Station");
-        registerBlockTileEntity(FossilGrinderTile.class, fossil_grinder, "Fossil Grinder");
-        registerBlockTileEntity(DNASequencerTile.class, dna_sequencer, "DNA Sequencer");
-        registerBlockTileEntity(DNASynthesizerTile.class, dna_synthesizer, "DNA Synthesizer");
-        registerBlockTileEntity(EmbryonicMachineTile.class, embryonic_machine, "Embryonic Machine");
-        registerBlockTileEntity(EmbryoCalcificationMachineTile.class, embryo_calcification_machine, "Embryo Calcification Machine");
-        registerBlockTileEntity(DNAExtractorTile.class, dna_extractor, "DNA Extractor");
-        registerBlockTileEntity(DNACombinatorHybridizerTile.class, dna_combinator_hybridizer, "DNA Combinator Hybridizer");
-        registerBlockTileEntity(IncubatorTile.class, incubator, "Incubator");
-        registerBlockTileEntity(ActionFigureTile.class, action_figure, "Action Figure Block");
+        registerBlockTileEntity(CultivatorTile.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
+        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
+        registerBlockTileEntity(CleaningStationTile.class, CLEANING_STATION, "Cleaning Station");
+        registerBlockTileEntity(FossilGrinderTile.class, FOSSIL_GRINDER, "Fossil Grinder");
+        registerBlockTileEntity(DNASequencerTile.class, DNA_SEQUENCER, "DNA Sequencer");
+        registerBlockTileEntity(DNASynthesizerTile.class, DNA_SYNTHESIZER, "DNA Synthesizer");
+        registerBlockTileEntity(EmbryonicMachineTile.class, EMBRYONIC_MACHINE, "Embryonic Machine");
+        registerBlockTileEntity(EmbryoCalcificationMachineTile.class, EMBRYO_CALCIFICATION_MACHINE, "Embryo Calcification Machine");
+        registerBlockTileEntity(DNAExtractorTile.class, DNA_EXTRACTOR, "DNA Extractor");
+        registerBlockTileEntity(DNACombinatorHybridizerTile.class, DNA_COMBINATOR_HYBRIDIZER, "DNA Combinator Hybridizer");
+        registerBlockTileEntity(IncubatorTile.class, INCUBATOR, "Incubator");
+        registerBlockTileEntity(ActionFigureTile.class, ACTION_FIGURE, "Action Figure Block");
     }
 
     public void registerTreeType(TreeType type)
     {
-        JCPlanksBlock planks = new JCPlanksBlock(type);
-        JCLogBlock log = new JCLogBlock(type, false);
-        JCLogBlock petrified_log = new JCLogBlock(type, true);
-        JCLeavesBlock leaves = new JCLeavesBlock(type);
-        JCSaplingBlock sapling = new JCSaplingBlock(type);
-        JCStairsBlock stair = new JCStairsBlock(type, planks.getDefaultState());
-        JCSlabHalfBlock slab = new JCSlabHalfBlock(type, planks.getDefaultState());
-        JCDoubleSlabBlock double_slab = new JCDoubleSlabBlock(type, slab, planks.getDefaultState());
+        AncientPlanksBlock planks = new AncientPlanksBlock(type);
+        AncientLogBlock log = new AncientLogBlock(type, false);
+        AncientLogBlock petrified_log = new AncientLogBlock(type, true);
+        AncientLeavesBlock leaves = new AncientLeavesBlock(type);
+        AncientSaplingBlock sapling = new AncientSaplingBlock(type);
+        AncientStairsBlock stair = new AncientStairsBlock(type, planks.getDefaultState());
+        AncientSlabHalfBlock slab = new AncientSlabHalfBlock(type, planks.getDefaultState());
+        AncientDoubleSlabBlock double_slab = new AncientDoubleSlabBlock(type, slab, planks.getDefaultState());
 
-        this.planks.put(type, planks);
-        this.logs.put(type, log);
-        this.leaves.put(type, leaves);
-        this.saplings.put(type, sapling);
-        this.stairs.put(type, stair);
-        this.slabs.put(type, slab);
-        this.double_slabs.put(type, double_slab);
-        this.petrified_logs.put(type, petrified_log);
+        this.ANCIENT_PLANKS.put(type, planks);
+        this.ANCIENT_LOGS.put(type, log);
+        this.ANCIENT_LEAVES.put(type, leaves);
+        this.ANCIENT_SAPLINGS.put(type, sapling);
+        this.ANCIENT_STAIRS.put(type, stair);
+        this.ANCIENT_SLABS.put(type, slab);
+        this.ANCIENT_DOUBLE_SLABS.put(type, double_slab);
+        this.PETRIFIED_LOGS.put(type, petrified_log);
 
         String typeName = type.name();
 
@@ -269,13 +269,13 @@ public enum BlockHandler
         OreDictionary.registerOre("slabWood", slab);
         OreDictionary.registerOre("stairWood", stair);
 
-        Blocks.fire.setFireInfo(leaves, 30, 60);
-        Blocks.fire.setFireInfo(planks, 5, 20);
-        Blocks.fire.setFireInfo(log, 5, 5);
-        Blocks.fire.setFireInfo(petrified_log, 5, 5);
-        Blocks.fire.setFireInfo(double_slab, 5, 20);
-        Blocks.fire.setFireInfo(slab, 5, 20);
-        Blocks.fire.setFireInfo(stair, 5, 20);
+        Blocks.FIRE.setFireInfo(leaves, 30, 60);
+        Blocks.FIRE.setFireInfo(planks, 5, 20);
+        Blocks.FIRE.setFireInfo(log, 5, 5);
+        Blocks.FIRE.setFireInfo(petrified_log, 5, 5);
+        Blocks.FIRE.setFireInfo(double_slab, 5, 20);
+        Blocks.FIRE.setFireInfo(slab, 5, 20);
+        Blocks.FIRE.setFireInfo(stair, 5, 20);
     }
 
     public FossilBlock getFossilBlock(Dinosaur dinosaur)
@@ -295,22 +295,22 @@ public enum BlockHandler
 
     public EncasedFossilBlock getEncasedFossil(int id)
     {
-        return encased_fossils.get(getBlockId(id));
+        return ENCASED_FOSSILS.get(getBlockId(id));
     }
 
     public FossilBlock getFossilBlock(int id)
     {
-        return fossils.get(getBlockId(id));
+        return FOSSILS.get(getBlockId(id));
     }
 
     public int getDinosaurId(FossilBlock fossil, int metadata)
     {
-        return (fossils.indexOf(fossil) * 16) + metadata;
+        return (FOSSILS.indexOf(fossil) * 16) + metadata;
     }
 
     public int getDinosaurId(EncasedFossilBlock fossil, int metadata)
     {
-        return (encased_fossils.indexOf(fossil) * 16) + metadata;
+        return (ENCASED_FOSSILS.indexOf(fossil) * 16) + metadata;
     }
 
     public int getMetadata(int id)
@@ -338,10 +338,10 @@ public enum BlockHandler
 
         ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
 
-        if (block instanceof ISubBlocksBlock)
+        if (block instanceof SubBlocksBlock)
         {
             GameRegistry.register(block, resource);
-            GameRegistry.register(((ISubBlocksBlock) block).getItemBlock(), resource);
+            GameRegistry.register(((SubBlocksBlock) block).getItemBlock(), resource);
         }
         else
         {

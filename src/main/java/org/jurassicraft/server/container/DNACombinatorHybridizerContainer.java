@@ -7,7 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 public class DNACombinatorHybridizerContainer extends SyncedFieldContainer
 {

@@ -8,8 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -56,7 +56,7 @@ public class ServerEventHandler
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onItemPickup(PlayerEvent.ItemPickupEvent event)
     {
-        if (event.pickedUp.getEntityItem().getItem() == ItemHandler.INSTANCE.amber)
+        if (event.pickedUp.getEntityItem().getItem() == ItemHandler.INSTANCE.AMBER)
         {
             event.player.addStat(AchievementHandler.INSTANCE.amber, 1);
         }
@@ -67,23 +67,23 @@ public class ServerEventHandler
     {
         Item item = event.crafting.getItem();
 
-        if (item == ItemHandler.INSTANCE.plaster_and_bandage)
+        if (item == ItemHandler.INSTANCE.PLASTER_AND_BANDAGE)
         {
             event.player.addStat(AchievementHandler.INSTANCE.paleontology, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.cleaning_station))
+        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.CLEANING_STATION))
         {
             event.player.addStat(AchievementHandler.INSTANCE.cleaningStation, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.fossil_grinder))
+        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.FOSSIL_GRINDER))
         {
             event.player.addStat(AchievementHandler.INSTANCE.fossilGrinder, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.reinforced_stone))
+        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.REINFORCED_STONE))
         {
             event.player.addStat(AchievementHandler.INSTANCE.reinforcedStone, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.reinforced_bricks))
+        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.REINFORCED_BRICKS))
         {
             event.player.addStat(AchievementHandler.INSTANCE.reinforcedStone, 1);
         }
@@ -96,28 +96,28 @@ public class ServerEventHandler
         BlockPos pos = event.getPos();
         Random rand = event.getRand();
 
-        for (BiomeGenBase biome : BiomeGenBase.biomeRegistry)
+        for (Biome biome : Biome.REGISTRY)
         {
             BiomeDecorator decorator = biome.theBiomeDecorator;
 
             if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal))
             {
-                decorator.coalGen = new WorldGenCoal(Blocks.coal_ore.getDefaultState(), decorator.chunkProviderSettings.coalSize);
+                decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
             }
         }
 
-        BiomeGenBase biome = world.getBiomeGenForCoords(pos);
+        Biome biome = world.getBiomeGenForCoords(pos);
 
-        if (biome == Biomes.forest || biome == Biomes.birchForest || biome == Biomes.taiga || biome == Biomes.megaTaiga || biome == Biomes.swampland || biome == Biomes.jungle)
+        if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome == Biomes.SWAMPLAND || biome == Biomes.JUNGLE)
         {
             if (rand.nextInt(8) == 0)
             {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
                 IBlockState state = world.getBlockState(topBlock.down());
 
-                if (state != null && state.getBlock().isOpaqueCube(state))
+                if (state.isOpaqueCube())
                 {
-                    world.setBlockState(topBlock, BlockHandler.INSTANCE.moss.getDefaultState(), 2);
+                    world.setBlockState(topBlock, BlockHandler.INSTANCE.MOSS.getDefaultState(), 2);
                 }
             }
         }

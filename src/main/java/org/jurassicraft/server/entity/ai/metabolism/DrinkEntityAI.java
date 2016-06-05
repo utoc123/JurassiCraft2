@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.client.animation.Animations;
@@ -15,7 +15,7 @@ public class DrinkEntityAI extends EntityAIBase
 {
     protected DinosaurEntity dinosaur;
 
-    protected PathEntity path;
+    protected Path path;
     protected BlockPos pos;
 
     public DrinkEntityAI(DinosaurEntity dinosaur)
@@ -49,14 +49,15 @@ public class DrinkEntityAI extends EntityAIBase
                         {
                             Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
-                            if (block == Blocks.water || block == Blocks.flowing_water)
+                            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER)
                             {
                                 for (int landX = x - 1; landX < x + 1; landX++)
                                 {
                                     for (int landZ = z - 1; landZ < z + 1; landZ++)
                                     {
                                         IBlockState state = world.getBlockState(new BlockPos(landX, y, landZ));
-                                        if (state.getBlock().isOpaqueCube(state))
+
+                                        if (state.isOpaqueCube())
                                         {
                                             int diffX = posX - landX;
                                             int diffY = posY - y;
@@ -109,6 +110,6 @@ public class DrinkEntityAI extends EntityAIBase
     {
         Block block = dinosaur.worldObj.getBlockState(pos).getBlock();
 
-        return dinosaur != null && path != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.water || block == Blocks.flowing_water);
+        return dinosaur != null && path != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.WATER || block == Blocks.FLOWING_WATER);
     }
 }

@@ -23,6 +23,6 @@ public class WildOnionPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.wild_onion;
+        return BlockHandler.INSTANCE.WILD_ONION;
     }
 }

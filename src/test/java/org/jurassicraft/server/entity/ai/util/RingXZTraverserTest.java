@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RingXZTraverserTest
 {
@@ -16,7 +16,7 @@ public class RingXZTraverserTest
         BlockPos center = new BlockPos( 100, 0, 200 );
         RingXZTraverser traverser = new RingXZTraverser(center, 4);
 
-        List<BlockPos> values = new ArrayList<BlockPos>();
+        List<BlockPos> values = new ArrayList<>();
 
         values.add( new BlockPos(96, 0, 196));
         values.add( new BlockPos(97, 0, 196));

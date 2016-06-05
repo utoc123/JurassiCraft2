@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
 import org.lwjgl.opengl.GL11;
 
 public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryonicMachineTile>

@@ -22,28 +22,28 @@ public enum FoodHelper
 {
     INSTANCE;
 
-    private final Map<FoodType, List<Item>> foodTypes = new HashMap<FoodType, List<Item>>();
-    private final List<Item> food = new ArrayList<Item>();
+    private final Map<FoodType, List<Item>> foodTypes = new HashMap<>();
+    private final List<Item> food = new ArrayList<>();
 
     // TODO:  Add food values for each.
 
     public void init()
     {
-        registerFood(Blocks.leaves, FoodType.PLANT);
-        registerFood(Blocks.leaves2, FoodType.PLANT);
-        registerFood(Blocks.tallgrass, FoodType.PLANT);
-        registerFood(Blocks.wheat, FoodType.PLANT);
-        registerFood(Blocks.melon_block, FoodType.PLANT);
-        registerFood(Blocks.reeds, FoodType.PLANT);
-        registerFood(Blocks.sapling, FoodType.PLANT);
-        registerFood(Blocks.pumpkin, FoodType.PLANT);
-        registerFood(Blocks.carrots, FoodType.PLANT);
-        registerFood(Blocks.potatoes, FoodType.PLANT);
-        registerFood(Blocks.hay_block, FoodType.PLANT);
-        registerFood(Blocks.waterlily, FoodType.PLANT);
-        registerFood(Blocks.yellow_flower, FoodType.PLANT);
-        registerFood(Blocks.red_flower, FoodType.PLANT);
-        registerFood(Blocks.double_plant, FoodType.PLANT);
+        registerFood(Blocks.LEAVES, FoodType.PLANT);
+        registerFood(Blocks.LEAVES2, FoodType.PLANT);
+        registerFood(Blocks.TALLGRASS, FoodType.PLANT);
+        registerFood(Blocks.WHEAT, FoodType.PLANT);
+        registerFood(Blocks.MELON_BLOCK, FoodType.PLANT);
+        registerFood(Blocks.REEDS, FoodType.PLANT);
+        registerFood(Blocks.SAPLING, FoodType.PLANT);
+        registerFood(Blocks.PUMPKIN, FoodType.PLANT);
+        registerFood(Blocks.CARROTS, FoodType.PLANT);
+        registerFood(Blocks.POTATOES, FoodType.PLANT);
+        registerFood(Blocks.HAY_BLOCK, FoodType.PLANT);
+        registerFood(Blocks.WATERLILY, FoodType.PLANT);
+        registerFood(Blocks.YELLOW_FLOWER, FoodType.PLANT);
+        registerFood(Blocks.RED_FLOWER, FoodType.PLANT);
+        registerFood(Blocks.DOUBLE_PLANT, FoodType.PLANT);
 
         for (Plant plant : PlantHandler.INSTANCE.getPlants())
         {
@@ -52,38 +52,38 @@ public enum FoodHelper
 
         for (TreeType type : TreeType.values())
         {
-            registerFood(BlockHandler.INSTANCE.leaves.get(type), FoodType.PLANT);
-            registerFood(BlockHandler.INSTANCE.saplings.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.INSTANCE.ANCIENT_LEAVES.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(type), FoodType.PLANT);
         }
 
-        registerFood(Items.apple, FoodType.PLANT);
-        registerFood(Items.potato, FoodType.PLANT);
-        registerFood(Items.carrot, FoodType.PLANT);
-        registerFood(Items.wheat, FoodType.PLANT);
-        registerFood(Items.wheat_seeds, FoodType.PLANT);
-        registerFood(Items.melon_seeds, FoodType.PLANT);
-        registerFood(Items.pumpkin_seeds, FoodType.PLANT);
-        registerFood(Items.melon, FoodType.PLANT);
+        registerFood(Items.APPLE, FoodType.PLANT);
+        registerFood(Items.POTATO, FoodType.PLANT);
+        registerFood(Items.CARROT, FoodType.PLANT);
+        registerFood(Items.WHEAT, FoodType.PLANT);
+        registerFood(Items.WHEAT_SEEDS, FoodType.PLANT);
+        registerFood(Items.MELON_SEEDS, FoodType.PLANT);
+        registerFood(Items.PUMPKIN_SEEDS, FoodType.PLANT);
+        registerFood(Items.MELON, FoodType.PLANT);
 
-        registerFood(Items.beef, FoodType.MEAT);
-        registerFood(Items.cooked_beef, FoodType.MEAT);
-        registerFood(Items.porkchop, FoodType.MEAT);
-        registerFood(Items.cooked_porkchop, FoodType.MEAT);
-        registerFood(Items.chicken, FoodType.MEAT);
-        registerFood(Items.cooked_chicken, FoodType.MEAT);
-        registerFood(Items.fish, FoodType.FISH);
-        registerFood(Items.cooked_fish, FoodType.MEAT);
-        registerFood(Items.mutton, FoodType.MEAT);
-        registerFood(Items.cooked_mutton, FoodType.MEAT);
-        registerFood(Items.rabbit, FoodType.MEAT);
-        registerFood(Items.cooked_rabbit, FoodType.MEAT);
+        registerFood(Items.BEEF, FoodType.MEAT);
+        registerFood(Items.COOKED_BEEF, FoodType.MEAT);
+        registerFood(Items.PORKCHOP, FoodType.MEAT);
+        registerFood(Items.COOKED_PORKCHOP, FoodType.MEAT);
+        registerFood(Items.CHICKEN, FoodType.MEAT);
+        registerFood(Items.COOKED_CHICKEN, FoodType.MEAT);
+        registerFood(Items.FISH, FoodType.FISH);
+        registerFood(Items.COOKED_FISH, FoodType.MEAT);
+        registerFood(Items.MUTTON, FoodType.MEAT);
+        registerFood(Items.COOKED_MUTTON, FoodType.MEAT);
+        registerFood(Items.RABBIT, FoodType.MEAT);
+        registerFood(Items.COOKED_RABBIT, FoodType.MEAT);
 
-        registerFood(ItemHandler.INSTANCE.dino_meat, FoodType.MEAT);
-        registerFood(ItemHandler.INSTANCE.dino_steak, FoodType.MEAT);
+        registerFood(ItemHandler.INSTANCE.DINOSAUR_MEAT, FoodType.MEAT);
+        registerFood(ItemHandler.INSTANCE.DINOSAUR_STEAK, FoodType.MEAT);
 
-        for (Item item : Item.itemRegistry)
+        for (Item item : Item.REGISTRY)
         {
-            String resourceDomain = Item.itemRegistry.getNameForObject(item).getResourceDomain();
+            String resourceDomain = Item.REGISTRY.getNameForObject(item).getResourceDomain();
 
             if (!resourceDomain.equals("minecraft"))
             {
@@ -91,7 +91,7 @@ public enum FoodHelper
                 {
                     ItemFood food = (ItemFood) item;
 
-                    if (food.getHealAmount(new ItemStack(food)) > 3)
+                    if (food.getHealAmount(new ItemStack(food)) <= 3)
                     {
                         registerFood(food, FoodType.PLANT);
                     }
@@ -112,7 +112,7 @@ public enum FoodHelper
 
             if (foodsForType == null)
             {
-                foodsForType = new ArrayList<Item>();
+                foodsForType = new ArrayList<>();
             }
 
             foodsForType.add(food);
@@ -163,7 +163,7 @@ public enum FoodHelper
 
     private List<Item> getFoodsForDiet(Diet diet)
     {
-        List<Item> possibleItems = new ArrayList<Item>();
+        List<Item> possibleItems = new ArrayList<>();
 
         if (diet.doesEatPlants())
         {

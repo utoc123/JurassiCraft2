@@ -1,5 +1,6 @@
 package org.jurassicraft.server.damagesource;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -7,7 +8,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.translation.I18n;
 
 public class DinosaurEntityDamageSource extends DamageSource
 {
@@ -40,16 +40,13 @@ public class DinosaurEntityDamageSource extends DamageSource
         return this.entity;
     }
 
-    /**
-     * Gets the death message that is displayed when the player dies
-     */
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity)
     {
-        ItemStack itemstack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;
-        String s = "death.attack." + this.damageType;
-        String s1 = s + ".item";
-        return itemstack != null && itemstack.hasDisplayName() && I18n.canTranslate(s1) ? new TextComponentTranslation(s1, entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getTextComponent()) : new TextComponentTranslation(s, entity.getDisplayName(), this.entity.getDisplayName());
+        ItemStack stack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;
+        String deathMessage = "death.attack." + this.damageType;
+        String itemDeathMessage = deathMessage + ".item";
+        return stack != null && stack.hasDisplayName() && I18n.hasKey(itemDeathMessage) ? new TextComponentTranslation(itemDeathMessage, entity.getDisplayName(), this.entity.getDisplayName(), stack.getTextComponent()) : new TextComponentTranslation(deathMessage, entity.getDisplayName(), this.entity.getDisplayName());
     }
 
     @Override

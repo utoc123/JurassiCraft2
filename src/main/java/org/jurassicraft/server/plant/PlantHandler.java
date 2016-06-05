@@ -7,7 +7,7 @@ public enum PlantHandler
 {
     INSTANCE;
 
-    private List<Plant> plants = new ArrayList<Plant>();
+    private List<Plant> plants = new ArrayList<>();
 
     public Plant ajuginucula_smithii;
     public Plant small_royal_fern;

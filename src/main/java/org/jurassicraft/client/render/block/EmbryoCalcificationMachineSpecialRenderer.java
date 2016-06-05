@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 import org.lwjgl.opengl.GL11;
 
 public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryoCalcificationMachineTile>

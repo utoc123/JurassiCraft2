@@ -35,11 +35,11 @@ public class GrowthStageGenderContainer
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(Object object)
     {
-        if (o instanceof GrowthStageGenderContainer)
+        if (object instanceof GrowthStageGenderContainer)
         {
-            GrowthStageGenderContainer container = (GrowthStageGenderContainer) o;
+            GrowthStageGenderContainer container = (GrowthStageGenderContainer) object;
 
             return container.growthStage == growthStage && container.isMale == isMale;
         }

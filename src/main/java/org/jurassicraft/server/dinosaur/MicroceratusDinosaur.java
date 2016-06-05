@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.MicroceratusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.MicroceratusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class MicroceratusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class MicroceratusDinosaur extends Dinosaur
 
         this.setName("Microceratus");
         this.setDinosaurClass(MicroceratusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x956F2D, 0x92442C);
         this.setEggColorFemale(0x958331, 0x7E4A1F);
         this.setHealth(3, 10);

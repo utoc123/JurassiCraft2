@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
 import org.lwjgl.opengl.GL11;
 
 public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorTile>
@@ -42,7 +42,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
     {
         IBlockState blockState = tileEntity.getWorld().getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.dna_extractor)
+        if (blockState.getBlock() == BlockHandler.INSTANCE.DNA_EXTRACTOR)
         {
             GlStateManager.pushMatrix();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -70,7 +70,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
 
             model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
-            mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
             ItemStack extraction = tileEntity.getStackInSlot(0);
 

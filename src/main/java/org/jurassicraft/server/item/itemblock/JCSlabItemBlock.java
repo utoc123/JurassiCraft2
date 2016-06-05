@@ -16,16 +16,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.block.tree.JCDoubleSlabBlock;
-import org.jurassicraft.server.block.tree.JCSlabBlock;
-import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
+import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
+import org.jurassicraft.server.block.tree.AncientSlabBlock;
+import org.jurassicraft.server.block.tree.AncientSlabHalfBlock;
 
 public class JCSlabItemBlock extends ItemBlock
 {
     private final BlockSlab singleSlab;
     private final BlockSlab doubleSlab;
 
-    public JCSlabItemBlock(Block block, JCSlabHalfBlock singleSlab, JCDoubleSlabBlock doubleSlab)
+    public JCSlabItemBlock(Block block, AncientSlabHalfBlock singleSlab, AncientDoubleSlabBlock doubleSlab)
     {
         super(block);
         this.singleSlab = singleSlab;
@@ -54,7 +54,7 @@ public class JCSlabItemBlock extends ItemBlock
             IBlockState state = world.getBlockState(pos);
             if (state.getBlock() == this.singleSlab)
             {
-                JCSlabBlock.EnumBlockHalf half = state.getValue(BlockSlab.HALF);
+                AncientSlabBlock.EnumBlockHalf half = state.getValue(BlockSlab.HALF);
 
                 if ((facing == EnumFacing.UP && half == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && half == BlockSlab.EnumBlockHalf.TOP))
                 {

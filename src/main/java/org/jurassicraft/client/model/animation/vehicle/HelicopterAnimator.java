@@ -5,7 +5,7 @@ import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 
 @SideOnly(Side.CLIENT)
 public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterBaseEntity>

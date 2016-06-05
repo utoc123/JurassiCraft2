@@ -108,7 +108,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
                 dataManager.set(DATA_WATCHER_ENTITY_ID, EntityList.getEntityID(entity));
                 dataManager.set(DATA_WATCHER_AGE, entity.getDinosaurAge());
                 dataManager.set(DATA_WATCHER_DNA_QUALITY, entity.getDNAQuality());
-                dataManager.set(DATA_WATCHER_GENETICS, entity.getGenetics().toString());
+                dataManager.set(DATA_WATCHER_GENETICS, entity.getGenetics());
                 dataManager.set(DATA_WATCHER_GENDER, entity.isMale());
             }
             else
@@ -139,7 +139,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
             worldObj.spawnEntityInWorld(entity);
 
             this.setDead();
-            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.cage_small, 1, marine ? 1 : 0), 0.5F);
+            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.CAGE_SMALL, 1, marine ? 1 : 0), 0.5F);
         }
 
         return true;
@@ -152,7 +152,7 @@ public class CageSmallEntity extends Entity implements IEntityAdditionalSpawnDat
 
         if (!worldObj.isRemote)
         {
-            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.cage_small, 1, marine ? 1 : 0);
+            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.CAGE_SMALL, 1, marine ? 1 : 0);
 
             if (entity != null)
             {

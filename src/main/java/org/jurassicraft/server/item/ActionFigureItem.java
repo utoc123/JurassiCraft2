@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.tile.ActionFigureTile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +43,7 @@ public class ActionFigureItem extends Item
 
         if (player.canPlayerEdit(pos, side, stack))
         {
-            Block block = BlockHandler.INSTANCE.action_figure;
+            Block block = BlockHandler.INSTANCE.ACTION_FIGURE;
 
             if (block.canPlaceBlockAt(world, pos))
             {

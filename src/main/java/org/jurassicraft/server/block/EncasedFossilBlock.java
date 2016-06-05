@@ -15,18 +15,18 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ICleanableItem;
-import org.jurassicraft.server.api.ISubBlocksBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.api.CleanableItem;
+import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
 import java.util.Random;
 
-public class EncasedFossilBlock extends Block implements ISubBlocksBlock, ICleanableItem
+public class EncasedFossilBlock extends Block implements SubBlocksBlock, CleanableItem
 {
     public static final PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
 
@@ -34,7 +34,7 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock, IClean
 
     public EncasedFossilBlock(int start)
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setSoundType(SoundType.STONE);
@@ -162,6 +162,6 @@ public class EncasedFossilBlock extends Block implements ISubBlocksBlock, IClean
     {
         int dinosaurId = BlockHandler.INSTANCE.getDinosaurId((EncasedFossilBlock) Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
         String[] bones = EntityHandler.INSTANCE.getDinosaurById(dinosaurId).getBones();
-        return new ItemStack(ItemHandler.INSTANCE.fossils.get(bones[random.nextInt(bones.length)]), 1, dinosaurId);
+        return new ItemStack(ItemHandler.INSTANCE.FOSSILS.get(bones[random.nextInt(bones.length)]), 1, dinosaurId);
     }
 }

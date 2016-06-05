@@ -9,13 +9,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.IGrindableItem;
-import org.jurassicraft.server.api.IHybrid;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.api.GrindableItem;
+import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,12 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class FossilItem extends Item implements IGrindableItem
+public class FossilItem extends Item implements GrindableItem
 {
     private String type;
     private boolean includeHybrids;
 
-    public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<String, List<Dinosaur>>();
+    public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<>();
 
     public FossilItem(String type, boolean includeHybrids)
     {
@@ -100,7 +100,7 @@ public class FossilItem extends Item implements IGrindableItem
 
         for (Dinosaur dino : dinosaurs)
         {
-            if (dino.shouldRegister() && dinosaursForType.contains(dino) && !(!includeHybrids && dino instanceof IHybrid))
+            if (dino.shouldRegister() && dinosaursForType.contains(dino) && !(!includeHybrids && dino instanceof Hybrid))
             {
                 subtypes.add(new ItemStack(item, 1, ids.get(dino)));
             }
@@ -155,15 +155,15 @@ public class FossilItem extends Item implements IGrindableItem
 
         if (outputType == 5 || stack.getUnlocalizedName().contains("fresh"))
         {
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.soft_tissue, 1, stack.getItemDamage());
+            ItemStack output = new ItemStack(ItemHandler.INSTANCE.SOFT_TISSUE, 1, stack.getItemDamage());
             output.setTagCompound(tag);
             return output;
         }
         else if (outputType < 3)
         {
-            return new ItemStack(Items.dye, 1, 15);
+            return new ItemStack(Items.DYE, 1, 15);
         }
 
-        return new ItemStack(Items.flint);
+        return new ItemStack(Items.FLINT);
     }
 }

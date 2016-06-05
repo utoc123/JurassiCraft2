@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.AnkylosaurusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.AnkylosaurusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class AnkylosaurusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class AnkylosaurusDinosaur extends Dinosaur
 
         this.setName("Ankylosaurus");
         this.setDinosaurClass(AnkylosaurusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xAB9B82, 0x7C6270);
         this.setEggColorFemale(0x554E45, 0x3F3935);
         this.setHealth(20, 120);

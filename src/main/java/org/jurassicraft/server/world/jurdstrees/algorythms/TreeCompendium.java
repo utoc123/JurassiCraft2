@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class TreeCompendium
 {
-    public static ArrayList<Tree> TreeList = new ArrayList<Tree>();
+    public static ArrayList<Tree> TreeList = new ArrayList<>();
 
-    public static ArrayList<Shape> ShapeList = new ArrayList<Shape>();
+    public static ArrayList<Shape> ShapeList = new ArrayList<>();
 
     public static void addShapesToCompendium()
     {

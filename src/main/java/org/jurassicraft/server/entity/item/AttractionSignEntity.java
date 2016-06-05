@@ -80,27 +80,27 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
                 }
             }
 
-            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.attraction_sign, 1, type.ordinal()), 0.0F);
+            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.ATTRACTION_SIGN, 1, type.ordinal()), 0.0F);
         }
     }
 
     @Override
-    public void func_184523_o()
+    public void playPlaceSound()
+    {
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
     }
 
     @Override
     public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
     {
-        BlockPos locationOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
-        BlockPos newPosition = this.hangingPosition.add(locationOffset);
+        BlockPos positionOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
+        BlockPos newPosition = this.hangingPosition.add(positionOffset);
         this.setPosition(newPosition.getX(), newPosition.getY(), newPosition.getZ());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
-    {
     }
 
     @Override
@@ -194,7 +194,7 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
     @Override
     public ItemStack getPickedResult(RayTraceResult target)
     {
-        return new ItemStack(ItemHandler.INSTANCE.attraction_sign, 1, this.type.ordinal());
+        return new ItemStack(ItemHandler.INSTANCE.ATTRACTION_SIGN, 1, this.type.ordinal());
     }
 
     public enum AttractionSignType

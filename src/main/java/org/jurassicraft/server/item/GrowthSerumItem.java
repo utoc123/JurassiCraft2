@@ -5,8 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class GrowthSerumItem extends Item
 {
@@ -31,7 +31,7 @@ public class GrowthSerumItem extends Item
 
                 if (!player.capabilities.isCreativeMode)
                 {
-                    player.inventory.addItemStackToInventory(new ItemStack(ItemHandler.INSTANCE.empty_syringe));
+                    player.inventory.addItemStackToInventory(new ItemStack(ItemHandler.INSTANCE.EMPTY_SYRINGE));
                 }
 
                 return true;

@@ -7,10 +7,10 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.api.IHybrid;
+import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.dinosaur.AchillobatorDinosaur;
 import org.jurassicraft.server.dinosaur.AnkylosaurusDinosaur;
@@ -66,14 +66,14 @@ import org.jurassicraft.server.dinosaur.VelociraptorDeltaDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorEchoDinosaur;
 import org.jurassicraft.server.dinosaur.ZhenyuanopterusDinosaur;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.modules.HelicopterSeatEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
-import org.jurassicraft.server.period.EnumTimePeriod;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
-import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterSeatEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,8 +83,8 @@ public enum EntityHandler
 {
     INSTANCE;
 
-    private List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>();
-    private HashMap<EnumTimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<EnumTimePeriod, List<Dinosaur>>();
+    private List<Dinosaur> dinosaurs = new ArrayList<>();
+    private HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
 
     public final Dinosaur dodo = new DodoDinosaur();
     public final Dinosaur achillobator = new AchillobatorDinosaur();
@@ -144,11 +144,11 @@ public enum EntityHandler
 
     public List<Dinosaur> getDinosaursFromSeaLampreys()
     {
-        List<Dinosaur> marineDinos = new ArrayList<Dinosaur>();
+        List<Dinosaur> marineDinos = new ArrayList<>();
 
         for (Dinosaur dino : getRegisteredDinosaurs())
         {
-            if (dino.isMarineAnimal() && !(dino instanceof IHybrid))
+            if (dino.isMarineAnimal() && !(dino instanceof Hybrid))
             {
                 marineDinos.add(dino);
             }
@@ -236,9 +236,9 @@ public enum EntityHandler
 
         dinosaurs.add(dinosaur);
 
-        if (!(dinosaur instanceof IHybrid) && dinosaur.shouldRegister())
+        if (!(dinosaur instanceof Hybrid) && dinosaur.shouldRegister())
         {
-            EnumTimePeriod period = dinosaur.getPeriod();
+            TimePeriod period = dinosaur.getPeriod();
 
             List<Dinosaur> dinoList = dinosaursFromPeriod.get(period);
 
@@ -251,7 +251,7 @@ public enum EntityHandler
             }
             else
             {
-                List<Dinosaur> newDinoList = new ArrayList<Dinosaur>();
+                List<Dinosaur> newDinoList = new ArrayList<>();
                 newDinoList.add(dinosaur);
 
                 dinosaursFromPeriod.put(period, newDinoList);
@@ -262,16 +262,16 @@ public enum EntityHandler
 
         registerEntity(clazz, dinosaur.getName());
 
-        if (dinosaur.shouldRegister() && !(dinosaur instanceof IHybrid) && JCConfigurations.spawnJurassiCraftMobsNaturally())
+        if (dinosaur.shouldRegister() && !(dinosaur instanceof Hybrid) && JCConfigurations.spawnJurassiCraftMobsNaturally())
         {
             if (dinosaur.isMarineAnimal())
             {
-                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, Biomes.ocean, Biomes.deepOcean, Biomes.river);
+                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.RIVER);
                 EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.IN_WATER);
             }
             else
             {
-                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(BiomeGenBase.biomeRegistry.iterator(), Predicates.notNull()), BiomeGenBase.class));
+                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(Biome.REGISTRY.iterator(), Predicates.notNull()), Biome.class));
                 EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.ON_GROUND);
             }
         }
@@ -294,11 +294,11 @@ public enum EntityHandler
 
     public List<Dinosaur> getDinosaursFromAmber()
     {
-        List<Dinosaur> amberDinos = new ArrayList<Dinosaur>();
+        List<Dinosaur> amberDinos = new ArrayList<>();
 
         for (Dinosaur dino : getRegisteredDinosaurs())
         {
-            if (!dino.isMarineAnimal() && !(dino instanceof IHybrid))
+            if (!dino.isMarineAnimal() && !(dino instanceof Hybrid))
             {
                 amberDinos.add(dino);
             }
@@ -314,7 +314,7 @@ public enum EntityHandler
 
     public List<Dinosaur> getRegisteredDinosaurs()
     {
-        List<Dinosaur> reg = new ArrayList<Dinosaur>();
+        List<Dinosaur> reg = new ArrayList<>();
 
         for (Dinosaur dino : dinosaurs)
         {
@@ -327,7 +327,7 @@ public enum EntityHandler
         return reg;
     }
 
-    public List<Dinosaur> getDinosaursFromPeriod(EnumTimePeriod period)
+    public List<Dinosaur> getDinosaursFromPeriod(TimePeriod period)
     {
         return dinosaursFromPeriod.get(period);
     }

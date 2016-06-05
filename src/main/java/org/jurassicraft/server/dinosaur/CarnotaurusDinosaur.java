@@ -1,9 +1,9 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.CarnotaurusEntity;
 import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.SleepingSchedule;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.CarnotaurusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class CarnotaurusDinosaur extends Dinosaur
 {
@@ -13,7 +13,7 @@ public class CarnotaurusDinosaur extends Dinosaur
 
         this.setName("Carnotaurus");
         this.setDinosaurClass(CarnotaurusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xA2996E, 0x545338);
         this.setEggColorFemale(0x9C8E6A, 0x635639);
         this.setHealth(10, 30);

@@ -19,20 +19,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ISubBlocksBlock;
+import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.itemblock.CultivateItemBlock;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tile.CultivatorTile;
 
 import java.util.List;
 
-public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
+public class CultivatorBlock extends BlockContainer implements SubBlocksBlock
 {
     public static final PropertyEnum COLOR = PropertyEnum.create("color", EnumDyeColor.class);
 
     public CultivatorBlock(String position)
     {
-        super(Material.iron);
+        super(Material.IRON);
         this.setUnlocalizedName("cultivator_" + position);
         this.setDefaultState(this.blockState.getBaseState().withProperty(COLOR, EnumDyeColor.WHITE));
         this.setHardness(2.0F);
@@ -48,7 +48,7 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        if (world.getBlockState(pos).getBlock() == BlockHandler.INSTANCE.cultivate_top)
+        if (world.getBlockState(pos).getBlock() == BlockHandler.INSTANCE.CULTIVATOR_TOP)
         {
             pos.add(0, -1, 0);
         }
@@ -61,9 +61,6 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
         }
     }
 
-    /**
-     * returns a subtypes of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subtypes)
@@ -88,27 +85,18 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
         return new CultivatorTile();
     }
 
-    /**
-     * Get the MapColor for this Block and the given BlockState
-     */
     @Override
     public MapColor getMapColor(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMapColor();
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state)
     {

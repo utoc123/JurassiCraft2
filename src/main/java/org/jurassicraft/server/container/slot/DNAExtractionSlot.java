@@ -15,6 +15,6 @@ public class DNAExtractionSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        return stack.getItem() == ItemHandler.INSTANCE.amber || stack.getItem() == ItemHandler.INSTANCE.sea_lamprey || stack.getItem() == ItemHandler.INSTANCE.dino_meat;
+        return stack.getItem() == ItemHandler.INSTANCE.AMBER || stack.getItem() == ItemHandler.INSTANCE.SEA_LAMPREY || stack.getItem() == ItemHandler.INSTANCE.DINOSAUR_MEAT;
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.DNAExtractionSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
 
 public class DNAExtractorContainer extends SyncedFieldContainer
 {

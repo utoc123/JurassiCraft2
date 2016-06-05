@@ -19,13 +19,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
 public class DoublePlantBlock extends BlockBush
 {
-    public static final PropertyEnum HALF = PropertyEnum.create("half", DoublePlantBlock.EnumBlockHalf.class);
+    public static final PropertyEnum HALF = PropertyEnum.create("half", BlockHalf.class);
 
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, 1.0F, 0.9F);
 
@@ -49,9 +49,6 @@ public class DoublePlantBlock extends BlockBush
         return super.canPlaceBlockAt(world, pos) && world.isAirBlock(pos.up());
     }
 
-    /**
-     * Whether this Block can be replaced directly by other blocks (true for e.g. tall grass)
-     */
     @Override
     public boolean isReplaceable(IBlockAccess world, BlockPos pos)
     {
@@ -65,7 +62,7 @@ public class DoublePlantBlock extends BlockBush
     {
         if (!this.canBlockStay(world, pos, state))
         {
-            boolean upperPart = state.getValue(HALF) == DoublePlantBlock.EnumBlockHalf.UPPER;
+            boolean upperPart = state.getValue(HALF) == BlockHalf.UPPER;
             BlockPos top = upperPart ? pos : pos.up();
             BlockPos bottom = upperPart ? pos.down() : pos;
             Block topBlock = upperPart ? this : world.getBlockState(top).getBlock();
@@ -78,43 +75,38 @@ public class DoublePlantBlock extends BlockBush
 
             if (topBlock == this)
             {
-                world.setBlockState(top, Blocks.air.getDefaultState(), 3);
+                world.setBlockState(top, Blocks.AIR.getDefaultState(), 3);
             }
 
             if (bottomBlock == this)
             {
-                world.setBlockState(bottom, Blocks.air.getDefaultState(), 3);
+                world.setBlockState(bottom, Blocks.AIR.getDefaultState(), 3);
             }
         }
     }
 
     @Override
-    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
+    public boolean canBlockStay(World world, BlockPos pos, IBlockState state)
     {
         if (state.getBlock() != this)
         {
-            return super.canBlockStay(worldIn, pos, state); // Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
+            return super.canBlockStay(world, pos, state);
         }
-        if (state.getValue(HALF) == DoublePlantBlock.EnumBlockHalf.UPPER)
+        if (state.getValue(HALF) == BlockHalf.UPPER)
         {
-            return worldIn.getBlockState(pos.down()).getBlock() == this;
+            return world.getBlockState(pos.down()).getBlock() == this;
         }
         else
         {
-            IBlockState iblockstate1 = worldIn.getBlockState(pos.up());
-            return iblockstate1.getBlock() == this && super.canBlockStay(worldIn, pos, iblockstate1);
+            IBlockState up = world.getBlockState(pos.up());
+            return up.getBlock() == this && super.canBlockStay(world, pos, up);
         }
     }
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     *
-     * @param fortune the level of the Fortune enchantment on the player's tool
-     */
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        if (state.getValue(HALF) == DoublePlantBlock.EnumBlockHalf.UPPER)
+        if (state.getValue(HALF) == BlockHalf.UPPER)
         {
             return null;
         }
@@ -124,9 +116,6 @@ public class DoublePlantBlock extends BlockBush
         }
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
     @Override
     public int damageDropped(IBlockState state)
     {
@@ -136,65 +125,56 @@ public class DoublePlantBlock extends BlockBush
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-        worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, EnumBlockHalf.LOWER), 2);
-        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, DoublePlantBlock.EnumBlockHalf.UPPER), 2);
+        worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, BlockHalf.LOWER), 2);
+        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, BlockHalf.UPPER), 2);
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
     {
-        if (state.getValue(HALF) == DoublePlantBlock.EnumBlockHalf.UPPER)
+        if (state.getValue(HALF) == BlockHalf.UPPER)
         {
-            if (worldIn.getBlockState(pos.down()).getBlock() == this)
+            if (world.getBlockState(pos.down()).getBlock() == this)
             {
                 if (!player.capabilities.isCreativeMode)
                 {
-                    IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
+                    IBlockState lowerBlock = world.getBlockState(pos.down());
 
-                    if (iblockstate1.getBlock() == this)
+                    if (lowerBlock.getBlock() == this)
                     {
-                        worldIn.destroyBlock(pos.down(), true);
+                        world.destroyBlock(pos.down(), true);
                     }
                 }
                 else
                 {
-                    worldIn.setBlockToAir(pos.down());
+                    world.setBlockToAir(pos.down());
                 }
             }
         }
-        else if (player.capabilities.isCreativeMode && worldIn.getBlockState(pos.up()).getBlock() == this)
+        else if (player.capabilities.isCreativeMode && world.getBlockState(pos.up()).getBlock() == this)
         {
-            worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState(), 2);
+            world.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 2);
         }
 
-        super.onBlockHarvested(worldIn, pos, state, player);
+        super.onBlockHarvested(world, pos, state, player);
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(HALF, DoublePlantBlock.EnumBlockHalf.values()[meta]);
+        return this.getDefaultState().withProperty(HALF, BlockHalf.values()[meta]);
     }
 
-    /**
-     * Get the actual Block state of this Block at the given position. This applies properties not visible in the metadata, such as fence connections.
-     */
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return state;
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((DoublePlantBlock.EnumBlockHalf) state.getValue(HALF)).ordinal();
+        return ((BlockHalf) state.getValue(HALF)).ordinal();
     }
 
     @Override
@@ -206,7 +186,7 @@ public class DoublePlantBlock extends BlockBush
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
     {
-        if (state.getBlock() == this && state.getValue(HALF) == EnumBlockHalf.LOWER && world.getBlockState(pos.up()).getBlock() == this)
+        if (state.getBlock() == this && state.getValue(HALF) == BlockHalf.LOWER && world.getBlockState(pos.up()).getBlock() == this)
         {
             world.setBlockToAir(pos.up());
         }
@@ -221,7 +201,7 @@ public class DoublePlantBlock extends BlockBush
         return EnumOffsetType.XZ;
     }
 
-    enum EnumBlockHalf implements IStringSerializable
+    enum BlockHalf implements IStringSerializable
     {
         UPPER, LOWER;
 

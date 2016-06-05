@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.LeptictidiumEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.LeptictidiumEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class LeptictidiumDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class LeptictidiumDinosaur extends Dinosaur
 
         this.setName("Leptictidium");
         this.setDinosaurClass(LeptictidiumEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS); // TODO EOCENE
+        this.setTimePeriod(TimePeriod.CRETACEOUS); // TODO EOCENE
         this.setEggColorMale(0x362410, 0x978A78);
         this.setEggColorFemale(0xAFA27E, 0x3E2D17);
         this.setHealth(8, 18);

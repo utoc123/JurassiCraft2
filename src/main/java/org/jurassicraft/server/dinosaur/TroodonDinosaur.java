@@ -1,9 +1,9 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.TroodonEntity;
 import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.base.SleepingSchedule;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.TroodonEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class TroodonDinosaur extends Dinosaur
 {
@@ -13,7 +13,7 @@ public class TroodonDinosaur extends Dinosaur
 
         this.setName("Troodon");
         this.setDinosaurClass(TroodonEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x9DAA7A, 0x636B67);
         this.setEggColorFemale(0xA2A67C, 0x646D66);
         this.setHealth(5, 20);

@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.SyringeSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tile.CultivatorTile;
 
 public class CultivateContainer extends SyncedFieldContainer
 {

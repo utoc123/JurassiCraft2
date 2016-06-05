@@ -205,9 +205,9 @@ public class HerdManager
     // Takes care of all the members of a species.
     public class Herd
     {
-        private LinkedList<Cluster> clusters = new LinkedList<Cluster>();
-        private LinkedList<DinosaurEntity> noise = new LinkedList<DinosaurEntity>();
-        private final LinkedList<DinosaurEntity> allDinosaurs = new LinkedList<DinosaurEntity>();
+        private LinkedList<Cluster> clusters = new LinkedList<>();
+        private LinkedList<DinosaurEntity> noise = new LinkedList<>();
+        private final LinkedList<DinosaurEntity> allDinosaurs = new LinkedList<>();
 
         /**
          * Returns the cluster this dinosaur is in, or null if not in a cluster.
@@ -269,7 +269,7 @@ public class HerdManager
             allDinosaurs.add(dinosaur);
 
             // Add to a cluster if we can find one.
-            LinkedList<Cluster> belongsTo = new LinkedList<Cluster>();
+            LinkedList<Cluster> belongsTo = new LinkedList<>();
             for (Cluster cluster : clusters)
             {
                 if (cluster.withinProximity(dinosaur))
@@ -345,7 +345,7 @@ public class HerdManager
         void rebalance()
         {
             // For now this is a hack!  We recompute the entire thing instead of just updating
-            noise = new LinkedList<DinosaurEntity>(allDinosaurs);
+            noise = new LinkedList<>(allDinosaurs);
             clusters = cluster(noise);
 
             //LOGGER.info("After rebalance #clusters: " + _clusters.size());
@@ -381,7 +381,7 @@ public class HerdManager
     public class Cluster
     {
         // We use linked list because we traverse and don't need random access
-        private LinkedList<DinosaurEntity> dinosaurs = new LinkedList<DinosaurEntity>();
+        private LinkedList<DinosaurEntity> dinosaurs = new LinkedList<>();
 
         /**
          * Gets the "center" (average) of the cluster,
@@ -527,7 +527,7 @@ public class HerdManager
     private LinkedList<Cluster> cluster(LinkedList<DinosaurEntity> dinosaurs)
     {
         DinosaurEntity dino;
-        LinkedList<Cluster> clusters = new LinkedList<Cluster>();
+        LinkedList<Cluster> clusters = new LinkedList<>();
 
         while ((dino = dinosaurs.poll()) != null)
         {
@@ -548,7 +548,7 @@ public class HerdManager
      */
     private LinkedList<DinosaurEntity> extractProximates(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
     {
-        LinkedList<DinosaurEntity> proximates = new LinkedList<DinosaurEntity>();
+        LinkedList<DinosaurEntity> proximates = new LinkedList<>();
         Iterator<DinosaurEntity> iter = dinosaurs.iterator();
         while (iter.hasNext())
         {

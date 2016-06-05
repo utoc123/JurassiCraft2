@@ -32,7 +32,7 @@ public class InventoryDinosaur implements IInventory
         {
             ItemStack stack = getStackInSlot(i);
 
-            if (stack != null && stack.getItem() == ItemHandler.INSTANCE.tracker)
+            if (stack != null && stack.getItem() == ItemHandler.INSTANCE.TRACKER)
             {
                 hasTracker = true;
             }

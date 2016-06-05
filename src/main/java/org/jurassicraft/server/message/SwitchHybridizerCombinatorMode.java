@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.gui.DNACombinatorHybridizerGui;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybridizerCombinatorMode>
 {

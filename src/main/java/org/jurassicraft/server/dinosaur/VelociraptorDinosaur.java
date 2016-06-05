@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.VelociraptorEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class VelociraptorDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class VelociraptorDinosaur extends Dinosaur
 
         this.setName("Velociraptor");
         this.setDinosaurClass(VelociraptorEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xB17041, 0x3B1505);
         this.setEggColorFemale(0x91765D, 0x5A4739);
         this.setAttackSpeed(2.0);

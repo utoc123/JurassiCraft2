@@ -6,7 +6,7 @@ import org.jurassicraft.server.genetics.PlantDNA;
 
 import java.util.List;
 
-public class PlantDNAStorageType implements IStorageType
+public class PlantDNAStorageType implements StorageType
 {
     private PlantDNA dna;
 

@@ -1,6 +1,5 @@
 package org.jurassicraft.server.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -32,34 +31,34 @@ public abstract class OrientedBlock extends BlockContainer
         this.setDefaultFacing(worldIn, pos, state);
     }
 
-    private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
+    private void setDefaultFacing(World world, BlockPos pos, IBlockState state)
     {
-        if (!worldIn.isRemote)
+        if (!world.isRemote)
         {
-            Block blockNorth = worldIn.getBlockState(pos.north()).getBlock();
-            Block blockSouth = worldIn.getBlockState(pos.south()).getBlock();
-            Block blockWest = worldIn.getBlockState(pos.west()).getBlock();
-            Block blockEast = worldIn.getBlockState(pos.east()).getBlock();
-            EnumFacing enumfacing = state.getValue(FACING);
+            IBlockState blockNorth = world.getBlockState(pos.north());
+            IBlockState blockSouth = world.getBlockState(pos.south());
+            IBlockState blockWest = world.getBlockState(pos.west());
+            IBlockState blockEast = world.getBlockState(pos.east());
+            EnumFacing facing = state.getValue(FACING);
 
-            if (enumfacing == EnumFacing.NORTH && blockNorth.isFullBlock(state) && !blockSouth.isFullBlock(state))
+            if (facing == EnumFacing.NORTH && blockNorth.isFullBlock() && !blockSouth.isFullBlock())
             {
-                enumfacing = EnumFacing.SOUTH;
+                facing = EnumFacing.SOUTH;
             }
-            else if (enumfacing == EnumFacing.SOUTH && blockSouth.isFullBlock(state) && !blockNorth.isFullBlock(state))
+            else if (facing == EnumFacing.SOUTH && blockSouth.isFullBlock() && !blockNorth.isFullBlock())
             {
-                enumfacing = EnumFacing.NORTH;
+                facing = EnumFacing.NORTH;
             }
-            else if (enumfacing == EnumFacing.WEST && blockWest.isFullBlock(state) && !blockEast.isFullBlock(state))
+            else if (facing == EnumFacing.WEST && blockWest.isFullBlock() && !blockEast.isFullBlock())
             {
-                enumfacing = EnumFacing.EAST;
+                facing = EnumFacing.EAST;
             }
-            else if (enumfacing == EnumFacing.EAST && blockEast.isFullBlock(state) && !blockWest.isFullBlock(state))
+            else if (facing == EnumFacing.EAST && blockEast.isFullBlock() && !blockWest.isFullBlock())
             {
-                enumfacing = EnumFacing.WEST;
+                facing = EnumFacing.WEST;
             }
 
-            worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
+            world.setBlockState(pos, state.withProperty(FACING, facing), 2);
         }
     }
 
@@ -78,12 +77,14 @@ public abstract class OrientedBlock extends BlockContainer
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y)
+        EnumFacing facing = EnumFacing.getFront(meta);
+
+        if (facing.getAxis() == EnumFacing.Axis.Y)
         {
-            enumfacing = EnumFacing.NORTH;
+            facing = EnumFacing.NORTH;
         }
-        return this.getDefaultState().withProperty(FACING, enumfacing);
+
+        return this.getDefaultState().withProperty(FACING, facing);
     }
 
     @Override

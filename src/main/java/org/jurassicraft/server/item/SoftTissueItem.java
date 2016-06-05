@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ISequencableItem;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.api.SequencableItem;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class SoftTissueItem extends Item implements ISequencableItem
+public class SoftTissueItem extends Item implements SequencableItem
 {
     public SoftTissueItem()
     {
@@ -88,12 +88,12 @@ public class SoftTissueItem extends Item implements ISequencableItem
         if (nbt == null)
         {
             nbt = new NBTTagCompound();
-            int quality = ISequencableItem.randomQuality(random);
+            int quality = SequencableItem.randomQuality(random);
             DinoDNA dna = new DinoDNA(EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage()), quality, GeneticsHelper.randomGenetics(random));
             dna.writeToNBT(nbt);
         }
 
-        ItemStack output = new ItemStack(ItemHandler.INSTANCE.storage_disc, 1, stack.getItemDamage());
+        ItemStack output = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, stack.getItemDamage());
         output.setTagCompound(nbt);
 
         return output;

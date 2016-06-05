@@ -2,6 +2,7 @@ package org.jurassicraft.server.item;
 
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,15 +20,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,7 +111,7 @@ public class DinosaurSpawnEggItem extends Item
                 modeString = "female";
             }
 
-            player.addChatMessage(new TextComponentString(new AdvLang("spawnegg.genderchange.name").withProperty("mode", I18n.translateToLocal("gender." + modeString + ".name")).build()));
+            player.addChatMessage(new TextComponentString(new AdvLang("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
 
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
@@ -143,7 +143,7 @@ public class DinosaurSpawnEggItem extends Item
     {
         List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
+        Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
@@ -176,14 +176,14 @@ public class DinosaurSpawnEggItem extends Item
         {
             IBlockState iblockstate = world.getBlockState(pos);
 
-            if (iblockstate.getBlock() == Blocks.mob_spawner)
+            if (iblockstate.getBlock() == Blocks.MOB_SPAWNER)
             {
                 TileEntity tile = world.getTileEntity(pos);
 
                 if (tile instanceof TileEntityMobSpawner)
                 {
                     MobSpawnerBaseLogic spawnerLogic = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic();
-                    spawnerLogic.setEntityName(EntityList.classToStringMapping.get(getDinosaur(stack).getDinosaurClass()));
+                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(getDinosaur(stack).getDinosaurClass()));
                     tile.markDirty();
 
                     if (!player.capabilities.isCreativeMode)
@@ -266,7 +266,7 @@ public class DinosaurSpawnEggItem extends Item
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
-        lore.add(I18n.translateToLocal("lore.baby_dino.name"));
-        lore.add(I18n.translateToLocal("lore.change_gender.name"));
+        lore.add(I18n.format("lore.baby_dino.name"));
+        lore.add(I18n.format("lore.change_gender.name"));
     }
 }

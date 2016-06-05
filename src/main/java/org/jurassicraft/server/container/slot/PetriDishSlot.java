@@ -15,6 +15,6 @@ public class PetriDishSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        return stack.getItem() == ItemHandler.INSTANCE.plant_cells_petri_dish || stack.getItem() == ItemHandler.INSTANCE.petri_dish;
+        return stack.getItem() == ItemHandler.INSTANCE.PLANT_CELLS_PETRI_DISH || stack.getItem() == ItemHandler.INSTANCE.PETRI_DISH;
     }
 }

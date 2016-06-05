@@ -91,7 +91,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
-            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.egg, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.EGG, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("DNAQuality", dnaQuality);
             nbt.setString("Genetics", genetics);

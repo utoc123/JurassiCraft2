@@ -8,10 +8,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,9 +52,9 @@ public class PlantDNAItem extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<Plant>(PlantHandler.INSTANCE.getPlants());
+        List<Plant> plants = new ArrayList<>(PlantHandler.INSTANCE.getPlants());
 
-        Map<Plant, Integer> ids = new HashMap<Plant, Integer>();
+        Map<Plant, Integer> ids = new HashMap<>();
 
         for (Plant plant : plants)
         {

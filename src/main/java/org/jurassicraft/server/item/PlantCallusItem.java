@@ -26,14 +26,14 @@ public class PlantCallusItem extends Item
     {
         if (side == EnumFacing.UP && player.canPlayerEdit(pos.offset(side), side, stack))
         {
-            if (world.isAirBlock(pos.offset(side)) && world.getBlockState(pos).getBlock() == Blocks.farmland)
+            if (world.isAirBlock(pos.offset(side)) && world.getBlockState(pos).getBlock() == Blocks.FARMLAND)
             {
                 Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
 
                 if (plant != null)
                 {
                     world.setBlockState(pos.up(), plant.getBlock().getDefaultState());
-                    world.setBlockState(pos, Blocks.dirt.getDefaultState());
+                    world.setBlockState(pos, Blocks.DIRT.getDefaultState());
                     --stack.stackSize;
                     return EnumActionResult.SUCCESS;
                 }

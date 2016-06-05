@@ -32,16 +32,16 @@ import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
-import org.jurassicraft.server.tileentity.CultivatorTile;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
-import org.jurassicraft.server.tileentity.FossilGrinderTile;
-import org.jurassicraft.server.tileentity.IncubatorTile;
+import org.jurassicraft.server.tile.CleaningStationTile;
+import org.jurassicraft.server.tile.CultivatorTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASynthesizerTile;
+import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.FossilGrinderTile;
+import org.jurassicraft.server.tile.IncubatorTile;
 
 public class GuiHandler implements IGuiHandler
 {

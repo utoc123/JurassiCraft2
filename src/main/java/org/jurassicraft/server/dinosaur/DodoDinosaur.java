@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.DodoEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.DodoEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class DodoDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class DodoDinosaur extends Dinosaur
 
         this.setName("Dodo");
         this.setDinosaurClass(DodoEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xA2996E, 0x545338);
         this.setEggColorFemale(0x908B80, 0x665C51);
         this.setHealth(5, 15);

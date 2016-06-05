@@ -11,7 +11,7 @@ import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
+import org.jurassicraft.server.tile.ActionFigureTile;
 
 public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureTile>
 {

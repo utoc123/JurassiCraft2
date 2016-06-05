@@ -18,14 +18,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
 public class EmbryonicMachineBlock extends OrientedBlock
 {
     public EmbryonicMachineBlock()
     {
-        super(Material.iron);
+        super(Material.IRON);
         this.setUnlocalizedName("embryonic_machine");
         this.setHardness(2.0F);
         this.setSoundType(SoundType.METAL);

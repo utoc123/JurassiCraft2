@@ -8,9 +8,6 @@ import org.jurassicraft.server.world.jurdstrees.algorythms.TreeGenerator;
 
 import java.util.Random;
 
-/**
- * Created by Jordi on 12/08/2015.
- */
 public class WorldGenJCTree extends WorldGenAbstractTree
 {
     private TreeType type;
@@ -22,9 +19,9 @@ public class WorldGenJCTree extends WorldGenAbstractTree
     }
 
     @Override
-    public boolean generate(World worldIn, Random random, BlockPos pos)
+    public boolean generate(World world, Random random, BlockPos pos)
     {
-        TreeGenerator generator = new TreeGenerator(type, worldIn, pos);
+        TreeGenerator generator = new TreeGenerator(type, world, pos);
         generator.placeTree();
 
         return true;

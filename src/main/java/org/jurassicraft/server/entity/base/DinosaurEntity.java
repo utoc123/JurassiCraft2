@@ -342,11 +342,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (burning)
             {
-                entityDropItem(new ItemStack(ItemHandler.INSTANCE.dino_steak, 1, meta), 0.0F);
+                entityDropItem(new ItemStack(ItemHandler.INSTANCE.DINOSAUR_STEAK, 1, meta), 0.0F);
             }
             else
             {
-                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.dino_meat, 1, meta));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.DINOSAUR_MEAT, 1, meta));
             }
         }
     }
@@ -734,7 +734,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (rand.nextInt(10) != 0)
             {
-                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.fresh_fossils.get(bone), 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur)));
+                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.FRESH_FOSSILS.get(bone), 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur)));
             }
         }
     }
@@ -972,9 +972,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
-        super.writeToNBT(nbt);
+        nbt = super.writeToNBT(nbt);
 
         nbt.setDouble("DinosaurAge", dinosaurAge);
         nbt.setBoolean("IsCarcass", isCarcass);
@@ -995,6 +995,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         inventory.writeToNBT(nbt);
+
+        return nbt;
     }
 
     @Override
@@ -1176,7 +1178,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public ItemStack getPickedResult(RayTraceResult target)
     {
-        return new ItemStack(ItemHandler.INSTANCE.spawn_egg, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        return new ItemStack(ItemHandler.INSTANCE.SPAWN_EGG, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
     }
 
     @Override

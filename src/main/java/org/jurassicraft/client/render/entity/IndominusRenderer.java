@@ -8,8 +8,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.dinosaur.IndominusDinosaur;
-import org.jurassicraft.server.entity.IndominusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.dinosaur.IndominusEntity;
 
 @SideOnly(Side.CLIENT)
 public class IndominusRenderer extends DinosaurRenderer

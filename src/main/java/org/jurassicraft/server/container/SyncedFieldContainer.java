@@ -1,7 +1,7 @@
 package org.jurassicraft.server.container;
 
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,7 +22,7 @@ public abstract class SyncedFieldContainer extends Container
     {
         super.detectAndSendChanges();
 
-        for (ICrafting crafter : this.crafters)
+        for (IContainerListener listener : this.listeners)
         {
             for (int fieldIndex = 0; fieldIndex < fields.length; fieldIndex++)
             {
@@ -30,7 +30,7 @@ public abstract class SyncedFieldContainer extends Container
 
                 if (field != fields[fieldIndex])
                 {
-                    crafter.sendProgressBarUpdate(this, fieldIndex, field);
+                    listener.sendProgressBarUpdate(this, fieldIndex, field);
                 }
             }
         }
