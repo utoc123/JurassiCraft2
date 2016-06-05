@@ -2,20 +2,21 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.DNAExtractionSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
 
-public class DNAExtractorContainer extends Container
+public class DNAExtractorContainer extends SyncedFieldContainer
 {
     private DNAExtractorTile extractor;
 
     public DNAExtractorContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
         this.extractor = (DNAExtractorTile) tileEntity;
         this.addSlotToContainer(new StorageSlot(extractor, 1, 55, 47, false));
         this.addSlotToContainer(new DNAExtractionSlot(extractor, 0, 55, 26));

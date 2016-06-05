@@ -3,9 +3,8 @@ package org.jurassicraft.server.block.machine;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.InventoryHelper;
@@ -14,43 +13,42 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ISubBlocksBlock;
+import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.itemblock.CultivateItemBlock;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tile.CultivatorTile;
 
 import java.util.List;
 
-public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
+public class CultivatorBlock extends BlockContainer implements SubBlocksBlock
 {
     public static final PropertyEnum COLOR = PropertyEnum.create("color", EnumDyeColor.class);
 
     public CultivatorBlock(String position)
     {
-        super(Material.iron);
+        super(Material.IRON);
         this.setUnlocalizedName("cultivator_" + position);
         this.setDefaultState(this.blockState.getBaseState().withProperty(COLOR, EnumDyeColor.WHITE));
         this.setHardness(2.0F);
         this.setResistance(5.0F);
     }
 
-    /**
-     * Get the damage value that this Block should drop
-     */
     @Override
     public int damageDropped(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
     }
 
-    public void dropItems(World world, BlockPos pos)
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        if (world.getBlockState(pos).getBlock() == BlockHandler.INSTANCE.cultivate_top)
+        if (world.getBlockState(pos).getBlock() == BlockHandler.INSTANCE.CULTIVATOR_TOP)
         {
             pos.add(0, -1, 0);
         }
@@ -63,11 +61,8 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
         }
     }
 
-    /**
-     * returns a subtypes of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
-    @Override
     @SideOnly(Side.CLIENT)
+    @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
         EnumDyeColor[] colors = EnumDyeColor.values();
@@ -79,9 +74,9 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     }
 
     @Override
-    public Class<? extends ItemBlock> getItemBlockClass()
+    public ItemBlock getItemBlock()
     {
-        return CultivateItemBlock.class;
+        return new CultivateItemBlock(this);
     }
 
     @Override
@@ -90,27 +85,18 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
         return new CultivatorTile();
     }
 
-    /**
-     * Get the MapColor for this Block and the given BlockState
-     */
     @Override
     public MapColor getMapColor(IBlockState state)
     {
         return ((EnumDyeColor) state.getValue(COLOR)).getMapColor();
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state)
     {
@@ -118,33 +104,33 @@ public class CultivatorBlock extends BlockContainer implements ISubBlocksBlock
     }
 
     @Override
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] { COLOR });
+        return new BlockStateContainer(this, COLOR);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.TRANSLUCENT;
+        return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 }

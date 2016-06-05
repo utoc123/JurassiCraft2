@@ -3,18 +3,20 @@ package org.jurassicraft.server.block.plant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +36,17 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     {
         this.setDefaultState(this.blockState.getBaseState().withProperty(getAgeProperty(), 0));
         this.setTickRandomly(true);
-        float f = 0.5F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
-
         // NOTE: No tab because the seeds are placed not the plant.
-        this.setCreativeTab((CreativeTabs) null);
+        this.setCreativeTab(null);
         this.setHardness(0.0F);
-        this.setStepSound(soundTypeGrass);
+        this.setSoundType(SoundType.PLANT);
         this.disableStats();
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, (state.getValue(getAgeProperty()) + 1) * 0.125F, 0.9F);
     }
 
     abstract protected PropertyInteger getAgeProperty();
@@ -50,7 +55,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
 
     // NOTE:  This is called on parent object construction.
     @Override
-    abstract protected BlockState createBlockState();
+    abstract protected BlockStateContainer createBlockState();
 
     abstract protected Item getSeed();
 
@@ -58,50 +63,47 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
 
     //============================================
 
-    /**
-     * is the block grass, dirt or farmland
-     */
     @Override
-    protected boolean canPlaceBlockOn(Block ground)
+    protected boolean canSustainBush(IBlockState ground)
     {
-        return ground == Blocks.farmland;
+        return ground == Blocks.FARMLAND;
     }
 
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
-        super.updateTick(worldIn, pos, state, rand);
+        super.updateTick(world, pos, state, rand);
 
-        if (worldIn.getLightFromNeighbors(pos.up()) >= 9)
+        if (world.getLightFromNeighbors(pos.up()) >= 9)
         {
-            int i = (Integer) state.getValue(getAgeProperty());
+            int i = state.getValue(getAgeProperty());
 
             if (i < this.getMaxAge())
             {
-                float f = getGrowthChance(this, worldIn, pos);
+                float f = getGrowthChance(this, world, pos);
 
                 if (rand.nextInt((int) (25.0F / f) + 1) == 0)
                 {
-                    worldIn.setBlockState(pos, state.withProperty(getAgeProperty(), i + 1), 2);
+                    world.setBlockState(pos, state.withProperty(getAgeProperty(), i + 1), 2);
                 }
             }
         }
     }
 
-    public void grow(World worldIn, BlockPos pos, IBlockState state)
+    public void grow(World world, BlockPos pos, IBlockState state)
     {
         // TODO:  Pull out these two numbers.
-        int i = (Integer) state.getValue(getAgeProperty()) + MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
+        int i = state.getValue(getAgeProperty()) + MathHelper.getRandomIntegerInRange(world.rand, 2, 5);
 
         if (i > this.getMaxAge())
         {
             i = this.getMaxAge();
         }
 
-        worldIn.setBlockState(pos, state.withProperty(getAgeProperty(), i), 2);
+        world.setBlockState(pos, state.withProperty(getAgeProperty(), i), 2);
     }
 
-    protected static float getGrowthChance(Block blockIn, World worldIn, BlockPos pos)
+    protected static float getGrowthChance(Block block, World world, BlockPos pos)
     {
         float f = 1.0F;
         BlockPos blockpos = pos.down();
@@ -111,14 +113,13 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
             for (int j = -1; j <= 1; ++j)
             {
                 float f1 = 0.0F;
-                IBlockState iblockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
+                IBlockState state = world.getBlockState(blockpos.add(i, 0, j));
 
-                if (iblockstate.getBlock().canSustainPlant(worldIn, blockpos.add(i, 0, j),
-                        net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable) blockIn))
+                if (state.getBlock().canSustainPlant(state, world, blockpos.add(i, 0, j), EnumFacing.UP, (IPlantable) block))
                 {
                     f1 = 1.0F;
 
-                    if (iblockstate.getBlock().isFertile(worldIn, blockpos.add(i, 0, j)))
+                    if (state.getBlock().isFertile(world, blockpos.add(i, 0, j)))
                     {
                         f1 = 3.0F;
                     }
@@ -137,8 +138,8 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         BlockPos blockpos2 = pos.south();
         BlockPos blockpos3 = pos.west();
         BlockPos blockpos4 = pos.east();
-        boolean flag = blockIn == worldIn.getBlockState(blockpos3).getBlock() || blockIn == worldIn.getBlockState(blockpos4).getBlock();
-        boolean flag1 = blockIn == worldIn.getBlockState(blockpos1).getBlock() || blockIn == worldIn.getBlockState(blockpos2).getBlock();
+        boolean flag = block == world.getBlockState(blockpos3).getBlock() || block == world.getBlockState(blockpos4).getBlock();
+        boolean flag1 = block == world.getBlockState(blockpos1).getBlock() || block == world.getBlockState(blockpos2).getBlock();
 
         if (flag && flag1)
         {
@@ -146,10 +147,10 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         }
         else
         {
-            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() ||
-                    blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() ||
-                    blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() ||
-                    blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
+            boolean flag2 = block == world.getBlockState(blockpos3.north()).getBlock() ||
+                    block == world.getBlockState(blockpos4.north()).getBlock() ||
+                    block == world.getBlockState(blockpos4.south()).getBlock() ||
+                    block == world.getBlockState(blockpos3.south()).getBlock();
 
             if (flag2)
             {
@@ -161,19 +162,15 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     }
 
     @Override
-    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
+    public boolean canBlockStay(World world, BlockPos pos, IBlockState state)
     {
-        return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) &&
-                worldIn.getBlockState(pos.down()).getBlock().canSustainPlant(worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+        return (world.getLight(pos) >= 8 || world.canSeeSky(pos)) && world.getBlockState(pos.down()).getBlock().canSustainPlant(state, world, pos.down(), net.minecraft.util.EnumFacing.UP, this);
     }
 
-    /**
-     * Whether this IGrowable can grow
-     */
     @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
     {
-        return (Integer) state.getValue(getAgeProperty()) < this.getMaxAge();
+        return state.getValue(getAgeProperty()) < this.getMaxAge();
     }
 
     @Override
@@ -183,62 +180,45 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public Item getItem(World worldIn, BlockPos pos)
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return this.getSeed();
+        return new ItemStack(this.getSeed());
     }
 
     @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public void grow(World world, Random rand, BlockPos pos, IBlockState state)
     {
-        this.grow(worldIn, pos, state);
+        this.grow(world, pos, state);
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(getAgeProperty(), meta);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return (Integer) state.getValue(getAgeProperty());
+        return state.getValue(getAgeProperty());
     }
 
-
-    //==============
-
-    /**
-     * Spawns this Block's drops into the World as EntityItems.
-     */
     @Override
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
     {
         super.dropBlockAsItemWithChance(worldIn, pos, state, chance, 0);
     }
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return state.getValue(getAgeProperty()) == this.getMaxAge() ? this.getCrop() : this.getSeed();
     }
 
-
     @Override
-    public java.util.List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
+    public List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        List<ItemStack> drops = new ArrayList<ItemStack>();
+        List<ItemStack> drops = new ArrayList<>();
 
         int age = state.getValue(getAgeProperty());
         Random rand = world instanceof World ? ((World) world).rand : new Random();
@@ -251,12 +231,15 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         {
             // Drop range of leaves and range of seeds
             if (seedDropMin > 0 && seedDropMax > 0)
+            {
                 drops.add(new ItemStack(getSeed(), MathHelper.getRandomIntegerInRange(rand, seedDropMin, seedDropMax)));
+            }
             if (cropDropMin > 0 && cropDropMax > 0)
+            {
                 drops.add(new ItemStack(getCrop(), MathHelper.getRandomIntegerInRange(rand, cropDropMin, cropDropMax)));
+            }
         }
 
         return drops;
     }
-
 }

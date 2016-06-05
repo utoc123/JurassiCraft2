@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.ZhenyuanopterusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.ZhenyuanopterusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class ZhenyuanopterusDinosaur extends Dinosaur
 {
@@ -11,7 +11,7 @@ public class ZhenyuanopterusDinosaur extends Dinosaur
         super();
         this.setName("Zhenyuanopterus");
         this.setDinosaurClass(ZhenyuanopterusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x434F4E, 0x0F1010);
         this.setEggColorFemale(0x4A5957, 0xB9B7A3);
         this.setSpeed(0.46, 0.40);

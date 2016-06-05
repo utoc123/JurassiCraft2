@@ -2,19 +2,21 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.GrindableItemSlot;
-import org.jurassicraft.server.tileentity.FossilGrinderTile;
+import org.jurassicraft.server.tile.FossilGrinderTile;
 
-public class FossilGrinderContainer extends Container
+public class FossilGrinderContainer extends SyncedFieldContainer
 {
     private FossilGrinderTile fossilGrinder;
 
     public FossilGrinderContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
+
         this.fossilGrinder = (FossilGrinderTile) tileEntity;
         this.addSlotToContainer(new GrindableItemSlot(fossilGrinder, 0, 50, 35));
 

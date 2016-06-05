@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.CoelacanthEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.CoelacanthEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class CoelacanthDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class CoelacanthDinosaur extends Dinosaur
 
         this.setName("Coelacanth");
         this.setDinosaurClass(CoelacanthEntity.class);
-        this.setTimePeriod(EnumTimePeriod.DEVONIAN);
+        this.setTimePeriod(TimePeriod.DEVONIAN);
         this.setEggColorMale(0x3C4B65, 0x737E96);
         this.setEggColorFemale(0x4C4A3A, 0x7C775E);
         this.setHealth(5, 10);

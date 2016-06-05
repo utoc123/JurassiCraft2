@@ -5,10 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -86,11 +87,11 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     }
 
     @Override
-    public boolean interactFirst(EntityPlayer player)
+    public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand)
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
-            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.egg, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.EGG, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("DNAQuality", dnaQuality);
             nbt.setString("Genetics", genetics);
@@ -144,11 +145,10 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
 
     public void warnPlayersWithinRadius(String message)
     {
-        List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.fromBounds(this.posX - 30, this.posY - 10, this.posZ - 30, this.posX + 30, this.posY + 10, this.posZ + 30));
-
+        List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.posX - 30, this.posY - 10, this.posZ - 30, this.posX + 30, this.posY + 10, this.posZ + 30));
         for (EntityPlayer player : players)
         {
-            player.addChatMessage(new ChatComponentText(message));
+            player.addChatMessage(new TextComponentString(message));
         }
     }
 

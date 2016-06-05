@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
+import org.jurassicraft.server.tile.CleaningStationTile;
 
 public class WaterBucketSlot extends Slot
 {

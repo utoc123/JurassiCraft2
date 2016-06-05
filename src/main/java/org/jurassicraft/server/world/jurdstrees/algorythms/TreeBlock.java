@@ -34,12 +34,7 @@ public class TreeBlock
     public boolean equals(TreeBlock TB)
     {
 
-        if (TB.getX() == x && TB.getY() == y && TB.getZ() == z)
-        {
-            return true;
-        }
-
-        return false;
+        return TB.getX() == x && TB.getY() == y && TB.getZ() == z;
 
     }
 

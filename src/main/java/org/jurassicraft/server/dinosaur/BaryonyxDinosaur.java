@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.BaryonyxEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.BaryonyxEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class BaryonyxDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class BaryonyxDinosaur extends Dinosaur
 
         this.setName("Baryonyx");
         this.setDinosaurClass(BaryonyxEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x567F4F, 0x13270F);
         this.setEggColorFemale(0x9D9442, 0x2A2405);
         this.setHealth(5, 30);

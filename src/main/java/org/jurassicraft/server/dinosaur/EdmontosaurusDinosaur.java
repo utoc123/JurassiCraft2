@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.EdmontosaurusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.EdmontosaurusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class EdmontosaurusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class EdmontosaurusDinosaur extends Dinosaur
 
         this.setName("Edmontosaurus");
         this.setDinosaurClass(EdmontosaurusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xB97840, 0x644329);
         this.setEggColorFemale(0x8F8039, 0x615A30);
         this.setHealth(10, 40);

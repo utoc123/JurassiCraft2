@@ -13,12 +13,26 @@
             "to": [ 16.0, 16.0, 16.0 ],
             "shade": false,
             "faces": {
-               "north": { "texture": "#14", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "north" },
-               "east": { "texture": "#13", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "east" },
-               "south": { "texture": "#14", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "south" },
-               "west": { "texture": "#15", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "west" },
-               "up": { "texture": "#3", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "up" },
-              "down": {
+              "north": {
+                "texture": "#14",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "east": {
+                "texture": "#13",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "east"
+              },
+              "south": {
                 "texture": "#14",
                 "uv": [
                   0.0,
@@ -26,7 +40,36 @@
                   16.0,
                   16.0
                 ],
-                "cullface": "down"
+                "cullface": "south"
+              },
+              "west": {
+                "texture": "#15",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "west"
+              },
+              "up": {
+                "texture": "#3",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "up"
+              },
+              "down": {
+                "texture": "#14",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
               }
             }
         }

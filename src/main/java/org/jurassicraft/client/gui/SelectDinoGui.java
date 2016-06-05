@@ -4,13 +4,14 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
@@ -38,13 +39,15 @@ public class SelectDinoGui extends GuiScreen
 
     private BlockPos pos;
     private EnumFacing facing;
+    private EnumHand hand;
 
     private List<Dinosaur> dinosaurs;
 
-    public SelectDinoGui(BlockPos pos, EnumFacing facing)
+    public SelectDinoGui(BlockPos pos, EnumFacing facing, EnumHand hand)
     {
         this.pos = pos;
         this.facing = facing;
+        this.hand = hand;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class SelectDinoGui extends GuiScreen
     {
         super.initGui();
 
-        this.buttonList.add(new GuiButton(0, (this.width - 150) / 2, this.height / 5 + 150, 150, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(new GuiButton(0, (this.width - 150) / 2, this.height / 5 + 150, 150, 20, I18n.format("gui.cancel")));
         this.buttonList.add(backward = new GuiButton(1, this.width / 2 - 105, this.height / 5 + 150, 20, 20, "<"));
         this.buttonList.add(forward = new GuiButton(2, this.width / 2 + 85, this.height / 5 + 150, 20, 20, ">"));
 
@@ -67,6 +70,9 @@ public class SelectDinoGui extends GuiScreen
         enableDisablePages();
     }
 
+    /**
+     * Called when a mouse button is released.  Args : mouseX, mouseY, releaseButton
+     */
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
@@ -154,7 +160,7 @@ public class SelectDinoGui extends GuiScreen
             inventory.decrStackSize(inventory.currentItem, 1);
         }
 
-        JurassiCraft.NETWORK_WRAPPER.sendToServer(new PlacePaddockSignMessage(facing, pos, dinosaur));
+        JurassiCraft.NETWORK_WRAPPER.sendToServer(new PlacePaddockSignMessage(hand, facing, pos, dinosaur));
     }
 
     @Override
@@ -242,12 +248,12 @@ public class SelectDinoGui extends GuiScreen
         float f = 1.0F / (float) width;
         float f1 = 1.0F / (float) height;
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (0), (double) ((float) (height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) (height) * f1)).endVertex();
-        worldrenderer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) 0)).endVertex();
-        worldrenderer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) 0), (double) ((float) 0)).endVertex();
+        VertexBuffer vertexBuffer = tessellator.getBuffer();
+        vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        vertexBuffer.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (0), (double) ((float) (height) * f1)).endVertex();
+        vertexBuffer.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) (height) * f1)).endVertex();
+        vertexBuffer.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f), (double) ((float) 0)).endVertex();
+        vertexBuffer.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) ((float) 0), (double) ((float) 0)).endVertex();
         tessellator.draw();
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -266,7 +272,7 @@ public class SelectDinoGui extends GuiScreen
     public void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height, int textureWidth, int textureHeight)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer vertexbuffer = tessellator.getWorldRenderer();
+        VertexBuffer vertexbuffer = tessellator.getBuffer();
         vertexbuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
         vertexbuffer.pos(x, y + height, this.zLevel).tex(textureX / textureWidth, (textureY + height) / textureHeight).endVertex();
         vertexbuffer.pos(x + width, y + height, this.zLevel).tex((textureX + width) / textureWidth, (textureY + height) / textureHeight).endVertex();

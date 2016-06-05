@@ -1,6 +1,6 @@
 package org.jurassicraft.server.animation;
 
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Random;
 

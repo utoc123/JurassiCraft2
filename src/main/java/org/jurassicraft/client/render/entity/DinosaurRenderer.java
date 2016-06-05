@@ -33,9 +33,9 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
     public Random random;
 
-    public DinosaurRenderer(RenderManager manager, RenderDinosaurDefinition renderDef)
+    public DinosaurRenderer(RenderDinosaurDefinition renderDef, RenderManager renderManager)
     {
-        super(manager, renderDef.getModel(GrowthStage.INFANT), renderDef.getShadowSize());
+        super(renderManager, renderDef.getModel(GrowthStage.INFANT), renderDef.getShadowSize());
 
         this.dinosaur = renderDef.getDinosaur();
         this.random = new Random();
@@ -69,8 +69,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                 int k = ticksExisted % colorTypes;
                 int l = (ticksExisted + 1) % colorTypes;
                 float time = ((float) (entity.ticksExisted % 25) + 2) / 25.0F;
-                float[] colors = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(k));
-                float[] colors2 = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(l));
+                float[] colors = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
+                float[] colors2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
                 GlStateManager.color(colors[0] * (1.0F - time) + colors2[0] * time, colors[1] * (1.0F - time) + colors2[1] * time, colors[2] * (1.0F - time) + colors2[2] * time);
                 if (time > 0.5F)
                 {
@@ -181,11 +181,11 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     }
 
     @Override
-    protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float p_77043_4_)
+    protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
         if (!(entity.deathTime > 0))
         {
-            super.rotateCorpse(entity, p_77043_2_, p_77043_3_, p_77043_4_);
+            super.rotateCorpse(entity, p_77043_2_, p_77043_3_, partialTicks);
         }
         else
         {
@@ -216,7 +216,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         }
 
         @Override
-        public void doRenderLayer(DinosaurEntity entity, float v, float v1, float v2, float v3, float v4, float v5, float v6)
+        public void doRenderLayer(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, float scale)
         {
             if (!entity.isInvisible())
             {
@@ -226,12 +226,12 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                 {
                     ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
 
-                    if (textureObject != TextureUtil.missingTexture)
+                    if (textureObject != TextureUtil.MISSING_TEXTURE)
                     {
                         this.renderer.bindTexture(texture);
 
-                        this.renderer.getMainModel().render(entity, v, v1, v3, v4, v5, v6);
-                        this.renderer.func_177105_a(entity, v2);
+                        this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
+                        this.renderer.setLightmap(entity, partialTicks);
                     }
                 }
             }

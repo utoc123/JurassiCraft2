@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.container.CleaningStationContainer;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
+import org.jurassicraft.server.tile.CleaningStationTile;
 
 @SideOnly(Side.CLIENT)
 public class CleaningStationGui extends GuiContainer

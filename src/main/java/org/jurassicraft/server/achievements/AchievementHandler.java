@@ -20,13 +20,13 @@ public enum AchievementHandler
 
     public void init()
     {
-        jurassicraft = (JCAchievement) (new JCAchievement("mod", 0, 0, ItemHandler.INSTANCE.fossils.get("skull"), null)).initIndependentStat();
-        paleontology = new JCAchievement("paleontology", 2, 1, ItemHandler.INSTANCE.plaster_and_bandage, jurassicraft);
-        fossils = new JCAchievement("fossils", 3, 3, BlockHandler.INSTANCE.encased_fossils.get(0), paleontology);
-        amber = new JCAchievement("amber", 2, -2, ItemHandler.INSTANCE.amber, jurassicraft);
-        cleaningStation = new JCAchievement("cleaningStation", -1, 2, BlockHandler.INSTANCE.cleaning_station, jurassicraft);
-        fossilGrinder = new JCAchievement("fossilGrinder", -2, -1, BlockHandler.INSTANCE.fossil_grinder, jurassicraft);
-        reinforcedStone = new JCAchievement("reinforcedStone", 4, -1, BlockHandler.INSTANCE.reinforced_stone, jurassicraft);
+        jurassicraft = (JCAchievement) (new JCAchievement("mod", 0, 0, ItemHandler.INSTANCE.FOSSILS.get("skull"), null)).initIndependentStat();
+        paleontology = new JCAchievement("paleontology", 2, 1, ItemHandler.INSTANCE.PLASTER_AND_BANDAGE, jurassicraft);
+        fossils = new JCAchievement("fossils", 3, 3, BlockHandler.INSTANCE.ENCASED_FOSSILS.get(0), paleontology);
+        amber = new JCAchievement("amber", 2, -2, ItemHandler.INSTANCE.AMBER, jurassicraft);
+        cleaningStation = new JCAchievement("cleaningStation", -1, 2, BlockHandler.INSTANCE.CLEANING_STATION, jurassicraft);
+        fossilGrinder = new JCAchievement("fossilGrinder", -2, -1, BlockHandler.INSTANCE.FOSSIL_GRINDER, jurassicraft);
+        reinforcedStone = new JCAchievement("reinforcedStone", 4, -1, BlockHandler.INSTANCE.REINFORCED_STONE, jurassicraft);
 
         jurassicraftPage = new AchievementPage("JurassiCraft", jurassicraft, paleontology, fossils, amber, cleaningStation, fossilGrinder, reinforcedStone);
 

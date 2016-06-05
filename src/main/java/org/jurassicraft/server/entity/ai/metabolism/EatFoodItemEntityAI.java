@@ -4,13 +4,11 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.food.FoodHandler;
+import org.jurassicraft.server.food.FoodHelper;
 
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
 
                 World world = dinosaur.worldObj;
 
-                List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(posX - 16, posY - 16, posZ - 16, posX + 16, posY + 16, posZ + 16));
+                List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 16, posY - 16, posZ - 16, posX + 16, posY + 16, posZ + 16));
 
                 for (EntityItem e : items)
                 {
@@ -54,7 +52,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
                     {
                         Item item = stack.getItem();
 
-                        if (FoodHandler.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
+                        if (FoodHelper.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
                         {
                             double diffX = posX - e.posX;
                             double diffY = posY - e.posY;
@@ -117,6 +115,4 @@ public class EatFoodItemEntityAI extends EntityAIBase
     {
         return dinosaur != null && !this.dinosaur.getNavigator().noPath() && item != null && !item.isDead && !eaten;
     }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 }

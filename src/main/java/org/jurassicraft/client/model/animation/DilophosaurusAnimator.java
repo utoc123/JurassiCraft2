@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.DilophosaurusEntity;
+import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
 @SideOnly(Side.CLIENT)
 public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
@@ -118,6 +118,7 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
         model.chainSwing(tail, 0.15F, -0.1F, 3, ticks, 0.25F);
 
         model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, neck3, neck4, head);
+
         entity.tailBuffer.applyChainSwingBuffer(tail);
     }
 }

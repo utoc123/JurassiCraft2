@@ -1,9 +1,9 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.api.IHybrid;
-import org.jurassicraft.server.entity.VelociraptorCharlieEntity;
+import org.jurassicraft.server.api.Hybrid;
+import org.jurassicraft.server.entity.dinosaur.VelociraptorCharlieEntity;
 
-public class VelociraptorCharlieDinosaur extends VelociraptorDinosaur implements IHybrid
+public class VelociraptorCharlieDinosaur extends VelociraptorDinosaur implements Hybrid
 {
     public VelociraptorCharlieDinosaur()
     {

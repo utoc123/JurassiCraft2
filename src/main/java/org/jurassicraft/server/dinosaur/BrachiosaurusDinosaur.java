@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.BrachiosaurusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.BrachiosaurusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class BrachiosaurusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class BrachiosaurusDinosaur extends Dinosaur
 
         this.setName("Brachiosaurus");
         this.setDinosaurClass(BrachiosaurusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.JURASSIC);
+        this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x87987F, 0x607343);
         this.setEggColorFemale(0xAA987D, 0x4F4538);
         this.setHealth(20, 100);

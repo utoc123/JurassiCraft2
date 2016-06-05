@@ -3,24 +3,26 @@ package org.jurassicraft.server.container;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.SyringeSlot;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 
-public class EmbryoCalcificationMachineContainer extends Container
+public class EmbryoCalcificationMachineContainer extends SyncedFieldContainer
 {
     private EmbryoCalcificationMachineTile calcificationMachine;
 
     public EmbryoCalcificationMachineContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
+
         this.calcificationMachine = (EmbryoCalcificationMachineTile) tileEntity;
 
         this.addSlotToContainer(new SyringeSlot(calcificationMachine, 0, 34, 14));
-        this.addSlotToContainer(new CustomSlot(calcificationMachine, 1, 34, 50, Items.egg));
+        this.addSlotToContainer(new CustomSlot(calcificationMachine, 1, 34, 50, Items.EGG));
 
         this.addSlotToContainer(new Slot(calcificationMachine, 2, 97, 32));
 
@@ -56,7 +58,7 @@ public class EmbryoCalcificationMachineContainer extends Container
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
         return null;
     }

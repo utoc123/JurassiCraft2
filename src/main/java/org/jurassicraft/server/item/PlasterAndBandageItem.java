@@ -5,14 +5,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class PlasterAndBandageItem extends Item
 {
@@ -24,15 +26,11 @@ public class PlasterAndBandageItem extends Item
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
+        if (world.isRemote || !player.canPlayerEdit(pos.offset(side), side, stack))
         {
-            return true;
-        }
-        else if (!player.canPlayerEdit(pos.offset(side), side, stack))
-        {
-            return false;
+            return EnumActionResult.PASS;
         }
         else
         {
@@ -53,10 +51,10 @@ public class PlasterAndBandageItem extends Item
 
                 player.addStat(AchievementHandler.INSTANCE.fossils, 1);
 
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return false;
+        return EnumActionResult.PASS;
     }
 }

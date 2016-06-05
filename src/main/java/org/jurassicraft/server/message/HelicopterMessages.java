@@ -1,7 +1,7 @@
 package org.jurassicraft.server.message;
 
 import net.minecraft.world.World;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 
 public class HelicopterMessages
 {

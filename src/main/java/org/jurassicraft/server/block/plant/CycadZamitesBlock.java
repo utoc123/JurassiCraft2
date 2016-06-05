@@ -6,6 +6,6 @@ public class CycadZamitesBlock extends DoublePlantBlock
 {
     public CycadZamitesBlock()
     {
-        super(Material.vine);
+        super(Material.VINE);
     }
 }

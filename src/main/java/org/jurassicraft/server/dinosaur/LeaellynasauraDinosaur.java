@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.LeaellynasauraEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.LeaellynasauraEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class LeaellynasauraDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class LeaellynasauraDinosaur extends Dinosaur
 
         this.setName("Leaellynasaura");
         this.setDinosaurClass(LeaellynasauraEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xE1D0A6, 0x262B27);
         this.setEggColorFemale(0xC8B50C, 0x926045);
         this.setHealth(3, 10);

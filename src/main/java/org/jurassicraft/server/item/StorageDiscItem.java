@@ -1,22 +1,22 @@
 package org.jurassicraft.server.item;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.api.ISynthesizableItem;
-import org.jurassicraft.server.creativetab.TabHandler;
-import org.jurassicraft.server.storagedisc.IStorageType;
-import org.jurassicraft.server.storagedisc.StorageTypeHandler;
+import org.jurassicraft.server.api.SynthesizableItem;
+import org.jurassicraft.server.storagedisc.StorageType;
+import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
 import java.util.Random;
 
-public class StorageDiscItem extends Item implements ISynthesizableItem
+public class StorageDiscItem extends Item implements SynthesizableItem
 {
     public StorageDiscItem()
     {
@@ -24,22 +24,16 @@ public class StorageDiscItem extends Item implements ISynthesizableItem
         this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
-    /**
-     * allows items to add custom lines of information to the mouseover description
-     *
-     * @param tooltip  All lines to display in the Item's tooltip. This is a List of Strings.
-     * @param advanced Whether the setting "Advanced tooltips" is enabled
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         NBTTagCompound nbt = stack.getTagCompound();
 
         if (nbt != null)
         {
             String storageId = nbt.getString("StorageId");
-            IStorageType type = StorageTypeHandler.INSTANCE.getStorageType(storageId);
+            StorageType type = StorageTypeRegistry.INSTANCE.getStorageType(storageId);
 
             if (type != null)
             {
@@ -49,7 +43,7 @@ public class StorageDiscItem extends Item implements ISynthesizableItem
         }
         else
         {
-            tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("cage.empty.name"));
+            tooltip.add(TextFormatting.RED + I18n.format("cage.empty.name"));
         }
     }
 
@@ -67,11 +61,11 @@ public class StorageDiscItem extends Item implements ISynthesizableItem
 
         if (!stack.getTagCompound().getString("StorageId").equalsIgnoreCase("PlantDNA"))
         {
-            output = new ItemStack(ItemHandler.INSTANCE.dna, 1, stack.getItemDamage());
+            output = new ItemStack(ItemHandler.INSTANCE.DNA, 1, stack.getItemDamage());
         }
         else
         {
-            output = new ItemStack(ItemHandler.INSTANCE.plant_dna, 1, stack.getItemDamage());
+            output = new ItemStack(ItemHandler.INSTANCE.PLANT_DNA, 1, stack.getItemDamage());
         }
 
         output.setTagCompound(stack.getTagCompound());

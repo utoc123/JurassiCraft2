@@ -10,14 +10,27 @@
             "name": "Cube",
             "from": [ 0.0, 0.0, 0.0 ], 
             "to": [ 16.0, 16.0, 16.0 ],
-            "shade": false,
+          "shade": false,
             "faces": {
-               "north": { "texture": "#15", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "north" },
-               "east": { "texture": "#13", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "east" },
-               "south": { "texture": "#13", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "south" },
-               "west": { "texture": "#15", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "west" },
-               "up": { "texture": "#2", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "up" },
-              "down": {
+              "north": {
+                "texture": "#15",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "east": {
+                "texture": "#13",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "south": {
                 "texture": "#13",
                 "uv": [
                   0.0,
@@ -25,7 +38,36 @@
                   16.0,
                   16.0
                 ],
-                "cullface": "down"
+                "cullface": "south"
+              },
+              "west": {
+                "texture": "#15",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "west"
+              },
+              "up": {
+                "texture": "#2",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ],
+                "cullface": "up"
+              },
+              "down": {
+                "texture": "#13",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
               }
             }
         }

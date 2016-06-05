@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.PachycephalosaurusEntity;
+import org.jurassicraft.server.entity.dinosaur.PachycephalosaurusEntity;
 
 @SideOnly(Side.CLIENT)
 public class PachycephalosaurusAnimator extends DinosaurAnimator<PachycephalosaurusEntity>

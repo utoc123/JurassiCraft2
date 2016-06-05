@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.ai.util.AIUtils;
 

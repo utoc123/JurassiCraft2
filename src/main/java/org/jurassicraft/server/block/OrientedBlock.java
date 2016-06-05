@@ -1,16 +1,16 @@
 package org.jurassicraft.server.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,37 +31,34 @@ public abstract class OrientedBlock extends BlockContainer
         this.setDefaultFacing(worldIn, pos, state);
     }
 
-    private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
+    private void setDefaultFacing(World world, BlockPos pos, IBlockState state)
     {
-        if (!worldIn.isRemote)
+        if (!world.isRemote)
         {
-            Block blockNorth = worldIn.getBlockState(pos.north()).getBlock();
-            Block blockSouth = worldIn.getBlockState(pos.south()).getBlock();
-            Block blockWest = worldIn.getBlockState(pos.west()).getBlock();
-            Block blockEast = worldIn.getBlockState(pos.east()).getBlock();
-            EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
+            IBlockState blockNorth = world.getBlockState(pos.north());
+            IBlockState blockSouth = world.getBlockState(pos.south());
+            IBlockState blockWest = world.getBlockState(pos.west());
+            IBlockState blockEast = world.getBlockState(pos.east());
+            EnumFacing facing = state.getValue(FACING);
 
-            if (enumfacing == EnumFacing.NORTH && blockNorth.isFullBlock() && !blockSouth.isFullBlock())
+            if (facing == EnumFacing.NORTH && blockNorth.isFullBlock() && !blockSouth.isFullBlock())
             {
-                enumfacing = EnumFacing.SOUTH;
+                facing = EnumFacing.SOUTH;
+            }
+            else if (facing == EnumFacing.SOUTH && blockSouth.isFullBlock() && !blockNorth.isFullBlock())
+            {
+                facing = EnumFacing.NORTH;
+            }
+            else if (facing == EnumFacing.WEST && blockWest.isFullBlock() && !blockEast.isFullBlock())
+            {
+                facing = EnumFacing.EAST;
+            }
+            else if (facing == EnumFacing.EAST && blockEast.isFullBlock() && !blockWest.isFullBlock())
+            {
+                facing = EnumFacing.WEST;
             }
 
-            else if (enumfacing == EnumFacing.SOUTH && blockSouth.isFullBlock() && !blockNorth.isFullBlock())
-            {
-                enumfacing = EnumFacing.NORTH;
-            }
-
-            else if (enumfacing == EnumFacing.WEST && blockWest.isFullBlock() && !blockEast.isFullBlock())
-            {
-                enumfacing = EnumFacing.EAST;
-            }
-
-            else if (enumfacing == EnumFacing.EAST && blockEast.isFullBlock() && !blockWest.isFullBlock())
-            {
-                enumfacing = EnumFacing.WEST;
-            }
-
-            worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
+            world.setBlockState(pos, state.withProperty(FACING, facing), 2);
         }
     }
 
@@ -78,21 +75,16 @@ public abstract class OrientedBlock extends BlockContainer
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IBlockState getStateForEntityRender(IBlockState state)
-    {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.SOUTH);
-    }
-
-    @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y)
+        EnumFacing facing = EnumFacing.getFront(meta);
+
+        if (facing.getAxis() == EnumFacing.Axis.Y)
         {
-            enumfacing = EnumFacing.NORTH;
+            facing = EnumFacing.NORTH;
         }
-        return this.getDefaultState().withProperty(FACING, enumfacing);
+
+        return this.getDefaultState().withProperty(FACING, facing);
     }
 
     @Override
@@ -102,33 +94,33 @@ public abstract class OrientedBlock extends BlockContainer
     }
 
     @Override
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, FACING);
+        return new BlockStateContainer(this, FACING);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.SOLID;
+        return BlockRenderLayer.SOLID;
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return true;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return true;
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 }

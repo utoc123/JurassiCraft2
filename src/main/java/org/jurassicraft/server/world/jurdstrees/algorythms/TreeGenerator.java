@@ -2,7 +2,7 @@ package org.jurassicraft.server.world.jurdstrees.algorythms;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
@@ -112,7 +112,7 @@ public class TreeGenerator
 
                 }
 
-                if ((world.getBlockState(pos.add(xW, yW, zW)) == Blocks.air.getDefaultState() || world.getBlockState(new BlockPos(xW, yW, zW)).getBlock() == Tree.getLeavesFromCode(tree.getTreeType())))
+                if ((world.getBlockState(pos.add(xW, yW, zW)) == Blocks.AIR.getDefaultState() || world.getBlockState(new BlockPos(xW, yW, zW)).getBlock() == Tree.getLeavesFromCode(tree.getTreeType())))
                 {
 
                     world.setBlockState(pos.add(xW, yW, zW), leaves);
@@ -136,10 +136,10 @@ public class TreeGenerator
 
             // this sets the skull blocks from the loaded shape.
 
-            if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getBlocksFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == BlockHandler.INSTANCE.saplings.get(tree.getTreeType()))
+            if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.AIR.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getBlocksFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(tree.getTreeType()))
             {
 
-                if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == BlockHandler.INSTANCE.saplings.get(tree.getTreeType()))
+                if (world.getBlockState(pos.add(xC, yC, zC)) == Blocks.AIR.getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState() || world.getBlockState(pos.add(xC, yC, zC)).getBlock() == BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(tree.getTreeType()))
                 {
                     world.setBlockState(pos.add(xC, yC, zC), logs); // skull block
 
@@ -154,7 +154,7 @@ public class TreeGenerator
 
                     int ageLevel = tree.getMaxAge() - (yW - y) / tree.getPenalty();
 
-                    if (WoodB.level < ageLevel && (world.getBlockState(pos.add(xW, yW, zW)) == Blocks.air.getDefaultState() || world.getBlockState(pos.add(xW, yW, zW)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState()))
+                    if (WoodB.level < ageLevel && (world.getBlockState(pos.add(xW, yW, zW)) == Blocks.AIR.getDefaultState() || world.getBlockState(pos.add(xW, yW, zW)) == Tree.getLeavesFromCode(tree.getTreeType()).getDefaultState()))
                     {
 
                         world.setBlockState(pos.add(xW, yW, zW), logs);

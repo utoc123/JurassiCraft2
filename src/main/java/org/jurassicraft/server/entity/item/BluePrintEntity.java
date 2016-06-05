@@ -6,8 +6,8 @@ import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,9 +36,6 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
         this.dinosaur = dinosaur;
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     @Override
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
@@ -46,9 +43,6 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
         super.writeEntityToNBT(tagCompound);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     @Override
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
@@ -69,9 +63,6 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
         return 16;
     }
 
-    /**
-     * Called when this entity is broken. Entity parameter may be null.
-     */
     @Override
     public void onBroken(Entity entity)
     {
@@ -87,7 +78,7 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
                 }
             }
 
-            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.blue_print);
+            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.BLUEPRINT);
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("Dinosaur", dinosaur);
 
@@ -95,21 +86,23 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
         }
     }
 
-    /**
-     * Sets the location and Yaw/Pitch of an entity in the world
-     */
     @Override
-    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
+    public void playPlaceSound()
     {
-        BlockPos blockpos = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
-        BlockPos blockpos1 = this.hangingPosition.add(blockpos);
-        this.setPosition(blockpos1.getX(), blockpos1.getY(), blockpos1.getZ());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
+    }
+
+    @Override
+    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
+    {
+        BlockPos positionOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
+        BlockPos newPosition = this.hangingPosition.add(positionOffset);
+        this.setPosition(newPosition.getX(), newPosition.getY(), newPosition.getZ());
     }
 
     @Override

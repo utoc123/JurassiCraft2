@@ -29,7 +29,7 @@ public class Tree
     private int maxBranchLevel;
     private int maxTrunkHeight;
 
-    private ArrayList<InsPCoord> insPList = new ArrayList<InsPCoord>();
+    private ArrayList<InsPCoord> insPList = new ArrayList<>();
 
     public Tree(TreeType type, int maxAge, int maxBranchLength)
     {
@@ -43,12 +43,12 @@ public class Tree
 
     public static Block getBlocksFromCode(TreeType type)
     {
-        return BlockHandler.INSTANCE.logs.get(type);
+        return BlockHandler.INSTANCE.ANCIENT_LOGS.get(type);
     }
 
     public static Block getLeavesFromCode(TreeType type)
     {
-        return BlockHandler.INSTANCE.leaves.get(type);
+        return BlockHandler.INSTANCE.ANCIENT_LEAVES.get(type);
     }
 
     public Tree(TreeType type, int maxAge, int maxBranchLength, int penalty, int lbl, int mtheight)
@@ -83,12 +83,7 @@ public class Tree
     public boolean hasBeenGenerated()
     {
 
-        if (insPList.size() != 0)
-        {
-            return true;
-        }
-
-        return false;
+        return insPList.size() != 0;
 
     }
 
@@ -272,7 +267,7 @@ public class Tree
                 int zC = insPList.get(j).getZ() + insertp.getZ();
 
                 // if the next insert point allows for trunk, then trunk rotation does not matter, it can be random.
-                if (insertp.allowTrunk && addLeavesInsPOnly == false)
+                if (insertp.allowTrunk && !addLeavesInsPOnly)
                 {
                     // Rotation of the insert point is corrected in the Tree Compendium method that gives the rotated shape.
                     int newRotation;
@@ -307,7 +302,7 @@ public class Tree
                     else
                     {
 
-                        if (addLeavesInsPOnly == false)
+                        if (!addLeavesInsPOnly)
                         {
 
                             if (insertp.rotation == Rotation.none)

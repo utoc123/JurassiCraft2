@@ -14,15 +14,16 @@ import com.google.common.collect.Lists;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats.Type;
 import net.minecraft.command.EntityNotFoundException;
+import net.minecraft.command.EntitySelector;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerSelector;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -50,14 +51,16 @@ public class CommandForceAnimation implements ICommand
     private static class ProxySender implements ICommandSender
     {
         private final ICommandSender original;
+        private MinecraftServer server;
 
-        public ProxySender(ICommandSender proxy)
+        public ProxySender(MinecraftServer server, ICommandSender proxy)
         {
             this.original = Objects.requireNonNull(proxy);
+            this.server = server;
         }
 
         @Override
-        public void addChatMessage(IChatComponent component)
+        public void addChatMessage(ITextComponent component)
         {
             original.addChatMessage(component);
         }
@@ -81,7 +84,7 @@ public class CommandForceAnimation implements ICommand
         }
 
         @Override
-        public IChatComponent getDisplayName()
+        public ITextComponent getDisplayName()
         {
             return original.getDisplayName();
         }
@@ -99,7 +102,7 @@ public class CommandForceAnimation implements ICommand
         }
 
         @Override
-        public Vec3 getPositionVector()
+        public Vec3d getPositionVector()
         {
             return original.getPositionVector();
         }
@@ -115,13 +118,19 @@ public class CommandForceAnimation implements ICommand
         {
             original.setCommandStat(type, amount);
         }
+
+        @Override
+        public MinecraftServer getServer()
+        {
+            return server;
+        }
     }
 
     private final List<String> aliases;
 
     public CommandForceAnimation()
     {
-        aliases = new ArrayList<String>();
+        aliases = new ArrayList<>();
         aliases.add("animate");
         aliases.add("anim");
     }
@@ -145,15 +154,9 @@ public class CommandForceAnimation implements ICommand
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender)
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        return true;
-    }
-
-    @Override
-    public void processCommand(ICommandSender parSender, String[] argString) throws CommandException
-    {
-        World theWorld = parSender.getEntityWorld();
+        World theWorld = sender.getEntityWorld();
 
         if (theWorld.isRemote)
         {
@@ -162,32 +165,32 @@ public class CommandForceAnimation implements ICommand
         else
         {
             JurassiCraft.INSTANCE.getLogger().debug("Processing on Server side");
-            if (argString.length < 1)
+            if (args.length < 1)
             {
                 throw new WrongUsageException("Missing the animation to set");
             }
-            String entitySelector = argString.length < 2 ? "@e[c=1]" : argString[1];
-            List<DinosaurEntity> dinos = PlayerSelector.matchEntities(new ProxySender(parSender), entitySelector, DinosaurEntity.class);
+            String entitySelector = args.length < 2 ? "@e[c=1]" : args[1];
+            List<DinosaurEntity> dinos = EntitySelector.matchEntities(new ProxySender(server, sender), entitySelector, DinosaurEntity.class);
             if (dinos == null || dinos.size() == 0)
             {
                 throw new EntityNotFoundException("No IAnimatedEntity to animate");
             }
             for (DinosaurEntity entity : dinos)
             {
-                setDinoAnimation(parSender, entity, argString[0]);
-                parSender.addChatMessage(new ChatComponentText("Animating entity " + entity.getEntityId() + " with animation type " + argString[0]));
+                setDinoAnimation(sender, entity, args[0]);
+                sender.addChatMessage(new TextComponentString("Animating entity " + entity.getEntityId() + " with animation type " + args[0]));
             }
         }
     }
 
     @Override
-    public boolean isUsernameIndex(String[] var1, int var2)
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender)
     {
-        return false;
+        return true;
     }
 
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {
@@ -203,6 +206,12 @@ public class CommandForceAnimation implements ICommand
             return animations;
         }
         return null;
+    }
+
+    @Override
+    public boolean isUsernameIndex(String[] var1, int var2)
+    {
+        return false;
     }
 
     private static void setDinoAnimation(ICommandSender sender, DinosaurEntity entity, String parAnimType) throws CommandException

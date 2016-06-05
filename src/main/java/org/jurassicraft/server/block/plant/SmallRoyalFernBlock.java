@@ -2,21 +2,30 @@ package org.jurassicraft.server.block.plant;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class SmallRoyalFernBlock extends BlockBush
 {
+    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, 0.8F, 0.9F);
+
     public SmallRoyalFernBlock()
     {
         super();
         this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setSoundType(SoundType.PLANT);
+    }
 
-        float f = 0.4F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
-
-        this.setStepSound(Block.soundTypeGrass);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos)
+    {
+        return BOUNDS;
     }
 
     @Override

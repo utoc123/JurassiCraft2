@@ -6,6 +6,6 @@ public class ScalyTreeFernBlock extends DoublePlantBlock
 {
     public ScalyTreeFernBlock()
     {
-        super(Material.vine);
+        super(Material.VINE);
     }
 }

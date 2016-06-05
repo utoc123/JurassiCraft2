@@ -5,13 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,6 @@ public class PlantDNAItem extends Item
     public PlantDNAItem()
     {
         super();
-
         this.setCreativeTab(TabHandler.INSTANCE.plants);
         this.setHasSubtypes(true);
     }
@@ -53,9 +52,9 @@ public class PlantDNAItem extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<Plant>(PlantHandler.INSTANCE.getPlants());
+        List<Plant> plants = new ArrayList<>(PlantHandler.INSTANCE.getPlants());
 
-        Map<Plant, Integer> ids = new HashMap<Plant, Integer>();
+        Map<Plant, Integer> ids = new HashMap<>();
 
         for (Plant plant : plants)
         {
@@ -103,25 +102,25 @@ public class PlantDNAItem extends Item
     {
         int quality = getDNAQuality(player, stack);
 
-        EnumChatFormatting colour;
+        TextFormatting formatting;
 
         if (quality > 75)
         {
-            colour = EnumChatFormatting.GREEN;
+            formatting = TextFormatting.GREEN;
         }
         else if (quality > 50)
         {
-            colour = EnumChatFormatting.YELLOW;
+            formatting = TextFormatting.YELLOW;
         }
         else if (quality > 25)
         {
-            colour = EnumChatFormatting.GOLD;
+            formatting = TextFormatting.GOLD;
         }
         else
         {
-            colour = EnumChatFormatting.RED;
+            formatting = TextFormatting.RED;
         }
 
-        lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        lore.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
     }
 }

@@ -7,7 +7,6 @@ import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,10 +19,10 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.GrowthStage;
 
 @SideOnly(Side.CLIENT)
-public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderFactory<DinosaurEntity>
+public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 {
     private final Dinosaur dinosaur;
-    private final ITabulaModelAnimator<ENTITY> animator;
+    private final ITabulaModelAnimator<? extends DinosaurEntity> animator;
 
     private final TabulaModel modelAdult;
     private final TabulaModel modelInfant;
@@ -51,7 +50,7 @@ public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderF
         }
     }
 
-    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<ENTITY> animator, float parShadowSize)
+    public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<? extends DinosaurEntity> animator, float parShadowSize)
     {
         this.dinosaur = dinosaur;
         this.animator = animator;
@@ -98,7 +97,7 @@ public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderF
         return eggTexture == null ? DEFAULT_EGG_TEXTURE : eggTexture;
     }
 
-    public ITabulaModelAnimator<ENTITY> getModelAnimator()
+    public ITabulaModelAnimator<? extends DinosaurEntity> getModelAnimator()
     {
         return animator;
     }
@@ -121,6 +120,6 @@ public class RenderDinosaurDefinition<ENTITY extends Entity> implements IRenderF
     @Override
     public Render<? super DinosaurEntity> createRenderFor(RenderManager manager)
     {
-        return new DinosaurRenderer(manager, this);
+        return new DinosaurRenderer(this, manager);
     }
 }

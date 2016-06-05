@@ -3,8 +3,9 @@ package org.jurassicraft.server.handler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,16 +32,16 @@ import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
-import org.jurassicraft.server.tileentity.CleaningStationTile;
-import org.jurassicraft.server.tileentity.CultivatorTile;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tileentity.DNAExtractorTile;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
-import org.jurassicraft.server.tileentity.DNASynthesizerTile;
-import org.jurassicraft.server.tileentity.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tileentity.EmbryonicMachineTile;
-import org.jurassicraft.server.tileentity.FossilGrinderTile;
-import org.jurassicraft.server.tileentity.IncubatorTile;
+import org.jurassicraft.server.tile.CleaningStationTile;
+import org.jurassicraft.server.tile.CultivatorTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNAExtractorTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASynthesizerTile;
+import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
+import org.jurassicraft.server.tile.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.FossilGrinderTile;
+import org.jurassicraft.server.tile.IncubatorTile;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -157,17 +158,17 @@ public class GuiHandler implements IGuiHandler
         return null;
     }
 
-    public static void openSelectDino(EntityPlayer player, BlockPos pos, EnumFacing facing)
+    public static void openSelectDino(EntityPlayer player, BlockPos pos, EnumFacing facing, EnumHand hand)
     {
         if (player.worldObj.isRemote)
         {
-            displayOpenSelectDino(pos, facing);
+            displayOpenSelectDino(pos, facing, hand);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    private static void displayOpenSelectDino(BlockPos pos, EnumFacing facing)
+    private static void displayOpenSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand)
     {
-        Minecraft.getMinecraft().displayGuiScreen(new SelectDinoGui(pos, facing));
+        Minecraft.getMinecraft().displayGuiScreen(new SelectDinoGui(pos, facing, hand));
     }
 }

@@ -2,7 +2,7 @@ package org.jurassicraft.server.genetics;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import org.jurassicraft.server.lang.AdvLang;
 import org.jurassicraft.server.plant.PlantHandler;
 
@@ -48,27 +48,27 @@ public class PlantDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(EnumChatFormatting.DARK_AQUA + new AdvLang("lore.plant.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new AdvLang("lore.plant.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
 
-        EnumChatFormatting colour;
+        TextFormatting formatting;
 
         if (quality > 75)
         {
-            colour = EnumChatFormatting.GREEN;
+            formatting = TextFormatting.GREEN;
         }
         else if (quality > 50)
         {
-            colour = EnumChatFormatting.YELLOW;
+            formatting = TextFormatting.YELLOW;
         }
         else if (quality > 25)
         {
-            colour = EnumChatFormatting.GOLD;
+            formatting = TextFormatting.GOLD;
         }
         else
         {
-            colour = EnumChatFormatting.RED;
+            formatting = TextFormatting.RED;
         }
 
-        tooltip.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        tooltip.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
     }
 }

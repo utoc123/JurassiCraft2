@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 @SideOnly(Side.CLIENT)
-public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITabulaModelAnimator<T>
+public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements ITabulaModelAnimator<ENTITY>
 {
     protected EnumMap<GrowthStage, Map<DinosaurEntity, JabelarAnimationHandler>> animationHandlers = new EnumMap<>(GrowthStage.class);
 
@@ -40,7 +40,7 @@ public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITab
     }
 
     @Override
-    public final void setRotationAngles(TabulaModel model, T entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
+    public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, ticks);
 
@@ -60,14 +60,14 @@ public abstract class DinosaurAnimator<T extends DinosaurEntity> implements ITab
     /*
      * @Override this if you want dino to have cyclical animations.
      */
-    protected void performMowzieLandAnimations(DinosaurModel parModel, T entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performMowzieLandAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
     }
 
     /*
      * @Override this if you want swimming dino to have different cyclical animations.
      */
-    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, T entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         performMowzieLandAnimations(parModel, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
     }

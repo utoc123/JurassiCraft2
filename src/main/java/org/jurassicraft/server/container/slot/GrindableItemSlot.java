@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.api.IGrindableItem;
+import org.jurassicraft.server.api.GrindableItem;
 
 public class GrindableItemSlot extends Slot
 {
@@ -15,7 +15,7 @@ public class GrindableItemSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        IGrindableItem grindableItem = IGrindableItem.getGrindableItem(stack);
+        GrindableItem grindableItem = GrindableItem.getGrindableItem(stack);
         return grindableItem != null && grindableItem.isGrindable(stack);
     }
 }

@@ -2,24 +2,30 @@ package org.jurassicraft.server.item.itemblock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.block.tree.JCDoubleSlabBlock;
-import org.jurassicraft.server.block.tree.JCSlabHalfBlock;
+import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
+import org.jurassicraft.server.block.tree.AncientSlabBlock;
+import org.jurassicraft.server.block.tree.AncientSlabHalfBlock;
 
 public class JCSlabItemBlock extends ItemBlock
 {
     private final BlockSlab singleSlab;
     private final BlockSlab doubleSlab;
 
-    public JCSlabItemBlock(Block block, JCSlabHalfBlock singleSlab, JCDoubleSlabBlock doubleSlab)
+    public JCSlabItemBlock(Block block, AncientSlabHalfBlock singleSlab, AncientDoubleSlabBlock doubleSlab)
     {
         super(block);
         this.singleSlab = singleSlab;
@@ -28,77 +34,62 @@ public class JCSlabItemBlock extends ItemBlock
         this.setHasSubtypes(true);
     }
 
-    /**
-     * Converts the given ItemStack damage value into a metadata value to be placed in the world when this Item is placed as a Block (mostly used with ItemBlocks).
-     */
     @Override
     public int getMetadata(int damage)
     {
         return damage;
     }
 
-    /**
-     * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have different names based on their damage or NBT.
-     */
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
         return this.singleSlab.getUnlocalizedName(stack.getMetadata());
     }
 
-    /**
-     * Called when a Block is right-clicked with this Item
-     *
-     * @param pos  The block being right-clicked
-     * @param side The side being right-clicked
-     */
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (stack.stackSize == 0)
+        if (stack.stackSize != 0 && player.canPlayerEdit(pos.offset(facing), facing, stack))
         {
-            return false;
-        }
-        else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack))
-        {
-            return false;
-        }
-        else
-        {
-            IBlockState iblockstate = worldIn.getBlockState(pos);
-
-            if (iblockstate.getBlock() == this.singleSlab)
+            IBlockState state = world.getBlockState(pos);
+            if (state.getBlock() == this.singleSlab)
             {
-                BlockSlab.EnumBlockHalf enumblockhalf = (BlockSlab.EnumBlockHalf) iblockstate.getValue(BlockSlab.HALF);
+                AncientSlabBlock.EnumBlockHalf half = state.getValue(BlockSlab.HALF);
 
-                if ((side == EnumFacing.UP && enumblockhalf == BlockSlab.EnumBlockHalf.BOTTOM || side == EnumFacing.DOWN && enumblockhalf == BlockSlab.EnumBlockHalf.TOP))
+                if ((facing == EnumFacing.UP && half == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && half == BlockSlab.EnumBlockHalf.TOP))
                 {
-                    IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
+                    AxisAlignedBB collisionBox = state.getSelectedBoundingBox(world, pos);
+                    IBlockState doubleSlabState = this.doubleSlab.getDefaultState();
 
-                    if (worldIn.checkNoEntityCollision(this.doubleSlab.getCollisionBoundingBox(worldIn, pos, iblockstate1)) && worldIn.setBlockState(pos, iblockstate1, 3))
+                    if (collisionBox != Block.NULL_AABB && world.checkNoEntityCollision(collisionBox.offset(pos)) && world.setBlockState(pos, doubleSlabState, 11))
                     {
-                        worldIn.playSoundEffect((double) ((float) pos.getX() + 0.5F), (double) ((float) pos.getY() + 0.5F), (double) ((float) pos.getZ() + 0.5F), this.doubleSlab.stepSound.getPlaceSound(), (this.doubleSlab.stepSound.getVolume() + 1.0F) / 2.0F, this.doubleSlab.stepSound.getFrequency() * 0.8F);
+                        SoundType sound = this.doubleSlab.getSoundType();
+                        world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
                         --stack.stackSize;
                     }
 
-                    return true;
+                    return EnumActionResult.SUCCESS;
                 }
             }
 
-            return this.tryPlace(stack, worldIn, pos.offset(side)) ? true : super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
+            return this.tryPlace(player, stack, world, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+        }
+        else
+        {
+            return EnumActionResult.FAIL;
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack)
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack)
     {
-        BlockPos blockpos1 = pos;
-        IBlockState iblockstate = worldIn.getBlockState(pos);
+        BlockPos placePos = pos;
+        IBlockState state = world.getBlockState(pos);
 
-        if (iblockstate.getBlock() == this.singleSlab)
+        if (state.getBlock() == this.singleSlab)
         {
-            boolean flag = iblockstate.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
+            boolean flag = state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
 
             if ((side == EnumFacing.UP && !flag || side == EnumFacing.DOWN && flag))
             {
@@ -107,21 +98,22 @@ public class JCSlabItemBlock extends ItemBlock
         }
 
         pos = pos.offset(side);
-        IBlockState iblockstate1 = worldIn.getBlockState(pos);
-        return iblockstate1.getBlock() == this.singleSlab ? true : super.canPlaceBlockOnSide(worldIn, blockpos1, side, player, stack);
+        IBlockState iblockstate1 = world.getBlockState(pos);
+        return iblockstate1.getBlock() == this.singleSlab || super.canPlaceBlockOnSide(world, placePos, side, player, stack);
     }
 
-    private boolean tryPlace(ItemStack stack, World worldIn, BlockPos pos)
+    private boolean tryPlace(EntityPlayer player, ItemStack stack, World world, BlockPos pos)
     {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
+        IBlockState state = world.getBlockState(pos);
 
-        if (iblockstate.getBlock() == this.singleSlab)
+        if (state.getBlock() == this.singleSlab)
         {
-            IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
+            AxisAlignedBB collisionBounds = state.getSelectedBoundingBox(world, pos);
 
-            if (worldIn.checkNoEntityCollision(this.doubleSlab.getCollisionBoundingBox(worldIn, pos, iblockstate1)) && worldIn.setBlockState(pos, iblockstate1, 3))
+            if (collisionBounds != Block.NULL_AABB && world.checkNoEntityCollision(collisionBounds.offset(pos)) && world.setBlockState(pos, state, 11))
             {
-                worldIn.playSoundEffect((double) ((float) pos.getX() + 0.5F), (double) ((float) pos.getY() + 0.5F), (double) ((float) pos.getZ() + 0.5F), this.doubleSlab.stepSound.getPlaceSound(), (this.doubleSlab.stepSound.getVolume() + 1.0F) / 2.0F, this.doubleSlab.stepSound.getFrequency() * 0.8F);
+                SoundType soundtype = this.doubleSlab.getSoundType();
+                world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 --stack.stackSize;
             }
 

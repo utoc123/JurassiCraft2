@@ -17,6 +17,6 @@ public class IndominusRenderDef extends RenderDinosaurDefinition
     @Override
     public Render<? super DinosaurEntity> createRenderFor(RenderManager manager)
     {
-        return new IndominusRenderer(this);
+        return new IndominusRenderer(this, manager);
     }
 }

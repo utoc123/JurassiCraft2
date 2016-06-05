@@ -7,7 +7,7 @@ import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class FossilItemBlock extends ItemBlock
 {
@@ -40,7 +40,7 @@ public class FossilItemBlock extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        EnumTimePeriod timePeriod = EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata()).getPeriod();
+        TimePeriod timePeriod = EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata()).getPeriod();
         return super.getUnlocalizedName() + "." + timePeriod.getName();
     }
 }

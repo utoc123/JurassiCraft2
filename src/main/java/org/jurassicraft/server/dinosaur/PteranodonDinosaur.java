@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.PteranodonEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.PteranodonEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class PteranodonDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class PteranodonDinosaur extends Dinosaur
 
         this.setName("Pteranodon");
         this.setDinosaurClass(PteranodonEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x57504C, 0x24383F);
         this.setEggColorFemale(0x535F65, 0x56312C);
         this.setHealth(10, 20);

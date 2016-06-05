@@ -3,11 +3,12 @@ package org.jurassicraft.server.world;
 import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.state.pattern.BlockHelper;
+import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -15,7 +16,7 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.period.TimePeriod;
 
 import java.util.List;
 import java.util.Random;
@@ -25,9 +26,9 @@ public enum WorldGenerator implements IWorldGenerator
     INSTANCE;
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
     {
-        if (world.provider.getDimensionId() == 0)
+        if (world.provider.getDimension() == 0)
         {
             generateOverworld(world, random, chunkX * 16, chunkZ * 16);
         }
@@ -50,11 +51,11 @@ public enum WorldGenerator implements IWorldGenerator
             int randPosY = random.nextInt(64);
             int randPosZ = chunkZ + random.nextInt(16);
 
-            EnumTimePeriod period = null;
+            TimePeriod period = null;
 
-            for (EnumTimePeriod p : EnumTimePeriod.values())
+            for (TimePeriod p : TimePeriod.values())
             {
-                if (randPosY < EnumTimePeriod.getEndYLevel(p) && randPosY > EnumTimePeriod.getStartYLevel(p))
+                if (randPosY < TimePeriod.getEndYLevel(p) && randPosY > TimePeriod.getStartYLevel(p))
                 {
                     period = p;
 
@@ -82,11 +83,11 @@ public enum WorldGenerator implements IWorldGenerator
             }
         }
 
-        Predicate<IBlockState> defaultPredicate = BlockHelper.forBlock(Blocks.stone);
+        Predicate<IBlockState> defaultPredicate = BlockMatcher.forBlock(Blocks.STONE);
 
-        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.INSTANCE.amber_ore.getDefaultState(), random, defaultPredicate);
-        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.INSTANCE.ice_shard.getDefaultState(), random, defaultPredicate);
-        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.gypsum_stone.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.INSTANCE.AMBER_ORE.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.INSTANCE.ICE_SHARD.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
     }
 
     public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random, Predicate<IBlockState> predicate)
@@ -108,7 +109,7 @@ public enum WorldGenerator implements IWorldGenerator
         float rotX = (float) (rand.nextDouble() * 360.0F);
         float rotY = (float) (rand.nextDouble() * 360.0F) - 180.0F;
 
-        IBlockState state = BlockHandler.INSTANCE.petrified_logs.get(treeType).getDefaultState();
+        IBlockState state = BlockHandler.INSTANCE.PETRIFIED_LOGS.get(treeType).getDefaultState();
 
         float horizontal = MathHelper.cos(rotX * (float) Math.PI / 180.0F);
         float vertical = MathHelper.sin(rotX * (float) Math.PI / 180.0F);
@@ -127,7 +128,7 @@ public enum WorldGenerator implements IWorldGenerator
                 BlockPos pos = new BlockPos(blockX, blockY, blockZ);
                 Block previousBlock = world.getBlockState(pos).getBlock();
 
-                if (previousBlock != Blocks.bedrock)
+                if (previousBlock != Blocks.BEDROCK)
                 {
                     world.setBlockState(pos, state);
                 }

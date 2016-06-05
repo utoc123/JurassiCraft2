@@ -7,12 +7,11 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.tileentity.ActionFigureTile;
+import org.jurassicraft.server.tile.ActionFigureTile;
 
 public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureTile>
 {
@@ -23,44 +22,41 @@ public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<Actio
     {
         World world = tileEntity.getWorld();
 
-        IBlockState blockState = world.getBlockState(tileEntity.getPos());
+        IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.action_figure)
+        Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(tileEntity.dinosaur);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.translate(x + 0.5, y, z + 0.5);
+
+        EnumFacing value = state.getValue(OrientedBlock.FACING);
+
+        if (value == EnumFacing.EAST)
         {
-            Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(tileEntity.dinosaur);
-
-            GlStateManager.pushMatrix();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.translate(x + 0.5, y, z + 0.5);
-
-            EnumFacing value = blockState.getValue(OrientedBlock.FACING);
-
-            if (value == EnumFacing.EAST)
-            {
-                value = EnumFacing.WEST;
-            }
-            else if (value == EnumFacing.WEST)
-            {
-                value = EnumFacing.EAST;
-            }
-
-            GlStateManager.rotate(value.getHorizontalIndex() * 90, 0, 1, 0);
-
-            double scale = 0.15;
-            GlStateManager.scale(scale, scale, scale);
-
-            Render<DinosaurEntity> renderer = (Render<DinosaurEntity>) mc.getRenderManager().entityRenderMap.get(dino.getDinosaurClass());
-
-            if (tileEntity.entity != null)
-            {
-                renderer.doRender(tileEntity.entity, 0, 0, 0, 0, 0);
-            }
-            else
-            {
-                tileEntity.updateEntity();
-            }
-
-            GlStateManager.popMatrix();
+            value = EnumFacing.WEST;
         }
+        else if (value == EnumFacing.WEST)
+        {
+            value = EnumFacing.EAST;
+        }
+
+        GlStateManager.rotate(value.getHorizontalIndex() * 90, 0, 1, 0);
+
+        double scale = 0.15;
+        GlStateManager.scale(scale, scale, scale);
+
+        Render<DinosaurEntity> renderer = (Render<DinosaurEntity>) mc.getRenderManager().entityRenderMap.get(dino.getDinosaurClass());
+
+        if (tileEntity.entity != null)
+        {
+            renderer.doRender(tileEntity.entity, 0, 0, 0, 0, 0);
+        }
+        else
+        {
+            tileEntity.updateEntity();
+        }
+
+        GlStateManager.popMatrix();
     }
 }

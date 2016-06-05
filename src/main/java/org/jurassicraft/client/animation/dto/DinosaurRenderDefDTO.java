@@ -28,7 +28,7 @@ public class DinosaurRenderDefDTO
             JsonObject def = json.getAsJsonObject();
             DinosaurRenderDefDTO built = new DinosaurRenderDefDTO();
             built.version = def.get("version") == null ? 0 : def.get("version").getAsInt();
-            built.perStage = new EnumMap<GrowthStage, GrowthRenderDef>(GrowthStage.class);
+            built.perStage = new EnumMap<>(GrowthStage.class);
             for (GrowthStage g : GrowthStage.values)
             {
                 JsonElement perhaps = def.get(g.name());

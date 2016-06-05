@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tileentity.DNACombinatorHybridizerTile;
+import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 import org.lwjgl.opengl.GL11;
 
 public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerTile>
@@ -43,7 +43,7 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.dna_combinator_hybridizer)
+        if (blockState.getBlock() == BlockHandler.INSTANCE.DNA_COMBINATOR_HYBRIDIZER)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

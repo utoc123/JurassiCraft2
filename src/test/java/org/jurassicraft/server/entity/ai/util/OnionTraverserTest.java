@@ -1,12 +1,13 @@
 package org.jurassicraft.server.entity.ai.util;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class OnionTraverserTest
 {
@@ -27,7 +28,7 @@ public class OnionTraverserTest
     // Build blocks
     private Queue<BlockPos> get3x3BlockList()
     {
-        Queue<BlockPos> list = new LinkedList<BlockPos>();
+        Queue<BlockPos> list = new LinkedList<>();
 
         list.add(new BlockPos(100, 100, 100));
 

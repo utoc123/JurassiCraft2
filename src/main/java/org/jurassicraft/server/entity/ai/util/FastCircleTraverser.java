@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity.ai.util;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.Iterator;
 
@@ -52,6 +52,5 @@ public class FastCircleTraverser implements Iterable<BlockPos>
     {
 
     }
-
 
 }

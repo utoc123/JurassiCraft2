@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.MegapiranhaEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.MegapiranhaEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class MegapiranhaDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class MegapiranhaDinosaur extends Dinosaur
 
         this.setName("Megapiranha");
         this.setDinosaurClass(MegapiranhaEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS); // TODO LATE MIOCENE
+        this.setTimePeriod(TimePeriod.CRETACEOUS); // TODO LATE MIOCENE
         this.setEggColorMale(0x17100B, 0x645C54);
         this.setEggColorFemale(0x7D735D, 0x322922);
         this.setHealth(1, 10);

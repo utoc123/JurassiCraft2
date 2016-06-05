@@ -36,5 +36,4 @@ public class ResetControlModelJson extends TabulaModel
     {
         resetAllowed = reset;
     }
-
 }

@@ -7,12 +7,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
@@ -26,12 +25,13 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
     private int y;
     private int z;
     private EnumFacing facing;
+    private EnumHand hand;
 
     public PlacePaddockSignMessage()
     {
     }
 
-    public PlacePaddockSignMessage(EnumFacing facing, BlockPos pos, Dinosaur dino)
+    public PlacePaddockSignMessage(EnumHand hand, EnumFacing facing, BlockPos pos, Dinosaur dino)
     {
         this.dino = EntityHandler.INSTANCE.getDinosaurId(dino);
         this.pos = new BlockPos(x, y, z);
@@ -39,13 +39,12 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
         this.y = pos.getY();
         this.z = pos.getZ();
         this.facing = facing;
+        this.hand = hand;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void onClientReceived(Minecraft client, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
+    public void onClientReceived(Minecraft minecraft, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
     {
-
     }
 
     @Override
@@ -58,9 +57,9 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
         PaddockSignEntity paddockSign = new PaddockSignEntity(world, pos, side, message.dino);
 
-        ItemStack heldItem = player.getHeldItem();
+        ItemStack heldItem = player.getHeldItem(message.hand);
 
-        if (heldItem != null && heldItem.getItem() == ItemHandler.INSTANCE.paddock_sign)
+        if (heldItem != null && heldItem.getItem() == ItemHandler.INSTANCE.PADDOCK_SIGN)
         {
             if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface())
             {
@@ -83,6 +82,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
         buffer.writeInt(z);
         buffer.writeInt(dino);
         buffer.writeByte((byte) facing.getIndex());
+        buffer.writeByte((byte) hand.ordinal());
     }
 
     @Override
@@ -93,6 +93,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
         z = buffer.readInt();
         dino = buffer.readInt();
         facing = EnumFacing.getFront(buffer.readByte());
+        hand = EnumHand.values()[buffer.readByte()];
         pos = new BlockPos(x, y, z);
     }
 }

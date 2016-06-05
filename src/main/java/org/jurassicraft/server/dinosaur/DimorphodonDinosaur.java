@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.DimorphodonEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.DimorphodonEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class DimorphodonDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class DimorphodonDinosaur extends Dinosaur
 
         this.setName("Dimorphodon");
         this.setDinosaurClass(DimorphodonEntity.class);
-        this.setTimePeriod(EnumTimePeriod.JURASSIC);
+        this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0xB2AC94, 0x636644);
         this.setEggColorFemale(0xBDB4A9, 0x726B57);
         this.setHealth(5, 10);

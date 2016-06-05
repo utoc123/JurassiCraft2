@@ -6,7 +6,7 @@ import org.jurassicraft.server.genetics.DinoDNA;
 
 import java.util.List;
 
-public class DinosaurDNAStorageType implements IStorageType
+public class DinosaurDNAStorageType implements StorageType
 {
     private DinoDNA dna;
 

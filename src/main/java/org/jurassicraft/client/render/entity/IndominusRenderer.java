@@ -1,22 +1,22 @@
 package org.jurassicraft.client.render.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.render.renderdef.RenderDinosaurDefinition;
 import org.jurassicraft.server.dinosaur.IndominusDinosaur;
-import org.jurassicraft.server.entity.IndominusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.dinosaur.IndominusEntity;
 
 @SideOnly(Side.CLIENT)
 public class IndominusRenderer extends DinosaurRenderer
 {
-    public IndominusRenderer(RenderDinosaurDefinition renderDef)
+    public IndominusRenderer(RenderDinosaurDefinition renderDef, RenderManager manager)
     {
-        super(Minecraft.getMinecraft().getRenderManager(), renderDef);
+        super(renderDef, manager);
 
         addLayer(new LayerIndominusCamo(this));
     }
@@ -60,7 +60,7 @@ public class IndominusRenderer extends DinosaurRenderer
                 this.renderer.bindTexture(indominusDino.getCamoTexture(entity.getGrowthStage()));
 
                 this.renderer.getMainModel().render(entity, armSwing, armSwingAmount, p_177148_5_, p_177148_6_, p_177148_7_, partialTicks);
-                this.renderer.func_177105_a(entity, p_177148_4_);
+                this.renderer.setLightmap(entity, p_177148_4_);
             }
         }
 

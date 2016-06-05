@@ -2,6 +2,7 @@ package org.jurassicraft.client.animation;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
+import net.minecraft.util.SoundEvent;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -299,7 +300,7 @@ public class AnimationPass
             return;
         }
 
-        String sound = entity.getSoundForAnimation(entity.getAnimation());
+        SoundEvent sound = entity.getSoundForAnimation(entity.getAnimation());
 
         if (sound != null)
         {

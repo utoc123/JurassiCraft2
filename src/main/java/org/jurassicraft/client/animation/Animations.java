@@ -51,15 +51,7 @@ public enum Animations
 
     public static Animations getAnimation(Animation animation)
     {
-        for (Animations anim : values())
-        {
-            if (animation.getID() == anim.get().getID())
-            {
-                return anim;
-            }
-        }
-
-        return null;
+        return values()[animation.getID()];
     }
 
     public boolean shouldHold()

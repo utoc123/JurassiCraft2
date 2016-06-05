@@ -6,9 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 
 public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMessage>
 {
@@ -26,8 +24,7 @@ public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMes
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void onClientReceived(Minecraft client, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
+    public void onClientReceived(Minecraft minecraft, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
     {
         HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)
@@ -37,7 +34,7 @@ public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMes
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
+    public void onServerReceived(MinecraftServer minecraftServer, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
     {
         HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
         if (helicopter != null)

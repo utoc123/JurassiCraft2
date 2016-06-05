@@ -5,7 +5,7 @@ import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -13,9 +13,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.tileentity.DNASequencerTile;
+import org.jurassicraft.server.tile.DNASequencerTile;
 import org.lwjgl.opengl.GL11;
 
 public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerTile>
@@ -42,71 +41,68 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
     {
         World world = tileEntity.getWorld();
 
-        IBlockState blockState = world.getBlockState(tileEntity.getPos());
+        IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.dna_sequencer)
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.enableBlend();
+        GlStateManager.disableCull();
+
+        EnumFacing value = state.getValue(OrientedBlock.FACING);
+
+        if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
         {
-            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GlStateManager.enableBlend();
-            GlStateManager.disableCull();
+            value = value.getOpposite();
+        }
 
-            EnumFacing value = blockState.getValue(OrientedBlock.FACING);
+        int rotation = value.getHorizontalIndex() * 90;
 
-            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
+        GlStateManager.pushMatrix(); // Items
+        {
+            GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
+
+            GlStateManager.rotate(rotation, 0, 1, 0);
+            GlStateManager.translate(0.2, -0.6, 0.15);
+            GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+
+            GlStateManager.scale(0.75F * 0.5F, 0.75F * 0.5F, 0.75F * 0.5F);
+            mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
+            RenderItem renderItem = mc.getRenderItem();
+
+            for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP))
             {
-                value = value.getOpposite();
-            }
+                GlStateManager.translate(0.0, 0.0, 0.4);
 
-            int rotation = value.getHorizontalIndex() * 90;
-
-            GlStateManager.pushMatrix(); // Items
-            {
-                GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
-
-                GlStateManager.rotate(rotation, 0, 1, 0);
-                GlStateManager.translate(0.2, -0.6, 0.15);
-                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-
-                GlStateManager.scale(0.75F, 0.75F, 0.75F);
-                mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-
-                RenderItem renderItem = mc.getRenderItem();
-
-                for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP))
+                if (inputSlot % 2 == 0)
                 {
-                    GlStateManager.translate(0.0, 0.0, 0.2);
+                    ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
 
-                    if (inputSlot % 2 == 0)
+                    if (sequence != null)
                     {
-                        ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
-
-                        if (sequence != null)
-                        {
-                            renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
-                        }
+                        renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
                     }
                 }
             }
-            GlStateManager.popMatrix();
-
-            GlStateManager.pushMatrix(); // Model
-            {
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
-
-                GlStateManager.rotate(rotation, 0, 1, 0);
-
-                double scale = 1.0;
-                GlStateManager.scale(scale, -scale, scale);
-
-                mc.getTextureManager().bindTexture(texture);
-
-                model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-            }
-            GlStateManager.popMatrix();
-
-            GlStateManager.disableBlend();
-            GlStateManager.enableCull();
         }
+        GlStateManager.popMatrix();
+
+        GlStateManager.pushMatrix(); // Model
+        {
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
+
+            GlStateManager.rotate(rotation, 0, 1, 0);
+
+            double scale = 1.0;
+            GlStateManager.scale(scale, -scale, scale);
+
+            mc.getTextureManager().bindTexture(texture);
+
+            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+        }
+        GlStateManager.popMatrix();
+
+        GlStateManager.disableBlend();
+        GlStateManager.enableCull();
     }
 }

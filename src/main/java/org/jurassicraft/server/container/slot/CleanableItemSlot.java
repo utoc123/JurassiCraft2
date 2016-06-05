@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.api.ICleanableItem;
+import org.jurassicraft.server.api.CleanableItem;
 
 public class CleanableItemSlot extends Slot
 {
@@ -15,7 +15,7 @@ public class CleanableItemSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        ICleanableItem cleanableItem = ICleanableItem.getCleanableItem(stack);
+        CleanableItem cleanableItem = CleanableItem.getCleanableItem(stack);
         return cleanableItem != null && cleanableItem.isCleanable(stack);
     }
 }

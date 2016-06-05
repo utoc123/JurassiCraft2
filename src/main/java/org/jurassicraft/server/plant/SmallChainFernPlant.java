@@ -20,6 +20,6 @@ public class SmallChainFernPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.small_chain_fern;
+        return BlockHandler.INSTANCE.SMALL_CHAIN_FERN;
     }
 }

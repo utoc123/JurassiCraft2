@@ -2,35 +2,38 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class JCPanicEntityAI extends EntityAIBase
 {
-    private final DinosaurEntity dinosaur;
+    private final DinosaurEntity theEntityCreature;
     protected double speed;
     private double randPosX;
     private double randPosY;
     private double randPosZ;
 
-    public JCPanicEntityAI(DinosaurEntity dinosaur, double speed)
+    public JCPanicEntityAI(DinosaurEntity creature, double speedIn)
     {
-        this.dinosaur = dinosaur;
-        this.speed = speed;
+        theEntityCreature = creature;
+        speed = speedIn;
         setMutexBits(1);
     }
 
+    /**
+     * Returns whether the EntityAIBase should begin execution.
+     */
     @Override
     public boolean shouldExecute()
     {
-        if (dinosaur.getAITarget() == null && !dinosaur.isBurning())
+        if (theEntityCreature.getAITarget() == null && !theEntityCreature.isBurning())
         {
             return false;
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(dinosaur, 5, 4);
+            Vec3d vec3 = RandomPositionGenerator.findRandomTarget(theEntityCreature, 5, 4);
 
             if (vec3 == null)
             {
@@ -52,11 +55,12 @@ public class JCPanicEntityAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        dinosaur.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
+        theEntityCreature.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
 
-        dinosaur.setAnimation(Animations.HISSING.get());
+        theEntityCreature.setAnimation(Animations.HISSING.get());
+
         // DEBUG
-        System.out.println("Starting panic AI for entity " + dinosaur.getEntityId());
+        System.out.println("Starting panic AI for entity " + theEntityCreature.getEntityId());
 
     }
 
@@ -66,6 +70,6 @@ public class JCPanicEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        return !dinosaur.getNavigator().noPath();
+        return !theEntityCreature.getNavigator().noPath();
     }
 }

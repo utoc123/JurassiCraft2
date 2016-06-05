@@ -2,8 +2,8 @@ package org.jurassicraft.server.entity.base;
 
 public enum SleepingSchedule
 {
-    DIURNAL(fromTimeToTicks(6, 00), fromTimeToTicks(22, 00)),
-    NOCTURNAL(fromTimeToTicks(18, 00), fromTimeToTicks(6, 00)),
+    DIURNAL(fromTimeToTicks(6, 0), fromTimeToTicks(22, 0)),
+    NOCTURNAL(fromTimeToTicks(18, 0), fromTimeToTicks(6, 0)),
     CREPUSCULAR(fromTimeToTicks(12, 30), fromTimeToTicks(4, 30));
 
     private int wakeUpTime;

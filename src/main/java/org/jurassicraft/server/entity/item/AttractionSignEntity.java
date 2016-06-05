@@ -8,16 +8,15 @@ import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.Validate;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.item.ItemHandler;
 
@@ -81,22 +80,27 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
                 }
             }
 
-            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.attraction_sign, 1, type.ordinal()), 0.0F);
+            this.entityDropItem(new ItemStack(ItemHandler.INSTANCE.ATTRACTION_SIGN, 1, type.ordinal()), 0.0F);
         }
+    }
+
+    @Override
+    public void playPlaceSound()
+    {
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
+    {
     }
 
     @Override
     public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
     {
-        BlockPos locationOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
-        BlockPos newPosition = this.hangingPosition.add(locationOffset);
+        BlockPos positionOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
+        BlockPos newPosition = this.hangingPosition.add(positionOffset);
         this.setPosition(newPosition.getX(), newPosition.getY(), newPosition.getZ());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean p_180426_10_)
-    {
     }
 
     @Override
@@ -118,7 +122,7 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
     @Override
     public boolean onValidSurface()
     {
-        if (!this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox()).isEmpty())
+        if (!this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty())
         {
             return false;
         }
@@ -137,7 +141,7 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
                 BlockPos partPos = pos.offset(facing, x).down(y);
                 IBlockState state = worldObj.getBlockState(partPos);
 
-                if (!(state.getBlock().isSideSolid(worldObj, partPos, this.facingDirection) && state.getBlock().getMaterial().isSolid()))
+                if (!(state.isSideSolid(worldObj, partPos, this.facingDirection) && state.getMaterial().isSolid()))
                 {
                     return false;
                 }
@@ -148,31 +152,6 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
     }
 
     @Override
-    public void setPosition(double x, double y, double z)
-    {
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
-        BlockPos prevPos = this.hangingPosition;
-        this.hangingPosition = new BlockPos(x, y, z);
-
-        if (!this.hangingPosition.equals(prevPos))
-        {
-            this.updateBoundingBox();
-            this.isAirBorne = true;
-        }
-    }
-
-    @Override
-    protected void updateFacingWithBoundingBox(EnumFacing direction)
-    {
-        Validate.notNull(direction);
-        Validate.isTrue(direction.getAxis().isHorizontal());
-        this.facingDirection = direction;
-        this.prevRotationYaw = this.rotationYaw = (float) (this.facingDirection.getHorizontalIndex() * 90);
-        this.updateBoundingBox();
-    }
-
     protected void updateBoundingBox()
     {
         if (this.facingDirection != null)
@@ -213,9 +192,9 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
     }
 
     @Override
-    public ItemStack getPickedResult(MovingObjectPosition target)
+    public ItemStack getPickedResult(RayTraceResult target)
     {
-        return new ItemStack(ItemHandler.INSTANCE.attraction_sign, 1, this.type.ordinal());
+        return new ItemStack(ItemHandler.INSTANCE.ATTRACTION_SIGN, 1, this.type.ordinal());
     }
 
     public enum AttractionSignType

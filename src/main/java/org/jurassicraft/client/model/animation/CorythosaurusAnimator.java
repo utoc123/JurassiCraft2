@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.CorythosaurusEntity;
+import org.jurassicraft.server.entity.dinosaur.CorythosaurusEntity;
 
 @SideOnly(Side.CLIENT)
 public class CorythosaurusAnimator extends DinosaurAnimator<CorythosaurusEntity>

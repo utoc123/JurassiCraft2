@@ -20,6 +20,6 @@ public class ZamitesPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.cycad_zamites;
+        return BlockHandler.INSTANCE.ZAMITES;
     }
 }

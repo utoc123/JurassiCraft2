@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.VelociraptorEntity;
+import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 
 @SideOnly(Side.CLIENT)
 public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>

@@ -2,13 +2,13 @@ package org.jurassicraft.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tile.CultivatorTile;
 
 @SideOnly(Side.CLIENT)
 public class CultivateProcessGui extends GuiScreen
@@ -39,12 +39,6 @@ public class CultivateProcessGui extends GuiScreen
     }
 
     @Override
-    public void onGuiClosed()
-    {
-        super.onGuiClosed();
-    }
-
-    @Override
     public boolean doesGuiPauseGame()
     {
         return false;
@@ -69,7 +63,7 @@ public class CultivateProcessGui extends GuiScreen
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
 
-        this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, StatCollector.translateToLocal("container.close.name")));
+        this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, I18n.format("container.close.name")));
     }
 
     @Override
@@ -103,8 +97,8 @@ public class CultivateProcessGui extends GuiScreen
             name = "Unknown";
         }
 
-        String cultivatingLang = StatCollector.translateToLocal("container.cultivator.cultivating");
-        String progressLang = StatCollector.translateToLocal("container.cultivator.progress");
+        String cultivatingLang = I18n.format("container.cultivator.cultivating");
+        String progressLang = I18n.format("container.cultivator.progress");
 
         String progress = progressLang + ": " + getScaled(cultivator.getField(0), cultivator.getField(1), 100) + "%";
         String cultivating = cultivatingLang + ": " + name;

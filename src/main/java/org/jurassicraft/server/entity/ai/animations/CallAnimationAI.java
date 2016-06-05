@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai.animations;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 import org.jurassicraft.client.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -19,9 +19,9 @@ public class CallAnimationAI extends EntityAIBase
         this.animatingEntity = (DinosaurEntity) entity;
     }
 
-    public List<Entity> getEntitiesWithinDistance(Entity e, double xz, double y)
+    public List<Entity> getEntitiesWithinDistance(Entity entity, double width, double height)
     {
-        return e.worldObj.getEntitiesWithinAABBExcludingEntity(e, AxisAlignedBB.fromBounds(e.posX - xz, e.posY - y, e.posZ - xz, e.posX + xz, e.posY + y, e.posZ + xz));
+        return entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, new AxisAlignedBB(entity.posX - width, entity.posY - height, entity.posZ - width, entity.posX + width, entity.posY + height, entity.posZ + width));
     }
 
     @Override

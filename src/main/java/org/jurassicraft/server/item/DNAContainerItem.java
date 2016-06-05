@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.lang.AdvLang;
 
@@ -72,26 +72,26 @@ public class DNAContainerItem extends Item
     {
         int quality = getDNAQuality(player, stack);
 
-        EnumChatFormatting colour;
+        TextFormatting colour;
 
         if (quality > 75)
         {
-            colour = EnumChatFormatting.GREEN;
+            colour = TextFormatting.GREEN;
         }
         else if (quality > 50)
         {
-            colour = EnumChatFormatting.YELLOW;
+            colour = TextFormatting.YELLOW;
         }
         else if (quality > 25)
         {
-            colour = EnumChatFormatting.GOLD;
+            colour = TextFormatting.GOLD;
         }
         else
         {
-            colour = EnumChatFormatting.RED;
+            colour = TextFormatting.RED;
         }
 
         lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(EnumChatFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack).toString()).build());
+        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
     }
 }

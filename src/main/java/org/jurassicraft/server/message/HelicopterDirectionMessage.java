@@ -6,10 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.timeless.unilib.utils.MutableVec3;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.util.MutableVec3;
 
 public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirectionMessage>
 {
@@ -28,10 +26,9 @@ public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirect
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void onClientReceived(Minecraft client, HelicopterDirectionMessage message, EntityPlayer player, MessageContext messageContext)
+    public void onClientReceived(Minecraft minecraft, HelicopterDirectionMessage message, EntityPlayer entityPlayer, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, message.heliID);
         if (helicopter != null)
         {
             helicopter.setDirection(message.direction);
@@ -39,9 +36,9 @@ public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirect
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, HelicopterDirectionMessage message, EntityPlayer player, MessageContext messageContext)
+    public void onServerReceived(MinecraftServer minecraftServer, HelicopterDirectionMessage message, EntityPlayer entityPlayer, MessageContext messageContext)
     {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, message.heliID);
         if (helicopter != null)
         {
             helicopter.setDirection(message.direction);

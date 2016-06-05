@@ -6,10 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 
 public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureMessage>
@@ -36,8 +34,7 @@ public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureM
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void onClientReceived(Minecraft client, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext)
+    public void onClientReceived(Minecraft minecraft, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext)
     {
         IInventory incubator = (IInventory) player.worldObj.getTileEntity(message.pos);
         incubator.setField(message.slot + 10, message.temp);

@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.HerrerasaurusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.HerrerasaurusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class HerrerasaurusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class HerrerasaurusDinosaur extends Dinosaur
 
         this.setName("Herrerasaurus");
         this.setDinosaurClass(HerrerasaurusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.TRIASSIC);
+        this.setTimePeriod(TimePeriod.TRIASSIC);
         this.setEggColorMale(0x2B1919, 0x932C23);
         this.setEggColorFemale(0x7C6F44, 0x2B2721);
         this.setHealth(10, 40);

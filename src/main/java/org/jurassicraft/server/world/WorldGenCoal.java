@@ -2,10 +2,10 @@ package org.jurassicraft.server.world;
 
 import com.google.common.base.Predicate;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.state.pattern.BlockHelper;
+import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import org.jurassicraft.server.block.BlockHandler;
@@ -20,7 +20,7 @@ public class WorldGenCoal extends WorldGenMinable
 
     public WorldGenCoal(IBlockState state, int blockCount)
     {
-        this(state, blockCount, BlockHelper.forBlock(Blocks.stone));
+        this(state, blockCount, BlockMatcher.forBlock(Blocks.STONE));
     }
 
     public WorldGenCoal(IBlockState state, int blockCount, Predicate<IBlockState> predicate)
@@ -80,11 +80,11 @@ public class WorldGenCoal extends WorldGenMinable
 
                                     IBlockState previousState = world.getBlockState(pos);
 
-                                    if (previousState.getBlock().isReplaceableOreGen(world, pos, this.predicate))
+                                    if (previousState.getBlock().isReplaceableOreGen(previousState, world, pos, this.predicate))
                                     {
                                         if (rand.nextInt(10) == 0)
                                         {
-                                            world.setBlockState(pos, BlockHandler.INSTANCE.plant_fossil.getDefaultState());
+                                            world.setBlockState(pos, BlockHandler.INSTANCE.PLANT_FOSSIL.getDefaultState());
                                         }
                                         else
                                         {

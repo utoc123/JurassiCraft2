@@ -2,7 +2,6 @@ package org.jurassicraft.client.animation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.util.ListHashMap;
@@ -14,6 +13,7 @@ import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,20 +71,12 @@ public class PoseHandler
         }
     }
 
-    /**
-     * Loads a specific growth state
-     *
-     * @param dinoDir the base directory
-     * @param name    the name of the dino
-     * @param growth  the growthstate to load
-     * @throws IOException
-     */
-    private PreloadedModelData loadDinosaur(URI dinoDir, String name, GrowthStage growth) throws IOException
+    private PreloadedModelData loadDinosaur(URI dinoDir, String name, GrowthStage growth)
     {
         String growthName = growth.name().toLowerCase(Locale.ROOT);
         URI growthSensitiveDir = dinoDir.resolve(growthName + "/");
         URI definitionFile = growthSensitiveDir.resolve(name + "_" + growthName + ".json");
-        InputStream dinoDef = TabulaModelHandler.class.getResourceAsStream(definitionFile.toString());
+        InputStream dinoDef = TabulaModelHelper.class.getResourceAsStream(definitionFile.toString());
 
         if (dinoDef == null)
         {
@@ -109,33 +101,24 @@ public class PoseHandler
         }
     }
 
-    /**
-     * Gets the posed models from the set of animations defined. Illegal poses (e.g. where the file doesn't exist) will be skipped and not show up in the map.
-     *
-     * @param anims the read animations
-     * @returns the posed models
-     */
     private PreloadedModelData getPosedModels(URI dinoDirURI, AnimationsDTO anims)
     {
-        // Check if the file is legal: -> at least one pose for the IDLE
-        // animation
         if (anims == null || anims.poses == null || anims.poses.get(Animations.IDLE.name()) == null || anims.poses.get(Animations.IDLE.name()).length == 0)
         {
             throw new IllegalArgumentException("Animation files must define at least one pose for the IDLE animation");
         }
-        // Collect all needed resources
-        List<String> posedModelResources = new ArrayList<String>();
+        List<String> posedModelResources = new ArrayList<>();
         for (PoseDTO[] poses : anims.poses.values())
         {
             if (poses == null)
             {
-                continue; // Pending comma in the map, ignoring
+                continue;
             }
             for (PoseDTO pose : poses)
             {
                 if (pose == null)
                 {
-                    continue; // Pending comma in the list, ignoring
+                    continue;
                 }
                 if (pose.pose == null)
                 {
@@ -144,21 +127,19 @@ public class PoseHandler
                 String resolvedRes = resolve(dinoDirURI, pose.pose);
                 int index = posedModelResources.indexOf(resolvedRes);
                 if (index == -1)
-                { // Not in the list
+                {
                     pose.index = posedModelResources.size();
                     posedModelResources.add(resolvedRes);
                 }
                 else
-                { // Already in there
+                {
                     pose.index = index;
                 }
             }
         }
-        assert (posedModelResources.size() > 0); // anims.poses.get(Animations.IDLE.get().getId()).length
-        // != 0
+        assert (posedModelResources.size() > 0);
         AdvancedModelRenderer[][] posedCubes = new AdvancedModelRenderer[posedModelResources.size()][];
-        Map<Animation, int[][]> animationSequences = new ListHashMap<Animation, int[][]>();
-        // find all names we need
+        Map<Animation, int[][]> animationSequences = new ListHashMap<>();
         DinosaurModel mainModel = JabelarAnimationHandler.getTabulaModel(posedModelResources.get(0), 0);
         if (mainModel == null)
         {
@@ -166,7 +147,6 @@ public class PoseHandler
         }
         String[] cubeNameArray = mainModel.getCubeNamesArray();
         int numParts = cubeNameArray.length;
-        // load the models from the resource files
         for (int i = 0; i < posedModelResources.size(); i++)
         {
             String resource = posedModelResources.get(i);
@@ -188,7 +168,6 @@ public class PoseHandler
             }
             posedCubes[i] = cubes;
         }
-        // load the animations sequences
         for (Map.Entry<String, PoseDTO[]> entry : anims.poses.entrySet())
         {
             Animation animations = Animations.valueOf(entry.getKey()).get();
@@ -268,7 +247,7 @@ public class PoseHandler
 
             if (animations == null)
             {
-                animations = new LinkedHashMap<Animation, int[][]>();
+                animations = new LinkedHashMap<>();
             }
 
             this.models = renderers;

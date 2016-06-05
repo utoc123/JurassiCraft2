@@ -6,9 +6,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
 import org.jurassicraft.client.animation.Animations;
-import org.jurassicraft.server.entity.GallimimusEntity;
-import org.jurassicraft.server.entity.TyrannosaurusEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.dinosaur.GallimimusEntity;
+import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;
 
 public class BiteAnimationAI extends AnimationAI
 {
@@ -76,7 +76,7 @@ public class BiteAnimationAI extends AnimationAI
 
     public double getCreatureSpeed()
     {
-        return (double) ((int) (100 * this.entityBiting.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue())) / 100;
+        return (double) ((int) (100 * this.entityBiting.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue())) / 100;
     }
 
     @Override

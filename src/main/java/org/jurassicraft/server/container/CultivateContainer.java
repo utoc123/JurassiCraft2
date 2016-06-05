@@ -2,20 +2,21 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.SyringeSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
-import org.jurassicraft.server.tileentity.CultivatorTile;
+import org.jurassicraft.server.tile.CultivatorTile;
 
-public class CultivateContainer extends Container
+public class CultivateContainer extends SyncedFieldContainer
 {
     private CultivatorTile cultivator;
 
     public CultivateContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
     {
+        super((IInventory) tileEntity);
         this.cultivator = (CultivatorTile) tileEntity;
         this.addSlotToContainer(new SyringeSlot(cultivator, 0, 122, 44));
         this.addSlotToContainer(new Slot(cultivator, 1, 208, 20));

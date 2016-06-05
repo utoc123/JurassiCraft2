@@ -6,14 +6,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,9 +48,9 @@ public class DinsaurMeatItem extends ItemFood
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
+        Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
@@ -123,26 +123,26 @@ public class DinsaurMeatItem extends ItemFood
     {
         int quality = getDNAQuality(player, stack);
 
-        EnumChatFormatting colour;
+        TextFormatting formatting;
 
         if (quality > 75)
         {
-            colour = EnumChatFormatting.GREEN;
+            formatting = TextFormatting.GREEN;
         }
         else if (quality > 50)
         {
-            colour = EnumChatFormatting.YELLOW;
+            formatting = TextFormatting.YELLOW;
         }
         else if (quality > 25)
         {
-            colour = EnumChatFormatting.GOLD;
+            formatting = TextFormatting.GOLD;
         }
         else
         {
-            colour = EnumChatFormatting.RED;
+            formatting = TextFormatting.RED;
         }
 
-        lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(EnumChatFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
+        lore.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
     }
 }

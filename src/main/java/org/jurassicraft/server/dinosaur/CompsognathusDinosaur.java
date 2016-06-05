@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.CompsognathusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.CompsognathusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class CompsognathusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class CompsognathusDinosaur extends Dinosaur
 
         this.setName("Compsognathus");
         this.setDinosaurClass(CompsognathusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.JURASSIC);
+        this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x7B8042, 0x454B3B);
         this.setEggColorFemale(0x7D734A, 0x484A3D);
         this.setHealth(2, 5);

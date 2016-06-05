@@ -1,8 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.OrnithomimusEntity;
 import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.period.EnumTimePeriod;
+import org.jurassicraft.server.entity.dinosaur.OrnithomimusEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 public class OrnithomimusDinosaur extends Dinosaur
 {
@@ -12,7 +12,7 @@ public class OrnithomimusDinosaur extends Dinosaur
 
         this.setName("Ornithomimus");
         this.setDinosaurClass(OrnithomimusEntity.class);
-        this.setTimePeriod(EnumTimePeriod.CRETACEOUS);
+        this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x92A8D5, 0x475F93);
         this.setEggColorFemale(0xBDC4A9, 0x7F91C1);
         this.setHealth(5, 25);

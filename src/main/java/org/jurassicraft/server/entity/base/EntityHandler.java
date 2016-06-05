@@ -6,10 +6,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.init.Biomes;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.api.IHybrid;
+import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.dinosaur.AchillobatorDinosaur;
 import org.jurassicraft.server.dinosaur.AnkylosaurusDinosaur;
@@ -65,14 +66,14 @@ import org.jurassicraft.server.dinosaur.VelociraptorDeltaDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorEchoDinosaur;
 import org.jurassicraft.server.dinosaur.ZhenyuanopterusDinosaur;
+import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.helicopter.modules.HelicopterSeatEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
-import org.jurassicraft.server.period.EnumTimePeriod;
-import org.jurassicraft.server.vehicles.helicopter.HelicopterBaseEntity;
-import org.jurassicraft.server.vehicles.helicopter.modules.HelicopterSeatEntity;
+import org.jurassicraft.server.period.TimePeriod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,8 +83,8 @@ public enum EntityHandler
 {
     INSTANCE;
 
-    private List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>();
-    private HashMap<EnumTimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<EnumTimePeriod, List<Dinosaur>>();
+    private List<Dinosaur> dinosaurs = new ArrayList<>();
+    private HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
 
     public final Dinosaur dodo = new DodoDinosaur();
     public final Dinosaur achillobator = new AchillobatorDinosaur();
@@ -143,11 +144,11 @@ public enum EntityHandler
 
     public List<Dinosaur> getDinosaursFromSeaLampreys()
     {
-        List<Dinosaur> marineDinos = new ArrayList<Dinosaur>();
+        List<Dinosaur> marineDinos = new ArrayList<>();
 
         for (Dinosaur dino : getRegisteredDinosaurs())
         {
-            if (dino.isMarineAnimal() && !(dino instanceof IHybrid))
+            if (dino.isMarineAnimal() && !(dino instanceof Hybrid))
             {
                 marineDinos.add(dino);
             }
@@ -158,90 +159,68 @@ public enum EntityHandler
 
     public void init()
     {
-        registerDinosaurType(velociraptor);
-        registerDinosaurType(achillobator);
-        registerDinosaurType(anklyosaurus);
-        registerDinosaurType(brachiosaurus);
-        registerDinosaurType(carnotaurus);
-        registerDinosaurType(coelacanth);
-        registerDinosaurType(compsognathus);
-        registerDinosaurType(dilophosaurus);
-        registerDinosaurType(dunkleosteus);
-        registerDinosaurType(gallimimus);
-        registerDinosaurType(giganotosaurus);
-        registerDinosaurType(indominus);
-        registerDinosaurType(majungasaurus);
-        registerDinosaurType(parasaurolophus);
-        registerDinosaurType(pteranodon);
-        registerDinosaurType(rugops);
-        registerDinosaurType(segisaurus);
-        registerDinosaurType(spinosaurus);
-        registerDinosaurType(stegosaurus);
-        registerDinosaurType(triceratops);
-        registerDinosaurType(tyrannosaurus);
-        registerDinosaurType(hypsilophodon);
-        registerDinosaurType(dodo);
-        registerDinosaurType(leptictidium);
-        registerDinosaurType(microceratus);
-        registerDinosaurType(apatosaurus);
-        registerDinosaurType(othnielia);
-        registerDinosaurType(dimorphodon);
-        registerDinosaurType(tylosaurus);
-        registerDinosaurType(ludodactylus);
-        registerDinosaurType(protoceratops);
-        registerDinosaurType(tropeognathus);
-        registerDinosaurType(leaellynasaura);
-        registerDinosaurType(herrerasaurus);
-        registerDinosaurType(velociraptor_blue);
-        registerDinosaurType(velociraptor_charlie);
-        registerDinosaurType(velociraptor_delta);
-        registerDinosaurType(velociraptor_echo);
-        registerDinosaurType(therizinosaurus);
-        registerDinosaurType(megapiranha);
-        registerDinosaurType(baryonyx);
-        registerDinosaurType(cearadactylus);
-        registerDinosaurType(mamenchisaurus);
-        registerDinosaurType(chasmosaurus);
-        registerDinosaurType(corythosaurus);
-        registerDinosaurType(edmontosaurus);
-        registerDinosaurType(lambeosaurus);
-        registerDinosaurType(metriacanthosaurus);
-        registerDinosaurType(moganopterus);
-        registerDinosaurType(ornithomimus);
-        registerDinosaurType(zhenyuanopterus);
-        registerDinosaurType(troodon);
-        registerDinosaurType(pachycephalosaurus);
+        registerDinosaur(velociraptor);
+        registerDinosaur(achillobator);
+        registerDinosaur(anklyosaurus);
+        registerDinosaur(brachiosaurus);
+        registerDinosaur(carnotaurus);
+        registerDinosaur(coelacanth);
+        registerDinosaur(compsognathus);
+        registerDinosaur(dilophosaurus);
+        registerDinosaur(dunkleosteus);
+        registerDinosaur(gallimimus);
+        registerDinosaur(giganotosaurus);
+        registerDinosaur(indominus);
+        registerDinosaur(majungasaurus);
+        registerDinosaur(parasaurolophus);
+        registerDinosaur(pteranodon);
+        registerDinosaur(rugops);
+        registerDinosaur(segisaurus);
+        registerDinosaur(spinosaurus);
+        registerDinosaur(stegosaurus);
+        registerDinosaur(triceratops);
+        registerDinosaur(tyrannosaurus);
+        registerDinosaur(hypsilophodon);
+        registerDinosaur(dodo);
+        registerDinosaur(leptictidium);
+        registerDinosaur(microceratus);
+        registerDinosaur(apatosaurus);
+        registerDinosaur(othnielia);
+        registerDinosaur(dimorphodon);
+        registerDinosaur(tylosaurus);
+        registerDinosaur(ludodactylus);
+        registerDinosaur(protoceratops);
+        registerDinosaur(tropeognathus);
+        registerDinosaur(leaellynasaura);
+        registerDinosaur(herrerasaurus);
+        registerDinosaur(velociraptor_blue);
+        registerDinosaur(velociraptor_charlie);
+        registerDinosaur(velociraptor_delta);
+        registerDinosaur(velociraptor_echo);
+        registerDinosaur(therizinosaurus);
+        registerDinosaur(megapiranha);
+        registerDinosaur(baryonyx);
+        registerDinosaur(cearadactylus);
+        registerDinosaur(mamenchisaurus);
+        registerDinosaur(chasmosaurus);
+        registerDinosaur(corythosaurus);
+        registerDinosaur(edmontosaurus);
+        registerDinosaur(lambeosaurus);
+        registerDinosaur(metriacanthosaurus);
+        registerDinosaur(moganopterus);
+        registerDinosaur(ornithomimus);
+        registerDinosaur(zhenyuanopterus);
+        registerDinosaur(troodon);
+        registerDinosaur(pachycephalosaurus);
 
         registerEntity(BluePrintEntity.class, "Blueprint");
         registerEntity(AttractionSignEntity.class, "JurassiCraft Sign");
         registerEntity(CageSmallEntity.class, "Small Dinosaur Cage");
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
+
         registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
         registerEntity(HelicopterBaseEntity.class, "Helicopter base");
         registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
-
-        dinosaurs.forEach(this::registerDinosaur);
-    }
-
-    private void registerDinosaur(Dinosaur dinosaur)
-    {
-        Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
-
-        registerEntity(clazz, dinosaur.getName());
-
-        if (dinosaur.shouldRegister() && !(dinosaur instanceof IHybrid) && JCConfigurations.spawnJurassiCraftMobsNaturally())
-        {
-            if (dinosaur.isMarineAnimal())
-            {
-                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, BiomeGenBase.ocean, BiomeGenBase.deepOcean, BiomeGenBase.river);
-                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.IN_WATER);
-            }
-            else
-            {
-                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(Iterators.forArray(BiomeGenBase.getBiomeGenArray()), Predicates.notNull()), BiomeGenBase.class));
-                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.ON_GROUND);
-            }
-        }
     }
 
     private void registerEntity(Class<? extends Entity> entity, String name)
@@ -251,15 +230,15 @@ public enum EntityHandler
         EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }
 
-    public void registerDinosaurType(Dinosaur dinosaur)
+    public void registerDinosaur(Dinosaur dinosaur)
     {
         dinosaur.init();
 
         dinosaurs.add(dinosaur);
 
-        if (!(dinosaur instanceof IHybrid) && dinosaur.shouldRegister())
+        if (!(dinosaur instanceof Hybrid) && dinosaur.shouldRegister())
         {
-            EnumTimePeriod period = dinosaur.getPeriod();
+            TimePeriod period = dinosaur.getPeriod();
 
             List<Dinosaur> dinoList = dinosaursFromPeriod.get(period);
 
@@ -272,10 +251,28 @@ public enum EntityHandler
             }
             else
             {
-                List<Dinosaur> newDinoList = new ArrayList<Dinosaur>();
+                List<Dinosaur> newDinoList = new ArrayList<>();
                 newDinoList.add(dinosaur);
 
                 dinosaursFromPeriod.put(period, newDinoList);
+            }
+        }
+
+        Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
+
+        registerEntity(clazz, dinosaur.getName());
+
+        if (dinosaur.shouldRegister() && !(dinosaur instanceof Hybrid) && JCConfigurations.spawnJurassiCraftMobsNaturally())
+        {
+            if (dinosaur.isMarineAnimal())
+            {
+                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.RIVER);
+                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.IN_WATER);
+            }
+            else
+            {
+                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(Biome.REGISTRY.iterator(), Predicates.notNull()), Biome.class));
+                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.ON_GROUND);
             }
         }
     }
@@ -297,11 +294,11 @@ public enum EntityHandler
 
     public List<Dinosaur> getDinosaursFromAmber()
     {
-        List<Dinosaur> amberDinos = new ArrayList<Dinosaur>();
+        List<Dinosaur> amberDinos = new ArrayList<>();
 
         for (Dinosaur dino : getRegisteredDinosaurs())
         {
-            if (!dino.isMarineAnimal() && !(dino instanceof IHybrid))
+            if (!dino.isMarineAnimal() && !(dino instanceof Hybrid))
             {
                 amberDinos.add(dino);
             }
@@ -317,7 +314,7 @@ public enum EntityHandler
 
     public List<Dinosaur> getRegisteredDinosaurs()
     {
-        List<Dinosaur> reg = new ArrayList<Dinosaur>();
+        List<Dinosaur> reg = new ArrayList<>();
 
         for (Dinosaur dino : dinosaurs)
         {
@@ -330,7 +327,7 @@ public enum EntityHandler
         return reg;
     }
 
-    public List<Dinosaur> getDinosaursFromPeriod(EnumTimePeriod period)
+    public List<Dinosaur> getDinosaursFromPeriod(TimePeriod period)
     {
         return dinosaursFromPeriod.get(period);
     }

@@ -1,20 +1,22 @@
 package org.jurassicraft.server.item;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
 
@@ -27,11 +29,6 @@ public class CageItem extends Item
         this.setCreativeTab(TabHandler.INSTANCE.items);
     }
 
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     *
-     * @param subItems The List of sub-items. This is a List of ItemStacks.
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
@@ -40,12 +37,6 @@ public class CageItem extends Item
         subItems.add(new ItemStack(itemIn, 1, 1));
     }
 
-    /**
-     * allows items to add custom lines of information to the mouseover description
-     *
-     * @param tooltip  All lines to display in the Item's tooltip. This is a List of Strings.
-     * @param advanced Whether the setting "Advanced tooltips" is enabled
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
@@ -55,35 +46,25 @@ public class CageItem extends Item
 
         if (caged != -1)
         {
-            tooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("entity.jurassicraft." + EntityList.classToStringMapping.get(EntityList.idToClassMapping.get(caged)) + ".name"));
+            tooltip.add(TextFormatting.BLUE + I18n.format("entity.jurassicraft." + EntityList.CLASS_TO_NAME.get(EntityList.ID_TO_CLASS.get(caged)) + ".name"));
 
             if (data != null)
             {
-                tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("gender." + (data.getBoolean("IsMale") ? "male" : "female") + ".name"));
+                tooltip.add(TextFormatting.RED + I18n.format("gender." + (data.getBoolean("IsMale") ? "male" : "female") + ".name"));
             }
         }
         else
         {
-            tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("cage.empty.name"));
+            tooltip.add(TextFormatting.RED + I18n.format("cage.empty.name"));
         }
     }
 
-    /**
-     * This is called when the item is used, before the block is activated.
-     *
-     * @param stack  The Item Stack
-     * @param player The Player that used the item
-     * @param world  The Current World
-     * @param pos    Target position
-     * @param side   The side of the target hit
-     * @return Return true to prevent any further processing.
-     */
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         pos = pos.offset(side);
 
-        if (player.canPlayerEdit(pos, side, stack) && !world.isRemote)
+        if (!world.isRemote && player.canPlayerEdit(pos, side, stack))
         {
             CageSmallEntity cage = new CageSmallEntity(world, stack.getMetadata() == 1);
             cage.setEntity(getCaged(stack));
@@ -97,10 +78,10 @@ public class CageItem extends Item
                 stack.stackSize--;
             }
 
-            return true;
+            return EnumActionResult.SUCCESS;
         }
 
-        return false;
+        return EnumActionResult.PASS;
     }
 
     private int getCaged(ItemStack stack)

@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai.util;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -61,7 +61,7 @@ public class BlockBreaker
     public static double breakSeconds(World world, double digSpeed, BlockPos pos)
     {
         IBlockState state = world.getBlockState(pos);
-        float hardness = state.getBlock().getBlockHardness(world, pos);
+        float hardness = state.getBlock().getBlockHardness(world.getBlockState(pos), world, pos);
 
         return (BASE_BREAK_FACTOR * hardness) / (digSpeed);
     }

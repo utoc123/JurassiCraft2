@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class MoveUnderwaterEntityAI extends EntityAIBase
@@ -26,7 +26,7 @@ public class MoveUnderwaterEntityAI extends EntityAIBase
             return false;
         }
 
-        Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.swimmingEntity, 6, 2);
+        Vec3d vec3 = RandomPositionGenerator.findRandomTarget(this.swimmingEntity, 6, 2);
 
         if (vec3 == null)
         {

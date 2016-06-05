@@ -4,14 +4,14 @@ import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -69,12 +69,12 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
             else
             {
                 DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
-                GL11.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
+                GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
                 float scale = 0.0625F;
                 GlStateManager.scale(scale, scale, scale);
 
                 this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), entity.getWidthPixels(), entity.getHeightPixels());
-                GL11.glEndList();
+                GlStateManager.glEndList();
 
                 HAS_COMPILED = true;
             }
@@ -114,7 +114,7 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
                     float maxTextureY = (textureHeight - y / pixelSize) / textureHeight;
                     float minTextureY = (textureHeight - (y + 1) / pixelSize) / textureHeight;
                     Tessellator tessellator = Tessellator.getInstance();
-                    WorldRenderer buffer = tessellator.getWorldRenderer();
+                    VertexBuffer buffer = tessellator.getBuffer();
 
                     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
                     buffer.pos(maxX, minY, 0.0F).tex(minTextureX, maxTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();

@@ -2,6 +2,7 @@ package org.jurassicraft.server.item;
 
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,20 +13,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +75,7 @@ public class DinosaurSpawnEggItem extends Item
                 }
 
                 dino.setPosition(x, y, z);
-                dino.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+                dino.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
                 dino.rotationYawHead = dino.rotationYaw;
                 dino.renderYawOffset = dino.rotationYaw;
                 return dino;
@@ -87,11 +89,8 @@ public class DinosaurSpawnEggItem extends Item
         return null;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         int mode = changeMode(stack);
 
@@ -112,10 +111,10 @@ public class DinosaurSpawnEggItem extends Item
                 modeString = "female";
             }
 
-            player.addChatMessage(new ChatComponentText(new AdvLang("spawnegg.genderchange.name").withProperty("mode", StatCollector.translateToLocal("gender." + modeString + ".name")).build()));
+            player.addChatMessage(new TextComponentString(new AdvLang("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
 
-        return stack;
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
@@ -140,39 +139,11 @@ public class DinosaurSpawnEggItem extends Item
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int renderPass)
-    {
-        Dinosaur dino = getDinosaur(stack);
-
-        if (dino != null)
-        {
-            int mode = getMode(stack);
-
-            if (mode == 0)
-            {
-                mode = JurassiCraft.timerTicks % 64 > 32 ? 1 : 2;
-            }
-
-            if (mode == 1)
-            {
-                return renderPass == 0 ? dino.getEggPrimaryColorMale() : dino.getEggSecondaryColorMale();
-            }
-            else
-            {
-                return renderPass == 0 ? dino.getEggPrimaryColorFemale() : dino.getEggSecondaryColorFemale();
-            }
-        }
-
-        return 16777215;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<Dinosaur>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<Dinosaur, Integer>();
+        Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
@@ -191,37 +162,36 @@ public class DinosaurSpawnEggItem extends Item
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote)
         {
-            return true;
+            return EnumActionResult.SUCCESS;
         }
         else if (!player.canPlayerEdit(pos.offset(side), side, stack))
         {
-            return false;
+            return EnumActionResult.PASS;
         }
         else
         {
             IBlockState iblockstate = world.getBlockState(pos);
 
-            if (iblockstate.getBlock() == Blocks.mob_spawner)
+            if (iblockstate.getBlock() == Blocks.MOB_SPAWNER)
             {
-                TileEntity tileentity = world.getTileEntity(pos);
+                TileEntity tile = world.getTileEntity(pos);
 
-                if (tileentity instanceof TileEntityMobSpawner)
+                if (tile instanceof TileEntityMobSpawner)
                 {
-                    MobSpawnerBaseLogic mobspawnerbaselogic = ((TileEntityMobSpawner) tileentity).getSpawnerBaseLogic();
-                    mobspawnerbaselogic.setEntityName((String) EntityList.classToStringMapping.get(getDinosaur(stack).getDinosaurClass()));
-                    tileentity.markDirty();
-                    world.markBlockForUpdate(pos);
+                    MobSpawnerBaseLogic spawnerLogic = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic();
+                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(getDinosaur(stack).getDinosaurClass()));
+                    tile.markDirty();
 
                     if (!player.capabilities.isCreativeMode)
                     {
                         --stack.stackSize;
                     }
 
-                    return true;
+                    return EnumActionResult.SUCCESS;
                 }
             }
 
@@ -251,7 +221,7 @@ public class DinosaurSpawnEggItem extends Item
                 dinosaur.playLivingSound();
             }
 
-            return true;
+            return EnumActionResult.SUCCESS;
         }
     }
 
@@ -296,7 +266,7 @@ public class DinosaurSpawnEggItem extends Item
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
     {
-        lore.add(StatCollector.translateToLocal("lore.baby_dino.name"));
-        lore.add(StatCollector.translateToLocal("lore.change_gender.name"));
+        lore.add(I18n.format("lore.baby_dino.name"));
+        lore.add(I18n.format("lore.change_gender.name"));
     }
 }

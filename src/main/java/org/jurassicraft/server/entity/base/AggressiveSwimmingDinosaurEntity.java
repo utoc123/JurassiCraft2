@@ -4,23 +4,20 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.ai.MoveUnderwaterEntityAI;
 
 public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosaurEntity
 {
-    public AggressiveSwimmingDinosaurEntity(World worldIn)
+    public AggressiveSwimmingDinosaurEntity(World world)
     {
-        super(worldIn);
+        super(world);
         this.moveHelper = new AggressiveSwimmingDinosaurEntity.SwimmingMoveHelper();
         this.tasks.addTask(1, new MoveUnderwaterEntityAI(this));
-        this.navigator = new PathNavigateSwimmer(this, worldIn);
+        this.navigator = new PathNavigateSwimmer(this, world);
     }
 
-    /**
-     * Gets called every tick from main Entity class
-     */
     @Override
     public void onEntityUpdate()
     {
@@ -44,9 +41,6 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         }
     }
 
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-     */
     @Override
     public void onLivingUpdate()
     {
@@ -63,9 +57,6 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         }
     }
 
-    /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to prevent them from trampling crops
-     */
     @Override
     protected boolean canTriggerWalking()
     {
@@ -78,15 +69,12 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         return this.height * 0.5F;
     }
 
-    /**
-     * Moves the entity based on the specified heading. Args: strafe, forward
-     */
     @Override
     public void moveEntityWithHeading(float strafe, float forward)
     {
         if (this.isServerWorld() && this.isInWater())
         {
-            this.moveFlying(strafe, forward, 0.1F);
+            this.moveRelative(strafe, forward, 0.1F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.7D;
             this.motionY *= 0.7D;
@@ -110,18 +98,18 @@ public abstract class AggressiveSwimmingDinosaurEntity extends AggressiveDinosau
         @Override
         public void onUpdateMoveHelper()
         {
-            if (update && !this.swimmingEntity.getNavigator().noPath())
+            if (this.action == EntityMoveHelper.Action.MOVE_TO && !this.swimmingEntity.getNavigator().noPath())
             {
-                double d0 = this.posX - this.swimmingEntity.posX;
-                double d1 = this.posY - this.swimmingEntity.posY;
-                double d2 = this.posZ - this.swimmingEntity.posZ;
-                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                d3 = (double) MathHelper.sqrt_double(d3);
-                d1 /= d3;
-                float f = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+                double distanceX = this.posX - this.swimmingEntity.posX;
+                double distanceY = this.posY - this.swimmingEntity.posY;
+                double distanceZ = this.posZ - this.swimmingEntity.posZ;
+                double distance = distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ;
+                distance = (double) MathHelper.sqrt_double(distance);
+                distanceY /= distance;
+                float f = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
                 this.swimmingEntity.rotationYaw = this.limitAngle(this.swimmingEntity.rotationYaw, f, 30.0F);
-                this.swimmingEntity.setAIMoveSpeed((float) (this.swimmingEntity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() * 0.5));
-                this.swimmingEntity.motionY += (double) this.swimmingEntity.getAIMoveSpeed() * d1 * 0.1D;
+                this.swimmingEntity.setAIMoveSpeed((float) (this.swimmingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 0.5));
+                this.swimmingEntity.motionY += (double) this.swimmingEntity.getAIMoveSpeed() * distanceY * 0.1D;
             }
             else
             {

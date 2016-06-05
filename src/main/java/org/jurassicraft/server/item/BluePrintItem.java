@@ -4,14 +4,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.tab.TabHandler;
 
 public class BluePrintItem extends Item
 {
@@ -66,31 +68,19 @@ public class BluePrintItem extends Item
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (side == EnumFacing.DOWN)
+        if (side != EnumFacing.DOWN && side != EnumFacing.UP)
         {
-            return false;
-        }
-        else if (side == EnumFacing.UP)
-        {
-            return false;
-        }
-        else
-        {
-            BlockPos blockpos1 = pos.offset(side);
+            BlockPos offset = pos.offset(side);
 
-            if (!playerIn.canPlayerEdit(blockpos1, side, stack))
-            {
-                return false;
-            }
-            else
+            if (player.canPlayerEdit(offset, side, stack))
             {
                 int dinosaur = getDinosaur(stack);
 
                 if (dinosaur != -1)
                 {
-                    BluePrintEntity bluePrint = new BluePrintEntity(worldIn, blockpos1, side, dinosaur);
+                    BluePrintEntity bluePrint = new BluePrintEntity(worldIn, offset, side, dinosaur);
 
                     if (bluePrint.onValidSurface())
                     {
@@ -101,12 +91,12 @@ public class BluePrintItem extends Item
 
                         --stack.stackSize;
 
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
                 }
             }
         }
 
-        return false;
+        return EnumActionResult.PASS;
     }
 }

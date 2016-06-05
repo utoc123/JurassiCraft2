@@ -4,11 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,6 +38,8 @@ public class GracilariaBlock extends BlockBush
     private static final int BAD_LIGHT_SPREAD_CHANCE = 1;
     private static final int SPREAD_RADIUS = 4;
 
+    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.8F, 0.4F, 0.8F);
+
     // This is needed because we user material of water so it doesn't have the block boundaries.
     public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
 
@@ -43,17 +47,18 @@ public class GracilariaBlock extends BlockBush
     {
         // Setting our material state to "water" is the trick to not having "walls" and air.
         // However, when we are water we alos need to have the LEVEL property.
-        super(Material.water);
+        super(Material.WATER);
         this.setDefaultState(blockState.getBaseState().withProperty(LEVEL, 0));
 
         // Not tab because we are accessed in play via the item.
         this.setCreativeTab(null);
-
-        float f = 0.2F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
-
-        // This is so we get update tick called so we can propagate.
         this.setTickRandomly(true);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return BOUNDS;
     }
 
     //  ____  _            _
@@ -65,7 +70,7 @@ public class GracilariaBlock extends BlockBush
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.gracilaria;
+        return ItemHandler.INSTANCE.GRACILARIA;
     }
 
     @Override
@@ -76,10 +81,10 @@ public class GracilariaBlock extends BlockBush
     }
 
     @Override
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
         // This is necessary because we are "water"
-        return new BlockState(this, LEVEL);
+        return new BlockStateContainer(this, LEVEL);
     }
 
     @Override
@@ -96,10 +101,9 @@ public class GracilariaBlock extends BlockBush
     // | |_) | | (_) | (__|   <| |_) | |_| \__ \ | | |
     // |____/|_|\___/ \___|_|\_\____/ \__,_|___/_| |_|
 
-    @Override
-    protected boolean canPlaceBlockOn(Block ground)
+    private boolean canPlaceBlockOn(Block ground)
     {
-        return ground == Blocks.sand || ground == Blocks.clay || ground == Blocks.gravel || ground == Blocks.dirt;
+        return ground == Blocks.SAND || ground == Blocks.CLAY || ground == Blocks.GRAVEL || ground == Blocks.DIRT;
     }
 
     @Override
@@ -110,7 +114,7 @@ public class GracilariaBlock extends BlockBush
         Block here = worldIn.getBlockState(pos).getBlock();
         Block up = worldIn.getBlockState(pos.up()).getBlock();
 
-        return canPlaceBlockOn(down) && here == Blocks.water && up == Blocks.water;
+        return canPlaceBlockOn(down) && here == Blocks.WATER && up == Blocks.WATER;
     }
 
     @Override
@@ -120,7 +124,7 @@ public class GracilariaBlock extends BlockBush
         Block down = worldIn.getBlockState(pos.down()).getBlock();
         Block up = worldIn.getBlockState(pos.up()).getBlock();
 
-        return canPlaceBlockOn(down) && up == Blocks.water;
+        return canPlaceBlockOn(down) && up == Blocks.WATER;
     }
 
     @Override
@@ -130,7 +134,9 @@ public class GracilariaBlock extends BlockBush
         int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
         int light = worldIn.getLight(pos);
         if (light >= 5 && light <= 11)
+        {
             spreadChance = GOOD_LIGHT_SPREAD_CHANCE;
+        }
 
         if (rand.nextInt(100) <= spreadChance)
         {
@@ -159,14 +165,16 @@ public class GracilariaBlock extends BlockBush
             {
                 // Chose a random location
                 int doubleRadius = SPREAD_RADIUS * 2;
-                BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, - SPREAD_RADIUS,
+                BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS,
                         rand.nextInt(doubleRadius) - SPREAD_RADIUS);
                 nextPos = findGround(worldIn, tmp);
                 --placementAttempts;
             }
 
             if (nextPos != null)
+            {
                 worldIn.setBlockState(nextPos, this.getDefaultState());
+            }
         }
     }
 
@@ -184,17 +192,19 @@ public class GracilariaBlock extends BlockBush
         // Search a column
         Block down = worldIn.getBlockState(pos.down()).getBlock();
         Block here = worldIn.getBlockState(pos).getBlock();
-        Block up   = worldIn.getBlockState(pos.up()).getBlock();
+        Block up = worldIn.getBlockState(pos.up()).getBlock();
 
         for (int i = 0; i < 8; ++i)
         {
-            if (canPlaceBlockOn(down) && here == Blocks.water && up == Blocks.water)
+            if (canPlaceBlockOn(down) && here == Blocks.WATER && up == Blocks.WATER)
+            {
                 return pos;
+            }
 
             down = here;
             here = up;
-            pos  = pos.up();
-            up   = worldIn.getBlockState(pos.up()).getBlock();
+            pos = pos.up();
+            up = worldIn.getBlockState(pos.up()).getBlock();
         }
 
         return null;

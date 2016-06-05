@@ -3,6 +3,7 @@
       "0": "jurassicraft:blocks/clear_glass/clear_glass",
       "particle": "jurassicraft:blocks/clear_glass/clear_glass"
     },
+  "parent": "block/block",
     "elements": [
         {
             "name": "Cube",
@@ -10,12 +11,52 @@
             "to": [ 16.0, 16.0, 16.0 ],
             "shade": false,
             "faces": {
-               "north": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "north" },
-               "east": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "east" },
-               "south": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "south" },
-               "west": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "west" },
-               "up": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "up" },
-               "down": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0], "cullface": "down" }
+              "north": {
+                "texture": "#0",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "east": {
+                "texture": "#0",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "south": {
+                "texture": "#0",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "west": {
+                "texture": "#0",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+              "up": {
+                "texture": "#0",
+                "uv": [
+                  0.0,
+                  0.0,
+                  16.0,
+                  16.0
+                ]
+              },
+               "down": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0] }
             }
         }
     ]

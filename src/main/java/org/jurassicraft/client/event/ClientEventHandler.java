@@ -15,10 +15,10 @@ public class ClientEventHandler
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void preRender(RenderLivingEvent.Pre event)
     {
-        if (event.entity instanceof DinosaurEntity && event.renderer instanceof IDinosaurRenderer)
+        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer)
         {
-            IDinosaurRenderer dinoRenderer = (IDinosaurRenderer) event.renderer;
-            DinosaurEntity entityDinosaur = (DinosaurEntity) event.entity;
+            IDinosaurRenderer dinoRenderer = (IDinosaurRenderer) event.getRenderer();
+            DinosaurEntity entityDinosaur = (DinosaurEntity) event.getEntity();
 
             dinoRenderer.setModel(dinoRenderer.getRenderDef().getModel(entityDinosaur.getGrowthStage()));
         }
@@ -27,7 +27,7 @@ public class ClientEventHandler
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void postRender(RenderLivingEvent.Post event)
     {
-        if (event.entity instanceof DinosaurEntity && event.renderer instanceof IDinosaurRenderer && !(event.renderer instanceof IndominusRenderer))
+        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer && !(event.getRenderer() instanceof IndominusRenderer))
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F);
         }

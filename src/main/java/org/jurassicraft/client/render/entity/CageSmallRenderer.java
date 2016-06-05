@@ -31,6 +31,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
             super(manager);
 
             String modelLoc = "/assets/jurassicraft/models/entities/cage_small/cage_small";
+
             try
             {
                 model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel(modelLoc));
@@ -50,7 +51,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
 
             if (cage.getEntity() != null)
             {
-                Minecraft.getMinecraft().getRenderManager().renderEntityWithPosYaw(cage.getEntity(), 0.0D, -1.45D, 0.0D, 0.0F, 0.0F);
+                Minecraft.getMinecraft().getRenderManager().doRenderEntity(cage.getEntity(), 0.0D, -1.45D, 0.0D, 0.0F, 0.0F, false);
             }
 
             float f4 = 0.75F;

@@ -1,6 +1,7 @@
 package org.jurassicraft.server.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -8,20 +9,20 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.Explosion;
-import org.jurassicraft.server.api.ICleanableItem;
-import org.jurassicraft.server.creativetab.TabHandler;
+import org.jurassicraft.server.api.CleanableItem;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
-public class PlantFossilBlock extends Block implements ICleanableItem
+public class PlantFossilBlock extends Block implements CleanableItem
 {
     public PlantFossilBlock()
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setHardness(2.0F);
         this.setResistance(8.0F);
-        this.setStepSound(soundTypeStone);
+        this.setSoundType(SoundType.STONE);
         this.setCreativeTab(TabHandler.INSTANCE.fossils);
         this.setHarvestLevel("pickaxe", 0);
     }
@@ -52,27 +53,27 @@ public class PlantFossilBlock extends Block implements ICleanableItem
 
     private Item getRandomOutput(Random rand, double luck)
     {
-        double v = rand.nextDouble() / luck;
+        double chance = rand.nextDouble() / luck;
 
-        if (v < 0.35)
+        if (chance < 0.35)
         {
-            return ItemHandler.INSTANCE.plant_fossil;
+            return ItemHandler.INSTANCE.PLANT_FOSSIL;
         }
-        else if (v < 0.50)
+        else if (chance < 0.50)
         {
-            return ItemHandler.INSTANCE.twig_fossil;
+            return ItemHandler.INSTANCE.TWIG_FOSSIL;
         }
-        else if (v < 0.75)
+        else if (chance < 0.75)
         {
-            return Items.coal;
+            return Items.COAL;
         }
-        else if (v < 0.85)
+        else if (chance < 0.85)
         {
-            return Items.flint;
+            return Items.FLINT;
         }
         else
         {
-            return Item.getItemFromBlock(Blocks.cobblestone);
+            return Item.getItemFromBlock(Blocks.COBBLESTONE);
         }
     }
 }

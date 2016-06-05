@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import org.jurassicraft.server.creativetab.TabHandler;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
@@ -13,7 +13,7 @@ public class GypsumStoneBlock extends Block
 {
     public GypsumStoneBlock()
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setCreativeTab(TabHandler.INSTANCE.blocks);
         this.setHardness(1.5F);
         this.setResistance(1.5F);
@@ -22,12 +22,9 @@ public class GypsumStoneBlock extends Block
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.gypsum_powder;
+        return ItemHandler.INSTANCE.GYPSUM_POWDER;
     }
 
-    /**
-     * Returns the quantity of items to drop on block destruction.
-     */
     @Override
     public int quantityDropped(Random random)
     {
