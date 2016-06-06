@@ -50,8 +50,6 @@ public class JurassiCraft
     public static File configFile;
     public static Configuration CONFIG;
 
-//    public static BookWiki bookWiki;
-
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -62,8 +60,6 @@ public class JurassiCraft
         LOGGER.debug("Finished pre-initialization for JurassiCraft!");
 
         FoodHelper.INSTANCE.init();
-
-//        bookWiki = BookWiki.create(instance, new InputStreamReader(JurassiCraft.class.getResourceAsStream("/assets/jurassicraft/bookwiki/bookwiki.json")));
     }
 
     @Mod.EventHandler

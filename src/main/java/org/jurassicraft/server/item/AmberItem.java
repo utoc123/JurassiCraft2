@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class AmberItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new AdvLang("item.amber.name").withProperty("stored", "amber." + (stack.getItemDamage() == 0 ? "mosquito" : "aphid") + ".name").build();
+        return new LangHelper("item.amber.name").withProperty("stored", "amber." + (stack.getItemDamage() == 0 ? "mosquito" : "aphid") + ".name").build();
     }
 
     @Override

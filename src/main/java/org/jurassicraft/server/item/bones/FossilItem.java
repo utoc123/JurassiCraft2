@@ -14,7 +14,7 @@ import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class FossilItem extends Item implements GrindableItem
 
         if (dinosaur != null)
         {
-            return new AdvLang(getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+            return new LangHelper(getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
         }
 
         return super.getItemStackDisplayName(stack);
@@ -135,8 +135,8 @@ public class FossilItem extends Item implements GrindableItem
                 colour = TextFormatting.RED;
             }
 
-            lore.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-            lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", nbt.getString("Genetics")).build());
+            lore.add(colour + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
+            lore.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", nbt.getString("Genetics")).build());
         }
     }
 

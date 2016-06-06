@@ -1,4 +1,4 @@
-package org.jurassicraft.server.damagesource;
+package org.jurassicraft.server.damage;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -9,12 +9,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
-public class DinosaurEntityDamageSource extends DamageSource
+public class DinosaurDamageSource extends DamageSource
 {
     protected Entity entity;
     private boolean isThornsDamage = false;
 
-    public DinosaurEntityDamageSource(String damageType, Entity entity)
+    public DinosaurDamageSource(String damageType, Entity entity)
     {
         super(damageType);
         this.entity = entity;
@@ -23,7 +23,7 @@ public class DinosaurEntityDamageSource extends DamageSource
     /**
      * Sets this EntityDamageSource as originating from Thorns armor
      */
-    public DinosaurEntityDamageSource setIsThornsDamage()
+    public DinosaurDamageSource setIsThornsDamage()
     {
         this.isThornsDamage = true;
         return this;

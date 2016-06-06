@@ -17,11 +17,11 @@ import java.util.List;
  */
 public class JCConfigurations
 {
-    private static boolean isInit = false;
+    private static boolean hasInitialized = false;
 
-    private static void checkInit()
+    private static void checkInitialized()
     {
-        if (!isInit)
+        if (!hasInitialized)
         {
             throw new IllegalStateException("Configuration not yet initialized.");
         }
@@ -29,35 +29,35 @@ public class JCConfigurations
 
     private static Property spawnJurassiCraftMobsNaturally;
 
-    public static boolean spawnJurassiCraftMobsNaturally()
+    public static boolean shouldSpawnJurassiCraftMobs()
     {
-        checkInit();
+        checkInitialized();
         return spawnJurassiCraftMobsNaturally.getBoolean(false);
     }
 
     private static Property spawnVanillaMobsNaturally;
 
-    public static boolean spawnVanillaMobsNaturally()
+    public static boolean shouldSpawnVanillaMobs()
     {
-        checkInit();
+        checkInitialized();
         return spawnVanillaMobsNaturally.getBoolean(true);
     }
 
-    private static Property spawnOtherMobsModsNaturally;
+    private static Property spawnModMobsNaturally;
 
-    public static boolean spawnModMobsNaturally()
+    public static boolean shouldSpawnModMobs()
     {
-        checkInit();
-        return spawnVanillaMobsNaturally.getBoolean(true);
+        checkInitialized();
+        return spawnModMobsNaturally.getBoolean(true);
     }
 
     public static List<IConfigElement> getAllConfigurableOptions()
     {
-        List<IConfigElement> list = new ArrayList<>();
-        list.add(new ConfigElement(spawnJurassiCraftMobsNaturally));
-        list.add(new ConfigElement(spawnVanillaMobsNaturally));
-        list.add(new ConfigElement(spawnOtherMobsModsNaturally));
-        return list;
+        List<IConfigElement> configElements = new ArrayList<>();
+        configElements.add(new ConfigElement(spawnJurassiCraftMobsNaturally));
+        configElements.add(new ConfigElement(spawnVanillaMobsNaturally));
+        configElements.add(new ConfigElement(spawnModMobsNaturally));
+        return configElements;
     }
 
     public void initConfig(FMLPreInitializationEvent event)
@@ -70,12 +70,9 @@ public class JCConfigurations
         JurassiCraft.CONFIG.load();
 
         syncConfig();
-        isInit = true;
+        hasInitialized = true;
     }
 
-    /*
-     * sync the configuration want it public so you can handle case of changes made in-game
-     */
     public void syncConfig()
     {
         spawnJurassiCraftMobsNaturally = JurassiCraft.CONFIG.get(Configuration.CATEGORY_GENERAL, "JurassiCraft Creatures Spawn Naturally", false, "Allow JurassiCraft entities to spawn naturally during world generation");
@@ -84,11 +81,10 @@ public class JCConfigurations
         spawnVanillaMobsNaturally = JurassiCraft.CONFIG.get(Configuration.CATEGORY_GENERAL, "Vanilla Mobs Spawn Naturally", true, "Allow vanilla mobs to spawn naturally during world generation");
         spawnVanillaMobsNaturally.getBoolean(true); // Init
         spawnVanillaMobsNaturally.setRequiresMcRestart(true);
-        spawnOtherMobsModsNaturally = JurassiCraft.CONFIG.get(Configuration.CATEGORY_GENERAL, "Other Mods' Mobs Spawn Naturally", true, "Allow mobs from other mods to spawn naturally during world generation");
-        spawnOtherMobsModsNaturally.getBoolean(true); // Init
-        spawnOtherMobsModsNaturally.setRequiresMcRestart(true);
+        spawnModMobsNaturally = JurassiCraft.CONFIG.get(Configuration.CATEGORY_GENERAL, "Other Mods' Mobs Spawn Naturally", true, "Allow mobs from other mods to spawn naturally during world generation");
+        spawnModMobsNaturally.getBoolean(true); // Init
+        spawnModMobsNaturally.setRequiresMcRestart(true);
 
-        // save is useful for the first run where config might not exist, and doesn't hurt
         if (JurassiCraft.CONFIG.hasChanged())
         {
             JurassiCraft.CONFIG.save();
@@ -96,12 +92,13 @@ public class JCConfigurations
     }
 
     @SubscribeEvent
-    public void onConfigChange(OnConfigChangedEvent occe)
+    public void onConfigChange(OnConfigChangedEvent event)
     {
-        if (!occe.getModID().equals(JurassiCraft.MODID))
+        if (!event.getModID().equals(JurassiCraft.MODID))
         {
             return;
         }
+
         syncConfig();
     }
 }

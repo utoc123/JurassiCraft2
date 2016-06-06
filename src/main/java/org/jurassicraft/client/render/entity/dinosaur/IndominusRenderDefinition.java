@@ -11,7 +11,7 @@ public class IndominusRenderDefinition extends RenderDinosaurDefinition
 {
     public IndominusRenderDefinition(float parShadowSize)
     {
-        super(EntityHandler.INSTANCE.indominus, new IndominusAnimator(), parShadowSize);
+        super(EntityHandler.INSTANCE.INDOMINUS, new IndominusAnimator(), parShadowSize);
     }
 
     @Override

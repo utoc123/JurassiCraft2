@@ -7,9 +7,9 @@ import org.jurassicraft.server.block.tree.TreeType;
 public class GinkgoPlant extends Plant
 {
     @Override
-    public EnumPlantType getPlantType()
+    public PlantType getPlantType()
     {
-        return EnumPlantType.TREE;
+        return PlantType.TREE;
     }
 
     @Override

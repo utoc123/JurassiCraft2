@@ -6,9 +6,9 @@ import org.jurassicraft.server.block.BlockHandler;
 public class CryPansyPlant extends Plant
 {
     @Override
-    public EnumPlantType getPlantType()
+    public PlantType getPlantType()
     {
-        return EnumPlantType.FLOWER;
+        return PlantType.FLOWER;
     }
 
     @Override

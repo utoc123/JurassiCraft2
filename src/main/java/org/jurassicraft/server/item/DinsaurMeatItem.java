@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class DinsaurMeatItem extends ItemFood
     {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
-        return new AdvLang("item.dinosaur_meat.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+        return new LangHelper("item.dinosaur_meat.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)
@@ -142,7 +142,7 @@ public class DinsaurMeatItem extends ItemFood
             formatting = TextFormatting.RED;
         }
 
-        lore.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
+        lore.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        lore.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
     }
 }

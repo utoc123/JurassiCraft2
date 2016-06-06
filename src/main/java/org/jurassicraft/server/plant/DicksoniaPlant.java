@@ -6,9 +6,9 @@ import org.jurassicraft.server.block.BlockHandler;
 public class DicksoniaPlant extends Plant
 {
     @Override
-    public EnumPlantType getPlantType()
+    public PlantType getPlantType()
     {
-        return EnumPlantType.FERN;
+        return PlantType.FERN;
     }
 
     @Override

@@ -49,18 +49,14 @@ public enum ItemHandler
     public StorageDiscItem STORAGE_DISC;
     public BasicItem DNA_NUCLEOTIDES;
 
-    public CageItem CAGE_SMALL;
-
     public PlantDNAItem PLANT_DNA;
 
     public BasicItem SEA_LAMPREY;
 
     public BasicItem IRON_BLADES;
-    public BasicItem IRON_RODE;
-    public BasicItem DISC_DRIVE;
+    public BasicItem IRON_ROD;
+    public BasicItem HARD_DRIVE;
     public BasicItem LASER;
-
-    public BasicItem NEEDLE;
 
     public GrowthSerumItem GROWTH_SERUM;
 
@@ -130,16 +126,14 @@ public enum ItemHandler
         SYRINGE = new SyringeItem();
         EMPTY_SYRINGE = new EmptySyringeItem();
         STORAGE_DISC = new StorageDiscItem();
-        DISC_DRIVE = new BasicItem(TabHandler.INSTANCE.items);
+        HARD_DRIVE = new BasicItem(TabHandler.INSTANCE.items);
         LASER = new BasicItem(TabHandler.INSTANCE.items);
         DNA_NUCLEOTIDES = new BasicItem(TabHandler.INSTANCE.items);
-        CAGE_SMALL = new CageItem();
         PLANT_DNA = new PlantDNAItem();
         SEA_LAMPREY = new BasicItem(TabHandler.INSTANCE.items);
         IRON_BLADES = new BasicItem(TabHandler.INSTANCE.items);
-        IRON_RODE = new BasicItem(TabHandler.INSTANCE.items);
+        IRON_ROD = new BasicItem(TabHandler.INSTANCE.items);
         GROWTH_SERUM = new GrowthSerumItem();
-        NEEDLE = new BasicItem(TabHandler.INSTANCE.items);
         PLANT_CELLS = new BasicItem(TabHandler.INSTANCE.items);
         PLANT_CALLUS = new PlantCallusItem();
         PLANT_CELLS_PETRI_DISH = new BasicItem(TabHandler.INSTANCE.items);
@@ -213,14 +207,13 @@ public enum ItemHandler
         registerItem(EMPTY_SYRINGE, "Empty Syringe");
         registerItem(GROWTH_SERUM, "Growth Serum");
         registerItem(STORAGE_DISC, "Storage Disc");
-        registerItem(DISC_DRIVE, "Disc Reader");
+        registerItem(HARD_DRIVE, "Disc Reader");
         registerItem(LASER, "Laser");
         registerItem(DNA_NUCLEOTIDES, "DNA Base Material");
         registerItem(PETRI_DISH, "Petri Dish");
         registerItem(PLANT_CELLS_PETRI_DISH, "Plant Cells Petri Dish");
         registerItem(BLUEPRINT, "Blue Print");
         registerItem(PADDOCK_SIGN, "Paddock Sign");
-        registerItem(CAGE_SMALL, "Cage Small");
         registerItem(ATTRACTION_SIGN, "Attraction Sign");
         registerItem(SPAWN_EGG, "Dino Spawn Egg");
         registerItem(DNA, "DNA");
@@ -230,8 +223,7 @@ public enum ItemHandler
         registerItem(SYRINGE, "Syringe");
         registerItem(PLANT_DNA, "Plant DNA");
         registerItem(IRON_BLADES, "Iron Blades");
-        registerItem(IRON_RODE, "Iron Rod");
-        registerItem(NEEDLE, "Needle");
+        registerItem(IRON_ROD, "Iron Rod");
         registerItem(PLANT_CELLS, "Plant Cells");
         registerItem(PLANT_CALLUS, "Plant Callus");
         registerItem(TRACKER, "Tracker");
@@ -248,8 +240,8 @@ public enum ItemHandler
         registerItem(PLANT_FOSSIL, "Plant Fossil");
         registerItem(TWIG_FOSSIL, "Twig Fossil");
 
-        registerItem(HELICOPTER, "Helicopter Spawner");
-        registerItem(MINIGUN_MODULE, "Helicopter Minigun");
+//        registerItem(HELICOPTER, "Helicopter Spawner");
+//        registerItem(MINIGUN_MODULE, "Helicopter Minigun");
 
         registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
         registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");

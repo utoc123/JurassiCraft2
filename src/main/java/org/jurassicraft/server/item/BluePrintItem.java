@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class BluePrintItem extends Item
@@ -35,7 +35,7 @@ public class BluePrintItem extends Item
             name = "entity.jurassicraft." + dino.getName().toLowerCase().replaceAll(" ", "_") + ".name";
         }
 
-        return new AdvLang("item.blue_print.name").withProperty("type", name).build();
+        return new LangHelper("item.blue_print.name").withProperty("type", name).build();
     }
 
     public void setDinosaur(ItemStack stack, int dino)

@@ -7,7 +7,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
@@ -15,11 +14,9 @@ import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.food.FoodNutrients;
 import org.jurassicraft.server.item.ItemHandler;
 
-import java.util.List;
 import java.util.Random;
 
 public class CultivatorTile extends MachineBaseTile
@@ -92,31 +89,11 @@ public class CultivatorTile extends MachineBaseTile
 
                 dino.setAge(0);
 
-                List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, new AxisAlignedBB(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
+                dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(worldObj.rand.nextFloat() * 360.0F), 0.0F);
+                dino.rotationYawHead = dino.rotationYaw;
+                dino.renderYawOffset = dino.rotationYaw;
 
-                CageSmallEntity cage = null;
-
-                for (CageSmallEntity cCage : cages)
-                {
-                    if (cCage.getEntity() == null)
-                    {
-                        cage = cCage;
-                        break;
-                    }
-                }
-
-                if (cage != null)
-                {
-                    cage.setEntity(dino);
-                }
-                else
-                {
-                    dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(worldObj.rand.nextFloat() * 360.0F), 0.0F);
-                    dino.rotationYawHead = dino.rotationYaw;
-                    dino.renderYawOffset = dino.rotationYaw;
-
-                    worldObj.spawnEntityInWorld(dino);
-                }
+                worldObj.spawnEntityInWorld(dino);
 
                 slots[0].stackSize--;
 

@@ -7,17 +7,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-public class AdvLang
+public class LangHelper
 {
     private String langPath;
     private Map<String, String> properties = new HashMap<>();
 
-    public AdvLang(String langPath)
+    public LangHelper(String langPath)
     {
         this.langPath = langPath;
     }
 
-    public AdvLang withProperty(String propertyName, String value)
+    public LangHelper withProperty(String propertyName, String value)
     {
         properties.put(propertyName, I18n.translateToLocal(value));
 

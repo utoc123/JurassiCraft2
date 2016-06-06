@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class DinosaurEggItem extends DNAContainerItem
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
 
-        return new AdvLang("item.dino_egg.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+        return new LangHelper("item.dino_egg.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)

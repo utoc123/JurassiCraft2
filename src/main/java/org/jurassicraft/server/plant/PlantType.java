@@ -1,6 +1,6 @@
 package org.jurassicraft.server.plant;
 
-public enum EnumPlantType
+public enum PlantType
 {
     TREE, CROP, GRASS, FERN, FLOWER, LEAVES
 }

@@ -76,7 +76,7 @@ public class ServerProxy
                 {
                     if (name.contains("minecraft"))
                     {
-                        if (!JCConfigurations.spawnVanillaMobsNaturally())
+                        if (!JCConfigurations.shouldSpawnVanillaMobs())
                         {
                             EntityRegistry.removeSpawn(entity, EnumCreatureType.AMBIENT, allBiomes);
                             EntityRegistry.removeSpawn(entity, EnumCreatureType.CREATURE, allBiomes);
@@ -86,7 +86,7 @@ public class ServerProxy
                     }
                     else
                     {
-                        if (!JCConfigurations.spawnModMobsNaturally())
+                        if (!JCConfigurations.shouldSpawnModMobs())
                         {
                             EntityRegistry.removeSpawn(entity, EnumCreatureType.AMBIENT, allBiomes);
                             EntityRegistry.removeSpawn(entity, EnumCreatureType.CREATURE, allBiomes);

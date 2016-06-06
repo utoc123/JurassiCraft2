@@ -46,37 +46,33 @@ public enum RecipeHandler
 
         GameRegistry.addSmelting(new ItemStack(BlockHandler.INSTANCE.GYPSUM_COBBLESTONE), new ItemStack(BlockHandler.INSTANCE.GYPSUM_STONE), 1.5F);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.IRON_BLADES), "I I", " S ", "I I", 'I', Items.IRON_INGOT, 'S', Items.STICK);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.IRON_RODE), "ISI", "ISI", "ISI", 'I', Items.IRON_INGOT, 'S', Items.STICK);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.FOSSIL_GRINDER), "lBl", "rRr", "IPI", 'I', Items.IRON_INGOT, 'R', ItemHandler.INSTANCE.IRON_RODE, 'B', ItemHandler.INSTANCE.IRON_BLADES, 'r', Items.REDSTONE, 'l', new ItemStack(Items.DYE, 1, 4), 'P', Blocks.PISTON);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.IRON_ROD), "ISI", "ISI", "ISI", 'I', Items.IRON_INGOT, 'S', Items.STICK);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.FOSSIL_GRINDER), "lBl", "rRr", "IPI", 'I', Items.IRON_INGOT, 'R', ItemHandler.INSTANCE.IRON_ROD, 'B', ItemHandler.INSTANCE.IRON_BLADES, 'r', Items.REDSTONE, 'l', new ItemStack(Items.DYE, 1, 4), 'P', Blocks.PISTON);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.PLASTER_AND_BANDAGE, 9), "PGP", "GWG", "PGP", 'P', Items.PAPER, 'W', Blocks.WOOL, 'G', ItemHandler.INSTANCE.GYPSUM_POWDER);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.GYPSUM_STONE), "GGG", "GGG", "GGG", 'G', ItemHandler.INSTANCE.GYPSUM_POWDER);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.CAGE_SMALL, 1), "III", "BBB", "III", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BARS);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.CAGE_SMALL, 1, 1), "III", "GBG", "III", 'I', Items.IRON_INGOT, 'G', Blocks.GLASS_PANE, 'B', Items.WATER_BUCKET);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.GYPSUM_BRICKS, 4), "SS", "SS", 'S', BlockHandler.INSTANCE.GYPSUM_STONE);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.CLEANING_STATION), "iii", "RGR", "IBI", 'i', Items.IRON_INGOT, 'B', Items.BUCKET, 'G', Blocks.GLASS_PANE, 'R', Items.REDSTONE, 'I', Blocks.IRON_BLOCK);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.REINFORCED_STONE, 8), "PPP", "PWP", "PPP", 'P', Blocks.STONE, 'W', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.REINFORCED_BRICKS, 8), "PPP", "PWP", "PPP", 'P', Blocks.STONEBRICK, 'W', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.REINFORCED_BRICKS, 4), "SS", "SS", 'S', BlockHandler.INSTANCE.REINFORCED_STONE);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.EMPTY_TEST_TUBE, 8), "G", "G", 'G', Blocks.GLASS);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.PETRI_DISH), "G G", "GGG", 'G', Blocks.GLASS_PANE);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.PETRI_DISH, 4), "G G", "GGG", 'G', Blocks.GLASS_PANE);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.BLUEPRINT), "BBB", "BPB", "BBB", 'B', new ItemStack(Items.DYE, 1, 4), 'P', Items.PAPER);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.EMPTY_SYRINGE), "  N", "IG ", "II ", 'G', Blocks.GLASS_PANE, 'I', Items.IRON_INGOT, 'N', ItemHandler.INSTANCE.NEEDLE);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.EMPTY_SYRINGE), "N  ", " GI", " II", 'G', Blocks.GLASS_PANE, 'I', Items.IRON_INGOT, 'N', ItemHandler.INSTANCE.NEEDLE);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.EMPTY_SYRINGE), "I", "T ", "I ", 'I', Items.IRON_INGOT, 'T', ItemHandler.INSTANCE.EMPTY_TEST_TUBE);
         GameRegistry.addSmelting(new ItemStack(Items.POTIONITEM, 1, 0), new ItemStack(ItemHandler.INSTANCE.DNA_NUCLEOTIDES), 1.0F);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.NEEDLE), "GIG", "GIG", " I ", 'G', Blocks.GLASS_PANE, 'I', Items.IRON_INGOT);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_EXTRACTOR), "III", "INI", "RSR", 'S', BlockHandler.INSTANCE.DNA_SEQUENCER, 'I', Items.IRON_INGOT, 'R', Items.REDSTONE, 'N', ItemHandler.INSTANCE.NEEDLE);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.INSTANCE.DNA_ANALYZER, 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'H', ItemHandler.INSTANCE.DISC_DRIVE, 'K', ItemHandler.INSTANCE.KEYBOARD);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'C', ItemHandler.INSTANCE.ADVANCED_CIRCUIT, 'D', ItemHandler.INSTANCE.DISC_DRIVE);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_EXTRACTOR), "III", "SAP", "HII", 'I', Items.IRON_INGOT, 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'A', ItemHandler.INSTANCE.DNA_ANALYZER, 'P', Blocks.GLASS_PANE, 'H', ItemHandler.INSTANCE.HARD_DRIVE);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.INSTANCE.DNA_ANALYZER, 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'H', ItemHandler.INSTANCE.HARD_DRIVE, 'K', ItemHandler.INSTANCE.KEYBOARD);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'C', ItemHandler.INSTANCE.ADVANCED_CIRCUIT, 'D', ItemHandler.INSTANCE.HARD_DRIVE);
 
         for (int i = 0; i < 16; i++)
         {
-            GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "III", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT);
+            GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT, 'C', ItemHandler.INSTANCE.ADVANCED_CIRCUIT);
         }
 
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.EMBRYONIC_MACHINE), "GIG", "GIG", "III", 'G', Blocks.GLASS_PANE, 'I', Items.IRON_INGOT);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.EMBRYO_CALCIFICATION_MACHINE), "GIG", "GSG", "III", 'G', Blocks.GLASS_PANE, 'I', Items.IRON_INGOT, 'S', ItemHandler.INSTANCE.NEEDLE);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.INCUBATOR), "GGG", "RRR", "III", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE, 'G', Blocks.GLASS);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'C', ItemHandler.INSTANCE.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.INSTANCE.DISC_DRIVE, 'L', ItemHandler.INSTANCE.KEYBOARD);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.EMBRYO_CALCIFICATION_MACHINE), "iBK", "RCR", "RIR", 'i', Items.IRON_INGOT, 'I', Blocks.IRON_BLOCK, 'B', Items.BOWL, 'K', ItemHandler.INSTANCE.KEYBOARD, 'R', ItemHandler.INSTANCE.IRON_ROD, 'C', ItemHandler.INSTANCE.BASIC_CIRCUIT);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.INCUBATOR), "GIG", "RRR", "IKI", 'I', Items.IRON_INGOT, 'R', Items.COMPARATOR, 'G', Blocks.GLASS, 'K', ItemHandler.INSTANCE.KEYBOARD);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.INSTANCE.COMPUTER_SCREEN, 'C', ItemHandler.INSTANCE.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.INSTANCE.HARD_DRIVE, 'L', ItemHandler.INSTANCE.KEYBOARD);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.INSTANCE.PLANT_CELLS_PETRI_DISH), ItemHandler.INSTANCE.PLANT_CELLS, ItemHandler.INSTANCE.PETRI_DISH);
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.IRON_NUGGET, 9), "i", 'i', Items.IRON_INGOT);
@@ -84,7 +80,7 @@ public enum RecipeHandler
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemHandler.INSTANCE.ADVANCED_CIRCUIT, 1), ItemHandler.INSTANCE.BASIC_CIRCUIT, ItemHandler.INSTANCE.BASIC_CIRCUIT, "nuggetIron", Items.GOLD_NUGGET, Items.REDSTONE));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC), " I ", "ICI", " I ", 'I', "nuggetIron", 'C', ItemHandler.INSTANCE.BASIC_CIRCUIT));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.LASER), "IDI", "ICI", "IRI", 'I', "nuggetIron", 'C', ItemHandler.INSTANCE.BASIC_CIRCUIT, 'D', Items.DIAMOND, 'R', Items.REDSTONE));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.DISC_DRIVE), "CLI", "i  ", "iib", 'i', "nuggetIron", 'C', ItemHandler.INSTANCE.ADVANCED_CIRCUIT, 'L', ItemHandler.INSTANCE.LASER, 'I', Items.IRON_INGOT, 'b', Blocks.STONE_BUTTON));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.HARD_DRIVE), "CLI", "i  ", "iib", 'i', "nuggetIron", 'C', ItemHandler.INSTANCE.ADVANCED_CIRCUIT, 'L', ItemHandler.INSTANCE.LASER, 'I', Items.IRON_INGOT, 'b', Blocks.STONE_BUTTON));
 
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_OIL), ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES, Items.GLASS_BOTTLE);
 

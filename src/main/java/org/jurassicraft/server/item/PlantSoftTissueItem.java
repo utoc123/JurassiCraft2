@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.SequencableItem;
 import org.jurassicraft.server.genetics.PlantDNA;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.tab.TabHandler;
@@ -33,7 +33,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
     {
         String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
 
-        return new AdvLang("item.plant_soft_tissue.name").withProperty("plant", "plants." + plantName + ".name").build();
+        return new LangHelper("item.plant_soft_tissue.name").withProperty("plant", "plants." + plantName + ".name").build();
     }
 
     public Plant getPlant(ItemStack stack)

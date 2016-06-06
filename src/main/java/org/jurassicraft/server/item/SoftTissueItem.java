@@ -11,7 +11,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.genetics.DinoDNA;
 import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class SoftTissueItem extends Item implements SequencableItem
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
 
-        return new AdvLang("item.soft_tissue.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+        return new LangHelper("item.soft_tissue.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)
@@ -44,7 +44,7 @@ public class SoftTissueItem extends Item implements SequencableItem
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.achillobator;
+            dinosaur = EntityHandler.INSTANCE.ACHILLOBATOR;
         }
 
         return dinosaur;

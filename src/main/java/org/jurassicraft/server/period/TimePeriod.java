@@ -2,19 +2,30 @@ package org.jurassicraft.server.period;
 
 import net.minecraft.util.IStringSerializable;
 
-/**
- * PropertyEnum used create fossil blocks from different periods in time.
- */
 public enum TimePeriod implements IStringSerializable
 {
-    QUATERNARY(0, "quaternary", 2.588F, 0.0F, false), NEOGENE(1, "neogene", 23.03F, 2.589F, false), PALEOGENE(2, "paleogene", 66.0F, 23.04F, false), CRETACEOUS(3, "cretaceous", 145.5F, 66.1F, true), JURASSIC(4, "jurassic", 201.3F, 145.6F, false), TRIASSIC(5, "triassic", 252.17F, 201.4F, false), PERMIAN(6, "permian", 298.9F, 252.18F, false), CARBONIFEROUS(7, "carboniferous", 358.9F, 299.0F, false), DEVONIAN(8, "devonian", 419.2F, 359.0F, false), SILURIAN(9, "silurian", 443.4F, 419.3F, false), ORDOVICIAN(10, "ordovician", 485.4F, 443.5F, false), CAMBRIAN(11, "cambrian", 541.0F, 485.5F, false);
+    QUATERNARY("quaternary", 2.588F, 0.0F),
+    NEOGENE("neogene", 23.03F, 2.589F),
+    PALEOGENE("paleogene", 66.0F, 23.04F),
+    CRETACEOUS("cretaceous", 145.5F, 66.1F),
+    JURASSIC("jurassic", 201.3F, 145.6F),
+    TRIASSIC("triassic", 252.17F, 201.4F),
+    PERMIAN("permian", 298.9F, 252.18F),
+    CARBONIFEROUS("carboniferous", 358.9F, 299.0F),
+    DEVONIAN("devonian", 419.2F, 359.0F),
+    SILURIAN("silurian", 443.4F, 419.3F),
+    ORDOVICIAN("ordovician", 485.4F, 443.5F),
+    CAMBRIAN("cambrian", 541.0F, 485.5F);
 
-    /**
-     * Returns the metadata of this time period.
-     */
-    public int getMetadata()
+    private final String name;
+    private final float startTime;
+    private final float endTime;
+
+    TimePeriod(String name, float startTime, float endTime)
     {
-        return this.meta;
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
@@ -23,100 +34,20 @@ public enum TimePeriod implements IStringSerializable
         return this.name;
     }
 
-    /**
-     * Returns the time period from its metadata.
-     */
-    public static TimePeriod byMetadata(int meta)
-    {
-        if (meta < 0 || meta >= META_LOOKUP.length)
-        {
-            meta = 0;
-        }
-
-        return META_LOOKUP[meta];
-    }
-
-    /**
-     * Returns the name of this time period.
-     */
     @Override
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * Returns if this time period should be implemented.
-     */
     public float getStartTime()
     {
         return this.startTime;
     }
 
-    /**
-     * Returns if this time period should be implemented.
-     */
     public float getEndTime()
     {
         return this.endTime;
-    }
-
-    /**
-     * Returns the tooltip of this itemBlock.
-     */
-    public String getNameForDisplay()
-    {
-        return this.name;
-    }
-
-    /**
-     * Returns if this time period should be implemented.
-     */
-    public boolean shouldBeImplement()
-    {
-        return this.shouldImplement;
-    }
-
-    /**
-     * Name of this period.
-     */
-    private final String name;
-    /**
-     * ID of this period.
-     */
-    private final int meta;
-    /**
-     * Start time of this period.
-     */
-    private final float startTime;
-    /**
-     * Final time of this period.
-     */
-    private final float endTime;
-    /**
-     * Tells if this period should be used.
-     */
-    private final boolean shouldImplement;
-    /**
-     * META_LOOKUP array.
-     */
-    private static final TimePeriod[] META_LOOKUP = new TimePeriod[values().length];
-
-    TimePeriod(int meta, String name, float startTime, float endTime, boolean shouldImplement)
-    {
-        this.name = name;
-        this.meta = meta;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.shouldImplement = shouldImplement;
-    }
-
-    static
-    {
-        for (TimePeriod timePeriod : values())
-        {
-            META_LOOKUP[timePeriod.getMetadata()] = timePeriod;
-        }
     }
 
     public static int getStartYLevel(TimePeriod period)

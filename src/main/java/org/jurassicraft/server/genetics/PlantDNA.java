@@ -3,7 +3,7 @@ package org.jurassicraft.server.genetics;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class PlantDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(TextFormatting.DARK_AQUA + new AdvLang("lore.plant.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
 
         TextFormatting formatting;
 
@@ -69,6 +69,6 @@ public class PlantDNA
             formatting = TextFormatting.RED;
         }
 
-        tooltip.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        tooltip.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
     }
 }

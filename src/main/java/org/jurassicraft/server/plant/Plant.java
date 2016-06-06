@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 
 public abstract class Plant implements Comparable<Plant>
 {
-    public abstract EnumPlantType getPlantType();
+    public abstract PlantType getPlantType();
 
     public abstract String getName();
 

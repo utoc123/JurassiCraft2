@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
@@ -111,7 +111,7 @@ public class DinosaurSpawnEggItem extends Item
                 modeString = "female";
             }
 
-            player.addChatMessage(new TextComponentString(new AdvLang("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+            player.addChatMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
 
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
@@ -122,7 +122,7 @@ public class DinosaurSpawnEggItem extends Item
     {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
-        return new AdvLang("item.dino_spawn_egg.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+        return new LangHelper("item.dino_spawn_egg.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)
@@ -131,7 +131,7 @@ public class DinosaurSpawnEggItem extends Item
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.achillobator;
+            dinosaur = EntityHandler.INSTANCE.ACHILLOBATOR;
         }
 
         return dinosaur;

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.period.TimePeriod;
 
 public class EncasedFossilItemBlock extends ItemBlock
@@ -28,7 +28,7 @@ public class EncasedFossilItemBlock extends ItemBlock
             dinosaur = EntityHandler.INSTANCE.getDinosaurById(0);
         }
 
-        return new AdvLang("tile.encased_fossil.name").withProperty("period", "period." + dinosaur.getPeriod().getName() + ".name").build();
+        return new LangHelper("tile.encased_fossil.name").withProperty("period", "period." + dinosaur.getPeriod().getName() + ".name").build();
     }
 
     @Override

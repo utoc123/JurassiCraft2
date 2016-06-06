@@ -3,15 +3,12 @@ package org.jurassicraft.server.plant;
 import net.minecraft.block.Block;
 import org.jurassicraft.server.block.BlockHandler;
 
-/**
- * Copyright 2016 Timeless Modding Mod
- */
 public class WildOnionPlant extends Plant
 {
     @Override
-    public EnumPlantType getPlantType()
+    public PlantType getPlantType()
     {
-        return EnumPlantType.CROP;
+        return PlantType.CROP;
     }
 
     @Override

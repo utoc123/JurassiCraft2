@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class DinosaurSteakItem extends ItemFood
     {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
-        return new AdvLang("item.dinosaur_steak.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+        return new LangHelper("item.dinosaur_steak.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)
@@ -42,7 +42,7 @@ public class DinosaurSteakItem extends ItemFood
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.achillobator;
+            dinosaur = EntityHandler.INSTANCE.ACHILLOBATOR;
         }
 
         return dinosaur;

@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class DinoDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(TextFormatting.DARK_AQUA + new AdvLang("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build());
 
         TextFormatting colour;
 
@@ -73,8 +73,8 @@ public class DinoDNA
             colour = TextFormatting.RED;
         }
 
-        tooltip.add(colour + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        tooltip.add(TextFormatting.BLUE + new AdvLang("lore.genetic_code.name").withProperty("code", genetics).build());
+        tooltip.add(colour + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        tooltip.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", genetics).build());
     }
 
     public Dinosaur getDinosaur()

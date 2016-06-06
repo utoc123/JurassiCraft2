@@ -6,7 +6,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
@@ -14,15 +13,12 @@ import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.entity.item.CageSmallEntity;
 import org.jurassicraft.server.item.DinosaurEggItem;
-
-import java.util.List;
 
 public class IncubatorTile extends MachineBaseTile
 {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4 };
-    private static final int[] OTHER = new int[] { 5 };
+    private static final int[] HABITAT = new int[] { 5 };
     private static final int[] OUTPUTS = new int[0];
 
     private int[] temperature = new int[5];
@@ -75,7 +71,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return side == EnumFacing.DOWN ? getInputs() : OTHER;
+        return side == EnumFacing.DOWN ? getInputs() : HABITAT;
     }
 
     @Override
@@ -105,31 +101,11 @@ public class IncubatorTile extends MachineBaseTile
                     int blockY = pos.getY();
                     int blockZ = pos.getZ();
 
-                    List<CageSmallEntity> cages = worldObj.getEntitiesWithinAABB(CageSmallEntity.class, new AxisAlignedBB(blockX - 2, blockY, blockZ - 2, blockX + 2, blockY + 1, blockZ + 2));
+                    dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(worldObj.rand.nextFloat() * 360.0F), 0.0F);
+                    dino.rotationYawHead = dino.rotationYaw;
+                    dino.renderYawOffset = dino.rotationYaw;
 
-                    CageSmallEntity spawnCage = null;
-
-                    for (CageSmallEntity cage : cages)
-                    {
-                        if (cage.getEntity() == null)
-                        {
-                            spawnCage = cage;
-                            break;
-                        }
-                    }
-
-                    if (spawnCage != null)
-                    {
-                        spawnCage.setEntity(dino);
-                    }
-                    else
-                    {
-                        dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(worldObj.rand.nextFloat() * 360.0F), 0.0F);
-                        dino.rotationYawHead = dino.rotationYaw;
-                        dino.renderYawOffset = dino.rotationYaw;
-
-                        worldObj.spawnEntityInWorld(dino);
-                    }
+                    worldObj.spawnEntityInWorld(dino);
 
                     decreaseStackSize(process);
                 }

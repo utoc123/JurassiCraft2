@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class AttractionSignItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new AdvLang("item.attraction_sign.name").withProperty("type", "attraction_sign." + (AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()].name().toLowerCase()) + ".name").build();
+        return new LangHelper("item.attraction_sign.name").withProperty("type", "attraction_sign." + (AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()].name().toLowerCase()) + ".name").build();
     }
 
     @Override

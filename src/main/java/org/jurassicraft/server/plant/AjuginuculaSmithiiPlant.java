@@ -9,9 +9,9 @@ import org.jurassicraft.server.block.BlockHandler;
 public class AjuginuculaSmithiiPlant extends Plant
 {
     @Override
-    public EnumPlantType getPlantType()
+    public PlantType getPlantType()
     {
-        return EnumPlantType.CROP;
+        return PlantType.CROP;
     }
 
     @Override

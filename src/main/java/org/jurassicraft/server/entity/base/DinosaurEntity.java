@@ -43,7 +43,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.Animations;
-import org.jurassicraft.server.damagesource.DinosaurEntityDamageSource;
+import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
@@ -249,7 +249,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             knockback += EnchantmentHelper.getKnockbackModifier(this);
         }
 
-        if (entity.attackEntityFrom(new DinosaurEntityDamageSource("mob", this), damage))
+        if (entity.attackEntityFrom(new DinosaurDamageSource("mob", this), damage))
         {
             if (knockback > 0)
             {

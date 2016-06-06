@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.tab.TabHandler;
@@ -33,7 +33,7 @@ public class PlantDNAItem extends Item
     {
         String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
 
-        return new AdvLang("item.plant_dna.name").withProperty("plant", "plants." + plantName + ".name").build();
+        return new LangHelper("item.plant_dna.name").withProperty("plant", "plants." + plantName + ".name").build();
     }
 
     public Plant getPlant(ItemStack stack)
@@ -121,6 +121,6 @@ public class PlantDNAItem extends Item
             formatting = TextFormatting.RED;
         }
 
-        lore.add(formatting + new AdvLang("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        lore.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
     }
 }

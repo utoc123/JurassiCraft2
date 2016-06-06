@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 
@@ -18,7 +18,7 @@ public class PlantCallusItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new AdvLang("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
+        return new LangHelper("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
     }
 
     @Override

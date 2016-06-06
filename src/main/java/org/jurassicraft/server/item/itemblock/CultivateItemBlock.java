@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 
 public class CultivateItemBlock extends ItemBlock
 {
@@ -25,6 +25,6 @@ public class CultivateItemBlock extends ItemBlock
     public String getItemStackDisplayName(ItemStack stack)
     {
         EnumDyeColor color = EnumDyeColor.byMetadata(stack.getItemDamage());
-        return new AdvLang("tile.cultivate.name").withProperty("color", "color." + color.getName() + ".name").build();
+        return new LangHelper("tile.cultivate.name").withProperty("color", "color." + color.getName() + ".name").build();
     }
 }

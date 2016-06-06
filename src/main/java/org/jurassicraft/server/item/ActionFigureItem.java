@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.AdvLang;
+import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.ActionFigureTile;
 
@@ -71,7 +71,7 @@ public class ActionFigureItem extends Item
     {
         String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
 
-        return new AdvLang("item.action_figure.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+        return new LangHelper("item.action_figure.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)
