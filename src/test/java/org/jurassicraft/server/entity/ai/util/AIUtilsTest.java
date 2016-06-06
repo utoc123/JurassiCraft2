@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai.util;
 import net.minecraft.util.math.BlockPos;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AIUtilsTest
 {
