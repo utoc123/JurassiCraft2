@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class JCPanicEntityAI extends EntityAIBase

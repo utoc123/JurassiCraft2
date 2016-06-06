@@ -9,7 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.ai.util.BlockBreaker;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;

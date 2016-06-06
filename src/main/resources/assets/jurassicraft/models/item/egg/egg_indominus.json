@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-		"layer0": "jurassicraft:items/egg/indominus",
-		"layer1": "jurassicraft:items/overlay/indominus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/indominus",
+    "layer1": "jurassicraft:items/overlay/indominus"
+  }
 }

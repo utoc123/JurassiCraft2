@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "jurassicraft:reinforced_bricks" }
+  "variants": {
+    "normal": {
+      "model": "jurassicraft:reinforced_bricks"
     }
+  }
 }

@@ -1,7 +1,6 @@
 package org.jurassicraft.client.render.block;
 
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
-import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 import org.lwjgl.opengl.GL11;
 
@@ -25,8 +25,8 @@ public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecial
     {
         try
         {
-            this.model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine"));
-            this.modelWithEgg = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine_egg"));
+            this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine"));
+            this.modelWithEgg = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine_egg"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryo_calcification_machine.png");
         }
         catch (Exception e)

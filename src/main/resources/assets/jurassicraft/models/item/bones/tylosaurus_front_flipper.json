@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-		"layer0": "jurassicraft:items/bones/tylosaurus_front_flipper"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/bones/tylosaurus_front_flipper"
+  }
 }

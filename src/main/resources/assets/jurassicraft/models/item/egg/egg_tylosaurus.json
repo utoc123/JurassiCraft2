@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jurassicraft:items/egg/tylosaurus",
-        "layer1": "jurassicraft:items/overlay/tylosaurus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/tylosaurus",
+    "layer1": "jurassicraft:items/overlay/tylosaurus"
+  }
 }

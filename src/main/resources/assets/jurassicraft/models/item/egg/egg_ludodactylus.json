@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jurassicraft:items/egg/ludodactylus",
-        "layer1": "jurassicraft:items/overlay/ludodactylus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/ludodactylus",
+    "layer1": "jurassicraft:items/overlay/ludodactylus"
+  }
 }

@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jurassicraft:items/steak/moganopterus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/steak/moganopterus"
+  }
 }

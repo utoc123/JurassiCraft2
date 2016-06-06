@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "jurassicraft:ice_shard" }
+  "variants": {
+    "normal": {
+      "model": "jurassicraft:ice_shard"
     }
+  }
 }

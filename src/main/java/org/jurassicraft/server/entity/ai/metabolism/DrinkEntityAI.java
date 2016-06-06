@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
 

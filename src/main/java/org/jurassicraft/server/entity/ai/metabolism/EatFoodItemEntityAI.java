@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.food.FoodHelper;
 

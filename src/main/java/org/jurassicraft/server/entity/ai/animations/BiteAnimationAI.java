@@ -5,7 +5,7 @@ import net.ilexiconn.llibrary.server.animation.AnimationAI;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.dinosaur.GallimimusEntity;
 import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;

@@ -1,11 +1,17 @@
 package org.jurassicraft.server.tabula;
 
+import com.google.gson.Gson;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeGroupContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class TabulaModelHelper
 {
@@ -85,5 +91,42 @@ public class TabulaModelHelper
         }
 
         return retCubes;
+    }
+
+    public static TabulaModelContainer loadTabulaModel(String path) throws IOException
+    {
+        if (!path.startsWith("/"))
+        {
+            path = "/" + path;
+        }
+
+        if (!path.endsWith(".tbl"))
+        {
+            path += ".tbl";
+        }
+
+        InputStream stream = TabulaModelHelper.class.getResourceAsStream(path);
+        return TabulaModelHelper.loadTabulaModel(getModelJsonStream(path, stream));
+    }
+
+    public static TabulaModelContainer loadTabulaModel(InputStream stream)
+    {
+        return new Gson().fromJson(new InputStreamReader(stream), TabulaModelContainer.class);
+    }
+
+    private static InputStream getModelJsonStream(String name, InputStream file) throws IOException
+    {
+        ZipInputStream zip = new ZipInputStream(file);
+        ZipEntry entry;
+
+        while ((entry = zip.getNextEntry()) != null)
+        {
+            if (entry.getName().equals("model.json"))
+            {
+                return zip;
+            }
+        }
+
+        throw new RuntimeException("No model.json present in " + name);
     }
 }

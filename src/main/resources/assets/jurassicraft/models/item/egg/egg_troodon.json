@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jurassicraft:items/egg/troodon",
-        "layer1": "jurassicraft:items/overlay/troodon"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/troodon",
+    "layer1": "jurassicraft:items/overlay/troodon"
+  }
 }

@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-		"layer0": "jurassicraft:items/egg/carnotaurus",
-		"layer1": "jurassicraft:items/overlay/carnotaurus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/carnotaurus",
+    "layer1": "jurassicraft:items/overlay/carnotaurus"
+  }
 }

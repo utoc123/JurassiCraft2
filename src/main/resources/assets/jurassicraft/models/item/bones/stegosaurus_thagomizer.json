@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-		"layer0": "jurassicraft:items/bones/stegosaurus_thagomizer"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/bones/stegosaurus_thagomizer"
+  }
 }

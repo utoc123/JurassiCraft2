@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "normal": { "model": "jurassicraft:moss" }
+  "variants": {
+    "normal": {
+      "model": "jurassicraft:moss"
     }
+  }
 }

@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-		"layer0": "jurassicraft:items/egg/segisaurus",
-		"layer1": "jurassicraft:items/overlay/segisaurus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/segisaurus",
+    "layer1": "jurassicraft:items/overlay/segisaurus"
+  }
 }

@@ -1,6 +1,10 @@
 {
-    "variants": {
-        "half=bottom": { "model": "jurassicraft:half_slab_calamites" },
-        "half=top": { "model": "jurassicraft:upper_slab_calamites" }
+  "variants": {
+    "half=bottom": {
+      "model": "jurassicraft:half_slab_calamites"
+    },
+    "half=top": {
+      "model": "jurassicraft:upper_slab_calamites"
     }
+  }
 }

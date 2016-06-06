@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jurassicraft:items/egg/lambeosaurus",
-        "layer1": "jurassicraft:items/overlay/lambeosaurus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/lambeosaurus",
+    "layer1": "jurassicraft:items/overlay/lambeosaurus"
+  }
 }

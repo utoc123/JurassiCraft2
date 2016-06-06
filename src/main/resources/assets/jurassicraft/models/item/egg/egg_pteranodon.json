@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-		"layer0": "jurassicraft:items/egg/pteranodon",
-		"layer1": "jurassicraft:items/overlay/pteranodon"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/pteranodon",
+    "layer1": "jurassicraft:items/overlay/pteranodon"
+  }
 }

@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "jurassicraft:small_royal_fern" }
+    "normal": {
+      "model": "jurassicraft:small_royal_fern"
+    }
   }
 }

@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "jurassicraft:cry_pansy" }
+    "normal": {
+      "model": "jurassicraft:cry_pansy"
+    }
   }
 }

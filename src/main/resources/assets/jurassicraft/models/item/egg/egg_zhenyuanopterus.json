@@ -1,7 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jurassicraft:items/egg/zhenyuanopterus",
-        "layer1": "jurassicraft:items/overlay/zhenyuanopterus"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/egg/zhenyuanopterus",
+    "layer1": "jurassicraft:items/overlay/zhenyuanopterus"
+  }
 }

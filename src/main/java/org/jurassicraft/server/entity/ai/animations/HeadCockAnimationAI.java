@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai.animations;
 
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class HeadCockAnimationAI extends EntityAIBase

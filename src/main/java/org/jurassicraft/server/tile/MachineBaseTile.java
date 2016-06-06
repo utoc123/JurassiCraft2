@@ -156,7 +156,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     {
         ItemStack[] slots = getSlots();
 
-        boolean flag = stack != null && stack.isItemEqual(slots[index]) && ItemStack.areItemStackTagsEqual(stack, slots[index]);
+        boolean stacksEqual = stack != null && stack.isItemEqual(slots[index]) && ItemStack.areItemStackTagsEqual(stack, slots[index]);
         slots[index] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit())
@@ -164,12 +164,16 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
             stack.stackSize = this.getInventoryStackLimit();
         }
 
-        if (!flag)
+        if (!stacksEqual)
         {
             int i = getProcess(index);
-            this.totalProcessTime[i] = this.getStackProcessTime(stack);
-            this.processTime[i] = 0;
-            this.markDirty();
+
+            if (i < getProcessCount())
+            {
+                this.totalProcessTime[i] = this.getStackProcessTime(stack);
+                this.processTime[i] = 0;
+                this.markDirty();
+            }
         }
     }
 

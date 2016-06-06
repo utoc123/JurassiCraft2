@@ -1,11 +1,10 @@
 package org.jurassicraft.server.dinosaur;
 
-import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.animation.PoseHandler;
+import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.server.api.GrowthStageGenderContainer;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.entity.base.Diet;
@@ -157,7 +156,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
         try
         {
-            return TabulaModelHandler.INSTANCE.loadTabulaModel(modelPath);
+            return TabulaModelHelper.loadTabulaModel(modelPath);
         }
         catch (Exception e)
         {

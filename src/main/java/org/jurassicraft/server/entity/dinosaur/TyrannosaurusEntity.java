@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.animation.Animations;
+import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
 
 public class TyrannosaurusEntity extends AggressiveDinosaurEntity

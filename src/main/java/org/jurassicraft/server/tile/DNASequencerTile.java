@@ -25,7 +25,7 @@ public class DNASequencerTile extends MachineBaseTile
     @Override
     protected int getProcess(int slot)
     {
-        return (int) Math.floor(slot / 2);
+        return Math.min(5, (int) Math.floor(slot / 2));
     }
 
     @Override

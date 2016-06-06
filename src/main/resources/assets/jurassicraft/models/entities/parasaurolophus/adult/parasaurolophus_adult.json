@@ -7,12 +7,6 @@
         "time": 20
       }
     ],
-    "SLEEPING": [
-      {
-        "pose": "parasaurolophus_adult_sleeping",
-        "time": 20
-      }
-    ],
     "CALLING": [
       {
         "pose": "parasaurolophus_adult_calling",
@@ -25,6 +19,64 @@
       {
         "pose": "parasaurolophus_adult_idle",
         "time": 20
+      }
+    ],
+    "DRINKING": [
+      {
+        "pose": "parasaurolophus_adult_drinking_1",
+        "time": 5
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_2",
+        "time": 5
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_3",
+        "time": 5
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_4",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_4",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_2",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_3",
+        "time": 5
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_4",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_4",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_2",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_3",
+        "time": 5
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_4",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_drinking_4",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_idle",
+        "time": 5
       }
     ]
   }

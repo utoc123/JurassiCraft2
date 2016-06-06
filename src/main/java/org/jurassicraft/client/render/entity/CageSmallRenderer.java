@@ -1,7 +1,6 @@
 package org.jurassicraft.client.render.entity;
 
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
-import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -10,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.item.CageSmallEntity;
+import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
 public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
@@ -22,8 +22,8 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
 
     public static class Renderer extends Render<CageSmallEntity>
     {
-        private static final ResourceLocation texture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small.png");
-        private static final ResourceLocation texture_marine = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small_marine.png");
+        private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small.png");
+        private static final ResourceLocation TEXTURE_MARINE = new ResourceLocation(JurassiCraft.MODID, "textures/entities/cage_small/cage_small_marine.png");
         private TabulaModel model;
 
         public Renderer(RenderManager manager)
@@ -34,7 +34,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
 
             try
             {
-                model = new TabulaModel(TabulaModelHandler.INSTANCE.loadTabulaModel(modelLoc));
+                model = new TabulaModel(TabulaModelHelper.loadTabulaModel(modelLoc));
             }
             catch (Exception e)
             {
@@ -72,7 +72,7 @@ public class CageSmallRenderer implements IRenderFactory<CageSmallEntity>
         @Override
         protected ResourceLocation getEntityTexture(CageSmallEntity entity)
         {
-            return entity.isMarine() ? texture_marine : texture;
+            return entity.isMarine() ? TEXTURE_MARINE : TEXTURE;
         }
     }
 }
