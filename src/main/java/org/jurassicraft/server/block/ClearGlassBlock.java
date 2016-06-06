@@ -59,7 +59,7 @@ public class ClearGlassBlock extends BlockGlass
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
-        return BlockRenderLayer.TRANSLUCENT;
+        return BlockRenderLayer.CUTOUT;
     }
 
     @SideOnly(Side.CLIENT)

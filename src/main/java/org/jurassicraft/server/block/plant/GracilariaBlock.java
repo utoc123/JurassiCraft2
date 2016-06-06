@@ -128,11 +128,11 @@ public class GracilariaBlock extends BlockBush
     }
 
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
         // Make sure we have enough light.
         int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
-        int light = worldIn.getLight(pos);
+        int light = world.getLight(pos);
         if (light >= 5 && light <= 11)
         {
             spreadChance = GOOD_LIGHT_SPREAD_CHANCE;
@@ -147,7 +147,7 @@ public class GracilariaBlock extends BlockBush
             for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-SPREAD_RADIUS, -3, -SPREAD_RADIUS), pos.add(SPREAD_RADIUS, 3, SPREAD_RADIUS)))
             {
                 // Count how many
-                if (worldIn.getBlockState(blockpos).getBlock() == this)
+                if (world.getBlockState(blockpos).getBlock() == this)
                 {
                     --i;
                     if (i <= 0)
@@ -167,13 +167,13 @@ public class GracilariaBlock extends BlockBush
                 int doubleRadius = SPREAD_RADIUS * 2;
                 BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS,
                         rand.nextInt(doubleRadius) - SPREAD_RADIUS);
-                nextPos = findGround(worldIn, tmp);
+                nextPos = findGround(world, tmp);
                 --placementAttempts;
             }
 
             if (nextPos != null)
             {
-                worldIn.setBlockState(nextPos, this.getDefaultState());
+                world.setBlockState(nextPos, this.getDefaultState());
             }
         }
     }
@@ -185,14 +185,14 @@ public class GracilariaBlock extends BlockBush
     // | .__/|_|  |_| \_/ \__,_|\__\___|
     // |_|
 
-    private BlockPos findGround(World worldIn, BlockPos start)
+    private BlockPos findGround(World world, BlockPos start)
     {
         BlockPos pos = start;
 
         // Search a column
-        Block down = worldIn.getBlockState(pos.down()).getBlock();
-        Block here = worldIn.getBlockState(pos).getBlock();
-        Block up = worldIn.getBlockState(pos.up()).getBlock();
+        Block down = world.getBlockState(pos.down()).getBlock();
+        Block here = world.getBlockState(pos).getBlock();
+        Block up = world.getBlockState(pos.up()).getBlock();
 
         for (int i = 0; i < 8; ++i)
         {
@@ -204,7 +204,7 @@ public class GracilariaBlock extends BlockBush
             down = here;
             here = up;
             pos = pos.up();
-            up = worldIn.getBlockState(pos.up()).getBlock();
+            up = world.getBlockState(pos.up()).getBlock();
         }
 
         return null;
