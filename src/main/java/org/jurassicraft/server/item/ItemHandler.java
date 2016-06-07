@@ -29,6 +29,7 @@ public enum ItemHandler
 
     public DNAItem DNA;
     public DinosaurEggItem EGG;
+    public HatchedEggItem HATCHED_EGG;
     public SoftTissueItem SOFT_TISSUE;
     public PlantSoftTissueItem PLANT_SOFT_TISSUE;
 
@@ -41,6 +42,7 @@ public enum ItemHandler
 
     public AmberItem AMBER;
     public BasicItem PETRI_DISH;
+    public BasicItem PETRI_DISH_AGAR;
     public BasicItem EMPTY_TEST_TUBE;
 
     public SyringeItem SYRINGE;
@@ -113,6 +115,7 @@ public enum ItemHandler
         SPAWN_EGG = new DinosaurSpawnEggItem();
         DNA = new DNAItem();
         EGG = new DinosaurEggItem();
+        HATCHED_EGG = new HatchedEggItem();
         DINOSAUR_MEAT = new DinsaurMeatItem();
         DINOSAUR_STEAK = new DinosaurSteakItem();
         BLUEPRINT = new BluePrintItem();
@@ -122,6 +125,7 @@ public enum ItemHandler
         PLANT_SOFT_TISSUE = new PlantSoftTissueItem();
         AMBER = new AmberItem();
         PETRI_DISH = new BasicItem(TabHandler.INSTANCE.items);
+        PETRI_DISH_AGAR = new BasicItem(TabHandler.INSTANCE.items);
         EMPTY_TEST_TUBE = new BasicItem(TabHandler.INSTANCE.items);
         SYRINGE = new SyringeItem();
         EMPTY_SYRINGE = new EmptySyringeItem();
@@ -211,6 +215,7 @@ public enum ItemHandler
         registerItem(LASER, "Laser");
         registerItem(DNA_NUCLEOTIDES, "DNA Base Material");
         registerItem(PETRI_DISH, "Petri Dish");
+        registerItem(PETRI_DISH_AGAR, "Petri Dish Agar");
         registerItem(PLANT_CELLS_PETRI_DISH, "Plant Cells Petri Dish");
         registerItem(BLUEPRINT, "Blue Print");
         registerItem(PADDOCK_SIGN, "Paddock Sign");
@@ -218,6 +223,7 @@ public enum ItemHandler
         registerItem(SPAWN_EGG, "Dino Spawn Egg");
         registerItem(DNA, "DNA");
         registerItem(EGG, "Dino Egg");
+        registerItem(HATCHED_EGG, "Hatched Egg");
         registerItem(SOFT_TISSUE, "Soft Tissue");
         registerItem(PLANT_SOFT_TISSUE, "Plant Soft Tissue");
         registerItem(SYRINGE, "Syringe");

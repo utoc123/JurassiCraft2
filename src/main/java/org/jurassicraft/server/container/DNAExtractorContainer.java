@@ -45,6 +45,7 @@ public class DNAExtractorContainer extends SyncedFieldContainer
     public void onContainerClosed(EntityPlayer player)
     {
         super.onContainerClosed(player);
+
         if (!player.worldObj.isRemote)
         {
             extractor.closeInventory(player);

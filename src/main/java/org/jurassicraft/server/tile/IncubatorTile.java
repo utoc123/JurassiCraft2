@@ -5,20 +5,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.IncubatorContainer;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.DinosaurEggItem;
+import org.jurassicraft.server.item.ItemHandler;
 
 public class IncubatorTile extends MachineBaseTile
 {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4 };
-    private static final int[] HABITAT = new int[] { 5 };
     private static final int[] OUTPUTS = new int[0];
 
     private int[] temperature = new int[5];
@@ -69,51 +63,25 @@ public class IncubatorTile extends MachineBaseTile
     }
 
     @Override
-    public int[] getSlotsForFace(EnumFacing side)
-    {
-        return side == EnumFacing.DOWN ? getInputs() : HABITAT;
-    }
-
-    @Override
     protected void processItem(int process)
     {
         if (this.canProcess(process) && !worldObj.isRemote)
         {
             ItemStack egg = slots[process];
 
-            Dinosaur dinoInEgg = EntityHandler.INSTANCE.getDinosaurById(egg.getMetadata());
+            ItemStack incubatedEgg = new ItemStack(ItemHandler.INSTANCE.HATCHED_EGG, 1, egg.getItemDamage());
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setBoolean("Gender", temperature[process] > 50);
 
-            if (dinoInEgg != null)
+            if (egg.getTagCompound() != null)
             {
-                Class<? extends DinosaurEntity> dinoClass = dinoInEgg.getDinosaurClass();
-
-                try
-                {
-                    DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(worldObj);
-
-                    dino.setDNAQuality(egg.getTagCompound().getInteger("DNAQuality"));
-                    dino.setGenetics(egg.getTagCompound().getString("Genetics"));
-
-                    dino.setMale(temperature[process] > 50);
-                    dino.setAge(0);
-
-                    int blockX = pos.getX();
-                    int blockY = pos.getY();
-                    int blockZ = pos.getZ();
-
-                    dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(worldObj.rand.nextFloat() * 360.0F), 0.0F);
-                    dino.rotationYawHead = dino.rotationYaw;
-                    dino.renderYawOffset = dino.rotationYaw;
-
-                    worldObj.spawnEntityInWorld(dino);
-
-                    decreaseStackSize(process);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                compound.setString("Genetics", egg.getTagCompound().getString("Genetics"));
+                compound.setInteger("DNAQuality", egg.getTagCompound().getInteger("DNAQuality"));
             }
+
+            incubatedEgg.setTagCompound(compound);
+
+            slots[process] = incubatedEgg;
         }
     }
 

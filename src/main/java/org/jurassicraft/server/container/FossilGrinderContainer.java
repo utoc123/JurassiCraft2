@@ -48,6 +48,7 @@ public class FossilGrinderContainer extends SyncedFieldContainer
     public void onContainerClosed(EntityPlayer player)
     {
         super.onContainerClosed(player);
+
         if (!player.worldObj.isRemote)
         {
             fossilGrinder.closeInventory(player);

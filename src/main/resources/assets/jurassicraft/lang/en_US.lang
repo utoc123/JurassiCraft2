@@ -165,6 +165,7 @@ item.arm_bones.name={dino} Arm Bones
 item.first_dorsal_fin.name={dino} First Dorsal Fin
 
 item.dino_egg.name={dino} Egg
+item.hatched_egg.name=Hatched {dino} Egg
 item.dino_spawn_egg.name=Spawn {dino}
 item.dinosaur_meat.name={dino} Meat
 item.dinosaur_steak.name={dino} Steak
@@ -174,6 +175,7 @@ item.paddock_sign.name=Paddock Sign
 item.soft_tissue.name={dino} Soft Tissue
 item.amber.name={stored} in Amber
 item.petri_dish.name=Petri Dish
+item.petri_dish_agar.name=Petri Dish With Agar
 item.empty_test_tube.name=Empty Test Tube
 item.syringe.name={dino} Syringe
 item.empty_syringe.name=Empty Syringe

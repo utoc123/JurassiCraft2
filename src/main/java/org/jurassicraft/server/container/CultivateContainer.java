@@ -43,6 +43,7 @@ public class CultivateContainer extends SyncedFieldContainer
     public void onContainerClosed(EntityPlayer player)
     {
         super.onContainerClosed(player);
+
         if (!player.worldObj.isRemote)
         {
             cultivator.closeInventory(player);

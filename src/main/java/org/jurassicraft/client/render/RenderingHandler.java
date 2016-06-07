@@ -164,6 +164,7 @@ public enum RenderingHandler
             if (!dino.isMammal())
             {
                 ModelBakery.registerItemVariants(ItemHandler.INSTANCE.EGG, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
+                ModelBakery.registerItemVariants(ItemHandler.INSTANCE.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
             }
 
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.DINOSAUR_MEAT, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
@@ -340,7 +341,7 @@ public enum RenderingHandler
             @Override
             public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
             {
-                return BiomeColorHelper.getGrassColorAtPos(access, pos);
+                return pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF;
             }
         }, BlockHandler.INSTANCE.MOSS);
 
@@ -383,6 +384,7 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.IRON_ROD, "iron_rod", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.IRON_BLADES, "iron_blades", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PETRI_DISH, "petri_dish", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PETRI_DISH_AGAR, "petri_dish_agar", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.AMBER, "amber", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.PLASTER_AND_BANDAGE, "plaster_and_bandage", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.SPAWN_EGG, "dino_spawn_egg", "inventory");
@@ -466,6 +468,7 @@ public enum RenderingHandler
 
             this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DNA, meta, "dna/dna_" + dinoName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.EGG, meta, "egg/egg_" + dinoName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.HATCHED_EGG, meta, "hatched_egg/egg_" + dinoName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DINOSAUR_MEAT, meta, "meat/meat_" + dinoName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DINOSAUR_STEAK, meta, "meat/steak_" + dinoName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + dinoName, "inventory");
