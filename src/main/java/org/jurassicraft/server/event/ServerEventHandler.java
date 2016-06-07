@@ -96,17 +96,14 @@ public class ServerEventHandler
         BlockPos pos = event.getPos();
         Random rand = event.getRand();
 
-        for (Biome biome : Biome.REGISTRY)
-        {
-            BiomeDecorator decorator = biome.theBiomeDecorator;
-
-            if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal))
-            {
-                decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
-            }
-        }
-
         Biome biome = world.getBiomeGenForCoords(pos);
+
+        BiomeDecorator decorator = biome.theBiomeDecorator;
+
+        if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal))
+        {
+            decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
+        }
 
         if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome == Biomes.SWAMPLAND || biome == Biomes.JUNGLE)
         {
@@ -118,6 +115,23 @@ public class ServerEventHandler
                 if (state.isOpaqueCube())
                 {
                     world.setBlockState(topBlock, BlockHandler.INSTANCE.MOSS.getDefaultState(), 2);
+                }
+            }
+        }
+        else if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN)
+        {
+            if (rand.nextInt(8) == 0)
+            {
+                BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
+
+                if (topBlock.getY() < 62)
+                {
+                    IBlockState state = world.getBlockState(topBlock.down());
+
+                    if (state.isOpaqueCube())
+                    {
+                        world.setBlockState(topBlock, BlockHandler.INSTANCE.GRACILARIA.getDefaultState(), 2);
+                    }
                 }
             }
         }
