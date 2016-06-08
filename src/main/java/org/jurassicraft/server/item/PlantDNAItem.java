@@ -42,7 +42,7 @@ public class PlantDNAItem extends Item
 
         if (plant == null)
         {
-            plant = PlantHandler.INSTANCE.small_royal_fern;
+            plant = PlantHandler.INSTANCE.SMALL_ROYAL_FERN;
         }
 
         return plant;

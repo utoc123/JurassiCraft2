@@ -7,7 +7,7 @@ import org.jurassicraft.server.world.jurdstrees.trees.WorldGenJCTree;
 
 public enum TreeType
 {
-    GINKGO(PlantHandler.INSTANCE.ginkgo), CALAMITES(PlantHandler.INSTANCE.calamites);
+    GINKGO(PlantHandler.INSTANCE.GINKGO), CALAMITES(PlantHandler.INSTANCE.CALAMITES);
 
     private Plant plant;
 

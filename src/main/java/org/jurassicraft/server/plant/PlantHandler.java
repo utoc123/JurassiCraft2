@@ -9,46 +9,46 @@ public enum PlantHandler
 
     private List<Plant> plants = new ArrayList<>();
 
-    public Plant ajuginucula_smithii;
-    public Plant small_royal_fern;
-    public Plant calamites;
-    public Plant small_chain_fern;
-    public Plant small_cycad;
-    public Plant ginkgo;
-    public Plant bennettitalean_cycadeoidea;
-    public Plant cry_pansy;
-    public Plant scaly_tree_fern;
-    public Plant cycad_zamites;
-    public Plant dicksonia;
-    public Plant wild_onion;
+    public Plant AJUGINUCULA_SMITHII;
+    public Plant SMALL_ROYAL_FERN;
+    public Plant CALAMITES;
+    public Plant SMALL_CHAIN_FERN;
+    public Plant SMALL_CYCAD;
+    public Plant GINKGO;
+    public Plant CYCADEOIDEA;
+    public Plant CRY_PANSY;
+    public Plant SCALY_TREE_FERN;
+    public Plant ZAMITES;
+    public Plant DICKSONIA;
+    public Plant WILD_ONION;
 
     public void init()
     {
-        ajuginucula_smithii = new AjuginuculaSmithiiPlant();
-        small_royal_fern = new SmallRoyalFernPlant();
-        calamites = new CalamitesPlant();
-        small_chain_fern = new SmallChainFernPlant();
-        small_cycad = new SmallCycadPlant();
-        ginkgo = new GinkgoPlant();
-        bennettitalean_cycadeoidea = new BennettitaleanCycadeoideaPlant();
-        cry_pansy = new CryPansyPlant();
-        scaly_tree_fern = new ScalyTreeFernPlant();
-        cycad_zamites = new ZamitesPlant();
-        dicksonia = new DicksoniaPlant();
-        wild_onion = new WildOnionPlant();
+        AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
+        SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
+        CALAMITES = new CalamitesPlant();
+        SMALL_CHAIN_FERN = new SmallChainFernPlant();
+        SMALL_CYCAD = new SmallCycadPlant();
+        GINKGO = new GinkgoPlant();
+        CYCADEOIDEA = new BennettitaleanCycadeoideaPlant();
+        CRY_PANSY = new CryPansyPlant();
+        SCALY_TREE_FERN = new ScalyTreeFernPlant();
+        ZAMITES = new ZamitesPlant();
+        DICKSONIA = new DicksoniaPlant();
+        WILD_ONION = new WildOnionPlant();
 
-        registerPlant(ajuginucula_smithii);
-        registerPlant(small_royal_fern);
-        registerPlant(calamites);
-        registerPlant(small_chain_fern);
-        registerPlant(small_cycad);
-        registerPlant(ginkgo);
-        registerPlant(bennettitalean_cycadeoidea);
-        registerPlant(cry_pansy);
-        registerPlant(scaly_tree_fern);
-        registerPlant(cycad_zamites);
-        registerPlant(dicksonia);
-        registerPlant(wild_onion);
+        registerPlant(AJUGINUCULA_SMITHII);
+        registerPlant(SMALL_ROYAL_FERN);
+        registerPlant(CALAMITES);
+        registerPlant(SMALL_CHAIN_FERN);
+        registerPlant(SMALL_CYCAD);
+        registerPlant(GINKGO);
+        registerPlant(CYCADEOIDEA);
+        registerPlant(CRY_PANSY);
+        registerPlant(SCALY_TREE_FERN);
+        registerPlant(ZAMITES);
+        registerPlant(DICKSONIA);
+        registerPlant(WILD_ONION);
     }
 
     public Plant getPlantById(int id)
