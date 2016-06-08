@@ -109,6 +109,8 @@ public enum ItemHandler
 
     public BasicItem DNA_ANALYZER;
 
+    public BasicFoodItem CHILEAN_SEA_BASS;
+
     public void init()
     {
         PLASTER_AND_BANDAGE = new PlasterAndBandageItem();
@@ -178,6 +180,8 @@ public enum ItemHandler
         WILD_ONION = new ItemSeeds(BlockHandler.INSTANCE.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.plants);
         GRACILARIA = new GracilariaItem(BlockHandler.INSTANCE.GRACILARIA).setCreativeTab(TabHandler.INSTANCE.plants);
         LIQUID_AGAR = new BasicItem(TabHandler.INSTANCE.items);
+
+        CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.INSTANCE.foods);
 
         for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
         {
@@ -271,6 +275,8 @@ public enum ItemHandler
 
         registerItem(GRACILARIA, "Gracilaria");
         registerItem(LIQUID_AGAR, "Liquid Agar");
+
+        registerItem(CHILEAN_SEA_BASS, "Chilean Sea Bass");
     }
 
     public void registerItemOreDict(Item item, String name, String oreDict)

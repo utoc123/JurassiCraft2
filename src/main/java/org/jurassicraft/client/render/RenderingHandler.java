@@ -440,6 +440,8 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.COMPUTER_SCREEN, "computer_screen", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DNA_ANALYZER, "dna_analyzer", "inventory");
 
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.CHILEAN_SEA_BASS, "chilean_sea_bass", "inventory");
+
         int meta = 0;
 
         for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
