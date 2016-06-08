@@ -12,7 +12,7 @@ public class CryPansyBlock extends BlockBush
     public CryPansyBlock()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.setSoundType(SoundType.PLANT);
     }
 

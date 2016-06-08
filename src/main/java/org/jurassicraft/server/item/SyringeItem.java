@@ -22,7 +22,7 @@ public class SyringeItem extends DNAContainerItem
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.dna);
+        this.setCreativeTab(TabHandler.INSTANCE.DNA);
         this.setHasSubtypes(true);
     }
 

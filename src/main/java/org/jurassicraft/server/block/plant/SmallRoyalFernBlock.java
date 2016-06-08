@@ -18,7 +18,7 @@ public class SmallRoyalFernBlock extends BlockBush
     public SmallRoyalFernBlock()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.setSoundType(SoundType.PLANT);
     }
 

@@ -18,7 +18,7 @@ public class SmallChainFernBlock extends BlockBush
     public SmallChainFernBlock()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.setSoundType(SoundType.PLANT);
     }
 

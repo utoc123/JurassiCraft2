@@ -18,7 +18,7 @@ public class BennettitaleanCycadeoideaBlock extends BlockBush
     public BennettitaleanCycadeoideaBlock()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.setSoundType(SoundType.PLANT);
     }
 

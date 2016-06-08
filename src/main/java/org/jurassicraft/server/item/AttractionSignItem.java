@@ -21,7 +21,7 @@ public class AttractionSignItem extends Item
 {
     public AttractionSignItem()
     {
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
         this.setHasSubtypes(true);
     }
 

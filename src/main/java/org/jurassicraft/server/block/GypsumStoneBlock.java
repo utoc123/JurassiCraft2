@@ -14,7 +14,7 @@ public class GypsumStoneBlock extends Block
     public GypsumStoneBlock()
     {
         super(Material.ROCK);
-        this.setCreativeTab(TabHandler.INSTANCE.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
         this.setHardness(1.5F);
         this.setResistance(1.5F);
     }

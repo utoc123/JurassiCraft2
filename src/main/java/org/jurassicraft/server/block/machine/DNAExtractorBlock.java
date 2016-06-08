@@ -29,7 +29,7 @@ public class DNAExtractorBlock extends OrientedBlock
         this.setUnlocalizedName("dna_extractor");
         this.setHardness(2.0F);
         this.setSoundType(SoundType.METAL);
-        this.setCreativeTab(TabHandler.INSTANCE.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
     }
 
     @Override

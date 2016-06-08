@@ -231,6 +231,8 @@ tile.plant_fossil_block.name=Plant Fossil
 tile.amber_ore.name=Amber Ore
 tile.ice_shard.name=Ice Shard Ore
 tile.moss.name=Moss
+tile.peat.name=Peat
+tile.peat_moss.name=Peat Moss
 
 tile.cleaning_station.name=Cleaning Station
 tile.fossil_grinder.name=Fossil Grinder

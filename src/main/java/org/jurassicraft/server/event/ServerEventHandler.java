@@ -10,6 +10,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -118,7 +119,8 @@ public class ServerEventHandler
                 }
             }
         }
-        else if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN)
+
+        if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN)
         {
             if (rand.nextInt(8) == 0)
             {
@@ -133,6 +135,14 @@ public class ServerEventHandler
                         world.setBlockState(topBlock, BlockHandler.INSTANCE.GRACILARIA.getDefaultState(), 2);
                     }
                 }
+            }
+        }
+
+        if (biome == Biomes.SWAMPLAND)
+        {
+            if (rand.nextInt(2) == 0)
+            {
+                new WorldGenMinable(BlockHandler.INSTANCE.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
             }
         }
     }

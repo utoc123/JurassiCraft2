@@ -2,7 +2,6 @@ package org.jurassicraft.client.render;
 
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.ItemModelMesher;
@@ -10,15 +9,12 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -334,27 +330,17 @@ public enum RenderingHandler
 
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.WILD_ONION, "wild_onion_plant", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.GRACILARIA, "graciliaria_seaweed", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PEAT, "peat", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PEAT_MOSS, "peat_moss", "inventory");
 
         BlockColors blockColors = mc.getBlockColors();
-        blockColors.registerBlockColorHandler(new IBlockColor()
-        {
-            @Override
-            public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
-            {
-                return pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF;
-            }
-        }, BlockHandler.INSTANCE.MOSS);
+        blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.INSTANCE.MOSS);
 
         for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.INSTANCE.ANCIENT_LEAVES.entrySet())
         {
-            blockColors.registerBlockColorHandler(new IBlockColor()
-            {
-                @Override
-                public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
-                {
-                    AncientLeavesBlock block = (AncientLeavesBlock) (state.getBlock());
-                    return block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
-                }
+            blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> {
+                AncientLeavesBlock block = (AncientLeavesBlock) state.getBlock();
+                return block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
             }, entry.getValue());
         }
 

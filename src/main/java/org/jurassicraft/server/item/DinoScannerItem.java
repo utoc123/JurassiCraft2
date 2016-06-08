@@ -19,7 +19,7 @@ public class DinoScannerItem extends Item
     public DinoScannerItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
         this.setMaxStackSize(1);
     }
 

@@ -22,7 +22,7 @@ public class PlasterAndBandageItem extends Item
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
     }
 
     @Override

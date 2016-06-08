@@ -30,7 +30,7 @@ public class CleaningStationBlock extends OrientedBlock
         this.setHardness(2.0F);
         this.setLightOpacity(0);
         this.setSoundType(SoundType.METAL);
-        this.setCreativeTab(TabHandler.INSTANCE.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
     }
 
     @Override

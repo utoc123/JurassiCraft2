@@ -18,7 +18,7 @@ public class HelicopterItem extends Item
 {
     public HelicopterItem()
     {
-        setCreativeTab(TabHandler.INSTANCE.items);
+        setCreativeTab(TabHandler.INSTANCE.ITEMS);
         setMaxStackSize(1);
     }
 

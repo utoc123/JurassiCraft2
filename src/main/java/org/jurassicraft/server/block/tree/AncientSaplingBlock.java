@@ -34,7 +34,7 @@ public class AncientSaplingBlock extends BlockBush implements IGrowable
         this.setUnlocalizedName(type.name().toLowerCase() + "_sapling");
         this.setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.treeType = type;
     }
 

@@ -91,6 +91,8 @@ public enum RecipeHandler
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.COMPUTER_SCREEN), "IGI", "RPB", "CQI", 'I', Items.IRON_INGOT, 'G', new ItemStack(Items.DYE, 1, 2), 'R', new ItemStack(Items.DYE, 1, 1), 'P', Blocks.GLASS_PANE, 'B', new ItemStack(Items.DYE, 1, 4), 'C', ItemHandler.INSTANCE.BASIC_CIRCUIT, 'Q', Items.QUARTZ);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.INSTANCE.KEYBOARD), "bbb", "bbb", "psc", 'b', Blocks.STONE_BUTTON, 'p', Blocks.STONE_PRESSURE_PLATE, 's', Blocks.STONE_SLAB, 'c', ItemHandler.INSTANCE.BASIC_CIRCUIT);
 
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.INSTANCE.PEAT_MOSS), "MMM", "MMM", "MMM", 'M', BlockHandler.INSTANCE.MOSS);
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.INSTANCE.DNA_ANALYZER), "iGi", "CLi", "iii", 'i', "nuggetIron", 'G', Blocks.GLASS, 'C', ItemHandler.INSTANCE.ADVANCED_CIRCUIT, 'L', ItemHandler.INSTANCE.LASER));
 
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.INSTANCE.CHILEAN_SEA_BASS), Items.COOKED_FISH, ItemHandler.INSTANCE.WILD_ONION, Items.CARROT, ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES);

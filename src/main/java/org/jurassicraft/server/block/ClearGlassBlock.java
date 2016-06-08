@@ -26,7 +26,7 @@ public class ClearGlassBlock extends BlockGlass
     public ClearGlassBlock()
     {
         super(Material.GLASS, false);
-        this.setCreativeTab(TabHandler.INSTANCE.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
         this.setHardness(0.3F);
         this.setSoundType(SoundType.GLASS);
         this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false).withProperty(WEST, false).withProperty(UP, false).withProperty(DOWN, false));

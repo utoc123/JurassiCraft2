@@ -9,20 +9,20 @@ public enum TabHandler
 {
     INSTANCE;
 
-    public CreativeTabs items;
-    public JurassiCraftFossilTab bones;
-    public JurassiCraftDNATab dna;
-    public JurassiCraftEggsTab eggs;
-    public JurassiCraftSpawnEggsTab spawnEggs;
-    public JurassiCraftFoodTab foods;
-    public CreativeTabs blocks;
-    public CreativeTabs plants;
-    public CreativeTabs fossils;
-    public JurassiCraftMerchandiseTab merchandise;
+    public CreativeTabs ITEMS;
+    public JurassiCraftFossilTab BONES;
+    public JurassiCraftDNATab DNA;
+    public JurassiCraftEggsTab EGGS;
+    public JurassiCraftSpawnEggsTab SPAWN_EGGS;
+    public JurassiCraftFoodTab FOODS;
+    public CreativeTabs BLOCKS;
+    public CreativeTabs PLANTS;
+    public CreativeTabs FOSSILS;
+    public JurassiCraftMerchandiseTab MERCHANDISE;
 
     public void init()
     {
-        items = new CreativeTabs("jurassicraft.items")
+        ITEMS = new CreativeTabs("jurassicraft.items")
         {
             @Override
             public Item getTabIconItem()
@@ -31,13 +31,13 @@ public enum TabHandler
             }
         };
 
-        bones = new JurassiCraftFossilTab("jurassicraft.dino_bones");
-        dna = new JurassiCraftDNATab("jurassicraft.dna");
-        eggs = new JurassiCraftEggsTab("jurassicraft.eggs");
-        spawnEggs = new JurassiCraftSpawnEggsTab("jurassicraft.spawnEggs");
-        foods = new JurassiCraftFoodTab("jurassicraft.foods");
+        BONES = new JurassiCraftFossilTab("jurassicraft.dino_bones");
+        DNA = new JurassiCraftDNATab("jurassicraft.dna");
+        EGGS = new JurassiCraftEggsTab("jurassicraft.eggs");
+        SPAWN_EGGS = new JurassiCraftSpawnEggsTab("jurassicraft.spawnEggs");
+        FOODS = new JurassiCraftFoodTab("jurassicraft.foods");
 
-        blocks = new CreativeTabs("jurassicraft.blocks")
+        BLOCKS = new CreativeTabs("jurassicraft.blocks")
         {
             @Override
             public Item getTabIconItem()
@@ -46,7 +46,7 @@ public enum TabHandler
             }
         };
 
-        plants = new CreativeTabs("jurassicraft.plants")
+        PLANTS = new CreativeTabs("jurassicraft.plants")
         {
             @Override
             public Item getTabIconItem()
@@ -55,7 +55,7 @@ public enum TabHandler
             }
         };
 
-        fossils = new CreativeTabs("jurassicraft.fossils")
+        FOSSILS = new CreativeTabs("jurassicraft.fossils")
         {
             @Override
             public Item getTabIconItem()
@@ -64,6 +64,6 @@ public enum TabHandler
             }
         };
 
-        merchandise = new JurassiCraftMerchandiseTab("jurassicraft.merchandise");
+        MERCHANDISE = new JurassiCraftMerchandiseTab("jurassicraft.merchandise");
     }
 }

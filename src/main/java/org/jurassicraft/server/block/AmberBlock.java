@@ -23,7 +23,7 @@ public class AmberBlock extends Block
         super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
-        this.setCreativeTab(TabHandler.INSTANCE.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
         this.setHarvestLevel("pickaxe", 2);
     }
 

@@ -1,6 +1,7 @@
 package org.jurassicraft.server.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -43,6 +44,7 @@ import org.jurassicraft.server.block.tree.AncientStairsBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.ActionFigureTile;
 import org.jurassicraft.server.tile.CleaningStationTile;
 import org.jurassicraft.server.tile.CultivatorTile;
@@ -79,20 +81,20 @@ public enum BlockHandler
     public List<FossilBlock> FOSSILS;
     public List<EncasedFossilBlock> ENCASED_FOSSILS;
 
-    public Block PLANT_FOSSIL;
+    public PlantFossilBlock PLANT_FOSSIL;
 
-    public Block CLEANING_STATION;
-    public Block FOSSIL_GRINDER;
-    public Block DNA_SEQUENCER;
-    public Block DNA_SYNTHESIZER;
-    public Block EMBRYONIC_MACHINE;
-    public Block EMBRYO_CALCIFICATION_MACHINE;
-    public Block INCUBATOR;
-    public Block DNA_EXTRACTOR;
-    public Block DNA_COMBINATOR_HYBRIDIZER;
+    public CleaningStationBlock CLEANING_STATION;
+    public FossilGrinderBlock FOSSIL_GRINDER;
+    public DNASequencerBlock DNA_SEQUENCER;
+    public DNASynthesizerBlock DNA_SYNTHESIZER;
+    public EmbryonicMachineBlock EMBRYONIC_MACHINE;
+    public EmbryoCalcificationMachineBlock EMBRYO_CALCIFICATION_MACHINE;
+    public IncubatorBlock INCUBATOR;
+    public DNAExtractorBlock DNA_EXTRACTOR;
+    public DNACombinatorHybridizerBlock DNA_COMBINATOR_HYBRIDIZER;
 
-    public Block AMBER_ORE;
-    public Block ICE_SHARD;
+    public AmberBlock AMBER_ORE;
+    public IceShardBlock ICE_SHARD;
 
     public Block GYPSUM_COBBLESTONE;
     public Block GYPSUM_STONE;
@@ -101,28 +103,31 @@ public enum BlockHandler
     public Block REINFORCED_STONE;
     public Block REINFORCED_BRICKS;
 
-    public Block SMALL_ROYAL_FERN;
-    public Block SMALL_CHAIN_FERN;
-    public Block SMALL_CYCAD;
+    public SmallRoyalFernBlock SMALL_ROYAL_FERN;
+    public SmallChainFernBlock SMALL_CHAIN_FERN;
+    public SmallCycadBlock SMALL_CYCAD;
 
-    public Block CULTIVATOR_TOP;
-    public Block CULTIVATOR_BOTTOM;
+    public CultivatorTopBlock CULTIVATOR_TOP;
+    public CultivatorBottomBlock CULTIVATOR_BOTTOM;
 
-    public Block CYCADEOIDEA;
-    public Block CRY_PANSY;
-    public Block SCALY_TREE_FERN;
-    public Block ZAMITES;
-    public Block DICKSONIA;
+    public BennettitaleanCycadeoideaBlock CYCADEOIDEA;
+    public CryPansyBlock CRY_PANSY;
+    public ScalyTreeFernBlock SCALY_TREE_FERN;
+    public CycadZamitesBlock ZAMITES;
+    public DicksoniaBlock DICKSONIA;
 
-    public Block ACTION_FIGURE;
+    public ActionFigureBlock ACTION_FIGURE;
 
-    public Block MOSS;
+    public MossBlock MOSS;
 
-    public Block CLEAR_GLASS;
+    public ClearGlassBlock CLEAR_GLASS;
 
-    public Block AJUGINUCULA_SMITHII;
-    public Block WILD_ONION;
-    public Block GRACILARIA;
+    public AjuginuculaSmithiiBlock AJUGINUCULA_SMITHII;
+    public WildOnionBlock WILD_ONION;
+    public GracilariaBlock GRACILARIA;
+
+    public PeatBlock PEAT;
+    public Block PEAT_MOSS;
 
     public void init()
     {
@@ -146,10 +151,10 @@ public enum BlockHandler
         ICE_SHARD = new IceShardBlock();
 
         GYPSUM_STONE = new GypsumStoneBlock();
-        GYPSUM_COBBLESTONE = new BasicBlock(Material.ROCK).setHardness(1.5F).setResistance(1.5F);
-        GYPSUM_BRICKS = new BasicBlock(Material.ROCK).setHardness(1.5F).setResistance(1.5F);
-        REINFORCED_STONE = new BasicBlock(Material.ROCK).setHardness(2.0F).setResistance(15.0F);
-        REINFORCED_BRICKS = new BasicBlock(Material.ROCK).setHardness(2.0F).setResistance(15.0F);
+        GYPSUM_COBBLESTONE = new BasicBlock(Material.ROCK).setHardness(1.5F);
+        GYPSUM_BRICKS = new BasicBlock(Material.ROCK).setHardness(1.5F);
+        REINFORCED_STONE = new BasicBlock(Material.ROCK).setHardness(2.0F);
+        REINFORCED_BRICKS = new BasicBlock(Material.ROCK).setHardness(2.0F);
 
         AJUGINUCULA_SMITHII = new AjuginuculaSmithiiBlock();
         SMALL_ROYAL_FERN = new SmallRoyalFernBlock();
@@ -168,6 +173,9 @@ public enum BlockHandler
         MOSS = new MossBlock();
 
         CLEAR_GLASS = new ClearGlassBlock();
+
+        PEAT = new PeatBlock();
+        PEAT_MOSS = new BasicBlock(Material.GROUND, SoundType.GROUND).setHardness(0.5F).setCreativeTab(TabHandler.INSTANCE.PLANTS);
 
         for (int i = 0; i < (int) Math.ceil(EntityHandler.INSTANCE.getDinosaurs().size() / 16.0F); i++)
         {
@@ -214,6 +222,9 @@ public enum BlockHandler
         registerBlock(GRACILARIA, "Gracilaria Seaweed");
 
         registerBlock(MOSS, "Moss");
+        registerBlock(PEAT, "Peat");
+        registerBlock(PEAT_MOSS, "Peat Moss");
+
         registerBlock(CLEAR_GLASS, "Clear Glass");
 
         registerBlockTileEntity(CultivatorTile.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");

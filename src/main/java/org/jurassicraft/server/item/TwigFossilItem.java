@@ -16,7 +16,7 @@ public class TwigFossilItem extends Item implements GrindableItem
     public TwigFossilItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 
     @Override

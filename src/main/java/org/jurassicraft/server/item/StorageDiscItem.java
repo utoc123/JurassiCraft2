@@ -21,7 +21,7 @@ public class StorageDiscItem extends Item implements SynthesizableItem
     public StorageDiscItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
     }
 
     @Override

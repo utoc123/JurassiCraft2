@@ -32,7 +32,7 @@ public class ActionFigureItem extends Item
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.merchandise);
+        this.setCreativeTab(TabHandler.INSTANCE.MERCHANDISE);
         this.setHasSubtypes(true);
     }
 

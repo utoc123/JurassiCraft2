@@ -27,7 +27,7 @@ public class SoftTissueItem extends Item implements SequencableItem
     {
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.dna);
+        this.setCreativeTab(TabHandler.INSTANCE.DNA);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class AmberItem extends Item
     public AmberItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
         this.setHasSubtypes(true);
     }
 

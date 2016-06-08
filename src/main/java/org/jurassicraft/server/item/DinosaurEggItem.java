@@ -28,7 +28,7 @@ public class DinosaurEggItem extends DNAContainerItem
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.eggs);
+        this.setCreativeTab(TabHandler.INSTANCE.EGGS);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
     }

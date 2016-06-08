@@ -24,7 +24,7 @@ public class PlantDNAItem extends Item
     public PlantDNAItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.setHasSubtypes(true);
     }
 

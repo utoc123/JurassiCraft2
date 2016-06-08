@@ -23,7 +23,7 @@ public class PlantFossilBlock extends Block implements CleanableItem
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(TabHandler.INSTANCE.fossils);
+        this.setCreativeTab(TabHandler.INSTANCE.FOSSILS);
         this.setHarvestLevel("pickaxe", 0);
     }
 

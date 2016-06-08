@@ -21,7 +21,7 @@ public class DNAItem extends DNAContainerItem
     public DNAItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.dna);
+        this.setCreativeTab(TabHandler.INSTANCE.DNA);
         this.setHasSubtypes(true);
     }
 

@@ -28,7 +28,7 @@ public class DinsaurMeatItem extends ItemFood
         super(3, 0.3F, true);
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.foods);
+        this.setCreativeTab(TabHandler.INSTANCE.FOODS);
     }
 
     @Override

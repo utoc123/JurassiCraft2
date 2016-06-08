@@ -13,7 +13,7 @@ public class GrowthSerumItem extends Item
     public GrowthSerumItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
     }
 
     @Override

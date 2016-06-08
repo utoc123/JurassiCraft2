@@ -12,11 +12,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.block.PeatBlock;
 import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.Random;
 
 public class MossBlock extends Block
 {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
+
+    private static final int DENSITY_PER_AREA = 8;
+    private static final int SPREAD_RADIUS = 3;
 
     public MossBlock()
     {
@@ -25,9 +31,74 @@ public class MossBlock extends Block
         this.setHardness(0.2F);
         this.setResistance(0.0F);
         this.setTickRandomly(true);
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
         this.setSoundType(SoundType.PLANT);
         this.setLightOpacity(0);
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (world.getBlockState(pos.down()).getBlock() instanceof PeatBlock)
+        {
+            if (rand.nextInt(8) <= 3)
+            {
+                int allowedInArea = DENSITY_PER_AREA;
+
+                BlockPos nextPos = null;
+                int placementAttempts = 3;
+
+                while (nextPos == null && placementAttempts > 0)
+                {
+                    int doubleRadius = SPREAD_RADIUS * 2;
+                    BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS, rand.nextInt(doubleRadius) - SPREAD_RADIUS);
+                    nextPos = findGround(world, tmp);
+                    placementAttempts--;
+                }
+
+                if (nextPos != null)
+                {
+                    for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-2, -3, -2), nextPos.add(2, 3, 2)))
+                    {
+                        if (world.getBlockState(neighbourPos).getBlock() == this)
+                        {
+                            allowedInArea--;
+
+                            if (allowedInArea <= 0)
+                            {
+                                return;
+                            }
+                        }
+                    }
+
+                    world.setBlockState(nextPos, this.getDefaultState());
+                }
+            }
+        }
+    }
+
+    private BlockPos findGround(World world, BlockPos start)
+    {
+        BlockPos pos = start;
+
+        Block down = world.getBlockState(pos.down()).getBlock();
+        Block here = world.getBlockState(pos).getBlock();
+        Block up = world.getBlockState(pos.up()).getBlock();
+
+        for (int i = 0; i < 8; ++i)
+        {
+            if (down instanceof PeatBlock)
+            {
+                return pos;
+            }
+
+            down = here;
+            here = up;
+            pos = pos.up();
+            up = world.getBlockState(pos.up()).getBlock();
+        }
+
+        return null;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class EmptySyringeItem extends Item
     public EmptySyringeItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.items);
+        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
     }
 
     @Override

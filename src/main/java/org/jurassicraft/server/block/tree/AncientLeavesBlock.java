@@ -36,7 +36,7 @@ public class AncientLeavesBlock extends BlockLeaves
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false));
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 
     public TreeType getTreeType()

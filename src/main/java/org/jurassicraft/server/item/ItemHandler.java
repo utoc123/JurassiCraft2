@@ -126,34 +126,34 @@ public enum ItemHandler
         SOFT_TISSUE = new SoftTissueItem();
         PLANT_SOFT_TISSUE = new PlantSoftTissueItem();
         AMBER = new AmberItem();
-        PETRI_DISH = new BasicItem(TabHandler.INSTANCE.items);
-        PETRI_DISH_AGAR = new BasicItem(TabHandler.INSTANCE.items);
-        EMPTY_TEST_TUBE = new BasicItem(TabHandler.INSTANCE.items);
+        PETRI_DISH = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        PETRI_DISH_AGAR = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        EMPTY_TEST_TUBE = new BasicItem(TabHandler.INSTANCE.ITEMS);
         SYRINGE = new SyringeItem();
         EMPTY_SYRINGE = new EmptySyringeItem();
         STORAGE_DISC = new StorageDiscItem();
-        HARD_DRIVE = new BasicItem(TabHandler.INSTANCE.items);
-        LASER = new BasicItem(TabHandler.INSTANCE.items);
-        DNA_NUCLEOTIDES = new BasicItem(TabHandler.INSTANCE.items);
+        HARD_DRIVE = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        LASER = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        DNA_NUCLEOTIDES = new BasicItem(TabHandler.INSTANCE.ITEMS);
         PLANT_DNA = new PlantDNAItem();
-        SEA_LAMPREY = new BasicItem(TabHandler.INSTANCE.items);
-        IRON_BLADES = new BasicItem(TabHandler.INSTANCE.items);
-        IRON_ROD = new BasicItem(TabHandler.INSTANCE.items);
+        SEA_LAMPREY = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        IRON_BLADES = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        IRON_ROD = new BasicItem(TabHandler.INSTANCE.ITEMS);
         GROWTH_SERUM = new GrowthSerumItem();
-        PLANT_CELLS = new BasicItem(TabHandler.INSTANCE.items);
+        PLANT_CELLS = new BasicItem(TabHandler.INSTANCE.ITEMS);
         PLANT_CALLUS = new PlantCallusItem();
-        PLANT_CELLS_PETRI_DISH = new BasicItem(TabHandler.INSTANCE.items);
-        TRACKER = new BasicItem(TabHandler.INSTANCE.items);
+        PLANT_CELLS_PETRI_DISH = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        TRACKER = new BasicItem(TabHandler.INSTANCE.ITEMS);
         ACTION_FIGURE = new ActionFigureItem();
         DINO_SCANNER = new DinoScannerItem();
         PLANT_FOSSIL = new PlantFossilItem();
         TWIG_FOSSIL = new TwigFossilItem();
 
-        AMBER_CANE = new BasicItem(TabHandler.INSTANCE.merchandise);
+        AMBER_CANE = new BasicItem(TabHandler.INSTANCE.MERCHANDISE);
         AMBER_CANE.setFull3D();
         AMBER_CANE.setMaxStackSize(1);
-        AMBER_KEYCHAIN = new BasicItem(TabHandler.INSTANCE.merchandise);
-        MR_DNA_KEYCHAIN = new BasicItem(TabHandler.INSTANCE.merchandise);
+        AMBER_KEYCHAIN = new BasicItem(TabHandler.INSTANCE.MERCHANDISE);
+        MR_DNA_KEYCHAIN = new BasicItem(TabHandler.INSTANCE.MERCHANDISE);
 
         HELICOPTER = new HelicopterItem();
         MINIGUN_MODULE = new HelicopterModuleItem("minigun");
@@ -162,26 +162,26 @@ public enum ItemHandler
         TROODONS_AND_RAPTORS_DISC = new JCMusicDiscItem("troodons_and_raptors");
         DONT_MOVE_A_MUSCLE_DISC = new JCMusicDiscItem("dont_move_a_muscle");
 
-        BASIC_CIRCUIT = new BasicItem(TabHandler.INSTANCE.items);
-        ADVANCED_CIRCUIT = new BasicItem(TabHandler.INSTANCE.items);
+        BASIC_CIRCUIT = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        ADVANCED_CIRCUIT = new BasicItem(TabHandler.INSTANCE.ITEMS);
 
-        COMPUTER_SCREEN = new BasicItem(TabHandler.INSTANCE.items);
-        KEYBOARD = new BasicItem(TabHandler.INSTANCE.items);
-        DNA_ANALYZER = new BasicItem(TabHandler.INSTANCE.items);
+        COMPUTER_SCREEN = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        KEYBOARD = new BasicItem(TabHandler.INSTANCE.ITEMS);
+        DNA_ANALYZER = new BasicItem(TabHandler.INSTANCE.ITEMS);
 
-        IRON_NUGGET = new BasicItem(TabHandler.INSTANCE.items);
+        IRON_NUGGET = new BasicItem(TabHandler.INSTANCE.ITEMS);
 
-        GYPSUM_POWDER = new BasicItem(TabHandler.INSTANCE.items);
+        GYPSUM_POWDER = new BasicItem(TabHandler.INSTANCE.ITEMS);
 
-        AJUGINUCULA_SMITHII_SEEDS = new ItemSeeds(BlockHandler.INSTANCE.AJUGINUCULA_SMITHII, Blocks.FARMLAND).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(TabHandler.INSTANCE.plants);
-        AJUGINUCULA_SMITHII_LEAVES = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(TabHandler.INSTANCE.plants);
-        AJUGINUCULA_SMITHII_OIL = new BasicItem(TabHandler.INSTANCE.plants);
+        AJUGINUCULA_SMITHII_SEEDS = new ItemSeeds(BlockHandler.INSTANCE.AJUGINUCULA_SMITHII, Blocks.FARMLAND).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        AJUGINUCULA_SMITHII_LEAVES = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        AJUGINUCULA_SMITHII_OIL = new BasicItem(TabHandler.INSTANCE.PLANTS);
 
-        WILD_ONION = new ItemSeeds(BlockHandler.INSTANCE.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.plants);
-        GRACILARIA = new GracilariaItem(BlockHandler.INSTANCE.GRACILARIA).setCreativeTab(TabHandler.INSTANCE.plants);
-        LIQUID_AGAR = new BasicItem(TabHandler.INSTANCE.items);
+        WILD_ONION = new ItemSeeds(BlockHandler.INSTANCE.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        GRACILARIA = new GracilariaItem(BlockHandler.INSTANCE.GRACILARIA).setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        LIQUID_AGAR = new BasicItem(TabHandler.INSTANCE.ITEMS);
 
-        CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.INSTANCE.foods);
+        CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.INSTANCE.FOODS);
 
         for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
         {

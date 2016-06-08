@@ -15,7 +15,7 @@ public class PlantFossilItem extends Item implements GrindableItem
     public PlantFossilItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 
     @Override

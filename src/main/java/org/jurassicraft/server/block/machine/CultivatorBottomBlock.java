@@ -21,7 +21,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
     public CultivatorBottomBlock()
     {
         super("bottom");
-        this.setCreativeTab(TabHandler.INSTANCE.blocks);
+        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
     }
 
     @Override

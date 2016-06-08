@@ -25,7 +25,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
     public PlantSoftTissueItem()
     {
         this.setHasSubtypes(true);
-        this.setCreativeTab(TabHandler.INSTANCE.plants);
+        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 
     @Override
