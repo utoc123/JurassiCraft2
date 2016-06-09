@@ -1,8 +1,6 @@
 package org.jurassicraft.server.block.plant;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -17,13 +15,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
-public class DoublePlantBlock extends BlockBush
+public class DoublePlantBlock extends AncientPlantBlock
 {
     public static final PropertyEnum HALF = PropertyEnum.create("half", BlockHalf.class);
 
@@ -33,8 +28,6 @@ public class DoublePlantBlock extends BlockBush
     {
         super(material);
         this.setHardness(0.0F);
-        this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 
     @Override
@@ -195,10 +188,16 @@ public class DoublePlantBlock extends BlockBush
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public Block.EnumOffsetType getOffsetType()
+    protected void spread(World world, BlockPos position)
     {
-        return EnumOffsetType.XZ;
+        world.setBlockState(position, this.getDefaultState().withProperty(HALF, BlockHalf.LOWER));
+        world.setBlockState(position.up(), this.getDefaultState().withProperty(HALF, BlockHalf.UPPER));
+    }
+
+    @Override
+    protected boolean canPlace(IBlockState down, IBlockState here, IBlockState up)
+    {
+        return super.canPlace(down, here, up) && up.getBlock() == Blocks.AIR;
     }
 
     enum BlockHalf implements IStringSerializable

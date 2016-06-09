@@ -23,8 +23,8 @@ import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
 import org.jurassicraft.server.block.plant.AjuginuculaSmithiiBlock;
+import org.jurassicraft.server.block.plant.AncientPlantBlock;
 import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
-import org.jurassicraft.server.block.plant.CryPansyBlock;
 import org.jurassicraft.server.block.plant.CycadZamitesBlock;
 import org.jurassicraft.server.block.plant.DicksoniaBlock;
 import org.jurassicraft.server.block.plant.GracilariaBlock;
@@ -111,7 +111,7 @@ public enum BlockHandler
     public CultivatorBottomBlock CULTIVATOR_BOTTOM;
 
     public BennettitaleanCycadeoideaBlock CYCADEOIDEA;
-    public CryPansyBlock CRY_PANSY;
+    public AncientPlantBlock CRY_PANSY;
     public ScalyTreeFernBlock SCALY_TREE_FERN;
     public CycadZamitesBlock ZAMITES;
     public DicksoniaBlock DICKSONIA;
@@ -161,7 +161,7 @@ public enum BlockHandler
         SMALL_CHAIN_FERN = new SmallChainFernBlock();
         SMALL_CYCAD = new SmallCycadBlock();
         CYCADEOIDEA = new BennettitaleanCycadeoideaBlock();
-        CRY_PANSY = new CryPansyBlock();
+        CRY_PANSY = new AncientPlantBlock();
         SCALY_TREE_FERN = new ScalyTreeFernBlock();
         ZAMITES = new CycadZamitesBlock();
         DICKSONIA = new DicksoniaBlock();
