@@ -57,7 +57,6 @@ import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
 import org.jurassicraft.server.tile.FossilGrinderTile;
 import org.jurassicraft.server.tile.IncubatorTile;
-import org.jurassicraft.server.world.jurdstrees.algorythms.TreeCompendium;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -195,9 +194,6 @@ public enum BlockHandler
         }
 
         registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
-
-        TreeCompendium.addShapesToCompendium();
-        TreeCompendium.registerTrees();
 
         for (TreeType type : TreeType.values())
         {

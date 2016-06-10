@@ -30,12 +30,13 @@ public class AncientLeavesBlock extends BlockLeaves
 
     public AncientLeavesBlock(TreeType type)
     {
+        super();
         this.treeType = type;
         this.setUnlocalizedName(type.name().toLowerCase() + "_leaves");
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
         this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 
