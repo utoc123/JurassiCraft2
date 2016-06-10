@@ -36,7 +36,7 @@ public class AncientLeavesBlock extends BlockLeaves
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false)); //TODO Until we fix the decay code, keep this false
         this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
     }
 

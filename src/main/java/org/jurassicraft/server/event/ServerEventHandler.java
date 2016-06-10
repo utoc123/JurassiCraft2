@@ -5,7 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -19,6 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
@@ -143,6 +146,39 @@ public class ServerEventHandler
             if (rand.nextInt(2) == 0)
             {
                 new WorldGenMinable(BlockHandler.INSTANCE.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
+            }
+        }
+
+        int footprintChance = 20;
+
+        if (biome == Biomes.RIVER)
+        {
+            footprintChance = 10;
+        }
+
+        if (rand.nextInt(footprintChance) == 0)
+        {
+            int y = rand.nextInt(20) + 30;
+
+            FossilizedTrackwayBlock.TrackwayType type = FossilizedTrackwayBlock.TrackwayType.values()[rand.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)];
+
+            for (int i = 0; i < rand.nextInt(2) + 1; i++)
+            {
+                BlockPos basePos = new BlockPos(pos.getX() + rand.nextInt(10) - 5, y, pos.getZ() + rand.nextInt(10) - 5);
+
+                System.out.println(basePos);
+
+                float angle = (float) (rand.nextDouble() * 360.0F);
+
+                IBlockState trackway = BlockHandler.INSTANCE.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.fromAngle(angle)).withProperty(FossilizedTrackwayBlock.VARIANT, type);
+
+                float xOffset = -MathHelper.sin((float) Math.toRadians(angle));
+                float zOffset = MathHelper.cos((float) Math.toRadians(angle));
+
+                for (int l = 0; l < rand.nextInt(2) + 3; l++)
+                {
+                    world.setBlockState(basePos.add(xOffset * l, 0, zOffset * l), trackway);
+                }
             }
         }
     }

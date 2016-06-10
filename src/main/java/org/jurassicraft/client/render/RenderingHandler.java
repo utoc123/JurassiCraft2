@@ -89,6 +89,7 @@ import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
+import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -165,6 +166,11 @@ public enum RenderingHandler
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.SOFT_TISSUE, new ResourceLocation("jurassicraft:soft_tissue/soft_tissue_" + dinoName));
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.SYRINGE, new ResourceLocation("jurassicraft:syringe/syringe_" + dinoName));
             ModelBakery.registerItemVariants(ItemHandler.INSTANCE.ACTION_FIGURE, new ResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName));
+        }
+
+        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
+        {
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.INSTANCE.FOSSILIZED_TRACKWAY), new ResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName()));
         }
 
         for (Plant plant : PlantHandler.INSTANCE.getPlants())
@@ -272,6 +278,7 @@ public enum RenderingHandler
         }
 
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PLANT_FOSSIL, "plant_fossil_block", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.FOSSILIZED_TRACKWAY, "fossilized_trackway", "inventory");
 
         for (TreeType type : TreeType.values())
         {
@@ -331,6 +338,11 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PEAT_MOSS, "peat_moss", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DICROIDIUM_ZUBERI, "dicroidium_zuberi", "inventory");
 
+        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
+        {
+            this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.FOSSILIZED_TRACKWAY, trackwayType.ordinal(), "fossilized_trackway_" + trackwayType.getName(), "inventory");
+        }
+
         BlockColors blockColors = mc.getBlockColors();
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.INSTANCE.MOSS);
 
@@ -338,7 +350,7 @@ public enum RenderingHandler
         {
             blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> {
                 AncientLeavesBlock block = (AncientLeavesBlock) state.getBlock();
-                return block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
+                return pos == null || block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
             }, entry.getValue());
         }
 

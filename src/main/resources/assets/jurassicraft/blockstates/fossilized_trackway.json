@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,variant=biped_medium": {
+      "model": "jurassicraft:fossilized_trackway_biped_medium",
+      "y": 0
+    },
+    "facing=south,variant=biped_medium": {
+      "model": "jurassicraft:fossilized_trackway_biped_medium"
+    },
+    "facing=west,variant=biped_medium": {
+      "model": "jurassicraft:fossilized_trackway_biped_medium",
+      "y": 270
+    },
+    "facing=east,variant=biped_medium": {
+      "model": "jurassicraft:fossilized_trackway_biped_medium",
+      "y": 90
+    },
+    "facing=north,variant=biped_small": {
+      "model": "jurassicraft:fossilized_trackway_biped_small",
+      "y": 0
+    },
+    "facing=south,variant=biped_small": {
+      "model": "jurassicraft:fossilized_trackway_biped_small"
+    },
+    "facing=west,variant=biped_small": {
+      "model": "jurassicraft:fossilized_trackway_biped_small",
+      "y": 270
+    },
+    "facing=east,variant=biped_small": {
+      "model": "jurassicraft:fossilized_trackway_biped_small",
+      "y": 90
+    },
+    "facing=north,variant=raptor": {
+      "model": "jurassicraft:fossilized_trackway_raptor",
+      "y": 0
+    },
+    "facing=south,variant=raptor": {
+      "model": "jurassicraft:fossilized_trackway_raptor"
+    },
+    "facing=west,variant=raptor": {
+      "model": "jurassicraft:fossilized_trackway_raptor",
+      "y": 270
+    },
+    "facing=east,variant=raptor": {
+      "model": "jurassicraft:fossilized_trackway_raptor",
+      "y": 90
+    },
+    "facing=north,variant=sauropod": {
+      "model": "jurassicraft:fossilized_trackway_sauropod",
+      "y": 0
+    },
+    "facing=south,variant=sauropod": {
+      "model": "jurassicraft:fossilized_trackway_sauropod"
+    },
+    "facing=west,variant=sauropod": {
+      "model": "jurassicraft:fossilized_trackway_sauropod",
+      "y": 270
+    },
+    "facing=east,variant=sauropod": {
+      "model": "jurassicraft:fossilized_trackway_sauropod",
+      "y": 90
+    }
+  }
+}

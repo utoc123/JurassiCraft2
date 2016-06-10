@@ -130,6 +130,8 @@ public enum BlockHandler
     public PeatBlock PEAT;
     public Block PEAT_MOSS;
 
+    public FossilizedTrackwayBlock FOSSILIZED_TRACKWAY;
+
     public void init()
     {
         FOSSILS = new ArrayList<>();
@@ -179,6 +181,8 @@ public enum BlockHandler
         PEAT = new PeatBlock();
         PEAT_MOSS = new BasicBlock(Material.GROUND, SoundType.GROUND).setHardness(0.5F).setCreativeTab(TabHandler.INSTANCE.PLANTS);
 
+        FOSSILIZED_TRACKWAY = new FossilizedTrackwayBlock();
+
         for (int i = 0; i < (int) Math.ceil(EntityHandler.INSTANCE.getDinosaurs().size() / 16.0F); i++)
         {
             FossilBlock fossil = new FossilBlock(i * 16);
@@ -194,6 +198,7 @@ public enum BlockHandler
         }
 
         registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
+        registerBlock(FOSSILIZED_TRACKWAY, "Fossilized Trackway");
 
         for (TreeType type : TreeType.values())
         {

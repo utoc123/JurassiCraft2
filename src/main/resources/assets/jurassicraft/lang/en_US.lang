@@ -228,6 +228,7 @@ item.liquid_agar.name=Liquid Agar
 tile.fossil_block.name={period} Fossil
 tile.encased_fossil.name=Encased {period} Fossil
 tile.plant_fossil_block.name=Plant Fossil
+tile.fossilized_trackway.name=Fossilized {variant} Trackway
 tile.amber_ore.name=Amber Ore
 tile.ice_shard.name=Ice Shard Ore
 tile.moss.name=Moss
@@ -281,6 +282,11 @@ tile.reinforced_bricks.name=Reinforced Bricks
 tile.cultivate.name={color} Cultivator
 
 tile.clear_glass.name=Clear Glass
+
+trackway.biped_medium.name=Biped
+trackway.biped_small.name=Small Biped
+trackway.raptor.name=Raptor
+trackway.sauropod.name=Sauropod
 
 // Crops ========================================
 tile.ajuginucula_smithii.name=Ajuginucula Smithii
