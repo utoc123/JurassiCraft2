@@ -273,20 +273,12 @@ tile.cry_pansy.name=Cry Pansy
 tile.scaly_tree_fern.name=Scaly Tree Fern
 tile.cycad_zamites.name=Zamites
 tile.dicksonia.name=Dicksonia
+tile.dicroidium_zuberi.name=Dicroidium Zuberi
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
 
 tile.cultivate.name={color} Cultivator
-
-tile.planks_0.name=Alethopteris Planks
-tile.planks_1.name=Williamsonia Planks
-tile.planks_2.name=Archaeopteris Planks
-tile.planks_3.name=Cycadeoidea Planks
-tile.planks_4.name=Calamites Planks
-tile.planks_5.name=Glossopteris Planks
-tile.planks_6.name=Dorycordaites Planks
-tile.planks_7.name=Mangrove Planks
 
 tile.clear_glass.name=Clear Glass
 
@@ -308,6 +300,7 @@ plants.cycad_zamites.name=Zamites
 plants.dicksonia.name=Dicksonia
 plants.ajuginucula_smithii.name=Ajuginucula Smithii
 plants.wild_onion.name=Wild Onion
+plants.dicroidium_zuberi.name=Dicroidium Zuberi
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

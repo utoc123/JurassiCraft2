@@ -27,6 +27,7 @@ import org.jurassicraft.server.block.plant.AncientPlantBlock;
 import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
 import org.jurassicraft.server.block.plant.CycadZamitesBlock;
 import org.jurassicraft.server.block.plant.DicksoniaBlock;
+import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
 import org.jurassicraft.server.block.plant.GracilariaBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
@@ -115,6 +116,7 @@ public enum BlockHandler
     public ScalyTreeFernBlock SCALY_TREE_FERN;
     public CycadZamitesBlock ZAMITES;
     public DicksoniaBlock DICKSONIA;
+    public DicroidiumZuberiBlock DICROIDIUM_ZUBERI;
 
     public ActionFigureBlock ACTION_FIGURE;
 
@@ -167,6 +169,7 @@ public enum BlockHandler
         DICKSONIA = new DicksoniaBlock();
         WILD_ONION = new WildOnionBlock();
         GRACILARIA = new GracilariaBlock();
+        DICROIDIUM_ZUBERI = new DicroidiumZuberiBlock();
 
         ACTION_FIGURE = new ActionFigureBlock();
 
@@ -220,6 +223,7 @@ public enum BlockHandler
         registerBlock(DICKSONIA, "Dicksonia");
         registerBlock(WILD_ONION, "Wild Onion Plant");
         registerBlock(GRACILARIA, "Gracilaria Seaweed");
+        registerBlock(DICROIDIUM_ZUBERI, "Dicroidium Zuberi");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

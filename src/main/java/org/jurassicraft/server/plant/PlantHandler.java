@@ -9,34 +9,22 @@ public enum PlantHandler
 
     private List<Plant> plants = new ArrayList<>();
 
-    public Plant AJUGINUCULA_SMITHII;
-    public Plant SMALL_ROYAL_FERN;
-    public Plant CALAMITES;
-    public Plant SMALL_CHAIN_FERN;
-    public Plant SMALL_CYCAD;
-    public Plant GINKGO;
-    public Plant CYCADEOIDEA;
-    public Plant CRY_PANSY;
-    public Plant SCALY_TREE_FERN;
-    public Plant ZAMITES;
-    public Plant DICKSONIA;
-    public Plant WILD_ONION;
+    public final Plant AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
+    public final Plant SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
+    public final Plant CALAMITES = new CalamitesPlant();
+    public final Plant SMALL_CHAIN_FERN = new SmallChainFernPlant();
+    public final Plant SMALL_CYCAD = new SmallCycadPlant();
+    public final Plant GINKGO = new GinkgoPlant();
+    public final Plant CYCADEOIDEA = new BennettitaleanCycadeoideaPlant();
+    public final Plant CRY_PANSY = new CryPansyPlant();
+    public final Plant SCALY_TREE_FERN = new ScalyTreeFernPlant();
+    public final Plant ZAMITES = new ZamitesPlant();
+    public final Plant DICKSONIA = new DicksoniaPlant();
+    public final Plant WILD_ONION = new WildOnionPlant();
+    public final Plant DICROIDIUM_ZUBERI_PLANT = new DicroidiumZuberiPlant();
 
     public void init()
     {
-        AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
-        SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
-        CALAMITES = new CalamitesPlant();
-        SMALL_CHAIN_FERN = new SmallChainFernPlant();
-        SMALL_CYCAD = new SmallCycadPlant();
-        GINKGO = new GinkgoPlant();
-        CYCADEOIDEA = new BennettitaleanCycadeoideaPlant();
-        CRY_PANSY = new CryPansyPlant();
-        SCALY_TREE_FERN = new ScalyTreeFernPlant();
-        ZAMITES = new ZamitesPlant();
-        DICKSONIA = new DicksoniaPlant();
-        WILD_ONION = new WildOnionPlant();
-
         registerPlant(AJUGINUCULA_SMITHII);
         registerPlant(SMALL_ROYAL_FERN);
         registerPlant(CALAMITES);
@@ -49,6 +37,7 @@ public enum PlantHandler
         registerPlant(ZAMITES);
         registerPlant(DICKSONIA);
         registerPlant(WILD_ONION);
+        registerPlant(DICROIDIUM_ZUBERI_PLANT);
     }
 
     public Plant getPlantById(int id)

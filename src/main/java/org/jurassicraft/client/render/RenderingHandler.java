@@ -3,17 +3,14 @@ package org.jurassicraft.client.render;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -332,6 +329,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.GRACILARIA, "graciliaria_seaweed", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PEAT, "peat", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.PEAT_MOSS, "peat_moss", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.INSTANCE.DICROIDIUM_ZUBERI, "dicroidium_zuberi", "inventory");
 
         BlockColors blockColors = mc.getBlockColors();
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.INSTANCE.MOSS);
@@ -479,82 +477,51 @@ public enum RenderingHandler
         }
 
         ItemColors itemColors = mc.getItemColors();
-        itemColors.registerItemColorHandler(new IItemColor()
-        {
-            @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+        itemColors.registerItemColorHandler((stack, tintIndex) -> {
+            DinosaurSpawnEggItem item = (DinosaurSpawnEggItem) stack.getItem();
+            Dinosaur dino = item.getDinosaur(stack);
+
+            if (dino != null)
             {
-                DinosaurSpawnEggItem item = (DinosaurSpawnEggItem) stack.getItem();
-                Dinosaur dino = item.getDinosaur(stack);
+                int mode = item.getMode(stack);
 
-                if (dino != null)
+                if (mode == 0)
                 {
-                    int mode = item.getMode(stack);
-
-                    if (mode == 0)
-                    {
-                        mode = JurassiCraft.timerTicks % 64 > 32 ? 1 : 2;
-                    }
-
-                    if (mode == 1)
-                    {
-                        return tintIndex == 0 ? dino.getEggPrimaryColorMale() : dino.getEggSecondaryColorMale();
-                    }
-                    else
-                    {
-                        return tintIndex == 0 ? dino.getEggPrimaryColorFemale() : dino.getEggSecondaryColorFemale();
-                    }
+                    mode = JurassiCraft.timerTicks % 64 > 32 ? 1 : 2;
                 }
 
-                return 0xFFFFFF;
+                if (mode == 1)
+                {
+                    return tintIndex == 0 ? dino.getEggPrimaryColorMale() : dino.getEggSecondaryColorMale();
+                }
+                else
+                {
+                    return tintIndex == 0 ? dino.getEggPrimaryColorFemale() : dino.getEggSecondaryColorFemale();
+                }
             }
+
+            return 0xFFFFFF;
         }, ItemHandler.INSTANCE.SPAWN_EGG);
     }
 
-    /**
-     * Registers an item renderer
-     */
     public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, final String path, final String type)
     {
-        itemModelMesher.register(item, new ItemMeshDefinition()
-        {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack)
-            {
-                return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
-            }
-        });
+        itemModelMesher.register(item, stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    /**
-     * Registers an item renderer with metadata
-     */
     public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, int meta, String path, String type)
     {
         itemModelMesher.register(item, meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    /**
-     * Registers an block renderer with metadata
-     */
     public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, int meta, String path, String type)
     {
         itemModelMesher.register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    /**
-     * Registers a block renderer
-     */
     public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, final String path, final String type)
     {
-        itemModelMesher.register(Item.getItemFromBlock(block), new ItemMeshDefinition()
-        {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack)
-            {
-                return new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type);
-            }
-        });
+        itemModelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     private void registerRenderDef(RenderDinosaurDefinition renderDef)
