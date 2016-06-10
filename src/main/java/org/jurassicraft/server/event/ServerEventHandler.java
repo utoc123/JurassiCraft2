@@ -166,8 +166,6 @@ public class ServerEventHandler
             {
                 BlockPos basePos = new BlockPos(pos.getX() + rand.nextInt(10) - 5, y, pos.getZ() + rand.nextInt(10) - 5);
 
-                System.out.println(basePos);
-
                 float angle = (float) (rand.nextDouble() * 360.0F);
 
                 IBlockState trackway = BlockHandler.INSTANCE.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.fromAngle(angle)).withProperty(FossilizedTrackwayBlock.VARIANT, type);
