@@ -13,24 +13,18 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
     @Override
     protected void performMowzieLandAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
-        boolean scary = false;
-
         AdvancedModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
         AdvancedModelRenderer frillLeftTop = model.getCube("Frill Upper Left");
 
         AdvancedModelRenderer frillRightBottom = model.getCube("Frill Lower Right");
         AdvancedModelRenderer frillRightTop = model.getCube("Frill Upper Right");
 
-        frillLeftBottom.showModel = scary;
-        frillLeftTop.showModel = scary;
-        frillRightBottom.showModel = scary;
-        frillRightTop.showModel = scary;
+        boolean hasTarget = entity.hasTarget();
 
-        frillLeftTop.rotateAngleY = (float) Math.toRadians(180);
-        frillLeftTop.rotationPointX += 10F;
-
-        frillLeftBottom.rotateAngleY = (float) Math.toRadians(180);
-        frillLeftBottom.rotationPointX += 10F;
+        frillLeftBottom.showModel = hasTarget;
+        frillLeftTop.showModel = hasTarget;
+        frillRightBottom.showModel = hasTarget;
+        frillRightTop.showModel = hasTarget;
 
         float globalSpeed = 0.6F;
         float globalDegree = 0.77F;

@@ -6,6 +6,9 @@ import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.VenomEntity;
@@ -13,6 +16,8 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttackMob
 {
+    private static final DataParameter<Boolean> WATCHER_HAS_TARGET = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
+
     public DilophosaurusEntity(World world)
     {
         super(world);
@@ -36,5 +41,29 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     public EntityAIBase getAttackAI()
     {
         return new EntityAIAttackRanged(this, 1.0, 40, 10);
+    }
+
+    @Override
+    public void entityInit()
+    {
+        super.entityInit();
+
+        this.dataManager.register(WATCHER_HAS_TARGET, false);
+    }
+
+    @Override
+    public void onUpdate()
+    {
+        super.onUpdate();
+
+        if (!worldObj.isRemote)
+        {
+            this.dataManager.set(WATCHER_HAS_TARGET, hasTarget());
+        }
+    }
+
+    public boolean hasTarget()
+    {
+        return worldObj.isRemote ? dataManager.get(WATCHER_HAS_TARGET) : getAttackTarget() != null;
     }
 }
