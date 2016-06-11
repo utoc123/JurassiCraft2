@@ -11,6 +11,8 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
@@ -48,6 +50,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
+import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
 import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
@@ -152,6 +155,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.tasks.addTask(2, new FollowOwnerEntityAI(this));
         herdEntityAI = new HerdEntityAI(this);
         this.tasks.addTask(2, herdEntityAI);
+        this.tasks.addTask(2, getAttackAI());
 
         this.tasks.addTask(3, new EntityAILookIdle(this));
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
@@ -1279,6 +1283,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             JurassiCraft.NETWORK_WRAPPER.sendToServer(new SetOrderMessage(this));
         }
+    }
+
+    @SafeVarargs
+    public final void target(Class<? extends EntityLivingBase>... targets)
+    {
+        for (Class<? extends EntityLivingBase> target : targets)
+        {
+            targetTasks.addTask(2, new SelectTargetEntityAI<>(this, target, true));
+        }
+    }
+
+    public EntityAIBase getAttackAI()
+    {
+        return new EntityAIAttackMelee(this, 1.0, false);
     }
 
     public enum Order

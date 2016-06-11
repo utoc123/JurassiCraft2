@@ -1,6 +1,9 @@
 package org.jurassicraft.server.entity.dinosaur;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -15,12 +18,13 @@ public class TyrannosaurusEntity extends DinosaurEntity
     public TyrannosaurusEntity(World world)
     {
         super(world);
+        this.target(EntityPlayer.class, EntityAnimal.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class);
     }
 
     @Override
     public SoundEvent getSoundForAnimation(Animation animation)
     {
-        if (animation == Animations.ATTACKING.get())
+        if (animation == Animations.CALLING.get())
         {
             return getSound("roar");
         }
