@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_top",
-  "textures": {
-    "top": "jurassicraft:blocks/fossilized_trackway_sauropod",
-    "side": "jurassicraft:blocks/fossilized_trackway"
-  }
-}

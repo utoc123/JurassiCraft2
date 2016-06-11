@@ -52,7 +52,7 @@ public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing facing = EnumFacing.getFront(meta >> 3 & 3);
+        EnumFacing facing = EnumFacing.getFront(meta >> 2 & 3);
 
         if (facing.getAxis() == EnumFacing.Axis.Y)
         {
@@ -65,7 +65,7 @@ public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return (state.getValue(FACING).getIndex() & 3) << 3 | (state.getValue(VARIANT).ordinal() & 3);
+        return (state.getValue(FACING).getIndex() & 3) << 2 | (state.getValue(VARIANT).ordinal() & 3);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock
 
     public enum TrackwayType implements IStringSerializable
     {
-        BIPED_MEDIUM, BIPED_SMALL, RAPTOR, SAUROPOD;
+        BIPED_MEDIUM, BIPED_SMALL, RAPTOR;
 
         @Override
         public String getName()

@@ -286,7 +286,6 @@ tile.clear_glass.name=Clear Glass
 trackway.biped_medium.name=Biped
 trackway.biped_small.name=Small Biped
 trackway.raptor.name=Raptor
-trackway.sauropod.name=Sauropod
 
 // Crops ========================================
 tile.ajuginucula_smithii.name=Ajuginucula Smithii
