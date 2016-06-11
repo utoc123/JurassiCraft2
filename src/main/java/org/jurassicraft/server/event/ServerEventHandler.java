@@ -175,7 +175,12 @@ public class ServerEventHandler
 
                 for (int l = 0; l < rand.nextInt(2) + 3; l++)
                 {
-                    world.setBlockState(basePos.add(xOffset * l, 0, zOffset * l), trackway);
+                    BlockPos trackwayPos = basePos.add(xOffset * l, 0, zOffset * l);
+
+                    if (world.getBlockState(trackwayPos).getBlock() == Blocks.STONE)
+                    {
+                        world.setBlockState(trackwayPos, trackway);
+                    }
                 }
             }
         }
