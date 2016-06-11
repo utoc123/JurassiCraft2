@@ -51,6 +51,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private String[] bones;
     private int maximumAge;
     private String headCubeName;
+    private boolean isImprintable;
 
     private float scaleInfant;
     private float scaleAdult;
@@ -682,6 +683,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.offsetZ = z;
     }
 
+    public void setImprintable(boolean imprintable)
+    {
+        this.isImprintable = imprintable;
+    }
+
     public double getScaleInfant()
     {
         return scaleInfant;
@@ -725,5 +731,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public boolean doesSupportGrowthStage(GrowthStage stage)
     {
         return stage == GrowthStage.ADULT;
+    }
+
+    public boolean isImprintable()
+    {
+        return isImprintable;
     }
 }

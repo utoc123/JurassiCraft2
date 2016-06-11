@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.model.animation.DinosaurAnimator;
-import org.jurassicraft.server.entity.dinosaur.StegosaurusEntity;
+import org.jurassicraft.server.entity.dinosaur.disabled.StegosaurusEntity;
 
 @SideOnly(Side.CLIENT)
 public class StegosaurusAnimator extends DinosaurAnimator<StegosaurusEntity>

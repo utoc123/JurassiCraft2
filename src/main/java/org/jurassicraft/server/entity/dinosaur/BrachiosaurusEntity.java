@@ -4,9 +4,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.base.DefensiveDinosaurEntity;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class BrachiosaurusEntity extends DefensiveDinosaurEntity
+public class BrachiosaurusEntity extends DinosaurEntity
 {
     private int stepCount = 0;
 

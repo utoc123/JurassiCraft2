@@ -27,7 +27,7 @@ public class PaddockSignItem extends Item
 
             if (player.worldObj.isRemote && player.canPlayerEdit(offset, side, stack))
             {
-                GuiHandler.openSelectDino(player, offset, side, hand);
+                GuiHandler.openSelectDino(offset, side, hand);
             }
         }
 

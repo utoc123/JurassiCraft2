@@ -18,7 +18,6 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -34,6 +33,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -45,6 +45,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
@@ -55,8 +56,11 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.genetics.GeneticsHelper;
+import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.lang.LangHelper;
+import org.jurassicraft.server.message.SetOrderMessage;
 
 import java.util.List;
 import java.util.Random;
@@ -95,6 +99,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private static final DataParameter<Integer> WATCHER_GROWTH_OFFSET = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> WATCHER_IS_SLEEPING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<String> WATCHER_OWNER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.STRING);
+    private static final DataParameter<Order> WATCHER_ORDER = EntityDataManager.createKey(DinosaurEntity.class, DinosaurSerializers.ORDER);
 
     private final MetabolismContainer metabolism;
 
@@ -111,11 +117,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     protected EntityAITasks animationTasks;
 
+    protected Order order = Order.WANDER;
+
     public DinosaurEntity(World world)
     {
         super(world);
 
-        this.animationTasks = new EntityAITasks(world != null ? world.theProfiler : null);
+        this.animationTasks = new EntityAITasks(world.theProfiler);
 
         this.metabolism = new MetabolismContainer(this);
         this.inventory = new InventoryDinosaur(this);
@@ -141,6 +149,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
+        this.tasks.addTask(2, new FollowOwnerEntityAI(this));
         herdEntityAI = new HerdEntityAI(this);
         this.tasks.addTask(2, herdEntityAI);
 
@@ -232,7 +241,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setOwner(EntityPlayer player)
     {
-        this.owner = player.getUniqueID();
+        if (dinosaur.isImprintable())
+        {
+            UUID prevOwner = this.owner;
+            this.owner = player.getUniqueID();
+
+            if (!owner.equals(prevOwner))
+            {
+                player.addChatComponentMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build()));
+            }
+        }
     }
 
     @Override
@@ -426,6 +444,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.dataManager.register(WATCHER_GROWTH_OFFSET, 0);
         this.dataManager.register(WATCHER_IS_SLEEPING, false);
         this.dataManager.register(WATCHER_HAS_TRACKER, false);
+        this.dataManager.register(WATCHER_OWNER, "");
+        this.dataManager.register(WATCHER_ORDER, Order.WANDER);
     }
 
     @Override
@@ -608,6 +628,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             dataManager.set(WATCHER_IS_SLEEPING, isSleeping);
             dataManager.set(WATCHER_IS_CARCASS, isCarcass);
             dataManager.set(WATCHER_HAS_TRACKER, hasTracker);
+            dataManager.set(WATCHER_ORDER, order);
+            dataManager.set(WATCHER_OWNER, owner != null ? owner.toString() : "");
         }
         else
         {
@@ -618,6 +640,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             isSleeping = dataManager.get(WATCHER_IS_SLEEPING);
             isCarcass = dataManager.get(WATCHER_IS_CARCASS);
             hasTracker = dataManager.get(WATCHER_HAS_TRACKER);
+            order = dataManager.get(WATCHER_ORDER);
+
+            String owner = dataManager.get(WATCHER_OWNER);
+
+            if (owner.length() > 0 && (this.owner == null || !owner.equals(this.owner.toString())))
+            {
+                this.owner = UUID.fromString(owner);
+            }
+            else if (owner.length() == 0)
+            {
+                this.owner = null;
+            }
         }
 
         if (ticksExisted % 16 == 0)
@@ -657,6 +691,21 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         else if (getAnimation() == Animations.SLEEPING.get())
         {
             this.setAnimation(Animations.IDLE.get());
+        }
+
+        if (!isSleeping)
+        {
+            if (order == Order.SIT)
+            {
+                if (getAnimation() != Animations.RESTING.get())
+                {
+                    this.setAnimation(Animations.RESTING.get());
+                }
+            }
+            else if (getAnimation() == Animations.RESTING.get())
+            {
+                this.setAnimation(Animations.IDLE.get());
+            }
         }
 
         if (!shouldSleep() && !isSleeping && stayAwakeTime > 0)
@@ -778,45 +827,55 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
     {
-        if (player.isSneaking())
+        if (player.isSneaking() && hand == EnumHand.MAIN_HAND)
         {
-            if (getAgePercentage() > 75)
+            if (isOwner(player))
             {
-                player.displayGUIChest(inventory);
+                if (getAgePercentage() > 75)
+                {
+                    player.displayGUIChest(inventory);
+                }
+                else
+                {
+                    if (worldObj.isRemote)
+                    {
+                        player.addChatComponentMessage(new TextComponentTranslation("message.too_young.name"));
+                    }
+                }
             }
             else
             {
                 if (worldObj.isRemote)
                 {
-                    String msg;
-
-                    if (hasCustomName())
-                    {
-                        msg = getCustomNameTag();
-                    }
-                    else
-                    {
-                        msg = "This " + getName();
-                    }
-
-                    player.addChatComponentMessage(new TextComponentString(msg + " is not old enough to hold items!")); //TODO translation
+                    player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
         }
         else
         {
-            if (stack != null)
+            if (stack != null && stack.getItem() instanceof BluePrintItem)
             {
-                Item item = stack.getItem();
-
-                if (item instanceof BluePrintItem)
+                ((BluePrintItem) stack.getItem()).setDinosaur(stack, EntityHandler.INSTANCE.getDinosaurId(getDinosaur()));
+            }
+            else if (stack == null && hand == EnumHand.MAIN_HAND && worldObj.isRemote)
+            {
+                if (isOwner(player))
                 {
-                    ((BluePrintItem) item).setDinosaur(stack, EntityHandler.INSTANCE.getDinosaurId(getDinosaur()));
+                    GuiHandler.openOrderGui(this);
+                }
+                else
+                {
+                    player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
         }
 
         return false;
+    }
+
+    public boolean isOwner(EntityPlayer player)
+    {
+        return player.getUniqueID().equals(getOwner());
     }
 
     @Override
@@ -925,11 +984,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return transitionFromAge(dinosaur.getBabyStrength(), dinosaur.getAdultStrength());
     }
 
-    public boolean isStronger(DinosaurEntity dinosaur)
-    {
-        return getHealth() * (float) getAttackDamage() < dinosaur.getHealth() * (float) dinosaur.getAttackDamage();
-    }
-
     public boolean isMale()
     {
         return isMale;
@@ -948,24 +1002,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public GrowthStage getGrowthStage()
     {
-        GrowthStage stage = GrowthStage.INFANT;
-
         int percent = getAgePercentage();
 
-        if (percent > 75)
-        {
-            stage = GrowthStage.ADULT;
-        }
-        else if (percent > 50)
-        {
-            stage = GrowthStage.ADOLESCENT;
-        }
-        else if (percent > 25)
-        {
-            stage = GrowthStage.JUVENILE;
-        }
-
-        return stage;
+        return percent > 75 ? GrowthStage.ADULT : percent > 50 ? GrowthStage.ADOLESCENT : percent > 25 ? GrowthStage.JUVENILE : GrowthStage.INFANT;
     }
 
     public void increaseGrowthSpeed()
@@ -973,9 +1012,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         growthSpeedOffset += 240;
     }
 
-    /*
-     * Used by DinosaurAnimator class to allow different cyclic animations when land dinosaur is in water (need to @Override the performMowzieSwimmingAnimations() method)
-     */
     public boolean isSwimming()
     {
         return (isInWater() || isInLava());
@@ -995,6 +1031,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setByte("RareVariant", (byte) rareVariant);
         nbt.setInteger("StayAwakeTime", stayAwakeTime);
         nbt.setBoolean("IsSleeping", isSleeping);
+        nbt.setByte("Order", (byte) order.ordinal());
         nbt.setInteger("CarcassHealth", carcassHealth);
 
         metabolism.writeToNBT(nbt);
@@ -1023,12 +1060,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         stayAwakeTime = nbt.getInteger("StayAwakeTime");
         isSleeping = nbt.getBoolean("IsSleeping");
         carcassHealth = nbt.getInteger("CarcassHealth");
+        order = Order.values()[nbt.getByte("Order")];
 
         metabolism.readFromNBT(nbt);
 
         String ownerUUID = nbt.getString("OwnerUUID");
 
-        if (ownerUUID != null && ownerUUID.length() > 0)
+        if (ownerUUID.length() > 0)
         {
             owner = UUID.fromString(ownerUUID);
         }
@@ -1216,5 +1254,35 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             AxisAlignedBB bounds = this.getEntityBoundingBox();
             this.setEntityBoundingBox(new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + (double) this.width, bounds.minY + (double) this.height, bounds.minZ + (double) this.width));
         }
+    }
+
+    public Order getOrder()
+    {
+        return order;
+    }
+
+    public void setOrder(Order order)
+    {
+        this.order = order;
+
+        if (worldObj.isRemote)
+        {
+            if (owner != null)
+            {
+                EntityPlayer player = worldObj.getPlayerEntityByUUID(owner);
+
+                if (player != null)
+                {
+                    player.addChatComponentMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase() + ".name").build()));
+                }
+            }
+
+            JurassiCraft.NETWORK_WRAPPER.sendToServer(new SetOrderMessage(this));
+        }
+    }
+
+    public enum Order
+    {
+        WANDER, FOLLOW, SIT
     }
 }

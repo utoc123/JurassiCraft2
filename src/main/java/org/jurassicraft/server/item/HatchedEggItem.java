@@ -127,6 +127,8 @@ public class HatchedEggItem extends DNAContainerItem
                 entity.setGenetics(getGeneticCode(player, stack));
                 entity.setDNAQuality(getDNAQuality(player, stack));
                 entity.setMale(getGender(player, stack));
+                entity.setOwner(player);
+
                 world.spawnEntityInWorld(entity);
 
                 if (!player.capabilities.isCreativeMode)

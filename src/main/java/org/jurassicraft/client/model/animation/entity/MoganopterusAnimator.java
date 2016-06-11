@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.model.animation.DinosaurAnimator;
-import org.jurassicraft.server.entity.dinosaur.MoganopterusEntity;
+import org.jurassicraft.server.entity.dinosaur.disabled.MoganopterusEntity;
 
 @SideOnly(Side.CLIENT)
 public class MoganopterusAnimator extends DinosaurAnimator<MoganopterusEntity>

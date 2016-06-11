@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Random;
 
@@ -22,25 +21,6 @@ public class InventoryDinosaur implements IInventory
     {
         this.entity = entity;
         this.inventory = new ItemStack[entity.getDinosaur().getStorage()];
-    }
-
-    public boolean checkForTracker()
-    {
-        boolean hasTracker = false;
-
-        for (int i = 0; i < getSizeInventory(); i++)
-        {
-            ItemStack stack = getStackInSlot(i);
-
-            if (stack != null && stack.getItem() == ItemHandler.INSTANCE.TRACKER)
-            {
-                hasTracker = true;
-            }
-        }
-
-        entity.setHasTracker(hasTracker);
-
-        return hasTracker;
     }
 
     public void writeToNBT(NBTTagCompound nbt)
@@ -140,8 +120,6 @@ public class InventoryDinosaur implements IInventory
     public void setInventorySlotContents(int index, ItemStack stack)
     {
         inventory[index] = stack;
-
-        checkForTracker();
 
         if (stack != null && stack.stackSize > getInventoryStackLimit())
         {

@@ -3,7 +3,7 @@ package org.jurassicraft.client.model.animation.entity;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.model.animation.DinosaurAnimator;
-import org.jurassicraft.server.entity.dinosaur.MegapiranhaEntity;
+import org.jurassicraft.server.entity.dinosaur.disabled.MegapiranhaEntity;
 
 public class MegapiranhaAnimator extends DinosaurAnimator<MegapiranhaEntity>
 {

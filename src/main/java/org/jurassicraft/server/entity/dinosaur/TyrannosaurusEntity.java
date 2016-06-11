@@ -6,17 +6,15 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.Animations;
-import org.jurassicraft.server.entity.base.AggressiveDinosaurEntity;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class TyrannosaurusEntity extends AggressiveDinosaurEntity
+public class TyrannosaurusEntity extends DinosaurEntity
 {
     private int stepCount = 0;
 
     public TyrannosaurusEntity(World world)
     {
         super(world);
-
-        this.setUseInertialTweens(true);
     }
 
     @Override

@@ -29,5 +29,6 @@ public class DilophosaurusDinosaur extends Dinosaur
         this.setBones("skull", "tooth", "arm_bones", "leg_bones", "neck", "pelvis", "ribcage", "shoulder", "tail_vertebrae");
         this.setHeadCubeName("Head");
         this.setScale(0.95F, 0.22F);
+        this.setImprintable(true);
     }
 }

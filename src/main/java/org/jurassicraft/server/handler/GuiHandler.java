@@ -8,8 +8,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.gui.CleaningStationGui;
 import org.jurassicraft.client.gui.CultivateGui;
 import org.jurassicraft.client.gui.CultivateProcessGui;
@@ -21,6 +19,7 @@ import org.jurassicraft.client.gui.EmbryoCalcificationMachineGui;
 import org.jurassicraft.client.gui.EmbryonicMachineGui;
 import org.jurassicraft.client.gui.FossilGrinderGui;
 import org.jurassicraft.client.gui.IncubatorGui;
+import org.jurassicraft.client.gui.OrderDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
@@ -32,6 +31,7 @@ import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.tile.CleaningStationTile;
 import org.jurassicraft.server.tile.CultivatorTile;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
@@ -158,17 +158,13 @@ public class GuiHandler implements IGuiHandler
         return null;
     }
 
-    public static void openSelectDino(EntityPlayer player, BlockPos pos, EnumFacing facing, EnumHand hand)
-    {
-        if (player.worldObj.isRemote)
-        {
-            displayOpenSelectDino(pos, facing, hand);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    private static void displayOpenSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand)
+    public static void openSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand)
     {
         Minecraft.getMinecraft().displayGuiScreen(new SelectDinoGui(pos, facing, hand));
+    }
+
+    public static void openOrderGui(DinosaurEntity entity)
+    {
+        Minecraft.getMinecraft().displayGuiScreen(new OrderDinosaurGui(entity));
     }
 }

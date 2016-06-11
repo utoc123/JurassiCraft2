@@ -236,7 +236,7 @@ public enum ItemHandler
         registerItem(IRON_ROD, "Iron Rod");
         registerItem(PLANT_CELLS, "Plant Cells");
         registerItem(PLANT_CALLUS, "Plant Callus");
-        registerItem(TRACKER, "Tracker");
+//        registerItem(TRACKER, "Tracker");
         registerItem(BASIC_CIRCUIT, "Basic Circuit");
         registerItem(ADVANCED_CIRCUIT, "Advanced Circuit");
         registerItemOreDict(IRON_NUGGET, "Iron Nugget", "nuggetIron");

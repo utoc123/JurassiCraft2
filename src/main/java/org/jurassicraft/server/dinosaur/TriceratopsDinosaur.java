@@ -28,5 +28,6 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(1.8F, 0.325F);
         this.setOffset(0.0F, 0.45F, 0.0F);
+        this.setImprintable(true);
     }
 }

@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.model.animation.DinosaurAnimator;
-import org.jurassicraft.server.entity.dinosaur.PteranodonEntity;
+import org.jurassicraft.server.entity.dinosaur.disabled.PteranodonEntity;
 
 @SideOnly(Side.CLIENT)
 public class PteranodonAnimator extends DinosaurAnimator<PteranodonEntity>
