@@ -83,6 +83,7 @@ import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
+import org.jurassicraft.client.render.entity.VenomRenderer;
 import org.jurassicraft.client.render.entity.dinosaur.IndominusRenderDefinition;
 import org.jurassicraft.client.render.entity.dinosaur.RenderDinosaurDefinition;
 import org.jurassicraft.server.api.Hybrid;
@@ -93,6 +94,7 @@ import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
@@ -252,6 +254,7 @@ public enum RenderingHandler
         RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
         RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
     }
 
     public void init()

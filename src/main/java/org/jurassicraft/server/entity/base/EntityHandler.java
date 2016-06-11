@@ -66,6 +66,7 @@ import org.jurassicraft.server.dinosaur.disabled.VelociraptorCharlieDinosaur;
 import org.jurassicraft.server.dinosaur.disabled.VelociraptorDeltaDinosaur;
 import org.jurassicraft.server.dinosaur.disabled.VelociraptorEchoDinosaur;
 import org.jurassicraft.server.dinosaur.disabled.ZhenyuanopterusDinosaur;
+import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.helicopter.modules.HelicopterSeatEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
@@ -214,8 +215,9 @@ public enum EntityHandler
         registerDinosaur(PACHYCEPHALOSAURUS);
 
         registerEntity(BluePrintEntity.class, "Blueprint");
-        registerEntity(AttractionSignEntity.class, "JurassiCraft Sign");
+        registerEntity(AttractionSignEntity.class, "Attraction Sign");
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
+        registerEntity(VenomEntity.class, "Venom");
 
         registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
         registerEntity(HelicopterBaseEntity.class, "Helicopter base");
