@@ -31,7 +31,7 @@ public class AssistOwnerEntityAI extends EntityAIBase
 
                 if (owner != null)
                 {
-                    target = owner.getAITarget();
+                    target = owner.getLastAttacker();
 
                     return target != null && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
                 }

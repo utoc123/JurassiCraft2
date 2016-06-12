@@ -11,7 +11,7 @@ public class DefendOwnerEntityAI extends EntityAIBase
 {
     private DinosaurEntity entity;
     private EntityPlayer owner;
-    private EntityLivingBase lastAttacker;
+    private EntityLivingBase attacker;
 
     public DefendOwnerEntityAI(DinosaurEntity entity)
     {
@@ -31,9 +31,9 @@ public class DefendOwnerEntityAI extends EntityAIBase
 
                 if (owner != null)
                 {
-                    lastAttacker = owner.getLastAttacker();
+                    attacker = owner.getAITarget();
 
-                    return lastAttacker != null && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+                    return attacker != null && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
                 }
             }
         }
@@ -44,13 +44,13 @@ public class DefendOwnerEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        return !lastAttacker.isDead && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+        return !attacker.isDead && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
     }
 
     @Override
     public void updateTask()
     {
-        entity.setAttackTarget(lastAttacker);
+        entity.setAttackTarget(attacker);
     }
 
     @Override

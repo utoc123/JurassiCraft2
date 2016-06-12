@@ -373,6 +373,11 @@ public class HerdManager
             }
             return (int) Math.round(dinosaur.width * factor);
         }
+
+        public List<DinosaurEntity> getAllDinosaurs()
+        {
+            return allDinosaurs;
+        }
     }
 
     //=============================================================================================

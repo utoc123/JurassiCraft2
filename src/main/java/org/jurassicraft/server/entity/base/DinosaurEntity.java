@@ -49,6 +49,7 @@ import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
+import org.jurassicraft.server.entity.ai.DefendSelfEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
@@ -172,6 +173,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.tasks.addTask(2, new AssistOwnerEntityAI(this));
         }
 
+        this.tasks.addTask(2, new DefendSelfEntityAI(this));
         this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
         this.tasks.addTask(2, new FollowOwnerEntityAI(this));
 
