@@ -3,6 +3,7 @@ package org.jurassicraft.server.entity.dinosaur;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -18,7 +19,7 @@ public class TyrannosaurusEntity extends DinosaurEntity
     public TyrannosaurusEntity(World world)
     {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class);
+        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class);
     }
 
     @Override

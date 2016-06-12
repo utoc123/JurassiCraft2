@@ -47,9 +47,8 @@ public class VenomEntity extends EntityThrowable
             {
                 EntityLivingBase entityHit = (EntityLivingBase) result.entityHit;
 
-                entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 2.0F);
+                entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 4.0F);
                 entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("blindness"), 300, 1, false, false));
-                entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("poison"), 300, 1, false, false));
             }
         }
         else

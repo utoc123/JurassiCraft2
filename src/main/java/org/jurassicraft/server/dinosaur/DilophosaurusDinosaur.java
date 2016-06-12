@@ -18,7 +18,7 @@ public class DilophosaurusDinosaur extends Dinosaur
         this.setEggColorFemale(0x5E6E2B, 0x2D221A);
         this.setHealth(10, 30);
         this.setSpeed(0.42, 0.40);
-        this.setStrength(5, 20);
+        this.setStrength(2, 6);
         this.setMaximumAge(fromDays(40));
         this.setEyeHeight(0.45F, 2.15F);
         this.setSizeX(0.3F, 1.25F);
