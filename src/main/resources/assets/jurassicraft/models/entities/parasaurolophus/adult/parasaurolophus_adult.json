@@ -78,6 +78,20 @@
         "pose": "parasaurolophus_adult_idle",
         "time": 5
       }
+    ],
+    "SPEAK": [
+      {
+        "pose": "parasaurolophus_adult_talk",
+        "time": 10
+      },
+      {
+        "pose": "parasaurolophus_adult_talk",
+        "time": 20
+      },
+      {
+        "pose": "parasaurolophus_adult_idle",
+        "time": 10
+      }
     ]
   }
 }

@@ -47,6 +47,8 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.Animations;
 import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
+import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
@@ -126,44 +128,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super(world);
 
-        this.animationTasks = new EntityAITasks(world.theProfiler);
+        this.setFullyGrown();
 
         this.metabolism = new MetabolismContainer(this);
         this.inventory = new InventoryDinosaur(this);
-
-        // SetupAI
-        //tasks.addTask(0, new EscapeBlockEntityAI(this));
-
-        if (!dinosaur.isMarineAnimal())
-        {
-            this.tasks.addTask(0, new EntityAISwimming(this));
-//            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
-        }
-
-        this.animationTasks.addTask(0, new SleepEntityAI(this));
-
-        this.animationTasks.addTask(1, new DrinkEntityAI(this));
-        this.animationTasks.addTask(1, new MateEntityAI(this));
-        this.animationTasks.addTask(1, new EatFoodItemEntityAI(this));
-
-        if (dinosaur.getDiet().doesEatPlants())
-        {
-            this.tasks.addTask(1, new FindPlantEntityAI(this));
-        }
-
-        this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
-        this.tasks.addTask(2, new FollowOwnerEntityAI(this));
-        herdEntityAI = new HerdEntityAI(this);
-        this.tasks.addTask(2, herdEntityAI);
-        this.tasks.addTask(2, getAttackAI());
-
-        this.tasks.addTask(3, new EntityAILookIdle(this));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
-        this.animationTasks.addTask(3, new CallAnimationAI(this));
-        this.animationTasks.addTask(3, new LookAnimationAI(this));
-        this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
-
-        this.setFullyGrown();
 
         this.genetics = GeneticsHelper.randomGenetics(rand);
         this.isMale = rand.nextBoolean();
@@ -182,6 +150,47 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.setUseInertialTweens(true);
+
+        this.animationTasks = new EntityAITasks(world.theProfiler);
+
+        //tasks.addTask(0, new EscapeBlockEntityAI(this));
+
+        if (!dinosaur.isMarineAnimal())
+        {
+            this.tasks.addTask(0, new EntityAISwimming(this));
+//            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
+        }
+
+        if (dinosaur.getDiet().doesEatPlants())
+        {
+            this.tasks.addTask(1, new FindPlantEntityAI(this));
+        }
+
+        if (dinosaur.shouldDefendOwner())
+        {
+            this.tasks.addTask(2, new DefendOwnerEntityAI(this));
+            this.tasks.addTask(2, new AssistOwnerEntityAI(this));
+        }
+
+        this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 60));
+        this.tasks.addTask(2, new FollowOwnerEntityAI(this));
+
+        this.tasks.addTask(2, herdEntityAI = new HerdEntityAI(this));
+
+        this.tasks.addTask(2, getAttackAI());
+
+        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
+
+        this.animationTasks.addTask(0, new SleepEntityAI(this));
+
+        this.animationTasks.addTask(1, new DrinkEntityAI(this));
+        this.animationTasks.addTask(1, new MateEntityAI(this));
+        this.animationTasks.addTask(1, new EatFoodItemEntityAI(this));
+
+        this.animationTasks.addTask(3, new CallAnimationAI(this));
+        this.animationTasks.addTask(3, new LookAnimationAI(this));
+        this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
     }
 
     public boolean shouldSleep()

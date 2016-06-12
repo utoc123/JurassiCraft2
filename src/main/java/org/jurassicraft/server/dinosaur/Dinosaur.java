@@ -70,6 +70,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private String[] rareVariants = new String[0];
     private PoseHandler poseHandler;
 
+    private boolean defendOwner;
+
     public void init()
     {
         String formattedName = getName().toLowerCase().replaceAll(" ", "_");
@@ -688,6 +690,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.isImprintable = imprintable;
     }
 
+    public void setDefendOwner(boolean defendOwner)
+    {
+        this.defendOwner = defendOwner;
+    }
+
     public double getScaleInfant()
     {
         return scaleInfant;
@@ -736,5 +743,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public boolean isImprintable()
     {
         return isImprintable;
+    }
+
+    public boolean shouldDefendOwner()
+    {
+        return defendOwner;
     }
 }

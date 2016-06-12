@@ -1,4 +1,4 @@
-package org.jurassicraft.server.entity;
+package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackMelee;

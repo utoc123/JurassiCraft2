@@ -29,5 +29,6 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.3F);
         this.setImprintable(true);
+        this.setDefendOwner(true);
     }
 }

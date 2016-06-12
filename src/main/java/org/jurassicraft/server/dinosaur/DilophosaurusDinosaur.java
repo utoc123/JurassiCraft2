@@ -30,5 +30,6 @@ public class DilophosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(0.95F, 0.22F);
         this.setImprintable(true);
+        this.setDefendOwner(true);
     }
 }

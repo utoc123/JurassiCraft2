@@ -15,8 +15,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jurassicraft.server.entity.DilophosaurusMeleeEntityAI;
 import org.jurassicraft.server.entity.VenomEntity;
+import org.jurassicraft.server.entity.ai.DilophosaurusMeleeEntityAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttackMob
