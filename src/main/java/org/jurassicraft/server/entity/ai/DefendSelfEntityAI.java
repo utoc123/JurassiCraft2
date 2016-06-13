@@ -51,7 +51,7 @@ public class DefendSelfEntityAI extends EntityAIBase
     {
         for (EntityLivingBase attacker : attackers)
         {
-            if (attacker.isEntityAlive())
+            if (!isDead(attacker))
             {
                 return true;
             }
@@ -65,7 +65,9 @@ public class DefendSelfEntityAI extends EntityAIBase
     {
         for (DinosaurEntity entity : herd)
         {
-            if (entity.getAttackTarget() == null && entity.getAgePercentage() > 75)
+            EntityLivingBase attackTarget = entity.getAttackTarget();
+
+            if ((attackTarget == null || isDead(attackTarget)) && entity.getAgePercentage() > 75)
             {
                 entity.setAttackTarget(attackers.get(entity.getRNG().nextInt(attackers.size())));
             }
@@ -75,13 +77,18 @@ public class DefendSelfEntityAI extends EntityAIBase
 
         for (EntityLivingBase attacker : attackers)
         {
-            if (!attacker.isEntityAlive())
+            if (isDead(attacker))
             {
                 deadAttackers.add(attacker);
             }
         }
 
         attackers.removeAll(deadAttackers);
+    }
+
+    private boolean isDead(EntityLivingBase attacker)
+    {
+        return !attacker.isEntityAlive() || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).getDinosaur().getDiet().doesEatMeat() && ((DinosaurEntity) attacker).isCarcass());
     }
 
     @Override

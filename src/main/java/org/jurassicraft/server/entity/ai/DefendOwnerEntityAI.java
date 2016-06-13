@@ -44,7 +44,12 @@ public class DefendOwnerEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        return !attacker.isDead && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+        return !isDead(attacker) && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+    }
+
+    private boolean isDead(EntityLivingBase attacker)
+    {
+        return !attacker.isEntityAlive() || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass());
     }
 
     @Override

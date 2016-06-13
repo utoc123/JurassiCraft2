@@ -44,7 +44,12 @@ public class AssistOwnerEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        return !target.isDead && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+        return !isDead(target) && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+    }
+
+    private boolean isDead(EntityLivingBase attacker)
+    {
+        return !attacker.isEntityAlive() || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass());
     }
 
     @Override
