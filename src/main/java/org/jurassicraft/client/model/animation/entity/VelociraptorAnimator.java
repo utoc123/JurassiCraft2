@@ -25,10 +25,10 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
         AdvancedModelRenderer head = model.getCube("Head");
         AdvancedModelRenderer leftShin = model.getCube("Left shin");
         AdvancedModelRenderer rightShin = model.getCube("Right shin");
-        AdvancedModelRenderer leftUpperFoot = model.getCube("Left Calf Centre");
-        AdvancedModelRenderer leftFoot = model.getCube("Foot Left Centre");
-        AdvancedModelRenderer rightUpperFoot = model.getCube("Right Calf Centre");
-        AdvancedModelRenderer rightFoot = model.getCube("Foot Right Centre");
+        AdvancedModelRenderer leftUpperFoot = model.getCube("Left upper foot");
+        AdvancedModelRenderer leftFoot = model.getCube("Left foot");
+        AdvancedModelRenderer rightUpperFoot = model.getCube("Right upper foot");
+        AdvancedModelRenderer rightFoot = model.getCube("Right foot");
         AdvancedModelRenderer tail1 = model.getCube("tail1");
         AdvancedModelRenderer tail2 = model.getCube("tail2");
         AdvancedModelRenderer tail3 = model.getCube("tail3");
@@ -60,22 +60,22 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
         model.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, limbSwing, limbSwingAmount);
         model.walk(leftShin, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, limbSwing, limbSwingAmount);
         model.walk(leftUpperFoot, 0.5F * speed, 0.8F, false, -1F, -0.1F, limbSwing, limbSwingAmount);
-        model.walk(leftFoot, 0.5F * speed, 1.5F, true, -1F, 1F, limbSwing, limbSwingAmount);
+        model.walk(leftFoot, 0.5F * speed, 0.5F, true, -1F, 1F, limbSwing, limbSwingAmount);
 
         model.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, limbSwing, limbSwingAmount);
         model.walk(rightShin, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, limbSwing, limbSwingAmount);
         model.walk(rightUpperFoot, 0.5F * speed, 0.8F, true, -1F, -0.1F, limbSwing, limbSwingAmount);
-        model.walk(rightFoot, 0.5F * speed, 1.5F, false, -1F, 1F, limbSwing, limbSwingAmount);
+        model.walk(rightFoot, 0.5F * speed, 0.5F, false, -1F, 1F, limbSwing, limbSwingAmount);
 
-        shoulders.rotationPointY -= 0.5 * limbSwingAmount;
-        shoulders.rotationPointZ -= 0.5 * limbSwingAmount;
-        shoulders.rotateAngleX += 0.6 * limbSwingAmount;
-        chest.rotateAngleX += 0.1 * limbSwingAmount;
-        neck1.rotateAngleX += 0.1 * limbSwingAmount;
-        neck2.rotateAngleX += 0.1 * limbSwingAmount;
-        neck3.rotateAngleX -= 0.2 * limbSwingAmount;
-        neck4.rotateAngleX -= 0.2 * limbSwingAmount;
-        head.rotateAngleX -= 0.3 * limbSwingAmount;
+        shoulders.rotationPointY -= 0.25 * limbSwingAmount;
+        shoulders.rotationPointZ -= 0.25 * limbSwingAmount;
+        shoulders.rotateAngleX += 0.3 * limbSwingAmount;
+        chest.rotateAngleX += 0.05 * limbSwingAmount;
+        neck1.rotateAngleX += 0.05 * limbSwingAmount;
+        neck2.rotateAngleX += 0.05 * limbSwingAmount;
+        neck3.rotateAngleX -= 0.1 * limbSwingAmount;
+        neck4.rotateAngleX -= 0.1 * limbSwingAmount;
+        head.rotateAngleX -= 0.15 * limbSwingAmount;
 
         model.chainSwing(tailParts, 0.5F * speed, -0.1F, 2, limbSwing, limbSwingAmount);
         model.chainWave(tailParts, 1F * speed, -0.1F, 2.5F, limbSwing, limbSwingAmount);
