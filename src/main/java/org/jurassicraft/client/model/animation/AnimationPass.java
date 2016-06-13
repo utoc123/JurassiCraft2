@@ -41,7 +41,7 @@ public class AnimationPass
         this.useInertialTweens = useIntertialTweens;
     }
 
-    public void init(AdvancedModelRenderer[] parts)
+    public void init(AdvancedModelRenderer[] parts, DinosaurEntity entity)
     {
         this.parts = parts;
 
@@ -49,6 +49,7 @@ public class AnimationPass
         this.prevPositionIncrements = new float[parts.length][3];
 
         this.initPoseModel();
+        this.initSequence(entity, entity.getAnimation());
         this.initTweenTicks();
 
         this.updatePreviousPose();
@@ -281,11 +282,13 @@ public class AnimationPass
 
     protected void handleFinishedPose(DinosaurEntity entity)
     {
-        this.updatePreviousPose();
-
         if (this.incrementCurrentPoseIndex())
         {
             this.setNextSequence(entity, entity.getAnimation());
+        }
+        else
+        {
+            this.updatePreviousPose();
         }
 
         this.setNextPoseModel();
@@ -334,8 +337,7 @@ public class AnimationPass
 
     protected void setNextSequence(DinosaurEntity entity, Animation requestedAnimation)
     {
-        this.prevRotationIncrements = new float[parts.length][3];
-        this.prevPositionIncrements = new float[parts.length][3];
+        updatePreviousPose();
 
         /**
          * TODO:
