@@ -111,6 +111,8 @@ public enum ItemHandler
 
     public BasicFoodItem CHILEAN_SEA_BASS;
 
+    public FieldGuideItem FIELD_GUIDE;
+
     public void init()
     {
         PLASTER_AND_BANDAGE = new PlasterAndBandageItem();
@@ -183,6 +185,8 @@ public enum ItemHandler
 
         CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.INSTANCE.FOODS);
 
+        FIELD_GUIDE = new FieldGuideItem();
+
         for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
         {
             String[] boneTypes = dinosaur.getBones();
@@ -208,6 +212,7 @@ public enum ItemHandler
             }
         }
 
+        registerItem(FIELD_GUIDE, "Field Guide");
         registerItem(AMBER, "Amber");
         registerItem(SEA_LAMPREY, "Sea Lamprey");
         registerItem(PLASTER_AND_BANDAGE, "Plaster And Bandage");

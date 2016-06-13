@@ -17,6 +17,7 @@ import org.jurassicraft.client.gui.DNASequencerGui;
 import org.jurassicraft.client.gui.DNASynthesizerGui;
 import org.jurassicraft.client.gui.EmbryoCalcificationMachineGui;
 import org.jurassicraft.client.gui.EmbryonicMachineGui;
+import org.jurassicraft.client.gui.FieldGuideGui;
 import org.jurassicraft.client.gui.FossilGrinderGui;
 import org.jurassicraft.client.gui.IncubatorGui;
 import org.jurassicraft.client.gui.OrderDinosaurGui;
@@ -166,5 +167,10 @@ public class GuiHandler implements IGuiHandler
     public static void openOrderGui(DinosaurEntity entity)
     {
         Minecraft.getMinecraft().displayGuiScreen(new OrderDinosaurGui(entity));
+    }
+
+    public static void openFieldGuide(DinosaurEntity entity)
+    {
+        Minecraft.getMinecraft().displayGuiScreen(new FieldGuideGui(entity));
     }
 }

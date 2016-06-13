@@ -49,6 +49,7 @@ public class VenomEntity extends EntityThrowable
 
                 entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 4.0F);
                 entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("blindness"), 300, 1, false, false));
+                entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("nausea"), 300, 1, false, false));
 
                 if (!this.worldObj.isRemote)
                 {

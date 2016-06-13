@@ -259,7 +259,6 @@ public enum RenderingHandler
 
     public void init()
     {
-        // Blocks
         ItemModelMesher modelMesher = mc.getRenderItem().getItemModelMesher();
 
         int i = 0;
@@ -440,6 +439,7 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.DNA_ANALYZER, "dna_analyzer", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.CHILEAN_SEA_BASS, "chilean_sea_bass", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.INSTANCE.FIELD_GUIDE, "field_guide", "inventory");
 
         int meta = 0;
 

@@ -67,7 +67,6 @@ entity.jurassicraft.troodon.name=Troodon
 entity.jurassicraft.pachycephalosaurus.name=Pachycephalosaurus
 
 //Items ==================================================
-item.rock_pick.name=Rock Pick
 item.plaster_and_bandage.name=Plaster and Bandage
 
 item.attraction_sign.name={type} Attraction Sign
@@ -215,6 +214,7 @@ item.keyboard.name=Keyboard
 item.computer_screen.name=Computer Screen
 item.dna_analyzer.name=DNA Analyzer
 item.chilean_sea_bass.name=Chilean Sea Bass
+item.field_guide.name=InGen Field Guide
 
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
