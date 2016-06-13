@@ -1307,7 +1307,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public EntityAIBase getAttackAI()
     {
-        return new EntityAIAttackMelee(this, 1.0, false);
+        return new EntityAIAttackMelee(this, dinosaur.getAttackSpeed(), false);
     }
 
     public enum Order
