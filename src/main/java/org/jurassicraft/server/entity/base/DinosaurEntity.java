@@ -1,5 +1,6 @@
 package org.jurassicraft.server.entity.base;
 
+import com.google.common.collect.Lists;
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
@@ -68,6 +69,7 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.message.SetOrderMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -124,6 +126,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     protected EntityAITasks animationTasks;
 
     protected Order order = Order.WANDER;
+
+    private List<Class<? extends EntityLivingBase>> attackTargets = new ArrayList<>();
 
     public DinosaurEntity(World world)
     {
@@ -1303,11 +1307,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             targetTasks.addTask(2, new SelectTargetEntityAI<>(this, target, true));
         }
+
+        attackTargets.addAll(Lists.newArrayList(targets));
     }
 
     public EntityAIBase getAttackAI()
     {
         return new EntityAIAttackMelee(this, dinosaur.getAttackSpeed(), false);
+    }
+
+    public List<Class<? extends EntityLivingBase>> getAttackTargets()
+    {
+        return attackTargets;
     }
 
     public enum Order

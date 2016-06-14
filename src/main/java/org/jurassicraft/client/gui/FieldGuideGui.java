@@ -17,11 +17,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.base.DinosaurStatus;
 import org.jurassicraft.server.lang.LangHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class FieldGuideGui extends GuiScreen
@@ -34,6 +38,16 @@ public class FieldGuideGui extends GuiScreen
 
     private DinosaurEntity entity;
     private boolean file;
+
+    private static final Map<DinosaurStatus, ResourceLocation> STATUS_TEXTURES = new HashMap<>();
+
+    static
+    {
+        for (DinosaurStatus status : DinosaurStatus.values())
+        {
+            STATUS_TEXTURES.put(status, new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/status/" + status.name().toLowerCase() + ".png"));
+        }
+    }
 
     public FieldGuideGui(DinosaurEntity entity)
     {
@@ -65,6 +79,7 @@ public class FieldGuideGui extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         ScaledResolution scaledResolution = new ScaledResolution(mc);
+        int scaleFactor = scaledResolution.getScaleFactor();
 
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -107,6 +122,59 @@ public class FieldGuideGui extends GuiScreen
             GL11.glScissor((int) ((scaledResolution.getScaledWidth() / 6.5F) * scaledResolution.getScaleFactor()), (int) ((scaledResolution.getScaledHeight() / 2.9F) * scaledResolution.getScaleFactor()), (int) ((scaledResolution.getScaledWidth() / 2.9F) * scaledResolution.getScaleFactor()), (int) ((scaledResolution.getScaledHeight() / 1.9F) * scaledResolution.getScaleFactor()));
             this.drawEntity((int) (scaledResolution.getScaledWidth() / 3.1F), scaledResolution.getScaledHeight() / 2, (16.0F / dinosaur.getAdultSizeY()) * scaledResolution.getScaleFactor(), entity);
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+            int statusX = 0;
+            int statusY = 0;
+
+            List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(entity);
+
+            for (DinosaurStatus status : activeStatuses)
+            {
+                int renderX = (int) (statusX + (sizeX / 1.45F) + 10);
+                int renderY = (int) (statusY + (sizeY / 1.06F));
+
+                mc.getTextureManager().bindTexture(STATUS_TEXTURES.get(status));
+
+                int size = scaleFactor * 6;
+
+                drawFullTexturedRect(renderX, renderY, size, size);
+
+                statusX += 8 * scaleFactor;
+
+                if (statusX > scaleFactor * 40)
+                {
+                    statusX = 0;
+                    statusY -= scaleFactor * 8;
+                }
+            }
+
+            statusX = 0;
+            statusY = 0;
+
+            for (DinosaurStatus status : activeStatuses)
+            {
+                int renderX = (int) (statusX + (sizeX / 1.45F) + 10);
+                int renderY = (int) (statusY + (sizeY / 1.06F));
+
+                int size = scaleFactor * 6;
+
+                if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size)
+                {
+                    this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase() + ".name").build(), mouseX, mouseY);
+                }
+
+                statusX += 8 * scaleFactor;
+
+                if (statusX > scaleFactor * 40)
+                {
+                    statusX = 0;
+                    statusY -= scaleFactor * 8;
+                }
+            }
+
+            GlStateManager.disableLighting();
         }
     }
 

@@ -47,6 +47,8 @@ public class AnimationPass
 
         this.prevRotationIncrements = new float[parts.length][3];
         this.prevPositionIncrements = new float[parts.length][3];
+        this.rotationIncrements = new float[parts.length][3];
+        this.positionIncrements = new float[parts.length][3];
 
         this.initPoseModel();
         this.initSequence(entity, entity.getAnimation());

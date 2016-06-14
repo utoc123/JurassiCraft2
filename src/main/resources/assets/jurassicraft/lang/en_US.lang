@@ -412,3 +412,11 @@ order.sit.name=Sit
 order.follow.name=Follow
 
 gui.select_order.name=Select Order
+
+status.drowning.name=Drowning
+status.hungry.name=Hungry
+status.low_health.name=Low Health
+status.poisoned.name=Poisoned
+status.sleepy.name=Sleepy
+status.tamed.name=Tamed
+status.thirsty.name=Thirsty
