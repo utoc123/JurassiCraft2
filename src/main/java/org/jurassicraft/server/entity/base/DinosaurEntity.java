@@ -586,8 +586,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             updateGrowth();
 
-            metabolism.update();
-
+            if (!worldObj.isRemote)
+            {
+                metabolism.update();
+            }
+            
             if (this.ticksExisted % 62 == 0)
             {
                 this.playSound(getBreathingSound(), this.getSoundVolume(), this.getSoundPitch());
