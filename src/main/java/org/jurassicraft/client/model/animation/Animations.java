@@ -23,18 +23,25 @@ public enum Animations
     LOOKING_RIGHT,
     BEGGING,
     SNAP,
-    DYING(true, false),
+    DYING(true, false, false),
     SCRATCHING, SPITTING,
     WALKING(false, false), SWIMMING(false, false), FLYING(false, false);
 
     private Animation animation;
     private boolean hold;
     private boolean doesBlockMovement;
+    private boolean useInertia;
 
     Animations(boolean hold, boolean blockMovement)
     {
+        this(hold, blockMovement, true);
+    }
+
+    Animations(boolean hold, boolean blockMovement, boolean useInertia)
+    {
         this.hold = hold;
         this.doesBlockMovement = blockMovement;
+        this.useInertia = useInertia;
     }
 
     Animations()
@@ -85,5 +92,10 @@ public enum Animations
     public boolean doesBlockMovement()
     {
         return doesBlockMovement;
+    }
+
+    public boolean useInertia()
+    {
+        return useInertia;
     }
 }

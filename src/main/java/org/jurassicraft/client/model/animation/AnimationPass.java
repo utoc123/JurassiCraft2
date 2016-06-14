@@ -133,7 +133,7 @@ public class AnimationPass
     {
         float inertiaFactor = tick / tweenLength;
 
-        if (useInertialTweens)
+        if (useInertialTweens && Animations.getAnimation(animation).useInertia())
         {
             inertiaFactor = (float) (Math.sin(Math.PI * (inertiaFactor - 0.5D)) * 0.5D + 0.5D);
         }
@@ -155,7 +155,7 @@ public class AnimationPass
     {
         float incrementAmount = ticks - this.prevTicks;
 
-        if (!Animations.getAnimation(animation).shouldHold())
+        if (!(Animations.getAnimation(animation).shouldHold() && currentPoseIndex >= posesInAnimation - 1))
         {
             this.tick += incrementAmount;
 

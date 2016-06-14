@@ -6,18 +6,6 @@
         "pose": "dilophosaurus_adult_idle",
         "time": 20
       }
-    ],
-    "RESTING": [
-      {
-        "pose": "dilophosaurus_adult_resting",
-        "time": 20
-      }
-    ],
-    "SLEEPING": [
-      {
-        "pose": "dilophosaurus_adult_sleeping",
-        "time": 20
-      }
     ]
   }
 }
