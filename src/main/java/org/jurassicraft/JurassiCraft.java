@@ -35,7 +35,7 @@ public class JurassiCraft
     public static final String MODID = "jurassicraft";
     public static final String MODNAME = "JurassiCraft";
     public static final String VERSION = "2.0.0-dev";
-    public static final String LLIBRARY_VERSION = "1.3.0";
+    public static final String LLIBRARY_VERSION = "1.4.0";
 
     @Instance(JurassiCraft.MODID)
     public static JurassiCraft INSTANCE;
