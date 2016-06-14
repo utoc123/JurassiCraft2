@@ -116,6 +116,8 @@ public class FieldGuideGui extends GuiScreen
             drawScaledString("Dinosaur Statistics:", statisticsX, y + 10, 1.28F, 0);
             drawScaledString("Health: " + (entity.isCarcass() ? 0 : decimalFormat.format(entity.getHealth())) + "/" + decimalFormat.format(entity.getMaxHealth()), statisticsX, y + 25, 1.0F, 0);
             drawScaledString("Age: " + entity.getDaysExisted() + " days", statisticsX, y + 35, 1.0F, 0);
+            drawScaledString("Hunger: " + entity.getMetabolism().getEnergy() + "/" + entity.getMetabolism().getMaxEnergy(), statisticsX, y + 45, 1.0F, 0);
+            drawScaledString("Thirst: " + entity.getMetabolism().getWater() + "/" + entity.getMetabolism().getMaxWater(), statisticsX, y + 55, 1.0F, 0);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -223,8 +225,6 @@ public class FieldGuideGui extends GuiScreen
         GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
-        int rotation = entity.ticksExisted % 360;
-        GlStateManager.rotate(rotation, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
         RenderManager renderManager = mc.getRenderManager();
         renderManager.setPlayerViewY(180.0F);
