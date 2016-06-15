@@ -142,11 +142,11 @@
     "DYING": [
       {
         "pose": "triceratops_adult_death_1",
-        "time": 5
+        "time": 10
       },
       {
         "pose": "triceratops_adult_death_2",
-        "time": 5
+        "time": 10
       },
       {
         "pose": "triceratops_adult_death_3",
@@ -155,6 +155,24 @@
       {
         "pose": "triceratops_adult_death_4",
         "time": 5
+      }
+    ],
+    "WALKING": [
+      {
+        "pose": "triceratops_adult_walking_1",
+        "time": 6
+      },
+      {
+        "pose": "triceratops_adult_walking_2",
+        "time": 6
+      },
+      {
+        "pose": "triceratops_adult_walking_3",
+        "time": 6
+      },
+      {
+        "pose": "triceratops_adult_walking_4",
+        "time": 6
       }
     ]
   }

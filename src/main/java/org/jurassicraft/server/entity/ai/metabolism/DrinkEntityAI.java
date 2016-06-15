@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
 
@@ -95,9 +95,9 @@ public class DrinkEntityAI extends EntityAIBase
     {
         if (path.isFinished())
         {
-            if (dinosaur.getAnimation() != Animations.DRINKING.get())
+            if (dinosaur.getAnimation() != DinosaurAnimation.DRINKING.get())
             {
-                dinosaur.setAnimation(Animations.DRINKING.get());
+                dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
             }
 
             MetabolismContainer metabolism = dinosaur.getMetabolism();

@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class JCPanicEntityAI extends EntityAIBase
@@ -57,7 +57,7 @@ public class JCPanicEntityAI extends EntityAIBase
     {
         theEntityCreature.getNavigator().tryMoveToXYZ(randPosX, randPosY, randPosZ, speed);
 
-        theEntityCreature.setAnimation(Animations.HISSING.get());
+        theEntityCreature.setAnimation(DinosaurAnimation.HISSING.get());
 
         // DEBUG
         System.out.println("Starting panic AI for entity " + theEntityCreature.getEntityId());

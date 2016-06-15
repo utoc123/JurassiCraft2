@@ -17,7 +17,8 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import java.util.Map;
 
 /**
- * @author jabelar This class is used to hold per-entity animation variables for use with Jabelar's animation tweening system.
+ * @author jabelar
+ * This class handles per-entity animations.
  */
 @SideOnly(Side.CLIENT)
 public class JabelarAnimationHandler
@@ -25,10 +26,12 @@ public class JabelarAnimationHandler
     private static final Minecraft MC = Minecraft.getMinecraft();
 
     private final AnimationPass DEFAULT_PASS;
+    private final AnimationPass MOVEMENT_PASS;
 
     public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, AdvancedModelRenderer[][] poses, Map<Animation, int[][]> poseSequences, boolean useInertialTweens)
     {
         this.DEFAULT_PASS = new AnimationPass(poseSequences, poses, useInertialTweens);
+        this.MOVEMENT_PASS = new MovementAnimationPass(poseSequences, poses, useInertialTweens);
 
         this.init(entity, model);
     }
@@ -39,13 +42,16 @@ public class JabelarAnimationHandler
 
         this.DEFAULT_PASS.initSequence(entity, entity.getAnimation());
         this.DEFAULT_PASS.init(modelParts, entity);
+
+        this.MOVEMENT_PASS.init(modelParts, entity);
     }
 
-    public void performAnimations(DinosaurEntity entity, float ticks)
+    public void performAnimations(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float ticks)
     {
         this.performHurtAnimation(entity);
 
-        this.DEFAULT_PASS.performAnimations(entity, ticks);
+        this.DEFAULT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+        this.MOVEMENT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
     }
 
     private AdvancedModelRenderer[] getModelParts(DinosaurModel model)

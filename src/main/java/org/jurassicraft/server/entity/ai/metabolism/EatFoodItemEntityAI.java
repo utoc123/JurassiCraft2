@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.food.FoodHelper;
 
@@ -89,7 +89,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
     {
         if (dinosaur.getEntityBoundingBox().intersectsWith(item.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
         {
-            dinosaur.setAnimation(Animations.EATING.get());
+            dinosaur.setAnimation(DinosaurAnimation.EATING.get());
 
             if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
             {

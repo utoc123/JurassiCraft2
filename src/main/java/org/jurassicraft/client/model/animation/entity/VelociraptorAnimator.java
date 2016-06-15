@@ -51,38 +51,38 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
         float speed = 0.75F;
         float height = 2F * limbSwingAmount;
 
-        model.bob(waist, 1F * speed, height, false, limbSwing, limbSwingAmount);
-        model.bob(leftThigh, 1F * speed, height, false, limbSwing, limbSwingAmount);
-        model.bob(rightThigh, 1F * speed, height, false, limbSwing, limbSwingAmount);
-        model.walk(shoulders, 1F * speed, 0.2F, true, 1, 0, limbSwing, limbSwingAmount);
-        model.walk(chest, 1F * speed, 0.2F, false, 0.5F, 0, limbSwing, limbSwingAmount);
-
-        model.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, limbSwing, limbSwingAmount);
-        model.walk(leftShin, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, limbSwing, limbSwingAmount);
-        model.walk(leftUpperFoot, 0.5F * speed, 0.8F, false, -1F, -0.1F, limbSwing, limbSwingAmount);
-        model.walk(leftFoot, 0.5F * speed, 0.5F, true, -1F, 1F, limbSwing, limbSwingAmount);
-
-        model.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, limbSwing, limbSwingAmount);
-        model.walk(rightShin, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, limbSwing, limbSwingAmount);
-        model.walk(rightUpperFoot, 0.5F * speed, 0.8F, true, -1F, -0.1F, limbSwing, limbSwingAmount);
-        model.walk(rightFoot, 0.5F * speed, 0.5F, false, -1F, 1F, limbSwing, limbSwingAmount);
-
-        shoulders.rotationPointY -= 0.25 * limbSwingAmount;
-        shoulders.rotationPointZ -= 0.25 * limbSwingAmount;
-        shoulders.rotateAngleX += 0.3 * limbSwingAmount;
-        chest.rotateAngleX += 0.05 * limbSwingAmount;
-        neck1.rotateAngleX += 0.05 * limbSwingAmount;
-        neck2.rotateAngleX += 0.05 * limbSwingAmount;
-        neck3.rotateAngleX -= 0.1 * limbSwingAmount;
-        neck4.rotateAngleX -= 0.1 * limbSwingAmount;
-        head.rotateAngleX -= 0.15 * limbSwingAmount;
-
-        model.chainSwing(tailParts, 0.5F * speed, -0.1F, 2, limbSwing, limbSwingAmount);
-        model.chainWave(tailParts, 1F * speed, -0.1F, 2.5F, limbSwing, limbSwingAmount);
-        model.chainWave(bodyParts, 1F * speed, -0.1F, 4, limbSwing, limbSwingAmount);
-
-        model.chainWave(rightArmParts, 1F * speed, -0.3F, 4, limbSwing, limbSwingAmount);
-        model.chainWave(leftArmParts, 1F * speed, -0.3F, 4, limbSwing, limbSwingAmount);
+//        model.bob(waist, 1F * speed, height, false, limbSwing, limbSwingAmount);
+//        model.bob(leftThigh, 1F * speed, height, false, limbSwing, limbSwingAmount);
+//        model.bob(rightThigh, 1F * speed, height, false, limbSwing, limbSwingAmount);
+//        model.walk(shoulders, 1F * speed, 0.2F, true, 1, 0, limbSwing, limbSwingAmount);
+//        model.walk(chest, 1F * speed, 0.2F, false, 0.5F, 0, limbSwing, limbSwingAmount);
+//
+//        model.walk(leftThigh, 0.5F * speed, 0.7F, false, 3.14F, 0.2F, limbSwing, limbSwingAmount);
+//        model.walk(leftShin, 0.5F * speed, 0.6F, false, 1.5F, 0.3F, limbSwing, limbSwingAmount);
+//        model.walk(leftUpperFoot, 0.5F * speed, 0.8F, false, -1F, -0.1F, limbSwing, limbSwingAmount);
+//        model.walk(leftFoot, 0.5F * speed, 0.5F, true, -1F, 1F, limbSwing, limbSwingAmount);
+//
+//        model.walk(rightThigh, 0.5F * speed, 0.7F, true, 3.14F, 0.2F, limbSwing, limbSwingAmount);
+//        model.walk(rightShin, 0.5F * speed, 0.6F, true, 1.5F, 0.3F, limbSwing, limbSwingAmount);
+//        model.walk(rightUpperFoot, 0.5F * speed, 0.8F, true, -1F, -0.1F, limbSwing, limbSwingAmount);
+//        model.walk(rightFoot, 0.5F * speed, 0.5F, false, -1F, 1F, limbSwing, limbSwingAmount);
+//
+//        shoulders.rotationPointY -= 0.25 * limbSwingAmount;
+//        shoulders.rotationPointZ -= 0.25 * limbSwingAmount;
+//        shoulders.rotateAngleX += 0.3 * limbSwingAmount;
+//        chest.rotateAngleX += 0.05 * limbSwingAmount;
+//        neck1.rotateAngleX += 0.05 * limbSwingAmount;
+//        neck2.rotateAngleX += 0.05 * limbSwingAmount;
+//        neck3.rotateAngleX -= 0.1 * limbSwingAmount;
+//        neck4.rotateAngleX -= 0.1 * limbSwingAmount;
+//        head.rotateAngleX -= 0.15 * limbSwingAmount;
+//
+//        model.chainSwing(tailParts, 0.5F * speed, -0.1F, 2, limbSwing, limbSwingAmount);
+//        model.chainWave(tailParts, 1F * speed, -0.1F, 2.5F, limbSwing, limbSwingAmount);
+//        model.chainWave(bodyParts, 1F * speed, -0.1F, 4, limbSwing, limbSwingAmount);
+//
+//        model.chainWave(rightArmParts, 1F * speed, -0.3F, 4, limbSwing, limbSwingAmount);
+//        model.chainWave(leftArmParts, 1F * speed, -0.3F, 4, limbSwing, limbSwingAmount);
 
         model.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.25F);
         model.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.25F);

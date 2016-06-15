@@ -8,7 +8,7 @@
  * For a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
  */
 
-package org.jurassicraft.client.model.animation;
+package org.jurassicraft.server.animation;
 
 import com.google.common.collect.Lists;
 import net.minecraft.command.CommandException;
@@ -26,6 +26,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import java.util.Objects;
 /**
  * @author jabelar
  */
-public class CommandForceAnimation implements ICommand
+public class ForceAnimationCommand implements ICommand
 {
     @Override
     public int compareTo(ICommand o)
@@ -128,7 +129,7 @@ public class CommandForceAnimation implements ICommand
 
     private final List<String> aliases;
 
-    public CommandForceAnimation()
+    public ForceAnimationCommand()
     {
         aliases = new ArrayList<>();
         aliases.add("animate");
@@ -196,7 +197,7 @@ public class CommandForceAnimation implements ICommand
         {
             List<String> animations = Lists.newArrayList();
             String current = args[0].toLowerCase();
-            for (Animations animation : Animations.values())
+            for (DinosaurAnimation animation : DinosaurAnimation.values())
             {
                 if (animation.name().toLowerCase().startsWith(current))
                 {
@@ -218,7 +219,7 @@ public class CommandForceAnimation implements ICommand
     {
         try
         {
-            entity.setAnimation(Animations.valueOf(parAnimType.toUpperCase()).get());
+            entity.setAnimation(DinosaurAnimation.valueOf(parAnimType.toUpperCase()).get());
         }
         catch (IllegalArgumentException iae)
         {

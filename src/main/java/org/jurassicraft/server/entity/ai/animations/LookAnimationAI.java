@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai.animations;
 
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class LookAnimationAI extends EntityAIBase
@@ -24,7 +24,7 @@ public class LookAnimationAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        animatingEntity.setAnimation(animatingEntity.getRNG().nextBoolean() ? Animations.LOOKING_LEFT.get() : Animations.LOOKING_RIGHT.get());
+        animatingEntity.setAnimation(animatingEntity.getRNG().nextBoolean() ? DinosaurAnimation.LOOKING_LEFT.get() : DinosaurAnimation.LOOKING_RIGHT.get());
     }
 
     @Override

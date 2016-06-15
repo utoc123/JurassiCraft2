@@ -9,7 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.ai.util.BlockBreaker;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -125,7 +125,7 @@ public class FindPlantEntityAI extends EntityAIBase
                 // TODO inadequate method for looking at block
                 dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 0, dinosaur.getVerticalFaceSpeed());
 
-                dinosaur.setAnimation(Animations.EATING.get());
+                dinosaur.setAnimation(DinosaurAnimation.EATING.get());
 
                 // TODO reimplement BlockBreaker
                 breaker = new BlockBreaker(dinosaur, EAT_BREAK_SPEED, target, MIN_BREAK_TIME_SEC);
@@ -163,7 +163,7 @@ public class FindPlantEntityAI extends EntityAIBase
     {
         dinosaur.getNavigator().clearPathEntity();
         target = null;
-        dinosaur.setAnimation(Animations.IDLE.get());
+        dinosaur.setAnimation(DinosaurAnimation.IDLE.get());
     }
 
     private static final Logger LOGGER = LogManager.getLogger();

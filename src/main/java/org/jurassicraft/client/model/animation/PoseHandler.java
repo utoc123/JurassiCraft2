@@ -103,7 +103,7 @@ public class PoseHandler
 
     private PreloadedModelData getPosedModels(URI dinoDirURI, AnimationsDTO anims)
     {
-        if (anims == null || anims.poses == null || anims.poses.get(Animations.IDLE.name()) == null || anims.poses.get(Animations.IDLE.name()).length == 0)
+        if (anims == null || anims.poses == null || anims.poses.get(DinosaurAnimation.IDLE.name()) == null || anims.poses.get(DinosaurAnimation.IDLE.name()).length == 0)
         {
             throw new IllegalArgumentException("Animation files must define at least one pose for the IDLE animation");
         }
@@ -170,7 +170,7 @@ public class PoseHandler
         }
         for (Map.Entry<String, PoseDTO[]> entry : anims.poses.entrySet())
         {
-            Animation animations = Animations.valueOf(entry.getKey()).get();
+            Animation animations = DinosaurAnimation.valueOf(entry.getKey()).get();
             PoseDTO[] poses = entry.getValue();
             int[][] poseSequence = new int[poses.length][2];
             for (int i = 0; i < poses.length; i++)

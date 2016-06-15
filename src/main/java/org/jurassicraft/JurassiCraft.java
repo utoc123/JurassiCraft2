@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
-import org.jurassicraft.client.model.animation.CommandForceAnimation;
+import org.jurassicraft.server.animation.ForceAnimationCommand;
 import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
@@ -81,7 +81,7 @@ public class JurassiCraft
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event)
     {
-        event.registerServerCommand(new CommandForceAnimation());
+        event.registerServerCommand(new ForceAnimationCommand());
     }
 
     public Logger getLogger()

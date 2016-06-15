@@ -45,7 +45,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
@@ -142,7 +142,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.isMale = rand.nextBoolean();
 
         this.animTick = 0;
-        this.setAnimation(Animations.IDLE.get());
+        this.setAnimation(DinosaurAnimation.IDLE.get());
 
         int rareVariantCount = dinosaur.getRareVariants().length;
 
@@ -275,7 +275,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean attackEntityAsMob(Entity entity)
     {
-        this.setAnimation(Animations.ATTACKING.get());
+        this.setAnimation(DinosaurAnimation.ATTACKING.get());
 
         float damage = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int knockback = 0;
@@ -323,9 +323,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
             else
             {
-                if (getAnimation() == Animations.IDLE.get())
+                if (getAnimation() == DinosaurAnimation.IDLE.get())
                 {
-                    this.setAnimation(Animations.INJURED.get());
+                    this.setAnimation(DinosaurAnimation.INJURED.get());
                 }
 
                 if (isSleeping)
@@ -440,15 +440,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @SideOnly(Side.CLIENT)
     public void performHurtAnimation()
     {
-        this.setAnimation(Animations.INJURED.get());
+        this.setAnimation(DinosaurAnimation.INJURED.get());
     }
 
     @Override
     public void playLivingSound()
     {
-        if (getAnimation() == Animations.IDLE.get())
+        if (getAnimation() == DinosaurAnimation.IDLE.get())
         {
-            this.setAnimation(Animations.SPEAK.get());
+            this.setAnimation(DinosaurAnimation.SPEAK.get());
             super.playLivingSound();
         }
     }
@@ -625,13 +625,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.onUpdate();
 
-        if (!worldObj.isRemote && animation != null && animation != Animations.IDLE.get())
+        if (!worldObj.isRemote && animation != null && animation != DinosaurAnimation.IDLE.get())
         {
             int animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
 
             if (animTick < animationLength)
             {
-                if (!Animations.getAnimation(animation).shouldHold() || animTick < animationLength - 1)
+                if (!DinosaurAnimation.getAnimation(animation).shouldHold() || animTick < animationLength - 1)
                 {
                     animTick++;
                 }
@@ -639,7 +639,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             else
             {
                 animTick = 0;
-                animation = Animations.IDLE.get();
+                animation = DinosaurAnimation.IDLE.get();
             }
         }
 
@@ -684,17 +684,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (isCarcass)
         {
-            if (getAnimation() != Animations.DYING.get())
+            if (getAnimation() != DinosaurAnimation.DYING.get())
             {
-                this.setAnimation(Animations.DYING.get());
+                this.setAnimation(DinosaurAnimation.DYING.get());
             }
         }
 
         if (isSleeping)
         {
-            if (getAnimation() != Animations.SLEEPING.get())
+            if (getAnimation() != DinosaurAnimation.SLEEPING.get())
             {
-                this.setAnimation(Animations.SLEEPING.get());
+                this.setAnimation(DinosaurAnimation.SLEEPING.get());
             }
 
             if (ticksExisted % 20 == 0)
@@ -710,23 +710,23 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 isSleeping = false;
             }
         }
-        else if (getAnimation() == Animations.SLEEPING.get())
+        else if (getAnimation() == DinosaurAnimation.SLEEPING.get())
         {
-            this.setAnimation(Animations.IDLE.get());
+            this.setAnimation(DinosaurAnimation.IDLE.get());
         }
 
         if (!isSleeping)
         {
             if (order == Order.SIT)
             {
-                if (getAnimation() != Animations.RESTING.get())
+                if (getAnimation() != DinosaurAnimation.RESTING.get())
                 {
-                    this.setAnimation(Animations.RESTING.get());
+                    this.setAnimation(DinosaurAnimation.RESTING.get());
                 }
             }
-            else if (getAnimation() == Animations.RESTING.get())
+            else if (getAnimation() == DinosaurAnimation.RESTING.get())
             {
-                this.setAnimation(Animations.IDLE.get());
+                this.setAnimation(DinosaurAnimation.IDLE.get());
             }
         }
 
@@ -735,7 +735,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             stayAwakeTime = 0;
         }
 
-        if (getAnimation() != Animations.IDLE.get())
+        if (getAnimation() != DinosaurAnimation.IDLE.get())
         {
             animTick++;
         }
@@ -768,7 +768,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean isMovementBlocked()
     {
-        return isCarcass() || isSleeping() || (animation != null && Animations.getAnimation(animation).doesBlockMovement());
+        return isCarcass() || isSleeping() || (animation != null && DinosaurAnimation.getAnimation(animation).doesBlockMovement());
     }
 
     public int getDaysExisted()
@@ -932,7 +932,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public Animation[] getAnimations()
     {
-        return Animations.getAnimations();
+        return DinosaurAnimation.getAnimations();
     }
 
     @Override
@@ -961,34 +961,34 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public SoundEvent getAmbientSound()
     {
-        return getSoundForAnimation(Animations.IDLE.get());
+        return getSoundForAnimation(DinosaurAnimation.IDLE.get());
     }
 
     @Override
     public SoundEvent getHurtSound()
     {
-        return getSoundForAnimation(Animations.INJURED.get());
+        return getSoundForAnimation(DinosaurAnimation.INJURED.get());
     }
 
     public SoundEvent getSoundForAnimation(Animation animation)
     {
-        if (animation == Animations.INJURED.get())
+        if (animation == DinosaurAnimation.INJURED.get())
         {
             return getSound("hurt");
         }
-        else if (animation == Animations.IDLE.get())
+        else if (animation == DinosaurAnimation.IDLE.get())
         {
             return getSound("living");
         }
-        else if (animation == Animations.CALLING.get())
+        else if (animation == DinosaurAnimation.CALLING.get())
         {
             return getSound("call");
         }
-        else if (animation == Animations.DYING.get())
+        else if (animation == DinosaurAnimation.DYING.get())
         {
             return getSound("death");
         }
-        else if (animation == Animations.ROARING.get())
+        else if (animation == DinosaurAnimation.ROARING.get())
         {
             return getSound("roar");
         }

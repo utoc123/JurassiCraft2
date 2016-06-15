@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class TyrannosaurusEntity extends DinosaurEntity
@@ -25,7 +25,7 @@ public class TyrannosaurusEntity extends DinosaurEntity
     @Override
     public SoundEvent getSoundForAnimation(Animation animation)
     {
-        if (animation == Animations.CALLING.get())
+        if (animation == DinosaurAnimation.CALLING.get())
         {
             return getSound("roar");
         }

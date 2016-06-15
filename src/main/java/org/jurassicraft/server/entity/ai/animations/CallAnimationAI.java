@@ -4,7 +4,7 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.AxisAlignedBB;
-import org.jurassicraft.client.model.animation.Animations;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class CallAnimationAI extends EntityAIBase
             {
                 if (this.animatingEntity.getClass().isInstance(entity))
                 {
-                    this.animatingEntity.playSound(animatingEntity.getSoundForAnimation(Animations.CALLING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
+                    this.animatingEntity.playSound(animatingEntity.getSoundForAnimation(DinosaurAnimation.CALLING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
                     return true;
                 }
             }
@@ -52,7 +52,7 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        animatingEntity.setAnimation(Animations.CALLING.get());
+        animatingEntity.setAnimation(DinosaurAnimation.CALLING.get());
     }
 
     @Override

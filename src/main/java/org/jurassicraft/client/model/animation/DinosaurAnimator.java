@@ -42,9 +42,9 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     @Override
     public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
-        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, ticks);
+        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, limbSwing, limbSwingAmount, ticks);
 
-        if (entity.getAnimation() != Animations.DYING.get()) // still alive
+        if (entity.getAnimation() != DinosaurAnimation.DYING.get()) // still alive
         {
             if (entity.isSwimming())
             {

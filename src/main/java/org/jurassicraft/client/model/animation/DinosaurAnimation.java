@@ -2,9 +2,9 @@ package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
 
-public enum Animations
+public enum DinosaurAnimation
 {
-    IDLE(false, false),
+    IDLE(false, false, false),
     ATTACKING(false, false),
     INJURED(false, false),
     HEAD_COCKING,
@@ -24,27 +24,28 @@ public enum Animations
     BEGGING,
     SNAP,
     DYING(true, false, false),
-    SCRATCHING, SPITTING,
-    WALKING(false, false), SWIMMING(false, false), FLYING(false, false);
+    SCRATCHING,
+    SPITTING,
+    WALKING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false);
 
     private Animation animation;
     private boolean hold;
     private boolean doesBlockMovement;
     private boolean useInertia;
 
-    Animations(boolean hold, boolean blockMovement)
+    DinosaurAnimation(boolean hold, boolean blockMovement)
     {
         this(hold, blockMovement, true);
     }
 
-    Animations(boolean hold, boolean blockMovement, boolean useInertia)
+    DinosaurAnimation(boolean hold, boolean blockMovement, boolean useInertia)
     {
         this.hold = hold;
         this.doesBlockMovement = blockMovement;
         this.useInertia = useInertia;
     }
 
-    Animations()
+    DinosaurAnimation()
     {
         this(false, true);
     }
@@ -71,9 +72,9 @@ public enum Animations
         return animations;
     }
 
-    public static Animations getAnimation(Animation animation)
+    public static DinosaurAnimation getAnimation(Animation animation)
     {
-        for (Animations animations : values())
+        for (DinosaurAnimation animations : values())
         {
             if (animation.equals(animations.animation))
             {
@@ -81,7 +82,7 @@ public enum Animations
             }
         }
 
-        return Animations.IDLE;
+        return DinosaurAnimation.IDLE;
     }
 
     public boolean shouldHold()

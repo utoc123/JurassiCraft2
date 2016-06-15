@@ -204,7 +204,7 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // velociraptor.tailBuffer.applyChainSwingBuffer(tailParts);
         //
         // // Call
-        // animator.setAnim(Animations.ATTACKING);
+        // animator.setAnim(DinosaurAnimation.ATTACKING);
         // animator.startPhase(2);
         // animator.rotate(shoulders, -0.3f, 0, 0);
         // animator.move(shoulders, 0, 0.5f, 0.2f);
@@ -238,7 +238,7 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // animator.resetPhase(8);
         //
         // // Twitch right
-        // animator.setAnim(Animations.MATING);
+        // animator.setAnim(DinosaurAnimation.MATING);
         // animator.startPhase(3);
         // animator.rotate(head, 0, 0, 0.3f);
         // animator.move(head, 1, 0, 0);
@@ -247,7 +247,7 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // animator.resetPhase(3);
         //
         // // Twitch left
-        // animator.setAnim(Animations.SLEEPING);
+        // animator.setAnim(DinosaurAnimation.SLEEPING);
         // animator.startPhase(3);
         // animator.rotate(head, 0, 0, -0.3f);
         // animator.move(head, -1, 0, 0);
@@ -256,7 +256,7 @@ public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueE
         // animator.resetPhase(3);
         //
         // // Look and sniff
-        // animator.setAnim(Animations.RESTING);
+        // animator.setAnim(DinosaurAnimation.RESTING);
         // animator.startPhase(8);
         // animator.rotate(shoulders, 0.5f, 0.1f, 0);
         // animator.move(shoulders, 0, -1, -0.5f);
