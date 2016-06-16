@@ -130,6 +130,10 @@
       },
       {
         "pose": "velociraptor_adult_walk_7",
+        "time": 4
+      },
+      {
+        "pose": "velociraptor_adult_walk_8",
         "time": 2
       }
     ]

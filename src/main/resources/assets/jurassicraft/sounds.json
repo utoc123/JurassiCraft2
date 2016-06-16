@@ -1,21 +1,24 @@
 {
-  "records.troodons_and_raptors": {
+  "troodons_and_raptors": {
     "category": "record",
     "sounds": [
       "jurassicraft:music/troodons_and_raptors"
-    ]
+    ],
+    "stream": true
   },
-  "records.jurassicraft_theme": {
+  "jurassicraft_theme": {
     "category": "record",
     "sounds": [
       "jurassicraft:music/jurassicraft_theme"
-    ]
+    ],
+    "stream": true
   },
-  "records.dont_move_a_muscle": {
+  "dont_move_a_muscle": {
     "category": "record",
     "sounds": [
       "jurassicraft:music/dont_move_a_muscle"
-    ]
+    ],
+    "stream": true
   },
   "triceratops_living": {
     "category": "hostile",

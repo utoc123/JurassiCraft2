@@ -328,7 +328,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     this.setAnimation(DinosaurAnimation.INJURED.get());
                 }
 
-                if (isSleeping)
+                if (shouldSleep())
                 {
                     disturbSleep();
                 }
@@ -590,7 +590,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             {
                 metabolism.update();
             }
-            
+
             if (this.ticksExisted % 62 == 0)
             {
                 this.playSound(getBreathingSound(), this.getSoundVolume(), this.getSoundPitch());

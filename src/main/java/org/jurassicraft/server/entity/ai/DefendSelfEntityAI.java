@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.player.EntityPlayer;
 import org.jurassicraft.server.entity.ai.util.HerdManager;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -24,7 +25,7 @@ public class DefendSelfEntityAI extends EntityAIBase
     {
         EntityLivingBase attacker = entity.getAITarget();
 
-        if (attacker != null && !attacker.isDead)
+        if (attacker != null && !attacker.isDead && !(attacker instanceof EntityPlayer && ((EntityPlayer) attacker).capabilities.isCreativeMode))
         {
             attackers = new ArrayList<>();
             herd = new ArrayList<>();
