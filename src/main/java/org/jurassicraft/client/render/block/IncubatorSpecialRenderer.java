@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.client.render.entity.dinosaur.RenderDinosaurDefinition;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
@@ -44,45 +45,48 @@ public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<Incubato
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.enableBlend();
-        GlStateManager.disableCull();
-
-        EnumFacing value = state.getValue(OrientedBlock.FACING);
-
-        if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
+        if (state.getBlock() == BlockHandler.INSTANCE.INCUBATOR)
         {
-            value = value.getOpposite();
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.enableBlend();
+            GlStateManager.disableCull();
+
+            EnumFacing value = state.getValue(OrientedBlock.FACING);
+
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
+            {
+                value = value.getOpposite();
+            }
+
+            int rotation = value.getHorizontalIndex() * 90;
+
+            GlStateManager.pushMatrix();
+
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.translate(x + 0.5, y, z + 0.5);
+
+            GlStateManager.rotate(rotation, 0, 1, 0);
+
+            double scale = 0.5;
+            GlStateManager.scale(-scale, -scale, scale);
+
+            GlStateManager.translate(0, -1.5, 0);
+
+            mc.getTextureManager().bindTexture(texture);
+
+            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+
+            GlStateManager.popMatrix();
+
+            renderEgg(tileEntity.getStackInSlot(0), rotation, x, y, z, 0.2, 0.2);
+            renderEgg(tileEntity.getStackInSlot(1), rotation, x, y, z, 0.2, 0.8);
+            renderEgg(tileEntity.getStackInSlot(3), rotation, x, y, z, 0.8, 0.8);
+            renderEgg(tileEntity.getStackInSlot(4), rotation, x, y, z, 0.8, 0.2);
+            renderEgg(tileEntity.getStackInSlot(2), rotation, x, y + 0.05, z, 0.5, 0.5);
+
+            GlStateManager.disableBlend();
+            GlStateManager.enableCull();
         }
-
-        int rotation = value.getHorizontalIndex() * 90;
-
-        GlStateManager.pushMatrix();
-
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.translate(x + 0.5, y, z + 0.5);
-
-        GlStateManager.rotate(rotation, 0, 1, 0);
-
-        double scale = 0.5;
-        GlStateManager.scale(-scale, -scale, scale);
-
-        GlStateManager.translate(0, -1.5, 0);
-
-        mc.getTextureManager().bindTexture(texture);
-
-        model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-
-        GlStateManager.popMatrix();
-
-        renderEgg(tileEntity.getStackInSlot(0), rotation, x, y, z, 0.2, 0.2);
-        renderEgg(tileEntity.getStackInSlot(1), rotation, x, y, z, 0.2, 0.8);
-        renderEgg(tileEntity.getStackInSlot(3), rotation, x, y, z, 0.8, 0.8);
-        renderEgg(tileEntity.getStackInSlot(4), rotation, x, y, z, 0.8, 0.2);
-        renderEgg(tileEntity.getStackInSlot(2), rotation, x, y + 0.05, z, 0.5, 0.5);
-
-        GlStateManager.disableBlend();
-        GlStateManager.enableCull();
     }
 
     public void renderEgg(ItemStack stack, float rotation, double x, double y, double z, double xOffset, double zOffset)

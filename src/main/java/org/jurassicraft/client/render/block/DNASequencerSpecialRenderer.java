@@ -12,6 +12,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.DNASequencerTile;
@@ -43,66 +44,69 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.enableBlend();
-        GlStateManager.disableCull();
-
-        EnumFacing value = state.getValue(OrientedBlock.FACING);
-
-        if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
+        if (state.getBlock() == BlockHandler.INSTANCE.DNA_SEQUENCER)
         {
-            value = value.getOpposite();
-        }
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.enableBlend();
+            GlStateManager.disableCull();
 
-        int rotation = value.getHorizontalIndex() * 90;
+            EnumFacing value = state.getValue(OrientedBlock.FACING);
 
-        GlStateManager.pushMatrix(); // Items
-        {
-            GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
-
-            GlStateManager.rotate(rotation, 0, 1, 0);
-            GlStateManager.translate(0.2, -0.6, 0.15);
-            GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-
-            GlStateManager.scale(0.75F * 0.5F, 0.75F * 0.5F, 0.75F * 0.5F);
-            mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-
-            RenderItem renderItem = mc.getRenderItem();
-
-            for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP))
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
             {
-                GlStateManager.translate(0.0, 0.0, 0.4);
+                value = value.getOpposite();
+            }
 
-                if (inputSlot % 2 == 0)
+            int rotation = value.getHorizontalIndex() * 90;
+
+            GlStateManager.pushMatrix(); // Items
+            {
+                GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
+
+                GlStateManager.rotate(rotation, 0, 1, 0);
+                GlStateManager.translate(0.2, -0.6, 0.15);
+                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+
+                GlStateManager.scale(0.75F * 0.5F, 0.75F * 0.5F, 0.75F * 0.5F);
+                mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
+                RenderItem renderItem = mc.getRenderItem();
+
+                for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP))
                 {
-                    ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
+                    GlStateManager.translate(0.0, 0.0, 0.4);
 
-                    if (sequence != null)
+                    if (inputSlot % 2 == 0)
                     {
-                        renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
+                        ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
+
+                        if (sequence != null)
+                        {
+                            renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
+                        }
                     }
                 }
             }
+            GlStateManager.popMatrix();
+
+            GlStateManager.pushMatrix(); // Model
+            {
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
+
+                GlStateManager.rotate(rotation, 0, 1, 0);
+
+                double scale = 1.0;
+                GlStateManager.scale(scale, -scale, scale);
+
+                mc.getTextureManager().bindTexture(texture);
+
+                model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            }
+            GlStateManager.popMatrix();
+
+            GlStateManager.disableBlend();
+            GlStateManager.enableCull();
         }
-        GlStateManager.popMatrix();
-
-        GlStateManager.pushMatrix(); // Model
-        {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
-
-            GlStateManager.rotate(rotation, 0, 1, 0);
-
-            double scale = 1.0;
-            GlStateManager.scale(scale, -scale, scale);
-
-            mc.getTextureManager().bindTexture(texture);
-
-            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-        }
-        GlStateManager.popMatrix();
-
-        GlStateManager.disableBlend();
-        GlStateManager.enableCull();
     }
 }

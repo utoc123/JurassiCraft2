@@ -55,18 +55,13 @@ public class DinosaurSpawnEggItem extends Item
             try
             {
                 DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(player.worldObj);
-
                 dino.setDNAQuality(100);
 
                 int mode = getMode(stack);
 
-                if (mode == 1)
+                if (mode > 0)
                 {
-                    dino.setMale(true);
-                }
-                else if (mode == 2)
-                {
-                    dino.setMale(false);
+                    dino.setMale(mode == 1);
                 }
 
                 if (player.isSneaking())

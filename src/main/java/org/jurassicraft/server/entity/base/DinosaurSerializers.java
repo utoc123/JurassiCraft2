@@ -30,7 +30,7 @@ public class DinosaurSerializers
         }
     };
 
-    static
+    public static void register()
     {
         DataSerializers.registerSerializer(ORDER);
     }

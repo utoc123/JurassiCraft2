@@ -19,6 +19,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.configuration.JCConfigurations;
+import org.jurassicraft.server.entity.base.DinosaurSerializers;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.handler.GuiHandler;
@@ -39,6 +40,7 @@ public class ServerProxy
         JurassiCraft.configurations.initConfig(event);
 
         EntityHandler.INSTANCE.init();
+        DinosaurSerializers.register();
 
         FossilItem.init();
 

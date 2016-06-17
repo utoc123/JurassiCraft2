@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -37,8 +38,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -104,7 +105,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private static final DataParameter<Boolean> WATCHER_IS_CARCASS = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> WATCHER_AGE = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> WATCHER_GROWTH_OFFSET = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> WATCHER_IS_SLEEPING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<String> WATCHER_OWNER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.STRING);
@@ -460,7 +460,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.dataManager.register(WATCHER_IS_CARCASS, false);
         this.dataManager.register(WATCHER_AGE, 0);
-        this.dataManager.register(WATCHER_GROWTH_OFFSET, 0);
         this.dataManager.register(WATCHER_IS_SLEEPING, false);
         this.dataManager.register(WATCHER_HAS_TRACKER, false);
         this.dataManager.register(WATCHER_OWNER, "");
@@ -646,7 +645,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (!worldObj.isRemote)
         {
             dataManager.set(WATCHER_AGE, dinosaurAge);
-            dataManager.set(WATCHER_GROWTH_OFFSET, growthSpeedOffset);
             dataManager.set(WATCHER_IS_SLEEPING, isSleeping);
             dataManager.set(WATCHER_IS_CARCASS, isCarcass);
             dataManager.set(WATCHER_HAS_TRACKER, hasTracker);
@@ -658,7 +656,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             updateTailBuffer();
 
             dinosaurAge = dataManager.get(WATCHER_AGE);
-            growthSpeedOffset = dataManager.get(WATCHER_GROWTH_OFFSET);
             isSleeping = dataManager.get(WATCHER_IS_SLEEPING);
             isCarcass = dataManager.get(WATCHER_IS_CARCASS);
             hasTracker = dataManager.get(WATCHER_HAS_TRACKER);
@@ -1108,10 +1105,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         buffer.writeBoolean(isMale);
         buffer.writeInt(growthSpeedOffset);
         buffer.writeByte((byte) rareVariant);
-
-        metabolism.writeSpawnData(buffer);
-
-        ByteBufUtils.writeUTF8String(buffer, genetics); //TODO do we need to add the things that are on the dataManager?
     }
 
     @Override
@@ -1123,10 +1116,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         isMale = additionalData.readBoolean();
         growthSpeedOffset = additionalData.readInt();
         rareVariant = additionalData.readByte();
-
-        metabolism.readSpawnData(additionalData);
-
-        genetics = ByteBufUtils.readUTF8String(additionalData);
 
         updateCreatureData();
         adjustHitbox();
@@ -1322,6 +1311,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public List<Class<? extends EntityLivingBase>> getAttackTargets()
     {
         return attackTargets;
+    }
+
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData data)
+    {
+        metabolism.setEnergy(metabolism.getMaxEnergy());
+        metabolism.setWater(metabolism.getMaxWater());
+        genetics = GeneticsHelper.randomGenetics(rand);
+        setFullyGrown();
+        setMale(rand.nextBoolean());
+        setDNAQuality(100);
+        return data;
     }
 
     public enum Order

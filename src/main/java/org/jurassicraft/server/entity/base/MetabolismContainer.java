@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.base;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
@@ -115,20 +114,6 @@ public class MetabolismContainer
         nbt.setInteger("Water", water);
         nbt.setInteger("Energy", energy);
         nbt.setInteger("DigestingFood", digestingFood);
-    }
-
-    public void writeSpawnData(ByteBuf buf)
-    {
-        buf.writeInt(water);
-        buf.writeInt(energy);
-        buf.writeInt(digestingFood);
-    }
-
-    public void readSpawnData(ByteBuf buf)
-    {
-        water = buf.readInt();
-        energy = buf.readInt();
-        digestingFood = buf.readInt();
     }
 
     public int getMaxEnergy()
