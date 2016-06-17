@@ -17,7 +17,7 @@ public class ParasaurolophusDinosaur extends Dinosaur
         this.setEggColorFemale(0x5F653E, 0x3C3F44);
         this.setHealth(10, 30);
         this.setSpeed(0.46, 0.41);
-        this.setStrength(5, 15);
+        this.setStrength(2, 8);
         this.setMaximumAge(fromDays(45));
         this.setEyeHeight(0.45F, 2.45F);
         this.setSizeX(0.5F, 2.5F);

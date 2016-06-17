@@ -133,6 +133,24 @@
         "time": 10
       }
     ],
+    "ATTACKING": [
+      {
+        "pose": "triceratops_adult_attacking_1",
+        "time": 5
+      },
+      {
+        "pose": "triceratops_adult_attacking_1",
+        "time": 2
+      },
+      {
+        "pose": "triceratops_adult_attacking_2",
+        "time": 5
+      },
+      {
+        "pose": "triceratops_adult_idle",
+        "time": 5
+      }
+    ],
     "RESTING": [
       {
         "pose": "triceratops_adult_resting",

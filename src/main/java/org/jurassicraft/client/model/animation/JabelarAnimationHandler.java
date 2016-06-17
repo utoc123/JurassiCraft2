@@ -15,6 +15,7 @@ import org.jurassicraft.server.entity.particle.HurtParticle;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author jabelar
@@ -100,6 +101,8 @@ public class JabelarAnimationHandler
 
         ParticleManager particleManager = MC.effectRenderer;
 
+        Random random = new Random();
+
         if (entity.hurtTime == entity.maxHurtTime - 1)
         {
             float entityWidth = entity.width;
@@ -113,7 +116,10 @@ public class JabelarAnimationHandler
                 {
                     for (int z = 0; z < amount; z++)
                     {
-                        this.performHurtEffect(world, particleManager, (x / amount * entityWidth) + posX - (entityWidth / 2.0F), (y / amount * entityHeight) + posY, (z / amount * entityWidth) + posZ - (entityWidth / 2.0F));
+                        if (random.nextInt(2) == 0)
+                        {
+                            this.performHurtEffect(world, particleManager, (x / amount * entityWidth) + posX - (entityWidth / 2.0F), (y / amount * entityHeight) + posY, (z / amount * entityWidth) + posZ - (entityWidth / 2.0F));
+                        }
                     }
                 }
             }

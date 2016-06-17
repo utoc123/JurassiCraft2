@@ -16,8 +16,9 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setEggColorMale(0xB17041, 0x3B1505);
         this.setEggColorFemale(0x91765D, 0x5A4739);
         this.setSpeed(0.48, 0.40);
+        this.setAttackSpeed(1.2);
         this.setHealth(10, 40);
-        this.setStrength(1, 25);
+        this.setStrength(1, 8);
         this.setMaximumAge(fromDays(45));
         this.setEyeHeight(0.45F, 1.7F);
         this.setSizeX(0.5F, 1.0F);

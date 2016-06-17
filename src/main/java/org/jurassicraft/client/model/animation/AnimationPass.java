@@ -117,14 +117,11 @@ public class AnimationPass
                 this.animation = DinosaurAnimation.IDLE.get();
                 entity.setAnimation(DinosaurAnimation.IDLE.get());
             }
-            else if (this.animation != DinosaurAnimation.IDLE.get() && this.animation == animation) // finished sequence but no new sequence set
+
+            if (this.animation != DinosaurAnimation.IDLE.get() && this.animation == animation) // finished sequence but no new sequence set
             {
                 this.animation = DinosaurAnimation.IDLE.get();
                 entity.setAnimation(DinosaurAnimation.IDLE.get());
-            }
-            else if (entity.isCarcass())
-            {
-                this.animation = DinosaurAnimation.DYING.get();
             }
         }
     }
