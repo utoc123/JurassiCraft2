@@ -1,11 +1,10 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.potion.Potion;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
-public class DilophosaurusMeleeEntityAI extends EntityAIAttackMelee
+public class DilophosaurusMeleeEntityAI extends DinosaurAttackMeleeEntityAI
 {
     public DilophosaurusMeleeEntityAI(DilophosaurusEntity entity, double speed)
     {

@@ -13,7 +13,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -52,6 +51,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendSelfEntityAI;
+import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
@@ -1041,7 +1041,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         nbt = super.writeToNBT(nbt);
 
-        nbt.setDouble("DinosaurAge", dinosaurAge);
+        nbt.setInteger("DinosaurAge", dinosaurAge);
         nbt.setBoolean("IsCarcass", isCarcass);
         nbt.setInteger("DNAQuality", geneticsQuality);
         nbt.setString("Genetics", genetics);
@@ -1305,7 +1305,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public EntityAIBase getAttackAI()
     {
-        return new EntityAIAttackMelee(this, dinosaur.getAttackSpeed(), false);
+        return new DinosaurAttackMeleeEntityAI(this, dinosaur.getAttackSpeed(), false);
     }
 
     public List<Class<? extends EntityLivingBase>> getAttackTargets()
