@@ -103,6 +103,44 @@
         "time": 20
       }
     ],
+    "VELOCIRAPTOR_PREPARE_POUNCE": [
+      {
+        "pose": "velociraptor_adult_prepare_pounce_1",
+        "time": 10
+      },
+      {
+        "pose": "velociraptor_adult_prepare_pounce_1",
+        "time": 5
+      }
+    ],
+    "VELOCIRAPTOR_LEAP": [
+      {
+        "pose": "velociraptor_adult_leap_1",
+        "time": 5
+      },
+      {
+        "pose": "velociraptor_adult_leap_1",
+        "time": 2
+      },
+      {
+        "pose": "velociraptor_adult_leap_2",
+        "time": 5
+      }
+    ],
+    "VELOCIRAPTOR_LAND": [
+      {
+        "pose": "velociraptor_adult_landing_1",
+        "time": 4
+      },
+      {
+        "pose": "velociraptor_adult_landing_2",
+        "time": 2
+      },
+      {
+        "pose": "velociraptor_adult_idle",
+        "time": 10
+      }
+    ],
     "WALKING": [
       {
         "pose": "velociraptor_adult_walk_1",

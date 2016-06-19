@@ -26,7 +26,9 @@ public enum DinosaurAnimation
     DYING(true, false, false),
     SCRATCHING,
     SPITTING,
-    WALKING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false);
+    WALKING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false),
+
+    VELOCIRAPTOR_PREPARE_POUNCE(false, false), VELOCIRAPTOR_LEAP(true, false), VELOCIRAPTOR_LAND(false, false, false);
 
     private Animation animation;
     private boolean hold;
