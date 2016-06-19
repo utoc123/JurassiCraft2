@@ -206,7 +206,9 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
         GALLIMIMUS_VALLEY,
         GALLIMIMUS_VALLEY_PLANTS,
         GENTLE_GIANTS,
-        GENTLE_GIANTS_PLANTS;
+        GENTLE_GIANTS_PLANTS,
+        RAPTOR_PADDOCK,
+        RAPTOR_PADDOCK_PLANTS;
 
         public final int sizeX;
         public final int sizeY;

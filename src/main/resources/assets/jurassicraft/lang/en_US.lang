@@ -78,6 +78,8 @@ attraction_sign.gallimimus_valley.name=Gallimimus Valley
 attraction_sign.gallimimus_valley_plants.name=Gallimimus Valley With Plants
 attraction_sign.gentle_giants.name=Gentle Giants
 attraction_sign.gentle_giants_plants.name=Gentle Giants With Plants
+attraction_sign.raptor_paddock.name=Raptor Paddock
+attraction_sign.raptor_paddock_plants.name=Raptor Paddock With Plants
 
 item.skull_fresh.name=Fresh {dino} Skull
 item.tooth_fresh.name=Fresh {dino} Tooth
