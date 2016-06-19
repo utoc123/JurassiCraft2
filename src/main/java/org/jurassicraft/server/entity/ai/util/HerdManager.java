@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-/**
- * Copyright 2016 TimelessModdingTeam
- */
 public class HerdManager
 {
     // Blocks
@@ -25,7 +22,7 @@ public class HerdManager
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static HerdManager instance;
+    public static final HerdManager INSTANCE = new HerdManager();
 
     // For now we have one Herd per class of critter.  This needs to change when we have
     // different herds because of different herd leaders.
@@ -33,17 +30,6 @@ public class HerdManager
     private long nextRebalance = 0;
 
     //===============================================
-
-    // Returns the current instance of the herd manager
-    public static HerdManager getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new HerdManager();
-        }
-
-        return instance;
-    }
 
     /**
      * Adds a dinosaur to the herd manager.
@@ -403,7 +389,6 @@ public class HerdManager
             double totalX = 0.0F;
             double totalY = 0.0F;
             double totalZ = 0.0F;
-            int count = 0;
 
             for (DinosaurEntity dino : dinosaurs)
             {
@@ -411,8 +396,9 @@ public class HerdManager
                 totalX += pos.getX();
                 totalY += pos.getY();
                 totalZ += pos.getZ();
-                count += 1;
             }
+
+            int count = dinosaurs.size();
 
             center = new BlockPos(totalX / count, totalY / count, totalZ / count);
             return center;

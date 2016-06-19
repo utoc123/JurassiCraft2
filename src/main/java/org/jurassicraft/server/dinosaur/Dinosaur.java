@@ -72,6 +72,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     private boolean defendOwner;
 
+    private boolean flee;
+
     public void init()
     {
         String formattedName = getName().toLowerCase().replaceAll(" ", "_");
@@ -695,6 +697,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.defendOwner = defendOwner;
     }
 
+    public void setFlee(boolean flee)
+    {
+        this.flee = flee;
+    }
+
     public double getScaleInfant()
     {
         return scaleInfant;
@@ -748,5 +755,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public boolean shouldDefendOwner()
     {
         return defendOwner;
+    }
+
+    public boolean shouldFlee()
+    {
+        return flee;
     }
 }

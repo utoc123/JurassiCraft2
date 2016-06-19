@@ -22,7 +22,7 @@ public class HerdEntityAI extends EntityAIBase
         dinosaur = entity;
         if (dinosaur.worldObj.getGameRules().getBoolean("dinoHerding") && !entity.getEntityWorld().isRemote)
         {
-            HerdManager.getInstance().add(entity);
+            HerdManager.INSTANCE.add(entity);
         }
 
         // This is the same bits as wander
@@ -32,7 +32,9 @@ public class HerdEntityAI extends EntityAIBase
     public void terminate(DinosaurEntity entity)
     {
         if (!entity.getEntityWorld().isRemote)
-            HerdManager.getInstance().remove(entity);
+        {
+            HerdManager.INSTANCE.remove(entity);
+        }
     }
 
     @Override
@@ -55,7 +57,7 @@ public class HerdEntityAI extends EntityAIBase
         }
 
         // Ask the herd manager where we should move to
-        target = HerdManager.getInstance().getWanderLocation(dinosaur);
+        target = HerdManager.INSTANCE.getWanderLocation(dinosaur);
         //if (_target != null)
         //    LOGGER.info("Found target=" + _target + ", pos=" + dinosaur.getPosition());
 

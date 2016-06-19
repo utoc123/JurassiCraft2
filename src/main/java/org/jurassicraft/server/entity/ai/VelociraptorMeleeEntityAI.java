@@ -21,7 +21,7 @@ public class VelociraptorMeleeEntityAI extends DinosaurAttackMeleeEntityAI
     @Override
     public boolean continueExecuting()
     {
-        return shouldExecute();
+        return shouldExecute() && super.continueExecuting();
     }
 
     private boolean isInRange(EntityLivingBase target)
