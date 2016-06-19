@@ -27,7 +27,7 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (animatingEntity.isDead)
+        if (animatingEntity.isDead || animatingEntity.getAttackTarget() != null)
         {
             return false;
         }

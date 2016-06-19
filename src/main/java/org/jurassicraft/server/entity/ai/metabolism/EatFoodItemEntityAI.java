@@ -91,19 +91,16 @@ public class EatFoodItemEntityAI extends EntityAIBase
         {
             dinosaur.setAnimation(DinosaurAnimation.EATING.get());
 
-            if (dinosaur.worldObj.getGameRules().getBoolean("mobGriefing"))
+            if (item.getEntityItem().stackSize > 1)
             {
-                if (item.getEntityItem().stackSize > 1)
-                {
-                    item.getEntityItem().stackSize--;
-                }
-                else
-                {
-                    item.setDead();
-                }
+                item.getEntityItem().stackSize--;
+            }
+            else
+            {
+                item.setDead();
             }
 
-            dinosaur.getMetabolism().increaseDigestingFood(500);
+            dinosaur.getMetabolism().increaseDigestingFood(1000);
             dinosaur.heal(4.0F);
 
             eaten = true;

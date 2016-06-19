@@ -18,7 +18,7 @@ public class HeadCockAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return !animatingEntity.isDead && animatingEntity.getRNG().nextDouble() < 0.003;
+        return !animatingEntity.isDead && animatingEntity.getAttackTarget() == null && animatingEntity.getRNG().nextDouble() < 0.003;
     }
 
     @Override

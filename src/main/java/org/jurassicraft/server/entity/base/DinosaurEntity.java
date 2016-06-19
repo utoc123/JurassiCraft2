@@ -129,6 +129,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private List<Class<? extends EntityLivingBase>> attackTargets = new ArrayList<>();
 
+    private int attackCooldown;
+
     public DinosaurEntity(World world)
     {
         super(world);
@@ -140,6 +142,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.genetics = GeneticsHelper.randomGenetics(rand);
         this.isMale = rand.nextBoolean();
+
+        this.resetAttackCooldown();
 
         this.animTick = 0;
         this.setAnimation(DinosaurAnimation.IDLE.get());
@@ -623,6 +627,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onUpdate()
     {
         super.onUpdate();
+
+        if (attackCooldown > 0)
+        {
+            attackCooldown--;
+        }
 
         if (!worldObj.isRemote && animation != null && animation != DinosaurAnimation.IDLE.get())
         {
@@ -1323,6 +1332,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         setMale(rand.nextBoolean());
         setDNAQuality(100);
         return data;
+    }
+
+    public int getAttackCooldown()
+    {
+        return attackCooldown;
+    }
+
+    public void resetAttackCooldown()
+    {
+        attackCooldown = 100 + getRNG().nextInt(20);
     }
 
     public enum Order

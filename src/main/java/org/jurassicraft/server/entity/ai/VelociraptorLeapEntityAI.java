@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.SoundEvent;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -31,7 +32,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
     {
         EntityLivingBase target = entity.getAttackTarget();
 
-        if (target != null)
+        if (target != null && target.isEntityAlive() && !(target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass()))
         {
             float distance = entity.getDistanceToEntity(target);
 
@@ -69,13 +70,20 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
             animation = DinosaurAnimation.VELOCIRAPTOR_LEAP;
             entity.setAnimation(animation.get());
 
+            SoundEvent sound = entity.getHurtSound();
+
+            if (sound != null)
+            {
+                entity.playSound(sound, entity.getSoundVolume(), entity.getSoundPitch());
+            }
+
             double targetSpeedX = target.posX - targetPrevPosX;
             double targetSpeedZ = target.posZ - targetPrevPosZ;
 
             double length = 6.0;
 
-            double destX = target.posX + targetSpeedX * length * 2;
-            double destZ = target.posZ + targetSpeedZ * length * 2;
+            double destX = target.posX + (targetSpeedX * length * 2);
+            double destZ = target.posZ + (targetSpeedZ * length * 2);
 
             double delta = Math.sqrt((destX - entity.posX) * (destX - entity.posX) + (destZ - entity.posZ) * (destZ - entity.posZ));
             double angle = Math.atan2((destZ - entity.posZ), (destX - entity.posX));
@@ -94,7 +102,10 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
             animation = DinosaurAnimation.IDLE;
             entity.setAnimation(animation.get());
 
-            entity.attackEntityAsMob(target);
+            if (entity.getEntityBoundingBox() != null && target.getEntityBoundingBox() != null && entity.getEntityBoundingBox().intersectsWith(target.getEntityBoundingBox().expand(2.0, 2.0, 2.0)))
+            {
+                entity.attackEntityAsMob(target);
+            }
         }
 
         if (entity.getAnimation() != animation.get())
@@ -104,6 +115,12 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
         }
 
         prevTick = tick;
+    }
+
+    @Override
+    public void resetTask()
+    {
+        entity.setAnimation(DinosaurAnimation.IDLE.get());
     }
 
     @Override

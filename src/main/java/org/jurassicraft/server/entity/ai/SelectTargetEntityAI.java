@@ -15,8 +15,15 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAINe
     }
 
     @Override
+    public void resetTask()
+    {
+        super.resetTask();
+        entity.resetAttackCooldown();
+    }
+
+    @Override
     public boolean shouldExecute()
     {
-        return entity.getAgePercentage() > 75 && entity.getOwner() == null && !(entity.shouldSleep() && entity.getStayAwakeTime() <= 0) && super.shouldExecute();
+        return entity.getAgePercentage() > 75 && entity.getOwner() == null && !(entity.shouldSleep() && entity.getStayAwakeTime() <= 0) && entity.getAttackCooldown() <= 0 && super.shouldExecute();
     }
 }
