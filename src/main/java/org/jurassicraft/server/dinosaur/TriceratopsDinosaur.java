@@ -22,12 +22,12 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setMaximumAge(fromDays(45));
         this.setEyeHeight(0.45F, 1.8F);
         this.setSizeX(0.35F, 2.5F);
-        this.setSizeY(0.6F, 2.8F);
+        this.setSizeY(0.6F, 3.0F);
         this.setStorage(36);
         this.setDiet(Diet.HERBIVORE);
         this.setBones("front_leg_bones", "hind_leg_bones", "horn", "neck_vertebrae", "pelvis", "ribcage", "shoulder_bone", "skull", "tail_vertebrae", "tooth");
         this.setHeadCubeName("Head");
-        this.setScale(1.8F, 0.325F);
+        this.setScale(1.35F, 0.325F);
         this.setOffset(0.0F, 0.45F, 0.0F);
         this.setImprintable(true);
         this.setDefendOwner(true);

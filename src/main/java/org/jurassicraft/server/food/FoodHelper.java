@@ -153,7 +153,7 @@ public enum FoodHelper
 
     public boolean canDietEat(Diet diet, Item item)
     {
-        return getFoodsForDiet(diet).contains(item);
+        return getEdibleFoods(diet).contains(item);
     }
 
     public boolean canDietEat(Diet diet, Block block)
@@ -161,7 +161,7 @@ public enum FoodHelper
         return canDietEat(diet, Item.getItemFromBlock(block));
     }
 
-    private List<Item> getFoodsForDiet(Diet diet)
+    public List<Item> getEdibleFoods(Diet diet)
     {
         List<Item> possibleItems = new ArrayList<>();
 

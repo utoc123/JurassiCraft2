@@ -22,13 +22,13 @@ public class MovementAnimationPass extends AnimationPass
     @Override
     protected float getAnimationSpeed(DinosaurEntity entity)
     {
-        return isMoving(entity) ? getAnimationDegree(entity) : 4.0F;
+        return isMoving(entity) ? getAnimationDegree(entity) : 3.0F;
     }
 
     @Override
     protected float getAnimationDegree(DinosaurEntity entity)
     {
-        return animation == DinosaurAnimation.WALKING.get() ? limbSwingAmount : super.getAnimationDegree(entity);
+        return entity.isCarcass() ? 0.0F : animation == DinosaurAnimation.WALKING.get() ? limbSwingAmount : super.getAnimationDegree(entity);
     }
 
     @Override

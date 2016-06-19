@@ -57,6 +57,8 @@ import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
+import org.jurassicraft.server.entity.ai.TargetCarcassEntityAI;
+import org.jurassicraft.server.entity.ai.TemptNonAdultEntityAI;
 import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
@@ -174,6 +176,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             this.tasks.addTask(1, new FindPlantEntityAI(this));
         }
+
+        if (dinosaur.getDiet().doesEatMeat())
+        {
+            this.tasks.addTask(1, new TargetCarcassEntityAI(this));
+        }
+
+        this.tasks.addTask(1, new TemptNonAdultEntityAI(this, 0.6));
 
         if (dinosaur.shouldDefendOwner())
         {
@@ -1252,6 +1261,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void applyEntityCollision(Entity entity)
     {
+        super.applyEntityCollision(entity);
+
         if (this.isSleeping && !this.isRidingSameEntity(entity))
         {
             if (!entity.noClip && !this.noClip)

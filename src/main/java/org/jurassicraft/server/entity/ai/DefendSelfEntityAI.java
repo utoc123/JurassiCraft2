@@ -30,16 +30,36 @@ public class DefendSelfEntityAI extends EntityAIBase
             attackers = new ArrayList<>();
             herd = new ArrayList<>();
 
+            boolean hasHerd = false;
+
             if (attacker instanceof DinosaurEntity)
             {
-                attackers.addAll(HerdManager.getInstance().getHerd((DinosaurEntity) attacker).getAllDinosaurs());
+                HerdManager.Herd herd = HerdManager.getInstance().getHerd((DinosaurEntity) attacker);
+
+                if (herd != null)
+                {
+                    attackers.addAll(herd.getAllDinosaurs());
+                    hasHerd = true;
+                }
             }
-            else
+
+            if (!hasHerd)
             {
                 attackers.add(attacker);
             }
 
-            herd.addAll(HerdManager.getInstance().getHerd(entity).getAllDinosaurs());
+            HerdManager.Herd herd = HerdManager.getInstance().getHerd(entity);
+
+            if (herd != null)
+            {
+                this.herd.addAll(herd.getAllDinosaurs());
+            }
+            else
+            {
+                this.herd.add(entity);
+            }
+
+            entity.setAttackTarget(attacker);
 
             return true;
         }
@@ -50,6 +70,11 @@ public class DefendSelfEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
+        if (attackers.size() == 0)
+        {
+            return false;
+        }
+
         for (EntityLivingBase attacker : attackers)
         {
             if (!isDead(attacker))

@@ -135,10 +135,24 @@
       {
         "pose": "velociraptor_adult_landing_2",
         "time": 2
+      }
+    ],
+    "DRINKING": [
+      {
+        "pose": "velociraptor_adult_drink_1",
+        "time": 10
+      },
+      {
+        "pose": "velociraptor_adult_drink_2",
+        "time": 10
+      },
+      {
+        "pose": "velociraptor_adult_drink_3",
+        "time": 25
       },
       {
         "pose": "velociraptor_adult_idle",
-        "time": 10
+        "time": 20
       }
     ],
     "WALKING": [
@@ -168,10 +182,6 @@
       },
       {
         "pose": "velociraptor_adult_walk_7",
-        "time": 4
-      },
-      {
-        "pose": "velociraptor_adult_walk_8",
         "time": 2
       }
     ]

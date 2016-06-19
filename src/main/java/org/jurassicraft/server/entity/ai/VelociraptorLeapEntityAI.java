@@ -62,9 +62,6 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
     {
         int tick = entity.getAnimationTick();
 
-        targetPrevPosX = target.posX;
-        targetPrevPosZ = target.posZ;
-
         if (animation == DinosaurAnimation.VELOCIRAPTOR_PREPARE_POUNCE && tick < prevTick)
         {
             animation = DinosaurAnimation.VELOCIRAPTOR_LEAP;
@@ -82,22 +79,22 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
 
             double length = 6.0;
 
-            double destX = target.posX + (targetSpeedX * length * 2);
-            double destZ = target.posZ + (targetSpeedZ * length * 2);
+            double destX = target.posX + (targetSpeedX * length);
+            double destZ = target.posZ + (targetSpeedZ * length);
 
             double delta = Math.sqrt((destX - entity.posX) * (destX - entity.posX) + (destZ - entity.posZ) * (destZ - entity.posZ));
             double angle = Math.atan2((destZ - entity.posZ), (destX - entity.posX));
 
-            this.entity.motionX = (delta / length) * Math.cos(angle);
-            this.entity.motionZ = (delta / length) * Math.sin(angle);
-            this.entity.motionY = 0.6D;
+            this.entity.motionX = ((delta / length) * Math.cos(angle));
+            this.entity.motionZ = ((delta / length) * Math.sin(angle));
+            this.entity.motionY = Math.min(0.3, Math.max(0, (target.posY - entity.posY) * 0.1)) + 0.6;
         }
         else if (animation == DinosaurAnimation.VELOCIRAPTOR_LEAP && entity.motionY < 0)
         {
             animation = DinosaurAnimation.VELOCIRAPTOR_LAND;
             entity.setAnimation(animation.get());
         }
-        else if (animation == DinosaurAnimation.VELOCIRAPTOR_LAND && tick < prevTick)
+        else if (animation == DinosaurAnimation.VELOCIRAPTOR_LAND && tick < prevTick && entity.onGround)
         {
             animation = DinosaurAnimation.IDLE;
             entity.setAnimation(animation.get());
@@ -107,6 +104,9 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
                 entity.attackEntityAsMob(target);
             }
         }
+
+        targetPrevPosX = target.posX;
+        targetPrevPosZ = target.posZ;
 
         if (entity.getAnimation() != animation.get())
         {
