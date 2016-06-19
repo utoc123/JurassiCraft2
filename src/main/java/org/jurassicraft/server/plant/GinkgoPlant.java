@@ -7,12 +7,6 @@ import org.jurassicraft.server.block.tree.TreeType;
 public class GinkgoPlant extends Plant
 {
     @Override
-    public PlantType getPlantType()
-    {
-        return PlantType.TREE;
-    }
-
-    @Override
     public String getName()
     {
         return "Ginkgo";

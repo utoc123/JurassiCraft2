@@ -6,12 +6,6 @@ import org.jurassicraft.server.block.BlockHandler;
 public class DicroidiumZuberiPlant extends Plant
 {
     @Override
-    public PlantType getPlantType()
-    {
-        return PlantType.FERN;
-    }
-
-    @Override
     public String getName()
     {
         return "Dicroidium Zuberi";

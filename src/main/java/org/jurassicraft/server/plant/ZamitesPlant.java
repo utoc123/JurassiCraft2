@@ -6,12 +6,6 @@ import org.jurassicraft.server.block.BlockHandler;
 public class ZamitesPlant extends Plant
 {
     @Override
-    public PlantType getPlantType()
-    {
-        return PlantType.FERN;
-    }
-
-    @Override
     public String getName()
     {
         return "Cycad Zamites";

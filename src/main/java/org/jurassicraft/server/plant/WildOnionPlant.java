@@ -6,12 +6,6 @@ import org.jurassicraft.server.block.BlockHandler;
 public class WildOnionPlant extends Plant
 {
     @Override
-    public PlantType getPlantType()
-    {
-        return PlantType.CROP;
-    }
-
-    @Override
     public String getName()
     {
         return "Wild Onion";
