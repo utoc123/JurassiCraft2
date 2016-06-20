@@ -112,6 +112,6 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
     @Override
     public ItemBlock getItemBlock()
     {
-        return new JCSlabItemBlock(this, BlockHandler.INSTANCE.ANCIENT_SLABS.get(type), BlockHandler.INSTANCE.ANCIENT_DOUBLE_SLABS.get(type));
+        return new JCSlabItemBlock(this, BlockHandler.ANCIENT_SLABS.get(type), BlockHandler.ANCIENT_DOUBLE_SLABS.get(type));
     }
 }

@@ -9,7 +9,7 @@ public class AncientStairsBlock extends BlockStairs
     public AncientStairsBlock(TreeType type, IBlockState state)
     {
         super(state);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
         this.setUnlocalizedName(type.name().toLowerCase().replaceAll(" ", "_") + "_stairs");
     }
 }

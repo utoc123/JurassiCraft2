@@ -17,15 +17,15 @@ public class JurassiCraftFoodTab extends CreativeTabs
     public JurassiCraftFoodTab(String label)
     {
         super(label);
-        this.metas = new int[EntityHandler.INSTANCE.getRegisteredDinosaurs().size()];
+        this.metas = new int[EntityHandler.getRegisteredDinosaurs().size()];
 
         int i = 0;
 
-        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.getDinosaurs())
         {
             if (dino.shouldRegister())
             {
-                metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
+                metas[i] = EntityHandler.getDinosaurId(dino);
 
                 i++;
             }
@@ -42,6 +42,6 @@ public class JurassiCraftFoodTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return ItemHandler.INSTANCE.DINOSAUR_MEAT;
+        return ItemHandler.DINOSAUR_MEAT;
     }
 }

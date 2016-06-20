@@ -43,7 +43,7 @@ public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<E
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.INSTANCE.EMBRYONIC_MACHINE)
+        if (state.getBlock() == BlockHandler.EMBRYONIC_MACHINE)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

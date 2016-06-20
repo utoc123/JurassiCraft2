@@ -29,7 +29,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
         this.setUnlocalizedName("dna_combinator_hybridizer");
         this.setHardness(2.0F);
         this.setSoundType(SoundType.METAL);
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
     }
 
     @Override

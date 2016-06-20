@@ -44,7 +44,7 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.INSTANCE.DNA_SEQUENCER)
+        if (state.getBlock() == BlockHandler.DNA_SEQUENCER)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

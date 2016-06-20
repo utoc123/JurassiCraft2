@@ -40,7 +40,7 @@ public class DNASequencerTile extends MachineBaseTile
 
         if (sequencableItem != null && sequencableItem.isSequencable(input))
         {
-            if (storage != null && storage.getItem() == ItemHandler.INSTANCE.STORAGE_DISC)
+            if (storage != null && storage.getItem() == ItemHandler.STORAGE_DISC)
             {
                 if (slots[process + 6] == null)
                 {

@@ -56,7 +56,7 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
 
             if (texture == null)
             {
-                texture = new ResourceLocation(JurassiCraft.MODID, "textures/blueprints/" + EntityHandler.INSTANCE.getDinosaurById(id).getName().toLowerCase() + ".png");
+                texture = new ResourceLocation(JurassiCraft.MODID, "textures/blueprints/" + EntityHandler.getDinosaurById(id).getName().toLowerCase() + ".png");
                 TEXTURES.put(id, texture);
             }
 

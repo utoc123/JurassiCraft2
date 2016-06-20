@@ -21,7 +21,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
     public CultivatorBottomBlock()
     {
         super("bottom");
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
 
         if (block == Blocks.AIR)
         {
-            world.setBlockState(topBlock, BlockHandler.INSTANCE.CULTIVATOR_TOP.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
+            world.setBlockState(topBlock, BlockHandler.CULTIVATOR_TOP.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
         }
     }
 

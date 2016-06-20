@@ -25,20 +25,20 @@ public class JurassiCraftDNATab extends CreativeTabs
     {
         if (stacks == null)
         {
-            int dinosaurs = EntityHandler.INSTANCE.getRegisteredDinosaurs().size();
+            int dinosaurs = EntityHandler.getRegisteredDinosaurs().size();
             this.stacks = new ItemStack[dinosaurs * 3];
 
             int i = 0;
 
-            for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
+            for (Dinosaur dino : EntityHandler.getDinosaurs())
             {
                 if (dino.shouldRegister())
                 {
-                    int id = EntityHandler.INSTANCE.getDinosaurId(dino);
+                    int id = EntityHandler.getDinosaurId(dino);
 
-                    stacks[i] = new ItemStack(ItemHandler.INSTANCE.DNA, 1, id);
-                    stacks[i + dinosaurs] = new ItemStack(ItemHandler.INSTANCE.SOFT_TISSUE, 1, id);
-                    stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.INSTANCE.SYRINGE, 1, id);
+                    stacks[i] = new ItemStack(ItemHandler.DNA, 1, id);
+                    stacks[i + dinosaurs] = new ItemStack(ItemHandler.SOFT_TISSUE, 1, id);
+                    stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.SYRINGE, 1, id);
 
                     i++;
                 }
@@ -51,6 +51,6 @@ public class JurassiCraftDNATab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return ItemHandler.INSTANCE.DNA;
+        return ItemHandler.DNA;
     }
 }

@@ -38,7 +38,7 @@ public class EncasedFossilBlock extends Block implements SubBlocksBlock, Cleanab
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(TabHandler.INSTANCE.FOSSILS);
+        this.setCreativeTab(TabHandler.FOSSILS);
 
         this.start = start;
 
@@ -79,7 +79,7 @@ public class EncasedFossilBlock extends Block implements SubBlocksBlock, Cleanab
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
-        List<Dinosaur> dinosaurs = EntityHandler.INSTANCE.getDinosaurs();
+        List<Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
 
         for (int i = 0; i < 16; i++)
         {
@@ -99,7 +99,7 @@ public class EncasedFossilBlock extends Block implements SubBlocksBlock, Cleanab
 
     public Dinosaur getDinosaur(int metadata)
     {
-        return EntityHandler.INSTANCE.getDinosaurById(start + metadata);
+        return EntityHandler.getDinosaurById(start + metadata);
     }
 
     @Override
@@ -160,8 +160,8 @@ public class EncasedFossilBlock extends Block implements SubBlocksBlock, Cleanab
     @Override
     public ItemStack getCleanedItem(ItemStack stack, Random random)
     {
-        int dinosaurId = BlockHandler.INSTANCE.getDinosaurId((EncasedFossilBlock) Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
-        String[] bones = EntityHandler.INSTANCE.getDinosaurById(dinosaurId).getBones();
-        return new ItemStack(ItemHandler.INSTANCE.FOSSILS.get(bones[random.nextInt(bones.length)]), 1, dinosaurId);
+        int dinosaurId = BlockHandler.getDinosaurId((EncasedFossilBlock) Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
+        String[] bones = EntityHandler.getDinosaurById(dinosaurId).getBones();
+        return new ItemStack(ItemHandler.FOSSILS.get(bones[random.nextInt(bones.length)]), 1, dinosaurId);
     }
 }

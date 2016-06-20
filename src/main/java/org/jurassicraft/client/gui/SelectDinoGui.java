@@ -61,7 +61,7 @@ public class SelectDinoGui extends GuiScreen
 
         page = 0;
 
-        dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getRegisteredDinosaurs());
+        dinosaurs = new ArrayList<>(EntityHandler.getRegisteredDinosaurs());
 
         Collections.sort(dinosaurs);
 
@@ -70,9 +70,6 @@ public class SelectDinoGui extends GuiScreen
         enableDisablePages();
     }
 
-    /**
-     * Called when a mouse button is released.  Args : mouseX, mouseY, releaseButton
-     */
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
@@ -182,7 +179,7 @@ public class SelectDinoGui extends GuiScreen
         {
             if (i >= signsPerPage * page && i < signsPerPage * (page + 1))
             {
-                int id = EntityHandler.INSTANCE.getDinosaurId(dinosaur);
+                int id = EntityHandler.getDinosaurId(dinosaur);
 
                 GlStateManager.pushMatrix();
 
@@ -190,7 +187,7 @@ public class SelectDinoGui extends GuiScreen
 
                 if (texture == null)
                 {
-                    texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.INSTANCE.getDinosaurById(id).getName().toLowerCase() + ".png");
+                    texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase() + ".png");
                     TEXTURES.put(id, texture);
                 }
 

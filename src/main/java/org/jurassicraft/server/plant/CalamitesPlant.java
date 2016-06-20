@@ -15,6 +15,6 @@ public class CalamitesPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(TreeType.CALAMITES);
+        return BlockHandler.ANCIENT_SAPLINGS.get(TreeType.CALAMITES);
     }
 }

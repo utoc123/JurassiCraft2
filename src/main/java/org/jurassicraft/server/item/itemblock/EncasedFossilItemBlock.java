@@ -25,7 +25,7 @@ public class EncasedFossilItemBlock extends ItemBlock
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.getDinosaurById(0);
+            dinosaur = EntityHandler.getDinosaurById(0);
         }
 
         return new LangHelper("tile.encased_fossil.name").withProperty("period", "period." + dinosaur.getPeriod().getName() + ".name").build();
@@ -40,7 +40,7 @@ public class EncasedFossilItemBlock extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        TimePeriod timePeriod = EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata()).getPeriod();
+        TimePeriod timePeriod = EntityHandler.getDinosaurById(stack.getMetadata()).getPeriod();
         return super.getUnlocalizedName() + "." + timePeriod.getName();
     }
 }

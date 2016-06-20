@@ -33,7 +33,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
     public PlacePaddockSignMessage(EnumHand hand, EnumFacing facing, BlockPos pos, Dinosaur dino)
     {
-        this.dino = EntityHandler.INSTANCE.getDinosaurId(dino);
+        this.dino = EntityHandler.getDinosaurId(dino);
         this.pos = new BlockPos(x, y, z);
         this.x = pos.getX();
         this.y = pos.getY();
@@ -59,7 +59,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
         ItemStack heldItem = player.getHeldItem(message.hand);
 
-        if (heldItem != null && heldItem.getItem() == ItemHandler.INSTANCE.PADDOCK_SIGN)
+        if (heldItem != null && heldItem.getItem() == ItemHandler.PADDOCK_SIGN)
         {
             if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface())
             {

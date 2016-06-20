@@ -391,15 +391,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         for (int i = 0; i < count; ++i)
         {
-            int meta = EntityHandler.INSTANCE.getDinosaurId(dinosaur);
+            int meta = EntityHandler.getDinosaurId(dinosaur);
 
             if (burning)
             {
-                entityDropItem(new ItemStack(ItemHandler.INSTANCE.DINOSAUR_STEAK, 1, meta), 0.0F);
+                entityDropItem(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, meta), 0.0F);
             }
             else
             {
-                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.DINOSAUR_MEAT, 1, meta));
+                dropStackWithGenetics(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, meta));
             }
         }
     }
@@ -484,7 +484,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         super.applyEntityAttributes();
 
-        dinosaur = EntityHandler.INSTANCE.getDinosaurByClass(getClass());
+        dinosaur = EntityHandler.getDinosaurByClass(getClass());
 
         getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         updateCreatureData();
@@ -830,7 +830,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (rand.nextInt(10) != 0)
             {
-                dropStackWithGenetics(new ItemStack(ItemHandler.INSTANCE.FRESH_FOSSILS.get(bone), 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur)));
+                dropStackWithGenetics(new ItemStack(ItemHandler.FRESH_FOSSILS.get(bone), 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }
@@ -892,7 +892,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (stack != null && stack.getItem() instanceof BluePrintItem)
             {
-                ((BluePrintItem) stack.getItem()).setDinosaur(stack, EntityHandler.INSTANCE.getDinosaurId(getDinosaur()));
+                ((BluePrintItem) stack.getItem()).setDinosaur(stack, EntityHandler.getDinosaurId(getDinosaur()));
             }
             else if (stack == null && hand == EnumHand.MAIN_HAND && worldObj.isRemote)
             {
@@ -1255,7 +1255,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public ItemStack getPickedResult(RayTraceResult target)
     {
-        return new ItemStack(ItemHandler.INSTANCE.SPAWN_EGG, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        return new ItemStack(ItemHandler.SPAWN_EGG, 1, EntityHandler.getDinosaurId(dinosaur));
     }
 
     @Override

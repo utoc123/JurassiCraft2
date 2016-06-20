@@ -53,16 +53,16 @@ public class ServerEventHandler
         if (event.getEntity() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            player.addStat(AchievementHandler.INSTANCE.jurassicraft, 1);
+            player.addStat(AchievementHandler.JURASSICRAFT, 1);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onItemPickup(PlayerEvent.ItemPickupEvent event)
     {
-        if (event.pickedUp.getEntityItem().getItem() == ItemHandler.INSTANCE.AMBER)
+        if (event.pickedUp.getEntityItem().getItem() == ItemHandler.AMBER)
         {
-            event.player.addStat(AchievementHandler.INSTANCE.amber, 1);
+            event.player.addStat(AchievementHandler.AMBER, 1);
         }
     }
 
@@ -71,25 +71,25 @@ public class ServerEventHandler
     {
         Item item = event.crafting.getItem();
 
-        if (item == ItemHandler.INSTANCE.PLASTER_AND_BANDAGE)
+        if (item == ItemHandler.PLASTER_AND_BANDAGE)
         {
-            event.player.addStat(AchievementHandler.INSTANCE.paleontology, 1);
+            event.player.addStat(AchievementHandler.PALEONTOLOGY, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.CLEANING_STATION))
+        else if (item == Item.getItemFromBlock(BlockHandler.CLEANING_STATION))
         {
-            event.player.addStat(AchievementHandler.INSTANCE.cleaningStation, 1);
+            event.player.addStat(AchievementHandler.CLEANING_STATION, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.FOSSIL_GRINDER))
+        else if (item == Item.getItemFromBlock(BlockHandler.FOSSIL_GRINDER))
         {
-            event.player.addStat(AchievementHandler.INSTANCE.fossilGrinder, 1);
+            event.player.addStat(AchievementHandler.FOSSIL_GRINDER, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.REINFORCED_STONE))
+        else if (item == Item.getItemFromBlock(BlockHandler.REINFORCED_STONE))
         {
-            event.player.addStat(AchievementHandler.INSTANCE.reinforcedStone, 1);
+            event.player.addStat(AchievementHandler.REINFORCED_STONE, 1);
         }
-        else if (item == Item.getItemFromBlock(BlockHandler.INSTANCE.REINFORCED_BRICKS))
+        else if (item == Item.getItemFromBlock(BlockHandler.REINFORCED_BRICKS))
         {
-            event.player.addStat(AchievementHandler.INSTANCE.reinforcedStone, 1);
+            event.player.addStat(AchievementHandler.REINFORCED_STONE, 1);
         }
     }
 
@@ -118,7 +118,7 @@ public class ServerEventHandler
 
                 if (state.isOpaqueCube())
                 {
-                    world.setBlockState(topBlock, BlockHandler.INSTANCE.MOSS.getDefaultState(), 2);
+                    world.setBlockState(topBlock, BlockHandler.MOSS.getDefaultState(), 2);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class ServerEventHandler
 
                     if (state.isOpaqueCube())
                     {
-                        world.setBlockState(topBlock, BlockHandler.INSTANCE.GRACILARIA.getDefaultState(), 2);
+                        world.setBlockState(topBlock, BlockHandler.GRACILARIA.getDefaultState(), 2);
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class ServerEventHandler
         {
             if (rand.nextInt(2) == 0)
             {
-                new WorldGenMinable(BlockHandler.INSTANCE.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
+                new WorldGenMinable(BlockHandler.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
             }
         }
 
@@ -168,7 +168,7 @@ public class ServerEventHandler
 
                 float angle = (float) (rand.nextDouble() * 360.0F);
 
-                IBlockState trackway = BlockHandler.INSTANCE.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.fromAngle(angle)).withProperty(FossilizedTrackwayBlock.VARIANT, type);
+                IBlockState trackway = BlockHandler.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.fromAngle(angle)).withProperty(FossilizedTrackwayBlock.VARIANT, type);
 
                 float xOffset = -MathHelper.sin((float) Math.toRadians(angle));
                 float zOffset = MathHelper.cos((float) Math.toRadians(angle));

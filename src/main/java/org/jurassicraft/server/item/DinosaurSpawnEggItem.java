@@ -41,7 +41,7 @@ public class DinosaurSpawnEggItem extends Item
     {
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.SPAWN_EGGS);
+        this.setCreativeTab(TabHandler.SPAWN_EGGS);
     }
 
     public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)
@@ -122,11 +122,11 @@ public class DinosaurSpawnEggItem extends Item
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.ACHILLOBATOR;
+            dinosaur = EntityHandler.ACHILLOBATOR;
         }
 
         return dinosaur;
@@ -136,13 +136,13 @@ public class DinosaurSpawnEggItem extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

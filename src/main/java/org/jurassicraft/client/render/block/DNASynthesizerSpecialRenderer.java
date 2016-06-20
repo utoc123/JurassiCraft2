@@ -41,7 +41,7 @@ public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNA
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.DNA_SYNTHESIZER)
+        if (blockState.getBlock() == BlockHandler.DNA_SYNTHESIZER)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

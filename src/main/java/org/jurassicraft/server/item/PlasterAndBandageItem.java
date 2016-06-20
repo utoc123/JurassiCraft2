@@ -22,7 +22,7 @@ public class PlasterAndBandageItem extends Item
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
+        this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
@@ -40,16 +40,16 @@ public class PlasterAndBandageItem extends Item
 
             if (block instanceof FossilBlock)
             {
-                int id = BlockHandler.INSTANCE.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
+                int id = BlockHandler.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
 
-                world.setBlockState(pos, BlockHandler.INSTANCE.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.INSTANCE.getMetadata(id)));
+                world.setBlockState(pos, BlockHandler.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.getMetadata(id)));
 
                 if (!player.capabilities.isCreativeMode)
                 {
                     stack.stackSize--;
                 }
 
-                player.addStat(AchievementHandler.INSTANCE.fossils, 1);
+                player.addStat(AchievementHandler.FOSSILS, 1);
 
                 return EnumActionResult.SUCCESS;
             }

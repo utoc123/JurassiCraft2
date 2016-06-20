@@ -58,7 +58,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
 
             if (texture == null)
             {
-                texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.INSTANCE.getDinosaurById(id).getName().toLowerCase() + ".png");
+                texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase() + ".png");
                 TEXTURES.put(id, texture);
             }
 

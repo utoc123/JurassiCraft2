@@ -19,7 +19,7 @@ public class BluePrintItem extends Item
 {
     public BluePrintItem()
     {
-        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
+        this.setCreativeTab(TabHandler.ITEMS);
         this.setMaxStackSize(1);
     }
 
@@ -27,7 +27,7 @@ public class BluePrintItem extends Item
     public String getItemStackDisplayName(ItemStack stack)
     {
         int dinoId = getDinosaur(stack);
-        Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(dinoId);
+        Dinosaur dino = EntityHandler.getDinosaurById(dinoId);
         String name = "blue_print.blank.name";
 
         if (dino != null)

@@ -48,7 +48,7 @@ public class PlantDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
 
         TextFormatting formatting;
 

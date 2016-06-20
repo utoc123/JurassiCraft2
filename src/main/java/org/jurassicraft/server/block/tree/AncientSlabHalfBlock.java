@@ -9,7 +9,7 @@ public class AncientSlabHalfBlock extends AncientSlabBlock
     {
         super(type, state);
         this.setUnlocalizedName(type.name().toLowerCase() + "_slab");
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
     }
 
     @Override

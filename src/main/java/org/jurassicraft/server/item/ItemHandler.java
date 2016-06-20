@@ -20,174 +20,109 @@ import org.jurassicraft.server.tab.TabHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ItemHandler
+public class ItemHandler
 {
-    INSTANCE;
+    public static final PlasterAndBandageItem PLASTER_AND_BANDAGE = new PlasterAndBandageItem();
+    public static final DinosaurSpawnEggItem SPAWN_EGG = new DinosaurSpawnEggItem();
 
-    public PlasterAndBandageItem PLASTER_AND_BANDAGE;
-    public DinosaurSpawnEggItem SPAWN_EGG;
+    public static final DNAItem DNA = new DNAItem();
+    public static final DinosaurEggItem EGG = new DinosaurEggItem();
+    public static final HatchedEggItem HATCHED_EGG = new HatchedEggItem();
+    public static final SoftTissueItem SOFT_TISSUE = new SoftTissueItem();
+    public static final PlantSoftTissueItem PLANT_SOFT_TISSUE = new PlantSoftTissueItem();
 
-    public DNAItem DNA;
-    public DinosaurEggItem EGG;
-    public HatchedEggItem HATCHED_EGG;
-    public SoftTissueItem SOFT_TISSUE;
-    public PlantSoftTissueItem PLANT_SOFT_TISSUE;
+    public static final DinosaurMeatItem DINOSAUR_MEAT = new DinosaurMeatItem();
+    public static final DinosaurSteakItem DINOSAUR_STEAK = new DinosaurSteakItem();
 
-    public DinsaurMeatItem DINOSAUR_MEAT;
-    public DinosaurSteakItem DINOSAUR_STEAK;
+    public static final BluePrintItem BLUEPRINT = new BluePrintItem();
+    public static final PaddockSignItem PADDOCK_SIGN = new PaddockSignItem();
+    public static final AttractionSignItem ATTRACTION_SIGN = new AttractionSignItem();
 
-    public BluePrintItem BLUEPRINT;
-    public PaddockSignItem PADDOCK_SIGN;
-    public AttractionSignItem ATTRACTION_SIGN;
+    public static final AmberItem AMBER = new AmberItem();
+    public static final BasicItem PETRI_DISH = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem PETRI_DISH_AGAR = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem EMPTY_TEST_TUBE = new BasicItem(TabHandler.ITEMS);
 
-    public AmberItem AMBER;
-    public BasicItem PETRI_DISH;
-    public BasicItem PETRI_DISH_AGAR;
-    public BasicItem EMPTY_TEST_TUBE;
+    public static final SyringeItem SYRINGE = new SyringeItem();
+    public static final EmptySyringeItem EMPTY_SYRINGE = new EmptySyringeItem();
 
-    public SyringeItem SYRINGE;
-    public EmptySyringeItem EMPTY_SYRINGE;
+    public static final StorageDiscItem STORAGE_DISC = new StorageDiscItem();
+    public static final BasicItem DNA_NUCLEOTIDES = new BasicItem(TabHandler.ITEMS);
 
-    public StorageDiscItem STORAGE_DISC;
-    public BasicItem DNA_NUCLEOTIDES;
+    public static final PlantDNAItem PLANT_DNA = new PlantDNAItem();
 
-    public PlantDNAItem PLANT_DNA;
+    public static final BasicItem SEA_LAMPREY = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem SEA_LAMPREY;
+    public static final BasicItem IRON_BLADES = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem IRON_ROD = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem HARD_DRIVE = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem LASER = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem IRON_BLADES;
-    public BasicItem IRON_ROD;
-    public BasicItem HARD_DRIVE;
-    public BasicItem LASER;
+    public static final GrowthSerumItem GROWTH_SERUM = new GrowthSerumItem();
 
-    public GrowthSerumItem GROWTH_SERUM;
+    public static final BasicItem PLANT_CELLS = new BasicItem(TabHandler.ITEMS);
+    public static final PlantCallusItem PLANT_CALLUS = new PlantCallusItem();
+    public static final BasicItem PLANT_CELLS_PETRI_DISH = new BasicItem(TabHandler.ITEMS);
+    public static final HelicopterItem HELICOPTER = new HelicopterItem();
+    public static final HelicopterModuleItem MINIGUN_MODULE = new HelicopterModuleItem("minigun");
 
-    public BasicItem PLANT_CELLS;
-    public PlantCallusItem PLANT_CALLUS;
-    public BasicItem PLANT_CELLS_PETRI_DISH;
-    public HelicopterItem HELICOPTER;
-    public HelicopterModuleItem MINIGUN_MODULE;
+    public static final BasicItem TRACKER = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem TRACKER;
+    public static final JCMusicDiscItem JURASSICRAFT_THEME_DISC = new JCMusicDiscItem("jurassicraft_theme");
+    public static final JCMusicDiscItem TROODONS_AND_RAPTORS_DISC = new JCMusicDiscItem("troodons_and_raptors");
+    public static final JCMusicDiscItem DONT_MOVE_A_MUSCLE_DISC = new JCMusicDiscItem("dont_move_a_muscle");
 
-    public JCMusicDiscItem JURASSICRAFT_THEME_DISC;
-    public JCMusicDiscItem TROODONS_AND_RAPTORS_DISC;
-    public JCMusicDiscItem DONT_MOVE_A_MUSCLE_DISC;
+    public static final ActionFigureItem ACTION_FIGURE = new ActionFigureItem();
 
-    public ActionFigureItem ACTION_FIGURE;
+    public static final BasicItem AMBER_KEYCHAIN = new BasicItem(TabHandler.DECORATIONS);
+    public static final BasicItem AMBER_CANE = new BasicItem(TabHandler.DECORATIONS);
+    public static final BasicItem MR_DNA_KEYCHAIN = new BasicItem(TabHandler.DECORATIONS);
 
-    public BasicItem AMBER_KEYCHAIN;
-    public BasicItem AMBER_CANE;
-    public BasicItem MR_DNA_KEYCHAIN;
+    public static final BasicItem BASIC_CIRCUIT = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem ADVANCED_CIRCUIT = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem BASIC_CIRCUIT;
-    public BasicItem ADVANCED_CIRCUIT;
+    public static final BasicItem IRON_NUGGET = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem IRON_NUGGET;
+    public static final Item AJUGINUCULA_SMITHII_SEEDS = new ItemSeeds(BlockHandler.AJUGINUCULA_SMITHII, Blocks.FARMLAND).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(TabHandler.PLANTS);
+    public static final Item AJUGINUCULA_SMITHII_LEAVES = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(TabHandler.PLANTS);
+    public static final BasicItem AJUGINUCULA_SMITHII_OIL = new BasicItem(TabHandler.PLANTS);
 
-    public Item AJUGINUCULA_SMITHII_SEEDS;
-    public Item AJUGINUCULA_SMITHII_LEAVES;
-    public Item AJUGINUCULA_SMITHII_OIL;
+    public static final Item WILD_ONION = new ItemSeeds(BlockHandler.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.PLANTS);
 
-    public Item WILD_ONION;
+    public static final GracilariaItem GRACILARIA = (GracilariaItem) new GracilariaItem(BlockHandler.GRACILARIA).setCreativeTab(TabHandler.PLANTS);
+    public static final BasicItem LIQUID_AGAR = new BasicItem(TabHandler.PLANTS);
 
-    public Item GRACILARIA;
-    public Item LIQUID_AGAR;
+    public static final DinoScannerItem DINO_SCANNER = new DinoScannerItem();
 
-    public Item DINO_SCANNER;
+    public static final PlantFossilItem PLANT_FOSSIL = new PlantFossilItem();
+    public static final TwigFossilItem TWIG_FOSSIL = new TwigFossilItem();
 
-    public Item PLANT_FOSSIL;
-    public Item TWIG_FOSSIL;
+    public static final Map<String, FossilItem> FOSSILS = new HashMap<>();
+    public static final Map<String, FossilItem> FRESH_FOSSILS = new HashMap<>();
 
-    public Map<String, FossilItem> FOSSILS = new HashMap<>();
-    public Map<String, FossilItem> FRESH_FOSSILS = new HashMap<>();
+    public static final BasicItem GYPSUM_POWDER = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem GYPSUM_POWDER;
+    public static final BasicItem COMPUTER_SCREEN = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem KEYBOARD = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem COMPUTER_SCREEN;
-    public BasicItem KEYBOARD;
+    public static final BasicItem DNA_ANALYZER = new BasicItem(TabHandler.ITEMS);
 
-    public BasicItem DNA_ANALYZER;
+    public static final BasicFoodItem CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.FOODS);
 
-    public BasicFoodItem CHILEAN_SEA_BASS;
+    public static final FieldGuideItem FIELD_GUIDE = new FieldGuideItem();
 
-    public FieldGuideItem FIELD_GUIDE;
+    public static final BasicItem CAR_CHASSIS = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem CAR_ENGINE_SYSTEM = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem CAR_SEATS = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem CAR_TIRE = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem CAR_WINDSCREEN = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem UNFINISHED_CAR = new BasicItem(TabHandler.ITEMS);
 
-    public void init()
+    public static final BasicItem JEEP_WRANGLER = new BasicItem(TabHandler.ITEMS);
+
+    public static void init()
     {
-        PLASTER_AND_BANDAGE = new PlasterAndBandageItem();
-        SPAWN_EGG = new DinosaurSpawnEggItem();
-        DNA = new DNAItem();
-        EGG = new DinosaurEggItem();
-        HATCHED_EGG = new HatchedEggItem();
-        DINOSAUR_MEAT = new DinsaurMeatItem();
-        DINOSAUR_STEAK = new DinosaurSteakItem();
-        BLUEPRINT = new BluePrintItem();
-        PADDOCK_SIGN = new PaddockSignItem();
-        ATTRACTION_SIGN = new AttractionSignItem();
-        SOFT_TISSUE = new SoftTissueItem();
-        PLANT_SOFT_TISSUE = new PlantSoftTissueItem();
-        AMBER = new AmberItem();
-        PETRI_DISH = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        PETRI_DISH_AGAR = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        EMPTY_TEST_TUBE = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        SYRINGE = new SyringeItem();
-        EMPTY_SYRINGE = new EmptySyringeItem();
-        STORAGE_DISC = new StorageDiscItem();
-        HARD_DRIVE = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        LASER = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        DNA_NUCLEOTIDES = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        PLANT_DNA = new PlantDNAItem();
-        SEA_LAMPREY = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        IRON_BLADES = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        IRON_ROD = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        GROWTH_SERUM = new GrowthSerumItem();
-        PLANT_CELLS = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        PLANT_CALLUS = new PlantCallusItem();
-        PLANT_CELLS_PETRI_DISH = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        TRACKER = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        ACTION_FIGURE = new ActionFigureItem();
-        DINO_SCANNER = new DinoScannerItem();
-        PLANT_FOSSIL = new PlantFossilItem();
-        TWIG_FOSSIL = new TwigFossilItem();
-
-        AMBER_CANE = new BasicItem(TabHandler.INSTANCE.MERCHANDISE);
-        AMBER_CANE.setFull3D();
-        AMBER_CANE.setMaxStackSize(1);
-        AMBER_KEYCHAIN = new BasicItem(TabHandler.INSTANCE.MERCHANDISE);
-        MR_DNA_KEYCHAIN = new BasicItem(TabHandler.INSTANCE.MERCHANDISE);
-
-        HELICOPTER = new HelicopterItem();
-        MINIGUN_MODULE = new HelicopterModuleItem("minigun");
-
-        JURASSICRAFT_THEME_DISC = new JCMusicDiscItem("jurassicraft_theme");
-        TROODONS_AND_RAPTORS_DISC = new JCMusicDiscItem("troodons_and_raptors");
-        DONT_MOVE_A_MUSCLE_DISC = new JCMusicDiscItem("dont_move_a_muscle");
-
-        BASIC_CIRCUIT = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        ADVANCED_CIRCUIT = new BasicItem(TabHandler.INSTANCE.ITEMS);
-
-        COMPUTER_SCREEN = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        KEYBOARD = new BasicItem(TabHandler.INSTANCE.ITEMS);
-        DNA_ANALYZER = new BasicItem(TabHandler.INSTANCE.ITEMS);
-
-        IRON_NUGGET = new BasicItem(TabHandler.INSTANCE.ITEMS);
-
-        GYPSUM_POWDER = new BasicItem(TabHandler.INSTANCE.ITEMS);
-
-        AJUGINUCULA_SMITHII_SEEDS = new ItemSeeds(BlockHandler.INSTANCE.AJUGINUCULA_SMITHII, Blocks.FARMLAND).setUnlocalizedName("ajuginucula_smithii_seeds").setCreativeTab(TabHandler.INSTANCE.PLANTS);
-        AJUGINUCULA_SMITHII_LEAVES = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(TabHandler.INSTANCE.PLANTS);
-        AJUGINUCULA_SMITHII_OIL = new BasicItem(TabHandler.INSTANCE.PLANTS);
-
-        WILD_ONION = new ItemSeeds(BlockHandler.INSTANCE.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.INSTANCE.PLANTS);
-        GRACILARIA = new GracilariaItem(BlockHandler.INSTANCE.GRACILARIA).setCreativeTab(TabHandler.INSTANCE.PLANTS);
-        LIQUID_AGAR = new BasicItem(TabHandler.INSTANCE.ITEMS);
-
-        CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.INSTANCE.FOODS);
-
-        FIELD_GUIDE = new FieldGuideItem();
-
-        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
         {
             String[] boneTypes = dinosaur.getBones();
 
@@ -282,15 +217,23 @@ public enum ItemHandler
         registerItem(LIQUID_AGAR, "Liquid Agar");
 
         registerItem(CHILEAN_SEA_BASS, "Chilean Sea Bass");
+
+        registerItem(CAR_CHASSIS, "Car Chassis");
+        registerItem(CAR_ENGINE_SYSTEM, "Car Engine System");
+        registerItem(CAR_SEATS, "Car Seats");
+        registerItem(CAR_TIRE, "Car Tire");
+        registerItem(CAR_WINDSCREEN, "Car Windscreen");
+        registerItem(UNFINISHED_CAR, "Unfinished Car");
+        registerItem(JEEP_WRANGLER, "Jeep Wrangler");
     }
 
-    public void registerItemOreDict(Item item, String name, String oreDict)
+    public static void registerItemOreDict(Item item, String name, String oreDict)
     {
         registerItem(item, name);
         OreDictionary.registerOre(oreDict, item);
     }
 
-    public void registerItem(Item item, String name)
+    public static void registerItem(Item item, String name)
     {
         String formattedName = name.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
         item.setUnlocalizedName(formattedName);

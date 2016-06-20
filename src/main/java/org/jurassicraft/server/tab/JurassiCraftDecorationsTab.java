@@ -10,22 +10,22 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
-public class JurassiCraftMerchandiseTab extends CreativeTabs
+public class JurassiCraftDecorationsTab extends CreativeTabs
 {
     private int[] metas;
 
-    public JurassiCraftMerchandiseTab(String label)
+    public JurassiCraftDecorationsTab(String label)
     {
         super(label);
-        this.metas = new int[EntityHandler.INSTANCE.getRegisteredDinosaurs().size()];
+        this.metas = new int[EntityHandler.getRegisteredDinosaurs().size()];
 
         int i = 0;
 
-        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.getDinosaurs())
         {
             if (dino.shouldRegister())
             {
-                metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
+                metas[i] = EntityHandler.getDinosaurId(dino);
 
                 i++;
             }
@@ -42,6 +42,6 @@ public class JurassiCraftMerchandiseTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return ItemHandler.INSTANCE.ACTION_FIGURE;
+        return ItemHandler.ACTION_FIGURE;
     }
 }

@@ -29,7 +29,7 @@ public class JurassiCraftFossilTab extends CreativeTabs
 
         for (Dinosaur dino : fossilDinosaurs)
         {
-            metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
+            metas[i] = EntityHandler.getDinosaurId(dino);
 
             i++;
         }
@@ -60,6 +60,6 @@ public class JurassiCraftFossilTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return ItemHandler.INSTANCE.FOSSILS.get("skull");
+        return ItemHandler.FOSSILS.get("skull");
     }
 }

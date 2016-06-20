@@ -25,9 +25,9 @@ public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<Actio
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.INSTANCE.ACTION_FIGURE)
+        if (state.getBlock() == BlockHandler.ACTION_FIGURE)
         {
-            Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(tileEntity.dinosaur);
+            Dinosaur dino = EntityHandler.getDinosaurById(tileEntity.dinosaur);
 
             GlStateManager.pushMatrix();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

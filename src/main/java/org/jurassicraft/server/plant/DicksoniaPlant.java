@@ -14,6 +14,6 @@ public class DicksoniaPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.DICKSONIA;
+        return BlockHandler.DICKSONIA;
     }
 }

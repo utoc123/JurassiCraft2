@@ -17,15 +17,15 @@ public class JurassiCraftEggsTab extends CreativeTabs
     public JurassiCraftEggsTab(String label)
     {
         super(label);
-        this.metas = new int[EntityHandler.INSTANCE.getRegisteredDinosaurs().size()];
+        this.metas = new int[EntityHandler.getRegisteredDinosaurs().size()];
 
         int i = 0;
 
-        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.getDinosaurs())
         {
             if (dino.shouldRegister() && !(dino.isMammal()))
             {
-                metas[i] = EntityHandler.INSTANCE.getDinosaurId(dino);
+                metas[i] = EntityHandler.getDinosaurId(dino);
 
                 i++;
             }
@@ -42,6 +42,6 @@ public class JurassiCraftEggsTab extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return ItemHandler.INSTANCE.EGG;
+        return ItemHandler.EGG;
     }
 }

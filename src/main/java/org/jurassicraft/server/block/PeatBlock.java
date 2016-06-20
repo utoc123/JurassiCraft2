@@ -21,7 +21,7 @@ public class PeatBlock extends Block
     public PeatBlock()
     {
         super(Material.GROUND);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
         this.setSoundType(SoundType.GROUND);
         this.setHardness(0.5F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MOISTURE, 0));

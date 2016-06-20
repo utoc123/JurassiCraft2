@@ -25,7 +25,7 @@ public class DinosaurSteakItem extends ItemFood
 
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.FOODS);
+        this.setCreativeTab(TabHandler.FOODS);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class DinosaurSteakItem extends ItemFood
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.ACHILLOBATOR;
+            dinosaur = EntityHandler.ACHILLOBATOR;
         }
 
         return dinosaur;
@@ -52,13 +52,13 @@ public class DinosaurSteakItem extends ItemFood
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

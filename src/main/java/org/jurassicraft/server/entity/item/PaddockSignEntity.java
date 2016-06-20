@@ -78,7 +78,7 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
                 }
             }
 
-            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.PADDOCK_SIGN);
+            ItemStack stack = new ItemStack(ItemHandler.PADDOCK_SIGN);
             NBTTagCompound compound = new NBTTagCompound();
             compound.setInteger("Dinosaur", dinosaur);
 

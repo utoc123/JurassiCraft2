@@ -69,7 +69,7 @@ public class IncubatorTile extends MachineBaseTile
         {
             ItemStack egg = slots[process];
 
-            ItemStack incubatedEgg = new ItemStack(ItemHandler.INSTANCE.HATCHED_EGG, 1, egg.getItemDamage());
+            ItemStack incubatedEgg = new ItemStack(ItemHandler.HATCHED_EGG, 1, egg.getItemDamage());
             NBTTagCompound compound = new NBTTagCompound();
             compound.setBoolean("Gender", temperature[process] > 50);
 

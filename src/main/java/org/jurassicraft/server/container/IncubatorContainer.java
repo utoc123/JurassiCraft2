@@ -19,11 +19,11 @@ public class IncubatorContainer extends SyncedFieldContainer
         super((IInventory) tileEntity);
 
         this.incubator = (IncubatorTile) tileEntity;
-        this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, ItemHandler.INSTANCE.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, ItemHandler.INSTANCE.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 2, 79, 14, ItemHandler.INSTANCE.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, ItemHandler.INSTANCE.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, ItemHandler.INSTANCE.EGG));
+        this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, ItemHandler.EGG));
+        this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, ItemHandler.EGG));
+        this.addSlotToContainer(new CustomSlot(incubator, 2, 79, 14, ItemHandler.EGG));
+        this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, ItemHandler.EGG));
+        this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, ItemHandler.EGG));
 
         this.addSlotToContainer(new Slot(incubator, 5, 79, 49));
 

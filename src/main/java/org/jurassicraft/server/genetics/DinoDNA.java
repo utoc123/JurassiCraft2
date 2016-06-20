@@ -27,7 +27,7 @@ public class DinoDNA
         nbt.setInteger("DNAQuality", quality);
         nbt.setString("Genetics", genetics);
         nbt.setString("StorageId", "DinoDNA");
-        nbt.setInteger("Dinosaur", EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        nbt.setInteger("Dinosaur", EntityHandler.getDinosaurId(dinosaur));
     }
 
     public static DinoDNA fromStack(ItemStack stack)
@@ -37,7 +37,7 @@ public class DinoDNA
 
     public static DinoDNA readFromNBT(NBTTagCompound nbt)
     {
-        return new DinoDNA(EntityHandler.INSTANCE.getDinosaurById(nbt.getInteger("Dinosaur")), nbt.getInteger("DNAQuality"), nbt.getString("Genetics"));
+        return new DinoDNA(EntityHandler.getDinosaurById(nbt.getInteger("Dinosaur")), nbt.getInteger("DNAQuality"), nbt.getString("Genetics"));
     }
 
     public int getDNAQuality()

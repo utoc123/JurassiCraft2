@@ -8,7 +8,7 @@ import org.jurassicraft.server.world.tree.GinkgoTreeGenerator;
 
 public enum TreeType
 {
-    GINKGO(PlantHandler.INSTANCE.GINKGO, new GinkgoTreeGenerator()), CALAMITES(PlantHandler.INSTANCE.CALAMITES, new CalamitesTreeGenerator());
+    GINKGO(PlantHandler.GINKGO, new GinkgoTreeGenerator()), CALAMITES(PlantHandler.CALAMITES, new CalamitesTreeGenerator());
 
     private WorldGenAbstractTree generator;
     private Plant plant;

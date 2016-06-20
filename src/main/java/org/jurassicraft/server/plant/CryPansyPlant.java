@@ -14,6 +14,6 @@ public class CryPansyPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.CRY_PANSY;
+        return BlockHandler.CRY_PANSY;
     }
 }

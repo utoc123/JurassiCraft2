@@ -48,7 +48,7 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        if (world.getBlockState(pos).getBlock() == BlockHandler.INSTANCE.CULTIVATOR_TOP)
+        if (world.getBlockState(pos).getBlock() == BlockHandler.CULTIVATOR_TOP)
         {
             pos.add(0, -1, 0);
         }

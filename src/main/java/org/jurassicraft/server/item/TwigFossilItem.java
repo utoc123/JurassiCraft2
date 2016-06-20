@@ -16,7 +16,7 @@ public class TwigFossilItem extends Item implements GrindableItem
     public TwigFossilItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TwigFossilItem extends Item implements GrindableItem
 
         if (outputType == 3)
         {
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.PLANT_SOFT_TISSUE, 1, PlantHandler.INSTANCE.getPlantId(TreeType.values()[random.nextInt(TreeType.values().length)].getPlant()));
+            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, PlantHandler.getPlantId(TreeType.values()[random.nextInt(TreeType.values().length)].getPlant()));
             output.setTagCompound(tag);
             return output;
         }

@@ -8,7 +8,7 @@ itemGroup.jurassicraft.foods=JurassiCraft Foodstuffs
 itemGroup.jurassicraft.plants=JurassiCraft Plants
 itemGroup.jurassicraft.fossils=JurassiCraft Fossils
 itemGroup.jurassicraft.dino_bones=JurassiCraft Bones
-itemGroup.jurassicraft.merchandise=JurassiCraft Merchandise
+itemGroup.jurassicraft.decorations=JurassiCraft Park Decorations
 
 //Entities ==================================================
 entity.jurassicraft.velociraptor.name=Velociraptor
@@ -217,6 +217,13 @@ item.computer_screen.name=Computer Screen
 item.dna_analyzer.name=DNA Analyzer
 item.chilean_sea_bass.name=Chilean Sea Bass
 item.field_guide.name=InGen Field Guide
+item.car_chassis.name=Car Chassis
+item.car_engine_system.name=Car Engine System
+item.car_seats.name=Car Seats
+item.car_tire.name=Car Tire
+item.car_windscreen.name=Car Windscreen
+item.jeep_wrangler.name=Jeep Wrangler
+item.unfinished_car.name=Unfinished Car
 
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds

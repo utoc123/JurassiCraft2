@@ -21,14 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DinsaurMeatItem extends ItemFood
+public class DinosaurMeatItem extends ItemFood
 {
-    public DinsaurMeatItem()
+    public DinosaurMeatItem()
     {
         super(3, 0.3F, true);
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.FOODS);
+        this.setCreativeTab(TabHandler.FOODS);
     }
 
     @Override
@@ -41,20 +41,20 @@ public class DinsaurMeatItem extends ItemFood
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
+        return EntityHandler.getDinosaurById(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

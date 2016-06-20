@@ -45,7 +45,7 @@ public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<Incubato
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.INSTANCE.INCUBATOR)
+        if (state.getBlock() == BlockHandler.INCUBATOR)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
@@ -97,7 +97,7 @@ public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<Incubato
             GlStateManager.translate(x, y + 0.05, z);
             GlStateManager.translate(xOffset, 1.2, zOffset);
             GlStateManager.scale(-0.5F, -0.5F, -0.5F);
-            RenderDinosaurDefinition renderDef = RenderingHandler.INSTANCE.getRenderDef(EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage()));
+            RenderDinosaurDefinition renderDef = RenderingHandler.INSTANCE.getRenderDef(EntityHandler.getDinosaurById(stack.getItemDamage()));
             mc.getTextureManager().bindTexture(renderDef.getEggTexture());
             renderDef.getEggModel().render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
             GlStateManager.popMatrix();

@@ -44,9 +44,9 @@ public class CultivatorTile extends MachineBaseTile
     @Override
     protected boolean canProcess(int process)
     {
-        if (slots[0] != null && slots[0].getItem() == ItemHandler.INSTANCE.SYRINGE && waterLevel == 3)
+        if (slots[0] != null && slots[0].getItem() == ItemHandler.SYRINGE && waterLevel == 3)
         {
-            Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(slots[0].getItemDamage());
+            Dinosaur dino = EntityHandler.getDinosaurById(slots[0].getItemDamage());
 
             if (dino != null)
             {
@@ -63,7 +63,7 @@ public class CultivatorTile extends MachineBaseTile
     @Override
     protected void processItem(int process)
     {
-        Dinosaur dinoInEgg = EntityHandler.INSTANCE.getDinosaurById(slots[0].getItemDamage());
+        Dinosaur dinoInEgg = EntityHandler.getDinosaurById(slots[0].getItemDamage());
 
         waterLevel = 0;
 
@@ -427,7 +427,7 @@ public class CultivatorTile extends MachineBaseTile
     {
         if (slots[0] != null)
         {
-            return EntityHandler.INSTANCE.getDinosaurById(slots[0].getItemDamage());
+            return EntityHandler.getDinosaurById(slots[0].getItemDamage());
         }
 
         return null;

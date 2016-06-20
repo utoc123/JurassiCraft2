@@ -79,71 +79,69 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public enum EntityHandler
+public class EntityHandler
 {
-    INSTANCE;
+    private static List<Dinosaur> dinosaurs = new ArrayList<>();
+    private static HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
 
-    private List<Dinosaur> dinosaurs = new ArrayList<>();
-    private HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
+    public static final Dinosaur BRACHIOSAURUS = new BrachiosaurusDinosaur();
+    public static final Dinosaur DILOPHOSAURUS = new DilophosaurusDinosaur();
+    public static final Dinosaur GALLIMIMUS = new GallimimusDinosaur();
+    public static final Dinosaur PARASAUROLOPHUS = new ParasaurolophusDinosaur();
+    public static final Dinosaur TRICERATOPS = new TriceratopsDinosaur();
+    public static final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
+    public static final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
 
-    public final Dinosaur BRACHIOSAURUS = new BrachiosaurusDinosaur();
-    public final Dinosaur DILOPHOSAURUS = new DilophosaurusDinosaur();
-    public final Dinosaur GALLIMIMUS = new GallimimusDinosaur();
-    public final Dinosaur PARASAUROLOPHUS = new ParasaurolophusDinosaur();
-    public final Dinosaur TRICERATOPS = new TriceratopsDinosaur();
-    public final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
-    public final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
+    public static final Dinosaur DODO = new DodoDinosaur();
+    public static final Dinosaur ACHILLOBATOR = new AchillobatorDinosaur();
+    public static final Dinosaur ANKYLOSAURUS = new AnkylosaurusDinosaur();
+    public static final Dinosaur CARNOTAURUS = new CarnotaurusDinosaur();
+    public static final Dinosaur COELACANTH = new CoelacanthDinosaur();
+    public static final Dinosaur COMPSOGNATHUS = new CompsognathusDinosaur();
+    public static final Dinosaur DUNKLEOSTEUS = new DunkleosteusDinosaur();
+    public static final Dinosaur GIGANOTOSAURUS = new GiganotosaurusDinosaur();
+    public static final Dinosaur HYPSILOPHODON = new HypsilophodonDinosaur();
+    public static final Dinosaur INDOMINUS = new IndominusDinosaur();
+    public static final Dinosaur MAJUNGASAURUS = new MajungasaurusDinosaur();
+    public static final Dinosaur PTERANODON = new PteranodonDinosaur();
+    public static final Dinosaur RUGOPS = new RugopsDinosaur();
+    public static final Dinosaur SEGISAURUS = new SegisaurusDinosaur();
+    public static final Dinosaur SPINOSAURUS = new SpinosaurusDinosaur();
+    public static final Dinosaur STEGOSAURUS = new StegosaurusDinosaur();
+    public static final Dinosaur LEPTICTIDIUM = new LeptictidiumDinosaur();
+    public static final Dinosaur MICROCERATUS = new MicroceratusDinosaur();
+    public static final Dinosaur APATOSAURUS = new ApatosaurusDinosaur();
+    public static final Dinosaur OTHNIELIA = new OthnieliaDinosaur();
+    public static final Dinosaur DIMORPHODON = new DimorphodonDinosaur();
+    public static final Dinosaur TYLOSAURUS = new TylosaurusDinosaur();
+    public static final Dinosaur LUDODACTYLUS = new LudodactylusDinosaur();
+    public static final Dinosaur PROTOCERATOPS = new ProtoceratopsDinosaur();
+    public static final Dinosaur TROPEOGNATHUS = new TropeognathusDinosaur();
+    public static final Dinosaur LEAELLYNASAURA = new LeaellynasauraDinosaur();
+    public static final Dinosaur HERRERASAURUS = new HerrerasaurusDinosaur();
+    public static final Dinosaur BLUE = new VelociraptorBlueDinosaur();
+    public static final Dinosaur DELTA = new VelociraptorDeltaDinosaur();
+    public static final Dinosaur CHARLIE = new VelociraptorCharlieDinosaur();
+    public static final Dinosaur ECHO = new VelociraptorEchoDinosaur();
+    public static final Dinosaur THERIZINOSAURUS = new TherizinosaurusDinosaur();
+    public static final Dinosaur MEGAPIRANHA = new MegapiranhaDinosaur();
+    public static final Dinosaur BARYONYX = new BaryonyxDinosaur();
+    public static final Dinosaur CEARADACTYLUS = new CearadactylusDinosaur();
+    public static final Dinosaur MAMENCHISAURUS = new MamenchisaurusDinosaur();
+    public static final Dinosaur CHASMOSAURUS = new ChasmosaurusDinosaur();
+    public static final Dinosaur CORYTHOSAURUS = new CorythosaurusDinosaur();
+    public static final Dinosaur EDMONTOSAURUS = new EdmontosaurusDinosaur();
+    public static final Dinosaur LAMBEOSAURUS = new LambeosaurusDinosaur();
+    public static final Dinosaur METRIACANTHOSAURUS = new MetriacanthosaurusDinosaur();
+    public static final Dinosaur MOGANOPTERUS = new MoganopterusDinosaur();
+    public static final Dinosaur ORNITHOMIMUS = new OrnithomimusDinosaur();
+    public static final Dinosaur ZHENYUANOPTERUS = new ZhenyuanopterusDinosaur();
+    public static final Dinosaur TROODON = new TroodonDinosaur();
+    public static final Dinosaur PACHYCEPHALOSAURUS = new PachycephalosaurusDinosaur();
 
-    public final Dinosaur DODO = new DodoDinosaur();
-    public final Dinosaur ACHILLOBATOR = new AchillobatorDinosaur();
-    public final Dinosaur ANKYLOSAURUS = new AnkylosaurusDinosaur();
-    public final Dinosaur CARNOTAURUS = new CarnotaurusDinosaur();
-    public final Dinosaur COELACANTH = new CoelacanthDinosaur();
-    public final Dinosaur COMPSOGNATHUS = new CompsognathusDinosaur();
-    public final Dinosaur DUNKLEOSTEUS = new DunkleosteusDinosaur();
-    public final Dinosaur GIGANOTOSAURUS = new GiganotosaurusDinosaur();
-    public final Dinosaur HYPSILOPHODON = new HypsilophodonDinosaur();
-    public final Dinosaur INDOMINUS = new IndominusDinosaur();
-    public final Dinosaur MAJUNGASAURUS = new MajungasaurusDinosaur();
-    public final Dinosaur PTERANODON = new PteranodonDinosaur();
-    public final Dinosaur RUGOPS = new RugopsDinosaur();
-    public final Dinosaur SEGISAURUS = new SegisaurusDinosaur();
-    public final Dinosaur SPINOSAURUS = new SpinosaurusDinosaur();
-    public final Dinosaur STEGOSAURUS = new StegosaurusDinosaur();
-    public final Dinosaur LEPTICTIDIUM = new LeptictidiumDinosaur();
-    public final Dinosaur MICROCERATUS = new MicroceratusDinosaur();
-    public final Dinosaur APATOSAURUS = new ApatosaurusDinosaur();
-    public final Dinosaur OTHNIELIA = new OthnieliaDinosaur();
-    public final Dinosaur DIMORPHODON = new DimorphodonDinosaur();
-    public final Dinosaur TYLOSAURUS = new TylosaurusDinosaur();
-    public final Dinosaur LUDODACTYLUS = new LudodactylusDinosaur();
-    public final Dinosaur PROTOCERATOPS = new ProtoceratopsDinosaur();
-    public final Dinosaur TROPEOGNATHUS = new TropeognathusDinosaur();
-    public final Dinosaur LEAELLYNASAURA = new LeaellynasauraDinosaur();
-    public final Dinosaur HERRERASAURUS = new HerrerasaurusDinosaur();
-    public final Dinosaur BLUE = new VelociraptorBlueDinosaur();
-    public final Dinosaur DELTA = new VelociraptorDeltaDinosaur();
-    public final Dinosaur CHARLIE = new VelociraptorCharlieDinosaur();
-    public final Dinosaur ECHO = new VelociraptorEchoDinosaur();
-    public final Dinosaur THERIZINOSAURUS = new TherizinosaurusDinosaur();
-    public final Dinosaur MEGAPIRANHA = new MegapiranhaDinosaur();
-    public final Dinosaur BARYONYX = new BaryonyxDinosaur();
-    public final Dinosaur CEARADACTYLUS = new CearadactylusDinosaur();
-    public final Dinosaur MAMENCHISAURUS = new MamenchisaurusDinosaur();
-    public final Dinosaur CHASMOSAURUS = new ChasmosaurusDinosaur();
-    public final Dinosaur CORYTHOSAURUS = new CorythosaurusDinosaur();
-    public final Dinosaur EDMONTOSAURUS = new EdmontosaurusDinosaur();
-    public final Dinosaur LAMBEOSAURUS = new LambeosaurusDinosaur();
-    public final Dinosaur METRIACANTHOSAURUS = new MetriacanthosaurusDinosaur();
-    public final Dinosaur MOGANOPTERUS = new MoganopterusDinosaur();
-    public final Dinosaur ORNITHOMIMUS = new OrnithomimusDinosaur();
-    public final Dinosaur ZHENYUANOPTERUS = new ZhenyuanopterusDinosaur();
-    public final Dinosaur TROODON = new TroodonDinosaur();
-    public final Dinosaur PACHYCEPHALOSAURUS = new PachycephalosaurusDinosaur();
+    private static int entityId;
 
-    private int entityId;
-
-    public List<Dinosaur> getDinosaursFromSeaLampreys()
+    public static List<Dinosaur> getDinosaursFromSeaLampreys()
     {
         List<Dinosaur> marineDinos = new ArrayList<>();
 
@@ -158,7 +156,7 @@ public enum EntityHandler
         return marineDinos;
     }
 
-    public void init()
+    public static void init()
     {
         registerDinosaur(VELOCIRAPTOR);
         registerDinosaur(ACHILLOBATOR);
@@ -224,14 +222,14 @@ public enum EntityHandler
         registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
     }
 
-    private void registerEntity(Class<? extends Entity> entity, String name)
+    private static void registerEntity(Class<? extends Entity> entity, String name)
     {
         String formattedName = name.toLowerCase().replaceAll(" ", "_");
 
         EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }
 
-    public void registerDinosaur(Dinosaur dinosaur)
+    public static void registerDinosaur(Dinosaur dinosaur)
     {
         dinosaur.init();
 
@@ -278,7 +276,7 @@ public enum EntityHandler
         }
     }
 
-    public Dinosaur getDinosaurById(int id)
+    public static Dinosaur getDinosaurById(int id)
     {
         if (id >= dinosaurs.size() || id < 0)
         {
@@ -288,12 +286,12 @@ public enum EntityHandler
         return dinosaurs.get(id);
     }
 
-    public int getDinosaurId(Dinosaur dinosaur)
+    public static int getDinosaurId(Dinosaur dinosaur)
     {
         return dinosaurs.indexOf(dinosaur);
     }
 
-    public List<Dinosaur> getDinosaursFromAmber()
+    public static List<Dinosaur> getDinosaursFromAmber()
     {
         List<Dinosaur> amberDinos = new ArrayList<>();
 
@@ -308,12 +306,12 @@ public enum EntityHandler
         return amberDinos;
     }
 
-    public List<Dinosaur> getDinosaurs()
+    public static List<Dinosaur> getDinosaurs()
     {
         return dinosaurs;
     }
 
-    public List<Dinosaur> getRegisteredDinosaurs()
+    public static List<Dinosaur> getRegisteredDinosaurs()
     {
         List<Dinosaur> reg = new ArrayList<>();
 
@@ -328,12 +326,12 @@ public enum EntityHandler
         return reg;
     }
 
-    public List<Dinosaur> getDinosaursFromPeriod(TimePeriod period)
+    public static List<Dinosaur> getDinosaursFromPeriod(TimePeriod period)
     {
         return dinosaursFromPeriod.get(period);
     }
 
-    public Dinosaur getDinosaurByClass(Class<? extends DinosaurEntity> clazz)
+    public static Dinosaur getDinosaurByClass(Class<? extends DinosaurEntity> clazz)
     {
         for (Dinosaur dino : dinosaurs)
         {

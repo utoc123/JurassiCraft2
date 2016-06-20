@@ -23,7 +23,7 @@ public class IceShardBlock extends Block
         super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
         this.setHarvestLevel("pickaxe", 2);
     }
 
@@ -36,7 +36,7 @@ public class IceShardBlock extends Block
 
         if (rand.nextDouble() < 0.2 + ((fortune / 3.0) * 0.8))
         {
-            ret.add(new ItemStack(ItemHandler.INSTANCE.SEA_LAMPREY));
+            ret.add(new ItemStack(ItemHandler.SEA_LAMPREY));
         }
         else if (rand.nextDouble() < 0.2)
         {

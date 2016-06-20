@@ -27,7 +27,7 @@ public class SoftTissueItem extends Item implements SequencableItem
     {
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.DNA);
+        this.setCreativeTab(TabHandler.DNA);
     }
 
     @Override
@@ -40,11 +40,11 @@ public class SoftTissueItem extends Item implements SequencableItem
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        Dinosaur dinosaur = EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
+        Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.INSTANCE.ACHILLOBATOR;
+            dinosaur = EntityHandler.ACHILLOBATOR;
         }
 
         return dinosaur;
@@ -54,13 +54,13 @@ public class SoftTissueItem extends Item implements SequencableItem
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);
@@ -89,11 +89,11 @@ public class SoftTissueItem extends Item implements SequencableItem
         {
             nbt = new NBTTagCompound();
             int quality = SequencableItem.randomQuality(random);
-            DinoDNA dna = new DinoDNA(EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage()), quality, GeneticsHelper.randomGenetics(random));
+            DinoDNA dna = new DinoDNA(EntityHandler.getDinosaurById(stack.getItemDamage()), quality, GeneticsHelper.randomGenetics(random));
             dna.writeToNBT(nbt);
         }
 
-        ItemStack output = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, stack.getItemDamage());
+        ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, stack.getItemDamage());
         output.setTagCompound(nbt);
 
         return output;

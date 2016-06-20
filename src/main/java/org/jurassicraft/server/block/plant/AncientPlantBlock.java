@@ -22,7 +22,7 @@ public class AncientPlantBlock extends BlockBush
     public AncientPlantBlock(Material material)
     {
         super(material);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
         this.setSoundType(SoundType.PLANT);
         this.setTickRandomly(true);
     }

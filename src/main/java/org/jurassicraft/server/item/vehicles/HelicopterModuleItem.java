@@ -19,7 +19,7 @@ public class HelicopterModuleItem extends Item
     {
         moduleID = helicopterModuleID;
         module = checkNotNull(HelicopterModule.registry.get(helicopterModuleID), "Invalid module id " + helicopterModuleID);
-        setCreativeTab(TabHandler.INSTANCE.ITEMS);
+        setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override

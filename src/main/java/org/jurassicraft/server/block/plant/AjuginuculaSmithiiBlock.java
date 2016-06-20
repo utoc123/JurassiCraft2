@@ -16,12 +16,12 @@ public class AjuginuculaSmithiiBlock extends JCBlockCrops8
     @Override
     protected Item getSeed()
     {
-        return ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_SEEDS;
+        return ItemHandler.AJUGINUCULA_SMITHII_SEEDS;
     }
 
     @Override
     protected Item getCrop()
     {
-        return ItemHandler.INSTANCE.AJUGINUCULA_SMITHII_LEAVES;
+        return ItemHandler.AJUGINUCULA_SMITHII_LEAVES;
     }
 }

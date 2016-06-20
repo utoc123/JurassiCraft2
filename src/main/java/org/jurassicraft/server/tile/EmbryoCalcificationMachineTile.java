@@ -33,11 +33,11 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
 
         if (input != null && input.getItem() instanceof SyringeItem && egg != null && egg.getItem() == Items.EGG)
         {
-            Dinosaur dino = EntityHandler.INSTANCE.getDinosaurById(input.getItemDamage());
+            Dinosaur dino = EntityHandler.getDinosaurById(input.getItemDamage());
 
             if (!dino.isMammal())
             {
-                ItemStack output = new ItemStack(ItemHandler.INSTANCE.EGG, 1, input.getItemDamage());
+                ItemStack output = new ItemStack(ItemHandler.EGG, 1, input.getItemDamage());
                 output.setTagCompound(input.getTagCompound());
 
                 return hasOutputSlot(output);
@@ -52,7 +52,7 @@ public class EmbryoCalcificationMachineTile extends MachineBaseTile
     {
         if (this.canProcess(process))
         {
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.EGG, 1, slots[0].getItemDamage());
+            ItemStack output = new ItemStack(ItemHandler.EGG, 1, slots[0].getItemDamage());
             output.setTagCompound(slots[0].getTagCompound());
 
             mergeStack(2, output);

@@ -39,7 +39,7 @@ public class DNAExtractorTile extends MachineBaseTile
         ItemStack extraction = slots[0];
         ItemStack storage = slots[1];
 
-        if (storage != null && storage.getItem() == ItemHandler.INSTANCE.STORAGE_DISC && extraction != null && (extraction.getItem() == ItemHandler.INSTANCE.AMBER || extraction.getItem() == ItemHandler.INSTANCE.SEA_LAMPREY || extraction.getItem() == ItemHandler.INSTANCE.DINOSAUR_MEAT) && (storage.getTagCompound() == null || !storage.getTagCompound().hasKey("Genetics")))
+        if (storage != null && storage.getItem() == ItemHandler.STORAGE_DISC && extraction != null && (extraction.getItem() == ItemHandler.AMBER || extraction.getItem() == ItemHandler.SEA_LAMPREY || extraction.getItem() == ItemHandler.DINOSAUR_MEAT) && (storage.getTagCompound() == null || !storage.getTagCompound().hasKey("Genetics")))
         {
             for (int i = 2; i < 6; i++)
             {
@@ -65,17 +65,17 @@ public class DNAExtractorTile extends MachineBaseTile
 
             Item item = input.getItem();
 
-            if (item == ItemHandler.INSTANCE.AMBER || item == ItemHandler.INSTANCE.SEA_LAMPREY)
+            if (item == ItemHandler.AMBER || item == ItemHandler.SEA_LAMPREY)
             {
                 if (input.getItemDamage() == 0)
                 {
-                    List<Dinosaur> possibleDinos = item == ItemHandler.INSTANCE.AMBER ? EntityHandler.INSTANCE.getDinosaursFromAmber() : EntityHandler.INSTANCE.getDinosaursFromSeaLampreys();
+                    List<Dinosaur> possibleDinos = item == ItemHandler.AMBER ? EntityHandler.getDinosaursFromAmber() : EntityHandler.getDinosaursFromSeaLampreys();
 
                     Dinosaur dino = possibleDinos.get(rand.nextInt(possibleDinos.size()));
 
-                    int dinosaurId = EntityHandler.INSTANCE.getDinosaurId(dino);
+                    int dinosaurId = EntityHandler.getDinosaurId(dino);
 
-                    disc = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, dinosaurId);
+                    disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, dinosaurId);
 
                     int quality = rand.nextInt(50);
 
@@ -93,12 +93,12 @@ public class DNAExtractorTile extends MachineBaseTile
                 }
                 else if (input.getItemDamage() == 1)
                 {
-                    List<Plant> possiblePlants = PlantHandler.INSTANCE.getPlants();
+                    List<Plant> possiblePlants = PlantHandler.getPlants();
                     Plant plant = possiblePlants.get(rand.nextInt(possiblePlants.size()));
 
-                    int plantId = PlantHandler.INSTANCE.getPlantId(plant);
+                    int plantId = PlantHandler.getPlantId(plant);
 
-                    disc = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, plantId);
+                    disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, plantId);
 
                     int quality = rand.nextInt(50);
 
@@ -115,9 +115,9 @@ public class DNAExtractorTile extends MachineBaseTile
                     disc.setTagCompound(nbt);
                 }
             }
-            else if (item == ItemHandler.INSTANCE.DINOSAUR_MEAT)
+            else if (item == ItemHandler.DINOSAUR_MEAT)
             {
-                disc = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, input.getItemDamage());
+                disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, input.getItemDamage());
 
                 disc.setTagCompound(input.getTagCompound());
             }

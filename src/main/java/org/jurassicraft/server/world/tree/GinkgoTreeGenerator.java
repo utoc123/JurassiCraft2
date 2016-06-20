@@ -22,8 +22,8 @@ public class GinkgoTreeGenerator extends WorldGenAbstractTree
     @Override
     public boolean generate(World world, Random rand, BlockPos position)
     {
-        IBlockState log = BlockHandler.INSTANCE.ANCIENT_LOGS.get(TreeType.GINKGO).getDefaultState();
-        IBlockState leaves = BlockHandler.INSTANCE.ANCIENT_LEAVES.get(TreeType.GINKGO).getDefaultState();
+        IBlockState log = BlockHandler.ANCIENT_LOGS.get(TreeType.GINKGO).getDefaultState();
+        IBlockState leaves = BlockHandler.ANCIENT_LEAVES.get(TreeType.GINKGO).getDefaultState();
 
         int height = rand.nextInt(16) + 4;
 

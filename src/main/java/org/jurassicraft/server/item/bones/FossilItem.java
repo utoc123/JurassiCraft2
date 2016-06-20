@@ -38,12 +38,12 @@ public class FossilItem extends Item implements GrindableItem
 
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.INSTANCE.BONES);
+        this.setCreativeTab(TabHandler.BONES);
     }
 
     public static void init()
     {
-        for (Dinosaur dinosaur : EntityHandler.INSTANCE.getDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
         {
             String[] boneTypes = dinosaur.getBones();
 
@@ -78,20 +78,20 @@ public class FossilItem extends Item implements GrindableItem
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return EntityHandler.INSTANCE.getDinosaurById(stack.getItemDamage());
+        return EntityHandler.getDinosaurById(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getRegisteredDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getRegisteredDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);
@@ -155,7 +155,7 @@ public class FossilItem extends Item implements GrindableItem
 
         if (outputType == 5 || stack.getUnlocalizedName().contains("fresh"))
         {
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.SOFT_TISSUE, 1, stack.getItemDamage());
+            ItemStack output = new ItemStack(ItemHandler.SOFT_TISSUE, 1, stack.getItemDamage());
             output.setTagCompound(tag);
             return output;
         }

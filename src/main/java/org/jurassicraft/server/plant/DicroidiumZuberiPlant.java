@@ -14,6 +14,6 @@ public class DicroidiumZuberiPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.DICROIDIUM_ZUBERI;
+        return BlockHandler.DICROIDIUM_ZUBERI;
     }
 }

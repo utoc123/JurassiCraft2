@@ -53,7 +53,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
             dinosaurs[i] = getDino(discs[i]);
         }
 
-        for (Dinosaur dino : EntityHandler.INSTANCE.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.getDinosaurs())
         {
             if (dino instanceof Hybrid && dino.shouldRegister())
             {
@@ -122,7 +122,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
         }
         else
         {
-            if (slots[8] != null && slots[8].getItem() == ItemHandler.INSTANCE.STORAGE_DISC && slots[9] != null && slots[9].getItem() == ItemHandler.INSTANCE.STORAGE_DISC)
+            if (slots[8] != null && slots[8].getItem() == ItemHandler.STORAGE_DISC && slots[9] != null && slots[9].getItem() == ItemHandler.STORAGE_DISC)
             {
                 if (slots[8].getTagCompound() != null && slots[9].getTagCompound() != null && slots[11] == null && slots[8].getItemDamage() == slots[9].getItemDamage() && slots[8].getTagCompound().getString("StorageId").equals(slots[9].getTagCompound().getString("StorageId")))
                 {
@@ -148,8 +148,8 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
                 DinoDNA dna = new DinoDNA(hybrid, 100, slots[0].getTagCompound().getString("Genetics"));
                 dna.writeToNBT(nbt);
 
-                ItemStack output = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, EntityHandler.INSTANCE.getDinosaurId(hybrid));
-                output.setItemDamage(EntityHandler.INSTANCE.getDinosaurId(dna.getDinosaur()));
+                ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, EntityHandler.getDinosaurId(hybrid));
+                output.setItemDamage(EntityHandler.getDinosaurId(dna.getDinosaur()));
                 output.setTagCompound(nbt);
 
                 mergeStack(getOutputSlot(output), output);
@@ -161,7 +161,7 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
             }
             else
             {
-                ItemStack output = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, slots[8].getItemDamage());
+                ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, slots[8].getItemDamage());
 
                 String storageId = slots[8].getTagCompound().getString("StorageId");
 

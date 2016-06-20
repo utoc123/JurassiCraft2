@@ -30,18 +30,18 @@ public class EmbryonicMachineTile extends MachineBaseTile
         ItemStack petridish = slots[1];
         ItemStack syringe = slots[2];
 
-        if (dna != null && petridish != null && syringe != null && syringe.getItem() == ItemHandler.INSTANCE.EMPTY_SYRINGE)
+        if (dna != null && petridish != null && syringe != null && syringe.getItem() == ItemHandler.EMPTY_SYRINGE)
         {
             ItemStack output = null;
 
-            if (petridish.getItem() == ItemHandler.INSTANCE.PETRI_DISH && dna.getItem() instanceof DNAItem)
+            if (petridish.getItem() == ItemHandler.PETRI_DISH && dna.getItem() instanceof DNAItem)
             {
-                output = new ItemStack(ItemHandler.INSTANCE.SYRINGE, 1, dna.getItemDamage());
+                output = new ItemStack(ItemHandler.SYRINGE, 1, dna.getItemDamage());
                 output.setTagCompound(dna.getTagCompound());
             }
-            else if (petridish.getItem() == ItemHandler.INSTANCE.PLANT_CELLS_PETRI_DISH && dna.getItem() instanceof PlantDNAItem)
+            else if (petridish.getItem() == ItemHandler.PLANT_CELLS_PETRI_DISH && dna.getItem() instanceof PlantDNAItem)
             {
-                output = new ItemStack(ItemHandler.INSTANCE.PLANT_CALLUS, 1, dna.getItemDamage());
+                output = new ItemStack(ItemHandler.PLANT_CALLUS, 1, dna.getItemDamage());
                 output.setTagCompound(dna.getTagCompound());
             }
 
@@ -58,13 +58,13 @@ public class EmbryonicMachineTile extends MachineBaseTile
         {
             ItemStack output = null;
 
-            if (slots[0].getItem() instanceof DNAItem && slots[1].getItem() == ItemHandler.INSTANCE.PETRI_DISH)
+            if (slots[0].getItem() instanceof DNAItem && slots[1].getItem() == ItemHandler.PETRI_DISH)
             {
-                output = new ItemStack(ItemHandler.INSTANCE.SYRINGE, 1, slots[0].getItemDamage());
+                output = new ItemStack(ItemHandler.SYRINGE, 1, slots[0].getItemDamage());
             }
-            else if (slots[0].getItem() instanceof PlantDNAItem && slots[1].getItem() == ItemHandler.INSTANCE.PLANT_CELLS_PETRI_DISH)
+            else if (slots[0].getItem() instanceof PlantDNAItem && slots[1].getItem() == ItemHandler.PLANT_CELLS_PETRI_DISH)
             {
-                output = new ItemStack(ItemHandler.INSTANCE.PLANT_CALLUS, 1, slots[0].getItemDamage());
+                output = new ItemStack(ItemHandler.PLANT_CALLUS, 1, slots[0].getItemDamage());
             }
 
             output.setTagCompound(slots[0].getTagCompound());

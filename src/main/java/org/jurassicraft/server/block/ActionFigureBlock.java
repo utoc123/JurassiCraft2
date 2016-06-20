@@ -85,14 +85,14 @@ public class ActionFigureBlock extends OrientedBlock
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.ACTION_FIGURE;
+        return ItemHandler.ACTION_FIGURE;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
-        return new ItemStack(ItemHandler.INSTANCE.ACTION_FIGURE);
+        return new ItemStack(ItemHandler.ACTION_FIGURE);
     }
 
     @Override

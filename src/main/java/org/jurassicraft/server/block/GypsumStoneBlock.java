@@ -14,7 +14,7 @@ public class GypsumStoneBlock extends Block
     public GypsumStoneBlock()
     {
         super(Material.ROCK);
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
         this.setHardness(1.5F);
         this.setResistance(1.5F);
     }
@@ -22,7 +22,7 @@ public class GypsumStoneBlock extends Block
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.GYPSUM_POWDER;
+        return ItemHandler.GYPSUM_POWDER;
     }
 
     @Override

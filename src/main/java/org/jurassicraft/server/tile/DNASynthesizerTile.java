@@ -33,7 +33,7 @@ public class DNASynthesizerTile extends MachineBaseTile
 
         SynthesizableItem synthesizableItem = SynthesizableItem.getSynthesizableItem(storage);
 
-        if (synthesizableItem != null && synthesizableItem.isSynthesizable(storage) && testTube != null && testTube.getItem() == ItemHandler.INSTANCE.EMPTY_TEST_TUBE && baseMaterial != null && baseMaterial.getItem() == ItemHandler.INSTANCE.DNA_NUCLEOTIDES && (storage.getTagCompound() != null && storage.getTagCompound().hasKey("DNAQuality")))
+        if (synthesizableItem != null && synthesizableItem.isSynthesizable(storage) && testTube != null && testTube.getItem() == ItemHandler.EMPTY_TEST_TUBE && baseMaterial != null && baseMaterial.getItem() == ItemHandler.DNA_NUCLEOTIDES && (storage.getTagCompound() != null && storage.getTagCompound().hasKey("DNAQuality")))
         {
             ItemStack output = synthesizableItem.getSynthesizedItem(storage, new Random(0));
 

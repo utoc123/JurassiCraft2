@@ -15,7 +15,7 @@ public class PlantFossilItem extends Item implements GrindableItem
     public PlantFossilItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PlantFossilItem extends Item implements GrindableItem
 
         if (outputType == 3)
         {
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.PLANT_SOFT_TISSUE, 1, random.nextInt(PlantHandler.INSTANCE.getPlants().size()));
+            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, random.nextInt(PlantHandler.getPlants().size()));
             output.setTagCompound(tag);
             return output;
         }

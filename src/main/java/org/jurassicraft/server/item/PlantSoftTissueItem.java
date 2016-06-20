@@ -25,7 +25,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
     public PlantSoftTissueItem()
     {
         this.setHasSubtypes(true);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
 
     public Plant getPlant(ItemStack stack)
     {
-        Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
+        Plant plant = PlantHandler.getPlantById(stack.getItemDamage());
 
         if (plant == null)
         {
-            plant = PlantHandler.INSTANCE.SMALL_ROYAL_FERN;
+            plant = PlantHandler.SMALL_ROYAL_FERN;
         }
 
         return plant;
@@ -52,13 +52,13 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<>(PlantHandler.INSTANCE.getPlants());
+        List<Plant> plants = new ArrayList<>(PlantHandler.getPlants());
 
         Map<Plant, Integer> ids = new HashMap<>();
 
         for (Plant plant : plants)
         {
-            ids.put(plant, PlantHandler.INSTANCE.getPlantId(plant));
+            ids.put(plant, PlantHandler.getPlantId(plant));
         }
 
         Collections.sort(plants);
@@ -90,7 +90,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
             dna.writeToNBT(nbt);
         }
 
-        ItemStack output = new ItemStack(ItemHandler.INSTANCE.STORAGE_DISC, 1, stack.getItemDamage());
+        ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, stack.getItemDamage());
         output.setTagCompound(nbt);
 
         return output;

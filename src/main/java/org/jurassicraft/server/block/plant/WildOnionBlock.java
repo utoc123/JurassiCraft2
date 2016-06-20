@@ -16,13 +16,13 @@ public class WildOnionBlock extends JCBlockCrops7
     @Override
     protected Item getSeed()
     {
-        return ItemHandler.INSTANCE.WILD_ONION;
+        return ItemHandler.WILD_ONION;
     }
 
     @Override
     protected Item getCrop()
     {
-        return ItemHandler.INSTANCE.WILD_ONION;
+        return ItemHandler.WILD_ONION;
     }
 
 }

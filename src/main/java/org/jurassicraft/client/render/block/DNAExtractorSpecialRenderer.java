@@ -42,7 +42,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
     {
         IBlockState blockState = tileEntity.getWorld().getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.DNA_EXTRACTOR)
+        if (blockState.getBlock() == BlockHandler.DNA_EXTRACTOR)
         {
             GlStateManager.pushMatrix();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

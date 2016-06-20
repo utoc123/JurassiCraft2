@@ -70,7 +70,7 @@ public class GracilariaBlock extends BlockBush
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ItemHandler.INSTANCE.GRACILARIA;
+        return ItemHandler.GRACILARIA;
     }
 
     @Override

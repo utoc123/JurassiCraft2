@@ -16,7 +16,7 @@ public class FieldGuideItem extends Item
     public FieldGuideItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
+        this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override

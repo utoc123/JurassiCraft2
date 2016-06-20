@@ -36,7 +36,7 @@ public class FossilBlock extends Block implements SubBlocksBlock
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(TabHandler.INSTANCE.FOSSILS);
+        this.setCreativeTab(TabHandler.FOSSILS);
 
         this.start = start;
 
@@ -64,7 +64,7 @@ public class FossilBlock extends Block implements SubBlocksBlock
     @Override
     protected ItemStack createStackedBlock(IBlockState state)
     {
-        return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
+        return new ItemStack(this, 1, getMetaFromState(state));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class FossilBlock extends Block implements SubBlocksBlock
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
-        List<Dinosaur> dinosaurs = EntityHandler.INSTANCE.getDinosaurs();
+        List<Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
 
         for (int i = 0; i < 16; i++)
         {
@@ -97,7 +97,7 @@ public class FossilBlock extends Block implements SubBlocksBlock
 
     public Dinosaur getDinosaur(int metadata)
     {
-        return EntityHandler.INSTANCE.getDinosaurById(start + metadata);
+        return EntityHandler.getDinosaurById(start + metadata);
     }
 
     @Override

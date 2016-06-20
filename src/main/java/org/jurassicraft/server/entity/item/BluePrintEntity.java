@@ -78,7 +78,7 @@ public class BluePrintEntity extends EntityHanging implements IEntityAdditionalS
                 }
             }
 
-            ItemStack stack = new ItemStack(ItemHandler.INSTANCE.BLUEPRINT);
+            ItemStack stack = new ItemStack(ItemHandler.BLUEPRINT);
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("Dinosaur", dinosaur);
 

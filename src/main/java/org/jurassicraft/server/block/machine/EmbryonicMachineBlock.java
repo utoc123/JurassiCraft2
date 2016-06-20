@@ -29,7 +29,7 @@ public class EmbryonicMachineBlock extends OrientedBlock
         this.setUnlocalizedName("embryonic_machine");
         this.setHardness(2.0F);
         this.setSoundType(SoundType.METAL);
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
     }
 
     @Override

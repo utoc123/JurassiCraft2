@@ -31,7 +31,7 @@ public class MossBlock extends Block
         this.setHardness(0.2F);
         this.setResistance(0.0F);
         this.setTickRandomly(true);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
         this.setSoundType(SoundType.PLANT);
         this.setLightOpacity(0);
     }

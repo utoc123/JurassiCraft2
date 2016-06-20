@@ -28,7 +28,7 @@ public class DinosaurEggItem extends DNAContainerItem
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.EGGS);
+        this.setCreativeTab(TabHandler.EGGS);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
     }
@@ -43,26 +43,26 @@ public class DinosaurEggItem extends DNAContainerItem
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata());
+        return EntityHandler.getDinosaurById(stack.getMetadata());
     }
 
     @Override
     public int getContainerId(ItemStack stack)
     {
-        return EntityHandler.INSTANCE.getDinosaurId(getDinosaur(stack));
+        return EntityHandler.getDinosaurId(getDinosaur(stack));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);

@@ -15,6 +15,6 @@ public class GinkgoPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(TreeType.GINKGO);
+        return BlockHandler.ANCIENT_SAPLINGS.get(TreeType.GINKGO);
     }
 }

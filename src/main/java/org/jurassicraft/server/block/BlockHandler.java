@@ -63,127 +63,73 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum BlockHandler
+public class BlockHandler
 {
-    INSTANCE;
+    public static final Map<TreeType, AncientPlanksBlock> ANCIENT_PLANKS = new HashMap<>();
+    public static final Map<TreeType, AncientLogBlock> ANCIENT_LOGS = new HashMap<>();
+    public static final Map<TreeType, AncientLeavesBlock> ANCIENT_LEAVES = new HashMap<>();
+    public static final Map<TreeType, AncientSaplingBlock> ANCIENT_SAPLINGS = new HashMap<>();
 
-    public Map<TreeType, AncientPlanksBlock> ANCIENT_PLANKS = new HashMap<>();
-    public Map<TreeType, AncientLogBlock> ANCIENT_LOGS = new HashMap<>();
-    public Map<TreeType, AncientLeavesBlock> ANCIENT_LEAVES = new HashMap<>();
-    public Map<TreeType, AncientSaplingBlock> ANCIENT_SAPLINGS = new HashMap<>();
+    public static final Map<TreeType, AncientSlabHalfBlock> ANCIENT_SLABS = new HashMap<>();
+    public static final Map<TreeType, AncientDoubleSlabBlock> ANCIENT_DOUBLE_SLABS = new HashMap<>();
+    public static final Map<TreeType, AncientStairsBlock> ANCIENT_STAIRS = new HashMap<>();
 
-    public Map<TreeType, AncientSlabHalfBlock> ANCIENT_SLABS = new HashMap<>();
-    public Map<TreeType, AncientDoubleSlabBlock> ANCIENT_DOUBLE_SLABS = new HashMap<>();
-    public Map<TreeType, AncientStairsBlock> ANCIENT_STAIRS = new HashMap<>();
+    public static final Map<TreeType, AncientLogBlock> PETRIFIED_LOGS = new HashMap<>();
 
-    public Map<TreeType, AncientLogBlock> PETRIFIED_LOGS = new HashMap<>();
+    public static final List<FossilBlock> FOSSILS = new ArrayList<>();
+    public static final List<EncasedFossilBlock> ENCASED_FOSSILS = new ArrayList<>();
 
-    public List<FossilBlock> FOSSILS;
-    public List<EncasedFossilBlock> ENCASED_FOSSILS;
+    public static final PlantFossilBlock PLANT_FOSSIL = new PlantFossilBlock();
 
-    public PlantFossilBlock PLANT_FOSSIL;
+    public static final CleaningStationBlock CLEANING_STATION = new CleaningStationBlock();
+    public static final FossilGrinderBlock FOSSIL_GRINDER = new FossilGrinderBlock();
+    public static final DNASequencerBlock DNA_SEQUENCER = new DNASequencerBlock();
+    public static final DNASynthesizerBlock DNA_SYNTHESIZER = new DNASynthesizerBlock();
+    public static final EmbryonicMachineBlock EMBRYONIC_MACHINE = new EmbryonicMachineBlock();
+    public static final EmbryoCalcificationMachineBlock EMBRYO_CALCIFICATION_MACHINE = new EmbryoCalcificationMachineBlock();
+    public static final IncubatorBlock INCUBATOR = new IncubatorBlock();
+    public static final DNAExtractorBlock DNA_EXTRACTOR = new DNAExtractorBlock();
+    public static final DNACombinatorHybridizerBlock DNA_COMBINATOR_HYBRIDIZER = new DNACombinatorHybridizerBlock();
 
-    public CleaningStationBlock CLEANING_STATION;
-    public FossilGrinderBlock FOSSIL_GRINDER;
-    public DNASequencerBlock DNA_SEQUENCER;
-    public DNASynthesizerBlock DNA_SYNTHESIZER;
-    public EmbryonicMachineBlock EMBRYONIC_MACHINE;
-    public EmbryoCalcificationMachineBlock EMBRYO_CALCIFICATION_MACHINE;
-    public IncubatorBlock INCUBATOR;
-    public DNAExtractorBlock DNA_EXTRACTOR;
-    public DNACombinatorHybridizerBlock DNA_COMBINATOR_HYBRIDIZER;
+    public static final AmberBlock AMBER_ORE = new AmberBlock();
+    public static final IceShardBlock ICE_SHARD = new IceShardBlock();
 
-    public AmberBlock AMBER_ORE;
-    public IceShardBlock ICE_SHARD;
+    public static final GypsumStoneBlock GYPSUM_STONE = new GypsumStoneBlock();
+    public static final Block GYPSUM_COBBLESTONE = new BasicBlock(Material.ROCK).setHardness(1.5F);
+    public static final Block GYPSUM_BRICKS = new BasicBlock(Material.ROCK).setHardness(2.0F);
 
-    public Block GYPSUM_COBBLESTONE;
-    public Block GYPSUM_STONE;
-    public Block GYPSUM_BRICKS;
+    public static final Block REINFORCED_STONE = new BasicBlock(Material.ROCK).setHardness(2.0F);
+    public static final Block REINFORCED_BRICKS = new BasicBlock(Material.ROCK).setHardness(3.0F);
 
-    public Block REINFORCED_STONE;
-    public Block REINFORCED_BRICKS;
+    public static final CultivatorTopBlock CULTIVATOR_TOP = new CultivatorTopBlock();
+    public static final CultivatorBottomBlock CULTIVATOR_BOTTOM = new CultivatorBottomBlock();
 
-    public SmallRoyalFernBlock SMALL_ROYAL_FERN;
-    public SmallChainFernBlock SMALL_CHAIN_FERN;
-    public SmallCycadBlock SMALL_CYCAD;
+    public static final ActionFigureBlock ACTION_FIGURE = new ActionFigureBlock();
 
-    public CultivatorTopBlock CULTIVATOR_TOP;
-    public CultivatorBottomBlock CULTIVATOR_BOTTOM;
+    public static final ClearGlassBlock CLEAR_GLASS = new ClearGlassBlock();
 
-    public BennettitaleanCycadeoideaBlock CYCADEOIDEA;
-    public AncientPlantBlock CRY_PANSY;
-    public ScalyTreeFernBlock SCALY_TREE_FERN;
-    public CycadZamitesBlock ZAMITES;
-    public DicksoniaBlock DICKSONIA;
-    public DicroidiumZuberiBlock DICROIDIUM_ZUBERI;
+    public static final FossilizedTrackwayBlock FOSSILIZED_TRACKWAY = new FossilizedTrackwayBlock();
 
-    public ActionFigureBlock ACTION_FIGURE;
+    public static final SmallRoyalFernBlock SMALL_ROYAL_FERN = new SmallRoyalFernBlock();
+    public static final SmallChainFernBlock SMALL_CHAIN_FERN = new SmallChainFernBlock();
+    public static final SmallCycadBlock SMALL_CYCAD = new SmallCycadBlock();
+    public static final BennettitaleanCycadeoideaBlock CYCADEOIDEA = new BennettitaleanCycadeoideaBlock();
+    public static final AncientPlantBlock CRY_PANSY = new AncientPlantBlock();
+    public static final ScalyTreeFernBlock SCALY_TREE_FERN = new ScalyTreeFernBlock();
+    public static final CycadZamitesBlock ZAMITES = new CycadZamitesBlock();
+    public static final DicksoniaBlock DICKSONIA = new DicksoniaBlock();
+    public static final DicroidiumZuberiBlock DICROIDIUM_ZUBERI = new DicroidiumZuberiBlock();
+    public static final AjuginuculaSmithiiBlock AJUGINUCULA_SMITHII = new AjuginuculaSmithiiBlock();
+    public static final WildOnionBlock WILD_ONION = new WildOnionBlock();
+    public static final GracilariaBlock GRACILARIA = new GracilariaBlock();
 
-    public MossBlock MOSS;
+    public static final PeatBlock PEAT = new PeatBlock();
+    public static final Block PEAT_MOSS = new BasicBlock(Material.GROUND, SoundType.GROUND).setHardness(0.5F).setCreativeTab(TabHandler.PLANTS);
+    public static final MossBlock MOSS = new MossBlock();
 
-    public ClearGlassBlock CLEAR_GLASS;
-
-    public AjuginuculaSmithiiBlock AJUGINUCULA_SMITHII;
-    public WildOnionBlock WILD_ONION;
-    public GracilariaBlock GRACILARIA;
-
-    public PeatBlock PEAT;
-    public Block PEAT_MOSS;
-
-    public FossilizedTrackwayBlock FOSSILIZED_TRACKWAY;
-
-    public void init()
+    public static void init()
     {
-        FOSSILS = new ArrayList<>();
-        ENCASED_FOSSILS = new ArrayList<>();
-        PLANT_FOSSIL = new PlantFossilBlock();
-
-        CLEANING_STATION = new CleaningStationBlock();
-        FOSSIL_GRINDER = new FossilGrinderBlock();
-        DNA_SEQUENCER = new DNASequencerBlock();
-        DNA_SYNTHESIZER = new DNASynthesizerBlock();
-        EMBRYONIC_MACHINE = new EmbryonicMachineBlock();
-        EMBRYO_CALCIFICATION_MACHINE = new EmbryoCalcificationMachineBlock();
-        INCUBATOR = new IncubatorBlock();
-        DNA_EXTRACTOR = new DNAExtractorBlock();
-        DNA_COMBINATOR_HYBRIDIZER = new DNACombinatorHybridizerBlock();
-        CULTIVATOR_BOTTOM = new CultivatorBottomBlock();
-        CULTIVATOR_TOP = new CultivatorTopBlock();
-
-        AMBER_ORE = new AmberBlock();
-        ICE_SHARD = new IceShardBlock();
-
-        GYPSUM_STONE = new GypsumStoneBlock();
-        GYPSUM_COBBLESTONE = new BasicBlock(Material.ROCK).setHardness(1.5F);
-        GYPSUM_BRICKS = new BasicBlock(Material.ROCK).setHardness(1.5F);
-        REINFORCED_STONE = new BasicBlock(Material.ROCK).setHardness(2.0F);
-        REINFORCED_BRICKS = new BasicBlock(Material.ROCK).setHardness(2.0F);
-
-        AJUGINUCULA_SMITHII = new AjuginuculaSmithiiBlock();
-        SMALL_ROYAL_FERN = new SmallRoyalFernBlock();
-        SMALL_CHAIN_FERN = new SmallChainFernBlock();
-        SMALL_CYCAD = new SmallCycadBlock();
-        CYCADEOIDEA = new BennettitaleanCycadeoideaBlock();
-        CRY_PANSY = new AncientPlantBlock();
-        SCALY_TREE_FERN = new ScalyTreeFernBlock();
-        ZAMITES = new CycadZamitesBlock();
-        DICKSONIA = new DicksoniaBlock();
-        WILD_ONION = new WildOnionBlock();
-        GRACILARIA = new GracilariaBlock();
-        DICROIDIUM_ZUBERI = new DicroidiumZuberiBlock();
-
-        ACTION_FIGURE = new ActionFigureBlock();
-
-        MOSS = new MossBlock();
-
-        CLEAR_GLASS = new ClearGlassBlock();
-
-        PEAT = new PeatBlock();
-        PEAT_MOSS = new BasicBlock(Material.GROUND, SoundType.GROUND).setHardness(0.5F).setCreativeTab(TabHandler.INSTANCE.PLANTS);
-
-        FOSSILIZED_TRACKWAY = new FossilizedTrackwayBlock();
-
-        for (int i = 0; i < (int) Math.ceil(EntityHandler.INSTANCE.getDinosaurs().size() / 16.0F); i++)
+        for (int i = 0; i < (int) Math.ceil(EntityHandler.getDinosaurs().size() / 16.0F); i++)
         {
             FossilBlock fossil = new FossilBlock(i * 16);
             EncasedFossilBlock encasedFossil = new EncasedFossilBlock(i * 16);
@@ -246,7 +192,7 @@ public enum BlockHandler
         registerBlockTileEntity(ActionFigureTile.class, ACTION_FIGURE, "Action Figure Block");
     }
 
-    public void registerTreeType(TreeType type)
+    public static void registerTreeType(TreeType type)
     {
         AncientPlanksBlock planks = new AncientPlanksBlock(type);
         AncientLogBlock log = new AncientLogBlock(type, false);
@@ -257,14 +203,14 @@ public enum BlockHandler
         AncientSlabHalfBlock slab = new AncientSlabHalfBlock(type, planks.getDefaultState());
         AncientDoubleSlabBlock double_slab = new AncientDoubleSlabBlock(type, slab, planks.getDefaultState());
 
-        this.ANCIENT_PLANKS.put(type, planks);
-        this.ANCIENT_LOGS.put(type, log);
-        this.ANCIENT_LEAVES.put(type, leaves);
-        this.ANCIENT_SAPLINGS.put(type, sapling);
-        this.ANCIENT_STAIRS.put(type, stair);
-        this.ANCIENT_SLABS.put(type, slab);
-        this.ANCIENT_DOUBLE_SLABS.put(type, double_slab);
-        this.PETRIFIED_LOGS.put(type, petrified_log);
+        ANCIENT_PLANKS.put(type, planks);
+        ANCIENT_LOGS.put(type, log);
+        ANCIENT_LEAVES.put(type, leaves);
+        ANCIENT_SAPLINGS.put(type, sapling);
+        ANCIENT_STAIRS.put(type, stair);
+        ANCIENT_SLABS.put(type, slab);
+        ANCIENT_DOUBLE_SLABS.put(type, double_slab);
+        PETRIFIED_LOGS.put(type, petrified_log);
 
         String typeName = type.name();
 
@@ -294,59 +240,59 @@ public enum BlockHandler
         Blocks.FIRE.setFireInfo(stair, 5, 20);
     }
 
-    public FossilBlock getFossilBlock(Dinosaur dinosaur)
+    public static FossilBlock getFossilBlock(Dinosaur dinosaur)
     {
-        return getFossilBlock(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        return getFossilBlock(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    private int getBlockId(int id)
+    private static int getBlockId(int id)
     {
         return (int) (Math.floor((((float) id + 1.0F) / 16.0F) - 0.0625F));
     }
 
-    public EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)
+    public static EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)
     {
-        return getEncasedFossil(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        return getEncasedFossil(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    public EncasedFossilBlock getEncasedFossil(int id)
+    public static EncasedFossilBlock getEncasedFossil(int id)
     {
         return ENCASED_FOSSILS.get(getBlockId(id));
     }
 
-    public FossilBlock getFossilBlock(int id)
+    public static FossilBlock getFossilBlock(int id)
     {
         return FOSSILS.get(getBlockId(id));
     }
 
-    public int getDinosaurId(FossilBlock fossil, int metadata)
+    public static int getDinosaurId(FossilBlock fossil, int metadata)
     {
         return (FOSSILS.indexOf(fossil) * 16) + metadata;
     }
 
-    public int getDinosaurId(EncasedFossilBlock fossil, int metadata)
+    public static int getDinosaurId(EncasedFossilBlock fossil, int metadata)
     {
         return (ENCASED_FOSSILS.indexOf(fossil) * 16) + metadata;
     }
 
-    public int getMetadata(int id)
+    public static int getMetadata(int id)
     {
         return id % 16;
     }
 
-    public int getMetadata(Dinosaur dinosaur)
+    public static int getMetadata(Dinosaur dinosaur)
     {
-        return getMetadata(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        return getMetadata(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    public void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name)
+    public static void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name)
     {
         registerBlock(block, name);
 
         GameRegistry.registerTileEntity(tileEntity, "jurassicraft:" + name.toLowerCase().replaceAll(" ", "_"));
     }
 
-    public void registerBlock(Block block, String name)
+    public static void registerBlock(Block block, String name)
     {
         name = name.toLowerCase().replaceAll(" ", "_");
 

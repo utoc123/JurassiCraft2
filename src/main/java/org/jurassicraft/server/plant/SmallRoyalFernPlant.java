@@ -14,6 +14,6 @@ public class SmallRoyalFernPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.SMALL_ROYAL_FERN;
+        return BlockHandler.SMALL_ROYAL_FERN;
     }
 }

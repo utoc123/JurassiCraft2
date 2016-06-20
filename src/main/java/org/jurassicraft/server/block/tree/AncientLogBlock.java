@@ -27,7 +27,7 @@ public class AncientLogBlock extends BlockLog implements GrindableItem
         this.setHardness(2.0F);
         this.setResistance(0.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
         this.petrified = petrified;
         this.type = treeType;
 
@@ -105,7 +105,7 @@ public class AncientLogBlock extends BlockLog implements GrindableItem
 
         if (outputType == 5)
         {
-            ItemStack output = new ItemStack(ItemHandler.INSTANCE.PLANT_SOFT_TISSUE, 1, PlantHandler.INSTANCE.getPlantId(type.getPlant()));
+            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, PlantHandler.getPlantId(type.getPlant()));
             output.setTagCompound(tag);
             return output;
         }

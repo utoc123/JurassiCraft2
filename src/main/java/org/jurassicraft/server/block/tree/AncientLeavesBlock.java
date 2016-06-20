@@ -37,7 +37,7 @@ public class AncientLeavesBlock extends BlockLeaves
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false)); //TODO Until we fix the decay code, keep this false
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
     }
 
     public TreeType getTreeType()
@@ -105,7 +105,7 @@ public class AncientLeavesBlock extends BlockLeaves
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(treeType));
+        return Item.getItemFromBlock(BlockHandler.ANCIENT_SAPLINGS.get(treeType));
     }
 
     @Override

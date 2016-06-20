@@ -48,7 +48,7 @@ public class ActionFigureTile extends TileEntity
         {
             try
             {
-                entity = EntityHandler.INSTANCE.getDinosaurById(dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(worldObj);
+                entity = EntityHandler.getDinosaurById(dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(worldObj);
                 entity.applySettingsForActionFigure();
             }
             catch (Exception e)

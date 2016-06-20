@@ -23,7 +23,7 @@ public class PlantFossilBlock extends Block implements CleanableItem
         this.setHardness(2.0F);
         this.setResistance(8.0F);
         this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(TabHandler.INSTANCE.FOSSILS);
+        this.setCreativeTab(TabHandler.FOSSILS);
         this.setHarvestLevel("pickaxe", 0);
     }
 
@@ -57,11 +57,11 @@ public class PlantFossilBlock extends Block implements CleanableItem
 
         if (chance < 0.35)
         {
-            return ItemHandler.INSTANCE.PLANT_FOSSIL;
+            return ItemHandler.PLANT_FOSSIL;
         }
         else if (chance < 0.50)
         {
-            return ItemHandler.INSTANCE.TWIG_FOSSIL;
+            return ItemHandler.TWIG_FOSSIL;
         }
         else if (chance < 0.75)
         {

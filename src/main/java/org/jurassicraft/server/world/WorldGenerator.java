@@ -67,7 +67,7 @@ public enum WorldGenerator implements IWorldGenerator
             {
                 randPosY += random.nextInt(8) - 4;
 
-                List<Dinosaur> dinos = EntityHandler.INSTANCE.getDinosaursFromPeriod(period);
+                List<Dinosaur> dinos = EntityHandler.getDinosaursFromPeriod(period);
 
                 if (dinos != null && dinos.size() > 0)
                 {
@@ -75,9 +75,9 @@ public enum WorldGenerator implements IWorldGenerator
 
                     if (dinosaur.shouldRegister())
                     {
-                        int meta = BlockHandler.INSTANCE.getMetadata(dinosaur);
+                        int meta = BlockHandler.getMetadata(dinosaur);
 
-                        new WorldGenMinable(BlockHandler.INSTANCE.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+                        new WorldGenMinable(BlockHandler.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
                     }
                 }
             }
@@ -85,9 +85,9 @@ public enum WorldGenerator implements IWorldGenerator
 
         Predicate<IBlockState> defaultPredicate = BlockMatcher.forBlock(Blocks.STONE);
 
-        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.INSTANCE.AMBER_ORE.getDefaultState(), random, defaultPredicate);
-        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.INSTANCE.ICE_SHARD.getDefaultState(), random, defaultPredicate);
-        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.INSTANCE.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
+        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
     }
 
     public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random, Predicate<IBlockState> predicate)
@@ -109,7 +109,7 @@ public enum WorldGenerator implements IWorldGenerator
         float rotX = (float) (rand.nextDouble() * 360.0F);
         float rotY = (float) (rand.nextDouble() * 360.0F) - 180.0F;
 
-        IBlockState state = BlockHandler.INSTANCE.PETRIFIED_LOGS.get(treeType).getDefaultState();
+        IBlockState state = BlockHandler.PETRIFIED_LOGS.get(treeType).getDefaultState();
 
         float horizontal = MathHelper.cos(rotX * (float) Math.PI / 180.0F);
         float vertical = MathHelper.sin(rotX * (float) Math.PI / 180.0F);

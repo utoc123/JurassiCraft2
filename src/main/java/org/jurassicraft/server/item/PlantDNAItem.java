@@ -24,7 +24,7 @@ public class PlantDNAItem extends Item
     public PlantDNAItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.PLANTS);
+        this.setCreativeTab(TabHandler.PLANTS);
         this.setHasSubtypes(true);
     }
 
@@ -38,11 +38,11 @@ public class PlantDNAItem extends Item
 
     public Plant getPlant(ItemStack stack)
     {
-        Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
+        Plant plant = PlantHandler.getPlantById(stack.getItemDamage());
 
         if (plant == null)
         {
-            plant = PlantHandler.INSTANCE.SMALL_ROYAL_FERN;
+            plant = PlantHandler.SMALL_ROYAL_FERN;
         }
 
         return plant;
@@ -52,13 +52,13 @@ public class PlantDNAItem extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<>(PlantHandler.INSTANCE.getPlants());
+        List<Plant> plants = new ArrayList<>(PlantHandler.getPlants());
 
         Map<Plant, Integer> ids = new HashMap<>();
 
         for (Plant plant : plants)
         {
-            ids.put(plant, PlantHandler.INSTANCE.getPlantId(plant));
+            ids.put(plant, PlantHandler.getPlantId(plant));
         }
 
         Collections.sort(plants);

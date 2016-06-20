@@ -91,7 +91,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     {
         if (dinosaur != null && !worldObj.isRemote)
         {
-            ItemStack eggStack = new ItemStack(ItemHandler.INSTANCE.EGG, 1, EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+            ItemStack eggStack = new ItemStack(ItemHandler.EGG, 1, EntityHandler.getDinosaurId(dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("DNAQuality", dnaQuality);
             nbt.setString("Genetics", genetics);
@@ -170,7 +170,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     protected void readEntityFromNBT(NBTTagCompound compound)
     {
         hatchTime = compound.getInteger("HatchTime");
-        dinosaur = EntityHandler.INSTANCE.getDinosaurById(compound.getInteger("Dinosaur"));
+        dinosaur = EntityHandler.getDinosaurById(compound.getInteger("Dinosaur"));
         dnaQuality = compound.getByte("DNAQuality");
         genetics = compound.getString("Genetics");
     }
@@ -178,7 +178,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound)
     {
-        compound.setInteger("Dinosaur", EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        compound.setInteger("Dinosaur", EntityHandler.getDinosaurId(dinosaur));
         compound.setInteger("HatchTime", hatchTime);
         compound.setByte("DNAQuality", (byte) dnaQuality);
         compound.setString("Genetics", genetics);
@@ -187,7 +187,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     @Override
     public void writeSpawnData(ByteBuf buffer)
     {
-        buffer.writeInt(EntityHandler.INSTANCE.getDinosaurId(dinosaur));
+        buffer.writeInt(EntityHandler.getDinosaurId(dinosaur));
         buffer.writeByte(dnaQuality);
         ByteBufUtils.writeUTF8String(buffer, genetics);
     }
@@ -195,7 +195,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     @Override
     public void readSpawnData(ByteBuf additionalData)
     {
-        dinosaur = EntityHandler.INSTANCE.getDinosaurById(additionalData.readInt());
+        dinosaur = EntityHandler.getDinosaurById(additionalData.readInt());
         dnaQuality = additionalData.readByte();
         genetics = ByteBufUtils.readUTF8String(additionalData);
     }

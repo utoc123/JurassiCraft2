@@ -14,6 +14,6 @@ public class ScalyTreeFernPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.SCALY_TREE_FERN;
+        return BlockHandler.SCALY_TREE_FERN;
     }
 }

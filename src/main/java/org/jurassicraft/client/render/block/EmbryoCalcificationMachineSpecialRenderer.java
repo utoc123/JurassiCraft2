@@ -43,7 +43,7 @@ public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecial
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.INSTANCE.EMBRYO_CALCIFICATION_MACHINE)
+        if (state.getBlock() == BlockHandler.EMBRYO_CALCIFICATION_MACHINE)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

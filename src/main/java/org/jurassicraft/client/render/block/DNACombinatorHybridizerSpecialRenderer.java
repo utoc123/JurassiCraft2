@@ -43,7 +43,7 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.INSTANCE.DNA_COMBINATOR_HYBRIDIZER)
+        if (blockState.getBlock() == BlockHandler.DNA_COMBINATOR_HYBRIDIZER)
         {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();

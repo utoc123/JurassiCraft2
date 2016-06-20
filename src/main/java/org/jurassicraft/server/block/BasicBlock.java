@@ -10,13 +10,13 @@ public class BasicBlock extends Block
     public BasicBlock(Material material)
     {
         super(material);
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
     }
 
     public BasicBlock(Material material, SoundType soundType)
     {
         super(material);
         this.setSoundType(soundType);
-        this.setCreativeTab(TabHandler.INSTANCE.BLOCKS);
+        this.setCreativeTab(TabHandler.BLOCKS);
     }
 }

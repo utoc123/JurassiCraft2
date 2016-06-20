@@ -16,7 +16,7 @@ public class EmptySyringeItem extends Item
     public EmptySyringeItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
+        this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class EmptySyringeItem extends Item
     {
         if (worldIn.getBlockState(pos).getBlock() instanceof BlockBush)
         {
-            playerIn.inventory.addItemStackToInventory(new ItemStack(ItemHandler.INSTANCE.PLANT_CELLS));
+            playerIn.inventory.addItemStackToInventory(new ItemStack(ItemHandler.PLANT_CELLS));
             stack.stackSize--;
 
             return EnumActionResult.SUCCESS;

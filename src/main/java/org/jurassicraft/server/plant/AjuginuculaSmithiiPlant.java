@@ -14,6 +14,6 @@ public class AjuginuculaSmithiiPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.AJUGINUCULA_SMITHII;
+        return BlockHandler.AJUGINUCULA_SMITHII;
     }
 }

@@ -14,6 +14,6 @@ public class SmallCycadPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.SMALL_CYCAD;
+        return BlockHandler.SMALL_CYCAD;
     }
 }

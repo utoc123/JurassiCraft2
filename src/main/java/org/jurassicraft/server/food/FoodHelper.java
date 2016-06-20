@@ -45,15 +45,15 @@ public enum FoodHelper
         registerFood(Blocks.RED_FLOWER, FoodType.PLANT);
         registerFood(Blocks.DOUBLE_PLANT, FoodType.PLANT);
 
-        for (Plant plant : PlantHandler.INSTANCE.getPlants())
+        for (Plant plant : PlantHandler.getPlants())
         {
             registerFood(plant.getBlock(), FoodType.PLANT);
         }
 
         for (TreeType type : TreeType.values())
         {
-            registerFood(BlockHandler.INSTANCE.ANCIENT_LEAVES.get(type), FoodType.PLANT);
-            registerFood(BlockHandler.INSTANCE.ANCIENT_SAPLINGS.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.ANCIENT_LEAVES.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.ANCIENT_SAPLINGS.get(type), FoodType.PLANT);
         }
 
         registerFood(Items.APPLE, FoodType.PLANT);
@@ -78,8 +78,8 @@ public enum FoodHelper
         registerFood(Items.RABBIT, FoodType.MEAT);
         registerFood(Items.COOKED_RABBIT, FoodType.MEAT);
 
-        registerFood(ItemHandler.INSTANCE.DINOSAUR_MEAT, FoodType.MEAT);
-        registerFood(ItemHandler.INSTANCE.DINOSAUR_STEAK, FoodType.MEAT);
+        registerFood(ItemHandler.DINOSAUR_MEAT, FoodType.MEAT);
+        registerFood(ItemHandler.DINOSAUR_STEAK, FoodType.MEAT);
 
         for (Item item : Item.REGISTRY)
         {

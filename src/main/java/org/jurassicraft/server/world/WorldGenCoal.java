@@ -84,7 +84,7 @@ public class WorldGenCoal extends WorldGenMinable
                                     {
                                         if (rand.nextInt(10) == 0)
                                         {
-                                            world.setBlockState(pos, BlockHandler.INSTANCE.PLANT_FOSSIL.getDefaultState());
+                                            world.setBlockState(pos, BlockHandler.PLANT_FOSSIL.getDefaultState());
                                         }
                                         else
                                         {

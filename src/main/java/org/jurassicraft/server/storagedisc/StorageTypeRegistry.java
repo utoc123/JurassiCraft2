@@ -6,30 +6,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public enum StorageTypeRegistry
+public class StorageTypeRegistry
 {
-    INSTANCE;
+    private static final Map<String, Supplier<? extends StorageType>> STORAGE_TYPES = new HashMap<>();
 
-    private Map<String, Supplier<? extends StorageType>> storageTypes = new HashMap<>();
-
-    public void init()
+    public static void init()
     {
         register("DinoDNA", DinosaurDNAStorageType::new);
         register("PlantDNA", PlantDNAStorageType::new);
     }
 
-    private void register(String id, Supplier<? extends StorageType> storageType)
+    private static void register(String id, Supplier<? extends StorageType> storageType)
     {
-        storageTypes.put(id, Objects.requireNonNull(storageType));
+        STORAGE_TYPES.put(id, Objects.requireNonNull(storageType));
     }
 
-    public StorageType getStorageType(String id)
+    public static StorageType getStorageType(String id)
     {
         if (id == null || id.isEmpty())
         {
             id = "DinoDNA";
         }
 
-        return storageTypes.get(id).get();
+        return STORAGE_TYPES.get(id).get();
     }
 }

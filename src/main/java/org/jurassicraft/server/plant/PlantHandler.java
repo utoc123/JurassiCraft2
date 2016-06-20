@@ -3,27 +3,25 @@ package org.jurassicraft.server.plant;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum PlantHandler
+public class PlantHandler
 {
-    INSTANCE;
+    private static List<Plant> plants = new ArrayList<>();
 
-    private List<Plant> plants = new ArrayList<>();
+    public static final Plant AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
+    public static final Plant SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
+    public static final Plant CALAMITES = new CalamitesPlant();
+    public static final Plant SMALL_CHAIN_FERN = new SmallChainFernPlant();
+    public static final Plant SMALL_CYCAD = new SmallCycadPlant();
+    public static final Plant GINKGO = new GinkgoPlant();
+    public static final Plant CYCADEOIDEA = new BennettitaleanCycadeoideaPlant();
+    public static final Plant CRY_PANSY = new CryPansyPlant();
+    public static final Plant SCALY_TREE_FERN = new ScalyTreeFernPlant();
+    public static final Plant ZAMITES = new ZamitesPlant();
+    public static final Plant DICKSONIA = new DicksoniaPlant();
+    public static final Plant WILD_ONION = new WildOnionPlant();
+    public static final Plant DICROIDIUM_ZUBERI_PLANT = new DicroidiumZuberiPlant();
 
-    public final Plant AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
-    public final Plant SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
-    public final Plant CALAMITES = new CalamitesPlant();
-    public final Plant SMALL_CHAIN_FERN = new SmallChainFernPlant();
-    public final Plant SMALL_CYCAD = new SmallCycadPlant();
-    public final Plant GINKGO = new GinkgoPlant();
-    public final Plant CYCADEOIDEA = new BennettitaleanCycadeoideaPlant();
-    public final Plant CRY_PANSY = new CryPansyPlant();
-    public final Plant SCALY_TREE_FERN = new ScalyTreeFernPlant();
-    public final Plant ZAMITES = new ZamitesPlant();
-    public final Plant DICKSONIA = new DicksoniaPlant();
-    public final Plant WILD_ONION = new WildOnionPlant();
-    public final Plant DICROIDIUM_ZUBERI_PLANT = new DicroidiumZuberiPlant();
-
-    public void init()
+    public static void init()
     {
         registerPlant(AJUGINUCULA_SMITHII);
         registerPlant(SMALL_ROYAL_FERN);
@@ -40,7 +38,7 @@ public enum PlantHandler
         registerPlant(DICROIDIUM_ZUBERI_PLANT);
     }
 
-    public Plant getPlantById(int id)
+    public static Plant getPlantById(int id)
     {
         if (id >= plants.size() || id < 0)
         {
@@ -50,17 +48,17 @@ public enum PlantHandler
         return plants.get(id);
     }
 
-    public int getPlantId(Plant plant)
+    public static int getPlantId(Plant plant)
     {
         return plants.indexOf(plant);
     }
 
-    public List<Plant> getPlants()
+    public static List<Plant> getPlants()
     {
         return plants;
     }
 
-    public void registerPlant(Plant plant)
+    public static void registerPlant(Plant plant)
     {
         if (!plants.contains(plant))
         {

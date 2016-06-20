@@ -22,8 +22,8 @@ public class CalamitesTreeGenerator extends WorldGenAbstractTree
     @Override
     public boolean generate(World world, Random rand, BlockPos position)
     {
-        IBlockState log = BlockHandler.INSTANCE.ANCIENT_LOGS.get(TreeType.CALAMITES).getDefaultState();
-        IBlockState leaves = BlockHandler.INSTANCE.ANCIENT_LEAVES.get(TreeType.CALAMITES).getDefaultState();
+        IBlockState log = BlockHandler.ANCIENT_LOGS.get(TreeType.CALAMITES).getDefaultState();
+        IBlockState leaves = BlockHandler.ANCIENT_LEAVES.get(TreeType.CALAMITES).getDefaultState();
 
         int height = rand.nextInt(10) + 10;
         int branchIndex = 0;

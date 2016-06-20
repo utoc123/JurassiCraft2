@@ -18,7 +18,7 @@ public class PlantCallusItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new LangHelper("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.INSTANCE.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
+        return new LangHelper("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PlantCallusItem extends Item
         {
             if (world.isAirBlock(pos.offset(side)) && world.getBlockState(pos).getBlock() == Blocks.FARMLAND)
             {
-                Plant plant = PlantHandler.INSTANCE.getPlantById(stack.getItemDamage());
+                Plant plant = PlantHandler.getPlantById(stack.getItemDamage());
 
                 if (plant != null)
                 {

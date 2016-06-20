@@ -21,7 +21,7 @@ public class StorageDiscItem extends Item implements SynthesizableItem
     public StorageDiscItem()
     {
         super();
-        this.setCreativeTab(TabHandler.INSTANCE.ITEMS);
+        this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class StorageDiscItem extends Item implements SynthesizableItem
         if (nbt != null)
         {
             String storageId = nbt.getString("StorageId");
-            StorageType type = StorageTypeRegistry.INSTANCE.getStorageType(storageId);
+            StorageType type = StorageTypeRegistry.getStorageType(storageId);
 
             if (type != null)
             {
@@ -61,11 +61,11 @@ public class StorageDiscItem extends Item implements SynthesizableItem
 
         if (!stack.getTagCompound().getString("StorageId").equalsIgnoreCase("PlantDNA"))
         {
-            output = new ItemStack(ItemHandler.INSTANCE.DNA, 1, stack.getItemDamage());
+            output = new ItemStack(ItemHandler.DNA, 1, stack.getItemDamage());
         }
         else
         {
-            output = new ItemStack(ItemHandler.INSTANCE.PLANT_DNA, 1, stack.getItemDamage());
+            output = new ItemStack(ItemHandler.PLANT_DNA, 1, stack.getItemDamage());
         }
 
         output.setTagCompound(stack.getTagCompound());

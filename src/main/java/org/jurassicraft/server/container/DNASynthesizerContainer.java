@@ -21,8 +21,8 @@ public class DNASynthesizerContainer extends SyncedFieldContainer
 
         this.dnaSynthesizer = (DNASynthesizerTile) tileEntity;
         this.addSlotToContainer(new SynthesizableItemSlot(dnaSynthesizer, 0, 38, 22));
-        this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 1, 24, 49, ItemHandler.INSTANCE.EMPTY_TEST_TUBE));
-        this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 2, 50, 49, ItemHandler.INSTANCE.DNA_NUCLEOTIDES));
+        this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 1, 24, 49, ItemHandler.EMPTY_TEST_TUBE));
+        this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 2, 50, 49, ItemHandler.DNA_NUCLEOTIDES));
 
         int i;
 

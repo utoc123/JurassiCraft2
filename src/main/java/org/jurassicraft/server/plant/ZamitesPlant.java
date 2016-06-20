@@ -14,6 +14,6 @@ public class ZamitesPlant extends Plant
     @Override
     public Block getBlock()
     {
-        return BlockHandler.INSTANCE.ZAMITES;
+        return BlockHandler.ZAMITES;
     }
 }

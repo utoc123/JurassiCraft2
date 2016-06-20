@@ -32,7 +32,7 @@ public class ActionFigureItem extends Item
     {
         super();
 
-        this.setCreativeTab(TabHandler.INSTANCE.MERCHANDISE);
+        this.setCreativeTab(TabHandler.DECORATIONS);
         this.setHasSubtypes(true);
     }
 
@@ -43,7 +43,7 @@ public class ActionFigureItem extends Item
 
         if (player.canPlayerEdit(pos, side, stack))
         {
-            Block block = BlockHandler.INSTANCE.ACTION_FIGURE;
+            Block block = BlockHandler.ACTION_FIGURE;
 
             if (block.canPlaceBlockAt(world, pos))
             {
@@ -76,20 +76,20 @@ public class ActionFigureItem extends Item
 
     public Dinosaur getDinosaur(ItemStack stack)
     {
-        return EntityHandler.INSTANCE.getDinosaurById(stack.getMetadata());
+        return EntityHandler.getDinosaurById(stack.getMetadata());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.INSTANCE.getDinosaurs());
+        List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getDinosaurs());
 
         Map<Dinosaur, Integer> ids = new HashMap<>();
 
         for (Dinosaur dino : dinosaurs)
         {
-            ids.put(dino, EntityHandler.INSTANCE.getDinosaurId(dino));
+            ids.put(dino, EntityHandler.getDinosaurId(dino));
         }
 
         Collections.sort(dinosaurs);
