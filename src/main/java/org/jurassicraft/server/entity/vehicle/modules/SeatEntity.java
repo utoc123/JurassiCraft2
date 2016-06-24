@@ -67,7 +67,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
             setParent(worldObj.getEntityByID(parentId));
         }
 
-        if ((hasParent && parent == null) || (parent != null && parent.isDead) || (!parentUpdating && !worldObj.isRemote))
+        if (!hasParent || (hasParent && parent == null) || (parent != null && parent.isDead) || (!parentUpdating && !worldObj.isRemote))
         {
             this.setDead();
             return;
