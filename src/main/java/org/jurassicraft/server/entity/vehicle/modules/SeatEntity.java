@@ -90,10 +90,6 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
         {
             updatePosition();
         }
-        else
-        {
-            System.out.println("w0t");
-        }
 
         Entity controllingPassenger = getControllingPassenger();
 
