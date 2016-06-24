@@ -1,4 +1,4 @@
-package org.jurassicraft.server.entity.helicopter.modules;
+package org.jurassicraft.server.entity.vehicle.modules;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

@@ -67,12 +67,11 @@ import org.jurassicraft.server.dinosaur.disabled.VelociraptorDeltaDinosaur;
 import org.jurassicraft.server.dinosaur.disabled.VelociraptorEchoDinosaur;
 import org.jurassicraft.server.dinosaur.disabled.ZhenyuanopterusDinosaur;
 import org.jurassicraft.server.entity.VenomEntity;
-import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterSeatEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
-import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
+import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
 import java.util.ArrayList;
@@ -217,9 +216,12 @@ public class EntityHandler
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
         registerEntity(VenomEntity.class, "Venom");
 
-        registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
-        registerEntity(HelicopterBaseEntity.class, "Helicopter base");
-        registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
+        registerEntity(JeepWranglerEntity.class, "Jeep Wrangler");
+        registerEntity(SeatEntity.class, "Vehicle Seat");
+
+//        registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
+//        registerEntity(HelicopterBaseEntity.class, "Helicopter base");
+//        registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
     }
 
     private static void registerEntity(Class<? extends Entity> entity, String name)

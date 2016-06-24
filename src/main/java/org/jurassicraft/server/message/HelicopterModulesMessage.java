@@ -8,9 +8,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterModuleSpot;
-import org.jurassicraft.server.entity.helicopter.modules.ModulePosition;
+import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterModuleSpot;
+import org.jurassicraft.server.entity.vehicle.modules.ModulePosition;
 
 public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesMessage>
 {

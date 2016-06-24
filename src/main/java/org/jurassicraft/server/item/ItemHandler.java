@@ -118,7 +118,7 @@ public class ItemHandler
     public static final BasicItem CAR_WINDSCREEN = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem UNFINISHED_CAR = new BasicItem(TabHandler.ITEMS);
 
-    public static final BasicItem JEEP_WRANGLER = new BasicItem(TabHandler.ITEMS);
+    public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
 
     public static void init()
     {

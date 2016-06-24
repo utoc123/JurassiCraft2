@@ -11,9 +11,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.entity.vehicle.HelicopterAnimator;
-import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterModule;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterModuleSpot;
+import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterModule;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterModuleSpot;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 

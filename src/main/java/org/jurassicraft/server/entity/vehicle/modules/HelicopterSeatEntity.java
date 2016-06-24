@@ -1,4 +1,4 @@
-package org.jurassicraft.server.entity.helicopter.modules;
+package org.jurassicraft.server.entity.vehicle.modules;
 
 import com.google.common.base.Predicate;
 import io.netty.buffer.ByteBuf;
@@ -9,7 +9,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package org.jurassicraft.server.entity.helicopter;
+package org.jurassicraft.server.entity.vehicle;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -25,11 +25,11 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterDoor;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterModule;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterModuleSpot;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterSeatEntity;
-import org.jurassicraft.server.entity.helicopter.modules.ModulePosition;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterDoor;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterModule;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterModuleSpot;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterSeatEntity;
+import org.jurassicraft.server.entity.vehicle.modules.ModulePosition;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;

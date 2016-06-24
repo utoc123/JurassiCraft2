@@ -1,4 +1,4 @@
-package org.jurassicraft.server.entity.helicopter.modules;
+package org.jurassicraft.server.entity.vehicle.modules;
 
 import com.google.common.base.Function;
 import net.minecraft.util.math.Vec3d;

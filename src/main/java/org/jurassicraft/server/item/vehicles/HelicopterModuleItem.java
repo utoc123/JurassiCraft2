@@ -3,7 +3,7 @@ package org.jurassicraft.server.item.vehicles;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.entity.helicopter.modules.HelicopterModule;
+import org.jurassicraft.server.entity.vehicle.modules.HelicopterModule;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;

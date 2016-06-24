@@ -1,4 +1,4 @@
-package org.jurassicraft.server.entity.helicopter.modules;
+package org.jurassicraft.server.entity.vehicle.modules;
 
 import com.google.common.collect.Lists;
 import io.netty.buffer.ByteBuf;
@@ -9,7 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 import org.jurassicraft.server.message.HelicopterModulesMessage;
 
 import java.util.List;

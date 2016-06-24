@@ -82,7 +82,9 @@ import org.jurassicraft.client.render.entity.AttractionSignRenderer;
 import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
+import org.jurassicraft.client.render.entity.JeepWranglerRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
+import org.jurassicraft.client.render.entity.SeatRenderer;
 import org.jurassicraft.client.render.entity.VenomRenderer;
 import org.jurassicraft.client.render.entity.dinosaur.IndominusRenderDefinition;
 import org.jurassicraft.client.render.entity.dinosaur.RenderDinosaurDefinition;
@@ -96,11 +98,13 @@ import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.entity.helicopter.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
+import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
+import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.item.DinosaurSpawnEggItem;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
@@ -255,6 +259,8 @@ public enum RenderingHandler
         RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
         RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
         RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, new JeepWranglerRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(SeatEntity.class, new SeatRenderer());
     }
 
     public void init()

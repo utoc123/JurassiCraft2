@@ -77,9 +77,9 @@ public class DNAExtractorTile extends MachineBaseTile
 
                     disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, dinosaurId);
 
-                    int quality = rand.nextInt(50);
+                    int quality = (rand.nextInt(10) + 1) * 5;
 
-                    if (rand.nextDouble() < 0.1)
+                    if (rand.nextInt(2) > 0)
                     {
                         quality += 50;
                     }
