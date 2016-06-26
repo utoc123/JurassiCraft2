@@ -22,7 +22,7 @@ public class EmbryoCalcificationMachineContainer extends SyncedFieldContainer
         this.calcificationMachine = (EmbryoCalcificationMachineTile) tileEntity;
 
         this.addSlotToContainer(new SyringeSlot(calcificationMachine, 0, 34, 14));
-        this.addSlotToContainer(new CustomSlot(calcificationMachine, 1, 34, 50, Items.EGG));
+        this.addSlotToContainer(new CustomSlot(calcificationMachine, 1, 34, 50, stack -> stack.getItem() == Items.EGG));
 
         this.addSlotToContainer(new Slot(calcificationMachine, 2, 97, 32));
 

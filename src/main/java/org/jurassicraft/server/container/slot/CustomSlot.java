@@ -2,14 +2,15 @@ package org.jurassicraft.server.container.slot;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.function.Predicate;
 
 public class CustomSlot extends Slot
 {
-    private Item item;
+    private Predicate<ItemStack> item;
 
-    public CustomSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition, Item item)
+    public CustomSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition, Predicate<ItemStack> item)
     {
         super(inventory, slotIndex, xPosition, yPosition);
         this.item = item;
@@ -18,6 +19,6 @@ public class CustomSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        return stack.getItem() == item;
+        return item.test(stack);
     }
 }

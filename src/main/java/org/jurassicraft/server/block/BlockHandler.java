@@ -20,6 +20,7 @@ import org.jurassicraft.server.block.machine.DNASequencerBlock;
 import org.jurassicraft.server.block.machine.DNASynthesizerBlock;
 import org.jurassicraft.server.block.machine.EmbryoCalcificationMachineBlock;
 import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
+import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
 import org.jurassicraft.server.block.plant.AjuginuculaSmithiiBlock;
@@ -55,6 +56,7 @@ import org.jurassicraft.server.tile.DNASequencerTile;
 import org.jurassicraft.server.tile.DNASynthesizerTile;
 import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.FeederTile;
 import org.jurassicraft.server.tile.FossilGrinderTile;
 import org.jurassicraft.server.tile.IncubatorTile;
 
@@ -127,6 +129,8 @@ public class BlockHandler
     public static final Block PEAT_MOSS = new BasicBlock(Material.GROUND, SoundType.GROUND).setHardness(0.5F).setCreativeTab(TabHandler.PLANTS);
     public static final MossBlock MOSS = new MossBlock();
 
+    public static final FeederBlock FEEDER = new FeederBlock();
+
     public static void init()
     {
         for (int i = 0; i < (int) Math.ceil(EntityHandler.getDinosaurs().size() / 16.0F); i++)
@@ -190,6 +194,7 @@ public class BlockHandler
         registerBlockTileEntity(DNACombinatorHybridizerTile.class, DNA_COMBINATOR_HYBRIDIZER, "DNA Combinator Hybridizer");
         registerBlockTileEntity(IncubatorTile.class, INCUBATOR, "Incubator");
         registerBlockTileEntity(ActionFigureTile.class, ACTION_FIGURE, "Action Figure Block");
+        registerBlockTileEntity(FeederTile.class, FEEDER, "Feeder");
     }
 
     public static void registerTreeType(TreeType type)

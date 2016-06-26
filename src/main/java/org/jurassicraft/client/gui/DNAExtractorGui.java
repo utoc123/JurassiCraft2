@@ -13,10 +13,7 @@ import org.jurassicraft.server.container.DNAExtractorContainer;
 @SideOnly(Side.CLIENT)
 public class DNAExtractorGui extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation("jurassicraft:textures/gui/dna_extractor.png");
-    /**
-     * The player inventory bound to this GUI.
-     */
+    private static final ResourceLocation TEXTURE = new ResourceLocation("jurassicraft:textures/gui/dna_extractor.png");
     private final InventoryPlayer playerInventory;
     private IInventory extractor;
 
@@ -27,31 +24,25 @@ public class DNAExtractorGui extends GuiContainer
         this.extractor = dnaSequencer;
     }
 
-    /**
-     * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
-     */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        String s = this.extractor.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+        String name = this.extractor.getDisplayName().getUnformattedText();
+        this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
-    /**
-     * Args : renderPartialTicks, mouseX, mouseY
-     */
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(texture);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+        this.mc.getTextureManager().bindTexture(TEXTURE);
+        int x = (this.width - this.xSize) / 2;
+        int y = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
 
         int progress = this.getProgress(24);
-        this.drawTexturedModalRect(k + 77, l + 36, 176, 0, progress + 1, 16);
+        this.drawTexturedModalRect(x + 77, y + 36, 176, 0, progress + 1, 16);
     }
 
     private int getProgress(int scale)

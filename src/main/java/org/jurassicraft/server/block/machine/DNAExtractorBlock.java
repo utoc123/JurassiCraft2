@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.DNAExtractorTile;
 
@@ -84,7 +85,7 @@ public class DNAExtractorBlock extends OrientedBlock
 
                 if (dnaExtractor.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, 9, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.DNA_EXTRACTOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

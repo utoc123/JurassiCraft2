@@ -10,6 +10,8 @@ import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tile.IncubatorTile;
 
+import java.util.function.Predicate;
+
 public class IncubatorContainer extends SyncedFieldContainer
 {
     private IncubatorTile incubator;
@@ -19,11 +21,12 @@ public class IncubatorContainer extends SyncedFieldContainer
         super((IInventory) tileEntity);
 
         this.incubator = (IncubatorTile) tileEntity;
-        this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, ItemHandler.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, ItemHandler.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 2, 79, 14, ItemHandler.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, ItemHandler.EGG));
-        this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, ItemHandler.EGG));
+        Predicate<ItemStack> eggPredicate = stack -> stack.getItem() == ItemHandler.EGG;
+        this.addSlotToContainer(new CustomSlot(incubator, 0, 33, 28, eggPredicate));
+        this.addSlotToContainer(new CustomSlot(incubator, 1, 56, 21, eggPredicate));
+        this.addSlotToContainer(new CustomSlot(incubator, 2, 79, 14, eggPredicate));
+        this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, eggPredicate));
+        this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, eggPredicate));
 
         this.addSlotToContainer(new Slot(incubator, 5, 79, 49));
 

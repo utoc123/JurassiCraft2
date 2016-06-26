@@ -17,10 +17,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class IncubatorGui extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation("jurassicraft:textures/gui/incubator.png");
-    /**
-     * The player inventory bound to this GUI.
-     */
+    private static final ResourceLocation TEXTURE = new ResourceLocation("jurassicraft:textures/gui/incubator.png");
     private final InventoryPlayer playerInventory;
     private IInventory incubator;
 
@@ -36,21 +33,18 @@ public class IncubatorGui extends GuiContainer
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        dragTemperature(mouseX, mouseY);
+        drawTemperature(mouseX, mouseY);
     }
 
-    /**
-     * Called when a mouse button is pressed and the mouse is moved around. Parameters are : mouseX, mouseY, lastButtonClicked & timeSinceMouseClick.
-     */
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick)
     {
         super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
 
-        dragTemperature(mouseX, mouseY);
+        drawTemperature(mouseX, mouseY);
     }
 
-    private void dragTemperature(int mouseX, int mouseY)
+    private void drawTemperature(int mouseX, int mouseY)
     {
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
@@ -102,9 +96,6 @@ public class IncubatorGui extends GuiContainer
         }
     }
 
-    /**
-     * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
-     */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
@@ -113,14 +104,11 @@ public class IncubatorGui extends GuiContainer
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 4, 4210752);
     }
 
-    /**
-     * Args : renderPartialTicks, mouseX, mouseY
-     */
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(texture);
+        this.mc.getTextureManager().bindTexture(TEXTURE);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
@@ -178,6 +166,6 @@ public class IncubatorGui extends GuiContainer
     {
         int j = this.incubator.getField(slot + 10);
         int k = 100;
-        return k != 0 && j != 0 ? j * scale / k : 0;
+        return j != 0 ? j * scale / k : 0;
     }
 }

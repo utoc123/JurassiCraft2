@@ -77,6 +77,7 @@ import org.jurassicraft.client.render.block.DNASequencerSpecialRenderer;
 import org.jurassicraft.client.render.block.DNASynthesizerSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
 import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
+import org.jurassicraft.client.render.block.FeederSpecialRenderer;
 import org.jurassicraft.client.render.block.IncubatorSpecialRenderer;
 import org.jurassicraft.client.render.entity.AttractionSignRenderer;
 import org.jurassicraft.client.render.entity.BluePrintRenderer;
@@ -117,6 +118,7 @@ import org.jurassicraft.server.tile.DNASequencerTile;
 import org.jurassicraft.server.tile.DNASynthesizerTile;
 import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
+import org.jurassicraft.server.tile.FeederTile;
 import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.List;
@@ -332,6 +334,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.EMBRYO_CALCIFICATION_MACHINE, "embryo_calcification_machine", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.INCUBATOR, "incubator", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.DNA_EXTRACTOR, "dna_extractor", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.FEEDER, "feeder", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.GYPSUM_STONE, "gypsum_stone", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.GYPSUM_COBBLESTONE, "gypsum_cobblestone", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.GYPSUM_BRICKS, "gypsum_bricks", "inventory");
@@ -375,6 +378,7 @@ public enum RenderingHandler
         ClientRegistry.bindTileEntitySpecialRenderer(EmbryonicMachineTile.class, new EmbryonicMachineSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(DNASynthesizerTile.class, new DNASynthesizerSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(IncubatorTile.class, new IncubatorSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(FeederTile.class, new FeederSpecialRenderer());
 
         RenderItem renderItem = mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();

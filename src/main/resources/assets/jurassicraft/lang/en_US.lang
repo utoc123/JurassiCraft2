@@ -292,6 +292,8 @@ tile.cultivate.name={color} Cultivator
 
 tile.clear_glass.name=Clear Glass
 
+tile.feeder.name=Feeder
+
 trackway.biped_medium.name=Biped
 trackway.biped_small.name=Small Biped
 trackway.raptor.name=Raptor
@@ -333,6 +335,7 @@ container.cultivator=Cultivator
 container.cultivator.progress=Progress
 container.cultivator.cultivating=Cultivating
 container.close.name=Close
+container.feeder=Feeder
 cultivator.proximates.name=Proximates
 cultivator.minerals.name=Minerals
 cultivator.vitamins.name=Vitamins

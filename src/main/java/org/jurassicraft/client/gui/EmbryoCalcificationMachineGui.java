@@ -13,39 +13,31 @@ import org.jurassicraft.server.container.EmbryoCalcificationMachineContainer;
 @SideOnly(Side.CLIENT)
 public class EmbryoCalcificationMachineGui extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation("jurassicraft:textures/gui/embryo_calcification_machine.png");
-    /**
-     * The player inventory bound to this GUI.
-     */
-    private final InventoryPlayer playerInventory;
-    private IInventory calcificationMachine;
+    private static final ResourceLocation TEXTURE = new ResourceLocation("jurassicraft:textures/gui/embryo_calcification_machine.png");
 
-    public EmbryoCalcificationMachineGui(InventoryPlayer playerInv, IInventory fossilGrinder)
+    private final InventoryPlayer playerInventory;
+    private IInventory inventory;
+
+    public EmbryoCalcificationMachineGui(InventoryPlayer playerInv, IInventory inventory)
     {
-        super(new EmbryoCalcificationMachineContainer(playerInv, (TileEntity) fossilGrinder));
+        super(new EmbryoCalcificationMachineContainer(playerInv, (TileEntity) inventory));
         this.playerInventory = playerInv;
-        this.calcificationMachine = fossilGrinder;
+        this.inventory = inventory;
     }
 
-    /**
-     * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
-     */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        String s = this.calcificationMachine.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 4, 4210752);
+        String displayName = this.inventory.getDisplayName().getUnformattedText();
+        this.fontRendererObj.drawString(displayName, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayName) / 2, 4, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
-    /**
-     * Args : renderPartialTicks, mouseX, mouseY
-     */
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(texture);
+        this.mc.getTextureManager().bindTexture(TEXTURE);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
@@ -60,13 +52,12 @@ public class EmbryoCalcificationMachineGui extends GuiContainer
         this.drawTexturedModalRect(k + 38, l + 38, 197, 38, 9, progress2);
         // Clean up
         this.drawTexturedModalRect(k + 38, l + 32, 187, 32, 9, progress1 - 1);
-
     }
 
     private int getProgress(int scale)
     {
-        int j = this.calcificationMachine.getField(0);
-        int k = this.calcificationMachine.getField(1);
-        return k != 0 && j != 0 ? j * scale / k : 0;
+        int progress = this.inventory.getField(0);
+        int nax = this.inventory.getField(1);
+        return nax != 0 && progress != 0 ? progress * scale / nax : 0;
     }
 }

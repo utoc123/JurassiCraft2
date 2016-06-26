@@ -317,9 +317,9 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
+    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction)
     {
-        return this.isItemValidForSlot(index, itemStackIn);
+        return this.isItemValidForSlot(index, stack);
     }
 
     protected abstract int getProcess(int slot);

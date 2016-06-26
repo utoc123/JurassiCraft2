@@ -64,6 +64,7 @@ import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
 import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.handler.GuiHandler;
@@ -206,6 +207,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.animationTasks.addTask(1, new DrinkEntityAI(this));
         this.animationTasks.addTask(1, new MateEntityAI(this));
         this.animationTasks.addTask(1, new EatFoodItemEntityAI(this));
+        this.animationTasks.addTask(1, new FeederEntityAI(this));
 
         this.animationTasks.addTask(3, new CallAnimationAI(this));
         this.animationTasks.addTask(3, new LookAnimationAI(this));

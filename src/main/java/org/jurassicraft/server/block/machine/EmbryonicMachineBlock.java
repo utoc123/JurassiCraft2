@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
@@ -78,7 +79,7 @@ public class EmbryonicMachineBlock extends OrientedBlock
 
                 if (embryonicMachine.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, 3, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.EMBRYONIC_MACHINE_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

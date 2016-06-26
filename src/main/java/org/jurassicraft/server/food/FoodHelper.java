@@ -44,6 +44,8 @@ public enum FoodHelper
         registerFood(Blocks.YELLOW_FLOWER, FoodType.PLANT);
         registerFood(Blocks.RED_FLOWER, FoodType.PLANT);
         registerFood(Blocks.DOUBLE_PLANT, FoodType.PLANT);
+        registerFood(Blocks.BROWN_MUSHROOM, FoodType.PLANT);
+        registerFood(Blocks.RED_MUSHROOM, FoodType.PLANT);
 
         for (Plant plant : PlantHandler.getPlants())
         {
@@ -64,6 +66,9 @@ public enum FoodHelper
         registerFood(Items.MELON_SEEDS, FoodType.PLANT);
         registerFood(Items.PUMPKIN_SEEDS, FoodType.PLANT);
         registerFood(Items.MELON, FoodType.PLANT);
+        registerFood(Items.BREAD, FoodType.PLANT);
+        registerFood(Items.SUGAR, FoodType.PLANT);
+        registerFood(ItemHandler.WILD_ONION, FoodType.PLANT);
 
         registerFood(Items.BEEF, FoodType.MEAT);
         registerFood(Items.COOKED_BEEF, FoodType.MEAT);
@@ -77,6 +82,7 @@ public enum FoodHelper
         registerFood(Items.COOKED_MUTTON, FoodType.MEAT);
         registerFood(Items.RABBIT, FoodType.MEAT);
         registerFood(Items.COOKED_RABBIT, FoodType.MEAT);
+        registerFood(Items.ROTTEN_FLESH, FoodType.MEAT);
 
         registerFood(ItemHandler.DINOSAUR_MEAT, FoodType.MEAT);
         registerFood(ItemHandler.DINOSAUR_STEAK, FoodType.MEAT);

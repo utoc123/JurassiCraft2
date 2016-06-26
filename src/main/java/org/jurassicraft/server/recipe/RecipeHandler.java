@@ -104,6 +104,8 @@ public class RecipeHandler
         GameRegistry.addRecipe(new ItemStack(ItemHandler.JEEP_WRANGLER), "LRL", "TCR", "LRL", 'L', new ItemStack(Items.DYE, 1, 7), 'R', new ItemStack(Items.DYE, 1, 1), 'C', ItemHandler.UNFINISHED_CAR, 'T', ItemHandler.CAR_TIRE);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.JEEP_WRANGLER), "LRL", "RCT", "LRL", 'L', new ItemStack(Items.DYE, 1, 7), 'R', new ItemStack(Items.DYE, 1, 1), 'C', ItemHandler.UNFINISHED_CAR, 'T', ItemHandler.CAR_TIRE);
 
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.FEEDER), "TDT", "ICI", "SSS", 'T', Blocks.IRON_TRAPDOOR, 'D', Blocks.DISPENSER, 'I', Items.IRON_INGOT, 'C', Blocks.CHEST, 'S', Blocks.COBBLESTONE);
+
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.CHILEAN_SEA_BASS), Items.COOKED_FISH, ItemHandler.WILD_ONION, Items.CARROT, ItemHandler.AJUGINUCULA_SMITHII_LEAVES);
 
         GameRegistry.addSmelting(ItemHandler.GRACILARIA, new ItemStack(ItemHandler.LIQUID_AGAR), 0);

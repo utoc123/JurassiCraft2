@@ -10,6 +10,11 @@ public class ResetControlTabulaModel extends TabulaModel
     private final ITabulaModelAnimator animator;
     private boolean resetAllowed;
 
+    public ResetControlTabulaModel(TabulaModelContainer model)
+    {
+        this(model, null);
+    }
+
     public ResetControlTabulaModel(TabulaModelContainer model, ITabulaModelAnimator animator)
     {
         super(model, animator);

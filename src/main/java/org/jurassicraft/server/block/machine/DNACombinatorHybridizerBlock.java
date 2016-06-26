@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
@@ -84,7 +85,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock
 
                 if (embryonicMachine.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, 7, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.DNA_COMBINATOR_HYBRIDIZER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

@@ -19,7 +19,7 @@ public class CultivateProcessGui extends GuiScreen
     private int guiLeft;
     private int guiTop;
 
-    private ResourceLocation gui = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_progress.png");
+    private ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_progress.png");
 
     public CultivateProcessGui(CultivatorTile entity)
     {
@@ -45,7 +45,7 @@ public class CultivateProcessGui extends GuiScreen
     }
 
     @Override
-    protected void keyTyped(char var1, int key)
+    protected void keyTyped(char c, int key)
     {
         if (key == 1 || key == this.mc.gameSettings.keyBindInventory.getKeyCode())
         {
@@ -79,7 +79,7 @@ public class CultivateProcessGui extends GuiScreen
     public void drawScreen(int x, int y, float f)
     {
         this.drawDefaultBackground();
-        this.mc.renderEngine.bindTexture(gui);
+        this.mc.renderEngine.bindTexture(TEXTURE);
 
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         this.drawTexturedModalRect(this.guiLeft + 13, this.guiTop + 49, 0, 107, getScaled(cultivator.getField(0), cultivator.getField(1), 150), 9);

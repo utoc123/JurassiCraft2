@@ -1,7 +1,10 @@
 package org.jurassicraft.server.block.machine;
 
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +12,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -17,20 +21,28 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.FossilGrinderTile;
+import org.jurassicraft.server.tile.FeederTile;
 
-public class FossilGrinderBlock extends OrientedBlock
+public class FeederBlock extends BlockContainer
 {
-    public FossilGrinderBlock()
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+
+    public FeederBlock()
     {
         super(Material.IRON);
-        this.setUnlocalizedName("fossil_grinder");
+        this.setUnlocalizedName("feeder");
         this.setHardness(2.0F);
         this.setSoundType(SoundType.METAL);
         this.setCreativeTab(TabHandler.BLOCKS);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
+    }
+
+    @Override
+    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        return this.getDefaultState().withProperty(FACING, facing);
     }
 
     @Override
@@ -42,24 +54,24 @@ public class FossilGrinderBlock extends OrientedBlock
         {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tile instanceof FossilGrinderTile)
+            if (tile instanceof FeederTile)
             {
-                ((FossilGrinderTile) tile).setCustomInventoryName(stack.getDisplayName());
+                ((FeederTile) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        TileEntity tileentity = world.getTileEntity(pos);
 
-        if (tileentity instanceof FossilGrinderTile)
+        if (tileentity instanceof FeederTile)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (FossilGrinderTile) tileentity);
+            InventoryHelper.dropInventoryItems(world, pos, (FeederTile) tileentity);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
@@ -73,13 +85,13 @@ public class FossilGrinderBlock extends OrientedBlock
         {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof FossilGrinderTile)
+            if (tileEntity instanceof FeederTile)
             {
-                FossilGrinderTile fossilGrinder = (FossilGrinderTile) tileEntity;
+                FeederTile feeder = (FeederTile) tileEntity;
 
-                if (fossilGrinder.isUseableByPlayer(player))
+                if (feeder.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.FEEDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }
@@ -88,9 +100,40 @@ public class FossilGrinderBlock extends OrientedBlock
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
+    public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new FossilGrinderTile();
+        return new FeederTile();
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        EnumFacing facing = EnumFacing.getFront(meta);
+
+        if (facing.getAxis() == EnumFacing.Axis.Y)
+        {
+            facing = EnumFacing.NORTH;
+        }
+
+        return this.getDefaultState().withProperty(FACING, facing);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return state.getValue(FACING).getIndex();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, FACING);
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override

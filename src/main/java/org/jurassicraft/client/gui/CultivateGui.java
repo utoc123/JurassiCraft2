@@ -17,8 +17,8 @@ public class CultivateGui extends GuiContainer
 
     private final InventoryPlayer playerInventory;
 
-    private static final ResourceLocation gui = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator.png");
-    private static final ResourceLocation nutrients = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_nutrients.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator.png");
+    private static final ResourceLocation NUTRIENTS_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_nutrients.png");
 
     public CultivateGui(InventoryPlayer inventoryPlayer, CultivatorTile entity)
     {
@@ -42,8 +42,8 @@ public class CultivateGui extends GuiContainer
     @Override
     protected void drawGuiContainerForegroundLayer(int i, int j)
     {
-        String s = this.cultivator.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 45, 10, 4210752);
+        String name = this.cultivator.getDisplayName().getUnformattedText();
+        this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2 - 45, 10, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 
         this.fontRendererObj.drawString(I18n.format("cultivator.proximates.name"), 200, 48, 4210752);
@@ -55,12 +55,12 @@ public class CultivateGui extends GuiContainer
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3)
     {
-        mc.renderEngine.bindTexture(gui);
+        mc.renderEngine.bindTexture(TEXTURE);
         drawTexturedModalRect(this.width / 2 - xSize / 2, this.height / 2 - ySize / 2, 0, 0, 176, 188);
 
         this.drawTexturedModalRect(guiLeft + 48, guiTop + 18, 0, 188, 42, 67 - getScaled(cultivator.getWaterLevel(), 3, 67));
 
-        mc.renderEngine.bindTexture(nutrients);
+        mc.renderEngine.bindTexture(NUTRIENTS_TEXTURE);
         drawTexturedModalRect(this.width / 2 + 1, this.height / 2 - ySize / 2, 0, 0, 176, 166);
 
         int maxNutrients = cultivator.getMaxNutrients();
