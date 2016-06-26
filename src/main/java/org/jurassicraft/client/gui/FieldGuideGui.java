@@ -30,14 +30,11 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class FieldGuideGui extends GuiScreen
 {
-    private int sizeX;
-    private int sizeY;
+    private int sizeX = 256;
+    private int sizeY = 192;
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/background.png");
 
-    private final ResourceLocation fileTexture;
-
     private DinosaurEntity entity;
-    private boolean file;
 
     private static final Map<DinosaurStatus, ResourceLocation> STATUS_TEXTURES = new HashMap<>();
 
@@ -52,27 +49,12 @@ public class FieldGuideGui extends GuiScreen
     public FieldGuideGui(DinosaurEntity entity)
     {
         this.entity = entity;
-        this.fileTexture = new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/" + entity.getDinosaur().getName().toLowerCase() + ".png");
     }
 
     @Override
     public void initGui()
     {
         super.initGui();
-
-        ScaledResolution resolution = new ScaledResolution(mc);
-        int scaleFactor = resolution.getScaleFactor();
-
-        sizeX = 153 * scaleFactor;
-        sizeY = 108 * scaleFactor;
-
-        int x = (this.width - sizeX) / 2;
-        int y = (this.height - sizeY) / 2;
-
-        buttonList.add(new GuiButton(0, x - 25, y + sizeY - 20, 20, 20, "<"));
-        buttonList.add(new GuiButton(1, x + sizeX + 5, y + sizeY - 20, 20, 20, ">"));
-
-        updateArrowStates();
     }
 
     @Override
@@ -92,92 +74,98 @@ public class FieldGuideGui extends GuiScreen
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-        this.drawFullTexturedRect(x, y, sizeX, sizeY);
+        this.drawTexturedModalRect(x, y, 0, 0, 256, 179);
 
-        if (file)
+        Dinosaur dinosaur = entity.getDinosaur();
+
+        drawScaledString(new LangHelper("entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build().toUpperCase(), x + 15, y + 10, 1.3F, 0);
+        drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(), x + 16, y + 24, 1.0F, 0);
+
+        int statisticsX = x + (sizeX / 2) + 15;
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+        drawScaledString("Dinosaur Statistics:", statisticsX, y + 10, 1.0F, 0);
+        int statisticTextX = x + (sizeX / 2 + sizeX / 4);
+        drawCenteredScaledString("Health:", statisticTextX, y + 35, 1.0F, 0);
+        drawCenteredScaledString("Hunger:", statisticTextX, y + 65, 1.0F, 0);
+        drawCenteredScaledString("Thirst:", statisticTextX, y + 95, 1.0F, 0);
+        drawCenteredScaledString("Age:", statisticTextX, y + 125, 1.0F, 0);
+
+        this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+
+        drawBar(statisticsX, y + 45, entity.isCarcass() ? 0 : entity.getHealth(), entity.getMaxHealth(), 0xFF0000);
+        drawBar(statisticsX, y + 75, entity.getMetabolism().getEnergy(), entity.getMetabolism().getMaxEnergy(), 0x94745A);
+        drawBar(statisticsX, y + 105, entity.getMetabolism().getWater(), entity.getMetabolism().getMaxWater(), 0x0000FF);
+        drawBar(statisticsX, y + 135, entity.getDinosaurAge(), dinosaur.getMaximumAge(), 0x00FF00);
+
+        drawCenteredScaledString(entity.getDaysExisted() + " days old", statisticTextX, y + 155, 1.0F, 0);
+
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+        GL11.glScissor((x + 15) * scaleFactor, (height - y - 140) * scaleFactor, 100 * scaleFactor, 100 * scaleFactor);
+        this.drawEntity(x + 65, y + 110, 45.0F / entity.height, entity);
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+        int statusX = 0;
+        int statusY = 0;
+
+        List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(entity);
+
+        for (DinosaurStatus status : activeStatuses)
         {
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            this.mc.getTextureManager().bindTexture(fileTexture);
-            this.drawFullTexturedRect(x, y, sizeX, sizeY);
-        }
-        else
-        {
-            Dinosaur dinosaur = entity.getDinosaur();
+            mc.getTextureManager().bindTexture(STATUS_TEXTURES.get(status));
 
-            drawScaledString(new LangHelper("entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build().toUpperCase(), x + 15, y + 10, 2.0F, 0);
-            drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(), x + 15, y + 28, 1.0F, 0);
+            int size = 16;
 
-            int statisticsX = scaledResolution.getScaledWidth() / 2 + 8;
+            drawFullTexturedRect(statusX + x + 35, statusY + y + (sizeY - 40), size, size);
 
-            DecimalFormat decimalFormat = new DecimalFormat("#.#");
-            decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+            statusX += 18;
 
-            drawScaledString("Dinosaur Statistics:", statisticsX, y + 10, 1.28F, 0);
-            drawScaledString("Health: " + (entity.isCarcass() ? 0 : decimalFormat.format(entity.getHealth())) + "/" + decimalFormat.format(entity.getMaxHealth()), statisticsX, y + 25, 1.0F, 0);
-            drawScaledString("Age: " + entity.getDaysExisted() + " days", statisticsX, y + 35, 1.0F, 0);
-            drawScaledString("Hunger: " + entity.getMetabolism().getEnergy() + "/" + entity.getMetabolism().getMaxEnergy(), statisticsX, y + 45, 1.0F, 0);
-            drawScaledString("Thirst: " + entity.getMetabolism().getWater() + "/" + entity.getMetabolism().getMaxWater(), statisticsX, y + 55, 1.0F, 0);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-            GL11.glEnable(GL11.GL_SCISSOR_TEST);
-            GL11.glScissor((int) ((scaledResolution.getScaledWidth() / 6.5F) * scaledResolution.getScaleFactor()), (int) ((scaledResolution.getScaledHeight() / 2.9F) * scaledResolution.getScaleFactor()), (int) ((scaledResolution.getScaledWidth() / 2.9F) * scaledResolution.getScaleFactor()), (int) ((scaledResolution.getScaledHeight() / 1.9F) * scaledResolution.getScaleFactor()));
-            this.drawEntity((int) (scaledResolution.getScaledWidth() / 3.1F), scaledResolution.getScaledHeight() / 2, (16.0F / dinosaur.getAdultSizeY()) * scaledResolution.getScaleFactor(), entity);
-            GL11.glDisable(GL11.GL_SCISSOR_TEST);
-
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-            int statusX = 0;
-            int statusY = 0;
-
-            List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(entity);
-
-            for (DinosaurStatus status : activeStatuses)
+            if (statusX > sizeX / 2 - 60)
             {
-                int renderX = (int) (statusX + (sizeX / 1.45F) + 10);
-                int renderY = (int) (statusY + (sizeY / 1.06F));
+                statusX = 0;
+                statusY -= 18;
+            }
+        }
 
-                mc.getTextureManager().bindTexture(STATUS_TEXTURES.get(status));
+        statusX = 0;
+        statusY = 0;
 
-                int size = scaleFactor * 6;
+        for (DinosaurStatus status : activeStatuses)
+        {
+            int size = 16;
 
-                drawFullTexturedRect(renderX, renderY, size, size);
+            int renderX = statusX + x + 35;
+            int renderY = statusY + y + (sizeY - 40);
 
-                statusX += 8 * scaleFactor;
-
-                if (statusX > scaleFactor * 40)
-                {
-                    statusX = 0;
-                    statusY -= scaleFactor * 8;
-                }
+            if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size)
+            {
+                this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase() + ".name").build(), mouseX, mouseY);
             }
 
-            statusX = 0;
-            statusY = 0;
+            statusX += 18;
 
-            for (DinosaurStatus status : activeStatuses)
+            if (statusX > sizeX / 2 - 60)
             {
-                int renderX = (int) (statusX + (sizeX / 1.45F) + 10);
-                int renderY = (int) (statusY + (sizeY / 1.06F));
-
-                int size = scaleFactor * 6;
-
-                if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size)
-                {
-                    this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase() + ".name").build(), mouseX, mouseY);
-                }
-
-                statusX += 8 * scaleFactor;
-
-                if (statusX > scaleFactor * 40)
-                {
-                    statusX = 0;
-                    statusY -= scaleFactor * 8;
-                }
+                statusX = 0;
+                statusY -= 18;
             }
-
-            GlStateManager.disableLighting();
         }
+
+        GlStateManager.disableLighting();
+    }
+
+    private void drawBar(int x, int y, float value, float max, int color)
+    {
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        drawTexturedModalRect(x, y, 0, 179, 98, 8);
+        GlStateManager.color((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F);
+        drawTexturedModalRect(x, y, 0, 187, (int) ((value / max) * 98), 8);
     }
 
     private void drawScaledString(String text, float x, float y, float scale, int color)
@@ -185,6 +173,14 @@ public class FieldGuideGui extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.scale(scale, scale, 1.0F);
         fontRendererObj.drawString(text, x / scale, y / scale, color, false);
+        GlStateManager.popMatrix();
+    }
+
+    private void drawCenteredScaledString(String text, float x, float y, float scale, int color)
+    {
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(scale, scale, 1.0F);
+        fontRendererObj.drawString(text, (x - fontRendererObj.getStringWidth(text) / 2) / scale, y / scale, color, false);
         GlStateManager.popMatrix();
     }
 
@@ -203,15 +199,6 @@ public class FieldGuideGui extends GuiScreen
     @Override
     public void actionPerformed(GuiButton button)
     {
-        file = !file;
-
-        updateArrowStates();
-    }
-
-    private void updateArrowStates()
-    {
-        buttonList.get(0).enabled = file;
-        buttonList.get(1).enabled = !file;
     }
 
     public void drawEntity(int posX, int posY, float scale, EntityLivingBase entity)
