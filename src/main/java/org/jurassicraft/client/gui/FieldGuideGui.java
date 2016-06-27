@@ -1,5 +1,6 @@
 package org.jurassicraft.client.gui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -23,6 +24,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +32,20 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class FieldGuideGui extends GuiScreen
 {
-    private int sizeX = 256;
-    private int sizeY = 192;
+    private static final int SIZE_X = 256;
+    private static final int SIZE_Y = 192;
+    private static final int TOTAL_PAGES = 2;
+
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/background.png");
 
     private DinosaurEntity entity;
 
     private static final Map<DinosaurStatus, ResourceLocation> STATUS_TEXTURES = new HashMap<>();
+
+    private PageButton nextPage;
+    private PageButton previousPage;
+
+    private int page;
 
     static
     {
@@ -55,6 +64,18 @@ public class FieldGuideGui extends GuiScreen
     public void initGui()
     {
         super.initGui();
+
+        int x = (this.width - SIZE_X) / 2;
+        int y = (this.height - SIZE_Y) / 2;
+        this.buttonList.add(this.nextPage = new PageButton(0, x + 235, y + 180, true));
+        this.buttonList.add(this.previousPage = new PageButton(1, x - 3, y + 180, false));
+        this.updateButtons();
+    }
+
+    private void updateButtons()
+    {
+        this.nextPage.visible = page < TOTAL_PAGES - 1;
+        this.previousPage.visible = page > 0;
     }
 
     @Override
@@ -66,8 +87,8 @@ public class FieldGuideGui extends GuiScreen
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        int x = (this.width - sizeX) / 2;
-        int y = (this.height - sizeY) / 2;
+        int x = (this.width - SIZE_X) / 2;
+        int y = (this.height - SIZE_Y) / 2;
 
         this.zLevel = -1000;
 
@@ -79,85 +100,127 @@ public class FieldGuideGui extends GuiScreen
         Dinosaur dinosaur = entity.getDinosaur();
 
         drawScaledString(new LangHelper("entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build().toUpperCase(), x + 15, y + 10, 1.3F, 0);
-        drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(), x + 16, y + 24, 1.0F, 0);
 
-        int statisticsX = x + (sizeX / 2) + 15;
-
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
-        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
-
-        drawScaledString("Dinosaur Statistics:", statisticsX, y + 10, 1.0F, 0);
-        int statisticTextX = x + (sizeX / 2 + sizeX / 4);
-        drawCenteredScaledString("Health:", statisticTextX, y + 35, 1.0F, 0);
-        drawCenteredScaledString("Hunger:", statisticTextX, y + 65, 1.0F, 0);
-        drawCenteredScaledString("Thirst:", statisticTextX, y + 95, 1.0F, 0);
-        drawCenteredScaledString("Age:", statisticTextX, y + 125, 1.0F, 0);
-
-        this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-
-        drawBar(statisticsX, y + 45, entity.isCarcass() ? 0 : entity.getHealth(), entity.getMaxHealth(), 0xFF0000);
-        drawBar(statisticsX, y + 75, entity.getMetabolism().getEnergy(), entity.getMetabolism().getMaxEnergy(), 0x94745A);
-        drawBar(statisticsX, y + 105, entity.getMetabolism().getWater(), entity.getMetabolism().getMaxWater(), 0x0000FF);
-        drawBar(statisticsX, y + 135, entity.getDinosaurAge(), dinosaur.getMaximumAge(), 0x00FF00);
-
-        drawCenteredScaledString(entity.getDaysExisted() + " days old", statisticTextX, y + 155, 1.0F, 0);
-
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor((x + 15) * scaleFactor, (height - y - 140) * scaleFactor, 100 * scaleFactor, 100 * scaleFactor);
-        this.drawEntity(x + 65, y + 110, 45.0F / entity.height, entity);
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
-
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-        int statusX = 0;
-        int statusY = 0;
-
-        List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(entity);
-
-        for (DinosaurStatus status : activeStatuses)
+        if (page == 0)
         {
-            mc.getTextureManager().bindTexture(STATUS_TEXTURES.get(status));
+            drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(), x + 16, y + 24, 1.0F, 0);
 
-            int size = 16;
+            int statisticsX = x + (SIZE_X / 2) + 15;
 
-            drawFullTexturedRect(statusX + x + 35, statusY + y + (sizeY - 40), size, size);
+            DecimalFormat decimalFormat = new DecimalFormat("#.#");
+            decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
 
-            statusX += 18;
+            drawScaledString("Dinosaur Statistics:", statisticsX, y + 10, 1.0F, 0);
+            int statisticTextX = x + (SIZE_X / 2 + SIZE_X / 4);
+            drawCenteredScaledString("Health:", statisticTextX, y + 35, 1.0F, 0);
+            drawCenteredScaledString("Hunger:", statisticTextX, y + 65, 1.0F, 0);
+            drawCenteredScaledString("Thirst:", statisticTextX, y + 95, 1.0F, 0);
+            drawCenteredScaledString("Age:", statisticTextX, y + 125, 1.0F, 0);
 
-            if (statusX > sizeX / 2 - 60)
+            this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+
+            drawBar(statisticsX, y + 45, entity.isCarcass() ? 0 : entity.getHealth(), entity.getMaxHealth(), 0xFF0000);
+            drawBar(statisticsX, y + 75, entity.getMetabolism().getEnergy(), entity.getMetabolism().getMaxEnergy(), 0x94745A);
+            drawBar(statisticsX, y + 105, entity.getMetabolism().getWater(), entity.getMetabolism().getMaxWater(), 0x0000FF);
+            drawBar(statisticsX, y + 135, entity.getDinosaurAge(), dinosaur.getMaximumAge(), 0x00FF00);
+
+            drawCenteredScaledString(entity.getDaysExisted() + " days old", statisticTextX, y + 155, 1.0F, 0);
+
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+            GL11.glEnable(GL11.GL_SCISSOR_TEST);
+            GL11.glScissor((x + 15) * scaleFactor, (height - y - 140) * scaleFactor, 100 * scaleFactor, 100 * scaleFactor);
+            this.drawEntity(x + 65, y + 110, 45.0F / entity.height, entity);
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+            int statusX = 0;
+            int statusY = 0;
+
+            List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(entity);
+
+            for (DinosaurStatus status : activeStatuses)
             {
-                statusX = 0;
-                statusY -= 18;
+                mc.getTextureManager().bindTexture(STATUS_TEXTURES.get(status));
+
+                int size = 16;
+
+                drawFullTexturedRect(statusX + x + 35, statusY + y + (SIZE_Y - 40), size, size);
+
+                statusX += 18;
+
+                if (statusX > SIZE_X / 2 - 60)
+                {
+                    statusX = 0;
+                    statusY -= 18;
+                }
+            }
+
+            statusX = 0;
+            statusY = 0;
+
+            for (DinosaurStatus status : activeStatuses)
+            {
+                int size = 16;
+
+                int renderX = statusX + x + 35;
+                int renderY = statusY + y + (SIZE_Y - 40);
+
+                if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size)
+                {
+                    this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase() + ".name").build(), mouseX, mouseY);
+                }
+
+                statusX += 18;
+
+                if (statusX > SIZE_X / 2 - 60)
+                {
+                    statusX = 0;
+                    statusY -= 18;
+                }
+            }
+
+            GlStateManager.disableLighting();
+        }
+        else
+        {
+            String text = new LangHelper("info." + dinosaur.getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
+            List<String> lines = new ArrayList<>();
+
+            int wrapX = 0;
+            String wrapLine = "";
+
+            for (String word : text.split(" "))
+            {
+                if (wrapX + (fontRendererObj.getStringWidth(word)) > 90)
+                {
+                    lines.add(wrapLine);
+                    wrapLine = "";
+                }
+
+                wrapLine += word + " ";
+                wrapX = fontRendererObj.getStringWidth(wrapLine.trim());
+            }
+
+            lines.add(wrapLine);
+
+            int lineX = 0;
+            int lineY = y + 25;
+
+            for (String line : lines)
+            {
+                drawCenteredScaledString(line.trim(), x + (SIZE_X / 4) + lineX, lineY, 1.0F, 0);
+
+                lineY += 10;
+
+                if (lineY > y + SIZE_Y - 35)
+                {
+                    lineX += SIZE_X / 2;
+                    lineY = y + 10;
+                }
             }
         }
-
-        statusX = 0;
-        statusY = 0;
-
-        for (DinosaurStatus status : activeStatuses)
-        {
-            int size = 16;
-
-            int renderX = statusX + x + 35;
-            int renderY = statusY + y + (sizeY - 40);
-
-            if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size)
-            {
-                this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase() + ".name").build(), mouseX, mouseY);
-            }
-
-            statusX += 18;
-
-            if (statusX > sizeX / 2 - 60)
-            {
-                statusX = 0;
-                statusY -= 18;
-            }
-        }
-
-        GlStateManager.disableLighting();
     }
 
     private void drawBar(int x, int y, float value, float max, int color)
@@ -199,6 +262,25 @@ public class FieldGuideGui extends GuiScreen
     @Override
     public void actionPerformed(GuiButton button)
     {
+        if (button.enabled)
+        {
+            if (button.id == 0)
+            {
+                if (page < TOTAL_PAGES)
+                {
+                    page++;
+                }
+            }
+            else if (button.id == 1)
+            {
+                if (page > 0)
+                {
+                    page--;
+                }
+            }
+
+            updateButtons();
+        }
     }
 
     public void drawEntity(int posX, int posY, float scale, EntityLivingBase entity)
@@ -230,5 +312,43 @@ public class FieldGuideGui extends GuiScreen
     public boolean doesGuiPauseGame()
     {
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    static class PageButton extends GuiButton
+    {
+        private final boolean isForward;
+
+        public PageButton(int id, int x, int y, boolean isForward)
+        {
+            super(id, x, y, 23, 13, "");
+            this.isForward = isForward;
+        }
+
+        @Override
+        public void drawButton(Minecraft mc, int mouseX, int mouseY)
+        {
+            if (this.visible)
+            {
+                boolean selected = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+
+                int u = 0;
+                int v = 194;
+
+                if (selected)
+                {
+                    u += 23;
+                }
+
+                if (!this.isForward)
+                {
+                    v += 13;
+                }
+
+                this.drawTexturedModalRect(this.xPosition, this.yPosition, u, v, 23, 13);
+            }
+        }
     }
 }
