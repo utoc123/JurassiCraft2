@@ -27,7 +27,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private final Map<GrowthStage, ResourceLocation> maleTextures = new HashMap<>();
     private final Map<GrowthStage, ResourceLocation> femaleTextures = new HashMap<>();
     private final Map<GrowthStageGenderContainer, ResourceLocation> eyelidTextures = new HashMap<>();
-    private final Map<GrowthStage, List<ResourceLocation>> rareVariantTextures = new HashMap<>();
 
     private String name;
     private Class<? extends DinosaurEntity> dinoClazz;
@@ -65,9 +64,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private TabulaModelContainer modelJuvenile;
     private TabulaModelContainer modelAdolescent;
 
-    private boolean usePosesForWalkingAnim = false;
-
-    private String[] rareVariants = new String[0];
     private PoseHandler poseHandler;
 
     private boolean defendOwner;
@@ -126,20 +122,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
                 eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + "_eyelid.png"));
                 eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + "_eyelid.png"));
             }
-
-            List<ResourceLocation> variantsForGrowthStage = rareVariantTextures.get(growthStage);
-
-            if (variantsForGrowthStage == null)
-            {
-                variantsForGrowthStage = new ArrayList<>();
-            }
-
-            for (String variant : getRareVariants())
-            {
-                variantsForGrowthStage.add(new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_" + variant + "_" + growthStageName + ".png"));
-            }
-
-            rareVariantTextures.put(growthStage, variantsForGrowthStage);
 
             List<ResourceLocation> overlaysForGrowthStage = new ArrayList<>();
 
@@ -279,16 +261,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.bones = bones;
     }
 
-    public void setUsePosesForWalkingAnim(boolean usePosesForWalkingAnim)
-    {
-        this.usePosesForWalkingAnim = usePosesForWalkingAnim;
-    }
-
-    public void setRareVariants(String... rareVariants)
-    {
-        this.rareVariants = rareVariants;
-    }
-
     public String getName()
     {
         return name;
@@ -421,11 +393,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         }
 
         return texture + ".png";
-    }
-
-    public boolean getUsePosesForWalkAnim()
-    {
-        return this.usePosesForWalkingAnim;
     }
 
     @Override
@@ -725,16 +692,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public float getOffsetZ()
     {
         return offsetZ;
-    }
-
-    public String[] getRareVariants()
-    {
-        return rareVariants;
-    }
-
-    public ResourceLocation getRareVariantTexture(int rareVariant, GrowthStage growthStage)
-    {
-        return rareVariantTextures.get(growthStage).get(rareVariant - 1);
     }
 
     public PoseHandler getPoseHandler()

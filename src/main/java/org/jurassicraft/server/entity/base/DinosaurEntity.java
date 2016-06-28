@@ -122,8 +122,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private int rareVariant;
-
     private boolean useInertialTweens;
 
     protected EntityAITasks animationTasks;
@@ -150,16 +148,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.animTick = 0;
         this.setAnimation(DinosaurAnimation.IDLE.get());
-
-        int rareVariantCount = dinosaur.getRareVariants().length;
-
-        if (rareVariantCount > 0)
-        {
-            if (rand.nextInt(100) < 2)
-            {
-                this.rareVariant = rand.nextInt(rareVariantCount) + 1;
-            }
-        }
 
         this.setUseInertialTweens(true);
 
@@ -1067,7 +1055,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setString("Genetics", genetics);
         nbt.setBoolean("IsMale", isMale);
         nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
-        nbt.setByte("RareVariant", (byte) rareVariant);
         nbt.setInteger("StayAwakeTime", stayAwakeTime);
         nbt.setBoolean("IsSleeping", isSleeping);
         nbt.setByte("Order", (byte) order.ordinal());
@@ -1095,7 +1082,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         genetics = nbt.getString("Genetics");
         isMale = nbt.getBoolean("IsMale");
         growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
-        rareVariant = nbt.getByte("RareVariant");
         stayAwakeTime = nbt.getInteger("StayAwakeTime");
         isSleeping = nbt.getBoolean("IsSleeping");
         carcassHealth = nbt.getInteger("CarcassHealth");
@@ -1124,7 +1110,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         buffer.writeInt(geneticsQuality);
         buffer.writeBoolean(isMale);
         buffer.writeInt(growthSpeedOffset);
-        buffer.writeByte((byte) rareVariant);
     }
 
     @Override
@@ -1135,7 +1120,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         geneticsQuality = additionalData.readInt();
         isMale = additionalData.readBoolean();
         growthSpeedOffset = additionalData.readInt();
-        rareVariant = additionalData.readByte();
 
         updateCreatureData();
         adjustHitbox();
@@ -1237,11 +1221,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean areEyelidsClosed()
     {
         return (isCarcass || isSleeping) || ticksExisted % 100 < 4;
-    }
-
-    public int getRareVariant()
-    {
-        return rareVariant;
     }
 
     public boolean getUseInertialTweens()

@@ -163,18 +163,11 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     @Override
     public ResourceLocation getEntityTexture(DinosaurEntity entity)
     {
-        int rareVariant = entity.getRareVariant();
-
         GrowthStage growthStage = entity.getGrowthStage();
 
         if (!dinosaur.doesSupportGrowthStage(growthStage))
         {
             growthStage = GrowthStage.ADULT;
-        }
-
-        if (rareVariant != 0)
-        {
-            return dinosaur.getRareVariantTexture(rareVariant, growthStage);
         }
 
         return entity.isMale() ? dinosaur.getMaleTexture(growthStage) : dinosaur.getFemaleTexture(growthStage);
