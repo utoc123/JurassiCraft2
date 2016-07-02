@@ -522,6 +522,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public double transitionFromAge(double baby, double adult)
     {
+        int dinosaurAge = this.dinosaurAge;
+
         int maxAge = dinosaur.getMaximumAge();
 
         if (dinosaurAge > maxAge)

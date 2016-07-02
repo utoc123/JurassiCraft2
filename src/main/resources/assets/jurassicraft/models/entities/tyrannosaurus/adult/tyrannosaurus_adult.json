@@ -13,34 +13,86 @@
         "time": 20
       }
     ],
-    "CALLING": [
+    "RESTING": [
       {
-        "pose": "tyrannosaurus_adult_roar1",
-        "time": 15
+        "pose": "tyrannosaurus_adult_resting",
+        "time": 20
+      }
+    ],
+    "WALKING": [
+      {
+        "pose": "tyrannosaurus_adult_walking_1",
+        "time": 6
       },
       {
-        "pose": "tyrannosaurus_adult_roar2",
-        "time": 10
+        "pose": "tyrannosaurus_adult_walking_2",
+        "time": 6
       },
       {
-        "pose": "tyrannosaurus_adult_shake1",
-        "time": 15
+        "pose": "tyrannosaurus_adult_walking_3",
+        "time": 6
       },
       {
-        "pose": "tyrannosaurus_adult_shake2",
-        "time": 15
+        "pose": "tyrannosaurus_adult_walking_4",
+        "time": 6
       },
       {
-        "pose": "tyrannosaurus_adult_shake1",
-        "time": 15
+        "pose": "tyrannosaurus_adult_walking_5",
+        "time": 6
       },
       {
-        "pose": "tyrannosaurus_adult_shake2",
+        "pose": "tyrannosaurus_adult_walking_6",
+        "time": 6
+      }
+    ],
+    "SPEAK": [
+      {
+        "pose": "tyrannosaurus_adult_speak",
+        "time": 6
+      },
+      {
+        "pose": "tyrannosaurus_adult_speak",
         "time": 15
       },
       {
         "pose": "tyrannosaurus_adult_idle",
-        "time": 20
+        "time": 6
+      }
+    ],
+    "CALLING": [
+      {
+        "pose": "tyrannosaurus_adult_calling",
+        "time": 10
+      },
+      {
+        "pose": "tyrannosaurus_adult_calling",
+        "time": 40
+      },
+      {
+        "pose": "tyrannosaurus_adult_idle",
+        "time": 10
+      }
+    ],
+    "DYING": [
+      {
+        "pose": "tyrannosaurus_adult_death_1",
+        "time": 5
+      },
+      {
+        "pose": "tyrannosaurus_adult_death_2",
+        "time": 5
+      },
+      {
+        "pose": "tyrannosaurus_adult_death_3",
+        "time": 5
+      },
+      {
+        "pose": "tyrannosaurus_adult_death_4",
+        "time": 5
+      },
+      {
+        "pose": "tyrannosaurus_adult_death_5",
+        "time": 5
       }
     ]
   }
