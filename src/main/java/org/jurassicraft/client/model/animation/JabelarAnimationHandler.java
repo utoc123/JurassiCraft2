@@ -57,13 +57,13 @@ public class JabelarAnimationHandler
 
     private AdvancedModelRenderer[] getModelParts(DinosaurModel model)
     {
-        String[] partNames = model.getCubeNamesArray();
+        String[] identifiers = model.getCubeIdentifierArray();
 
-        AdvancedModelRenderer[] modelParts = new AdvancedModelRenderer[partNames.length];
+        AdvancedModelRenderer[] modelParts = new AdvancedModelRenderer[identifiers.length];
 
         for (int i = 0; i < modelParts.length; i++)
         {
-            modelParts[i] = model.getCube(partNames[i]);
+            modelParts[i] = model.getCubeByIdentifier(identifiers[i]);
         }
 
         return modelParts;

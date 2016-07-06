@@ -17,5 +17,10 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee
         {
             super.updateTask();
         }
+
+        if (attacker.getAttackTarget() == null || attacker.getAttackTarget().isDead)
+        {
+            super.resetTask();
+        }
     }
 }

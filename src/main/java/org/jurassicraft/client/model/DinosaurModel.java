@@ -41,20 +41,20 @@ public class DinosaurModel extends TabulaModel
         super(model, animator);
     }
 
-    public String[] getCubeNamesArray()
+    public String[] getCubeIdentifierArray()
     {
-        String[] cubeNamesArray = new String[cubes.size()];
+        String[] cubeIdentifiers = new String[identifierMap.size()];
         int index = 0;
 
-        Set<String> names = cubes.keySet();
+        Set<String> identifiers = identifierMap.keySet();
 
-        for (String name : names)
+        for (String identifier : identifiers)
         {
-            cubeNamesArray[index] = name;
+            cubeIdentifiers[index] = identifier;
             index++;
         }
 
-        return cubeNamesArray;
+        return cubeIdentifiers;
     }
 
     @Override

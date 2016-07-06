@@ -695,6 +695,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             {
                 this.setAnimation(DinosaurAnimation.DYING.get());
             }
+
+            if (ticksExisted % 1000 == 0)
+            {
+                this.attackEntityFrom(DamageSource.generic, 1.0F);
+            }
         }
 
         if (isSleeping)
@@ -844,6 +849,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (carcass)
         {
             carcassHealth = (int) Math.sqrt(width * height) * 2;
+            ticksExisted = 0;
             inventory.dropItems(worldObj, rand);
         }
     }

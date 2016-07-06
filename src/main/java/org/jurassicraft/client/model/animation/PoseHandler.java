@@ -101,31 +101,36 @@ public class PoseHandler
         }
     }
 
-    private PreloadedModelData getPosedModels(URI dinoDirURI, AnimationsDTO anims)
+    private PreloadedModelData getPosedModels(URI dinoDirURI, AnimationsDTO animations)
     {
-        if (anims == null || anims.poses == null || anims.poses.get(DinosaurAnimation.IDLE.name()) == null || anims.poses.get(DinosaurAnimation.IDLE.name()).length == 0)
+        if (animations == null || animations.poses == null || animations.poses.get(DinosaurAnimation.IDLE.name()) == null || animations.poses.get(DinosaurAnimation.IDLE.name()).length == 0)
         {
             throw new IllegalArgumentException("Animation files must define at least one pose for the IDLE animation");
         }
         List<String> posedModelResources = new ArrayList<>();
-        for (PoseDTO[] poses : anims.poses.values())
+
+        for (PoseDTO[] poses : animations.poses.values())
         {
             if (poses == null)
             {
                 continue;
             }
+
             for (PoseDTO pose : poses)
             {
                 if (pose == null)
                 {
                     continue;
                 }
+
                 if (pose.pose == null)
                 {
                     throw new IllegalArgumentException("Every pose must define a pose file");
                 }
+
                 String resolvedRes = resolve(dinoDirURI, pose.pose);
                 int index = posedModelResources.indexOf(resolvedRes);
+
                 if (index == -1)
                 {
                     pose.index = posedModelResources.size();
@@ -138,48 +143,62 @@ public class PoseHandler
             }
         }
         assert (posedModelResources.size() > 0);
+
         AdvancedModelRenderer[][] posedCubes = new AdvancedModelRenderer[posedModelResources.size()][];
         Map<Animation, int[][]> animationSequences = new ListHashMap<>();
         DinosaurModel mainModel = JabelarAnimationHandler.getTabulaModel(posedModelResources.get(0), 0);
+
         if (mainModel == null)
         {
             throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
         }
-        String[] cubeNameArray = mainModel.getCubeNamesArray();
-        int numParts = cubeNameArray.length;
+
+        String[] cubeIdentifierArray = mainModel.getCubeIdentifierArray();
+        int partCount = cubeIdentifierArray.length;
+
         for (int i = 0; i < posedModelResources.size(); i++)
         {
             String resource = posedModelResources.get(i);
-            DinosaurModel theModel = JabelarAnimationHandler.getTabulaModel(resource, 0);
-            if (theModel == null)
+            DinosaurModel model = JabelarAnimationHandler.getTabulaModel(resource, 0);
+
+            if (model == null)
             {
                 throw new IllegalArgumentException("Couldn't load the model from " + resource);
             }
-            AdvancedModelRenderer[] cubes = new AdvancedModelRenderer[numParts];
-            for (int partIndex = 0; partIndex < numParts; partIndex++)
+
+            AdvancedModelRenderer[] cubes = new AdvancedModelRenderer[partCount];
+
+            for (int partIndex = 0; partIndex < partCount; partIndex++)
             {
-                String cubeName = cubeNameArray[partIndex];
-                AdvancedModelRenderer cube = theModel.getCube(cubeName);
+                String identifier = cubeIdentifierArray[partIndex];
+                AdvancedModelRenderer cube = model.getCubeByIdentifier(identifier);
+
                 if (cube == null)
                 {
-                    JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + cubeName + " (" + partIndex + ") from the model " + resource);
+                    JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " (" + partIndex + ") from the model " + resource);
                 }
+
                 cubes[partIndex] = cube;
             }
+
             posedCubes[i] = cubes;
         }
-        for (Map.Entry<String, PoseDTO[]> entry : anims.poses.entrySet())
+
+        for (Map.Entry<String, PoseDTO[]> entry : animations.poses.entrySet())
         {
-            Animation animations = DinosaurAnimation.valueOf(entry.getKey()).get();
+            Animation animation = DinosaurAnimation.valueOf(entry.getKey()).get();
             PoseDTO[] poses = entry.getValue();
             int[][] poseSequence = new int[poses.length][2];
+
             for (int i = 0; i < poses.length; i++)
             {
                 poseSequence[i][0] = poses[i].index;
                 poseSequence[i][1] = poses[i].time;
             }
-            animationSequences.put(animations, poseSequence);
+
+            animationSequences.put(animation, poseSequence);
         }
+
         return new PreloadedModelData(posedCubes, animationSequences);
     }
 
