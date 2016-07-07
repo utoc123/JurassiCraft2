@@ -69,6 +69,7 @@ public enum FoodHelper
         registerFood(Items.BREAD, FoodType.PLANT);
         registerFood(Items.SUGAR, FoodType.PLANT);
         registerFood(ItemHandler.WILD_ONION, FoodType.PLANT);
+        registerFood(Items.BEETROOT, FoodType.PLANT);
 
         registerFood(Items.BEEF, FoodType.MEAT);
         registerFood(Items.COOKED_BEEF, FoodType.MEAT);

@@ -16,7 +16,7 @@ public class GallimimusDinosaur extends Dinosaur
         this.setEggColorMale(0xC57B5F, 0x985E54);
         this.setEggColorFemale(0xDAC0AC, 0x966943);
         this.setHealth(5, 25);
-        this.setSpeed(0.52, 0.40);
+        this.setSpeed(0.3, 0.40);
         this.setStrength(1, 5);
         this.setMaximumAge(fromDays(35));
         this.setEyeHeight(0.58F, 3F);

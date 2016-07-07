@@ -250,6 +250,11 @@ public class PoseHandler
         return duration;
     }
 
+    public boolean hasAnimation(Animation animation, GrowthStage growthStage)
+    {
+        return modelData.get(growthStage).animations.get(animation) != null;
+    }
+
     private class PreloadedModelData
     {
         public PreloadedModelData()

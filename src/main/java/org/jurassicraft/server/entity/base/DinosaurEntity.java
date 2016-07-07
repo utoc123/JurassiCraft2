@@ -62,6 +62,7 @@ import org.jurassicraft.server.entity.ai.TemptNonAdultEntityAI;
 import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.RoarAnimationAI;
 import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
@@ -198,6 +199,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.animationTasks.addTask(1, new FeederEntityAI(this));
 
         this.animationTasks.addTask(3, new CallAnimationAI(this));
+        this.animationTasks.addTask(3, new RoarAnimationAI(this));
         this.animationTasks.addTask(3, new LookAnimationAI(this));
         this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
     }
@@ -278,7 +280,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean attackEntityAsMob(Entity entity)
     {
-        this.setAnimation(DinosaurAnimation.ATTACKING.get());
+        if (entity instanceof DinosaurEntity && ((DinosaurEntity) entity).isCarcass())
+        {
+            this.setAnimation(DinosaurAnimation.EATING.get());
+        }
+        else
+        {
+            this.setAnimation(DinosaurAnimation.ATTACKING.get());
+        }
 
         float damage = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int knockback = 0;
@@ -557,13 +566,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public float getSoundPitch()
     {
-        return (float) transitionFromAge(1.5F, 1.0F) + ((rand.nextFloat() - 0.5F) * 0.125F);
+        return (float) transitionFromAge(2.5F, 1.0F) + ((rand.nextFloat() - 0.5F) * 0.125F);
     }
 
     @Override
     public float getSoundVolume()
     {
-        return (isCarcass || isSleeping) ? 0.0F : (2.0F * ((float) transitionFromAge(0.3F, 1.0F)));
+        return (isCarcass || isSleeping) ? 0.0F : (2.0F * ((float) transitionFromAge(0.2F, 1.0F)));
     }
 
     public void setGenetics(String genetics)
@@ -701,44 +710,46 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 this.attackEntityFrom(DamageSource.generic, 1.0F);
             }
         }
-
-        if (isSleeping)
+        else
         {
-            if (getAnimation() != DinosaurAnimation.SLEEPING.get())
+            if (isSleeping)
             {
-                this.setAnimation(DinosaurAnimation.SLEEPING.get());
-            }
-
-            if (ticksExisted % 20 == 0)
-            {
-                if (stayAwakeTime <= 0 && this.hasPredators())
+                if (getAnimation() != DinosaurAnimation.SLEEPING.get())
                 {
-                    this.disturbSleep();
+                    this.setAnimation(DinosaurAnimation.SLEEPING.get());
+                }
+
+                if (ticksExisted % 20 == 0)
+                {
+                    if (stayAwakeTime <= 0 && this.hasPredators())
+                    {
+                        this.disturbSleep();
+                    }
+                }
+
+                if (!shouldSleep() && !worldObj.isRemote)
+                {
+                    isSleeping = false;
                 }
             }
-
-            if (!shouldSleep() && !worldObj.isRemote)
-            {
-                isSleeping = false;
-            }
-        }
-        else if (getAnimation() == DinosaurAnimation.SLEEPING.get())
-        {
-            this.setAnimation(DinosaurAnimation.IDLE.get());
-        }
-
-        if (!isSleeping)
-        {
-            if (order == Order.SIT)
-            {
-                if (getAnimation() != DinosaurAnimation.RESTING.get())
-                {
-                    this.setAnimation(DinosaurAnimation.RESTING.get());
-                }
-            }
-            else if (getAnimation() == DinosaurAnimation.RESTING.get())
+            else if (getAnimation() == DinosaurAnimation.SLEEPING.get())
             {
                 this.setAnimation(DinosaurAnimation.IDLE.get());
+            }
+
+            if (!isSleeping)
+            {
+                if (order == Order.SIT)
+                {
+                    if (getAnimation() != DinosaurAnimation.RESTING.get())
+                    {
+                        this.setAnimation(DinosaurAnimation.RESTING.get());
+                    }
+                }
+                else if (getAnimation() == DinosaurAnimation.RESTING.get())
+                {
+                    this.setAnimation(DinosaurAnimation.IDLE.get());
+                }
             }
         }
 

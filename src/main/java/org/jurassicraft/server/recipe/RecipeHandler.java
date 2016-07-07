@@ -63,12 +63,13 @@ public class RecipeHandler
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.DNA_ANALYZER, 'S', ItemHandler.COMPUTER_SCREEN, 'H', ItemHandler.HARD_DRIVE, 'K', ItemHandler.KEYBOARD);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.ADVANCED_CIRCUIT, 'D', ItemHandler.HARD_DRIVE);
 
-        for (int i = 0; i < 16; i++)
-        {
-            GameRegistry.addRecipe(new ItemStack(BlockHandler.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT, 'C', ItemHandler.ADVANCED_CIRCUIT);
-        }
+//        for (int i = 0; i < 16; i++)
+//        {
+//            GameRegistry.addRecipe(new ItemStack(BlockHandler.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT, 'C', ItemHandler.ADVANCED_CIRCUIT);
+//        }
 
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.EMBRYONIC_MACHINE), "GIG", "GIG", "III", 'G', Blocks.GLASS_PANE, 'I', Items.IRON_INGOT);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.EMBRYONIC_MACHINE), "npb", "ngb", "iib", 'n', "nuggetIron", 'p', Blocks.PISTON, 'g', Items.GLOWSTONE_DUST, 'b', Blocks.STONE_BUTTON, 'i', Items.IRON_INGOT));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.EMBRYONIC_MACHINE), "npb", "ngb", "iib", 'n', "nuggetIron", 'p', Blocks.PISTON, 'g', Items.GLOWSTONE_DUST, 'b', Blocks.WOODEN_BUTTON, 'i', Items.IRON_INGOT));
         GameRegistry.addRecipe(new ItemStack(BlockHandler.EMBRYO_CALCIFICATION_MACHINE), "iBK", "RCR", "RIR", 'i', Items.IRON_INGOT, 'I', Blocks.IRON_BLOCK, 'B', Items.BOWL, 'K', ItemHandler.KEYBOARD, 'R', ItemHandler.IRON_ROD, 'C', ItemHandler.BASIC_CIRCUIT);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INCUBATOR), "GIG", "RRR", "IKI", 'I', Items.IRON_INGOT, 'R', Items.COMPARATOR, 'G', Blocks.GLASS, 'K', ItemHandler.KEYBOARD);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.HARD_DRIVE, 'L', ItemHandler.KEYBOARD);

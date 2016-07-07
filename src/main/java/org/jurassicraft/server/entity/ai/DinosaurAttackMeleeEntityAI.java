@@ -1,7 +1,9 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee
 {
@@ -13,14 +15,17 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee
     @Override
     public void updateTask()
     {
-        if (attacker.getAttackTarget() != null)
+        EntityLivingBase target = attacker.getAttackTarget();
+
+        if (target != null)
         {
             super.updateTask();
         }
 
-        if (attacker.getAttackTarget() == null || attacker.getAttackTarget().isDead)
+        if (target == null || target.isDead || (target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass()))
         {
             super.resetTask();
+            attacker.setAttackTarget(null);
         }
     }
 }

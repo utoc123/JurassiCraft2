@@ -19,7 +19,7 @@ public class TyrannosaurusEntity extends DinosaurEntity
     public TyrannosaurusEntity(World world)
     {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, TriceratopsEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class);
+        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, TriceratopsEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class, BrachiosaurusEntity.class);
     }
 
     @Override

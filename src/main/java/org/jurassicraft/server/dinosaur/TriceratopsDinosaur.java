@@ -15,8 +15,8 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x404138, 0x1C1C1C);
         this.setEggColorFemale(0x8F7B76, 0x73676A);
-        this.setSpeed(0.37, 0.35);
-        this.setAttackSpeed(1.3);
+        this.setSpeed(0.3, 0.35);
+        this.setAttackSpeed(1.2);
         this.setHealth(10, 50);
         this.setStrength(2, 10);
         this.setMaximumAge(fromDays(45));

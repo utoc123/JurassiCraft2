@@ -192,6 +192,84 @@
         "pose": "triceratops_adult_walking_4",
         "time": 6
       }
+    ],
+    "RUNNING": [
+      {
+        "pose": "triceratops_adult_running_1",
+        "time": 4
+      },
+      {
+        "pose": "triceratops_adult_running_2",
+        "time": 4
+      },
+      {
+        "pose": "triceratops_adult_running_3",
+        "time": 4
+      },
+      {
+        "pose": "triceratops_adult_running_4",
+        "time": 4
+      },
+      {
+        "pose": "triceratops_adult_running_5",
+        "time": 4
+      },
+      {
+        "pose": "triceratops_adult_running_6",
+        "time": 4
+      }
+    ],
+    "LOOKING_LEFT": [
+      {
+        "pose": "triceratops_adult_look_left",
+        "time": 20
+      },
+      {
+        "pose": "triceratops_adult_look_left",
+        "time": 20
+      },
+      {
+        "pose": "triceratops_adult_idle",
+        "time": 10
+      }
+    ],
+    "LOOKING_RIGHT": [
+      {
+        "pose": "triceratops_adult_look_right",
+        "time": 20
+      },
+      {
+        "pose": "triceratops_adult_look_right",
+        "time": 20
+      },
+      {
+        "pose": "triceratops_adult_idle",
+        "time": 10
+      }
+    ],
+    "INJURED": [
+      {
+        "pose": "triceratops_adult_injured",
+        "time": 10
+      },
+      {
+        "pose": "triceratops_adult_injured",
+        "time": 10
+      },
+      {
+        "pose": "triceratops_adult_idle",
+        "time": 10
+      }
+    ],
+    "SWIMMING": [
+      {
+        "pose": "triceratops_adult_swimming_1",
+        "time": 6
+      },
+      {
+        "pose": "triceratops_adult_swimming_2",
+        "time": 6
+      }
     ]
   }
 }

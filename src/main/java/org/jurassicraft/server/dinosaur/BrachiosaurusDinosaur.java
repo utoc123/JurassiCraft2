@@ -16,8 +16,8 @@ public class BrachiosaurusDinosaur extends Dinosaur
         this.setEggColorMale(0x87987F, 0x607343);
         this.setEggColorFemale(0xAA987D, 0x4F4538);
         this.setHealth(20, 100);
-        this.setSpeed(0.32, 0.31);
-        this.setStrength(5, 20);
+        this.setSpeed(0.25, 0.31);
+        this.setStrength(5, 15);
         this.setMaximumAge(fromDays(85));
         this.setEyeHeight(2.2F, 18.4F);
         this.setSizeX(0.9F, 6.5F);
