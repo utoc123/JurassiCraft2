@@ -25,7 +25,7 @@ public class FeederEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.ticksExisted % 4 == 0 && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
+        if (!dinosaur.isDead && !dinosaur.isCarcass() && !dinosaur.isMovementBlocked() && dinosaur.ticksExisted % 4 == 0 && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
         {
             if (dinosaur.getMetabolism().isHungry())
             {

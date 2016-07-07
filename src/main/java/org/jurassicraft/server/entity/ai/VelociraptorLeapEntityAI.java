@@ -22,6 +22,8 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
     private double targetPrevPosX;
     private double targetPrevPosZ;
 
+    private boolean ticked = false;
+
     public VelociraptorLeapEntityAI(VelociraptorEntity entity)
     {
         this.entity = entity;
@@ -55,6 +57,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
         GrowthStage growthStage = entity.getGrowthStage();
         leapLength = poseHandler.getAnimationLength(DinosaurAnimation.VELOCIRAPTOR_LEAP.get(), growthStage);
         entity.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
+        ticked = false;
     }
 
     @Override
@@ -74,19 +77,19 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
                 entity.playSound(sound, entity.getSoundVolume(), entity.getSoundPitch());
             }
 
-            double targetSpeedX = target.posX - targetPrevPosX;
-            double targetSpeedZ = target.posZ - targetPrevPosZ;
+            double targetSpeedX = target.posX - (!ticked ? target.prevPosX : targetPrevPosX);
+            double targetSpeedZ = target.posZ - (!ticked ? target.prevPosZ : targetPrevPosZ);
 
             double length = 6.0;
 
-            double destX = target.posX + (targetSpeedX * length);
-            double destZ = target.posZ + (targetSpeedZ * length);
+            double destX = target.posX + targetSpeedX * length;
+            double destZ = target.posZ + targetSpeedZ * length;
 
             double delta = Math.sqrt((destX - entity.posX) * (destX - entity.posX) + (destZ - entity.posZ) * (destZ - entity.posZ));
-            double angle = Math.atan2((destZ - entity.posZ), (destX - entity.posX));
+            double angle = Math.atan2(destZ - entity.posZ, destX - entity.posX);
 
-            this.entity.motionX = ((delta / length) * Math.cos(angle));
-            this.entity.motionZ = ((delta / length) * Math.sin(angle));
+            this.entity.motionX = delta / length * Math.cos(angle);
+            this.entity.motionZ = (delta / length * Math.sin(angle));
             this.entity.motionY = Math.min(0.3, Math.max(0, (target.posY - entity.posY) * 0.1)) + 0.6;
         }
         else if (animation == DinosaurAnimation.VELOCIRAPTOR_LEAP && entity.motionY < 0)
@@ -107,6 +110,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
 
         targetPrevPosX = target.posX;
         targetPrevPosZ = target.posZ;
+        ticked = true;
 
         if (entity.getAnimation() != animation.get())
         {

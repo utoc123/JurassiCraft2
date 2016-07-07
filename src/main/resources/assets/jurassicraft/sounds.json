@@ -272,25 +272,40 @@
   "tyrannosaurus_breathing": {
     "category": "hostile",
     "sounds": [
-      "jurassicraft:dinosaurs/tyrannosaurus_rex/tyrannosaurus_breath_1"
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_breath_1"
     ]
   },
   "tyrannosaurus_death": {
     "category": "hostile",
     "sounds": [
-      "jurassicraft:dinosaurs/tyrannosaurus_rex/tyrannosaurus_death_1"
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_death_1",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_death_2"
     ]
   },
   "tyrannosaurus_hurt": {
     "category": "hostile",
     "sounds": [
-      "jurassicraft:dinosaurs/tyrannosaurus_rex/tyrannosaurus_hurt_1"
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_hurt_1",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_hurt_2"
     ]
   },
   "tyrannosaurus_roar": {
     "category": "hostile",
     "sounds": [
-      "jurassicraft:dinosaurs/tyrannosaurus_rex/tyrannosaurus_roar_1"
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_roar_1",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_roar_2",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_roar_3"
+    ]
+  },
+  "tyrannosaurus_living": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_living_1",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_living_2",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_living_3",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_living_4",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_living_5",
+      "jurassicraft:dinosaurs/tyrannosaurus/tyrannosaurus_living_6"
     ]
   },
   "brachiosaurus_living": {

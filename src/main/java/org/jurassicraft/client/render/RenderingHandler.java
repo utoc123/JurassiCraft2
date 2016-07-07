@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -189,10 +190,10 @@ public enum RenderingHandler
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name));
         }
 
-        for (EnumDyeColor color : EnumDyeColor.values())
-        {
-            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase()));
-        }
+//        for (EnumDyeColor color : EnumDyeColor.values())
+//        {
+//            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase()));
+//        }
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
         {
@@ -364,6 +365,8 @@ public enum RenderingHandler
                 return pos == null || block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
             }, entry.getValue());
         }
+
+        blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos == null ? ColorizerFoliage.getFoliageColorBasic() : BiomeColorHelper.getFoliageColorAtPos(access, pos), BlockHandler.MOSS);
 
         this.registerBlockRenderer(modelMesher, BlockHandler.AJUGINUCULA_SMITHII, "ajuginucula_smithii", "inventory");
     }

@@ -49,7 +49,6 @@ import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.ActionFigureTile;
 import org.jurassicraft.server.tile.CleaningStationTile;
-import org.jurassicraft.server.tile.CultivatorTile;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 import org.jurassicraft.server.tile.DNAExtractorTile;
 import org.jurassicraft.server.tile.DNASequencerTile;
@@ -182,8 +181,8 @@ public class BlockHandler
 
         registerBlock(CLEAR_GLASS, "Clear Glass");
 
-        registerBlockTileEntity(CultivatorTile.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
-        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
+//        registerBlockTileEntity(CultivatorTile.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
+//        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
         registerBlockTileEntity(CleaningStationTile.class, CLEANING_STATION, "Cleaning Station");
         registerBlockTileEntity(FossilGrinderTile.class, FOSSIL_GRINDER, "Fossil Grinder");
         registerBlockTileEntity(DNASequencerTile.class, DNA_SEQUENCER, "DNA Sequencer");
