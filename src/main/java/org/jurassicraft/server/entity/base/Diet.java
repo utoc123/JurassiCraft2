@@ -4,33 +4,33 @@ public enum Diet
 {
     HERBIVORE(false, true, false, 0x007F0E), CARNIVORE(true, false, true, 0xB70000), OMNIVORE(true, true, true, 0xB77F0E), PISCIVORE(false, false, true, 0x437EA8);
 
-    private boolean eatsMeat;
-    private boolean eatsPlants;
-    private boolean eatsFish;
+    private boolean isCarnivorous;
+    private boolean isHerbivorous;
+    private boolean isPiscivorous;
 
     private int color;
 
-    Diet(boolean eatsMeat, boolean eatsPlants, boolean eatsFish, int color)
+    Diet(boolean isCarnivorous, boolean isHerbivorous, boolean isPiscivorous, int color)
     {
-        this.eatsMeat = eatsMeat;
-        this.eatsPlants = eatsPlants;
-        this.eatsFish = eatsFish;
+        this.isCarnivorous = isCarnivorous;
+        this.isHerbivorous = isHerbivorous;
+        this.isPiscivorous = isPiscivorous;
         this.color = color;
     }
 
-    public boolean doesEatMeat()
+    public boolean isCarnivorous()
     {
-        return eatsMeat;
+        return isCarnivorous;
     }
 
-    public boolean doesEatPlants()
+    public boolean isHerbivorous()
     {
-        return eatsPlants;
+        return isHerbivorous;
     }
 
-    public boolean doesEatFish()
+    public boolean isPiscivorous()
     {
-        return eatsFish;
+        return isPiscivorous;
     }
 
     public int getColor()

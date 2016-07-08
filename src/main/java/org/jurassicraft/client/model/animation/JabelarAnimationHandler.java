@@ -116,7 +116,7 @@ public class JabelarAnimationHandler
                 {
                     for (int z = 0; z < amount; z++)
                     {
-                        if (random.nextInt(2) == 0)
+                        if (random.nextInt(15) == 0)
                         {
                             this.performHurtEffect(world, particleManager, (x / amount * entityWidth) + posX - (entityWidth / 2.0F), (y / amount * entityHeight) + posY, (z / amount * entityWidth) + posZ - (entityWidth / 2.0F));
                         }

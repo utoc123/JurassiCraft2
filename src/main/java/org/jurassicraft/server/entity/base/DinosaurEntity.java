@@ -67,6 +67,7 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
+import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.item.BluePrintItem;
@@ -94,9 +95,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int geneticsQuality;
     private boolean isMale;
 
-    // For animation AI system
     private Animation animation;
-    private int animTick;
+    private int animationTick;
 
     private boolean hasTracker;
 
@@ -147,7 +147,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.resetAttackCooldown();
 
-        this.animTick = 0;
+        this.animationTick = 0;
         this.setAnimation(DinosaurAnimation.IDLE.get());
 
         this.setUseInertialTweens(true);
@@ -162,12 +162,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 //            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
         }
 
-        if (dinosaur.getDiet().doesEatPlants())
+        if (dinosaur.getDiet().isHerbivorous())
         {
             this.tasks.addTask(1, new FindPlantEntityAI(this));
         }
 
-        if (dinosaur.getDiet().doesEatMeat())
+        if (dinosaur.getDiet().isCarnivorous())
         {
             this.tasks.addTask(1, new TargetCarcassEntityAI(this));
         }
@@ -647,16 +647,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             int animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
 
-            if (animTick < animationLength)
+            if (animationTick < animationLength)
             {
-                if (!DinosaurAnimation.getAnimation(animation).shouldHold() || animTick < animationLength - 1)
+                if (!DinosaurAnimation.getAnimation(animation).shouldHold() || animationTick < animationLength - 1)
                 {
-                    animTick++;
+                    animationTick++;
                 }
             }
             else
             {
-                animTick = 0;
+                animationTick = 0;
                 animation = DinosaurAnimation.IDLE.get();
             }
         }
@@ -763,7 +763,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (getAnimation() != DinosaurAnimation.IDLE.get())
         {
-            animTick++;
+            animationTick++;
         }
 
         if (this.isServerWorld())
@@ -917,6 +917,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
+            else if (stack != null && metabolism.isHungry() && FoodHelper.INSTANCE.canDietEat(dinosaur.getDiet(), stack.getItem()))
+            {
+                if (isOwner(player) && !worldObj.isRemote)
+                {
+                    metabolism.increaseEnergy(2000);
+                    stack.stackSize--;
+                }
+                else if (worldObj.isRemote)
+                {
+                    player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
+                }
+            }
         }
 
         return false;
@@ -975,7 +987,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void setAnimationTick(int tick)
     {
-        animTick = tick;
+        animationTick = tick;
     }
 
     @Override
@@ -987,7 +999,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public int getAnimationTick()
     {
-        return animTick;
+        return animationTick;
     }
 
     protected SoundEvent getSound(String sound)
@@ -1338,7 +1350,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         for (Class<? extends EntityLivingBase> target : targets)
         {
-            targetTasks.addTask(2, new SelectTargetEntityAI<>(this, target, true));
+            targetTasks.addTask(1, new SelectTargetEntityAI<>(this, target, true));
         }
 
         attackTargets.addAll(Lists.newArrayList(targets));

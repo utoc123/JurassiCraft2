@@ -34,7 +34,7 @@ public class DrinkEntityAI extends EntityAIBase
                 int posY = (int) dinosaur.posY;
                 int posZ = (int) dinosaur.posZ;
 
-                int closestDist = Integer.MAX_VALUE;
+                int closestDistance = Integer.MAX_VALUE;
                 BlockPos closestPos = null;
 
                 World world = dinosaur.worldObj;
@@ -59,15 +59,15 @@ public class DrinkEntityAI extends EntityAIBase
 
                                         if (state.isOpaqueCube())
                                         {
-                                            int diffX = posX - landX;
-                                            int diffY = posY - y;
-                                            int diffZ = posZ - landZ;
+                                            int diffX = Math.abs(posX - landX);
+                                            int diffY = Math.abs(posY - y);
+                                            int diffZ = Math.abs(posZ - landZ);
 
-                                            int dist = (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ);
+                                            int distance = (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ);
 
-                                            if (dist < closestDist)
+                                            if (distance < closestDistance)
                                             {
-                                                closestDist = dist;
+                                                closestDistance = distance;
                                                 closestPos = new BlockPos(landX, y, landZ);
                                             }
                                         }

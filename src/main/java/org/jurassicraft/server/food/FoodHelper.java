@@ -172,17 +172,17 @@ public enum FoodHelper
     {
         List<Item> possibleItems = new ArrayList<>();
 
-        if (diet.doesEatPlants())
+        if (diet.isHerbivorous())
         {
             possibleItems.addAll(getFoodType(FoodType.PLANT));
         }
 
-        if (diet.doesEatFish())
+        if (diet.isPiscivorous())
         {
             possibleItems.addAll(getFoodType(FoodType.FISH));
         }
 
-        if (diet.doesEatMeat())
+        if (diet.isCarnivorous())
         {
             possibleItems.addAll(getFoodType(FoodType.MEAT));
         }

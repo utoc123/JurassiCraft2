@@ -55,15 +55,15 @@ public class FeederEntityAI extends EntityAIBase
 
                                 if (tile != null && tile.canFeedDinosaur(dinosaur.getDinosaur()) && tile.getFeeding() == null && tile.openAnimation == 0)
                                 {
-                                    int deltaX = posX - x;
-                                    int deltaY = posY - y;
-                                    int deltaZ = posZ - z;
+                                    int deltaX = Math.abs(posX - x);
+                                    int deltaY = Math.abs(posY - y);
+                                    int deltaZ = Math.abs(posZ - z);
 
-                                    int dist = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
+                                    int distance = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
 
-                                    if (dist < closestDist)
+                                    if (distance < closestDist)
                                     {
-                                        closestDist = dist;
+                                        closestDist = distance;
                                         closestPos = new BlockPos(x, y, z);
                                     }
                                 }

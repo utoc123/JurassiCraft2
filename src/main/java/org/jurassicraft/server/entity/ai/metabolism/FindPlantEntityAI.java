@@ -137,7 +137,7 @@ public class FindPlantEntityAI extends EntityAIBase
                 }
 
                 // TODO:  Add food value & food heal value to food helper
-                dinosaur.getMetabolism().increaseDigestingFood(500);
+                dinosaur.getMetabolism().eat(500);
                 dinosaur.heal(4.0F);
 
                 previousTarget = null;

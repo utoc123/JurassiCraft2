@@ -44,29 +44,26 @@ public class EatFoodItemEntityAI extends EntityAIBase
 
                 List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 16, posY - 16, posZ - 16, posX + 16, posY + 16, posZ + 16));
 
-                for (EntityItem e : items)
+                for (EntityItem entity : items)
                 {
-                    ItemStack stack = e.getEntityItem();
+                    ItemStack stack = entity.getEntityItem();
 
-                    if (stack != null)
+                    Item item = stack.getItem();
+
+                    if (FoodHelper.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
                     {
-                        Item item = stack.getItem();
+                        double deltaX = Math.abs(posX - entity.posX);
+                        double deltaY = Math.abs(posY - entity.posY);
+                        double deltaZ = Math.abs(posZ - entity.posZ);
 
-                        if (FoodHelper.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
+                        double distance = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
+
+                        if (distance < closestDist)
                         {
-                            double diffX = posX - e.posX;
-                            double diffY = posY - e.posY;
-                            double diffZ = posZ - e.posZ;
+                            closestDist = distance;
+                            closest = entity;
 
-                            double dist = (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ);
-
-                            if (dist < closestDist)
-                            {
-                                closestDist = dist;
-                                closest = e;
-
-                                found = true;
-                            }
+                            found = true;
                         }
                     }
                 }
@@ -87,7 +84,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
     @Override
     public void updateTask()
     {
-        if (dinosaur.getEntityBoundingBox().intersectsWith(item.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
+        if (dinosaur.getEntityBoundingBox().intersectsWith(item.getEntityBoundingBox().expand(1.0, 1.0, 1.0)))
         {
             dinosaur.setAnimation(DinosaurAnimation.EATING.get());
 
@@ -100,7 +97,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
                 item.setDead();
             }
 
-            dinosaur.getMetabolism().increaseDigestingFood(1000);
+            dinosaur.getMetabolism().eat(1000);
             dinosaur.heal(4.0F);
 
             eaten = true;

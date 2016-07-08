@@ -228,7 +228,7 @@ public class FieldGuideGui extends GuiScreen
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         drawTexturedModalRect(x, y, 0, 179, 98, 8);
         GlStateManager.color((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F);
-        drawTexturedModalRect(x, y, 0, 187, (int) ((value / max) * 98), 8);
+        drawTexturedModalRect(x, y, 0, 187, Math.max(0, Math.min(98, (int) ((value / max) * 98))), 8);
     }
 
     private void drawScaledString(String text, float x, float y, float scale, int color)

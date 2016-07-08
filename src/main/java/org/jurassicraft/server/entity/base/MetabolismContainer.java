@@ -9,8 +9,6 @@ public class MetabolismContainer
 
     public static final int MAX_DIGESTION_AMOUNT = 3000;
 
-    // Basically this is ticks of energy and ticks of water.  Specia actions like mating/healing
-    // cause them to loose faster.
     private final int MAX_ENERGY;
     private final int MAX_WATER;
 
@@ -24,9 +22,10 @@ public class MetabolismContainer
     {
         this.dinosaur = dinosaur;
 
-        // Each 24000 is one day!  So an adult dino (like an apatosaur) has like 8 days of energy?
-        MAX_ENERGY = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
-        MAX_WATER = (int) (24000 * (dinosaur.getDinosaur().getAdultHealth() / 15));
+        double health = dinosaur.getDinosaur().getAdultHealth();
+
+        MAX_ENERGY = (int) (health / 15.0 * 24000);
+        MAX_WATER = (int) (health / 15.0 * 24000);
 
         this.energy = MAX_ENERGY;
         this.water = MAX_WATER;
@@ -70,20 +69,22 @@ public class MetabolismContainer
     public void decreaseEnergy(int amount)
     {
         energy -= amount;
+        energy = Math.max(0, energy);
 
-        if (energy <= 0)
+        if (isStarving() && dinosaur.ticksExisted % 10 == 0)
         {
-            dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
+            dinosaur.attackEntityFrom(DamageSource.starve, 5.0F);
         }
     }
 
     public void decreaseWater(int amount)
     {
         water -= amount;
+        water = Math.max(0, water);
 
-        if (water <= 0)
+        if (isDehydrated() && dinosaur.ticksExisted % 10 == 0)
         {
-            dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
+            dinosaur.attackEntityFrom(DamageSource.starve, 5.0F);
         }
     }
 
@@ -131,8 +132,9 @@ public class MetabolismContainer
         this.setEnergy(energy + amount);
     }
 
-    public void increaseDigestingFood(int amount)
+    public void eat(int amount)
     {
+        this.increaseEnergy(amount / 10);
         this.setDigestingFoodAmount(digestingFood + amount);
     }
 
@@ -143,17 +145,17 @@ public class MetabolismContainer
 
     public boolean isStarving()
     {
-        return (double) this.energy / MAX_ENERGY < STARVING_THRESHOLD;
+        return (double) this.energy < 50 && digestingFood <= 0;
     }
 
     public boolean isDehydrated()
     {
-        return (double) this.water / MAX_WATER < STARVING_THRESHOLD;
+        return (double) this.water < 50;
     }
 
     public boolean isHungry()
     {
-        return (this.energy + (digestingFood * 2) < MAX_ENERGY * 0.9 || isStarving()) && digestingFood + 500 < MAX_DIGESTION_AMOUNT;
+        return (this.energy + (digestingFood * 2) < MAX_ENERGY * 0.8 || energy < 50) && digestingFood + 500 < MAX_DIGESTION_AMOUNT;
     }
 
     public boolean isThirsty()
