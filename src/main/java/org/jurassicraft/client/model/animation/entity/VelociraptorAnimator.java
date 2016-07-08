@@ -45,7 +45,7 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
         model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
         model.chainWave(leftArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);
 
-        model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, neck2, neck3, neck4, head);
+        model.faceTarget(rotationYaw, rotationPitch, 2.0F, neck1, head);
 
         entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }
