@@ -11,6 +11,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -184,6 +187,7 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
         if (id == 0)
         {
             open = type == 1;
+            worldObj.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new SoundEvent(new ResourceLocation("jurassicraft:feeder")), SoundCategory.BLOCKS, 1.0F, open ? 1.0F : 0.9F, false);
             return true;
         }
         else

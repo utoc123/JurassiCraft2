@@ -424,5 +424,11 @@
     "sounds": [
       "jurassicraft:dinosaurs/parasaurolophus/parasaurolophus_hurt_1"
     ]
+  },
+  "feeder": {
+    "category": "blocks",
+    "sounds": [
+      "jurassicraft:feeder"
+    ]
   }
 }

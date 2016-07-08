@@ -79,7 +79,7 @@ public class FeederSpecialRenderer extends TileEntitySpecialRenderer<FeederTile>
 
             mc.getTextureManager().bindTexture(texture);
 
-            float openAnimation = tile.openAnimation + LLibrary.PROXY.getPartialTicks() * (tile.openAnimation - tile.prevOpenAnimation);
+            float openAnimation = Math.max(0.0F, Math.min(20.0F, tile.openAnimation + LLibrary.PROXY.getPartialTicks() * (tile.openAnimation - tile.prevOpenAnimation)));
 
             model.getCube("Lid 1").rotateAngleX = (float) Math.toRadians((openAnimation / 20.0F) * 99.13F);
             model.getCube("Lid 2").rotateAngleX = (float) Math.toRadians((openAnimation / 20.0F) * -99.13F);
