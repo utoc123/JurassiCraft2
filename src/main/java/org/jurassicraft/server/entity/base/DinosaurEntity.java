@@ -700,6 +700,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (isCarcass)
         {
+            this.renderYawOffset = this.rotationYaw;
+            this.rotationYawHead = this.rotationYaw;
+
             if (getAnimation() != DinosaurAnimation.DYING.get())
             {
                 this.setAnimation(DinosaurAnimation.DYING.get());
@@ -1280,10 +1283,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         if (width != this.width || height != this.height)
         {
+            float prevWidth = this.width;
+
             this.width = width;
             this.height = height;
+
             AxisAlignedBB bounds = this.getEntityBoundingBox();
             this.setEntityBoundingBox(new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + (double) this.width, bounds.minY + (double) this.height, bounds.minZ + (double) this.width));
+
+            if (this.width > prevWidth && !this.firstUpdate && !this.worldObj.isRemote)
+            {
+                this.moveEntity(prevWidth - this.width, 0.0, prevWidth - this.width);
+            }
         }
     }
 
