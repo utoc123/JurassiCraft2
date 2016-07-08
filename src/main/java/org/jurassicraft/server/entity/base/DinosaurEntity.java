@@ -946,6 +946,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void setAnimation(Animation newAnimation)
     {
+        if (isSleeping())
+        {
+            newAnimation = DinosaurAnimation.SLEEPING.get();
+        }
+
+        if (isCarcass())
+        {
+            newAnimation = DinosaurAnimation.DYING.get();
+        }
+
         Animation oldAnimation = animation;
 
         this.animation = newAnimation;
