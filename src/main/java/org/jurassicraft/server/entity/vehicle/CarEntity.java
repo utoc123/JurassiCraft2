@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.sound.CarSound;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.message.UpdateCarControlMessage;
 
@@ -46,6 +47,9 @@ public abstract class CarEntity extends Entity
     public float wheelRotation;
     public float wheelRotateAmount;
     public float prevWheelRotateAmount;
+
+    @SideOnly(Side.CLIENT)
+    private CarSound sound;
 
     public CarEntity(World world)
     {
@@ -261,6 +265,11 @@ public abstract class CarEntity extends Entity
     protected void entityInit()
     {
         dataManager.register(WATCHER_STATE, (byte) 0);
+
+        if (worldObj.isRemote)
+        {
+            updateSound(true);
+        }
     }
 
     @Override
@@ -380,6 +389,23 @@ public abstract class CarEntity extends Entity
         if (!worldObj.isRemote)
         {
             dropItems();
+        }
+        else
+        {
+            this.updateSound(false);
+        }
+    }
+
+    private void updateSound(boolean start)
+    {
+        if (start)
+        {
+            sound = new CarSound(this);
+            Minecraft.getMinecraft().getSoundHandler().playSound(sound);
+        }
+        else
+        {
+            Minecraft.getMinecraft().getSoundHandler().stopSound(sound);
         }
     }
 

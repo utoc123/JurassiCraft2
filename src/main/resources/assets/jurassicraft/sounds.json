@@ -430,5 +430,11 @@
     "sounds": [
       "jurassicraft:feeder"
     ]
+  },
+  "car_move": {
+    "category": "blocks",
+    "sounds": [
+      "jurassicraft:car_move"
+    ]
   }
 }
