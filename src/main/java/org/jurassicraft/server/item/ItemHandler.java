@@ -121,6 +121,8 @@ public class ItemHandler
 
     public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
 
+    public static final MuralItem MURAL = new MuralItem();
+
     public static void init()
     {
         for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
@@ -165,6 +167,7 @@ public class ItemHandler
         registerItem(BLUEPRINT, "Blue Print");
         registerItem(PADDOCK_SIGN, "Paddock Sign");
         registerItem(ATTRACTION_SIGN, "Attraction Sign");
+        registerItem(MURAL, "Mural");
         registerItem(SPAWN_EGG, "Dino Spawn Egg");
         registerItem(DNA, "DNA");
         registerItem(EGG, "Dino Egg");

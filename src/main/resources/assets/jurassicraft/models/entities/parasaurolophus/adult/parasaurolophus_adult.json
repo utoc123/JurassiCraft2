@@ -25,8 +25,12 @@
         "time": 8
       },
       {
+        "pose": "parasaurolophus_adult_calling_3",
+        "time": 15
+      },
+      {
         "pose": "parasaurolophus_adult_idle",
-        "time": 20
+        "time": 10
       }
     ],
     "DRINKING": [

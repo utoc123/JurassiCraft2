@@ -112,6 +112,8 @@ public class RecipeHandler
 
         GameRegistry.addSmelting(ItemHandler.GRACILARIA, new ItemStack(ItemHandler.LIQUID_AGAR), 0);
 
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.MURAL), Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING);
+
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);
         addGrowthSerumRecipe(Items.COOKED_FISH);

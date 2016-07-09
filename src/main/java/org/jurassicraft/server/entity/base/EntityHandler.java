@@ -69,6 +69,7 @@ import org.jurassicraft.server.dinosaur.disabled.ZhenyuanopterusDinosaur;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
+import org.jurassicraft.server.entity.item.MuralEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
@@ -211,6 +212,7 @@ public class EntityHandler
         registerEntity(BluePrintEntity.class, "Blueprint");
         registerEntity(AttractionSignEntity.class, "Attraction Sign");
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
+        registerEntity(MuralEntity.class, "Mural");
         registerEntity(VenomEntity.class, "Venom");
 
         registerEntity(JeepWranglerEntity.class, "Jeep Wrangler");

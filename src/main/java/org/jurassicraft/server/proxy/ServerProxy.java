@@ -151,9 +151,6 @@ public class ServerProxy implements IGuiHandler
         return null;
     }
 
-    /**
-     * Returns a side-appropriate EntityPlayer for use during message handling
-     */
     public EntityPlayer getPlayerEntityFromContext(MessageContext ctx)
     {
         return ctx.getServerHandler().playerEntity;

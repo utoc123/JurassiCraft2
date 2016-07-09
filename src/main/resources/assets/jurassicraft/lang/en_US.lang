@@ -223,6 +223,8 @@ item.car_windscreen.name=Car Windscreen
 item.jeep_wrangler.name=Jeep Wrangler
 item.unfinished_car.name=Unfinished Car
 
+item.mural.name=Mural
+
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
 item.ajuginucula_smithii_leaves.name=Ajuginucula Smithii Leaves

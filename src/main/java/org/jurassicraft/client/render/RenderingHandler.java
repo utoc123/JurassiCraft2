@@ -85,6 +85,7 @@ import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.JeepWranglerRenderer;
+import org.jurassicraft.client.render.entity.MuralRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.entity.SeatRenderer;
 import org.jurassicraft.client.render.entity.VenomRenderer;
@@ -103,6 +104,7 @@ import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
+import org.jurassicraft.server.entity.item.MuralEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
@@ -264,6 +266,7 @@ public enum RenderingHandler
         RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
         RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, new JeepWranglerRenderer());
         RenderingRegistry.registerEntityRenderingHandler(SeatEntity.class, new SeatRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, new MuralRenderer());
     }
 
     public void init()
@@ -467,6 +470,8 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.CAR_WINDSCREEN, "car_windscreen", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.UNFINISHED_CAR, "unfinished_car", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.JEEP_WRANGLER, "jeep_wrangler", "inventory");
+
+        this.registerItemRenderer(modelMesher, ItemHandler.MURAL, "mural", "inventory");
 
         int meta = 0;
 
