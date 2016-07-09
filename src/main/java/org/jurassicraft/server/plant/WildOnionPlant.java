@@ -16,4 +16,10 @@ public class WildOnionPlant extends Plant
     {
         return BlockHandler.WILD_ONION;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 3000;
+    }
 }

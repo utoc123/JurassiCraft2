@@ -16,4 +16,10 @@ public class SmallChainFernPlant extends Plant
     {
         return BlockHandler.SMALL_CHAIN_FERN;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 2000;
+    }
 }

@@ -145,7 +145,7 @@ public class MetabolismContainer
 
     public boolean isStarving()
     {
-        return (double) this.energy < 50 && digestingFood <= 0;
+        return (double) this.energy < 200 && digestingFood <= 50;
     }
 
     public boolean isDehydrated()

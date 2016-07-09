@@ -41,7 +41,7 @@ public class FeederContainer extends Container
         {
             for (int y = 0; y < 3; y++)
             {
-                this.addSlotToContainer(new CustomSlot(tile, id, 26 + x * 18, 18 + y * 18, stack -> FoodHelper.INSTANCE.canDietEat(Diet.CARNIVORE, stack.getItem())));
+                this.addSlotToContainer(new CustomSlot(tile, id, 26 + x * 18, 18 + y * 18, stack -> FoodHelper.isEdible(Diet.CARNIVORE, stack.getItem())));
                 id++;
             }
         }
@@ -50,7 +50,7 @@ public class FeederContainer extends Container
         {
             for (int y = 0; y < 3; y++)
             {
-                this.addSlotToContainer(new CustomSlot(tile, id, 98 + x * 18, 18 + y * 18, stack -> FoodHelper.INSTANCE.canDietEat(Diet.HERBIVORE, stack.getItem())));
+                this.addSlotToContainer(new CustomSlot(tile, id, 98 + x * 18, 18 + y * 18, stack -> FoodHelper.isEdible(Diet.HERBIVORE, stack.getItem())));
                 id++;
             }
         }

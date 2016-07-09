@@ -17,4 +17,10 @@ public class CalamitesPlant extends Plant
     {
         return BlockHandler.ANCIENT_SAPLINGS.get(TreeType.CALAMITES);
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 1000;
+    }
 }

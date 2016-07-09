@@ -16,4 +16,10 @@ public class BennettitaleanCycadeoideaPlant extends Plant
     {
         return BlockHandler.CYCADEOIDEA;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 2000;
+    }
 }

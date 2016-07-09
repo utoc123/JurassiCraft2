@@ -16,4 +16,10 @@ public class CryPansyPlant extends Plant
     {
         return BlockHandler.CRY_PANSY;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 250;
+    }
 }

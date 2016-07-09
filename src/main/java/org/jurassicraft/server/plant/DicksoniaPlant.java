@@ -16,4 +16,10 @@ public class DicksoniaPlant extends Plant
     {
         return BlockHandler.DICKSONIA;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 4000;
+    }
 }

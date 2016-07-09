@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.PaleoBaleBlock;
 import org.jurassicraft.server.block.tree.AncientPlanksBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -121,6 +122,20 @@ public class RecipeHandler
         for (int i = 0; i < EntityHandler.getDinosaurs().size(); i++)
         {
             addGrowthSerumRecipe(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, i));
+        }
+
+        addPaleoBaleRecipe(BlockHandler.PALEO_BALE_CYCADEOIDEA);
+        addPaleoBaleRecipe(BlockHandler.PALEO_BALE_CYCAD);
+        addPaleoBaleRecipe(BlockHandler.PALEO_BALE_FERN);
+        addPaleoBaleRecipe(BlockHandler.PALEO_BALE_LEAVES);
+        addPaleoBaleRecipe(BlockHandler.PALEO_BALE_OTHER);
+    }
+
+    private static void addPaleoBaleRecipe(PaleoBaleBlock block)
+    {
+        for (Item ingredient : block.getVariant().getIngredients())
+        {
+            GameRegistry.addRecipe(new ItemStack(block), "###", "###", "###", '#', ingredient);
         }
     }
 

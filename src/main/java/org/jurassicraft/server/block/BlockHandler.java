@@ -130,6 +130,12 @@ public class BlockHandler
 
     public static final FeederBlock FEEDER = new FeederBlock();
 
+    public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
+    public static PaleoBaleBlock PALEO_BALE_CYCAD;
+    public static PaleoBaleBlock PALEO_BALE_FERN;
+    public static PaleoBaleBlock PALEO_BALE_LEAVES;
+    public static PaleoBaleBlock PALEO_BALE_OTHER;
+
     public static void init()
     {
         for (int i = 0; i < (int) Math.ceil(EntityHandler.getDinosaurs().size() / 16.0F); i++)
@@ -194,6 +200,18 @@ public class BlockHandler
         registerBlockTileEntity(IncubatorTile.class, INCUBATOR, "Incubator");
         registerBlockTileEntity(ActionFigureTile.class, ACTION_FIGURE, "Action Figure Block");
         registerBlockTileEntity(FeederTile.class, FEEDER, "Feeder");
+
+        PALEO_BALE_CYCADEOIDEA = new PaleoBaleBlock(PaleoBaleBlock.Variant.CYCADEOIDEA);
+        PALEO_BALE_CYCAD = new PaleoBaleBlock(PaleoBaleBlock.Variant.CYCAD);
+        PALEO_BALE_FERN = new PaleoBaleBlock(PaleoBaleBlock.Variant.FERN);
+        PALEO_BALE_LEAVES = new PaleoBaleBlock(PaleoBaleBlock.Variant.LEAVES);
+        PALEO_BALE_OTHER = new PaleoBaleBlock(PaleoBaleBlock.Variant.OTHER);
+
+        registerBlock(PALEO_BALE_OTHER, "Paleo Bale Other");
+        registerBlock(PALEO_BALE_CYCADEOIDEA, "Paleo Bale Cycadeoidea");
+        registerBlock(PALEO_BALE_CYCAD, "Paleo Bale Cycad");
+        registerBlock(PALEO_BALE_FERN, "Paleo Bale Fern");
+        registerBlock(PALEO_BALE_LEAVES, "Paleo Bale Leaves");
     }
 
     public static void registerTreeType(TreeType type)

@@ -16,4 +16,10 @@ public class DicroidiumZuberiPlant extends Plant
     {
         return BlockHandler.DICROIDIUM_ZUBERI;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 4000;
+    }
 }

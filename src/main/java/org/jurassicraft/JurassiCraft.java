@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.server.animation.ForceAnimationCommand;
 import org.jurassicraft.server.configuration.JCConfigurations;
-import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
 import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;
@@ -56,8 +55,6 @@ public class JurassiCraft
 
         PROXY.preInit(event);
         LOGGER.debug("Finished pre-initialization for JurassiCraft!");
-
-        FoodHelper.INSTANCE.init();
     }
 
     @Mod.EventHandler

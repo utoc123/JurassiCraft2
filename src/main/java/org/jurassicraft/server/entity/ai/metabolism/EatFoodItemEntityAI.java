@@ -50,7 +50,7 @@ public class EatFoodItemEntityAI extends EntityAIBase
 
                     Item item = stack.getItem();
 
-                    if (FoodHelper.INSTANCE.canDietEat(dinosaur.getDinosaur().getDiet(), item))
+                    if (FoodHelper.isEdible(dinosaur.getDinosaur().getDiet(), item))
                     {
                         double deltaX = Math.abs(posX - entity.posX);
                         double deltaY = Math.abs(posY - entity.posY);
@@ -97,8 +97,10 @@ public class EatFoodItemEntityAI extends EntityAIBase
                 item.setDead();
             }
 
-            dinosaur.getMetabolism().eat(1000);
-            dinosaur.heal(4.0F);
+            Item item = this.item.getEntityItem().getItem();
+            dinosaur.getMetabolism().eat(FoodHelper.getHealAmount(item));
+            FoodHelper.applyEatEffects(dinosaur, item);
+            dinosaur.heal(10.0F);
 
             eaten = true;
         }

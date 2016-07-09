@@ -40,6 +40,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.DinosaurSerializers;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
+import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.PlantHandler;
@@ -102,6 +103,8 @@ public class ServerProxy implements IGuiHandler
 
     public void postInit(FMLPostInitializationEvent event)
     {
+        FoodHelper.init();
+
         Biome[] allBiomes = Iterators.toArray(Biome.REGISTRY.iterator(), Biome.class);
 
         for (Map.Entry<Class<? extends Entity>, String> entry : EntityList.CLASS_TO_NAME.entrySet())

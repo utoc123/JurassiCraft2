@@ -16,4 +16,10 @@ public class ZamitesPlant extends Plant
     {
         return BlockHandler.ZAMITES;
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 4000;
+    }
 }

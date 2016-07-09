@@ -355,6 +355,12 @@ public enum RenderingHandler
             this.registerBlockRenderer(modelMesher, BlockHandler.FOSSILIZED_TRACKWAY, trackwayType.ordinal(), "fossilized_trackway_" + trackwayType.getName(), "inventory");
         }
 
+        this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_CYCADEOIDEA, "paleo_bale_cycadeoidea", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_CYCAD, "paleo_bale_cycad", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_FERN, "paleo_bale_fern", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_LEAVES, "paleo_bale_leaves", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_OTHER, "paleo_bale_other", "inventory");
+
         BlockColors blockColors = mc.getBlockColors();
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.MOSS);
 

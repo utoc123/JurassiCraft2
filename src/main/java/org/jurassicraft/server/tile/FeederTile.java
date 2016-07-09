@@ -397,7 +397,7 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
 
         for (ItemStack stack : slots)
         {
-            if (stack != null && stack.stackSize > 0 && FoodHelper.INSTANCE.canDietEat(dinosaur.getDiet(), stack.getItem()))
+            if (stack != null && stack.stackSize > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem()))
             {
                 return i;
             }

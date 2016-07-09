@@ -1,9 +1,8 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -14,11 +13,12 @@ import org.jurassicraft.server.entity.ai.util.BlockBreaker;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
+import org.jurassicraft.server.food.FoodHelper;
 
 /**
  * This piece of AI use used to find a plant and eat it. Should be titled "graze".
  */
-public class FindPlantEntityAI extends EntityAIBase
+public class GrazeEntityAI extends EntityAIBase
 {
     // How far to eat the thing
     public static final int EAT_RADIUS = 6;// was 25
@@ -31,7 +31,7 @@ public class FindPlantEntityAI extends EntityAIBase
     // TODO: Add eyesight/smell attribute for finding plants.
     public static final int LOOK_RADIUS = 16;
     //Time at which animal will cease attempting to eat a block
-    private static final int GIVE_UP_TIME = 140;// 7*20 counter = 7 ticks (ish?
+    private static final int GIVE_UP_TIME = 200;// 7*20 counter = 7 ticks (ish?
     private static final Logger LOGGER = LogManager.getLogger();
     // Used to animate block breaking
     protected BlockBreaker breaker = null;
@@ -44,7 +44,7 @@ public class FindPlantEntityAI extends EntityAIBase
     private BlockPos previousTarget;
     private Vec3d targetVec;
 
-    public FindPlantEntityAI(DinosaurEntity dinosaur)
+    public GrazeEntityAI(DinosaurEntity dinosaur)
     {
         this.dinosaur = dinosaur;
     }
@@ -60,7 +60,8 @@ public class FindPlantEntityAI extends EntityAIBase
     public void startExecuting()
     {
         // This gets called once to initiate.  Here's where we find the plant and start movement
-        BlockPos head = new BlockPos(dinosaur.getHeadPos().xCoord, dinosaur.getHeadPos().yCoord, dinosaur.getHeadPos().zCoord);
+        Vec3d headPos = dinosaur.getHeadPos();
+        BlockPos head = new BlockPos(headPos.xCoord, headPos.yCoord, headPos.zCoord);
 
         //world the animal currently inhabits
         world = dinosaur.worldObj;
@@ -76,8 +77,7 @@ public class FindPlantEntityAI extends EntityAIBase
         {
             Block block = world.getBlockState(pos).getBlock();
 
-            if (block instanceof BlockBush || block instanceof BlockLeaves && pos != previousTarget)
-//          if (FoodHandler.canDietEat(Diet.HERBIVORE, block)) // TODO returns true for air blocks
+            if (FoodHelper.isEdible(dinosaur.getDinosaur().getDiet(), block) && pos != previousTarget)
             {
                 target = pos;
                 targetVec = new Vec3d(target.getX(), target.getY(), target.getZ());
@@ -98,7 +98,7 @@ public class FindPlantEntityAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        if (target != null && world.isAirBlock(target))
+        if (target != null && world.isAirBlock(target) && !dinosaur.getNavigator().noPath())
         {
             terminateTask();
             return false;
@@ -111,13 +111,15 @@ public class FindPlantEntityAI extends EntityAIBase
     {
         if (target != null)
         {
-            Vec3d headVec = new Vec3d(dinosaur.getHeadPos().xCoord, target.getY(), dinosaur.getHeadPos().zCoord);
+            Vec3d headPos = dinosaur.getHeadPos();
+            Vec3d headVec = new Vec3d(headPos.xCoord, target.getY(), headPos.zCoord);
+
             if (headVec.squareDistanceTo(targetVec) < EAT_RADIUS)
             {
                 dinosaur.getNavigator().clearPathEntity();
 
                 // TODO inadequate method for looking at block
-                dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 0, dinosaur.getVerticalFaceSpeed());
+                dinosaur.getLookHelper().setLookPosition(target.getX(), target.getY(), target.getZ(), 30.0F, dinosaur.getVerticalFaceSpeed());
 
                 dinosaur.setAnimation(DinosaurAnimation.EATING.get());
 
@@ -125,14 +127,14 @@ public class FindPlantEntityAI extends EntityAIBase
                 breaker = new BlockBreaker(dinosaur, EAT_BREAK_SPEED, target, MIN_BREAK_TIME_SEC);
 
 //                if (breaker.tickUpdate()){
-                if (world.getGameRules().getBoolean("mobGriefing"))
-                {
-                    world.destroyBlock(target, false);
-                }
+                Item item = Item.getItemFromBlock(world.getBlockState(target).getBlock());
+
+                world.destroyBlock(target, false);
 
                 // TODO:  Add food value & food heal value to food helper
-                dinosaur.getMetabolism().eat(500);
-                dinosaur.heal(4.0F);
+                dinosaur.getMetabolism().eat(FoodHelper.getHealAmount(item));
+                FoodHelper.applyEatEffects(dinosaur, item);
+                dinosaur.heal(10.0F);
 
                 previousTarget = null;
                 terminateTask();

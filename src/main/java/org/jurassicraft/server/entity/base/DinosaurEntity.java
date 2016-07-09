@@ -21,6 +21,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -65,7 +66,7 @@ import org.jurassicraft.server.entity.ai.animations.RoarAnimationAI;
 import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
-import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.BluePrintItem;
@@ -146,7 +147,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (dinosaur.getDiet().isHerbivorous())
         {
-            this.tasks.addTask(1, new FindPlantEntityAI(this));
+            this.tasks.addTask(1, new GrazeEntityAI(this));
         }
 
         if (dinosaur.getDiet().isCarnivorous())
@@ -904,11 +905,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
-            else if (stack != null && metabolism.isHungry() && FoodHelper.INSTANCE.canDietEat(dinosaur.getDiet(), stack.getItem()))
+            else if (stack != null && metabolism.isHungry() && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem()))
             {
                 if (isOwner(player) && !worldObj.isRemote)
                 {
-                    metabolism.increaseEnergy(2000);
+                    Item item = stack.getItem();
+                    metabolism.eat(FoodHelper.getHealAmount(item));
+                    FoodHelper.applyEatEffects(this, item);
                     stack.stackSize--;
                 }
                 else if (worldObj.isRemote)

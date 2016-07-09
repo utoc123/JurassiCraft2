@@ -6,116 +6,97 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public enum FoodHelper
+public class FoodHelper
 {
-    INSTANCE;
+    private static final Map<FoodType, List<Item>> FOOD_TYPES = new HashMap<>();
+    private static final List<Item> FOODS = new LinkedList<>();
+    private static final Map<Item, Integer> HEAL_AMOUNTS = new HashMap<>();
+    private static final Map<Item, FoodEffect[]> FOOD_EFFECTS = new HashMap<>();
 
-    private final Map<FoodType, List<Item>> foodTypes = new HashMap<>();
-    private final List<Item> food = new ArrayList<>();
-
-    // TODO:  Add food values for each.
-
-    public void init()
+    public static void init()
     {
-        registerFood(Blocks.LEAVES, FoodType.PLANT);
-        registerFood(Blocks.LEAVES2, FoodType.PLANT);
-        registerFood(Blocks.TALLGRASS, FoodType.PLANT);
-        registerFood(Blocks.WHEAT, FoodType.PLANT);
-        registerFood(Blocks.MELON_BLOCK, FoodType.PLANT);
-        registerFood(Blocks.REEDS, FoodType.PLANT);
-        registerFood(Blocks.SAPLING, FoodType.PLANT);
-        registerFood(Blocks.PUMPKIN, FoodType.PLANT);
-        registerFood(Blocks.CARROTS, FoodType.PLANT);
-        registerFood(Blocks.POTATOES, FoodType.PLANT);
-        registerFood(Blocks.HAY_BLOCK, FoodType.PLANT);
-        registerFood(Blocks.WATERLILY, FoodType.PLANT);
-        registerFood(Blocks.YELLOW_FLOWER, FoodType.PLANT);
-        registerFood(Blocks.RED_FLOWER, FoodType.PLANT);
-        registerFood(Blocks.DOUBLE_PLANT, FoodType.PLANT);
-        registerFood(Blocks.BROWN_MUSHROOM, FoodType.PLANT);
-        registerFood(Blocks.RED_MUSHROOM, FoodType.PLANT);
+        registerFood(Blocks.LEAVES, FoodType.PLANT, 2000);
+        registerFood(Blocks.LEAVES2, FoodType.PLANT, 2000);
+        registerFood(Blocks.TALLGRASS, FoodType.PLANT, 1000);
+        registerFood(Blocks.WHEAT, FoodType.PLANT, 2000);
+        registerFood(Blocks.MELON_BLOCK, FoodType.PLANT, 3000);
+        registerFood(Blocks.REEDS, FoodType.PLANT, 1000);
+        registerFood(Blocks.SAPLING, FoodType.PLANT, 1000);
+        registerFood(Blocks.PUMPKIN, FoodType.PLANT, 3000);
+        registerFood(Blocks.CARROTS, FoodType.PLANT, 2000);
+        registerFood(Blocks.POTATOES, FoodType.PLANT, 2000);
+        registerFood(Blocks.HAY_BLOCK, FoodType.PLANT, 5000);
+        registerFood(Blocks.WATERLILY, FoodType.PLANT, 500);
+        registerFood(Blocks.YELLOW_FLOWER, FoodType.PLANT, 500);
+        registerFood(Blocks.RED_FLOWER, FoodType.PLANT, 500);
+        registerFood(Blocks.DOUBLE_PLANT, FoodType.PLANT, 2000);
+        registerFood(Blocks.BROWN_MUSHROOM, FoodType.PLANT, 250);
+        registerFood(Blocks.RED_MUSHROOM, FoodType.PLANT, 250);
+
+        registerFood(BlockHandler.PALEO_BALE_CYCADEOIDEA, FoodType.PLANT, 5000);
+        registerFood(BlockHandler.PALEO_BALE_CYCAD, FoodType.PLANT, 5000);
+        registerFood(BlockHandler.PALEO_BALE_FERN, FoodType.PLANT, 5000);
+        registerFood(BlockHandler.PALEO_BALE_LEAVES, FoodType.PLANT, 5000);
+        registerFood(BlockHandler.PALEO_BALE_OTHER, FoodType.PLANT, 5000);
 
         for (Plant plant : PlantHandler.getPlants())
         {
-            registerFood(plant.getBlock(), FoodType.PLANT);
+            registerFood(plant.getBlock(), FoodType.PLANT, plant.getHealAmount(), plant.getEffects());
         }
 
         for (TreeType type : TreeType.values())
         {
-            registerFood(BlockHandler.ANCIENT_LEAVES.get(type), FoodType.PLANT);
-            registerFood(BlockHandler.ANCIENT_SAPLINGS.get(type), FoodType.PLANT);
+            registerFood(BlockHandler.ANCIENT_LEAVES.get(type), FoodType.PLANT, 2000);
+            registerFood(BlockHandler.ANCIENT_SAPLINGS.get(type), FoodType.PLANT, 1000);
         }
 
-        registerFood(Items.APPLE, FoodType.PLANT);
-        registerFood(Items.POTATO, FoodType.PLANT);
-        registerFood(Items.CARROT, FoodType.PLANT);
-        registerFood(Items.WHEAT, FoodType.PLANT);
-        registerFood(Items.WHEAT_SEEDS, FoodType.PLANT);
-        registerFood(Items.MELON_SEEDS, FoodType.PLANT);
-        registerFood(Items.PUMPKIN_SEEDS, FoodType.PLANT);
-        registerFood(Items.MELON, FoodType.PLANT);
-        registerFood(Items.BREAD, FoodType.PLANT);
-        registerFood(Items.SUGAR, FoodType.PLANT);
-        registerFood(ItemHandler.WILD_ONION, FoodType.PLANT);
-        registerFood(Items.BEETROOT, FoodType.PLANT);
+        registerFood(Items.WHEAT, FoodType.PLANT, 1000);
+        registerFood(Items.WHEAT_SEEDS, FoodType.PLANT, 100);
+        registerFood(Items.MELON_SEEDS, FoodType.PLANT, 100);
+        registerFood(Items.PUMPKIN_SEEDS, FoodType.PLANT, 100);
 
-        registerFood(Items.BEEF, FoodType.MEAT);
-        registerFood(Items.COOKED_BEEF, FoodType.MEAT);
-        registerFood(Items.PORKCHOP, FoodType.MEAT);
-        registerFood(Items.COOKED_PORKCHOP, FoodType.MEAT);
-        registerFood(Items.CHICKEN, FoodType.MEAT);
-        registerFood(Items.COOKED_CHICKEN, FoodType.MEAT);
-        registerFood(Items.FISH, FoodType.FISH);
-        registerFood(Items.COOKED_FISH, FoodType.MEAT);
-        registerFood(Items.MUTTON, FoodType.MEAT);
-        registerFood(Items.COOKED_MUTTON, FoodType.MEAT);
-        registerFood(Items.RABBIT, FoodType.MEAT);
-        registerFood(Items.COOKED_RABBIT, FoodType.MEAT);
-        registerFood(Items.ROTTEN_FLESH, FoodType.MEAT);
+        registerFoodAuto((ItemFood) Items.FISH, FoodType.FISH);
+        registerFoodAuto((ItemFood) Items.COOKED_FISH, FoodType.FISH);
 
-        registerFood(ItemHandler.DINOSAUR_MEAT, FoodType.MEAT);
-        registerFood(ItemHandler.DINOSAUR_STEAK, FoodType.MEAT);
+        registerFoodAuto(ItemHandler.DINOSAUR_MEAT, FoodType.MEAT);
+        registerFoodAuto(ItemHandler.DINOSAUR_STEAK, FoodType.MEAT);
 
         for (Item item : Item.REGISTRY)
         {
-            String resourceDomain = Item.REGISTRY.getNameForObject(item).getResourceDomain();
-
-            if (!resourceDomain.equals("minecraft"))
+            if (item instanceof ItemFood)
             {
-                if (item instanceof ItemFood)
-                {
-                    ItemFood food = (ItemFood) item;
+                ItemFood food = (ItemFood) item;
 
-                    if (food.getHealAmount(new ItemStack(food)) <= 3)
-                    {
-                        registerFood(food, FoodType.PLANT);
-                    }
-                    else
-                    {
-                        registerFood(food, FoodType.MEAT);
-                    }
-                }
+                registerFoodAuto(food, food.isWolfsFavoriteMeat() ? FoodType.MEAT : FoodType.PLANT);
             }
         }
     }
 
-    public void registerFood(Item food, FoodType foodType)
+    public static void registerFoodAuto(ItemFood food, FoodType foodType, FoodEffect... effects)
     {
-        if (!this.food.contains(food))
+        registerFood(food, foodType, food.getHealAmount(new ItemStack(food)) * 650, effects);
+    }
+
+    public static void registerFood(Item food, FoodType foodType, int healAmount, FoodEffect... effects)
+    {
+        if (!FOODS.contains(food))
         {
-            List<Item> foodsForType = foodTypes.get(foodType);
+            List<Item> foodsForType = FOOD_TYPES.get(foodType);
 
             if (foodsForType == null)
             {
@@ -124,23 +105,24 @@ public enum FoodHelper
 
             foodsForType.add(food);
 
-            this.food.add(food);
-
-            foodTypes.put(foodType, foodsForType);
+            FOODS.add(food);
+            FOOD_TYPES.put(foodType, foodsForType);
+            HEAL_AMOUNTS.put(food, healAmount);
+            FOOD_EFFECTS.put(food, effects);
         }
     }
 
-    public void registerFood(Block food, FoodType foodType)
+    public static void registerFood(Block food, FoodType foodType, int foodAmount, FoodEffect... effects)
     {
-        registerFood(Item.getItemFromBlock(food), foodType);
+        registerFood(Item.getItemFromBlock(food), foodType, foodAmount, effects);
     }
 
-    public List<Item> getFoodType(FoodType type)
+    public static List<Item> getFoodType(FoodType type)
     {
-        return foodTypes.get(type);
+        return FOOD_TYPES.get(type);
     }
 
-    public FoodType getFoodType(Item item)
+    public static FoodType getFoodType(Item item)
     {
         for (FoodType foodType : FoodType.values())
         {
@@ -153,22 +135,22 @@ public enum FoodHelper
         return null;
     }
 
-    public FoodType getFoodType(Block block)
+    public static FoodType getFoodType(Block block)
     {
         return getFoodType(Item.getItemFromBlock(block));
     }
 
-    public boolean canDietEat(Diet diet, Item item)
+    public static boolean isEdible(Diet diet, Item item)
     {
-        return getEdibleFoods(diet).contains(item);
+        return item != null && getEdibleFoods(diet).contains(item);
     }
 
-    public boolean canDietEat(Diet diet, Block block)
+    public static boolean isEdible(Diet diet, Block block)
     {
-        return canDietEat(diet, Item.getItemFromBlock(block));
+        return isEdible(diet, Item.getItemFromBlock(block));
     }
 
-    public List<Item> getEdibleFoods(Diet diet)
+    public static List<Item> getEdibleFoods(Diet diet)
     {
         List<Item> possibleItems = new ArrayList<>();
 
@@ -188,5 +170,38 @@ public enum FoodHelper
         }
 
         return possibleItems;
+    }
+
+    public static int getHealAmount(Item item)
+    {
+        return HEAL_AMOUNTS.get(item);
+    }
+
+    public static void applyEatEffects(DinosaurEntity entity, Item item)
+    {
+        FoodEffect[] effects = FOOD_EFFECTS.get(item);
+
+        if (effects != null)
+        {
+            for (FoodEffect effect : effects)
+            {
+                if (entity.getRNG().nextInt(100) <= effect.chance)
+                {
+                    entity.addPotionEffect(effect.effect);
+                }
+            }
+        }
+    }
+
+    public static class FoodEffect
+    {
+        public PotionEffect effect;
+        public int chance;
+
+        public FoodEffect(PotionEffect effect, int chance)
+        {
+            this.effect = effect;
+            this.chance = chance;
+        }
     }
 }

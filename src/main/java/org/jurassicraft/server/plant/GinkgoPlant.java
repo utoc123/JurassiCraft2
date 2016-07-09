@@ -17,4 +17,10 @@ public class GinkgoPlant extends Plant
     {
         return BlockHandler.ANCIENT_SAPLINGS.get(TreeType.GINKGO);
     }
+
+    @Override
+    public int getHealAmount()
+    {
+        return 1000;
+    }
 }
