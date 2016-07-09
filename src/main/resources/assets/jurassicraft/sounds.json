@@ -331,7 +331,7 @@
       "jurassicraft:dinosaurs/brachiosaurus/brachiosaurus_death_2"
     ]
   },
-  "dodo_death_1": {
+  "dodo_death": {
     "category": "hostile",
     "sounds": [
       "jurassicraft:dinosaurs/dodo/dodo_death_1",
@@ -351,12 +351,6 @@
       "jurassicraft:dinosaurs/dodo/dodo_living_1",
       "jurassicraft:dinosaurs/dodo/dodo_living_2",
       "jurassicraft:dinosaurs/dodo/dodo_living_3"
-    ]
-  },
-  "rugops_attack": {
-    "category": "hostile",
-    "sounds": [
-      "jurassicraft:dinosaurs/rugops/rugops_attack_1"
     ]
   },
   "rugops_death": {

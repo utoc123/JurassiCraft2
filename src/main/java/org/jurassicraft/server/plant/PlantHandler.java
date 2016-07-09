@@ -5,8 +5,6 @@ import java.util.List;
 
 public class PlantHandler
 {
-    private static List<Plant> plants = new ArrayList<>();
-
     public static final Plant AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
     public static final Plant SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
     public static final Plant CALAMITES = new CalamitesPlant();
@@ -20,6 +18,7 @@ public class PlantHandler
     public static final Plant DICKSONIA = new DicksoniaPlant();
     public static final Plant WILD_ONION = new WildOnionPlant();
     public static final Plant DICROIDIUM_ZUBERI_PLANT = new DicroidiumZuberiPlant();
+    private static List<Plant> plants = new ArrayList<>();
 
     public static void init()
     {

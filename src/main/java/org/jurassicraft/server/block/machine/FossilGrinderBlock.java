@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.handler.GuiHandler;
+import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.FossilGrinderTile;
 
@@ -79,7 +79,7 @@ public class FossilGrinderBlock extends OrientedBlock
 
                 if (fossilGrinder.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

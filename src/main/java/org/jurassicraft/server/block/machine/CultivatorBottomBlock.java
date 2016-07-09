@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.handler.GuiHandler;
+import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.CultivatorTile;
 
@@ -64,7 +64,7 @@ public class CultivatorBottomBlock extends CultivatorBlock
 
                 if (cultivator.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.CULTIVATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_CULTIVATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

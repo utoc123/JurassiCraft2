@@ -93,7 +93,7 @@ public class BlockHandler
     public static final DNACombinatorHybridizerBlock DNA_COMBINATOR_HYBRIDIZER = new DNACombinatorHybridizerBlock();
 
     public static final AmberBlock AMBER_ORE = new AmberBlock();
-    public static final IceShardBlock ICE_SHARD = new IceShardBlock();
+//    public static final IceShardBlock ICE_SHARD = new IceShardBlock();
 
     public static final GypsumStoneBlock GYPSUM_STONE = new GypsumStoneBlock();
     public static final Block GYPSUM_COBBLESTONE = new BasicBlock(Material.ROCK).setHardness(1.5F);
@@ -155,7 +155,7 @@ public class BlockHandler
         }
 
         registerBlock(AMBER_ORE, "Amber Ore");
-        registerBlock(ICE_SHARD, "Ice Shard");
+//        registerBlock(ICE_SHARD, "Ice Shard");
         registerBlock(GYPSUM_STONE, "Gypsum Stone");
         registerBlock(GYPSUM_COBBLESTONE, "Gypsum Cobblestone");
         registerBlock(GYPSUM_BRICKS, "Gypsum Bricks");

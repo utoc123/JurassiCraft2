@@ -9,12 +9,16 @@ import java.util.Iterator;
 
 /**
  * Copyright 2016 Timeless Mod Team.
- * <p/>
+ * <p>
  * This traverser iterates "layers" (like an onion) around the center point.  Being Minecraft,
  * the layers are boxes around the center point.
  */
 public class OnionTraverser implements Iterable<BlockPos>
 {
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final BlockPos _center;
+    private final int _maxRadius;
+
     public OnionTraverser(BlockPos center, int radius)
     {
         _center = center;
@@ -29,6 +33,16 @@ public class OnionTraverser implements Iterable<BlockPos>
 
     public class OnionIterator implements Iterator<BlockPos>
     {
+        private final int _maxCounter;
+        // The max numbers are inclusive so <= rather than <
+        private int _x, _minX, _maxX;
+        private int _y;
+        private int _z, _minZ, _maxZ;
+        private int _currentRadius = 0;
+        private int _yCounter = 1;
+        private EnumFacing _facing;
+        private boolean _returnedCenter = false;
+
         public OnionIterator()
         {
             _maxCounter = _maxRadius * 2 + 1;
@@ -127,6 +141,8 @@ public class OnionTraverser implements Iterable<BlockPos>
             }
         }
 
+        //private int _idx = 0;
+
         // We go back an forth (east, west) across the slab until we get past maxZ
         // then go to the next layer.
         private void walkSlab()
@@ -209,24 +225,6 @@ public class OnionTraverser implements Iterable<BlockPos>
 
             //LOGGER.info("Ring. radius=" + _currentRadius + ", x=" + _minX + "-" + _maxX + ", z=" + _minZ + "-" + _maxZ );
         }
-
-        // The max numbers are inclusive so <= rather than <
-        private int _x, _minX, _maxX;
-        private int _y;
-        private int _z, _minZ, _maxZ;
-        private int _currentRadius = 0;
-        private int _yCounter = 1;
-
-        //private int _idx = 0;
-
-        private final int _maxCounter;
-        private EnumFacing _facing;
-        private boolean _returnedCenter = false;
     }
-
-    private final BlockPos _center;
-    private final int _maxRadius;
-
-    private static final Logger LOGGER = LogManager.getLogger();
 }
 

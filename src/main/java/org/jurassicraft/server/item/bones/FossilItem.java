@@ -26,10 +26,9 @@ import java.util.Random;
 
 public class FossilItem extends Item implements GrindableItem
 {
+    public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<>();
     private String type;
     private boolean includeHybrids;
-
-    public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<>();
 
     public FossilItem(String type, boolean includeHybrids)
     {

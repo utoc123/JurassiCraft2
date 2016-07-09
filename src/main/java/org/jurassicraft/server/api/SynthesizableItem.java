@@ -9,10 +9,6 @@ import java.util.Random;
 
 public interface SynthesizableItem
 {
-    boolean isSynthesizable(ItemStack stack);
-
-    ItemStack getSynthesizedItem(ItemStack stack, Random random);
-
     static SynthesizableItem getSynthesizableItem(ItemStack stack)
     {
         if (stack != null)
@@ -41,4 +37,8 @@ public interface SynthesizableItem
     {
         return getSynthesizableItem(stack) != null;
     }
+
+    boolean isSynthesizable(ItemStack stack);
+
+    ItemStack getSynthesizedItem(ItemStack stack, Random random);
 }

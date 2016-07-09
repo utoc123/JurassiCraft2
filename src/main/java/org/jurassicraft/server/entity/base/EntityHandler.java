@@ -80,9 +80,6 @@ import java.util.List;
 
 public class EntityHandler
 {
-    private static List<Dinosaur> dinosaurs = new ArrayList<>();
-    private static HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
-
     public static final Dinosaur BRACHIOSAURUS = new BrachiosaurusDinosaur();
     public static final Dinosaur DILOPHOSAURUS = new DilophosaurusDinosaur();
     public static final Dinosaur GALLIMIMUS = new GallimimusDinosaur();
@@ -90,7 +87,6 @@ public class EntityHandler
     public static final Dinosaur TRICERATOPS = new TriceratopsDinosaur();
     public static final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
     public static final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
-
     public static final Dinosaur DODO = new DodoDinosaur();
     public static final Dinosaur ACHILLOBATOR = new AchillobatorDinosaur();
     public static final Dinosaur ANKYLOSAURUS = new AnkylosaurusDinosaur();
@@ -137,7 +133,8 @@ public class EntityHandler
     public static final Dinosaur ZHENYUANOPTERUS = new ZhenyuanopterusDinosaur();
     public static final Dinosaur TROODON = new TroodonDinosaur();
     public static final Dinosaur PACHYCEPHALOSAURUS = new PachycephalosaurusDinosaur();
-
+    private static List<Dinosaur> dinosaurs = new ArrayList<>();
+    private static HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
     private static int entityId;
 
     public static List<Dinosaur> getDinosaursFromSeaLampreys()

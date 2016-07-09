@@ -294,15 +294,15 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
         return nbt;
     }
 
+    public boolean getMode()
+    {
+        return hybridizerMode;
+    }
+
     public void setMode(boolean mode)
     {
         this.hybridizerMode = mode;
         this.processTime[0] = 0;
-    }
-
-    public boolean getMode()
-    {
-        return hybridizerMode;
     }
 
     @Override

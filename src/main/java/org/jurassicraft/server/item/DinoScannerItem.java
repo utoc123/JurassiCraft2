@@ -16,6 +16,8 @@ import org.jurassicraft.server.tab.TabHandler;
  */
 public class DinoScannerItem extends Item
 {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public DinoScannerItem()
     {
         super();
@@ -49,6 +51,4 @@ public class DinoScannerItem extends Item
         }
         return false;
     }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 }

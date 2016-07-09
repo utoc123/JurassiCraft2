@@ -70,6 +70,85 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     private boolean flee;
 
+    public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)
+    {
+        List<TabulaCubeContainer> parentCubes = new ArrayList<>();
+
+        do
+        {
+            if (ignoreSelf)
+            {
+                ignoreSelf = false;
+            }
+            else
+            {
+                parentCubes.add(cube);
+            }
+        }
+        while (includeParents && cube.getParentIdentifier() != null && (cube = TabulaModelHelper.getCubeByIdentifier(cube.getParentIdentifier(), model)) != null);
+
+        Matrix4d mat = new Matrix4d();
+        mat.setIdentity();
+        Matrix4d transform = new Matrix4d();
+
+        transform.rotY(rot / 180 * Math.PI);
+        mat.mul(transform);
+
+        for (int i = parentCubes.size() - 1; i >= 0; i--)
+        {
+            cube = parentCubes.get(i);
+            transform.setIdentity();
+            transform.setTranslation(new Vector3d(cube.getPosition()));
+            mat.mul(transform);
+
+            double rotX = cube.getRotation()[0];
+            double rotY = cube.getRotation()[1];
+            double rotZ = cube.getRotation()[2];
+
+            transform.rotZ(rotZ / 180 * Math.PI);
+            mat.mul(transform);
+            transform.rotY(rotY / 180 * Math.PI);
+            mat.mul(transform);
+            transform.rotX(rotX / 180 * Math.PI);
+            mat.mul(transform);
+        }
+
+        return mat;
+    }
+
+    private static double[][] getTransformation(Matrix4d matrix)
+    {
+        double sinRotationAngleY, cosRotationAngleY, sinRotationAngleX, cosRotationAngleX, sinRotationAngleZ, cosRotationAngleZ;
+
+        sinRotationAngleY = -matrix.m20;
+        cosRotationAngleY = Math.sqrt(1 - sinRotationAngleY * sinRotationAngleY);
+
+        if (Math.abs(cosRotationAngleY) > 0.0001)
+        {
+            sinRotationAngleX = matrix.m21 / cosRotationAngleY;
+            cosRotationAngleX = matrix.m22 / cosRotationAngleY;
+            sinRotationAngleZ = matrix.m10 / cosRotationAngleY;
+            cosRotationAngleZ = matrix.m00 / cosRotationAngleY;
+        }
+        else
+        {
+            sinRotationAngleX = -matrix.m12;
+            cosRotationAngleX = matrix.m11;
+            sinRotationAngleZ = 0;
+            cosRotationAngleZ = 1;
+        }
+
+        double rotationAngleX = epsilon(Math.atan2(sinRotationAngleX, cosRotationAngleX)) / Math.PI * 180;
+        double rotationAngleY = epsilon(Math.atan2(sinRotationAngleY, cosRotationAngleY)) / Math.PI * 180;
+        double rotationAngleZ = epsilon(Math.atan2(sinRotationAngleZ, cosRotationAngleZ)) / Math.PI * 180;
+        return new double[][] { { epsilon(matrix.m03), epsilon(matrix.m13), epsilon(matrix.m23) }, { rotationAngleX, rotationAngleY, rotationAngleZ } };
+    }
+
+    private static double epsilon(double x)
+    {
+        return x < 0 ? x > -0.0001 ? 0 : x : x < 0.0001 ? 0 : x;
+    }
+
     public void init()
     {
         String formattedName = getName().toLowerCase().replaceAll(" ", "_");
@@ -153,16 +232,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return null;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setDinosaurClass(Class<? extends DinosaurEntity> clazz)
-    {
-        this.dinoClazz = clazz;
-    }
-
     public void setEggColorMale(int primary, int secondary)
     {
         this.primaryEggColorMale = primary;
@@ -221,54 +290,24 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.shouldRegister = false;
     }
 
-    public void setMarineAnimal(boolean marineAnimal)
-    {
-        this.isMarineAnimal = marineAnimal;
-    }
-
-    public void setMammal(boolean isMammal)
-    {
-        this.isMammal = isMammal;
-    }
-
-    public void setAttackSpeed(double attackSpeed)
-    {
-        this.attackSpeed = attackSpeed;
-    }
-
-    public void setStorage(int storage)
-    {
-        this.storage = storage;
-    }
-
-    public void setOverlayCount(int count)
-    {
-        this.overlayCount = count;
-    }
-
-    public void setDiet(Diet diet)
-    {
-        this.diet = diet;
-    }
-
-    public void setSleepingSchedule(SleepingSchedule sleepingSchedule)
-    {
-        this.sleepingSchedule = sleepingSchedule;
-    }
-
-    public void setBones(String... bones)
-    {
-        this.bones = bones;
-    }
-
     public String getName()
     {
         return name;
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
     public Class<? extends DinosaurEntity> getDinosaurClass()
     {
         return dinoClazz;
+    }
+
+    public void setDinosaurClass(Class<? extends DinosaurEntity> clazz)
+    {
+        this.dinoClazz = clazz;
     }
 
     public int getEggPrimaryColorMale()
@@ -361,6 +400,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return maximumAge;
     }
 
+    public void setMaximumAge(int age)
+    {
+        this.maximumAge = age;
+    }
+
     public ResourceLocation getMaleTexture(GrowthStage stage)
     {
         return maleTextures.get(stage);
@@ -374,6 +418,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public double getAttackSpeed()
     {
         return attackSpeed;
+    }
+
+    public void setAttackSpeed(double attackSpeed)
+    {
+        this.attackSpeed = attackSpeed;
     }
 
     public boolean shouldRegister()
@@ -417,9 +466,19 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return isMarineAnimal;
     }
 
+    public void setMarineAnimal(boolean marineAnimal)
+    {
+        this.isMarineAnimal = marineAnimal;
+    }
+
     public boolean isMammal()
     {
         return isMammal;
+    }
+
+    public void setMammal(boolean isMammal)
+    {
+        this.isMammal = isMammal;
     }
 
     public int getLipids()
@@ -447,6 +506,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return storage;
     }
 
+    public void setStorage(int storage)
+    {
+        this.storage = storage;
+    }
+
     public ResourceLocation getOverlayTexture(GrowthStage stage, int overlay)
     {
         return overlays.containsKey(stage) ? overlays.get(stage).get(overlay) : null;
@@ -455,6 +519,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public int getOverlayCount()
     {
         return overlayCount;
+    }
+
+    public void setOverlayCount(int count)
+    {
+        this.overlayCount = count;
     }
 
     public ResourceLocation getEyelidTexture(DinosaurEntity entity)
@@ -467,14 +536,29 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return diet;
     }
 
+    public void setDiet(Diet diet)
+    {
+        this.diet = diet;
+    }
+
     public SleepingSchedule getSleepingSchedule()
     {
         return sleepingSchedule;
     }
 
+    public void setSleepingSchedule(SleepingSchedule sleepingSchedule)
+    {
+        this.sleepingSchedule = sleepingSchedule;
+    }
+
     public String[] getBones()
     {
         return bones;
+    }
+
+    public void setBones(String... bones)
+    {
+        this.bones = bones;
     }
 
     @Override
@@ -484,19 +568,14 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     }
 
-    public void setMaximumAge(int age)
+    public String getHeadCubeName()
     {
-        this.maximumAge = age;
+        return headCubeName;
     }
 
     public void setHeadCubeName(String headCubeName)
     {
         this.headCubeName = headCubeName;
-    }
-
-    public String getHeadCubeName()
-    {
-        return headCubeName;
     }
 
     public double[] getCubePosition(String cubeName, GrowthStage stage)
@@ -525,85 +604,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         }
 
         return new double[] { 0.0, 0.0, 0.0 };
-    }
-
-    public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)
-    {
-        List<TabulaCubeContainer> parentCubes = new ArrayList<>();
-
-        do
-        {
-            if (ignoreSelf)
-            {
-                ignoreSelf = false;
-            }
-            else
-            {
-                parentCubes.add(cube);
-            }
-        }
-        while (includeParents && cube.getParentIdentifier() != null && (cube = TabulaModelHelper.getCubeByIdentifier(cube.getParentIdentifier(), model)) != null);
-
-        Matrix4d mat = new Matrix4d();
-        mat.setIdentity();
-        Matrix4d transform = new Matrix4d();
-
-        transform.rotY(rot / 180 * Math.PI);
-        mat.mul(transform);
-
-        for (int i = parentCubes.size() - 1; i >= 0; i--)
-        {
-            cube = parentCubes.get(i);
-            transform.setIdentity();
-            transform.setTranslation(new Vector3d(cube.getPosition()));
-            mat.mul(transform);
-
-            double rotX = cube.getRotation()[0];
-            double rotY = cube.getRotation()[1];
-            double rotZ = cube.getRotation()[2];
-
-            transform.rotZ(rotZ / 180 * Math.PI);
-            mat.mul(transform);
-            transform.rotY(rotY / 180 * Math.PI);
-            mat.mul(transform);
-            transform.rotX(rotX / 180 * Math.PI);
-            mat.mul(transform);
-        }
-
-        return mat;
-    }
-
-    private static double[][] getTransformation(Matrix4d matrix)
-    {
-        double sinRotationAngleY, cosRotationAngleY, sinRotationAngleX, cosRotationAngleX, sinRotationAngleZ, cosRotationAngleZ;
-
-        sinRotationAngleY = -matrix.m20;
-        cosRotationAngleY = Math.sqrt(1 - sinRotationAngleY * sinRotationAngleY);
-
-        if (Math.abs(cosRotationAngleY) > 0.0001)
-        {
-            sinRotationAngleX = matrix.m21 / cosRotationAngleY;
-            cosRotationAngleX = matrix.m22 / cosRotationAngleY;
-            sinRotationAngleZ = matrix.m10 / cosRotationAngleY;
-            cosRotationAngleZ = matrix.m00 / cosRotationAngleY;
-        }
-        else
-        {
-            sinRotationAngleX = -matrix.m12;
-            cosRotationAngleX = matrix.m11;
-            sinRotationAngleZ = 0;
-            cosRotationAngleZ = 1;
-        }
-
-        double rotationAngleX = epsilon(Math.atan2(sinRotationAngleX, cosRotationAngleX)) / Math.PI * 180;
-        double rotationAngleY = epsilon(Math.atan2(sinRotationAngleY, cosRotationAngleY)) / Math.PI * 180;
-        double rotationAngleZ = epsilon(Math.atan2(sinRotationAngleZ, cosRotationAngleZ)) / Math.PI * 180;
-        return new double[][] { { epsilon(matrix.m03), epsilon(matrix.m13), epsilon(matrix.m23) }, { rotationAngleX, rotationAngleY, rotationAngleZ } };
-    }
-
-    private static double epsilon(double x)
-    {
-        return x < 0 ? x > -0.0001 ? 0 : x : x < 0.0001 ? 0 : x;
     }
 
     public double[] getHeadPosition(GrowthStage stage, float rot)
@@ -654,11 +654,6 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         this.offsetZ = z;
     }
 
-    public void setImprintable(boolean imprintable)
-    {
-        this.isImprintable = imprintable;
-    }
-
     public void setDefendOwner(boolean defendOwner)
     {
         this.defendOwner = defendOwner;
@@ -707,6 +702,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public boolean isImprintable()
     {
         return isImprintable;
+    }
+
+    public void setImprintable(boolean imprintable)
+    {
+        this.isImprintable = imprintable;
     }
 
     public boolean shouldDefendOwner()

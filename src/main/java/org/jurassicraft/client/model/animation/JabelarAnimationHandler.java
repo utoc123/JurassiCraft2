@@ -19,7 +19,7 @@ import java.util.Random;
 
 /**
  * @author jabelar
- * This class handles per-entity animations.
+ *         This class handles per-entity animations.
  */
 @SideOnly(Side.CLIENT)
 public class JabelarAnimationHandler
@@ -35,6 +35,23 @@ public class JabelarAnimationHandler
         this.MOVEMENT_PASS = new MovementAnimationPass(poseSequences, poses, useInertialTweens);
 
         this.init(entity, model);
+    }
+
+    public static DinosaurModel getTabulaModel(String tabulaModel, int geneticVariant)
+    {
+        // catch the exception so you can call method without further catching
+        try
+        {
+            return new DinosaurModel(TabulaModelHelper.loadTabulaModel(tabulaModel), null); // okay to use null for animator
+            // parameter as we get animator
+            // from passed-in model
+        }
+        catch (Exception e)
+        {
+            JurassiCraft.INSTANCE.getLogger().error("Could not load Tabula model = " + tabulaModel);
+        }
+
+        return null;
     }
 
     private void init(DinosaurEntity entity, DinosaurModel model)
@@ -67,23 +84,6 @@ public class JabelarAnimationHandler
         }
 
         return modelParts;
-    }
-
-    public static DinosaurModel getTabulaModel(String tabulaModel, int geneticVariant)
-    {
-        // catch the exception so you can call method without further catching
-        try
-        {
-            return new DinosaurModel(TabulaModelHelper.loadTabulaModel(tabulaModel), null); // okay to use null for animator
-            // parameter as we get animator
-            // from passed-in model
-        }
-        catch (Exception e)
-        {
-            JurassiCraft.INSTANCE.getLogger().error("Could not load Tabula model = " + tabulaModel);
-        }
-
-        return null;
     }
 
     public DinosaurModel getTabulaModel(String tabulaModel)

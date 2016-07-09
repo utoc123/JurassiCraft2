@@ -28,6 +28,16 @@ public enum TimePeriod implements IStringSerializable
         this.endTime = endTime;
     }
 
+    public static int getStartYLevel(TimePeriod period)
+    {
+        return 64 - (int) (period.getStartTime() != 0 ? period.getStartTime() * 64.0F / 541.0F : 0);
+    }
+
+    public static int getEndYLevel(TimePeriod period)
+    {
+        return 64 - (int) (period.getEndTime() != 0 ? period.getEndTime() * 64.0F / 541.0F : 0);
+    }
+
     @Override
     public String toString()
     {
@@ -48,15 +58,5 @@ public enum TimePeriod implements IStringSerializable
     public float getEndTime()
     {
         return this.endTime;
-    }
-
-    public static int getStartYLevel(TimePeriod period)
-    {
-        return 64 - (int) (period.getStartTime() != 0 ? period.getStartTime() * 64.0F / 541.0F : 0);
-    }
-
-    public static int getEndYLevel(TimePeriod period)
-    {
-        return 64 - (int) (period.getEndTime() != 0 ? period.getEndTime() * 64.0F / 541.0F : 0);
     }
 }

@@ -27,13 +27,10 @@ import java.util.Map;
 public class SelectDinoGui extends GuiScreen
 {
     private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
-
-    private int page;
-    private int pageCount;
-
     public int columnsPerPage = 5;
     public int rowsPerPage = 3;
-
+    private int page;
+    private int pageCount;
     private GuiButton forward;
     private GuiButton backward;
 

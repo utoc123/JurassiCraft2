@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.handler.GuiHandler;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class PaddockSignItem extends Item
@@ -25,9 +25,9 @@ public class PaddockSignItem extends Item
         {
             BlockPos offset = pos.offset(side);
 
-            if (player.worldObj.isRemote && player.canPlayerEdit(offset, side, stack))
+            if (player.canPlayerEdit(offset, side, stack))
             {
-                GuiHandler.openSelectDino(offset, side, hand);
+                JurassiCraft.PROXY.openSelectDino(offset, side, hand);
             }
         }
 

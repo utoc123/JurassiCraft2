@@ -1,10 +1,10 @@
 /**
  * Copyright (C) 2015 by jabelar
- * <p/>
+ * <p>
  * This file is part of jabelar's Minecraft Forge modding examples; as such, you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- * <p/>
+ * <p>
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p/>
+ * <p>
  * For a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
  */
 
@@ -38,10 +38,110 @@ import java.util.Objects;
  */
 public class ForceAnimationCommand implements ICommand
 {
+    private final List<String> aliases;
+
+    public ForceAnimationCommand()
+    {
+        aliases = new ArrayList<>();
+        aliases.add("animate");
+        aliases.add("anim");
+    }
+
+    private static void setDinoAnimation(ICommandSender sender, DinosaurEntity entity, String parAnimType) throws CommandException
+    {
+        try
+        {
+            entity.setAnimation(DinosaurAnimation.valueOf(parAnimType.toUpperCase()).get());
+        }
+        catch (IllegalArgumentException iae)
+        {
+            throw new CommandException(parAnimType + " is not a valid animation.");
+        }
+    }
+
     @Override
     public int compareTo(ICommand o)
     {
         return 0;
+    }
+
+    @Override
+    public String getCommandName()
+    {
+        return "animate";
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender parSender)
+    {
+        return "animate <AnimID> [<entitySelector>]";
+    }
+
+    @Override
+    public List<String> getCommandAliases()
+    {
+        return aliases;
+    }
+
+    @Override
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        World theWorld = sender.getEntityWorld();
+
+        if (theWorld.isRemote)
+        {
+            JurassiCraft.INSTANCE.getLogger().debug("Not processing on Client side");
+        }
+        else
+        {
+            JurassiCraft.INSTANCE.getLogger().debug("Processing on Server side");
+            if (args.length < 1)
+            {
+                throw new WrongUsageException("Missing the animation to set");
+            }
+            String entitySelector = args.length < 2 ? "@e[c=1]" : args[1];
+            List<DinosaurEntity> dinos = EntitySelector.matchEntities(new ProxySender(server, sender), entitySelector, DinosaurEntity.class);
+            if (dinos == null || dinos.size() == 0)
+            {
+                throw new EntityNotFoundException("No IAnimatedEntity to animate");
+            }
+            for (DinosaurEntity entity : dinos)
+            {
+                setDinoAnimation(sender, entity, args[0]);
+                sender.addChatMessage(new TextComponentString("Animating entity " + entity.getEntityId() + " with animation type " + args[0]));
+            }
+        }
+    }
+
+    @Override
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender)
+    {
+        return true;
+    }
+
+    @Override
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
+    {
+        if (args.length == 1)
+        {
+            List<String> animations = Lists.newArrayList();
+            String current = args[0].toLowerCase();
+            for (DinosaurAnimation animation : DinosaurAnimation.values())
+            {
+                if (animation.name().toLowerCase().startsWith(current))
+                {
+                    animations.add(animation.name());
+                }
+            }
+            return animations;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isUsernameIndex(String[] var1, int var2)
+    {
+        return false;
     }
 
     /**
@@ -124,106 +224,6 @@ public class ForceAnimationCommand implements ICommand
         public MinecraftServer getServer()
         {
             return server;
-        }
-    }
-
-    private final List<String> aliases;
-
-    public ForceAnimationCommand()
-    {
-        aliases = new ArrayList<>();
-        aliases.add("animate");
-        aliases.add("anim");
-    }
-
-    @Override
-    public String getCommandName()
-    {
-        return "animate";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender parSender)
-    {
-        return "animate <AnimID> [<entitySelector>]";
-    }
-
-    @Override
-    public List<String> getCommandAliases()
-    {
-        return aliases;
-    }
-
-    @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
-    {
-        World theWorld = sender.getEntityWorld();
-
-        if (theWorld.isRemote)
-        {
-            JurassiCraft.INSTANCE.getLogger().debug("Not processing on Client side");
-        }
-        else
-        {
-            JurassiCraft.INSTANCE.getLogger().debug("Processing on Server side");
-            if (args.length < 1)
-            {
-                throw new WrongUsageException("Missing the animation to set");
-            }
-            String entitySelector = args.length < 2 ? "@e[c=1]" : args[1];
-            List<DinosaurEntity> dinos = EntitySelector.matchEntities(new ProxySender(server, sender), entitySelector, DinosaurEntity.class);
-            if (dinos == null || dinos.size() == 0)
-            {
-                throw new EntityNotFoundException("No IAnimatedEntity to animate");
-            }
-            for (DinosaurEntity entity : dinos)
-            {
-                setDinoAnimation(sender, entity, args[0]);
-                sender.addChatMessage(new TextComponentString("Animating entity " + entity.getEntityId() + " with animation type " + args[0]));
-            }
-        }
-    }
-
-    @Override
-    public boolean checkPermission(MinecraftServer server, ICommandSender sender)
-    {
-        return true;
-    }
-
-    @Override
-    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
-    {
-        if (args.length == 1)
-        {
-            List<String> animations = Lists.newArrayList();
-            String current = args[0].toLowerCase();
-            for (DinosaurAnimation animation : DinosaurAnimation.values())
-            {
-                if (animation.name().toLowerCase().startsWith(current))
-                {
-                    animations.add(animation.name());
-                }
-            }
-            return animations;
-        }
-        return null;
-    }
-
-    @Override
-    public boolean isUsernameIndex(String[] var1, int var2)
-    {
-        return false;
-    }
-
-    private static void setDinoAnimation(ICommandSender sender, DinosaurEntity entity, String parAnimType) throws CommandException
-    {
-        try
-        {
-            entity.setAnimation(DinosaurAnimation.valueOf(parAnimType.toUpperCase()).get());
-        }
-        catch (IllegalArgumentException iae)
-        {
-            throw new CommandException(parAnimType + " is not a valid animation.");
         }
     }
 }

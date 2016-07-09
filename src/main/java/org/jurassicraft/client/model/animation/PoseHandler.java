@@ -5,6 +5,9 @@ import com.google.gson.GsonBuilder;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.util.ListHashMap;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.client.model.animation.dto.AnimationsDTO;
@@ -144,45 +147,7 @@ public class PoseHandler
         }
         assert (posedModelResources.size() > 0);
 
-        AdvancedModelRenderer[][] posedCubes = new AdvancedModelRenderer[posedModelResources.size()][];
         Map<Animation, int[][]> animationSequences = new ListHashMap<>();
-        DinosaurModel mainModel = JabelarAnimationHandler.getTabulaModel(posedModelResources.get(0), 0);
-
-        if (mainModel == null)
-        {
-            throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
-        }
-
-        String[] cubeIdentifierArray = mainModel.getCubeIdentifierArray();
-        int partCount = cubeIdentifierArray.length;
-
-        for (int i = 0; i < posedModelResources.size(); i++)
-        {
-            String resource = posedModelResources.get(i);
-            DinosaurModel model = JabelarAnimationHandler.getTabulaModel(resource, 0);
-
-            if (model == null)
-            {
-                throw new IllegalArgumentException("Couldn't load the model from " + resource);
-            }
-
-            AdvancedModelRenderer[] cubes = new AdvancedModelRenderer[partCount];
-
-            for (int partIndex = 0; partIndex < partCount; partIndex++)
-            {
-                String identifier = cubeIdentifierArray[partIndex];
-                AdvancedModelRenderer cube = model.getCubeByIdentifier(identifier);
-
-                if (cube == null)
-                {
-                    JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " (" + partIndex + ") from the model " + resource);
-                }
-
-                cubes[partIndex] = cube;
-            }
-
-            posedCubes[i] = cubes;
-        }
 
         for (Map.Entry<String, PoseDTO[]> entry : animations.poses.entrySet())
         {
@@ -199,7 +164,51 @@ public class PoseHandler
             animationSequences.put(animation, poseSequence);
         }
 
-        return new PreloadedModelData(posedCubes, animationSequences);
+        if (FMLCommonHandler.instance().getSide().isClient())
+        {
+            AdvancedModelRenderer[][] posedCubes = new AdvancedModelRenderer[posedModelResources.size()][];
+            DinosaurModel mainModel = JabelarAnimationHandler.getTabulaModel(posedModelResources.get(0), 0);
+
+            if (mainModel == null)
+            {
+                throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
+            }
+
+            String[] cubeIdentifierArray = mainModel.getCubeIdentifierArray();
+            int partCount = cubeIdentifierArray.length;
+
+            for (int i = 0; i < posedModelResources.size(); i++)
+            {
+                String resource = posedModelResources.get(i);
+                DinosaurModel model = JabelarAnimationHandler.getTabulaModel(resource, 0);
+
+                if (model == null)
+                {
+                    throw new IllegalArgumentException("Couldn't load the model from " + resource);
+                }
+
+                AdvancedModelRenderer[] cubes = new AdvancedModelRenderer[partCount];
+
+                for (int partIndex = 0; partIndex < partCount; partIndex++)
+                {
+                    String identifier = cubeIdentifierArray[partIndex];
+                    AdvancedModelRenderer cube = model.getCubeByIdentifier(identifier);
+
+                    if (cube == null)
+                    {
+                        JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " (" + partIndex + ") from the model " + resource);
+                    }
+
+                    cubes[partIndex] = cube;
+                }
+
+                posedCubes[i] = cubes;
+            }
+
+            return new PreloadedModelData(posedCubes, animationSequences);
+        }
+
+        return new PreloadedModelData(animationSequences);
     }
 
     private String resolve(URI dinoDirURI, String posePath)
@@ -257,28 +266,35 @@ public class PoseHandler
 
     private class PreloadedModelData
     {
+        @SideOnly(Side.CLIENT)
+        AdvancedModelRenderer[][] models;
+        Map<Animation, int[][]> animations;
+
         public PreloadedModelData()
         {
-            this(null, null);
+            this(null);
         }
 
         public PreloadedModelData(AdvancedModelRenderer[][] renderers, Map<Animation, int[][]> animations)
         {
+            this(animations);
+
             if (renderers == null)
             {
                 renderers = new AdvancedModelRenderer[0][];
             }
 
+            this.models = renderers;
+        }
+
+        public PreloadedModelData(Map<Animation, int[][]> animations)
+        {
             if (animations == null)
             {
                 animations = new LinkedHashMap<>();
             }
 
-            this.models = renderers;
             this.animations = animations;
         }
-
-        AdvancedModelRenderer[][] models;
-        Map<Animation, int[][]> animations;
     }
 }

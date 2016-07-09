@@ -21,19 +21,6 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 @SideOnly(Side.CLIENT)
 public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 {
-    private final Dinosaur dinosaur;
-    private final ITabulaModelAnimator<? extends DinosaurEntity> animator;
-
-    private final TabulaModel modelAdult;
-    private final TabulaModel modelInfant;
-    private TabulaModel modelJuvenile;
-    private TabulaModel modelAdolescent;
-
-    private TabulaModel eggModel;
-    private ResourceLocation eggTexture;
-
-    private float shadowSize = 0.65F;
-
     private static TabulaModel DEFAULT_EGG_MODEL;
     private static ResourceLocation DEFAULT_EGG_TEXTURE;
 
@@ -49,6 +36,16 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
             e.printStackTrace();
         }
     }
+
+    private final Dinosaur dinosaur;
+    private final ITabulaModelAnimator<? extends DinosaurEntity> animator;
+    private final TabulaModel modelAdult;
+    private final TabulaModel modelInfant;
+    private TabulaModel modelJuvenile;
+    private TabulaModel modelAdolescent;
+    private TabulaModel eggModel;
+    private ResourceLocation eggTexture;
+    private float shadowSize = 0.65F;
 
     public RenderDinosaurDefinition(Dinosaur dinosaur, ITabulaModelAnimator<? extends DinosaurEntity> animator, float parShadowSize)
     {

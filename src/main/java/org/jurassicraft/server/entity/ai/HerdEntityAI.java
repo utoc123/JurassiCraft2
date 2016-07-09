@@ -108,9 +108,9 @@ public class HerdEntityAI extends EntityAIBase
 
 /**
  * FUTURE MODEL:
- * <p/>
+ * <p>
  * graze - wander around inside herd radius
  * alerted - radius is closer
- * <p/>
+ * <p>
  * The basic issue is that we don't have a real herd model.
  */

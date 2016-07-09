@@ -41,6 +41,17 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
 
     private String customName;
 
+    @SideOnly(Side.CLIENT)
+    public static boolean isCleaning(IInventory inventory)
+    {
+        return inventory.getField(0) > 0;
+    }
+
+    public static boolean isItemFuel(ItemStack stack)
+    {
+        return stack != null && stack.getItem() == Items.WATER_BUCKET;
+    }
+
     @Override
     public int getSizeInventory()
     {
@@ -208,12 +219,6 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
         return this.cleaningStationWaterTime > 0;
     }
 
-    @SideOnly(Side.CLIENT)
-    public static boolean isCleaning(IInventory inventory)
-    {
-        return inventory.getField(0) > 0;
-    }
-
     @Override
     public void update()
     {
@@ -362,11 +367,6 @@ public class CleaningStationTile extends TileEntityLockable implements ITickable
                 }
             }
         }
-    }
-
-    public static boolean isItemFuel(ItemStack stack)
-    {
-        return stack != null && stack.getItem() == Items.WATER_BUCKET;
     }
 
     @Override

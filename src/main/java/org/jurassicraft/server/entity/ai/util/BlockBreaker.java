@@ -7,13 +7,19 @@ import net.minecraft.world.World;
 
 /**
  * Copyright 2016 Timeless Mod Team.
- * <p/>
+ * <p>
  * This mod is used to compute and update the break status on the mod.
  */
 public class BlockBreaker
 {
     // This is a base factor use to adjust break time.
     public static final float BASE_BREAK_FACTOR = 2.5F;
+    private final World _world;
+    private final BlockPos _pos;
+    private final int _ticksNeeded;
+    private final int _entityID;
+    private int _ticksDone;
+    private int _previousTicksDone;
 
     /**
      * Constructs a block breaker that used to breaks blocks over time.
@@ -32,17 +38,9 @@ public class BlockBreaker
     }
 
     /**
-     * @return The number of ticks left to break;
-     */
-    public int ticksLeft()
-    {
-        return _ticksNeeded - _ticksDone;
-    }
-
-    /**
      * Returns the number of seconds needed to break this block based on the
      * block and digSpeed.
-     * <p/>
+     * <p>
      * A stone pickaxe takes about 1 second to break a stone block.
      * <ul>
      * <li> Stone hardness = 1.5 </li>
@@ -64,6 +62,14 @@ public class BlockBreaker
         float hardness = state.getBlock().getBlockHardness(world.getBlockState(pos), world, pos);
 
         return (BASE_BREAK_FACTOR * hardness) / (digSpeed);
+    }
+
+    /**
+     * @return The number of ticks left to break;
+     */
+    public int ticksLeft()
+    {
+        return _ticksNeeded - _ticksDone;
     }
 
     /**
@@ -106,15 +112,6 @@ public class BlockBreaker
                 ", _ticksDone=" + _ticksDone +
                 '}';
     }
-
-    private final World _world;
-
-    private final BlockPos _pos;
-    private final int _ticksNeeded;
-    private final int _entityID;
-
-    private int _ticksDone;
-    private int _previousTicksDone;
 
     //private static final Logger LOGGER = LogManager.getLogger();
 }

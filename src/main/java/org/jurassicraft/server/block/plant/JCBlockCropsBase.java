@@ -43,66 +43,6 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         this.disableStats();
     }
 
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, (state.getValue(getAgeProperty()) + 1) * 0.125F, 0.9F);
-    }
-
-    abstract protected PropertyInteger getAgeProperty();
-
-    abstract protected int getMaxAge();
-
-    // NOTE:  This is called on parent object construction.
-    @Override
-    abstract protected BlockStateContainer createBlockState();
-
-    abstract protected Item getSeed();
-
-    abstract protected Item getCrop();
-
-    //============================================
-
-    @Override
-    protected boolean canSustainBush(IBlockState ground)
-    {
-        return ground == Blocks.FARMLAND;
-    }
-
-    @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
-        super.updateTick(world, pos, state, rand);
-
-        if (world.getLightFromNeighbors(pos.up()) >= 9)
-        {
-            int i = state.getValue(getAgeProperty());
-
-            if (i < this.getMaxAge())
-            {
-                float f = getGrowthChance(this, world, pos);
-
-                if (rand.nextInt((int) (25.0F / f) + 1) == 0)
-                {
-                    world.setBlockState(pos, state.withProperty(getAgeProperty(), i + 1), 2);
-                }
-            }
-        }
-    }
-
-    public void grow(World world, BlockPos pos, IBlockState state)
-    {
-        // TODO:  Pull out these two numbers.
-        int i = state.getValue(getAgeProperty()) + MathHelper.getRandomIntegerInRange(world.rand, 2, 5);
-
-        if (i > this.getMaxAge())
-        {
-            i = this.getMaxAge();
-        }
-
-        world.setBlockState(pos, state.withProperty(getAgeProperty(), i), 2);
-    }
-
     protected static float getGrowthChance(Block block, World world, BlockPos pos)
     {
         float f = 1.0F;
@@ -159,6 +99,66 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable
         }
 
         return f;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.9F, (state.getValue(getAgeProperty()) + 1) * 0.125F, 0.9F);
+    }
+
+    abstract protected PropertyInteger getAgeProperty();
+
+    abstract protected int getMaxAge();
+
+    // NOTE:  This is called on parent object construction.
+    @Override
+    abstract protected BlockStateContainer createBlockState();
+
+    abstract protected Item getSeed();
+
+    //============================================
+
+    abstract protected Item getCrop();
+
+    @Override
+    protected boolean canSustainBush(IBlockState ground)
+    {
+        return ground == Blocks.FARMLAND;
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
+    {
+        super.updateTick(world, pos, state, rand);
+
+        if (world.getLightFromNeighbors(pos.up()) >= 9)
+        {
+            int i = state.getValue(getAgeProperty());
+
+            if (i < this.getMaxAge())
+            {
+                float f = getGrowthChance(this, world, pos);
+
+                if (rand.nextInt((int) (25.0F / f) + 1) == 0)
+                {
+                    world.setBlockState(pos, state.withProperty(getAgeProperty(), i + 1), 2);
+                }
+            }
+        }
+    }
+
+    public void grow(World world, BlockPos pos, IBlockState state)
+    {
+        // TODO:  Pull out these two numbers.
+        int i = state.getValue(getAgeProperty()) + MathHelper.getRandomIntegerInRange(world.rand, 2, 5);
+
+        if (i > this.getMaxAge())
+        {
+            i = this.getMaxAge();
+        }
+
+        world.setBlockState(pos, state.withProperty(getAgeProperty(), i), 2);
     }
 
     @Override

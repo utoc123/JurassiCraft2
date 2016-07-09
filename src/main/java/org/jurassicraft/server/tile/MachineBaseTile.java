@@ -24,6 +24,12 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     protected int[] processTime = new int[getProcessCount()];
     protected int[] totalProcessTime = new int[getProcessCount()];
 
+    @SideOnly(Side.CLIENT)
+    public static boolean isProcessing(IInventory inventory, int index)
+    {
+        return inventory.getField(index) > 0;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
@@ -227,12 +233,6 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     public boolean isProcessing(int index)
     {
         return this.processTime[index] > 0;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static boolean isProcessing(IInventory inventory, int index)
-    {
-        return inventory.getField(index) > 0;
     }
 
     @Override
@@ -468,9 +468,13 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     @Override
     public SPacketUpdateTileEntity getUpdatePacket()
     {
-        NBTTagCompound compound = new NBTTagCompound();
-        compound = this.writeToNBT(compound);
-        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
+        return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return this.writeToNBT(new NBTTagCompound());
     }
 
     @Override

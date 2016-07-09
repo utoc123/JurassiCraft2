@@ -11,6 +11,8 @@ import org.jurassicraft.server.entity.ai.util.AIUtils;
  */
 public class EscapeBlockEntityAI extends EntityAIBase
 {
+    private final EntityLiving _entity;
+
     public EscapeBlockEntityAI(EntityLiving entitylivingIn)
     {
         _entity = entitylivingIn;
@@ -38,6 +40,4 @@ public class EscapeBlockEntityAI extends EntityAIBase
     {
         return (!_entity.getNavigator().noPath());
     }
-
-    private final EntityLiving _entity;
 }

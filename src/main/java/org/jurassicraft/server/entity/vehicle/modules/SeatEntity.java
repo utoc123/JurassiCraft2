@@ -22,18 +22,16 @@ import java.util.List;
 
 public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
 {
-    private int id;
-    private CarEntity parent;
-    private float offsetX, offsetY, offsetZ;
-    private Controller controller;
-
     protected int interpProgress;
     protected double interpTargetX;
     protected double interpTargetY;
     protected double interpTargetZ;
     protected double interpTargetYaw;
     protected double interpTargetPitch;
-
+    private int id;
+    private CarEntity parent;
+    private float offsetX, offsetY, offsetZ;
+    private Controller controller;
     private boolean hasParent;
     private int parentId;
 

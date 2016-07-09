@@ -19,13 +19,6 @@ public class PlantDNA
         this.quality = quality;
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        nbt.setInteger("DNAQuality", quality);
-        nbt.setInteger("Plant", plant);
-        nbt.setString("StorageId", "PlantDNA");
-    }
-
     public static PlantDNA fromStack(ItemStack stack)
     {
         return readFromNBT(stack.getTagCompound());
@@ -34,6 +27,13 @@ public class PlantDNA
     public static PlantDNA readFromNBT(NBTTagCompound nbt)
     {
         return new PlantDNA(nbt.getInteger("Plant"), nbt.getInteger("DNAQuality"));
+    }
+
+    public void writeToNBT(NBTTagCompound nbt)
+    {
+        nbt.setInteger("DNAQuality", quality);
+        nbt.setInteger("Plant", plant);
+        nbt.setString("StorageId", "PlantDNA");
     }
 
     public int getDNAQuality()

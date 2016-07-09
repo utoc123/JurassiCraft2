@@ -44,16 +44,16 @@ import java.util.UUID;
  */
 public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdditionalSpawnData
 {
-    private final HelicopterModuleSpot[] moduleSpots;
-    private final HelicopterSeatEntity[] seats;
-    private boolean syncModules;
-    private UUID heliID;
-    private static final DataParameter<Boolean> DATA_WATCHER_ENGINE_RUNNING = EntityDataManager.createKey(HelicopterBaseEntity.class, DataSerializers.BOOLEAN);
     public static final int FRONT = ModulePosition.FRONT.ordinal();
     public static final int LEFT_SIDE = ModulePosition.LEFT_SIDE.ordinal();
     public static final int RIGHT_SIDE = ModulePosition.RIGHT_SIDE.ordinal();
     public static final float MAX_POWER = 80.0F;
     public static final float REQUIRED_POWER = MAX_POWER / 2.0F;
+    private static final DataParameter<Boolean> DATA_WATCHER_ENGINE_RUNNING = EntityDataManager.createKey(HelicopterBaseEntity.class, DataSerializers.BOOLEAN);
+    private final HelicopterModuleSpot[] moduleSpots;
+    private final HelicopterSeatEntity[] seats;
+    private boolean syncModules;
+    private UUID heliID;
     private float roll;
     private boolean engineRunning;
     private float enginePower;
@@ -66,21 +66,6 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         this(worldIn);
         prepareDefaultModules();
         setID(id);
-    }
-
-    private void setID(UUID id)
-    {
-        this.heliID = id;
-        if (seats != null)
-        {
-            for (HelicopterSeatEntity seat : seats)
-            {
-                if (seat != null)
-                {
-                    seat.setParentID(id);
-                }
-            }
-        }
     }
 
     public HelicopterBaseEntity(World worldIn)
@@ -106,6 +91,21 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
 
         direction = new MutableVec3(0, 1, 0);
         syncModules = true;
+    }
+
+    private void setID(UUID id)
+    {
+        this.heliID = id;
+        if (seats != null)
+        {
+            for (HelicopterSeatEntity seat : seats)
+            {
+                if (seat != null)
+                {
+                    seat.setParentID(id);
+                }
+            }
+        }
     }
 
     public void prepareDefaultModules()

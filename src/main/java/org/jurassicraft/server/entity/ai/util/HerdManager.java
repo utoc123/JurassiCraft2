@@ -19,17 +19,47 @@ public class HerdManager
 
     // We do this on a fairly frequent basis to identify all the clusters
     public static final long REBALANCE_DELAY_TICKS = 40;
-
-    private static final Logger LOGGER = LogManager.getLogger();
-
     public static final HerdManager INSTANCE = new HerdManager();
-
+    private static final Logger LOGGER = LogManager.getLogger();
     // For now we have one Herd per class of critter.  This needs to change when we have
     // different herds because of different herd leaders.
     private final Map<Class, Herd> herds = new WeakHashMap<>();
     private long nextRebalance = 0;
 
     //===============================================
+
+    // Used for the
+    private static boolean inProximity(DinosaurEntity lhs, DinosaurEntity rhs)
+    {
+        return lhs.getPosition().distanceSq(rhs.getPosition()) < speciesDistanceSq(lhs);
+    }
+
+    /**
+     * How far apart two dinos can be tobe considered "in proximity"
+     *
+     * @param dinosaur The entity from which to extract the proximity number.
+     * @return The square of the allowable proximity.
+     */
+    private static int speciesDistanceSq(DinosaurEntity dinosaur)
+    {
+        // Microceratus - 0.4 - So, micro's need to be 1.4 blocks away to make a cluster!
+        // Apatosaurus - 6.5 -
+        double radius = dinosaur.width * 3;
+        if (radius < 4)
+        {
+            radius = 4;
+        }
+
+        int distance = (int) Math.round(radius * radius);
+
+        // Minimum to deal with things like the Microceratus
+        if (distance < 6)
+        {
+            distance = 6;
+        }
+
+        return distance;
+    }
 
     /**
      * Adds a dinosaur to the herd manager.
@@ -138,6 +168,8 @@ public class HerdManager
         return null;
     }
 
+    //=============================================================================================
+
     /**
      * Updates all the herds in the list.
      */
@@ -151,6 +183,8 @@ public class HerdManager
 
         //LOGGER.info(this);
     }
+
+    //=============================================================================================
 
     @Override
     public String toString()
@@ -186,14 +220,63 @@ public class HerdManager
         return builder.toString();
     }
 
+    //===============================================
+
+    /**
+     * Goes through all the dinosaurs in the list, putting them into clusters.
+     * They may be in clusters of size 1.
+     *
+     * @param dinosaurs The dinosaurs to cluster.
+     * @return A list of clusters.
+     */
+    private LinkedList<Cluster> cluster(LinkedList<DinosaurEntity> dinosaurs)
+    {
+        DinosaurEntity dino;
+        LinkedList<Cluster> clusters = new LinkedList<>();
+
+        while ((dino = dinosaurs.poll()) != null)
+        {
+            Cluster cluster = new Cluster();
+            clusters.add(cluster);
+            cluster.addWithAdjacents(dino, dinosaurs);
+        }
+
+        return clusters;
+    }
+
+    /**
+     * Returns a list of all entities that are in close proximity
+     *
+     * @param dinosaur  The entity we are examining.
+     * @param dinosaurs The remaining entities that might be close.
+     * @return A list of entities close to the one we are examining.
+     */
+    private LinkedList<DinosaurEntity> extractProximates(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
+    {
+        LinkedList<DinosaurEntity> proximates = new LinkedList<>();
+        Iterator<DinosaurEntity> iter = dinosaurs.iterator();
+        while (iter.hasNext())
+        {
+            DinosaurEntity tmp = iter.next();
+            if (inProximity(dinosaur, tmp))
+            {
+                proximates.add(tmp);
+                iter.remove();
+            }
+        }
+
+        //LOGGER.info("extractProximates inDinos=" + dinosaurs.size() + ", extracted=" + proximates.size() );
+        return proximates;
+    }
+
     //=============================================================================================
 
     // Takes care of all the members of a species.
     public class Herd
     {
+        private final LinkedList<DinosaurEntity> allDinosaurs = new LinkedList<>();
         private LinkedList<Cluster> clusters = new LinkedList<>();
         private LinkedList<DinosaurEntity> noise = new LinkedList<>();
-        private final LinkedList<DinosaurEntity> allDinosaurs = new LinkedList<>();
 
         /**
          * Returns the cluster this dinosaur is in, or null if not in a cluster.
@@ -366,13 +449,12 @@ public class HerdManager
         }
     }
 
-    //=============================================================================================
-
     // Manages a set of these
     public class Cluster
     {
         // We use linked list because we traverse and don't need random access
         private LinkedList<DinosaurEntity> dinosaurs = new LinkedList<>();
+        private BlockPos center = null;
 
         /**
          * Gets the "center" (average) of the cluster,
@@ -404,6 +486,8 @@ public class HerdManager
             return center;
         }
 
+        //=====================================================
+
         /**
          * @return The desired outer radius from the cluster.
          */
@@ -415,8 +499,6 @@ public class HerdManager
             double width = dinosaur.width > 1.0 ? dinosaur.width : 1.0;
             return (int) Math.round(width * factor);
         }
-
-        //=====================================================
 
         /**
          * Is the dinosaur withinProximity to other dinosaurs?
@@ -502,92 +584,6 @@ public class HerdManager
                 addWithAdjacents(close, dinosaurs);
             }
         }
-
-        private BlockPos center = null;
-    }
-
-    //===============================================
-
-    /**
-     * Goes through all the dinosaurs in the list, putting them into clusters.
-     * They may be in clusters of size 1.
-     *
-     * @param dinosaurs The dinosaurs to cluster.
-     * @return A list of clusters.
-     */
-    private LinkedList<Cluster> cluster(LinkedList<DinosaurEntity> dinosaurs)
-    {
-        DinosaurEntity dino;
-        LinkedList<Cluster> clusters = new LinkedList<>();
-
-        while ((dino = dinosaurs.poll()) != null)
-        {
-            Cluster cluster = new Cluster();
-            clusters.add(cluster);
-            cluster.addWithAdjacents(dino, dinosaurs);
-        }
-
-        return clusters;
-    }
-
-    /**
-     * Returns a list of all entities that are in close proximity
-     *
-     * @param dinosaur  The entity we are examining.
-     * @param dinosaurs The remaining entities that might be close.
-     * @return A list of entities close to the one we are examining.
-     */
-    private LinkedList<DinosaurEntity> extractProximates(DinosaurEntity dinosaur, LinkedList<DinosaurEntity> dinosaurs)
-    {
-        LinkedList<DinosaurEntity> proximates = new LinkedList<>();
-        Iterator<DinosaurEntity> iter = dinosaurs.iterator();
-        while (iter.hasNext())
-        {
-            DinosaurEntity tmp = iter.next();
-            if (inProximity(dinosaur, tmp))
-            {
-                proximates.add(tmp);
-                iter.remove();
-            }
-        }
-
-        //LOGGER.info("extractProximates inDinos=" + dinosaurs.size() + ", extracted=" + proximates.size() );
-        return proximates;
-    }
-
-    //=============================================================================================
-
-    // Used for the
-    private static boolean inProximity(DinosaurEntity lhs, DinosaurEntity rhs)
-    {
-        return lhs.getPosition().distanceSq(rhs.getPosition()) < speciesDistanceSq(lhs);
-    }
-
-    /**
-     * How far apart two dinos can be tobe considered "in proximity"
-     *
-     * @param dinosaur The entity from which to extract the proximity number.
-     * @return The square of the allowable proximity.
-     */
-    private static int speciesDistanceSq(DinosaurEntity dinosaur)
-    {
-        // Microceratus - 0.4 - So, micro's need to be 1.4 blocks away to make a cluster!
-        // Apatosaurus - 6.5 -
-        double radius = dinosaur.width * 3;
-        if (radius < 4)
-        {
-            radius = 4;
-        }
-
-        int distance = (int) Math.round(radius * radius);
-
-        // Minimum to deal with things like the Microceratus
-        if (distance < 6)
-        {
-            distance = 6;
-        }
-
-        return distance;
     }
 
 }

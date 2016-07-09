@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class AIUtils
 {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     /**
      * Finds the point on the radius edge where we'll intersect if we travel in a
      * straight line.
@@ -40,6 +42,8 @@ public class AIUtils
                 center.getZ() + Math.round(deltaZ * scale));
     }
 
+    //=============================================================================================
+
     public static BlockPos computePosToward(BlockPos current, BlockPos target, int move)
     {
         int deltaX = target.getX() - current.getX();
@@ -57,8 +61,6 @@ public class AIUtils
                 current.getY(),
                 current.getZ() + Math.round(deltaZ * scale));
     }
-
-    //=============================================================================================
 
     public static BlockPos findSurface(EntityLiving entity)
     {
@@ -81,6 +83,8 @@ public class AIUtils
         // We are above water, so go down one
         return pos.down();
     }
+
+    //=============================================================================================
 
     public static int getWaterDepth(EntityLiving entity)
     {
@@ -137,8 +141,6 @@ public class AIUtils
         return null;
     }
 
-    //=============================================================================================
-
     static void plotCircle(int x0, int y0, int radius)
     {
         // Bresenham circle from: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
@@ -174,7 +176,5 @@ public class AIUtils
     {
         LOGGER.info("x=" + x + ", y=" + y);
     }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 }
 

@@ -5,11 +5,10 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class TyrannosaurusEntity extends DinosaurEntity
@@ -25,12 +24,27 @@ public class TyrannosaurusEntity extends DinosaurEntity
     @Override
     public SoundEvent getSoundForAnimation(Animation animation)
     {
-        if (animation == DinosaurAnimation.CALLING.get())
+        switch (DinosaurAnimation.getAnimation(animation))
         {
-            return getSound("roar");
+            case SPEAK:
+                return SoundHandler.TYRANNOSAURUS_LIVING;
+            case CALLING:
+                return SoundHandler.TYRANNOSAURUS_ROAR;
+            case ROARING:
+                return SoundHandler.TYRANNOSAURUS_ROAR;
+            case DYING:
+                return SoundHandler.TYRANNOSAURUS_DEATH;
+            case INJURED:
+                return SoundHandler.TYRANNOSAURUS_HURT;
         }
 
-        return super.getSoundForAnimation(animation);
+        return null;
+    }
+
+    @Override
+    public SoundEvent getBreathingSound()
+    {
+        return SoundHandler.TYRANNOSAURUS_BREATHING;
     }
 
     @Override
@@ -40,7 +54,7 @@ public class TyrannosaurusEntity extends DinosaurEntity
 
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
-            this.playSound(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "stomp")), (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
+            this.playSound(SoundHandler.STOMP, (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
             this.stepCount = 65;
         }
 

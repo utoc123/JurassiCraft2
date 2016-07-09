@@ -61,9 +61,13 @@ public class ActionFigureTile extends TileEntity
     @Override
     public SPacketUpdateTileEntity getUpdatePacket()
     {
-        NBTTagCompound compound = new NBTTagCompound();
-        compound = this.writeToNBT(compound);
-        return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), compound);
+        return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return this.writeToNBT(new NBTTagCompound());
     }
 
     @Override

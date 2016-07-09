@@ -1,12 +1,9 @@
 package org.jurassicraft.client.sound;
 
 import net.minecraft.client.audio.MovingSound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.vehicle.CarEntity;
 
 @SideOnly(Side.CLIENT)
@@ -16,7 +13,7 @@ public class CarSound extends MovingSound
 
     public CarSound(CarEntity entity)
     {
-        super(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "car_move")), SoundCategory.BLOCKS);
+        super(SoundHandler.CAR_MOVE, SoundCategory.BLOCKS);
         this.entity = entity;
         this.attenuationType = AttenuationType.NONE;
     }

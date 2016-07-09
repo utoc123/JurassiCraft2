@@ -11,10 +11,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -26,13 +25,10 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
 {
     private static final int[] CARNIVOROUS_SLOTS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
     private static final int[] HERBIVOROUS_SLOTS = new int[] { 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-
-    private ItemStack[] slots = new ItemStack[18];
-
-    protected String customName;
-
     public int prevOpenAnimation;
     public int openAnimation;
+    protected String customName;
+    private ItemStack[] slots = new ItemStack[18];
     private int stayOpen;
     private boolean open;
     private DinosaurEntity feeding;
@@ -187,7 +183,7 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
         if (id == 0)
         {
             open = type == 1;
-            worldObj.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new SoundEvent(new ResourceLocation("jurassicraft:feeder")), SoundCategory.BLOCKS, 1.0F, open ? 1.0F : 0.9F, false);
+            worldObj.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, open ? 1.0F : 0.9F, false);
             return true;
         }
         else
@@ -412,13 +408,13 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
         return -1;
     }
 
-    public void setFeeding(DinosaurEntity feeding)
-    {
-        this.feeding = feeding;
-    }
-
     public DinosaurEntity getFeeding()
     {
         return feeding;
+    }
+
+    public void setFeeding(DinosaurEntity feeding)
+    {
+        this.feeding = feeding;
     }
 }

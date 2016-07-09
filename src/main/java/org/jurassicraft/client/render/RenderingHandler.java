@@ -130,8 +130,8 @@ public enum RenderingHandler
 {
     INSTANCE;
 
-    private Map<Dinosaur, RenderDinosaurDefinition> renderDefs = Maps.newHashMap();
     private final Minecraft mc = Minecraft.getMinecraft();
+    private Map<Dinosaur, RenderDinosaurDefinition> renderDefs = Maps.newHashMap();
 
     public void preInit()
     {
@@ -325,7 +325,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.CULTIVATOR_TOP, "cultivate_bottom", "inventory");
 
         this.registerBlockRenderer(modelMesher, BlockHandler.AMBER_ORE, "amber_ore", "inventory");
-        this.registerBlockRenderer(modelMesher, BlockHandler.ICE_SHARD, "ice_shard", "inventory");
+//        this.registerBlockRenderer(modelMesher, BlockHandler.ICE_SHARD, "ice_shard", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.CLEANING_STATION, "cleaning_station", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.FOSSIL_GRINDER, "fossil_grinder", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.DNA_SEQUENCER, "dna_sequencer", "inventory");

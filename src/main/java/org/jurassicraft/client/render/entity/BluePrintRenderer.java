@@ -34,9 +34,9 @@ public class BluePrintRenderer implements IRenderFactory<BluePrintEntity>
 
     public static class Renderer extends Render<BluePrintEntity>
     {
-        private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
         private static int DISPLAY_LIST = -1;
         private static boolean HAS_COMPILED = false;
+        private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
 
         public Renderer(RenderManager manager)
         {

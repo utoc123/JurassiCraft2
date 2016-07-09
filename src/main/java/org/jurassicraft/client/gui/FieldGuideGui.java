@@ -37,15 +37,7 @@ public class FieldGuideGui extends GuiScreen
     private static final int TOTAL_PAGES = 2;
 
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/background.png");
-
-    private DinosaurEntity entity;
-
     private static final Map<DinosaurStatus, ResourceLocation> STATUS_TEXTURES = new HashMap<>();
-
-    private PageButton nextPage;
-    private PageButton previousPage;
-
-    private int page;
 
     static
     {
@@ -54,6 +46,11 @@ public class FieldGuideGui extends GuiScreen
             STATUS_TEXTURES.put(status, new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/status/" + status.name().toLowerCase() + ".png"));
         }
     }
+
+    private DinosaurEntity entity;
+    private PageButton nextPage;
+    private PageButton previousPage;
+    private int page;
 
     public FieldGuideGui(DinosaurEntity entity)
     {

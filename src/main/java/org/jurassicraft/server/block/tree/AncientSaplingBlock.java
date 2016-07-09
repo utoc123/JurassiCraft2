@@ -22,11 +22,9 @@ import java.util.Random;
 
 public class AncientSaplingBlock extends BlockBush implements IGrowable
 {
-    private TreeType treeType;
-
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
-
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.6F, 0.8F, 0.6F);
+    private TreeType treeType;
 
     public AncientSaplingBlock(TreeType type)
     {

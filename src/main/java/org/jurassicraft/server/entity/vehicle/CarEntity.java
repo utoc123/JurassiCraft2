@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.proxy.ClientProxy;
 import org.jurassicraft.client.sound.CarSound;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.message.UpdateCarControlMessage;
@@ -33,23 +34,20 @@ import java.util.Map;
 
 public abstract class CarEntity extends Entity
 {
-    private Map<Integer, SeatEntity> seats = new HashMap<>();
-
     public static final DataParameter<Byte> WATCHER_STATE = EntityDataManager.createKey(CarEntity.class, DataSerializers.BYTE);
-
+    public float wheelRotation;
+    public float wheelRotateAmount;
+    public float prevWheelRotateAmount;
     protected int interpProgress;
     protected double interpTargetX;
     protected double interpTargetY;
     protected double interpTargetZ;
     protected double interpTargetYaw;
     protected double interpTargetPitch;
-
-    public float wheelRotation;
-    public float wheelRotateAmount;
-    public float prevWheelRotateAmount;
+    private Map<Integer, SeatEntity> seats = new HashMap<>();
 
     @SideOnly(Side.CLIENT)
-    private CarSound sound;
+    public CarSound sound;
 
     public CarEntity(World world)
     {
@@ -57,6 +55,11 @@ public abstract class CarEntity extends Entity
         this.setSize(3.0F, 2.5F);
 
         this.stepHeight = 1.0F;
+
+        if (world.isRemote)
+        {
+            updateSound();
+        }
     }
 
     @Override
@@ -265,11 +268,6 @@ public abstract class CarEntity extends Entity
     protected void entityInit()
     {
         dataManager.register(WATCHER_STATE, (byte) 0);
-
-        if (worldObj.isRemote)
-        {
-            updateSound(true);
-        }
     }
 
     @Override
@@ -322,7 +320,7 @@ public abstract class CarEntity extends Entity
         double reach = 5.0;
 
         Vec3d look = player.getLook(0.0F);
-        Vec3d eyePosition = player.getPositionEyes(0.0F);
+        Vec3d eyePosition = new Vec3d(player.posX, player.posY + player.eyeHeight, player.posZ);
         Vec3d vec3d2 = eyePosition.addVector(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach);
 
         List<Entity> entities = worldObj.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach).expand(1.0F, 1.0F, 1.0F), Predicates.and(EntitySelectors.NOT_SPECTATING, entity -> entity != null && entity.canBeCollidedWith() && entity instanceof SeatEntity));
@@ -392,20 +390,20 @@ public abstract class CarEntity extends Entity
         }
         else
         {
-            this.updateSound(false);
+            this.updateSound();
         }
     }
 
-    private void updateSound(boolean start)
+    private void updateSound()
     {
-        if (start)
+        if (!isDead)
         {
             sound = new CarSound(this);
-            Minecraft.getMinecraft().getSoundHandler().playSound(sound);
+            ClientProxy.playSound(this);
         }
         else
         {
-            Minecraft.getMinecraft().getSoundHandler().stopSound(sound);
+            ClientProxy.stopSound(this);
         }
     }
 

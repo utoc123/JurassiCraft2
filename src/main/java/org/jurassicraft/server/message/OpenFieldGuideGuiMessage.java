@@ -7,8 +7,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.handler.GuiHandler;
 
 public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiMessage>
 {
@@ -37,7 +37,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
             DinosaurEntity dinosaur = (DinosaurEntity) entity;
             dinosaur.getMetabolism().setEnergy(hunger);
             dinosaur.getMetabolism().setWater(thirst);
-            GuiHandler.openFieldGuide(dinosaur);
+            JurassiCraft.PROXY.openFieldGuide(dinosaur);
         }
     }
 

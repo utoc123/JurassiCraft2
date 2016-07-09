@@ -18,6 +18,9 @@ import java.util.List;
 public class JCConfigurations
 {
     private static boolean hasInitialized = false;
+    private static Property spawnJurassiCraftMobsNaturally;
+    private static Property spawnVanillaMobsNaturally;
+    private static Property spawnModMobsNaturally;
 
     private static void checkInitialized()
     {
@@ -27,23 +30,17 @@ public class JCConfigurations
         }
     }
 
-    private static Property spawnJurassiCraftMobsNaturally;
-
     public static boolean shouldSpawnJurassiCraftMobs()
     {
         checkInitialized();
         return spawnJurassiCraftMobsNaturally.getBoolean(false);
     }
 
-    private static Property spawnVanillaMobsNaturally;
-
     public static boolean shouldSpawnVanillaMobs()
     {
         checkInitialized();
         return spawnVanillaMobsNaturally.getBoolean(true);
     }
-
-    private static Property spawnModMobsNaturally;
 
     public static boolean shouldSpawnModMobs()
     {
@@ -62,11 +59,11 @@ public class JCConfigurations
 
     public void initConfig(FMLPreInitializationEvent event)
     {
-        JurassiCraft.configFile = event.getSuggestedConfigurationFile();
-        JurassiCraft.INSTANCE.getLogger().debug(JurassiCraft.MODNAME + " config path = " + JurassiCraft.configFile.getAbsolutePath());
-        JurassiCraft.INSTANCE.getLogger().debug("Config file exists = " + JurassiCraft.configFile.canRead());
+        JurassiCraft.CONFIG_FILE = event.getSuggestedConfigurationFile();
+        JurassiCraft.INSTANCE.getLogger().debug(JurassiCraft.MODNAME + " config path = " + JurassiCraft.CONFIG_FILE.getAbsolutePath());
+        JurassiCraft.INSTANCE.getLogger().debug("Config file exists = " + JurassiCraft.CONFIG_FILE.canRead());
 
-        JurassiCraft.CONFIG = new Configuration(JurassiCraft.configFile);
+        JurassiCraft.CONFIG = new Configuration(JurassiCraft.CONFIG_FILE);
         JurassiCraft.CONFIG.load();
 
         syncConfig();

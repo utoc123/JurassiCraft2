@@ -30,14 +30,12 @@ import java.io.File;
 @Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[" + JurassiCraft.LLIBRARY_VERSION + ",)")
 public class JurassiCraft
 {
-    @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")
-    public static ServerProxy PROXY;
-
     public static final String MODID = "jurassicraft";
     public static final String MODNAME = "JurassiCraft";
     public static final String VERSION = "2.0.0-dev";
     public static final String LLIBRARY_VERSION = "1.4.0";
-
+    @SidedProxy(serverSide = "org.jurassicraft.server.proxy.ServerProxy", clientSide = "org.jurassicraft.client.proxy.ClientProxy")
+    public static ServerProxy PROXY;
     @Instance(JurassiCraft.MODID)
     public static JurassiCraft INSTANCE;
 
@@ -45,13 +43,10 @@ public class JurassiCraft
 
     @NetworkWrapper({ PlacePaddockSignMessage.class, ChangeTemperatureMessage.class, HelicopterEngineMessage.class, HelicopterDirectionMessage.class, HelicopterModulesMessage.class, SwitchHybridizerCombinatorMode.class, SetOrderMessage.class, OpenFieldGuideGuiMessage.class, UpdateCarControlMessage.class })
     public static SimpleNetworkWrapper NETWORK_WRAPPER;
-
-    private Logger LOGGER;
-
-    public static JCConfigurations configurations = new JCConfigurations();
-
-    public static File configFile;
+    public static JCConfigurations CONFIGURATIONS = new JCConfigurations();
+    public static File CONFIG_FILE;
     public static Configuration CONFIG;
+    private Logger LOGGER;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)

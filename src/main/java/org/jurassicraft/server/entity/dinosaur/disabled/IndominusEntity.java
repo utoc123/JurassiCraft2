@@ -1,30 +1,28 @@
 package org.jurassicraft.server.entity.dinosaur.disabled;
 
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class IndominusEntity extends DinosaurEntity
 {
+    private static final DataParameter<Boolean> DATA_WATCHER_IS_CAMOUFLAGING = EntityDataManager.createKey(IndominusEntity.class, DataSerializers.BOOLEAN);
     private float[] newSkinColor = new float[3];
     private float[] skinColor = new float[3];
-
     private int stepCount = 0;
-
     private boolean isCamouflaging;
-
-    private static final DataParameter<Boolean> DATA_WATCHER_IS_CAMOUFLAGING = EntityDataManager.createKey(IndominusEntity.class, DataSerializers.BOOLEAN);
 
     public IndominusEntity(World world)
     {
@@ -55,7 +53,7 @@ public class IndominusEntity extends DinosaurEntity
 
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
-            this.playSound(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "stomp")), (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
+            this.playSound(SoundHandler.STOMP, (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
             stepCount = 65;
         }
 
@@ -136,5 +134,31 @@ public class IndominusEntity extends DinosaurEntity
     public float[] getSkinColor()
     {
         return new float[] { this.skinColor[0] / 255.0F, this.skinColor[1] / 255.0F, this.skinColor[2] / 255.0F };
+    }
+
+    @Override
+    public SoundEvent getSoundForAnimation(Animation animation)
+    {
+        switch (DinosaurAnimation.getAnimation(animation))
+        {
+            case SPEAK:
+                return SoundHandler.INDOMINUS_LIVING;
+            case DYING:
+                return SoundHandler.INDOMINUS_DEATH;
+            case INJURED:
+                return SoundHandler.INDOMINUS_HURT;
+            case ROARING:
+                return SoundHandler.INDOMINUS_ROAR;
+            case CALLING:
+                return SoundHandler.INDOMINUS_ROAR;
+        }
+
+        return null;
+    }
+
+    @Override
+    public SoundEvent getBreathingSound()
+    {
+        return SoundHandler.INDOMINUS_BREATHING;
     }
 }

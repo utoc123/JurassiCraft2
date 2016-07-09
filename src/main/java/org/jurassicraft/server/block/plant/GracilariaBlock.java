@@ -23,13 +23,15 @@ import java.util.Random;
  */
 public class GracilariaBlock extends BlockBush
 {
+    // This is needed because we user material of water so it doesn't have the block boundaries.
+    public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
     /**
      * DESIGN:
-     *
+     * <p>
      * This stuff spreads like mushrooms.  It grows on a variety of special surfaces.
      * It will spread to other surfaces within the radius until it reaches the specified
      * density.
-     *
+     * <p>
      * It will spread quickly if within 5-11 range, slowly otherwise.
      */
 
@@ -37,11 +39,7 @@ public class GracilariaBlock extends BlockBush
     private static final int GOOD_LIGHT_SPREAD_CHANCE = 25;
     private static final int BAD_LIGHT_SPREAD_CHANCE = 1;
     private static final int SPREAD_RADIUS = 4;
-
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.8F, 0.4F, 0.8F);
-
-    // This is needed because we user material of water so it doesn't have the block boundaries.
-    public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
 
     public GracilariaBlock()
     {

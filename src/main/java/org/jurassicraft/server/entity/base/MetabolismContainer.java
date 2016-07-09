@@ -56,9 +56,19 @@ public class MetabolismContainer
         return water;
     }
 
+    public void setWater(int water)
+    {
+        this.water = Math.min(water, MAX_WATER);
+    }
+
     public int getEnergy()
     {
         return energy;
+    }
+
+    public void setEnergy(int energy)
+    {
+        this.energy = Math.min(energy, MAX_ENERGY);
     }
 
     public int getDigestingFood()
@@ -86,16 +96,6 @@ public class MetabolismContainer
         {
             dinosaur.attackEntityFrom(DamageSource.starve, 5.0F);
         }
-    }
-
-    public void setWater(int water)
-    {
-        this.water = Math.min(water, MAX_WATER);
-    }
-
-    public void setEnergy(int energy)
-    {
-        this.energy = Math.min(energy, MAX_ENERGY);
     }
 
     public void setDigestingFoodAmount(int digesting)

@@ -29,6 +29,23 @@ public abstract class HelicopterModule
         supported = createSupportedModuleList();
     }
 
+    public static HelicopterModule createFromID(String id)
+    {
+        Class<? extends HelicopterModule> clazz = registry.get(id);
+        if (clazz != null)
+        {
+            try
+            {
+                return clazz.newInstance();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     protected abstract Collection<Class<? extends HelicopterModule>> createSupportedModuleList();
 
     public Collection<Class<? extends HelicopterModule>> getSupportedModules()
@@ -58,23 +75,6 @@ public abstract class HelicopterModule
     public abstract void writeToNBT(NBTTagCompound compound);
 
     public abstract void readFromNBT(NBTTagCompound compound);
-
-    public static HelicopterModule createFromID(String id)
-    {
-        Class<? extends HelicopterModule> clazz = registry.get(id);
-        if (clazz != null)
-        {
-            try
-            {
-                return clazz.newInstance();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
 
     @Override
     public boolean equals(Object obj)

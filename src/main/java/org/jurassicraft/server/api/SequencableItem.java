@@ -9,10 +9,6 @@ import java.util.Random;
 
 public interface SequencableItem
 {
-    boolean isSequencable(ItemStack stack);
-
-    ItemStack getSequenceOutput(ItemStack stack, Random random);
-
     static SequencableItem getSequencableItem(ItemStack stack)
     {
         if (stack != null)
@@ -46,4 +42,8 @@ public interface SequencableItem
     {
         return (rand.nextInt(20) + 1) * 5;
     }
+
+    boolean isSequencable(ItemStack stack);
+
+    ItemStack getSequenceOutput(ItemStack stack, Random random);
 }

@@ -20,6 +20,9 @@ import java.util.Map;
  */
 public class DinosaurRenderDefDTO
 {
+    public int version;
+    public Map<GrowthStage, GrowthRenderDef> perStage;
+
     public static class DinosaurDeserializer implements JsonDeserializer<DinosaurRenderDefDTO>
     {
         @Override
@@ -42,7 +45,4 @@ public class DinosaurRenderDefDTO
             return built;
         }
     }
-
-    public int version;
-    public Map<GrowthStage, GrowthRenderDef> perStage;
 }

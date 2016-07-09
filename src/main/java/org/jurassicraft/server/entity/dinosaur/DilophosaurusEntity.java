@@ -1,5 +1,6 @@
 package org.jurassicraft.server.entity.dinosaur;
 
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
@@ -13,8 +14,11 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.ai.DilophosaurusMeleeEntityAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
@@ -96,5 +100,23 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     public boolean hasTarget()
     {
         return worldObj.isRemote ? dataManager.get(WATCHER_HAS_TARGET) : getAttackTarget() != null || targetCooldown > 0;
+    }
+
+    @Override
+    public SoundEvent getSoundForAnimation(Animation animation)
+    {
+        switch (DinosaurAnimation.getAnimation(animation))
+        {
+            case SPEAK:
+                return SoundHandler.DILOPHOSAURUS_LIVING;
+            case CALLING:
+                return SoundHandler.DILOPHOSAURUS_LIVING;
+            case DYING:
+                return SoundHandler.DILOPHOSAURUS_DEATH;
+            case INJURED:
+                return SoundHandler.DILOPHOSAURUS_HURT;
+        }
+
+        return null;
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.util.math.MathHelper;
  */
 public class MutableVec3
 {
+    private static final String __OBFID = "CL_00000612";
     /**
      * X coordinate of Vec3D
      */
@@ -19,7 +20,6 @@ public class MutableVec3
      * Z coordinate of Vec3D
      */
     public double zCoord;
-    private static final String __OBFID = "CL_00000612";
 
     public MutableVec3(double x, double y, double z)
     {

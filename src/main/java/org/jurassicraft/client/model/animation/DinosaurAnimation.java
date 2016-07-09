@@ -51,16 +51,6 @@ public enum DinosaurAnimation
         this(false, true);
     }
 
-    public Animation get()
-    {
-        if (animation == null)
-        {
-            animation = Animation.create(-1);
-        }
-
-        return animation;
-    }
-
     public static Animation[] getAnimations()
     {
         Animation[] animations = new Animation[values().length];
@@ -84,6 +74,16 @@ public enum DinosaurAnimation
         }
 
         return DinosaurAnimation.IDLE;
+    }
+
+    public Animation get()
+    {
+        if (animation == null)
+        {
+            animation = Animation.create(-1);
+        }
+
+        return animation;
     }
 
     public boolean shouldHold()

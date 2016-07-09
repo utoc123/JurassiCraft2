@@ -10,24 +10,19 @@ import java.util.Map;
 
 public class AnimationPass
 {
+    protected final Map<Animation, int[][]> poseSequences;
+    protected final AdvancedModelRenderer[][] poses;
     protected float[][] rotationIncrements;
     protected float[][] positionIncrements;
-
     protected float[][] prevRotationIncrements;
     protected float[][] prevPositionIncrements;
-
     protected int posesInAnimation;
     protected int currentPoseIndex;
     protected int tweenLength;
     protected float tick;
     protected float prevTicks;
-
     protected AdvancedModelRenderer[] parts;
     protected AdvancedModelRenderer[] nextParts;
-
-    protected final Map<Animation, int[][]> poseSequences;
-    protected final AdvancedModelRenderer[][] poses;
-
     protected Animation animation;
 
     protected boolean useInertialTweens;

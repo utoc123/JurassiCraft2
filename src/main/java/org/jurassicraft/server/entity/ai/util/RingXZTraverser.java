@@ -10,6 +10,9 @@ import java.util.Iterator;
  */
 public class RingXZTraverser implements Iterable<BlockPos>
 {
+    private final int _radius;
+    private BlockPos _center;
+
     public RingXZTraverser(BlockPos center, int radius)
     {
         _center = center;
@@ -24,6 +27,12 @@ public class RingXZTraverser implements Iterable<BlockPos>
 
     private class RingIter implements Iterator<BlockPos>
     {
+        private EnumFacing _facing = EnumFacing.EAST;
+        private int _x, _minX, _maxX;
+        private int _y;
+        private int _z, _minZ, _maxZ;
+        private boolean _done = false;
+
         public RingIter(int radius)
         {
             _x = _minX = _center.getX() - radius;
@@ -103,14 +112,5 @@ public class RingXZTraverser implements Iterable<BlockPos>
                     break;
             }
         }
-
-        private EnumFacing _facing = EnumFacing.EAST;
-        private int _x, _minX, _maxX;
-        private int _y;
-        private int _z, _minZ, _maxZ;
-        private boolean _done = false;
     }
-
-    private BlockPos _center;
-    private final int _radius;
 }

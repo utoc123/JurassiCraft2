@@ -19,6 +19,11 @@ public class DinosaurModel extends TabulaModel
         this(model, null);
     }
 
+    public DinosaurModel(TabulaModelContainer model, ITabulaModelAnimator animator)
+    {
+        super(model, animator);
+    }
+
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
@@ -34,11 +39,6 @@ public class DinosaurModel extends TabulaModel
         }
 
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
-    }
-
-    public DinosaurModel(TabulaModelContainer model, ITabulaModelAnimator animator)
-    {
-        super(model, animator);
     }
 
     public String[] getCubeIdentifierArray()

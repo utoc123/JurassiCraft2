@@ -64,8 +64,6 @@ public enum DinosaurStatus
                 }
             };
 
-    public abstract boolean apply(DinosaurEntity entity);
-
     public static List<DinosaurStatus> getActiveStatuses(DinosaurEntity entity)
     {
         List<DinosaurStatus> statuses = new ArrayList<>();
@@ -80,4 +78,6 @@ public enum DinosaurStatus
 
         return statuses;
     }
+
+    public abstract boolean apply(DinosaurEntity entity);
 }

@@ -1,9 +1,7 @@
 package org.jurassicraft.server.entity.dinosaur.disabled;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class ApatosaurusEntity extends DinosaurEntity
@@ -22,7 +20,7 @@ public class ApatosaurusEntity extends DinosaurEntity
 
         if (this.moveForward > 0 && this.stepCount <= 0)
         {
-            this.playSound(new SoundEvent(new ResourceLocation(JurassiCraft.MODID, "stomp")), (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
+            this.playSound(SoundHandler.STOMP, (float) transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
             stepCount = 65;
         }
 

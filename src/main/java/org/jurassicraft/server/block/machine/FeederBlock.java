@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.handler.GuiHandler;
+import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.FeederTile;
 
@@ -91,7 +91,7 @@ public class FeederBlock extends BlockContainer
 
                 if (feeder.isUseableByPlayer(player))
                 {
-                    player.openGui(JurassiCraft.INSTANCE, GuiHandler.FEEDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FEEDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
             }

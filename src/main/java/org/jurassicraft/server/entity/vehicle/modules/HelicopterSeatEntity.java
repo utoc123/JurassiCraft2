@@ -21,10 +21,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpawnData
 {
+    public HelicopterBaseEntity parent;
     private UUID parentID;
     private float dist;
     private int index;
-    public HelicopterBaseEntity parent;
 
     public HelicopterSeatEntity(World worldIn)
     {
@@ -32,11 +32,6 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         setEntityBoundingBox(createBoundingBox());
         noClip = true;
         parentID = UUID.randomUUID();
-    }
-
-    private AxisAlignedBB createBoundingBox()
-    {
-        return new AxisAlignedBB(posX, posY, posZ, posX, posY, posZ);
     }
 
     public HelicopterSeatEntity(float dist, int index, HelicopterBaseEntity parent)
@@ -48,6 +43,33 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         this.parent = checkNotNull(parent, "parent");
         parentID = parent.getHeliID();
         noClip = true;
+    }
+
+    public static HelicopterBaseEntity getParentFromID(World worldObj, final UUID id)
+    {
+        List<HelicopterBaseEntity> list = worldObj.getEntities(HelicopterBaseEntity.class, new Predicate<Entity>()
+        {
+            @Override
+            public boolean apply(Entity input)
+            {
+                if (input instanceof HelicopterBaseEntity)
+                {
+                    HelicopterBaseEntity helicopterBase = (HelicopterBaseEntity) input;
+                    return helicopterBase.getHeliID().equals(id);
+                }
+                return false;
+            }
+        });
+        if (list.isEmpty())
+        {
+            return null;
+        }
+        return list.get(0);
+    }
+
+    private AxisAlignedBB createBoundingBox()
+    {
+        return new AxisAlignedBB(posX, posY, posZ, posX, posY, posZ);
     }
 
     @Override
@@ -117,28 +139,6 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         dist = tagCompound.getFloat("dist");
         index = tagCompound.getInteger("index");
         parentID = UUID.fromString(tagCompound.getString("heliID"));
-    }
-
-    public static HelicopterBaseEntity getParentFromID(World worldObj, final UUID id)
-    {
-        List<HelicopterBaseEntity> list = worldObj.getEntities(HelicopterBaseEntity.class, new Predicate<Entity>()
-        {
-            @Override
-            public boolean apply(Entity input)
-            {
-                if (input instanceof HelicopterBaseEntity)
-                {
-                    HelicopterBaseEntity helicopterBase = (HelicopterBaseEntity) input;
-                    return helicopterBase.getHeliID().equals(id);
-                }
-                return false;
-            }
-        });
-        if (list.isEmpty())
-        {
-            return null;
-        }
-        return list.get(0);
     }
 
     @Override

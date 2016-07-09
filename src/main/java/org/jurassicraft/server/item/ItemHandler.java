@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -68,9 +69,9 @@ public class ItemHandler
 
     public static final BasicItem TRACKER = new BasicItem(TabHandler.ITEMS);
 
-    public static final JCMusicDiscItem JURASSICRAFT_THEME_DISC = new JCMusicDiscItem("jurassicraft_theme");
-    public static final JCMusicDiscItem TROODONS_AND_RAPTORS_DISC = new JCMusicDiscItem("troodons_and_raptors");
-    public static final JCMusicDiscItem DONT_MOVE_A_MUSCLE_DISC = new JCMusicDiscItem("dont_move_a_muscle");
+    public static final AncientRecordItem JURASSICRAFT_THEME_DISC = new AncientRecordItem("jurassicraft_theme", SoundHandler.JURASSICRAFT_THEME);
+    public static final AncientRecordItem TROODONS_AND_RAPTORS_DISC = new AncientRecordItem("troodons_and_raptors", SoundHandler.TROODONS_AND_RAPTORS);
+    public static final AncientRecordItem DONT_MOVE_A_MUSCLE_DISC = new AncientRecordItem("dont_move_a_muscle", SoundHandler.DONT_MOVE_A_MUSCLE);
 
     public static final ActionFigureItem ACTION_FIGURE = new ActionFigureItem();
 

@@ -23,17 +23,13 @@ public class CultivatorTile extends MachineBaseTile
 {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3 };
     private static final int[] OUTPUTS = new int[] { 4 };
-
+    private static final int MAX_NUTRIENTS = 3000;
     private ItemStack[] slots = new ItemStack[5];
-
     private int waterLevel;
-
     private int lipids;
     private int proximates;
     private int minerals;
     private int vitamins;
-
-    private static final int MAX_NUTRIENTS = 3000;
 
     @Override
     protected int getProcess(int slot)

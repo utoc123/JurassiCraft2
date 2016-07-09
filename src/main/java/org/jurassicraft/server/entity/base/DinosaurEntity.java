@@ -28,7 +28,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -69,7 +68,6 @@ import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FindPlantEntityAI;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.handler.GuiHandler;
 import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.LangHelper;
@@ -82,56 +80,40 @@ import java.util.UUID;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity
 {
-    protected Dinosaur dinosaur;
-
-    protected int dinosaurAge;
-    protected int prevAge;
-    private int growthSpeedOffset;
-
-    private boolean isCarcass;
-    private int carcassHealth;
-
-    private String genetics;
-    private int geneticsQuality;
-    private boolean isMale;
-
-    private Animation animation;
-    private int animationTick;
-
-    private boolean hasTracker;
-
-    @SideOnly(Side.CLIENT)
-    public ChainBuffer tailBuffer = new ChainBuffer();
-
-    private UUID owner;
-
-    private final InventoryDinosaur inventory;
-
     private static final DataParameter<Boolean> WATCHER_IS_CARCASS = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> WATCHER_AGE = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> WATCHER_IS_SLEEPING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<String> WATCHER_OWNER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.STRING);
     private static final DataParameter<Order> WATCHER_ORDER = EntityDataManager.createKey(DinosaurEntity.class, DinosaurSerializers.ORDER);
-
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final InventoryDinosaur inventory;
     private final MetabolismContainer metabolism;
-
+    protected Dinosaur dinosaur;
+    protected int dinosaurAge;
+    protected int prevAge;
+    protected EntityAITasks animationTasks;
+    protected Order order = Order.WANDER;
+    private int growthSpeedOffset;
+    private boolean isCarcass;
+    private int carcassHealth;
+    private String genetics;
+    private int geneticsQuality;
+    private boolean isMale;
+    private Animation animation;
+    private int animationTick;
+    private boolean hasTracker;
+    private UUID owner;
     private boolean isSleeping;
     private int stayAwakeTime;
-
     private HerdEntityAI herdEntityAI;
-
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private boolean useInertialTweens;
-
-    protected EntityAITasks animationTasks;
-
-    protected Order order = Order.WANDER;
-
     private List<Class<? extends EntityLivingBase>> attackTargets = new ArrayList<>();
 
     private int attackCooldown;
+
+    @SideOnly(Side.CLIENT)
+    public ChainBuffer tailBuffer;
 
     public DinosaurEntity(World world)
     {
@@ -202,6 +184,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.animationTasks.addTask(3, new RoarAnimationAI(this));
         this.animationTasks.addTask(3, new LookAnimationAI(this));
         this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
+
+        if (world.isRemote)
+        {
+            this.initClient();
+        }
+    }
+
+    private void initClient()
+    {
+        this.tailBuffer = new ChainBuffer();
     }
 
     public boolean shouldSleep()
@@ -227,11 +219,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         List<T> entities = this.worldObj.getEntitiesWithinAABB(entity, new AxisAlignedBB(this.posX - width, this.posY - height, this.posZ - width, this.posX + width, this.posY + height, this.posZ + width));
         entities.remove(this);
         return entities;
-    }
-
-    public void setSleeping(boolean sleeping)
-    {
-        this.isSleeping = sleeping;
     }
 
     public int getDinosaurTime()
@@ -575,14 +562,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return (isCarcass || isSleeping) ? 0.0F : (2.0F * ((float) transitionFromAge(0.2F, 1.0F)));
     }
 
-    public void setGenetics(String genetics)
-    {
-        this.genetics = genetics;
-    }
-
     public String getGenetics()
     {
         return genetics;
+    }
+
+    public void setGenetics(String genetics)
+    {
+        this.genetics = genetics;
     }
 
     @Override
@@ -856,6 +843,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         entityDropItem(stack, 0.0F);
     }
 
+    public boolean isCarcass()
+    {
+        return isCarcass;
+    }
+
     public void setCarcass(boolean carcass)
     {
         isCarcass = carcass;
@@ -866,11 +858,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             ticksExisted = 0;
             inventory.dropItems(worldObj, rand);
         }
-    }
-
-    public boolean isCarcass()
-    {
-        return isCarcass;
     }
 
     @Override
@@ -910,7 +897,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             {
                 if (isOwner(player))
                 {
-                    GuiHandler.openOrderGui(this);
+                    JurassiCraft.PROXY.openOrderGui(this);
                 }
                 else
                 {
@@ -956,6 +943,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
+    public Animation[] getAnimations()
+    {
+        return DinosaurAnimation.getAnimations();
+    }
+
+    @Override
+    public Animation getAnimation()
+    {
+        return animation;
+    }
+
+    @Override
     public void setAnimation(Animation newAnimation)
     {
         if (isSleeping())
@@ -979,9 +978,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public Animation[] getAnimations()
+    public int getAnimationTick()
     {
-        return DinosaurAnimation.getAnimations();
+        return animationTick;
     }
 
     @Override
@@ -991,26 +990,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public Animation getAnimation()
-    {
-        return animation;
-    }
-
-    @Override
-    public int getAnimationTick()
-    {
-        return animationTick;
-    }
-
-    protected SoundEvent getSound(String sound)
-    {
-        return new SoundEvent(new ResourceLocation(JurassiCraft.MODID, dinosaur.getName().toLowerCase() + "_" + sound));
-    }
-
-    @Override
     public SoundEvent getAmbientSound()
     {
-        return getSoundForAnimation(DinosaurAnimation.IDLE.get());
+        return getSoundForAnimation(DinosaurAnimation.SPEAK.get());
     }
 
     @Override
@@ -1019,35 +1001,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return getSoundForAnimation(DinosaurAnimation.INJURED.get());
     }
 
+    @Override
+    public SoundEvent getDeathSound()
+    {
+        return getSoundForAnimation(DinosaurAnimation.DYING.get());
+    }
+
     public SoundEvent getSoundForAnimation(Animation animation)
     {
-        if (animation == DinosaurAnimation.INJURED.get())
-        {
-            return getSound("hurt");
-        }
-        else if (animation == DinosaurAnimation.IDLE.get())
-        {
-            return getSound("living");
-        }
-        else if (animation == DinosaurAnimation.CALLING.get())
-        {
-            return getSound("call");
-        }
-        else if (animation == DinosaurAnimation.DYING.get())
-        {
-            return getSound("death");
-        }
-        else if (animation == DinosaurAnimation.ROARING.get())
-        {
-            return getSound("roar");
-        }
-
         return null;
     }
 
     public SoundEvent getBreathingSound()
     {
-        return getSound("breathing");
+        return null;
     }
 
     public double getAttackDamage()
@@ -1182,6 +1149,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean isSleeping()
     {
         return isSleeping;
+    }
+
+    public void setSleeping(boolean sleeping)
+    {
+        this.isSleeping = sleeping;
     }
 
     public int getStayAwakeTime()

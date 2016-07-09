@@ -13,12 +13,10 @@ import org.jurassicraft.server.tile.CultivatorTile;
 @SideOnly(Side.CLIENT)
 public class CultivateGui extends GuiContainer
 {
-    private CultivatorTile cultivator;
-
-    private final InventoryPlayer playerInventory;
-
     private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator.png");
     private static final ResourceLocation NUTRIENTS_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_nutrients.png");
+    private final InventoryPlayer playerInventory;
+    private CultivatorTile cultivator;
 
     public CultivateGui(InventoryPlayer inventoryPlayer, CultivatorTile entity)
     {

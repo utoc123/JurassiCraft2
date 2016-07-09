@@ -36,7 +36,7 @@ public enum WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        for (int i = 0; i < world.getHorizon() * 0.025; i++)
+        for (int i = 0; i < world.provider.getHorizon() * 0.025; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
@@ -86,7 +86,7 @@ public enum WorldGenerator implements IWorldGenerator
         Predicate<IBlockState> defaultPredicate = BlockMatcher.forBlock(Blocks.STONE);
 
         generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
-        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
+//        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
         generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
     }
 

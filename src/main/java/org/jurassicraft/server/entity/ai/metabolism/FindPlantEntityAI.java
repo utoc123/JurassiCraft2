@@ -27,27 +27,21 @@ public class FindPlantEntityAI extends EntityAIBase
     public static final double EAT_BREAK_SPEED = 1.0;
     // The minimum time to eat.
     public static final double MIN_BREAK_TIME_SEC = 3.0;
-
-    // Used to animate block breaking
-    protected BlockBreaker breaker = null;
-
-    private int counter;
-    //Time at which animal will cease attempting to eat a block
-    private static final int GIVE_UP_TIME = 140;// 7*20 counter = 7 ticks (ish?
-
     // How many block away the critter will look for plants.
     // TODO: Add eyesight/smell attribute for finding plants.
     public static final int LOOK_RADIUS = 16;
-
+    //Time at which animal will cease attempting to eat a block
+    private static final int GIVE_UP_TIME = 140;// 7*20 counter = 7 ticks (ish?
+    private static final Logger LOGGER = LogManager.getLogger();
+    // Used to animate block breaking
+    protected BlockBreaker breaker = null;
     // The animal we are tracking for.
     protected DinosaurEntity dinosaur;
-
-    private World world;
-
     // The target block to feed on, other null if currently not targeting anything
     protected BlockPos target;
+    private int counter;
+    private World world;
     private BlockPos previousTarget;
-
     private Vec3d targetVec;
 
     public FindPlantEntityAI(DinosaurEntity dinosaur)
@@ -165,6 +159,4 @@ public class FindPlantEntityAI extends EntityAIBase
         target = null;
         dinosaur.setAnimation(DinosaurAnimation.IDLE.get());
     }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 }

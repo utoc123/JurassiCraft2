@@ -9,10 +9,6 @@ import java.util.Random;
 
 public interface CleanableItem
 {
-    boolean isCleanable(ItemStack stack);
-
-    ItemStack getCleanedItem(ItemStack stack, Random random);
-
     static CleanableItem getCleanableItem(ItemStack stack)
     {
         if (stack != null)
@@ -41,4 +37,8 @@ public interface CleanableItem
     {
         return getCleanableItem(stack) != null;
     }
+
+    boolean isCleanable(ItemStack stack);
+
+    ItemStack getCleanedItem(ItemStack stack, Random random);
 }

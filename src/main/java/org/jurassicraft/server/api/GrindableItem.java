@@ -9,10 +9,6 @@ import java.util.Random;
 
 public interface GrindableItem
 {
-    boolean isGrindable(ItemStack stack);
-
-    ItemStack getGroundItem(ItemStack stack, Random random);
-
     static GrindableItem getGrindableItem(ItemStack stack)
     {
         if (stack != null)
@@ -41,4 +37,8 @@ public interface GrindableItem
     {
         return getGrindableItem(stack) != null;
     }
+
+    boolean isGrindable(ItemStack stack);
+
+    ItemStack getGroundItem(ItemStack stack, Random random);
 }

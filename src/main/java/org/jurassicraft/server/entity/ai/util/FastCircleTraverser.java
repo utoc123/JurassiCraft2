@@ -9,12 +9,6 @@ import java.util.Iterator;
  */
 public class FastCircleTraverser implements Iterable<BlockPos>
 {
-    @Override
-    public Iterator<BlockPos> iterator()
-    {
-        return null;
-    }
-
     static void plotCircle(int x0, int y0, int radius)
     {
 
@@ -51,6 +45,12 @@ public class FastCircleTraverser implements Iterable<BlockPos>
     private static void drawPixel(int x, int y)
     {
 
+    }
+
+    @Override
+    public Iterator<BlockPos> iterator()
+    {
+        return null;
     }
 
 }
