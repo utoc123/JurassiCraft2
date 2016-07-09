@@ -36,7 +36,7 @@ public enum WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
-        for (int i = 0; i < world.provider.getHorizon() * 0.025; i++)
+        for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
@@ -128,7 +128,7 @@ public enum WorldGenerator implements IWorldGenerator
                 BlockPos pos = new BlockPos(blockX, blockY, blockZ);
                 Block previousBlock = world.getBlockState(pos).getBlock();
 
-                if (previousBlock != Blocks.BEDROCK)
+                if (previousBlock != Blocks.BEDROCK && previousBlock != Blocks.AIR)
                 {
                     world.setBlockState(pos, state);
                 }

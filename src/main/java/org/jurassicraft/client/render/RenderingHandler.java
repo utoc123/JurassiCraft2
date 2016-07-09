@@ -413,7 +413,7 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.HARD_DRIVE, "disc_reader", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.LASER, "laser", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.DNA_NUCLEOTIDES, "dna_base_material", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.SEA_LAMPREY, "sea_lamprey", "inventory");
+//        this.registerItemRenderer(modelMesher, ItemHandler.SEA_LAMPREY, "sea_lamprey", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.AMBER, 0, "amber_mosquito", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.AMBER, 1, "amber_aphid", "inventory");
