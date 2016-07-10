@@ -7,24 +7,24 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class HeadCockAnimationAI extends EntityAIBase
 {
-    protected DinosaurEntity animatingEntity;
+    protected DinosaurEntity dinosaur;
 
     public HeadCockAnimationAI(IAnimatedEntity entity)
     {
         super();
-        this.animatingEntity = (DinosaurEntity) entity;
+        this.dinosaur = (DinosaurEntity) entity;
     }
 
     @Override
     public boolean shouldExecute()
     {
-        return !animatingEntity.isDead && animatingEntity.getAttackTarget() == null && animatingEntity.getRNG().nextDouble() < 0.003;
+        return !dinosaur.isDead && dinosaur.getAttackTarget() == null && dinosaur.getRNG().nextDouble() < 0.003;
     }
 
     @Override
     public void startExecuting()
     {
-        animatingEntity.setAnimation(DinosaurAnimation.HEAD_COCKING.get());
+        dinosaur.setAnimation(DinosaurAnimation.HEAD_COCKING.get());
     }
 
     @Override

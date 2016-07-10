@@ -11,12 +11,12 @@ import java.util.List;
 
 public class CallAnimationAI extends EntityAIBase
 {
-    protected DinosaurEntity animatingEntity;
+    protected DinosaurEntity dinosaur;
 
     public CallAnimationAI(IAnimatedEntity entity)
     {
         super();
-        this.animatingEntity = (DinosaurEntity) entity;
+        this.dinosaur = (DinosaurEntity) entity;
     }
 
     public List<Entity> getEntitiesWithinDistance(Entity entity, double width, double height)
@@ -27,20 +27,20 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (animatingEntity.isDead || animatingEntity.getAttackTarget() != null || animatingEntity.isSleeping())
+        if (dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping())
         {
             return false;
         }
 
-        if (animatingEntity.getRNG().nextDouble() < 0.003)
+        if (dinosaur.getRNG().nextDouble() < 0.003)
         {
-            List<Entity> entities = this.getEntitiesWithinDistance(animatingEntity, 50, 10);
+            List<Entity> entities = this.getEntitiesWithinDistance(dinosaur, 50, 10);
 
             for (Entity entity : entities)
             {
-                if (this.animatingEntity.getClass().isInstance(entity))
+                if (this.dinosaur.getClass().isInstance(entity))
                 {
-                    this.animatingEntity.playSound(animatingEntity.getSoundForAnimation(DinosaurAnimation.CALLING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
+                    this.dinosaur.playSound(dinosaur.getSoundForAnimation(DinosaurAnimation.CALLING.get()), dinosaur.getSoundVolume() + 1.25F, dinosaur.getSoundPitch());
                     return true;
                 }
             }
@@ -52,7 +52,7 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        animatingEntity.setAnimation(DinosaurAnimation.CALLING.get());
+        dinosaur.setAnimation(DinosaurAnimation.CALLING.get());
     }
 
     @Override

@@ -1,29 +1,30 @@
 package org.jurassicraft.server.entity.ai.animations;
 
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class LookAnimationAI extends EntityAIBase
+public class PeckGroundAnimationAI extends EntityAIBase
 {
     protected DinosaurEntity dinosaur;
 
-    public LookAnimationAI(DinosaurEntity dinosaur)
+    public PeckGroundAnimationAI(IAnimatedEntity entity)
     {
         super();
-        this.dinosaur = dinosaur;
+        this.dinosaur = (DinosaurEntity) entity;
     }
 
     @Override
     public boolean shouldExecute()
     {
-        return !dinosaur.isDead && dinosaur.getAttackTarget() == null && !dinosaur.isSleeping() && dinosaur.getRNG().nextDouble() < 0.003;
+        return !(dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping()) && dinosaur.getRNG().nextDouble() < 0.1;
     }
 
     @Override
     public void startExecuting()
     {
-        dinosaur.setAnimation(dinosaur.getRNG().nextBoolean() ? DinosaurAnimation.LOOKING_LEFT.get() : DinosaurAnimation.LOOKING_RIGHT.get());
+        dinosaur.setAnimation(DinosaurAnimation.PECKING.get());
     }
 
     @Override

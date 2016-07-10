@@ -5,6 +5,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
+import org.jurassicraft.server.entity.ai.animations.PeckGroundAnimationAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class GallimimusEntity extends DinosaurEntity
@@ -12,6 +13,7 @@ public class GallimimusEntity extends DinosaurEntity
     public GallimimusEntity(World world)
     {
         super(world);
+        this.animationTasks.addTask(3, new PeckGroundAnimationAI(this));
     }
 
     @Override

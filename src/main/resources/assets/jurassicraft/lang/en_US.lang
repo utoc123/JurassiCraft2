@@ -294,11 +294,11 @@ tile.clear_glass.name=Clear Glass
 
 tile.feeder.name=Feeder
 
-tile.paleo_bale_cycadeoidea.name=Bennettitalean Paleo Bale
-tile.paleo_bale_cycad.name=Cycad Paleo Bale
-tile.paleo_bale_fern.name=Fern Paleo Bale
-tile.paleo_bale_leaves.name=Leaves Paleo Bale
-tile.paleo_bale_other.name=Paleo Bale
+tile.paleo_bale_cycadeoidea.name=Bennettitalean Prehistoric Plant Bale
+tile.paleo_bale_cycad.name=Cycad Prehistoric Plant Bale
+tile.paleo_bale_fern.name=Fern Prehistoric Plant Bale
+tile.paleo_bale_leaves.name=Leaves Prehistoric Plant Bale
+tile.paleo_bale_other.name=Prehistoric Plant Bale
 
 trackway.biped_medium.name=Biped
 trackway.biped_small.name=Small Biped

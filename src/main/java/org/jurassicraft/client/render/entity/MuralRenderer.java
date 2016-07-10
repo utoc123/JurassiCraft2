@@ -1,5 +1,6 @@
 package org.jurassicraft.client.render.entity;
 
+import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -53,22 +54,21 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
             float scale = 0.0625F;
             GlStateManager.scale(scale, scale, scale);
 
-//            boolean hasDisplayList = DISPLAY_LIST.containsKey(type);
-//            int displayList = hasDisplayList ? DISPLAY_LIST.get(type) : -1;
-//
-//            if (hasDisplayList)
-//            {
-//                GlStateManager.callList(displayList);
-//            }
-//            else
-//            {
-//                displayList = GLAllocation.generateDisplayLists(1);
-//                GlStateManager.glNewList(displayList, GL11.GL_COMPILE);
-            this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), type.sizeX, type.sizeY);
-//                GlStateManager.glEndList();
-//
-//                DISPLAY_LIST.put(type, displayList);
-//            }
+            Integer displayList = DISPLAY_LIST.get(type);
+
+            if (displayList != null)
+            {
+                GlStateManager.callList(displayList);
+            }
+            else
+            {
+                displayList = GLAllocation.generateDisplayLists(1);
+                GlStateManager.glNewList(displayList, GL11.GL_COMPILE);
+                this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), type.sizeX, type.sizeY);
+                GlStateManager.glEndList();
+
+                DISPLAY_LIST.put(type, displayList);
+            }
 
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();

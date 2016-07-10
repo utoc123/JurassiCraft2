@@ -185,6 +185,60 @@
         "time": 5
       }
     ],
+    "PECKING": [
+      {
+        "pose": "gallimimus_adult_pecking_1",
+        "time": 20
+      },
+      {
+        "pose": "gallimimus_adult_pecking_2",
+        "time": 8
+      },
+      {
+        "pose": "gallimimus_adult_pecking_3",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_2",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_3",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_2",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_1",
+        "time": 8
+      },
+      {
+        "pose": "gallimimus_adult_pecking_2",
+        "time": 8
+      },
+      {
+        "pose": "gallimimus_adult_pecking_3",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_2",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_3",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_pecking_2",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_idle",
+        "time": 20
+      }
+    ],
     "SLEEPING": [
       {
         "pose": "gallimimus_adult_sleeping_1",

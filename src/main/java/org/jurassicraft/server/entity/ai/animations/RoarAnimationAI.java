@@ -7,25 +7,25 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class RoarAnimationAI extends EntityAIBase
 {
-    protected DinosaurEntity animatingEntity;
+    protected DinosaurEntity dinosaur;
 
     public RoarAnimationAI(IAnimatedEntity entity)
     {
         super();
-        this.animatingEntity = (DinosaurEntity) entity;
+        this.dinosaur = (DinosaurEntity) entity;
     }
 
     @Override
     public boolean shouldExecute()
     {
-        return !animatingEntity.isDead && animatingEntity.getAttackTarget() == null && animatingEntity.getAgePercentage() > 75 && !animatingEntity.isSleeping() && animatingEntity.getRNG().nextDouble() < 0.003;
+        return !dinosaur.isDead && dinosaur.getAttackTarget() == null && dinosaur.getAgePercentage() > 75 && !dinosaur.isSleeping() && dinosaur.getRNG().nextDouble() < 0.003;
     }
 
     @Override
     public void startExecuting()
     {
-        animatingEntity.setAnimation(DinosaurAnimation.ROARING.get());
-        animatingEntity.playSound(animatingEntity.getSoundForAnimation(DinosaurAnimation.ROARING.get()), animatingEntity.getSoundVolume() + 1.25F, animatingEntity.getSoundPitch());
+        dinosaur.setAnimation(DinosaurAnimation.ROARING.get());
+        dinosaur.playSound(dinosaur.getSoundForAnimation(DinosaurAnimation.ROARING.get()), dinosaur.getSoundVolume() + 1.25F, dinosaur.getSoundPitch());
     }
 
     @Override
