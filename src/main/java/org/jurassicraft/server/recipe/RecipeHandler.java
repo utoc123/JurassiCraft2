@@ -114,6 +114,10 @@ public class RecipeHandler
 
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.MURAL), Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING);
 
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_CANE), "A", "|", "|", 'A', ItemHandler.AMBER, '|', Items.STICK);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.AMBER, '#', Items.IRON_INGOT);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.DNA_NUCLEOTIDES, '#', Items.IRON_INGOT);
+
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);
         addGrowthSerumRecipe(Items.COOKED_FISH);

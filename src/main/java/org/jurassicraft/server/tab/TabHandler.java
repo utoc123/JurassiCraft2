@@ -34,19 +34,8 @@ public class TabHandler
         }
     };
 
-    public static final CreativeTabs FOSSILS = new CreativeTabs("jurassicraft.fossils")
-    {
-        @Override
-        public Item getTabIconItem()
-        {
-            return Item.getItemFromBlock(BlockHandler.ENCASED_FOSSILS.get(0));
-        }
-    };
-
-    public static final JurassiCraftFossilTab BONES = new JurassiCraftFossilTab("jurassicraft.dino_bones");
+    public static final JurassiCraftFossilTab FOSSILS = new JurassiCraftFossilTab("jurassicraft.fossils");
     public static final JurassiCraftDNATab DNA = new JurassiCraftDNATab("jurassicraft.dna");
-    public static final JurassiCraftEggsTab EGGS = new JurassiCraftEggsTab("jurassicraft.eggs");
-    public static final JurassiCraftSpawnEggsTab SPAWN_EGGS = new JurassiCraftSpawnEggsTab("jurassicraft.spawnEggs");
     public static final JurassiCraftFoodTab FOODS = new JurassiCraftFoodTab("jurassicraft.foods");
     public static final JurassiCraftDecorationsTab DECORATIONS = new JurassiCraftDecorationsTab("jurassicraft.decorations");
 }

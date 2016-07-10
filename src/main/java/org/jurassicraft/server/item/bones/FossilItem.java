@@ -37,7 +37,7 @@ public class FossilItem extends Item implements GrindableItem
 
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.BONES);
+        this.setCreativeTab(TabHandler.FOSSILS);
     }
 
     public static void init()

@@ -41,7 +41,7 @@ public class DinosaurSpawnEggItem extends Item
     {
         this.setHasSubtypes(true);
 
-        this.setCreativeTab(TabHandler.SPAWN_EGGS);
+        this.setCreativeTab(TabHandler.ITEMS);
     }
 
     public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)

@@ -150,6 +150,7 @@ public class ItemHandler
             }
         }
 
+        registerItem(SPAWN_EGG, "Dino Spawn Egg");
         registerItem(FIELD_GUIDE, "Field Guide");
         registerItem(AMBER, "Amber");
 //        registerItem(SEA_LAMPREY, "Sea Lamprey");
@@ -168,13 +169,12 @@ public class ItemHandler
         registerItem(PADDOCK_SIGN, "Paddock Sign");
         registerItem(ATTRACTION_SIGN, "Attraction Sign");
         registerItem(MURAL, "Mural");
-        registerItem(SPAWN_EGG, "Dino Spawn Egg");
         registerItem(DNA, "DNA");
+        registerItem(SOFT_TISSUE, "Soft Tissue");
+        registerItem(SYRINGE, "Syringe");
         registerItem(EGG, "Dino Egg");
         registerItem(HATCHED_EGG, "Hatched Egg");
-        registerItem(SOFT_TISSUE, "Soft Tissue");
         registerItem(PLANT_SOFT_TISSUE, "Plant Soft Tissue");
-        registerItem(SYRINGE, "Syringe");
         registerItem(PLANT_DNA, "Plant DNA");
         registerItem(IRON_BLADES, "Iron Blades");
         registerItem(IRON_ROD, "Iron Rod");

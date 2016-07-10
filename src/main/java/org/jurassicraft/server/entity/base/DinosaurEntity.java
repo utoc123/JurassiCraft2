@@ -392,6 +392,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
+    public boolean canBePushed()
+    {
+        return super.canBePushed() && !this.isCarcass() && !this.isSleeping();
+    }
+
+    @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY)
     {
         if (stack.stackSize != 0 && stack.getItem() != null)

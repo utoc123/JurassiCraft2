@@ -138,6 +138,9 @@ public class BlockHandler
 
     public static void init()
     {
+        registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
+        registerBlock(FOSSILIZED_TRACKWAY, "Fossilized Trackway");
+
         for (int i = 0; i < (int) Math.ceil(EntityHandler.getDinosaurs().size() / 16.0F); i++)
         {
             FossilBlock fossil = new FossilBlock(i * 16);
@@ -151,9 +154,6 @@ public class BlockHandler
 
             OreDictionary.registerOre("fossil", fossil);
         }
-
-        registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
-        registerBlock(FOSSILIZED_TRACKWAY, "Fossilized Trackway");
 
         for (TreeType type : TreeType.values())
         {
