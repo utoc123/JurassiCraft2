@@ -58,9 +58,7 @@ public class JabelarAnimationHandler
     {
         AdvancedModelRenderer[] modelParts = this.getModelParts(model);
 
-        this.DEFAULT_PASS.initSequence(entity, entity.getAnimation());
         this.DEFAULT_PASS.init(modelParts, entity);
-
         this.MOVEMENT_PASS.init(modelParts, entity);
     }
 

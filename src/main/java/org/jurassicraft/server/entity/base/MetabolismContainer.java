@@ -45,7 +45,7 @@ public class MetabolismContainer
 
             if (digestingFood > 0)
             {
-                increaseEnergy(2);
+                increaseEnergy(4);
                 digestingFood--;
             }
         }
@@ -155,7 +155,7 @@ public class MetabolismContainer
 
     public boolean isHungry()
     {
-        return (this.energy + (digestingFood * 2) < MAX_ENERGY * 0.8 || energy < 50) && digestingFood + 500 < MAX_DIGESTION_AMOUNT;
+        return (this.energy + (digestingFood * 4) < MAX_ENERGY * 0.8 || energy < 50) && digestingFood + 500 < MAX_DIGESTION_AMOUNT;
     }
 
     public boolean isThirsty()

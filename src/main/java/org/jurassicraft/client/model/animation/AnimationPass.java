@@ -53,8 +53,6 @@ public class AnimationPass
         this.initSequence(entity, getRequestedAnimation(entity));
         this.initTweenTicks(entity);
 
-        this.updatePreviousPose();
-
         this.initIncrements(entity);
     }
 

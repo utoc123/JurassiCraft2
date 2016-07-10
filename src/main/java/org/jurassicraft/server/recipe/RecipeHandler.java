@@ -112,11 +112,15 @@ public class RecipeHandler
 
         GameRegistry.addSmelting(ItemHandler.GRACILARIA, new ItemStack(ItemHandler.LIQUID_AGAR), 0);
 
-        GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.MURAL), Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING, Items.PAINTING);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.MURAL), "IWI", "WPW", "IWI", 'I', Items.IRON_INGOT, 'W', Blocks.WOOL, 'P', Items.PAINTING);
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_CANE), "A", "|", "|", 'A', ItemHandler.AMBER, '|', Items.STICK);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.AMBER, '#', Items.IRON_INGOT);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.DNA_NUCLEOTIDES, '#', Items.IRON_INGOT);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.MR_DNA_KEYCHAIN), "A", "#", 'A', ItemHandler.DNA_NUCLEOTIDES, '#', Items.IRON_INGOT);
+
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.PADDOCK_SIGN), "III", "SSS", "III", 'I', Items.IRON_INGOT, 'S', Items.SIGN);
+
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.FIELD_GUIDE), "WBW", "PPP", "WBW", 'W', new ItemStack(Blocks.WOOL, 1, 3), 'B', Items.BONE, 'P', Items.PAPER);
 
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);

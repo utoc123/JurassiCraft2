@@ -15,7 +15,7 @@ public class PaddockSignItem extends Item
 {
     public PaddockSignItem()
     {
-        this.setCreativeTab(TabHandler.ITEMS);
+        this.setCreativeTab(TabHandler.DECORATIONS);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class BluePrintItem extends Item
 {
     public BluePrintItem()
     {
-        this.setCreativeTab(TabHandler.ITEMS);
+        this.setCreativeTab(TabHandler.DECORATIONS);
         this.setMaxStackSize(1);
     }
 

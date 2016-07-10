@@ -190,6 +190,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             this.initClient();
         }
+
+        ignoreFrustumCheck = true;
     }
 
     private void initClient()
@@ -637,7 +639,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             attackCooldown--;
         }
 
-        if (!worldObj.isRemote && animation != null && animation != DinosaurAnimation.IDLE.get())
+        if (animation != null && animation != DinosaurAnimation.IDLE.get())
         {
             int animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
 
