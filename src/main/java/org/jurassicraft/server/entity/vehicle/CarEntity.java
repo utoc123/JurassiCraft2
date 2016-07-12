@@ -89,21 +89,16 @@ public abstract class CarEntity extends Entity
         {
             if (!worldObj.isRemote)
             {
-                addSeat(new SeatEntity(worldObj, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F, null));
-                addSeat(new SeatEntity(worldObj, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F, null));
-                addSeat(new SeatEntity(worldObj, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F, null));
-                addSeat(new SeatEntity(worldObj, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F, null));
+                addSeat(new SeatEntity(worldObj, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+                addSeat(new SeatEntity(worldObj, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+                addSeat(new SeatEntity(worldObj, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+                addSeat(new SeatEntity(worldObj, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
 
                 for (Map.Entry<Integer, SeatEntity> entry : seats.entrySet())
                 {
                     worldObj.spawnEntityInWorld(entry.getValue());
                 }
             }
-        }
-
-        for (Map.Entry<Integer, SeatEntity> entry : seats.entrySet())
-        {
-            entry.getValue().updateParent();
         }
 
         if (this.interpProgress > 0)
@@ -117,6 +112,11 @@ public abstract class CarEntity extends Entity
             this.interpProgress--;
             this.setPosition(interpolatedX, interpolatedY, interpolatedZ);
             this.setRotation(this.rotationYaw, this.rotationPitch);
+        }
+
+        for (Map.Entry<Integer, SeatEntity> entry : seats.entrySet())
+        {
+            entry.getValue().updateParent(this);
         }
 
         if (worldObj.isRemote)

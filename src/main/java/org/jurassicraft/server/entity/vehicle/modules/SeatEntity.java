@@ -22,36 +22,26 @@ import java.util.List;
 
 public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
 {
-    protected int interpProgress;
-    protected double interpTargetX;
-    protected double interpTargetY;
-    protected double interpTargetZ;
-    protected double interpTargetYaw;
-    protected double interpTargetPitch;
     private int id;
-    private CarEntity parent;
     private float offsetX, offsetY, offsetZ;
-    private Controller controller;
-    private boolean hasParent;
-    private int parentId;
 
-    private boolean parentUpdating;
+    private int parentId;
+    private CarEntity parent;
 
     public SeatEntity(World world)
     {
         super(world);
     }
 
-    public SeatEntity(World world, CarEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height, Controller controller)
+    public SeatEntity(World world, CarEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height)
     {
         super(world);
         this.setSize(width, height);
         this.id = id;
-        this.parent = parent;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.offsetZ = offsetZ;
-        this.controller = controller;
+        this.updateParent(parent);
         this.updatePosition();
     }
 
@@ -60,43 +50,38 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     {
         super.onUpdate();
 
-        if (hasParent && parent == null)
-        {
-            setParent(worldObj.getEntityByID(parentId));
-        }
-
-        if (!hasParent || (hasParent && parent == null) || (parent != null && parent.isDead) || (!parentUpdating && !worldObj.isRemote))
+        if (parent == null && !worldObj.isRemote)
         {
             this.setDead();
             return;
         }
-
-        if (this.interpProgress > 0)
+        else if (parent != null)
         {
-            double interpolatedX = this.posX + (this.interpTargetX - this.posX) / (double) this.interpProgress;
-            double interpolatedY = this.posY + (this.interpTargetY - this.posY) / (double) this.interpProgress;
-            double interpolatedZ = this.posZ + (this.interpTargetZ - this.posZ) / (double) this.interpProgress;
-            double deltaYaw = MathHelper.wrapDegrees(this.interpTargetYaw - (double) this.rotationYaw);
-            this.rotationYaw = (float) ((double) this.rotationYaw + deltaYaw / (double) this.interpProgress);
-            this.rotationPitch = (float) ((double) this.rotationPitch + (this.interpTargetPitch - (double) this.rotationPitch) / (double) this.interpProgress);
-            this.interpProgress--;
-            this.setPosition(interpolatedX, interpolatedY, interpolatedZ);
-            this.setRotation(this.rotationYaw, this.rotationPitch);
+            this.updatePosition();
         }
 
-        if (parent != null)
-        {
-            updatePosition();
-        }
+        parent = null;
+    }
 
-        Entity controllingPassenger = getControllingPassenger();
+    private void updatePosition()
+    {
+        Matrix4d matrix = new Matrix4d();
+        matrix.setIdentity();
+        Matrix4d transform = new Matrix4d();
+        transform.setIdentity();
+        transform.setTranslation(new Vector3d(parent.posX, parent.posY, parent.posZ));
+        matrix.mul(transform);
+        transform.setIdentity();
+        transform.rotY(Math.toRadians(180.0F - parent.rotationYaw));
+        matrix.mul(transform);
+        transform.setIdentity();
+        transform.setTranslation(new Vector3d(offsetX, offsetY, offsetZ));
+        matrix.mul(transform);
 
-        if (controller != null && controllingPassenger != null)
-        {
-            controller.control(controllingPassenger, this);
-        }
+        this.setPosition(matrix.m03, matrix.m13, matrix.m23);
 
-        parentUpdating = false;
+        this.prevRotationYaw = parent.prevRotationYaw;
+        this.rotationYaw = parent.rotationYaw;
     }
 
     @Override
@@ -113,21 +98,10 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
         return true;
     }
 
-    public void updatePosition()
+    public void updateParent(CarEntity parent)
     {
-        Matrix4d matrix = new Matrix4d();
-        matrix.setIdentity();
-        Matrix4d transform = new Matrix4d();
-        transform.setIdentity();
-        transform.setTranslation(new Vector3d(parent.posX, parent.posY, parent.posZ));
-        matrix.mul(transform);
-        transform.setIdentity();
-        transform.rotY(Math.toRadians(180.0F - parent.rotationYaw));
-        matrix.mul(transform);
-        transform.setIdentity();
-        transform.setTranslation(new Vector3d(offsetX, offsetY, offsetZ));
-        matrix.mul(transform);
-        this.setPositionAndRotation(matrix.m03, matrix.m13, matrix.m23, parent.rotationYaw, 0);
+        this.parent = parent;
+        this.parentId = parent.getEntityId();
     }
 
     @Override
@@ -163,9 +137,9 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     {
         super.updatePassenger(passenger);
 
-        if (parent != null && this.isPassenger(passenger))
+        if (this.isPassenger(passenger))
         {
-            passenger.rotationYaw += parent.rotationYaw - parent.prevRotationYaw;
+            passenger.rotationYaw += this.rotationYaw - this.prevRotationYaw;
             applyPassengerRotation(passenger);
         }
     }
@@ -190,53 +164,30 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     @Override
     public void writeSpawnData(ByteBuf buffer)
     {
-        if (parent != null)
-        {
-            buffer.writeByte(id);
-            buffer.writeFloat(offsetX);
-            buffer.writeFloat(offsetY);
-            buffer.writeFloat(offsetZ);
-            buffer.writeFloat(width);
-            buffer.writeFloat(height);
-            buffer.writeInt(parent.getEntityId());
-            hasParent = true;
-        }
+        buffer.writeByte(id);
+        buffer.writeFloat(offsetX);
+        buffer.writeFloat(offsetY);
+        buffer.writeFloat(offsetZ);
+        buffer.writeFloat(width);
+        buffer.writeFloat(height);
+        buffer.writeInt(parentId);
     }
 
     @Override
     public void readSpawnData(ByteBuf buffer)
     {
-        if (buffer.isReadable())
-        {
-            id = buffer.readByte();
-            offsetX = buffer.readFloat();
-            offsetY = buffer.readFloat();
-            offsetZ = buffer.readFloat();
-            setSize(buffer.readFloat(), buffer.readFloat());
+        id = buffer.readByte();
+        offsetX = buffer.readFloat();
+        offsetY = buffer.readFloat();
+        offsetZ = buffer.readFloat();
+        setSize(buffer.readFloat(), buffer.readFloat());
 
-            parentId = buffer.readInt();
+        Entity parent = worldObj.getEntityByID(buffer.readInt());
 
-            Entity parent = worldObj.getEntityByID(parentId);
-
-            setParent(parent);
-            hasParent = true;
-        }
-    }
-
-    private void setParent(Entity parent)
-    {
         if (parent instanceof CarEntity)
         {
             this.parent = (CarEntity) parent;
-            this.updatePosition();
             this.parent.addSeat(this);
-            this.hasParent = true;
-            this.parentUpdating = true;
-        }
-        else if (parent == null)
-        {
-            this.parent = null;
-            this.hasParent = false;
         }
     }
 
@@ -250,12 +201,6 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     @SideOnly(Side.CLIENT)
     public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
-        this.interpTargetX = x;
-        this.interpTargetY = y;
-        this.interpTargetZ = z;
-        this.interpTargetYaw = yaw;
-        this.interpTargetPitch = pitch;
-        this.interpProgress = posRotationIncrements;
     }
 
     @Override
@@ -273,15 +218,5 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     protected boolean canTriggerWalking()
     {
         return false;
-    }
-
-    public void updateParent()
-    {
-        parentUpdating = true;
-    }
-
-    public interface Controller
-    {
-        void control(Entity entity, SeatEntity seat);
     }
 }
