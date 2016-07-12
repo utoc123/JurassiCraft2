@@ -69,7 +69,6 @@ import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.item.BluePrintItem;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.message.SetOrderMessage;
@@ -898,11 +897,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
         else
         {
-            if (stack != null && stack.getItem() instanceof BluePrintItem)
-            {
-                ((BluePrintItem) stack.getItem()).setDinosaur(stack, EntityHandler.getDinosaurId(getDinosaur()));
-            }
-            else if (stack == null && hand == EnumHand.MAIN_HAND && worldObj.isRemote)
+            if (stack == null && hand == EnumHand.MAIN_HAND && worldObj.isRemote)
             {
                 if (isOwner(player))
                 {

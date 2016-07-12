@@ -57,7 +57,6 @@ public class RecipeHandler
         GameRegistry.addRecipe(new ItemStack(ItemHandler.EMPTY_TEST_TUBE, 8), "G", "G", 'G', Blocks.GLASS);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.PETRI_DISH, 4), "G G", "GGG", 'G', Blocks.GLASS_PANE);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PETRI_DISH_AGAR, 4), ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.LIQUID_AGAR);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.BLUEPRINT), "BBB", "BPB", "BBB", 'B', new ItemStack(Items.DYE, 1, 4), 'P', Items.PAPER);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.EMPTY_SYRINGE), "I", "T", "I", 'I', Items.IRON_INGOT, 'T', ItemHandler.EMPTY_TEST_TUBE);
         GameRegistry.addSmelting(new ItemStack(Items.POTIONITEM, 1, 0), new ItemStack(ItemHandler.DNA_NUCLEOTIDES), 1.0F);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_EXTRACTOR), "III", "SAP", "HII", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'A', ItemHandler.DNA_ANALYZER, 'P', Blocks.GLASS_PANE, 'H', ItemHandler.HARD_DRIVE);

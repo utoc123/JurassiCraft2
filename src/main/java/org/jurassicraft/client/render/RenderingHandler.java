@@ -81,7 +81,6 @@ import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
 import org.jurassicraft.client.render.block.FeederSpecialRenderer;
 import org.jurassicraft.client.render.block.IncubatorSpecialRenderer;
 import org.jurassicraft.client.render.entity.AttractionSignRenderer;
-import org.jurassicraft.client.render.entity.BluePrintRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.JeepWranglerRenderer;
@@ -102,7 +101,6 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
-import org.jurassicraft.server.entity.item.BluePrintEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.MuralEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
@@ -258,7 +256,6 @@ public enum RenderingHandler
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TROODON, new TroodonAnimator(), 0.65F));
         registerRenderDef(new RenderDinosaurDefinition(EntityHandler.PACHYCEPHALOSAURUS, new PachycephalosaurusAnimator(), 0.65F));
 
-        RenderingRegistry.registerEntityRenderingHandler(BluePrintEntity.class, new BluePrintRenderer());
         RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
@@ -408,7 +405,6 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.AMBER, "amber", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.PLASTER_AND_BANDAGE, "plaster_and_bandage", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.SPAWN_EGG, "dino_spawn_egg", "inventory");
-        this.registerItemRenderer(modelMesher, ItemHandler.BLUEPRINT, "blue_print", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.PADDOCK_SIGN, "paddock_sign", "inventory");
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())

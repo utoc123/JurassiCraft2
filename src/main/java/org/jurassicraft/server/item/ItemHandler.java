@@ -35,7 +35,6 @@ public class ItemHandler
     public static final DinosaurMeatItem DINOSAUR_MEAT = new DinosaurMeatItem();
     public static final DinosaurSteakItem DINOSAUR_STEAK = new DinosaurSteakItem();
 
-    public static final BluePrintItem BLUEPRINT = new BluePrintItem();
     public static final PaddockSignItem PADDOCK_SIGN = new PaddockSignItem();
     public static final AttractionSignItem ATTRACTION_SIGN = new AttractionSignItem();
 
@@ -165,7 +164,6 @@ public class ItemHandler
         registerItem(PETRI_DISH, "Petri Dish");
         registerItem(PETRI_DISH_AGAR, "Petri Dish Agar");
         registerItem(PLANT_CELLS_PETRI_DISH, "Plant Cells Petri Dish");
-        registerItem(BLUEPRINT, "Blue Print");
         registerItem(PADDOCK_SIGN, "Paddock Sign");
         registerItem(ATTRACTION_SIGN, "Attraction Sign");
         registerItem(MURAL, "Mural");

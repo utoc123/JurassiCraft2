@@ -1,5 +1,6 @@
 package org.jurassicraft.client.proxy;
 
+import net.ilexiconn.llibrary.server.util.WebUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,10 +48,16 @@ import org.jurassicraft.server.tile.FeederTile;
 import org.jurassicraft.server.tile.FossilGrinderTile;
 import org.jurassicraft.server.tile.IncubatorTile;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy
 {
     private static final Minecraft MC = Minecraft.getMinecraft();
+
+    public static final List<UUID> PATRONS = new ArrayList<>();
 
     @Override
     public void preInit(FMLPreInitializationEvent event)
@@ -77,6 +84,11 @@ public class ClientProxy extends ServerProxy
         super.postInit(event);
 
         RenderingHandler.INSTANCE.postInit();
+
+        for (String patron : WebUtils.readPastebinAsList("fgJQkCMa"))
+        {
+            PATRONS.add(UUID.fromString(patron));
+        }
     }
 
     @Override
@@ -137,13 +149,15 @@ public class ClientProxy extends ServerProxy
             }
             else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID)
             {
-                if (((CultivatorTile) tileEntity).isProcessing(0))
+                CultivatorTile cultivator = (CultivatorTile) tileEntity;
+
+                if (cultivator.isProcessing(0))
                 {
-                    return new CultivateProcessGui((CultivatorTile) tileEntity);
+                    return new CultivateProcessGui(cultivator);
                 }
                 else
                 {
-                    return new CultivateGui(player.inventory, (CultivatorTile) tileEntity);
+                    return new CultivateGui(player.inventory, cultivator);
                 }
             }
             else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID)
