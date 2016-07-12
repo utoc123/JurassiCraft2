@@ -93,16 +93,16 @@ public class DNAExtractorTile extends MachineBaseTile
                 }
                 else if (input.getItemDamage() == 1)
                 {
-                    List<Plant> possiblePlants = PlantHandler.getPlants();
+                    List<Plant> possiblePlants = PlantHandler.getPrehistoricPlants();
                     Plant plant = possiblePlants.get(rand.nextInt(possiblePlants.size()));
 
                     int plantId = PlantHandler.getPlantId(plant);
 
                     disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, plantId);
 
-                    int quality = rand.nextInt(50);
+                    int quality = (rand.nextInt(10) + 1) * 5;
 
-                    if (rand.nextDouble() < 0.1)
+                    if (rand.nextInt(2) > 0)
                     {
                         quality += 50;
                     }

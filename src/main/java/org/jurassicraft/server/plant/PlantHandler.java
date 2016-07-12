@@ -1,6 +1,6 @@
 package org.jurassicraft.server.plant;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlantHandler
@@ -17,8 +17,11 @@ public class PlantHandler
     public static final Plant ZAMITES = new ZamitesPlant();
     public static final Plant DICKSONIA = new DicksoniaPlant();
     public static final Plant WILD_ONION = new WildOnionPlant();
-    public static final Plant DICROIDIUM_ZUBERI_PLANT = new DicroidiumZuberiPlant();
-    private static List<Plant> plants = new ArrayList<>();
+    public static final Plant DICROIDIUM_ZUBERI = new DicroidiumZuberiPlant();
+    public static final Plant DICTYOPHYLLUM = new DictyophyllumPlant();
+    public static final Plant WEST_INDIAN_LILAC = new WestIndianLilacPlant();
+
+    private static final List<Plant> PLANTS = new LinkedList<>();
 
     public static void init()
     {
@@ -34,34 +37,51 @@ public class PlantHandler
         registerPlant(ZAMITES);
         registerPlant(DICKSONIA);
         registerPlant(WILD_ONION);
-        registerPlant(DICROIDIUM_ZUBERI_PLANT);
+        registerPlant(DICROIDIUM_ZUBERI);
+        registerPlant(DICTYOPHYLLUM);
+        registerPlant(WEST_INDIAN_LILAC);
     }
 
     public static Plant getPlantById(int id)
     {
-        if (id >= plants.size() || id < 0)
+        if (id >= PLANTS.size() || id < 0)
         {
             return null;
         }
 
-        return plants.get(id);
+        return PLANTS.get(id);
     }
 
     public static int getPlantId(Plant plant)
     {
-        return plants.indexOf(plant);
+        return PLANTS.indexOf(plant);
     }
 
     public static List<Plant> getPlants()
     {
-        return plants;
+        return PLANTS;
     }
 
     public static void registerPlant(Plant plant)
     {
-        if (!plants.contains(plant))
+        if (!PLANTS.contains(plant))
         {
-            plants.add(plant);
+            PLANTS.add(plant);
         }
+    }
+
+    public static List<Plant> getPrehistoricPlants()
+    {
+        List<Plant> prehistoricPlants = new LinkedList<>();
+
+        for (Plant plant : PLANTS)
+        {
+            if (plant.shouldRegister() && plant.isPrehistoric())
+            {
+                prehistoricPlants.add(plant);
+            }
+        }
+
+        return prehistoricPlants;
     }
 }

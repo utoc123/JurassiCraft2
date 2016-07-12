@@ -200,7 +200,7 @@ public class DoublePlantBlock extends AncientPlantBlock
         return super.canPlace(down, here, up) && up.getBlock() == Blocks.AIR;
     }
 
-    enum BlockHalf implements IStringSerializable
+    public enum BlockHalf implements IStringSerializable
     {
         UPPER, LOWER;
 

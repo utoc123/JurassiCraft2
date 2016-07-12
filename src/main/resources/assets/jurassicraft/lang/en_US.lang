@@ -281,6 +281,8 @@ tile.scaly_tree_fern.name=Scaly Tree Fern
 tile.cycad_zamites.name=Zamites
 tile.dicksonia.name=Dicksonia
 tile.dicroidium_zuberi.name=Dicroidium Zuberi
+tile.west_indian_lilac.name=West Indian Lilac
+tile.dictyophyllum.name=Dictyophyllum
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -320,6 +322,8 @@ plants.dicksonia.name=Dicksonia
 plants.ajuginucula_smithii.name=Ajuginucula Smithii
 plants.wild_onion.name=Wild Onion
 plants.dicroidium_zuberi.name=Dicroidium Zuberi
+plants.west_indian_lilac.name=West Indian Lilac
+plants.dictyophyllum.name=Dictyophyllum
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

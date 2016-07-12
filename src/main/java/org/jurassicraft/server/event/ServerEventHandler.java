@@ -12,6 +12,8 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.biome.BiomeJungle;
+import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -22,6 +24,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
+import org.jurassicraft.server.block.plant.DoublePlantBlock;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
@@ -109,16 +112,29 @@ public class ServerEventHandler
             decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
         }
 
-        if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome == Biomes.SWAMPLAND || biome == Biomes.JUNGLE)
+        if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome instanceof BiomeSwamp || biome instanceof BiomeJungle)
         {
             if (rand.nextInt(8) == 0)
             {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
-                IBlockState state = world.getBlockState(topBlock.down());
 
-                if (state.isOpaqueCube())
+                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid())
                 {
                     world.setBlockState(topBlock, BlockHandler.MOSS.getDefaultState(), 2);
+                }
+            }
+        }
+
+        if (biome instanceof BiomeJungle || biome instanceof BiomeSwamp)
+        {
+            if (rand.nextInt(8) == 0)
+            {
+                BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
+
+                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid())
+                {
+                    world.setBlockState(topBlock.up(), BlockHandler.WEST_INDIAN_LILAC.getDefaultState(), 2);
+                    world.setBlockState(topBlock, BlockHandler.WEST_INDIAN_LILAC.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.LOWER), 2);
                 }
             }
         }
@@ -141,7 +157,7 @@ public class ServerEventHandler
             }
         }
 
-        if (biome == Biomes.SWAMPLAND)
+        if (biome instanceof BiomeSwamp)
         {
             if (rand.nextInt(2) == 0)
             {

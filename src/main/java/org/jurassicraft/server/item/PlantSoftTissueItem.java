@@ -13,9 +13,9 @@ import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.tab.TabHandler;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -52,7 +52,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
     {
-        List<Plant> plants = new ArrayList<>(PlantHandler.getPlants());
+        List<Plant> plants = new LinkedList<>(PlantHandler.getPrehistoricPlants());
 
         Map<Plant, Integer> ids = new HashMap<>();
 
@@ -65,10 +65,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
 
         for (Plant plant : plants)
         {
-            if (plant.shouldRegister())
-            {
-                subtypes.add(new ItemStack(item, 1, ids.get(plant)));
-            }
+            subtypes.add(new ItemStack(item, 1, ids.get(plant)));
         }
     }
 

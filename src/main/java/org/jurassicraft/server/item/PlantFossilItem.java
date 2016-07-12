@@ -33,7 +33,7 @@ public class PlantFossilItem extends Item implements GrindableItem
 
         if (outputType == 3)
         {
-            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, random.nextInt(PlantHandler.getPlants().size()));
+            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, random.nextInt(PlantHandler.getPrehistoricPlants().size()));
             output.setTagCompound(tag);
             return output;
         }

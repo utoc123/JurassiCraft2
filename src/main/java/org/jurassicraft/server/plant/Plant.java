@@ -26,4 +26,9 @@ public abstract class Plant implements Comparable<Plant>
     {
         return new FoodHelper.FoodEffect[0];
     }
+
+    public boolean isPrehistoric()
+    {
+        return true;
+    }
 }

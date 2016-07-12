@@ -182,7 +182,7 @@ public enum RenderingHandler
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName()));
         }
 
-        for (Plant plant : PlantHandler.getPlants())
+        for (Plant plant : PlantHandler.getPrehistoricPlants())
         {
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 
@@ -349,6 +349,8 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.PEAT, "peat", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.PEAT_MOSS, "peat_moss", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.DICROIDIUM_ZUBERI, "dicroidium_zuberi", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.WEST_INDIAN_LILAC, "west_indian_lilac", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.DICTYOPHYLLUM, "dictyophyllum", "inventory");
 
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
         {
@@ -509,7 +511,7 @@ public enum RenderingHandler
 
         meta = 0;
 
-        for (Plant plant : PlantHandler.getPlants())
+        for (Plant plant : PlantHandler.getPrehistoricPlants())
         {
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 

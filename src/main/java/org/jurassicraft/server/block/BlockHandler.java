@@ -28,12 +28,14 @@ import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
 import org.jurassicraft.server.block.plant.CycadZamitesBlock;
 import org.jurassicraft.server.block.plant.DicksoniaBlock;
 import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
+import org.jurassicraft.server.block.plant.DictyophyllumBlock;
 import org.jurassicraft.server.block.plant.GracilariaBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SmallChainFernBlock;
 import org.jurassicraft.server.block.plant.SmallCycadBlock;
 import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
+import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
 import org.jurassicraft.server.block.plant.WildOnionBlock;
 import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
@@ -121,6 +123,8 @@ public class BlockHandler
     public static final AjuginuculaSmithiiBlock AJUGINUCULA_SMITHII = new AjuginuculaSmithiiBlock();
     public static final WildOnionBlock WILD_ONION = new WildOnionBlock();
     public static final GracilariaBlock GRACILARIA = new GracilariaBlock();
+    public static final DictyophyllumBlock DICTYOPHYLLUM = new DictyophyllumBlock();
+    public static final WestIndianLilacBlock WEST_INDIAN_LILAC = new WestIndianLilacBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -178,6 +182,8 @@ public class BlockHandler
         registerBlock(WILD_ONION, "Wild Onion Plant");
         registerBlock(GRACILARIA, "Gracilaria Seaweed");
         registerBlock(DICROIDIUM_ZUBERI, "Dicroidium Zuberi");
+        registerBlock(DICTYOPHYLLUM, "Dictyophyllum");
+        registerBlock(WEST_INDIAN_LILAC, "West Indian Lilac");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

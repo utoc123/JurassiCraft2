@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "jurassicraft:west_indian_lilac_bottom"
+    },
+    "half=upper": {
+      "model": "jurassicraft:west_indian_lilac_top"
+    }
+  }
+}
