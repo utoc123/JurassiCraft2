@@ -1,11 +1,14 @@
 package org.jurassicraft.server.tile;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.api.IncubatorEnvironmentItem;
 import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.item.DinosaurEggItem;
 import org.jurassicraft.server.item.ItemHandler;
@@ -13,7 +16,7 @@ import org.jurassicraft.server.item.ItemHandler;
 public class IncubatorTile extends MachineBaseTile
 {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4 };
-    private static final int[] OUTPUTS = new int[0];
+    private static final int[] ENVIRONMENT = new int[] { 5 };
 
     private int[] temperature = new int[5];
 
@@ -59,7 +62,20 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected boolean canProcess(int process)
     {
-        return slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof DinosaurEggItem;
+        ItemStack environment = slots[5];
+        boolean hasEnvironment = false;
+
+        if (environment != null)
+        {
+            Item item = environment.getItem();
+
+            if (item instanceof IncubatorEnvironmentItem || Block.getBlockFromItem(item) instanceof IncubatorEnvironmentItem)
+            {
+                hasEnvironment = true;
+            }
+        }
+
+        return hasEnvironment && slots[process] != null && slots[process].stackSize > 0 && slots[process].getItem() instanceof DinosaurEggItem;
     }
 
     @Override
@@ -80,6 +96,8 @@ public class IncubatorTile extends MachineBaseTile
             }
 
             incubatedEgg.setTagCompound(compound);
+
+            decreaseStackSize(5);
 
             slots[process] = incubatedEgg;
         }
@@ -118,7 +136,7 @@ public class IncubatorTile extends MachineBaseTile
     @Override
     protected int[] getOutputs()
     {
-        return OUTPUTS;
+        return ENVIRONMENT;
     }
 
     @Override
@@ -187,8 +205,9 @@ public class IncubatorTile extends MachineBaseTile
         }
     }
 
-    public String getCommandSenderName() // Forge Version compatibility, keep both getName and getCommandSenderName
+    @Override
+    protected boolean shouldResetProgress()
     {
-        return getName();
+        return false;
     }
 }

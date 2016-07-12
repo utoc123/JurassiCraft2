@@ -1,7 +1,6 @@
 package org.jurassicraft.server.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -46,7 +45,6 @@ import org.jurassicraft.server.block.tree.AncientStairsBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.ActionFigureTile;
 import org.jurassicraft.server.tile.CleaningStationTile;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
@@ -125,7 +123,7 @@ public class BlockHandler
     public static final GracilariaBlock GRACILARIA = new GracilariaBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
-    public static final Block PEAT_MOSS = new BasicBlock(Material.GROUND, SoundType.GROUND).setHardness(0.5F).setCreativeTab(TabHandler.PLANTS);
+    public static final Block PEAT_MOSS = new PeatMossBlock();
     public static final MossBlock MOSS = new MossBlock();
 
     public static final FeederBlock FEEDER = new FeederBlock();

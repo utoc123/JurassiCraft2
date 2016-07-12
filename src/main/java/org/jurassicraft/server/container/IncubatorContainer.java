@@ -1,11 +1,13 @@
 package org.jurassicraft.server.container;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.api.IncubatorEnvironmentItem;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tile.IncubatorTile;
@@ -28,7 +30,7 @@ public class IncubatorContainer extends SyncedFieldContainer
         this.addSlotToContainer(new CustomSlot(incubator, 3, 102, 21, eggPredicate));
         this.addSlotToContainer(new CustomSlot(incubator, 4, 125, 28, eggPredicate));
 
-        this.addSlotToContainer(new Slot(incubator, 5, 79, 49));
+        this.addSlotToContainer(new CustomSlot(incubator, 5, 79, 49, stack -> stack.getItem() instanceof IncubatorEnvironmentItem || Block.getBlockFromItem(stack.getItem()) instanceof IncubatorEnvironmentItem));
 
         int i;
 

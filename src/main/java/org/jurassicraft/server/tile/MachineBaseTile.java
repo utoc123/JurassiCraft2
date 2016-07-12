@@ -258,7 +258,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
                 {
                     if (this.canProcess(process))
                     {
-                        ++this.processTime[process];
+                        this.processTime[process]++;
 
                         if (this.processTime[process] == this.totalProcessTime[process])
                         {
@@ -269,7 +269,14 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
                     }
                     else
                     {
-                        this.processTime[process] = 0;
+                        if (this.shouldResetProgress())
+                        {
+                            this.processTime[process] = 0;
+                        }
+                        else if (this.processTime[process] > 0)
+                        {
+                            this.processTime[process]--;
+                        }
                     }
 
                     sync = true;
@@ -481,5 +488,10 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet)
     {
         this.readFromNBT(packet.getNbtCompound());
+    }
+
+    protected boolean shouldResetProgress()
+    {
+        return true;
     }
 }
