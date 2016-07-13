@@ -15,6 +15,7 @@ import org.jurassicraft.server.block.tree.AncientPlanksBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Map;
@@ -59,7 +60,7 @@ public class RecipeHandler
         GameRegistry.addRecipe(new ItemStack(ItemHandler.EMPTY_TEST_TUBE, 8), "G", "G", 'G', Blocks.GLASS);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.PETRI_DISH, 4), "G G", "GGG", 'G', Blocks.GLASS_PANE);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PETRI_DISH_AGAR, 4), ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.LIQUID_AGAR);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.EMPTY_SYRINGE), "I", "T", "I", 'I', Items.IRON_INGOT, 'T', ItemHandler.EMPTY_TEST_TUBE);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.EMPTY_SYRINGE), " I ", " T ", "III", 'I', "nuggetIron", 'T', ItemHandler.EMPTY_TEST_TUBE));
         GameRegistry.addSmelting(new ItemStack(Items.POTIONITEM, 1, 0), new ItemStack(ItemHandler.DNA_NUCLEOTIDES), 1.0F);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_EXTRACTOR), "III", "SAP", "HII", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'A', ItemHandler.DNA_ANALYZER, 'P', Blocks.GLASS_PANE, 'H', ItemHandler.HARD_DRIVE);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.DNA_ANALYZER, 'S', ItemHandler.COMPUTER_SCREEN, 'H', ItemHandler.HARD_DRIVE, 'K', ItemHandler.KEYBOARD);
@@ -119,7 +120,7 @@ public class RecipeHandler
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.AMBER, '#', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.MR_DNA_KEYCHAIN), "A", "#", 'A', ItemHandler.DNA_NUCLEOTIDES, '#', Items.IRON_INGOT);
 
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.PADDOCK_SIGN), "III", "SSS", "III", 'I', Items.IRON_INGOT, 'S', Items.SIGN);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.PADDOCK_SIGN), "III", "SSS", "III", 'I', "nuggetIron", 'S', Items.SIGN));
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.FIELD_GUIDE), "WBW", "PPP", "WBW", 'W', new ItemStack(Blocks.WOOL, 1, 3), 'B', Items.BONE, 'P', Items.PAPER);
 
@@ -140,6 +141,22 @@ public class RecipeHandler
         addPaleoBaleRecipe(BlockHandler.PALEO_BALE_FERN);
         addPaleoBaleRecipe(BlockHandler.PALEO_BALE_LEAVES);
         addPaleoBaleRecipe(BlockHandler.PALEO_BALE_OTHER);
+
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.ATTRACTION_SIGN), "III", "SSS", "III", 'I', Items.IRON_INGOT, 'S', Items.SIGN);
+
+        AttractionSignEntity.AttractionSignType[] types = AttractionSignEntity.AttractionSignType.values();
+
+        for (int i = 0; i < types.length; i++)
+        {
+            int previous = i - 1;
+
+            if (previous < 0)
+            {
+                previous = types.length - 1;
+            }
+
+            GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.ATTRACTION_SIGN, 1, i), new ItemStack(ItemHandler.ATTRACTION_SIGN, 1, previous));
+        }
     }
 
     private static void addPaleoBaleRecipe(PaleoBaleBlock block)

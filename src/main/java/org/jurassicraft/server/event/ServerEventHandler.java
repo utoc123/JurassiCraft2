@@ -6,6 +6,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
@@ -15,6 +16,16 @@ import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootEntryItem;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.SetMetadata;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -25,9 +36,12 @@ import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.plant.DoublePlantBlock;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
+import java.util.List;
 import java.util.Random;
 
 public class ServerEventHandler
@@ -198,6 +212,37 @@ public class ServerEventHandler
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onLootTableLoad(LootTableLoadEvent event)
+    {
+        ResourceLocation name = event.getName();
+
+        LootTable table = event.getTable();
+
+        if (name == LootTableList.GAMEPLAY_FISHING)
+        {
+            LootEntry[] entries = new LootEntry[] { new LootEntryItem(ItemHandler.GRACILARIA, 25, 0, new LootFunction[0], new LootCondition[0], "gracilaria") };
+            LootPool pool = new LootPool(entries, new LootCondition[0], new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft");
+            table.addPool(pool);
+        }
+        else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR)
+        {
+            List<Dinosaur> dinosaurs = EntityHandler.getRegisteredDinosaurs();
+
+            LootEntry[] entries = new LootEntry[dinosaurs.size()];
+
+            int i = 0;
+
+            for (Dinosaur dinosaur : dinosaurs)
+            {
+                int meta = EntityHandler.getDinosaurId(dinosaur);
+                entries[i++] = new LootEntryItem(ItemHandler.ACTION_FIGURE, 50, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase());
+            }
+
+            table.addPool(new LootPool(entries, new LootCondition[0], new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft"));
         }
     }
 }
