@@ -30,6 +30,7 @@ import org.jurassicraft.server.block.plant.DicksoniaBlock;
 import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
 import org.jurassicraft.server.block.plant.DictyophyllumBlock;
 import org.jurassicraft.server.block.plant.GracilariaBlock;
+import org.jurassicraft.server.block.plant.LadiniaSimplexBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
@@ -127,6 +128,7 @@ public class BlockHandler
     public static final DictyophyllumBlock DICTYOPHYLLUM = new DictyophyllumBlock();
     public static final WestIndianLilacBlock WEST_INDIAN_LILAC = new WestIndianLilacBlock();
     public static final SerennaVeriformansBlock SERENNA_VERIFORMANS = new SerennaVeriformansBlock();
+    public static final LadiniaSimplexBlock LADINIA_SIMPLEX = new LadiniaSimplexBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -187,6 +189,7 @@ public class BlockHandler
         registerBlock(DICTYOPHYLLUM, "Dictyophyllum");
         registerBlock(WEST_INDIAN_LILAC, "West Indian Lilac");
         registerBlock(SERENNA_VERIFORMANS, "Serenna Veriformans");
+        registerBlock(LADINIA_SIMPLEX, "Ladinia Simplex");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

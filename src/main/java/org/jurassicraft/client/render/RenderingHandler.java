@@ -352,6 +352,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.WEST_INDIAN_LILAC, "west_indian_lilac", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.DICTYOPHYLLUM, "dictyophyllum", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.SERENNA_VERIFORMANS, "serenna_veriformans", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.LADINIA_SIMPLEX, "ladinia_simplex", "inventory");
 
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
         {

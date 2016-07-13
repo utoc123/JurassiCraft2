@@ -39,7 +39,7 @@ public class AncientPlantBlock extends BlockBush
 
         if (light >= 5)
         {
-            if (rand.nextInt((15 - light) / 2 + 5) == 0)
+            if (rand.nextInt((int) (((15 - light) / 2 + 5) * 1.5)) == 0)
             {
                 int allowedInArea = DENSITY_PER_AREA;
 

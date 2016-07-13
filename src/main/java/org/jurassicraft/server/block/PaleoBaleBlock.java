@@ -41,9 +41,9 @@ public class PaleoBaleBlock extends BlockRotatedPillar
     {
         CYCADEOIDEA(BlockHandler.CYCADEOIDEA),
         CYCAD(BlockHandler.SMALL_CYCAD),
-        FERN(BlockHandler.SCALY_TREE_FERN, BlockHandler.SMALL_CHAIN_FERN, BlockHandler.SMALL_ROYAL_FERN),
+        FERN(BlockHandler.SCALY_TREE_FERN, BlockHandler.SMALL_CHAIN_FERN, BlockHandler.SMALL_ROYAL_FERN, BlockHandler.SERENNA_VERIFORMANS),
         LEAVES(BlockHandler.ANCIENT_LEAVES.values().toArray(new Block[BlockHandler.ANCIENT_LEAVES.size()])),
-        OTHER(BlockHandler.AJUGINUCULA_SMITHII, BlockHandler.CRY_PANSY, BlockHandler.DICKSONIA, BlockHandler.DICROIDIUM_ZUBERI, BlockHandler.WILD_ONION, BlockHandler.ZAMITES);
+        OTHER(BlockHandler.AJUGINUCULA_SMITHII, BlockHandler.CRY_PANSY, BlockHandler.DICKSONIA, BlockHandler.DICROIDIUM_ZUBERI, BlockHandler.WILD_ONION, BlockHandler.ZAMITES, BlockHandler.LADINIA_SIMPLEX, BlockHandler.DICTYOPHYLLUM);
 
         private Item[] ingredients;
 

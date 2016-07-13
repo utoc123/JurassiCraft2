@@ -1,5 +1,6 @@
 package org.jurassicraft.server.recipe;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -9,6 +10,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.PaleoBaleBlock;
+import org.jurassicraft.server.block.plant.DoublePlantBlock;
 import org.jurassicraft.server.block.tree.AncientPlanksBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -144,7 +146,7 @@ public class RecipeHandler
     {
         for (Item ingredient : block.getVariant().getIngredients())
         {
-            GameRegistry.addRecipe(new ItemStack(block), "###", "###", "###", '#', ingredient);
+            GameRegistry.addRecipe(new ItemStack(block, Block.getBlockFromItem(ingredient) instanceof DoublePlantBlock ? 2 : 1), "###", "###", "###", '#', ingredient);
         }
     }
 
