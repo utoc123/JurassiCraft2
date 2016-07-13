@@ -1,5 +1,6 @@
 package org.jurassicraft.server.entity.base;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
@@ -15,6 +16,7 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
@@ -52,6 +54,7 @@ import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
+import org.jurassicraft.server.entity.ai.HerdObj;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
@@ -71,7 +74,9 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.message.SetOrderMessage;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -111,6 +116,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @SideOnly(Side.CLIENT)
     public ChainBuffer tailBuffer;
+
+    public HerdObj herd;
 
     public DinosaurEntity(World world)
     {
@@ -438,6 +445,22 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
+    public void onDeath(DamageSource cause)
+    {
+        super.onDeath(cause);
+
+        if (herd != null)
+        {
+            if (herd.leader == this)
+            {
+                herd.updateLeader();
+            }
+
+            herd.members.remove(this);
+        }
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void performHurtAnimation()
     {
@@ -578,6 +601,27 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onLivingUpdate()
     {
         super.onLivingUpdate();
+
+        if (herd == null)
+        {
+            if (this.getNearbyFlock() != null)
+            {
+                this.getNearbyFlock().members.add(this);
+            }
+            else
+            {
+                herd = new HerdObj();
+                herd.createHerd(this);
+            }
+        }
+
+        if (this.herd != null)
+        {
+            if (this == herd.leader)
+            {
+                this.herd.onUpdate();
+            }
+        }
 
         if (!isCarcass)
         {
@@ -1351,6 +1395,33 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void resetAttackCooldown()
     {
         attackCooldown = 100 + getRNG().nextInt(20);
+    }
+
+    public HerdObj getNearbyFlock()
+    {
+        double d0 = 64;
+        EntityAINearestAttackableTarget.Sorter sort = new EntityAINearestAttackableTarget.Sorter(this);
+        Predicate<DinosaurEntity> predicate = new Predicate<DinosaurEntity>()
+        {
+            @Override
+            public boolean apply(@Nullable DinosaurEntity dinosaur)
+            {
+                return dinosaur != null && dinosaur.getClass().equals(this.getClass());
+            }
+        };
+        List<DinosaurEntity> nearby = worldObj.getEntitiesWithinAABB(DinosaurEntity.class, this.getEntityBoundingBox().expand(d0, 4.0D, d0), predicate);
+        Collections.sort(nearby, sort);
+        if (!nearby.isEmpty())
+        {
+            for (DinosaurEntity mob : nearby)
+            {
+                if (mob.getClass().equals(this.getClass()) && mob.herd != null && mob.herd.leader == mob)
+                {
+                    return mob.herd;
+                }
+            }
+        }
+        return null;
     }
 
     public enum Order
