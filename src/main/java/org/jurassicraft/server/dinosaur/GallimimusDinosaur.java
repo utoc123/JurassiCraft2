@@ -27,6 +27,7 @@ public class GallimimusDinosaur extends Dinosaur
         this.setBones("skull", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "leg_bones", "foot_bones", "arm_bones");
         this.setHeadCubeName("Head Base");
         this.setScale(0.85F, 0.2F);
+        this.setImprintable(true);
         this.setFlee(true);
     }
 }

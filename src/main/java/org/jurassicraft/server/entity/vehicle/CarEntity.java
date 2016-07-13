@@ -35,7 +35,8 @@ import java.util.Map;
 public abstract class CarEntity extends Entity
 {
     public static final DataParameter<Byte> WATCHER_STATE = EntityDataManager.createKey(CarEntity.class, DataSerializers.BYTE);
-    private static final float MAX_HEALTH = 40.0F;
+    public static final DataParameter<Float> WATCHER_HEALTH = EntityDataManager.createKey(CarEntity.class, DataSerializers.FLOAT);
+    public static final float MAX_HEALTH = 40.0F;
 
     public float wheelRotation;
     public float wheelRotateAmount;
@@ -51,7 +52,10 @@ public abstract class CarEntity extends Entity
     @SideOnly(Side.CLIENT)
     public CarSound sound;
 
-    private float health;
+    public float health;
+
+    private float healAmount;
+    private int healCooldown = 40;
 
     public CarEntity(World world)
     {
@@ -76,6 +80,8 @@ public abstract class CarEntity extends Entity
             if (source.getEntity() instanceof EntityPlayer)
             {
                 amount *= 10.0F;
+                healAmount += amount;
+                healCooldown = 40;
             }
 
             health -= amount;
@@ -101,6 +107,25 @@ public abstract class CarEntity extends Entity
     public void onUpdate()
     {
         super.onUpdate();
+
+        if (!worldObj.isRemote)
+        {
+            if (healCooldown > 0)
+            {
+                healCooldown--;
+            }
+            else if (healAmount > 0)
+            {
+                health++;
+                healAmount--;
+
+                if (health > MAX_HEALTH)
+                {
+                    health = MAX_HEALTH;
+                    healAmount = 0;
+                }
+            }
+        }
 
         if (seats.size() == 0)
         {
@@ -197,14 +222,13 @@ public abstract class CarEntity extends Entity
         this.wheelRotateAmount += (delta - this.wheelRotateAmount) * 0.4F;
         this.wheelRotation += this.wheelRotateAmount;
 
-        if (health < MAX_HEALTH && ticksExisted % 50 == 0)
+        if (!worldObj.isRemote)
         {
-            health++;
-
-            if (health > MAX_HEALTH)
-            {
-                health = MAX_HEALTH;
-            }
+            this.dataManager.set(WATCHER_HEALTH, health);
+        }
+        else
+        {
+            health = this.dataManager.get(WATCHER_HEALTH);
         }
     }
 
@@ -298,18 +322,21 @@ public abstract class CarEntity extends Entity
     protected void entityInit()
     {
         dataManager.register(WATCHER_STATE, (byte) 0);
+        dataManager.register(WATCHER_HEALTH, 40.0F);
     }
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound)
     {
         this.health = compound.getFloat("Health");
+        this.healAmount = compound.getFloat("HealAmount");
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound)
     {
         compound.setFloat("Health", health);
+        compound.setFloat("HealAmount", healAmount);
     }
 
     @Override
