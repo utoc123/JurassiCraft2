@@ -95,6 +95,7 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
+import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -180,6 +181,12 @@ public enum RenderingHandler
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
         {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName()));
+        }
+
+        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values())
+        {
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.NEST_FOSSIL), new ResourceLocation("jurassicraft:nest_fossil_" + (variant.ordinal() + 1)));
+            ModelBakery.registerItemVariants(ItemHandler.FOSSILIZED_EGG, new ResourceLocation("jurassicraft:fossilized_egg_" + (variant.ordinal() + 1)));
         }
 
         for (Plant plant : PlantHandler.getPrehistoricPlants())
@@ -359,6 +366,12 @@ public enum RenderingHandler
             this.registerBlockRenderer(modelMesher, BlockHandler.FOSSILIZED_TRACKWAY, trackwayType.ordinal(), "fossilized_trackway_" + trackwayType.getName(), "inventory");
         }
 
+        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values())
+        {
+            this.registerBlockRenderer(modelMesher, BlockHandler.NEST_FOSSIL, variant.ordinal(), "nest_fossil_" + (variant.ordinal() + 1), "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.ENCASED_NEST_FOSSIL, variant.ordinal(), "encased_nest_fossil", "inventory");
+        }
+
         this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_CYCADEOIDEA, "paleo_bale_cycadeoidea", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_CYCAD, "paleo_bale_cycad", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_FERN, "paleo_bale_fern", "inventory");
@@ -519,6 +532,11 @@ public enum RenderingHandler
 
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_DNA, meta, "dna/plants/dna_" + name, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");
+        }
+
+        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values())
+        {
+            this.registerItemRenderer(modelMesher, ItemHandler.FOSSILIZED_EGG, variant.ordinal(), "fossilized_egg_" + (variant.ordinal() + 1), "inventory");
         }
 
         ItemColors itemColors = mc.getItemColors();

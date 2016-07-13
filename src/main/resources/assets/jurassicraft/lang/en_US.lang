@@ -119,6 +119,8 @@ item.wing_bones_fresh.name=Fresh {dino} Wing Bones
 item.arm_bones_fresh.name=Fresh {dino} Arm Bones
 item.first_dorsal_fin_fresh.name=Fresh {dino} First Dorsal Fin
 
+item.fossilized_egg.name=Fossilized Egg
+
 item.skull.name={dino} Skull
 item.tooth.name={dino} Tooth
 item.anal_fin.name={dino} Anal Fin
@@ -235,6 +237,8 @@ tile.fossil_block.name={period} Fossil
 tile.encased_fossil.name=Encased {period} Fossil
 tile.plant_fossil_block.name=Plant Fossil
 tile.fossilized_trackway.name=Fossilized {variant} Trackway
+tile.nest_fossil.name=Fossilized Nest
+tile.encased_nest_fossil.name=Encased Fossilized Nest
 tile.amber_ore.name=Amber Ore
 tile.ice_shard.name=Ice Shard Ore
 tile.moss.name=Moss

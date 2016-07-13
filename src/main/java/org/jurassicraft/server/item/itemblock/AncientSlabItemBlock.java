@@ -20,12 +20,12 @@ import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientSlabBlock;
 import org.jurassicraft.server.block.tree.AncientSlabHalfBlock;
 
-public class JCSlabItemBlock extends ItemBlock
+public class AncientSlabItemBlock extends ItemBlock
 {
     private final BlockSlab singleSlab;
     private final BlockSlab doubleSlab;
 
-    public JCSlabItemBlock(Block block, AncientSlabHalfBlock singleSlab, AncientDoubleSlabBlock doubleSlab)
+    public AncientSlabItemBlock(Block block, AncientSlabHalfBlock singleSlab, AncientDoubleSlabBlock doubleSlab)
     {
         super(block);
         this.singleSlab = singleSlab;

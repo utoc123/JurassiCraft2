@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.item.itemblock.JCSlabItemBlock;
+import org.jurassicraft.server.item.itemblock.AncientSlabItemBlock;
 
 public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlock
 {
@@ -112,6 +112,6 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
     @Override
     public ItemBlock getItemBlock()
     {
-        return new JCSlabItemBlock(this, BlockHandler.ANCIENT_SLABS.get(type), BlockHandler.ANCIENT_DOUBLE_SLABS.get(type));
+        return new AncientSlabItemBlock(this, BlockHandler.ANCIENT_SLABS.get(type), BlockHandler.ANCIENT_DOUBLE_SLABS.get(type));
     }
 }

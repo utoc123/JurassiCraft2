@@ -14,6 +14,7 @@ import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
+import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class PlasterAndBandageItem extends Item
@@ -43,6 +44,19 @@ public class PlasterAndBandageItem extends Item
                 int id = BlockHandler.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
 
                 world.setBlockState(pos, BlockHandler.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.getMetadata(id)));
+
+                if (!player.capabilities.isCreativeMode)
+                {
+                    stack.stackSize--;
+                }
+
+                player.addStat(AchievementHandler.FOSSILS, 1);
+
+                return EnumActionResult.SUCCESS;
+            }
+            else if (block instanceof NestFossilBlock && !((NestFossilBlock) block).encased)
+            {
+                world.setBlockState(pos, BlockHandler.ENCASED_NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, state.getValue(NestFossilBlock.VARIANT)));
 
                 if (!player.capabilities.isCreativeMode)
                 {

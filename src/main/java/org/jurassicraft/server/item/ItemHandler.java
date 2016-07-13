@@ -100,6 +100,8 @@ public class ItemHandler
     public static final Map<String, FossilItem> FOSSILS = new HashMap<>();
     public static final Map<String, FossilItem> FRESH_FOSSILS = new HashMap<>();
 
+    public static final FossilizedEggItem FOSSILIZED_EGG = new FossilizedEggItem();
+
     public static final BasicItem GYPSUM_POWDER = new BasicItem(TabHandler.ITEMS);
 
     public static final BasicItem COMPUTER_SCREEN = new BasicItem(TabHandler.ITEMS);
@@ -124,6 +126,8 @@ public class ItemHandler
 
     public static void init()
     {
+        registerItem(FOSSILIZED_EGG, "Fossilized Egg");
+
         for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
         {
             String[] boneTypes = dinosaur.getBones();

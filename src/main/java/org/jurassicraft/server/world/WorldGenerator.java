@@ -2,17 +2,26 @@ package org.jurassicraft.server.world;
 
 import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockColored;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDesert;
+import net.minecraft.world.biome.BiomeHills;
+import net.minecraft.world.biome.BiomeMesa;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.FossilizedTrackwayBlock;
+import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
@@ -36,6 +45,8 @@ public enum WorldGenerator implements IWorldGenerator
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
     {
+        Biome biome = world.getBiomeGenForCoords(new BlockPos(chunkX, 0, chunkZ));
+
         for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++)
         {
             int randPosX = chunkX + random.nextInt(16);
@@ -80,6 +91,57 @@ public enum WorldGenerator implements IWorldGenerator
                         new WorldGenMinable(BlockHandler.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
                     }
                 }
+            }
+        }
+
+        int nestChance = 100;
+
+        if (biome instanceof BiomeHills || biome instanceof BiomeMesa || biome instanceof BiomeDesert)
+        {
+            nestChance = 30;
+        }
+
+        if (random.nextInt(nestChance) == 0)
+        {
+            BlockPos pos = new BlockPos(chunkX + random.nextInt(16), random.nextInt(20) + 30, chunkZ + random.nextInt(16));
+
+            IBlockState nest = BlockHandler.NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, NestFossilBlock.Variant.values()[random.nextInt(NestFossilBlock.Variant.values().length)]);
+            IBlockState trackway = BlockHandler.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.VARIANT, FossilizedTrackwayBlock.TrackwayType.values()[random.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)]).withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.getHorizontal(random.nextInt(4)));
+
+            int size = random.nextInt(3) + 6;
+
+            for (int x = 0; x < size; x++)
+            {
+                for (int z = 0; z < size; z++)
+                {
+                    IBlockState state = null;
+
+                    if (random.nextFloat() < 0.8F)
+                    {
+                        if (random.nextFloat() < 0.1F)
+                        {
+                            state = trackway;
+                        }
+                        else if (random.nextFloat() < 0.6F)
+                        {
+                            state = Blocks.GRAVEL.getDefaultState();
+                        }
+                        else
+                        {
+                            state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, random.nextBoolean() ? EnumDyeColor.WHITE : EnumDyeColor.SILVER);
+                        }
+                    }
+
+                    if (state != null)
+                    {
+                        world.setBlockState(pos.add(x, 0, z), state);
+                    }
+                }
+            }
+
+            for (int i = 0; i < random.nextInt(2) + 1; i++)
+            {
+                world.setBlockState(pos.add(random.nextInt(size), 0, random.nextInt(size)), nest);
             }
         }
 

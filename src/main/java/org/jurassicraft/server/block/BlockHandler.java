@@ -112,6 +112,8 @@ public class BlockHandler
     public static final ClearGlassBlock CLEAR_GLASS = new ClearGlassBlock();
 
     public static final FossilizedTrackwayBlock FOSSILIZED_TRACKWAY = new FossilizedTrackwayBlock();
+    public static final NestFossilBlock NEST_FOSSIL = new NestFossilBlock(false);
+    public static final NestFossilBlock ENCASED_NEST_FOSSIL = new NestFossilBlock(true);
 
     public static final SmallRoyalFernBlock SMALL_ROYAL_FERN = new SmallRoyalFernBlock();
     public static final SmallChainFernBlock SMALL_CHAIN_FERN = new SmallChainFernBlock();
@@ -146,6 +148,8 @@ public class BlockHandler
     {
         registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
         registerBlock(FOSSILIZED_TRACKWAY, "Fossilized Trackway");
+        registerBlock(NEST_FOSSIL, "Nest Fossil");
+        registerBlock(ENCASED_NEST_FOSSIL, "Encased Nest Fossil");
 
         for (int i = 0; i < (int) Math.ceil(EntityHandler.getDinosaurs().size() / 16.0F); i++)
         {

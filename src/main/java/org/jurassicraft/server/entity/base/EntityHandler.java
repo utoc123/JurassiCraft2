@@ -312,17 +312,32 @@ public class EntityHandler
 
     public static List<Dinosaur> getRegisteredDinosaurs()
     {
-        List<Dinosaur> reg = new ArrayList<>();
+        List<Dinosaur> dinosaurs = new ArrayList<>();
 
-        for (Dinosaur dino : dinosaurs)
+        for (Dinosaur dinosaur : EntityHandler.dinosaurs)
         {
-            if (dino.shouldRegister())
+            if (dinosaur.shouldRegister())
             {
-                reg.add(dino);
+                dinosaurs.add(dinosaur);
             }
         }
 
-        return reg;
+        return dinosaurs;
+    }
+
+    public static List<Dinosaur> getPrehistoricDinosaurs()
+    {
+        List<Dinosaur> dinosaurs = new ArrayList<>();
+
+        for (Dinosaur dinosaur : EntityHandler.dinosaurs)
+        {
+            if (dinosaur.shouldRegister() && !(dinosaur instanceof Hybrid))
+            {
+                dinosaurs.add(dinosaur);
+            }
+        }
+
+        return dinosaurs;
     }
 
     public static List<Dinosaur> getDinosaursFromPeriod(TimePeriod period)
