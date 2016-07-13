@@ -52,9 +52,7 @@ import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
-import org.jurassicraft.server.entity.ai.HerdEntityAI;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
-import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
 import org.jurassicraft.server.entity.ai.TargetCarcassEntityAI;
@@ -106,7 +104,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private UUID owner;
     private boolean isSleeping;
     private int stayAwakeTime;
-    private HerdEntityAI herdEntityAI;
     private boolean useInertialTweens;
     private List<Class<? extends EntityLivingBase>> attackTargets = new ArrayList<>();
 
@@ -162,11 +159,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.tasks.addTask(2, new AssistOwnerEntityAI(this));
         }
 
-        this.tasks.addTask(2, new RespondToAttackEntityAI(this));
         this.tasks.addTask(2, new EntityAIWander(this, 0.8F, 20));
         this.tasks.addTask(2, new FollowOwnerEntityAI(this));
-
-        this.tasks.addTask(2, herdEntityAI = new HerdEntityAI(this));
 
         this.tasks.addTask(2, getAttackAI());
 
@@ -777,13 +771,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private void updateTailBuffer()
     {
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
-    }
-
-    @Override
-    public void onDeath(DamageSource cause)
-    {
-        herdEntityAI.terminate(this);
-        super.onDeath(cause);
     }
 
     @Override
