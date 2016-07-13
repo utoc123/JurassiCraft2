@@ -9,7 +9,7 @@ import org.jurassicraft.server.lang.LangHelper;
 
 import java.util.List;
 
-public class DinoDNA
+public class/* Bingo! */ DinoDNA
 {
     private int quality;
     private String genetics;
