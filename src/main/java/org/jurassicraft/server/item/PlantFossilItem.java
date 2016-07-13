@@ -5,9 +5,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.jurassicraft.server.api.GrindableItem;
+import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.tab.TabHandler;
 
+import java.util.List;
 import java.util.Random;
 
 public class PlantFossilItem extends Item implements GrindableItem
@@ -33,7 +35,8 @@ public class PlantFossilItem extends Item implements GrindableItem
 
         if (outputType == 3)
         {
-            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, random.nextInt(PlantHandler.getPrehistoricPlants().size()));
+            List<Plant> prehistoricPlants = PlantHandler.getPrehistoricPlants();
+            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, PlantHandler.getPlantId(prehistoricPlants.get(random.nextInt(prehistoricPlants.size()))));
             output.setTagCompound(tag);
             return output;
         }

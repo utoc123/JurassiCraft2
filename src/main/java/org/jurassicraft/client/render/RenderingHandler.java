@@ -351,6 +351,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.DICROIDIUM_ZUBERI, "dicroidium_zuberi", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.WEST_INDIAN_LILAC, "west_indian_lilac", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.DICTYOPHYLLUM, "dictyophyllum", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.SERENNA_VERIFORMANS, "serenna_veriformans", "inventory");
 
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
         {
@@ -509,16 +510,14 @@ public enum RenderingHandler
             meta++;
         }
 
-        meta = 0;
-
         for (Plant plant : PlantHandler.getPrehistoricPlants())
         {
+            meta = PlantHandler.getPlantId(plant);
+
             String name = plant.getName().toLowerCase().replaceAll(" ", "_");
 
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_DNA, meta, "dna/plants/dna_" + name, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");
-
-            meta++;
         }
 
         ItemColors itemColors = mc.getItemColors();

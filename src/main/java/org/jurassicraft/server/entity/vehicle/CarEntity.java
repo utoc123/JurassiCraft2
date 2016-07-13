@@ -35,6 +35,8 @@ import java.util.Map;
 public abstract class CarEntity extends Entity
 {
     public static final DataParameter<Byte> WATCHER_STATE = EntityDataManager.createKey(CarEntity.class, DataSerializers.BYTE);
+    private static final float MAX_HEALTH = 40.0F;
+
     public float wheelRotation;
     public float wheelRotateAmount;
     public float prevWheelRotateAmount;
@@ -49,17 +51,21 @@ public abstract class CarEntity extends Entity
     @SideOnly(Side.CLIENT)
     public CarSound sound;
 
+    private float health;
+
     public CarEntity(World world)
     {
         super(world);
         this.setSize(3.0F, 2.5F);
 
-        this.stepHeight = 1.0F;
+        this.stepHeight = 1.5F;
 
         if (world.isRemote)
         {
             updateSound();
         }
+
+        this.health = MAX_HEALTH;
     }
 
     @Override
@@ -67,7 +73,18 @@ public abstract class CarEntity extends Entity
     {
         if (!isEntityInvulnerable(source))
         {
-            this.setDead();
+            if (source.getEntity() instanceof EntityPlayer)
+            {
+                amount *= 10.0F;
+            }
+
+            health -= amount;
+
+            if (health < 0.0F)
+            {
+                this.setDead();
+            }
+
             return true;
         }
 
@@ -128,33 +145,36 @@ public abstract class CarEntity extends Entity
             setState((byte) 0);
         }
 
-        float moveAmount = 0.0F;
+        if (!this.isInWater())
+        {
+            float moveAmount = 0.0F;
 
-        if ((left() || right()) && !(forward() || backward()))
-        {
-            moveAmount += 0.05F;
-        }
+            if ((left() || right()) && !(forward() || backward()))
+            {
+                moveAmount += 0.05F;
+            }
 
-        if (forward())
-        {
-            moveAmount += 0.1F;
-        }
-        else if (backward())
-        {
-            moveAmount -= 0.05F;
-        }
+            if (forward())
+            {
+                moveAmount += 0.1F;
+            }
+            else if (backward())
+            {
+                moveAmount -= 0.05F;
+            }
 
-        if (left())
-        {
-            this.rotationYaw -= 26.0F * moveAmount;
-        }
-        else if (right())
-        {
-            this.rotationYaw += 26.0F * moveAmount;
-        }
+            if (left())
+            {
+                this.rotationYaw -= 26.0F * moveAmount;
+            }
+            else if (right())
+            {
+                this.rotationYaw += 26.0F * moveAmount;
+            }
 
-        this.motionX += MathHelper.sin(-this.rotationYaw * 0.017453292F) * moveAmount;
-        this.motionZ += MathHelper.cos(this.rotationYaw * 0.017453292F) * moveAmount;
+            this.motionX += MathHelper.sin(-this.rotationYaw * 0.017453292F) * moveAmount;
+            this.motionZ += MathHelper.cos(this.rotationYaw * 0.017453292F) * moveAmount;
+        }
 
         motionY -= 0.1F;
 
@@ -176,6 +196,16 @@ public abstract class CarEntity extends Entity
 
         this.wheelRotateAmount += (delta - this.wheelRotateAmount) * 0.4F;
         this.wheelRotation += this.wheelRotateAmount;
+
+        if (health < MAX_HEALTH && ticksExisted % 50 == 0)
+        {
+            health++;
+
+            if (health > MAX_HEALTH)
+            {
+                health = MAX_HEALTH;
+            }
+        }
     }
 
     private void updateKeyStates()
@@ -273,13 +303,13 @@ public abstract class CarEntity extends Entity
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound)
     {
-
+        this.health = compound.getFloat("Health");
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound)
     {
-
+        compound.setFloat("Health", health);
     }
 
     @Override

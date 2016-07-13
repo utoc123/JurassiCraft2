@@ -14,12 +14,12 @@ public class BlockBreaker
 {
     // This is a base factor use to adjust break time.
     public static final float BASE_BREAK_FACTOR = 2.5F;
-    private final World _world;
-    private final BlockPos _pos;
-    private final int _ticksNeeded;
-    private final int _entityID;
-    private int _ticksDone;
-    private int _previousTicksDone;
+    private final World world;
+    private final BlockPos pos;
+    private final int totalProgress;
+    private final int entityID;
+    private int progress;
+    private int previousProgress;
 
     /**
      * Constructs a block breaker that used to breaks blocks over time.
@@ -31,10 +31,10 @@ public class BlockBreaker
      */
     public BlockBreaker(Entity entity, double digSpeed, BlockPos pos, double minSeconds)
     {
-        _world = entity.getEntityWorld();
-        _entityID = entity.getEntityId();
-        _pos = pos;
-        _ticksNeeded = (int) Math.max(breakSeconds(_world, digSpeed, pos), minSeconds) * 20;
+        this.world = entity.getEntityWorld();
+        this.entityID = entity.getEntityId();
+        this.pos = pos;
+        this.totalProgress = (int) Math.max(breakSeconds(world, digSpeed, pos), minSeconds) * 20;
     }
 
     /**
@@ -59,7 +59,7 @@ public class BlockBreaker
     public static double breakSeconds(World world, double digSpeed, BlockPos pos)
     {
         IBlockState state = world.getBlockState(pos);
-        float hardness = state.getBlock().getBlockHardness(world.getBlockState(pos), world, pos);
+        float hardness = state.getBlockHardness(world, pos);
 
         return (BASE_BREAK_FACTOR * hardness) / (digSpeed);
     }
@@ -69,7 +69,7 @@ public class BlockBreaker
      */
     public int ticksLeft()
     {
-        return _ticksNeeded - _ticksDone;
+        return totalProgress - progress;
     }
 
     /**
@@ -80,16 +80,16 @@ public class BlockBreaker
     public boolean tickUpdate()
     {
         // we have 10 stages
-        ++_ticksDone;
-        int i = (int) ((float) _ticksDone / _ticksNeeded * 10.0F);
+        ++progress;
+        int i = (int) ((float) progress / totalProgress * 10.0F);
 
-        if (i != this._previousTicksDone)
+        if (i != this.previousProgress)
         {
-            _world.sendBlockBreakProgress(_entityID, _pos, i);
-            this._previousTicksDone = i;
+            world.sendBlockBreakProgress(entityID, pos, i);
+            this.previousProgress = i;
         }
 
-        return (_ticksDone > _ticksNeeded);
+        return (progress > totalProgress);
     }
 
     /**
@@ -97,19 +97,19 @@ public class BlockBreaker
      */
     public void reset()
     {
-        _ticksDone = 0;
-        _previousTicksDone = 0;
-        _world.sendBlockBreakProgress(_entityID, _pos, 0);
+        progress = 0;
+        previousProgress = 0;
+        world.sendBlockBreakProgress(entityID, pos, 0);
     }
 
     @Override
     public String toString()
     {
         return "BlockBreaker{" +
-                "_pos=" + _pos +
-                ", _ticksNeeded=" + _ticksNeeded +
-                ", _entityID=" + _entityID +
-                ", _ticksDone=" + _ticksDone +
+                "_pos=" + pos +
+                ", _ticksNeeded=" + totalProgress +
+                ", _entityID=" + entityID +
+                ", _ticksDone=" + progress +
                 '}';
     }
 

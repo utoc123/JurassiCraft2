@@ -283,6 +283,7 @@ tile.dicksonia.name=Dicksonia
 tile.dicroidium_zuberi.name=Dicroidium Zuberi
 tile.west_indian_lilac.name=West Indian Lilac
 tile.dictyophyllum.name=Dictyophyllum
+tile.serenna_veriformans.name=Serenna Veriformans
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -324,6 +325,7 @@ plants.wild_onion.name=Wild Onion
 plants.dicroidium_zuberi.name=Dicroidium Zuberi
 plants.west_indian_lilac.name=West Indian Lilac
 plants.dictyophyllum.name=Dictyophyllum
+plants.serenna_veriformans.name=Serenna Veriformans
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station
