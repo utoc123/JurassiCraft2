@@ -22,6 +22,7 @@ public class PlantHandler
     public static final Plant WEST_INDIAN_LILAC = new WestIndianLilacPlant();
     public static final Plant SERENNA_VERIFORMANS = new SerennaVeriformansPlant();
     public static final Plant LADINIA_SIMPLEX = new LadiniaSimplexPlant();
+    public static final Plant ORONTIUM_MACKII = new OrontiumMackiiPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -44,6 +45,7 @@ public class PlantHandler
         registerPlant(WEST_INDIAN_LILAC);
         registerPlant(SERENNA_VERIFORMANS);
         registerPlant(LADINIA_SIMPLEX);
+        registerPlant(ORONTIUM_MACKII);
     }
 
     public static Plant getPlantById(int id)
