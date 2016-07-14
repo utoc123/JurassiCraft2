@@ -1,10 +1,14 @@
 package org.jurassicraft.server.entity.ai;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,8 +16,6 @@ import java.util.Random;
 
 public class Herd implements Iterable<DinosaurEntity>
 {
-    public static final int MAX_HERD_SIZE = 32;
-
     public List<DinosaurEntity> members = new LinkedList<>();
     public DinosaurEntity leader;
 
@@ -27,8 +29,15 @@ public class Herd implements Iterable<DinosaurEntity>
 
     private Random random = new Random();
 
+    public List<EntityLivingBase> enemies = new ArrayList<>();
+
+    public boolean fleeing;
+
+    private Dinosaur herdType;
+
     public Herd(DinosaurEntity leader)
     {
+        this.herdType = leader.getDinosaur();
         this.members.add(leader);
         this.leader = leader;
         this.resetStateTicks();
@@ -61,6 +70,36 @@ public class Herd implements Iterable<DinosaurEntity>
 
             this.center = getCenterPosition();
 
+            if (enemies.size() > 0)
+            {
+                if (fleeing)
+                {
+                    state = State.MOVING;
+
+                    float angle = 0.0F;
+
+                    for (EntityLivingBase attacker : enemies)
+                    {
+                        angle += Math.atan2(center.zCoord - attacker.posZ, center.xCoord - attacker.posX);
+                    }
+
+                    angle /= enemies.size();
+
+                    moveX = (float) -Math.cos(angle);
+                    moveZ = (float) Math.sin(angle);
+
+                    normalizeMovement();
+                }
+                else
+                {
+                    state = State.STATIC;
+                }
+            }
+            else
+            {
+                fleeing = false;
+            }
+
             List<DinosaurEntity> remove = new LinkedList<>();
 
             for (DinosaurEntity entity : this)
@@ -91,39 +130,76 @@ public class Herd implements Iterable<DinosaurEntity>
 
             for (DinosaurEntity entity : this)
             {
-                if (!entity.isMovementBlocked() && !entity.isInWater() && entity.getNavigator().noPath() && (state == State.MOVING || random.nextInt(50) == 0))
+                if (enemies.size() == 0 || fleeing)
                 {
-                    float entityMoveX = moveX * 2.0F;
-                    float entityMoveZ = moveZ * 2.0F;
-
-                    float centerDistance = (float) Math.abs(entity.getDistance(center.xCoord, entity.posY, center.zCoord));
-
-                    entityMoveX += (center.xCoord - entity.posX) / centerDistance;
-                    entityMoveZ += (center.zCoord - entity.posZ) / centerDistance;
-
-                    for (DinosaurEntity other : this)
+                    if (!entity.isMovementBlocked() && !entity.isInWater() && (fleeing || entity.getNavigator().noPath()) && (state == State.MOVING || random.nextInt(50) == 0))
                     {
-                        if (other != entity)
+                        float entityMoveX = moveX * 2.0F;
+                        float entityMoveZ = moveZ * 2.0F;
+
+                        float centerDistance = (float) Math.abs(entity.getDistance(center.xCoord, entity.posY, center.zCoord));
+
+                        if (fleeing)
                         {
-                            float distance = Math.abs(entity.getDistanceToEntity(other));
+                            centerDistance *= 4.0F;
+                        }
 
-                            float separation = entity.width * 1.3F;
+                        entityMoveX += (center.xCoord - entity.posX) / centerDistance;
+                        entityMoveZ += (center.zCoord - entity.posZ) / centerDistance;
 
-                            if (distance < separation)
+                        for (DinosaurEntity other : this)
+                        {
+                            if (other != entity)
                             {
-                                float scale = distance / separation;
-                                entityMoveX += (entity.posX - other.posX) / scale;
-                                entityMoveZ += (entity.posZ - other.posZ) / scale;
+                                float distance = Math.abs(entity.getDistanceToEntity(other));
+
+                                float separation = (entity.width * 1.5F) + 1.5F;
+
+                                if (distance < separation)
+                                {
+                                    float scale = distance / separation;
+                                    entityMoveX += (entity.posX - other.posX) / scale;
+                                    entityMoveZ += (entity.posZ - other.posZ) / scale;
+                                }
                             }
                         }
+
+                        double navigateX = entity.posX + entityMoveX;
+                        double navigateZ = entity.posZ + entityMoveZ;
+
+                        double speed = state == State.STATIC ? 0.8 : entity.getDinosaur().getFlockSpeed();
+
+                        if (fleeing)
+                        {
+                            if (entity.getDinosaur().getAttackSpeed() > speed)
+                            {
+                                speed = entity.getDinosaur().getAttackSpeed();
+                            }
+                        }
+
+                        entity.getNavigator().tryMoveToXYZ(navigateX, entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).getY() + 1, navigateZ, speed);
                     }
-
-                    double navigateX = entity.posX + entityMoveX;
-                    double navigateZ = entity.posZ + entityMoveZ;
-
-                    entity.getNavigator().tryMoveToXYZ(navigateX, entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).getY() + 1, navigateZ, state == State.STATIC ? 0.8 : entity.getDinosaur().getFlockSpeed());
+                }
+                else if (!fleeing && entity.getAttackTarget() == null && enemies.size() > 0)
+                {
+                    if (entity.getAgePercentage() > 75)
+                    {
+                        entity.setAttackTarget(enemies.get(random.nextInt(enemies.size())));
+                    }
                 }
             }
+
+            List<EntityLivingBase> removeAttackers = new LinkedList<>();
+
+            for (EntityLivingBase attacker : this.enemies)
+            {
+                if (attacker.isDead || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) || attacker.getDistanceSq(center.xCoord, center.yCoord, center.zCoord) > 2048)
+                {
+                    removeAttackers.add(attacker);
+                }
+            }
+
+            this.enemies.removeAll(removeAttackers);
 
             if (state == State.STATIC)
             {
@@ -159,10 +235,7 @@ public class Herd implements Iterable<DinosaurEntity>
             }
         }
 
-        for (DinosaurEntity entity : remove)
-        {
-            members.remove(entity);
-        }
+        members.removeAll(remove);
 
         AxisAlignedBB searchBounds = new AxisAlignedBB(center.xCoord - 16, center.yCoord - 5, center.zCoord - 16, center.xCoord + 16, center.yCoord + 5, center.zCoord + 16);
 
@@ -178,8 +251,13 @@ public class Herd implements Iterable<DinosaurEntity>
 
                     if (otherHerd == null)
                     {
-                        if (size() > MAX_HERD_SIZE)
+                        if (size() >= herdType.getMaxHerdSize())
                         {
+                            if (herdType.getDiet().isCarnivorous() && !enemies.contains(entity))
+                            {
+                                enemies.add(entity);
+                            }
+
                             return;
                         }
 
@@ -195,7 +273,7 @@ public class Herd implements Iterable<DinosaurEntity>
 
         for (Herd otherHerd : otherHerds)
         {
-            if (otherHerd.size() <= this.size() && otherHerd.size() + this.size() < MAX_HERD_SIZE)
+            if (otherHerd.size() <= this.size() && otherHerd.size() + this.size() < herdType.getMaxHerdSize())
             {
                 for (DinosaurEntity member : otherHerd)
                 {
@@ -204,6 +282,19 @@ public class Herd implements Iterable<DinosaurEntity>
                 }
 
                 otherHerd.disband();
+            }
+            else if (this.size() + 1 >= herdType.getMaxHerdSize())
+            {
+                if (herdType.getDiet().isCarnivorous())
+                {
+                    for (DinosaurEntity entity : otherHerd)
+                    {
+                        if (!enemies.contains(entity))
+                        {
+                            enemies.add(entity);
+                        }
+                    }
+                }
             }
         }
     }
@@ -284,9 +375,26 @@ public class Herd implements Iterable<DinosaurEntity>
         moveZ = moveZ / length;
     }
 
+    public boolean shouldDefend(List<EntityLivingBase> entities)
+    {
+        return this.getScore(this) + herdType.getAttackBias() > this.getScore(entities);
+    }
+
+    public double getScore(Iterable<? extends EntityLivingBase> entities)
+    {
+        double score = 0.0F;
+
+        for (EntityLivingBase entity : entities)
+        {
+            score += entity.getHealth() * entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
+        }
+
+        return score;
+    }
+
     public enum State
     {
         MOVING,
-        STATIC
+        STATIC,
     }
 }

@@ -97,7 +97,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
             animation = DinosaurAnimation.VELOCIRAPTOR_LAND;
             entity.setAnimation(animation.get());
         }
-        else if (animation == DinosaurAnimation.VELOCIRAPTOR_LAND && tick < prevTick && entity.onGround)
+        else if (animation == DinosaurAnimation.VELOCIRAPTOR_LAND && entity.onGround)
         {
             animation = DinosaurAnimation.IDLE;
             entity.setAnimation(animation.get());

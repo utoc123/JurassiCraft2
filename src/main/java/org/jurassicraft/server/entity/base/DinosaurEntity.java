@@ -56,6 +56,7 @@ import org.jurassicraft.server.entity.ai.DinosaurWanderEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
+import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
 import org.jurassicraft.server.entity.ai.TargetCarcassEntityAI;
@@ -75,6 +76,7 @@ import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.message.SetOrderMessage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -158,6 +160,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             this.tasks.addTask(1, new TargetCarcassEntityAI(this));
         }
+
+        this.tasks.addTask(1, new RespondToAttackEntityAI(this));
 
         this.tasks.addTask(1, new TemptNonAdultEntityAI(this, 0.6));
 
@@ -470,6 +474,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             herd.members.remove(this);
         }
+
+        if (cause.getSourceOfDamage() instanceof EntityLivingBase)
+        {
+            this.respondToAttack((EntityLivingBase) cause.getSourceOfDamage());
+        }
     }
 
     @Override
@@ -598,7 +607,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public float getSoundVolume()
     {
-        return (isCarcass || isSleeping) ? 0.0F : (2.0F * ((float) transitionFromAge(0.2F, 1.0F)));
+        return (isCarcass() || isSleeping) ? 0.0F : (2.0F * ((float) transitionFromAge(0.2F, 1.0F)));
     }
 
     public String getGenetics()
@@ -1430,6 +1439,50 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void resetAttackCooldown()
     {
         attackCooldown = 100 + getRNG().nextInt(20);
+    }
+
+    public void respondToAttack(EntityLivingBase attacker)
+    {
+        if (attacker != null && !attacker.isDead && !(attacker instanceof EntityPlayer && ((EntityPlayer) attacker).capabilities.isCreativeMode))
+        {
+            List<EntityLivingBase> enemies = new LinkedList<>();
+
+            if (attacker instanceof DinosaurEntity)
+            {
+                DinosaurEntity enemyDinosaur = (DinosaurEntity) attacker;
+
+                if (enemyDinosaur.herd != null)
+                {
+                    enemies.addAll(enemyDinosaur.herd.members);
+                }
+            }
+            else
+            {
+                enemies.add(attacker);
+            }
+
+            if (enemies.size() > 0)
+            {
+                Herd herd = this.herd;
+
+                if (herd != null)
+                {
+                    herd.fleeing = !herd.shouldDefend(enemies) || dinosaur.shouldFlee();
+
+                    for (EntityLivingBase entity : enemies)
+                    {
+                        if (!herd.enemies.contains(entity))
+                        {
+                            herd.enemies.add(entity);
+                        }
+                    }
+                }
+                else
+                {
+                    this.setAttackTarget(enemies.get(this.getRNG().nextInt(enemies.size())));
+                }
+            }
+        }
     }
 
     public enum Order

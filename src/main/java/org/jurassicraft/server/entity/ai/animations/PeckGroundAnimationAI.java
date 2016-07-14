@@ -19,7 +19,7 @@ public class PeckGroundAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return !(dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping() || (dinosaur.herd != null && dinosaur.herd.state == Herd.State.MOVING) || dinosaur.getAnimation() != DinosaurAnimation.IDLE.get()) && dinosaur.getRNG().nextDouble() < 0.02;
+        return !(dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping() || (dinosaur.herd != null && dinosaur.herd.state == Herd.State.MOVING) || dinosaur.getAnimation() != DinosaurAnimation.IDLE.get()) && !dinosaur.isSwimming() && dinosaur.getRNG().nextDouble() < 0.02;
     }
 
     @Override

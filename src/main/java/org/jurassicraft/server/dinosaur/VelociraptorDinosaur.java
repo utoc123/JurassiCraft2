@@ -16,7 +16,7 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setEggColorMale(0xB17041, 0x3B1505);
         this.setEggColorFemale(0x91765D, 0x5A4739);
         this.setSpeed(0.35, 0.40);
-        this.setAttackSpeed(1.2);
+        this.setAttackSpeed(1.4);
         this.setHealth(10, 40);
         this.setStrength(1, 8);
         this.setMaximumAge(fromDays(45));
@@ -30,5 +30,6 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setScale(1.3F, 0.3F);
         this.setImprintable(true);
         this.setDefendOwner(true);
+        this.setMaxHerdSize(15);
     }
 }

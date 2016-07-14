@@ -27,13 +27,17 @@ public class AdvancedSwimEntityAI extends EntityAIBase
     public void startExecuting()
     {
         BlockPos surface = AIUtils.findSurface(entity);
-        shore = AIUtils.findShore(entity.getEntityWorld(), surface);
 
-        if (shore != null)
+        if (surface != null)
         {
-            if (!entity.getNavigator().tryMoveToXYZ(shore.getX(), shore.getY(), shore.getZ(), 1.5))
+            shore = AIUtils.findShore(entity.getEntityWorld(), surface);
+
+            if (shore != null)
             {
-                shore = null;
+                if (!entity.getNavigator().tryMoveToXYZ(shore.getX(), shore.getY(), shore.getZ(), 1.5))
+                {
+                    shore = null;
+                }
             }
         }
     }

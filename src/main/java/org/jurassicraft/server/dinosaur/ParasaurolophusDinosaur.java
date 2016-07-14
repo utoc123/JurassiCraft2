@@ -28,6 +28,6 @@ public class ParasaurolophusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(1.9F, 0.4F);
         this.setImprintable(true);
-        this.setFlee(true);
+        this.setAttackBias(-50.0);
     }
 }

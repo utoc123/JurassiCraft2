@@ -18,7 +18,7 @@ public class HeadCockAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return !dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.getAttackTarget() == null && !dinosaur.isSwimming() && dinosaur.getRNG().nextDouble() < 0.003;
+        return !dinosaur.isDead && !dinosaur.isSwimming() && !dinosaur.isCarcass() && dinosaur.getAttackTarget() == null && !dinosaur.isSwimming() && dinosaur.getRNG().nextDouble() < 0.003;
     }
 
     @Override

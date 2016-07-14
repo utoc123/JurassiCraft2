@@ -71,6 +71,9 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private boolean flee;
     private double flockSpeed = 0.8;
 
+    private double attackBias = 50.0;
+    private int maxHerdSize = 32;
+
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)
     {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
@@ -289,6 +292,16 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public void setFlockSpeed(float speed)
     {
         this.flockSpeed = speed;
+    }
+
+    public void setAttackBias(double bias)
+    {
+        this.attackBias = bias;
+    }
+
+    public void setMaxHerdSize(int herdSize)
+    {
+        this.maxHerdSize = herdSize;
     }
 
     public void disableRegistry()
@@ -728,5 +741,15 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public double getFlockSpeed()
     {
         return flockSpeed;
+    }
+
+    public double getAttackBias()
+    {
+        return attackBias;
+    }
+
+    public int getMaxHerdSize()
+    {
+        return maxHerdSize;
     }
 }

@@ -316,10 +316,10 @@ tile.wild_onion_plant.name=Wild Onion Plant
 tile.gracilaria_seaweed.name=Gracilaria Plant
 
 //Plants =========================================
-plants.small_royal_fern.name=Small Royal Fern
+plants.small_royal_fern.name=Royal Fern
 plants.calamites.name=Calamites
-plants.small_chain_fern.name=Small Chain Fern
-plants.small_cycad.name=Small Cycad
+plants.small_chain_fern.name=Chain Fern
+plants.small_cycad.name=Cycad
 plants.ginkgo.name=Ginkgo
 plants.bennettitalean_cycadeoidea.name=Cycadeoidea
 plants.cry_pansy.name=Cry Pansy
