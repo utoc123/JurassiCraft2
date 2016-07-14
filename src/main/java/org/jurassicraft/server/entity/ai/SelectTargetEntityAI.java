@@ -1,22 +1,23 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T>
+public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBase
 {
     private DinosaurEntity entity;
+    private Class<T> targetClass;
+    private T targetEntity;
 
-    public SelectTargetEntityAI(DinosaurEntity entity, Class<T> classTarget, boolean checkSight)
+    public SelectTargetEntityAI(DinosaurEntity entity, Class<T> targetClass)
     {
-        super(entity, classTarget, checkSight);
         this.entity = entity;
-        this.setMutexBits(0);
+        this.targetClass = targetClass;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAINe
     @Override
     public void startExecuting()
     {
-        super.startExecuting();
+        entity.setAttackTarget(targetEntity);
 
         Herd herd = entity.herd;
 
@@ -59,6 +60,11 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAINe
     @Override
     public boolean shouldExecute()
     {
+        if (this.entity.getRNG().nextInt(10) != 0)
+        {
+            return false;
+        }
+
         if (!(EntityPlayer.class.isAssignableFrom(targetClass) || (DinosaurEntity.class.isAssignableFrom(targetClass) && entity.getDinosaur().getDiet().isCarnivorous())))
         {
             if (!entity.getMetabolism().isHungry())
@@ -67,6 +73,33 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAINe
             }
         }
 
-        return !(entity.herd != null && entity.herd.fleeing) && entity.getAgePercentage() > 75 && entity.getOwner() == null && !entity.isSleeping() && entity.getAttackCooldown() <= 0 && super.shouldExecute();
+        if (!(entity.herd != null && entity.herd.fleeing) && entity.getAgePercentage() > 75 && entity.getOwner() == null && !entity.isSleeping() && entity.getAttackCooldown() <= 0)
+        {
+            List<T> entities = this.entity.worldObj.getEntitiesWithinAABB(this.targetClass, entity.getEntityBoundingBox().expand(16, 16, 16));
+
+            if (entities.size() > 0)
+            {
+                targetEntity = null;
+                double bestScore = Double.MAX_VALUE;
+
+                for (T entity : entities)
+                {
+                    if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode))
+                    {
+                        double score = entity.getHealth() <= 0.0F ? (this.entity.getDistanceSqToEntity(entity) / entity.getHealth()) : 0;
+
+                        if (score < bestScore)
+                        {
+                            bestScore = score;
+                            targetEntity = entity;
+                        }
+                    }
+                }
+
+                return targetEntity != null;
+            }
+        }
+
+        return false;
     }
 }

@@ -1403,7 +1403,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     {
         for (Class<? extends EntityLivingBase> target : targets)
         {
-            targetTasks.addTask(1, new SelectTargetEntityAI<>(this, target, true));
+            targetTasks.addTask(1, new SelectTargetEntityAI<>(this, target));
         }
 
         attackTargets.addAll(Lists.newArrayList(targets));
