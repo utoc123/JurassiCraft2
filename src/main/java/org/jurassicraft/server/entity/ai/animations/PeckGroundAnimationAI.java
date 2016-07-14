@@ -3,6 +3,7 @@ package org.jurassicraft.server.entity.ai.animations;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class PeckGroundAnimationAI extends EntityAIBase
@@ -18,7 +19,7 @@ public class PeckGroundAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return !(dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping()) && dinosaur.getRNG().nextDouble() < 0.02;
+        return !(dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping() || dinosaur.herd.state == Herd.State.MOVING || dinosaur.getAnimation() != DinosaurAnimation.IDLE.get()) && dinosaur.getRNG().nextDouble() < 0.02;
     }
 
     @Override

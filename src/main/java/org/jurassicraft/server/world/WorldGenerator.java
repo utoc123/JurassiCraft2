@@ -114,34 +114,44 @@ public enum WorldGenerator implements IWorldGenerator
             {
                 for (int z = 0; z < size; z++)
                 {
-                    IBlockState state = null;
+                    BlockPos generationPos = pos.add(x, 0, z);
 
-                    if (random.nextFloat() < 0.8F)
+                    if (!world.isAirBlock(generationPos))
                     {
-                        if (random.nextFloat() < 0.1F)
-                        {
-                            state = trackway;
-                        }
-                        else if (random.nextFloat() < 0.6F)
-                        {
-                            state = Blocks.GRAVEL.getDefaultState();
-                        }
-                        else
-                        {
-                            state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, random.nextBoolean() ? EnumDyeColor.WHITE : EnumDyeColor.SILVER);
-                        }
-                    }
+                        IBlockState state = null;
 
-                    if (state != null)
-                    {
-                        world.setBlockState(pos.add(x, 0, z), state);
+                        if (random.nextFloat() < 0.8F)
+                        {
+                            if (random.nextFloat() < 0.1F)
+                            {
+                                state = trackway;
+                            }
+                            else if (random.nextFloat() < 0.6F)
+                            {
+                                state = Blocks.GRAVEL.getDefaultState();
+                            }
+                            else
+                            {
+                                state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, random.nextBoolean() ? EnumDyeColor.WHITE : EnumDyeColor.SILVER);
+                            }
+                        }
+
+                        if (state != null)
+                        {
+                            world.setBlockState(generationPos, state);
+                        }
                     }
                 }
             }
 
             for (int i = 0; i < random.nextInt(2) + 1; i++)
             {
-                world.setBlockState(pos.add(random.nextInt(size), 0, random.nextInt(size)), nest);
+                BlockPos generationPos = pos.add(random.nextInt(size), 0, random.nextInt(size));
+
+                if (!world.isAirBlock(generationPos))
+                {
+                    world.setBlockState(generationPos, nest);
+                }
             }
         }
 

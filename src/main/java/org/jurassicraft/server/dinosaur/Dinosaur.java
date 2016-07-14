@@ -69,6 +69,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private boolean defendOwner;
 
     private boolean flee;
+    private double flockSpeed = 0.8;
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)
     {
@@ -283,6 +284,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     {
         this.babyEyeHeight = baby;
         this.adultEyeHeight = adult;
+    }
+
+    public void setFlockSpeed(float speed)
+    {
+        this.flockSpeed = speed;
     }
 
     public void disableRegistry()
@@ -717,5 +723,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     public boolean shouldFlee()
     {
         return flee;
+    }
+
+    public double getFlockSpeed()
+    {
+        return flockSpeed;
     }
 }

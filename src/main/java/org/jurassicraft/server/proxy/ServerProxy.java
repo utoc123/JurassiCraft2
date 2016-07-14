@@ -1,17 +1,11 @@
 package org.jurassicraft.server.proxy;
 
-import com.google.common.collect.Iterators;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -19,12 +13,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
@@ -59,8 +51,6 @@ import org.jurassicraft.server.tile.FossilGrinderTile;
 import org.jurassicraft.server.tile.IncubatorTile;
 import org.jurassicraft.server.world.WorldGenerator;
 
-import java.util.Map;
-
 public class ServerProxy implements IGuiHandler
 {
     public static final int GUI_CLEANING_STATION_ID = 0;
@@ -77,8 +67,6 @@ public class ServerProxy implements IGuiHandler
 
     public void preInit(FMLPreInitializationEvent event)
     {
-        JurassiCraft.CONFIGURATIONS.initConfig(event);
-
         EntityHandler.init();
         DinosaurSerializers.register();
 
@@ -97,48 +85,12 @@ public class ServerProxy implements IGuiHandler
 
         ServerEventHandler eventHandler = new ServerEventHandler();
 
-        MinecraftForge.EVENT_BUS.register(JurassiCraft.CONFIGURATIONS);
         MinecraftForge.EVENT_BUS.register(eventHandler);
     }
 
     public void postInit(FMLPostInitializationEvent event)
     {
         FoodHelper.init();
-
-        Biome[] allBiomes = Iterators.toArray(Biome.REGISTRY.iterator(), Biome.class);
-
-        for (Map.Entry<Class<? extends Entity>, String> entry : EntityList.CLASS_TO_NAME.entrySet())
-        {
-            if (EntityLiving.class.isAssignableFrom(entry.getKey()))
-            {
-                Class<? extends EntityLiving> entity = (Class<? extends EntityLiving>) entry.getKey();
-                String name = entry.getValue();
-
-                if (!name.contains(JurassiCraft.MODID))
-                {
-                    if (name.contains("minecraft"))
-                    {
-                        if (!JCConfigurations.shouldSpawnVanillaMobs())
-                        {
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.AMBIENT, allBiomes);
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.CREATURE, allBiomes);
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.MONSTER, allBiomes);
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.WATER_CREATURE, allBiomes);
-                        }
-                    }
-                    else
-                    {
-                        if (!JCConfigurations.shouldSpawnModMobs())
-                        {
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.AMBIENT, allBiomes);
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.CREATURE, allBiomes);
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.MONSTER, allBiomes);
-                            EntityRegistry.removeSpawn(entity, EnumCreatureType.WATER_CREATURE, allBiomes);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public void init(FMLInitializationEvent event)

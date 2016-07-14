@@ -1,17 +1,9 @@
 package org.jurassicraft.server.entity.base;
 
-import com.google.common.base.Predicates;
-import com.google.common.collect.Iterators;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.Hybrid;
-import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.dinosaur.BrachiosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.DilophosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -259,20 +251,6 @@ public class EntityHandler
         Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
 
         registerEntity(clazz, dinosaur.getName());
-
-        if (dinosaur.shouldRegister() && !(dinosaur instanceof Hybrid) && JCConfigurations.shouldSpawnJurassiCraftMobs())
-        {
-            if (dinosaur.isMarineAnimal())
-            {
-                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.WATER_CREATURE, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.RIVER);
-                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.IN_WATER);
-            }
-            else
-            {
-                EntityRegistry.addSpawn(clazz, 5, 1, 2, EnumCreatureType.CREATURE, Iterators.toArray(Iterators.filter(Biome.REGISTRY.iterator(), Predicates.notNull()), Biome.class));
-                EntitySpawnPlacementRegistry.setPlacementType(clazz, EntityLiving.SpawnPlacementType.ON_GROUND);
-            }
-        }
     }
 
     public static Dinosaur getDinosaurById(int id)

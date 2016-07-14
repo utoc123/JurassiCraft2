@@ -1,8 +1,10 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.PotionTypes;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.tree.TreeType;
+import org.jurassicraft.server.food.FoodHelper;
 
 public class CalamitesPlant extends Plant
 {
@@ -22,5 +24,11 @@ public class CalamitesPlant extends Plant
     public int getHealAmount()
     {
         return 1000;
+    }
+
+    @Override
+    public FoodHelper.FoodEffect[] getEffects()
+    {
+        return new FoodHelper.FoodEffect[] { new FoodHelper.FoodEffect(PotionTypes.POISON.getEffects().get(0), 5) };
     }
 }

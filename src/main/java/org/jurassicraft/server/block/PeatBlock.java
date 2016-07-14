@@ -6,10 +6,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeSwamp;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
@@ -33,7 +33,7 @@ public class PeatBlock extends Block
     {
         int moisture = state.getValue(MOISTURE);
 
-        if (!this.hasWater(world, pos) && !world.isRainingAt(pos.up()) && world.getBiomeGenForCoords(pos) != Biomes.SWAMPLAND)
+        if (!this.hasWater(world, pos) && !world.isRainingAt(pos.up()) && !(world.getBiomeGenForCoords(pos) instanceof BiomeSwamp))
         {
             if (moisture > 0)
             {

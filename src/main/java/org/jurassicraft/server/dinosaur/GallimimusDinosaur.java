@@ -29,5 +29,6 @@ public class GallimimusDinosaur extends Dinosaur
         this.setScale(0.85F, 0.2F);
         this.setImprintable(true);
         this.setFlee(true);
+        this.setFlockSpeed(1.5F);
     }
 }

@@ -1,7 +1,6 @@
 package org.jurassicraft;
 
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -12,7 +11,6 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.server.animation.ForceAnimationCommand;
-import org.jurassicraft.server.configuration.JCConfigurations;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
 import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;
@@ -23,8 +21,6 @@ import org.jurassicraft.server.message.SetOrderMessage;
 import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
 import org.jurassicraft.server.message.UpdateCarControlMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
-
-import java.io.File;
 
 @Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[" + JurassiCraft.LLIBRARY_VERSION + ",)")
 public class JurassiCraft
@@ -42,9 +38,7 @@ public class JurassiCraft
 
     @NetworkWrapper({ PlacePaddockSignMessage.class, ChangeTemperatureMessage.class, HelicopterEngineMessage.class, HelicopterDirectionMessage.class, HelicopterModulesMessage.class, SwitchHybridizerCombinatorMode.class, SetOrderMessage.class, OpenFieldGuideGuiMessage.class, UpdateCarControlMessage.class })
     public static SimpleNetworkWrapper NETWORK_WRAPPER;
-    public static JCConfigurations CONFIGURATIONS = new JCConfigurations();
-    public static File CONFIG_FILE;
-    public static Configuration CONFIG;
+
     private Logger LOGGER;
 
     @Mod.EventHandler
