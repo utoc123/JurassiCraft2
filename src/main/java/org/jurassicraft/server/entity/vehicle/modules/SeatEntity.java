@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.vehicle.modules;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -147,6 +148,12 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     protected void applyPassengerRotation(Entity passenger)
     {
         passenger.setRenderYawOffset(this.rotationYaw);
+
+        if (passenger instanceof EntityLivingBase)
+        {
+            ((EntityLivingBase) passenger).prevRenderYawOffset = this.prevRotationYaw;
+        }
+
         float deltaYaw = MathHelper.wrapDegrees(passenger.rotationYaw - this.rotationYaw);
         float clampedDeltaYaw = MathHelper.clamp_float(deltaYaw, -105.0F, 105.0F);
         passenger.prevRotationYaw += clampedDeltaYaw - deltaYaw;

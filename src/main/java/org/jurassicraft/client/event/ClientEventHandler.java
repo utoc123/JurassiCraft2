@@ -4,12 +4,14 @@ import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.client.util.ClientUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -26,6 +28,8 @@ public class ClientEventHandler
 {
     private static final Minecraft MC = Minecraft.getMinecraft();
     private static final ResourceLocation PATREON_BADGE = new ResourceLocation(JurassiCraft.MODID, "textures/items/patreon_badge.png");
+
+    private boolean isGUI;
 
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void preRender(RenderLivingEvent.Pre event)
@@ -55,19 +59,39 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
+    public void onGUIRender(GuiScreenEvent.DrawScreenEvent.Pre event)
+    {
+        isGUI = true;
+    }
+
+    @SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent event)
+    {
+        if (event.phase == TickEvent.Phase.START)
+        {
+            isGUI = false;
+        }
+    }
+
+    @SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Post event)
     {
         EntityPlayer player = event.getEntityPlayer();
 
-        if (!player.isInvisible() && !player.isInvisibleToPlayer(MC.thePlayer) && ClientProxy.PATRONS.contains(player.getUniqueID()))
+        if (!player.isInvisible() && !player.isInvisibleToPlayer(MC.thePlayer) && !ClientProxy.PATRONS.contains(player.getUniqueID()))
         {
             GlStateManager.pushMatrix();
+
+            if (this.isGUI)
+            {
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+            }
 
             RenderPlayer renderer = event.getRenderer();
 
             GlStateManager.translate(event.getX(), event.getY(), event.getZ());
 
-            GlStateManager.rotate(-ClientUtils.interpolate(player.prevRenderYawOffset, player.renderYawOffset, LLibrary.PROXY.getPartialTicks()), 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(-ClientUtils.interpolate(this.isGUI ? player.renderYawOffset : player.prevRenderYawOffset, player.renderYawOffset, LLibrary.PROXY.getPartialTicks()), 0.0F, 1.0F, 0.0F);
 
             if (player.isSneaking())
             {
@@ -103,6 +127,11 @@ public class ClientEventHandler
             tessellator.draw();
 
             GlStateManager.popMatrix();
+
+            if (this.isGUI)
+            {
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
+            }
         }
     }
 }
