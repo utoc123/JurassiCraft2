@@ -29,15 +29,19 @@ import org.jurassicraft.server.block.plant.CycadZamitesBlock;
 import org.jurassicraft.server.block.plant.DicksoniaBlock;
 import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
 import org.jurassicraft.server.block.plant.DictyophyllumBlock;
+import org.jurassicraft.server.block.plant.EncephalartosBlock;
 import org.jurassicraft.server.block.plant.GracilariaBlock;
 import org.jurassicraft.server.block.plant.LadiniaSimplexBlock;
+import org.jurassicraft.server.block.plant.LiriodendritesBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.OrontiumMackiiBlock;
+import org.jurassicraft.server.block.plant.RaphaeliaBlock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
 import org.jurassicraft.server.block.plant.SmallChainFernBlock;
 import org.jurassicraft.server.block.plant.SmallCycadBlock;
 import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
+import org.jurassicraft.server.block.plant.UmaltolepisBlock;
 import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
 import org.jurassicraft.server.block.plant.WildOnionBlock;
 import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
@@ -133,6 +137,10 @@ public class BlockHandler
     public static final SerennaVeriformansBlock SERENNA_VERIFORMANS = new SerennaVeriformansBlock();
     public static final LadiniaSimplexBlock LADINIA_SIMPLEX = new LadiniaSimplexBlock();
     public static final OrontiumMackiiBlock ORONTIUM_MACKII = new OrontiumMackiiBlock();
+    public static final UmaltolepisBlock UMALTOLEPIS = new UmaltolepisBlock();
+    public static final LiriodendritesBlock LIRIODENDRITES = new LiriodendritesBlock();
+    public static final RaphaeliaBlock RAPHAELIA = new RaphaeliaBlock();
+    public static final EncephalartosBlock ENCEPHALARTOS = new EncephalartosBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -197,6 +205,10 @@ public class BlockHandler
         registerBlock(SERENNA_VERIFORMANS, "Serenna Veriformans");
         registerBlock(LADINIA_SIMPLEX, "Ladinia Simplex");
         registerBlock(ORONTIUM_MACKII, "Orontium Mackii");
+        registerBlock(UMALTOLEPIS, "Umaltolepis");
+        registerBlock(LIRIODENDRITES, "Liriodendrites");
+        registerBlock(RAPHAELIA, "Raphaelia");
+        registerBlock(ENCEPHALARTOS, "Encephalartos");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

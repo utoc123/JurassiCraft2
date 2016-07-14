@@ -361,6 +361,10 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.SERENNA_VERIFORMANS, "serenna_veriformans", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.LADINIA_SIMPLEX, "ladinia_simplex", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.ORONTIUM_MACKII, "orontium_mackii", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.UMALTOLEPIS, "umaltolepis", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.LIRIODENDRITES, "liriodendrites", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.RAPHAELIA, "raphaelia", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.ENCEPHALARTOS, "encephalartos", "inventory");
 
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
         {

@@ -35,43 +35,46 @@ public class AncientPlantBlock extends BlockBush
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
-        int light = world.getLight(pos);
-
-        if (light >= 5)
+        if (world.getGameRules().getBoolean("plantSpreading"))
         {
-            if (rand.nextInt((int) (((15 - light) / 2 + 5) * 1.5)) == 0)
+            int light = world.getLight(pos);
+
+            if (light >= 5)
             {
-                int allowedInArea = DENSITY_PER_AREA;
-
-                BlockPos nextPos = null;
-                int placementAttempts = 3;
-
-                while (nextPos == null && placementAttempts > 0)
+                if (rand.nextInt((15 - light) / 2 + 10) == 0)
                 {
-                    int doubleRadius = SPREAD_RADIUS * 2;
-                    BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS, rand.nextInt(doubleRadius) - SPREAD_RADIUS);
-                    nextPos = findGround(world, tmp);
-                    placementAttempts--;
-                }
+                    int allowedInArea = DENSITY_PER_AREA;
 
-                if (nextPos != null)
-                {
-                    for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-2, -3, -2), nextPos.add(2, 3, 2)))
+                    BlockPos nextPos = null;
+                    int placementAttempts = 3;
+
+                    while (nextPos == null && placementAttempts > 0)
                     {
-                        if (world.getBlockState(neighbourPos).getBlock() instanceof BlockBush)
-                        {
-                            allowedInArea--;
-
-                            if (allowedInArea <= 0)
-                            {
-                                return;
-                            }
-                        }
+                        int doubleRadius = SPREAD_RADIUS * 2;
+                        BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS, rand.nextInt(doubleRadius) - SPREAD_RADIUS);
+                        nextPos = findGround(world, tmp);
+                        placementAttempts--;
                     }
 
-                    if (isNearWater(world, pos))
+                    if (nextPos != null)
                     {
-                        spread(world, nextPos);
+                        for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-2, -3, -2), nextPos.add(2, 3, 2)))
+                        {
+                            if (world.getBlockState(neighbourPos).getBlock() instanceof BlockBush)
+                            {
+                                allowedInArea--;
+
+                                if (allowedInArea <= 0)
+                                {
+                                    return;
+                                }
+                            }
+                        }
+
+                        if (isNearWater(world, pos))
+                        {
+                            spread(world, nextPos);
+                        }
                     }
                 }
             }
@@ -80,7 +83,7 @@ public class AncientPlantBlock extends BlockBush
 
     private boolean isNearWater(World world, BlockPos nextPos)
     {
-        for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-10, -5, -10), nextPos.add(10, 5, 10)))
+        for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-8, -3, -8), nextPos.add(8, 3, 8)))
         {
             Block neighbourState = world.getBlockState(neighbourPos).getBlock();
 

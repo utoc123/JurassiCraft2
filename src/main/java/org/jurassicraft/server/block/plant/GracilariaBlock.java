@@ -128,50 +128,53 @@ public class GracilariaBlock extends BlockBush
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
-        // Make sure we have enough light.
-        int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
-        int light = world.getLight(pos);
-        if (light >= 5 && light <= 11)
+        if (world.getGameRules().getBoolean("plantSpreading"))
         {
-            spreadChance = GOOD_LIGHT_SPREAD_CHANCE;
-        }
-
-        if (rand.nextInt(100) <= spreadChance)
-        {
-            // Density check
-            int i = DENSITY_PER_AREA;
-
-            // We only allow so many around us before we move one.
-            for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-SPREAD_RADIUS, -3, -SPREAD_RADIUS), pos.add(SPREAD_RADIUS, 3, SPREAD_RADIUS)))
+            // Make sure we have enough light.
+            int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
+            int light = world.getLight(pos);
+            if (light >= 5 && light <= 11)
             {
-                // Count how many
-                if (world.getBlockState(blockpos).getBlock() == this)
+                spreadChance = GOOD_LIGHT_SPREAD_CHANCE;
+            }
+
+            if (rand.nextInt(100) <= spreadChance)
+            {
+                // Density check
+                int i = DENSITY_PER_AREA;
+
+                // We only allow so many around us before we move one.
+                for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-SPREAD_RADIUS, -3, -SPREAD_RADIUS), pos.add(SPREAD_RADIUS, 3, SPREAD_RADIUS)))
                 {
-                    --i;
-                    if (i <= 0)
+                    // Count how many
+                    if (world.getBlockState(blockpos).getBlock() == this)
                     {
-                        return;
+                        --i;
+                        if (i <= 0)
+                        {
+                            return;
+                        }
                     }
                 }
-            }
 
-            // Choose a location then find the surface.
-            BlockPos nextPos = null;
-            int placementAttempts = 3;
+                // Choose a location then find the surface.
+                BlockPos nextPos = null;
+                int placementAttempts = 3;
 
-            while (nextPos == null && placementAttempts > 0)
-            {
-                // Chose a random location
-                int doubleRadius = SPREAD_RADIUS * 2;
-                BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS,
-                        rand.nextInt(doubleRadius) - SPREAD_RADIUS);
-                nextPos = findGround(world, tmp);
-                --placementAttempts;
-            }
+                while (nextPos == null && placementAttempts > 0)
+                {
+                    // Chose a random location
+                    int doubleRadius = SPREAD_RADIUS * 2;
+                    BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS,
+                            rand.nextInt(doubleRadius) - SPREAD_RADIUS);
+                    nextPos = findGround(world, tmp);
+                    --placementAttempts;
+                }
 
-            if (nextPos != null)
-            {
-                world.setBlockState(nextPos, this.getDefaultState());
+                if (nextPos != null)
+                {
+                    world.setBlockState(nextPos, this.getDefaultState());
+                }
             }
         }
     }

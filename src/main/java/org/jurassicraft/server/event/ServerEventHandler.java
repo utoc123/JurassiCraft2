@@ -54,6 +54,7 @@ public class ServerEventHandler
 
         registerGameRule(gameRules, "dinoMetabolism", true);
         registerGameRule(gameRules, "dinoGrowth", true);
+        registerGameRule(gameRules, "plantSpreading", true);
     }
 
     private void registerGameRule(GameRules gameRules, String name, boolean value)

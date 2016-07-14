@@ -290,6 +290,10 @@ tile.dictyophyllum.name=Dictyophyllum
 tile.serenna_veriformans.name=Serenna Veriformans
 tile.ladinia_simplex.name=Ladinia Simplex
 tile.orontium_mackii.name=Orontium Mackii
+tile.umaltolepis.name=Umaltolepis
+tile.liriodendrites.name=Liriodendrites
+tile.raphaelia.name=Raphaelia
+tile.encephalartos.name=Encephalartos
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -334,6 +338,10 @@ plants.dictyophyllum.name=Dictyophyllum
 plants.serenna_veriformans.name=Serenna Veriformans
 plants.ladinia_simplex.name=Ladinia Simplex
 plants.orontium_mackii.name=Orontium Mackii
+plants.umaltolepis.name=Umaltolepis
+plants.liriodendrites.name=Liriodendrites
+plants.raphaelia.name=Raphaelia
+plants.encephalartos.name=Encephalartos
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

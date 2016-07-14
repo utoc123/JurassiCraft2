@@ -23,6 +23,10 @@ public class PlantHandler
     public static final Plant SERENNA_VERIFORMANS = new SerennaVeriformansPlant();
     public static final Plant LADINIA_SIMPLEX = new LadiniaSimplexPlant();
     public static final Plant ORONTIUM_MACKII = new OrontiumMackiiPlant();
+    public static final Plant UMALTOLEPIS = new UmaltolepisPlant();
+    public static final Plant LIRIODENDRITES = new LiriodendritesPlant();
+    public static final Plant RAPHAELIA = new RaphaeliaPlant();
+    public static final Plant ENCEPHALARTOS = new EncephalartosPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -46,6 +50,10 @@ public class PlantHandler
         registerPlant(SERENNA_VERIFORMANS);
         registerPlant(LADINIA_SIMPLEX);
         registerPlant(ORONTIUM_MACKII);
+        registerPlant(UMALTOLEPIS);
+        registerPlant(LIRIODENDRITES);
+        registerPlant(RAPHAELIA);
+        registerPlant(ENCEPHALARTOS);
     }
 
     public static Plant getPlantById(int id)
