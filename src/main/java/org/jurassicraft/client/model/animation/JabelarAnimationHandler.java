@@ -3,19 +3,14 @@ package org.jurassicraft.client.model.animation;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.particle.HurtParticle;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.util.Map;
-import java.util.Random;
 
 /**
  * @author jabelar
@@ -64,8 +59,6 @@ public class JabelarAnimationHandler
 
     public void performAnimations(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float ticks)
     {
-        this.performHurtAnimation(entity);
-
         this.DEFAULT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
         this.MOVEMENT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
     }
@@ -87,45 +80,5 @@ public class JabelarAnimationHandler
     public DinosaurModel getTabulaModel(String tabulaModel)
     {
         return getTabulaModel(tabulaModel, 0);
-    }
-
-    private void performHurtAnimation(DinosaurEntity entity)
-    {
-        double posX = entity.posX;
-        double posY = entity.posY;
-        double posZ = entity.posZ;
-
-        World world = entity.worldObj;
-
-        ParticleManager particleManager = MC.effectRenderer;
-
-        Random random = new Random();
-
-        if (entity.hurtTime == entity.maxHurtTime - 1)
-        {
-            float entityWidth = entity.width;
-            float entityHeight = entity.height;
-
-            float amount = 2;
-
-            for (int x = 0; x < amount; x++)
-            {
-                for (int y = 0; y < amount; y++)
-                {
-                    for (int z = 0; z < amount; z++)
-                    {
-                        if (random.nextInt(15) == 0)
-                        {
-                            this.performHurtEffect(world, particleManager, (x / amount * entityWidth) + posX - (entityWidth / 2.0F), (y / amount * entityHeight) + posY, (z / amount * entityWidth) + posZ - (entityWidth / 2.0F));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void performHurtEffect(World world, ParticleManager particleManager, double x, double y, double z)
-    {
-        particleManager.addEffect((new HurtParticle(world, x + 0.5D, y + 0.5D, z + 0.5D, 0, 0, 0).setBlockPos(new BlockPos((int) x, (int) y, (int) z))));
     }
 }

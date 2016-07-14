@@ -84,9 +84,14 @@ public class Herd implements Iterable<DinosaurEntity>
                 }
             }
 
+            if (leader == null)
+            {
+                return;
+            }
+
             for (DinosaurEntity entity : this)
             {
-                if (!entity.isMovementBlocked() && entity.getNavigator().noPath() && (state == State.MOVING || random.nextInt(50) == 0))
+                if (!entity.isMovementBlocked() && !entity.isInWater() && entity.getNavigator().noPath() && (state == State.MOVING || random.nextInt(50) == 0))
                 {
                     float entityMoveX = moveX * 2.0F;
                     float entityMoveZ = moveZ * 2.0F;
@@ -102,7 +107,7 @@ public class Herd implements Iterable<DinosaurEntity>
                         {
                             float distance = Math.abs(entity.getDistanceToEntity(other));
 
-                            float separation = entity.width + 2.0F;
+                            float separation = entity.width * 1.3F;
 
                             if (distance < separation)
                             {
@@ -220,14 +225,21 @@ public class Herd implements Iterable<DinosaurEntity>
         double x = 0.0;
         double z = 0.0;
 
+        int count = 0;
+
         for (DinosaurEntity member : members)
         {
-            x += member.posX;
-            z += member.posZ;
+            if (!member.isCarcass() && !member.isInWater())
+            {
+                x += member.posX;
+                z += member.posZ;
+
+                count++;
+            }
         }
 
-        x /= members.size();
-        z /= members.size();
+        x /= count;
+        z /= count;
 
         return new Vec3d(x, leader.worldObj.getHeight(new BlockPos(x, 0, z)).getY(), z);
     }

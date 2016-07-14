@@ -6,6 +6,7 @@ import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -15,7 +16,6 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
@@ -26,6 +26,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -47,6 +48,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
 import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
@@ -142,8 +144,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!dinosaur.isMarineAnimal())
         {
-            this.tasks.addTask(0, new EntityAISwimming(this));
-//            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
+//            this.tasks.addTask(0, new EntityAISwimming(this));
+            this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
+            this.setPathPriority(PathNodeType.WATER, 0.0F);
         }
 
         if (dinosaur.getDiet().isHerbivorous())
@@ -323,6 +326,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
             else
             {
+                if (getAnimation() == DinosaurAnimation.RESTING.get())
+                {
+                    this.setAnimation(DinosaurAnimation.IDLE.get());
+                    this.isSittingNaturally = false;
+                }
+
                 if (getAnimation() == DinosaurAnimation.IDLE.get())
                 {
                     this.setAnimation(DinosaurAnimation.INJURED.get());
@@ -341,6 +350,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             if (canHarmInCreative)
             {
                 return super.attackEntityFrom(damageSource, amount);
+            }
+
+            if (this.hurtResistantTime <= this.maxHurtResistantTime / 2.0F)
+            {
+                this.hurtTime = this.maxHurtTime = 10;
             }
 
             if (damageSource != DamageSource.drown)
@@ -604,6 +618,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!worldObj.isRemote)
         {
+            if (!this.dinosaur.isMarineAnimal())
+            {
+                if (this.isInsideOfMaterial(Material.WATER))
+                {
+                    this.getJumpHelper().setJumping();
+                }
+            }
+
             if (herd == null)
             {
                 herd = new Herd(this);
@@ -611,7 +633,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (order == Order.WANDER)
             {
-                if (herd.state == Herd.State.STATIC)
+                if (herd.state == Herd.State.STATIC && this.getAttackTarget() == null)
                 {
                     if (!this.isSleeping && this.getAnimation() == DinosaurAnimation.IDLE.get() && rand.nextInt(400) == 0)
                     {
@@ -1102,7 +1124,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public boolean isSwimming()
     {
-        return (isInWater() || isInLava());
+        return (isInWater() || isInLava()) && !onGround;
     }
 
     @Override

@@ -20,42 +20,39 @@ public class AdvancedSwimEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return entity.isInLava() || entity.isInWater();
+        return (entity.isInLava() || entity.isInWater()) && entity.getNavigator().noPath();
     }
 
     @Override
     public void startExecuting()
     {
-        // TODO: What speed do we use in water?
         BlockPos surface = AIUtils.findSurface(entity);
         shore = AIUtils.findShore(entity.getEntityWorld(), surface);
+
         if (shore != null)
         {
-            //LOGGER.info("Swimming, found shore. Surface=" + surface + " Moving to shore=" + shore);
-            entity.getNavigator().tryMoveToXYZ(shore.getX(), shore.getY(), shore.getZ(), 1.0);
+            if (!entity.getNavigator().tryMoveToXYZ(shore.getX(), shore.getY(), shore.getZ(), 1.5))
+            {
+                shore = null;
+            }
         }
     }
 
     @Override
     public boolean continueExecuting()
     {
-        return this.entity.isInWater() || this.entity.isInLava();
-//        return shore != null || AIUtils.getWaterDepth(entity) >= entity.getEyeHeight();
+        return shore != null && (this.entity.isInWater() || this.entity.isInLava());
     }
 
     @Override
     public void updateTask()
     {
-        // We should be moving toward shore. At the same time, bounce
-        int depth = AIUtils.getWaterDepth(entity);
-        if (depth >= entity.getEyeHeight() && entity.getRNG().nextFloat() < 0.8F)
+        if (shore != null && entity.getNavigator().noPath())
         {
-            entity.getJumpHelper().setJumping();
-        }
-
-        if (entity.getNavigator().noPath())
-        {
-            shore = null;
+            if (!entity.getNavigator().tryMoveToXYZ(shore.getX(), shore.getY(), shore.getZ(), 1.5))
+            {
+                shore = null;
+            }
         }
     }
 }

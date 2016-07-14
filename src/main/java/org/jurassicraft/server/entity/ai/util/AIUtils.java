@@ -72,16 +72,12 @@ public class AIUtils
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getPosition();
 
-        // Move up
-//        while (world.getBlockState(pos).getBlock().equals(Blocks.water) ||
-//                world.getBlockState(pos).getBlock().equals(Blocks.flowing_water))
         while (!world.isAirBlock(pos))
         {
             pos = pos.up();
         }
 
-        // We are above water, so go down one
-        return pos.down();
+        return pos;
     }
 
     //=============================================================================================
