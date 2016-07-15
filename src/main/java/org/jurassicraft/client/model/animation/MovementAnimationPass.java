@@ -28,7 +28,7 @@ public class MovementAnimationPass extends AnimationPass
     @Override
     protected float getAnimationDegree(DinosaurEntity entity)
     {
-        return Math.min(2.0F, entity.isCarcass() ? 0.0F : (animation == DinosaurAnimation.WALKING.get() || animation == DinosaurAnimation.RUNNING.get() || animation == DinosaurAnimation.SWIMMING.get()) ? limbSwingAmount * ((entity.isInWater() || entity.isInLava()) ? 4.0F : 1.0F) : super.getAnimationDegree(entity));
+        return Math.min(1.0F, entity.isCarcass() ? 0.0F : (animation == DinosaurAnimation.WALKING.get() || animation == DinosaurAnimation.RUNNING.get() || animation == DinosaurAnimation.SWIMMING.get()) ? limbSwingAmount * ((entity.isInWater() || entity.isInLava()) ? 4.0F : 1.0F) : super.getAnimationDegree(entity));
     }
 
     @Override

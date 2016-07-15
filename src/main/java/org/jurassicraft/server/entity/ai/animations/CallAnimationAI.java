@@ -27,7 +27,7 @@ public class CallAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping())
+        if (dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping() || dinosaur.isSwimming())
         {
             return false;
         }

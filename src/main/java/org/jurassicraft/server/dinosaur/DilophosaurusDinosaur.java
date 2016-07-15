@@ -32,5 +32,6 @@ public class DilophosaurusDinosaur extends Dinosaur
         this.setImprintable(true);
         this.setDefendOwner(true);
         this.setMaxHerdSize(10);
+        this.setAttackBias(400.0);
     }
 }

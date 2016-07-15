@@ -71,7 +71,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private boolean flee;
     private double flockSpeed = 0.8;
 
-    private double attackBias = 50.0;
+    private double attackBias = 200.0;
     private int maxHerdSize = 32;
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)

@@ -28,5 +28,7 @@ public class BrachiosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("head");
         this.setScale(2.5F, 0.3F);
         this.setOffset(0.0F, 0.0F, 1.0F);
+        this.setAttackBias(1000.0);
+        this.setMaxHerdSize(5);
     }
 }

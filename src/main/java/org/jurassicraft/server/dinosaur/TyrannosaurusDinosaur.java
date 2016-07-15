@@ -29,5 +29,6 @@ public class TyrannosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(2.4F, 0.35F);
         this.setMaxHerdSize(2);
+        this.setAttackBias(800.0);
     }
 }

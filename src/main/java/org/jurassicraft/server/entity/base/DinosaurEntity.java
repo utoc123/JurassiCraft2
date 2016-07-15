@@ -53,6 +53,7 @@ import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurWanderEntityAI;
+import org.jurassicraft.server.entity.ai.FleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
@@ -69,6 +70,7 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
+import org.jurassicraft.server.entity.ai.util.AIUtils;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
@@ -171,13 +173,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.tasks.addTask(2, new AssistOwnerEntityAI(this));
         }
 
-        this.tasks.addTask(2, new DinosaurWanderEntityAI(this, 0.8F, 20));
-        this.tasks.addTask(2, new FollowOwnerEntityAI(this));
+        if (dinosaur.shouldFlee())
+        {
+            this.tasks.addTask(2, new FleeEntityAI(this));
+        }
 
-        this.tasks.addTask(2, getAttackAI());
+        this.tasks.addTask(3, new DinosaurWanderEntityAI(this, 0.8F, 20));
+        this.tasks.addTask(3, new FollowOwnerEntityAI(this));
 
-        this.tasks.addTask(3, new EntityAILookIdle(this));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
+        this.tasks.addTask(3, getAttackAI());
+
+        this.tasks.addTask(4, new EntityAILookIdle(this));
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
 
         this.animationTasks.addTask(0, new SleepEntityAI(this));
 
@@ -552,7 +559,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         float width = (float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX());
         float height = (float) transitionFromAge(dinosaur.getBabySizeY(), dinosaur.getAdultSizeY());
 
-        this.stepHeight = Math.max(0.5F, (float) (Math.ceil(height / 2.0F) / 2.0F));
+        this.stepHeight = Math.max(0.6F, (float) (Math.ceil(height / 2.0F) / 2.0F));
 
         if (isCarcass)
         {
@@ -629,7 +636,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (!this.dinosaur.isMarineAnimal())
             {
-                if (this.isInsideOfMaterial(Material.WATER))
+                if (this.isInsideOfMaterial(Material.WATER) || (this.isInWater() && rand.nextFloat() < 0.8F && AIUtils.getWaterDepth(this) <= 2))
                 {
                     this.getJumpHelper().setJumping();
                 }
@@ -644,7 +651,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             {
                 if (herd.state == Herd.State.STATIC && this.getAttackTarget() == null)
                 {
-                    if (!this.isSleeping && this.getAnimation() == DinosaurAnimation.IDLE.get() && rand.nextInt(400) == 0)
+                    if (!this.isSleeping && !this.isSwimming() && this.getAnimation() == DinosaurAnimation.IDLE.get() && rand.nextInt(400) == 0)
                     {
                         this.setAnimation(DinosaurAnimation.RESTING.get());
                         this.isSittingNaturally = true;

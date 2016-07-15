@@ -31,5 +31,6 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setImprintable(true);
         this.setDefendOwner(true);
         this.setMaxHerdSize(15);
+        this.setAttackBias(500.0);
     }
 }
