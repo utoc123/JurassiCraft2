@@ -70,7 +70,6 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
-import org.jurassicraft.server.entity.ai.util.AIUtils;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
@@ -91,6 +90,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<String> WATCHER_OWNER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.STRING);
     private static final DataParameter<Order> WATCHER_ORDER = EntityDataManager.createKey(DinosaurEntity.class, DinosaurSerializers.ORDER);
+
     private static final Logger LOGGER = LogManager.getLogger();
     private final InventoryDinosaur inventory;
     private final MetabolismContainer metabolism;
@@ -105,8 +105,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private String genetics;
     private int geneticsQuality;
     private boolean isMale;
-    private Animation animation;
-    private int animationTick;
     private boolean hasTracker;
     private UUID owner;
     private boolean isSleeping;
@@ -122,6 +120,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public Herd herd;
 
     private boolean isSittingNaturally;
+
+    private Animation animation;
+    private int animationTick;
+    private int animationLength;
 
     public DinosaurEntity(World world)
     {
@@ -636,7 +638,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (!this.dinosaur.isMarineAnimal())
             {
-                if (this.isInsideOfMaterial(Material.WATER) || (this.isInWater() && rand.nextFloat() < 0.8F && AIUtils.getWaterDepth(this) <= 2))
+                if (this.isInsideOfMaterial(Material.WATER))
                 {
                     this.getJumpHelper().setJumping();
                 }
@@ -725,16 +727,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (animation != null && animation != DinosaurAnimation.IDLE.get())
         {
-            int animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
+            boolean shouldHold = DinosaurAnimation.getAnimation(animation).shouldHold();
 
             if (animationTick < animationLength)
             {
-                if (!DinosaurAnimation.getAnimation(animation).shouldHold() || animationTick < animationLength - 1)
+                if (!shouldHold || animationTick < animationLength - 1)
                 {
                     animationTick++;
                 }
             }
-            else if (!DinosaurAnimation.getAnimation(animation).shouldHold())
+            else if (!shouldHold)
             {
                 animationTick = 0;
                 animation = DinosaurAnimation.IDLE.get();
@@ -1061,6 +1063,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (oldAnimation != newAnimation)
         {
+            this.animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
+
             AnimationHandler.INSTANCE.sendAnimationMessage(this, newAnimation);
         }
     }
@@ -1490,6 +1494,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 }
             }
         }
+    }
+
+    public int getAnimationLength()
+    {
+        return animationLength;
     }
 
     public enum Order

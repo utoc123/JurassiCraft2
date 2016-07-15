@@ -1,5 +1,6 @@
 package org.jurassicraft.client.model.animation;
 
+import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.util.SoundEvent;
@@ -19,8 +20,10 @@ public class AnimationPass
     protected int posesInAnimation;
     protected int currentPoseIndex;
     protected int tweenLength;
+
     protected float tick;
     protected float prevTicks;
+
     protected AdvancedModelRenderer[] parts;
     protected AdvancedModelRenderer[] nextParts;
     protected Animation animation;
@@ -154,13 +157,25 @@ public class AnimationPass
         {
             this.tick += incrementAmount;
 
-            return tick >= tweenLength;
+            if (tick >= tweenLength)
+            {
+                tick = tweenLength;
+
+                return true;
+            }
+
+            return false;
         }
         else
         {
             if (tick < tweenLength - 1)
             {
                 this.tick += incrementAmount;
+
+                if (tick >= tweenLength)
+                {
+                    tick = tweenLength;
+                }
             }
             else
             {
@@ -256,12 +271,12 @@ public class AnimationPass
         }
     }
 
-    protected void setNextPoseModel(DinosaurEntity entity)
+    protected void setNextPoseModel(DinosaurEntity entity, float ticks)
     {
         this.nextParts = poses[poseSequences.get(animation)[currentPoseIndex][0]];
         this.tweenLength = poseSequences.get(animation)[currentPoseIndex][1];
         this.tick = 0;
-        this.prevTicks = 0;
+        this.prevTicks = ticks;
         this.updateTween(entity);
     }
 
@@ -271,13 +286,13 @@ public class AnimationPass
 
         if (this.incrementTweenTick(entity, ticks))
         {
-            this.handleFinishedPose(entity);
+            this.handleFinishedPose(entity, ticks);
         }
 
         this.prevTicks = ticks;
     }
 
-    protected void handleFinishedPose(DinosaurEntity entity)
+    protected void handleFinishedPose(DinosaurEntity entity, float ticks)
     {
         if (this.incrementCurrentPoseIndex())
         {
@@ -288,7 +303,7 @@ public class AnimationPass
             this.updatePreviousPose();
         }
 
-        this.setNextPoseModel(entity);
+        this.setNextPoseModel(entity, ticks);
 
         this.playSound(entity);
     }
@@ -334,7 +349,8 @@ public class AnimationPass
 
     protected void setNextSequence(DinosaurEntity entity, Animation requestedAnimation)
     {
-        updatePreviousPose();
+        this.prevRotationIncrements = new float[parts.length][3];
+        this.prevPositionIncrements = new float[parts.length][3];
 
         if (poseSequences.get(requestedAnimation) != null && !(animation != DinosaurAnimation.IDLE.get() && animation == requestedAnimation && isEntityAnimationDependent()))
         {
@@ -390,6 +406,11 @@ public class AnimationPass
     protected Animation getRequestedAnimation(DinosaurEntity entity)
     {
         return entity.getAnimation();
+    }
+
+    protected float getAnimationTick(DinosaurEntity entity)
+    {
+        return Math.min(entity.getAnimationLength(), entity.getAnimationTick() + LLibrary.PROXY.getPartialTicks());
     }
 
     protected boolean isEntityAnimationDependent()
