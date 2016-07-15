@@ -182,7 +182,7 @@ public class Herd implements Iterable<DinosaurEntity>
                 }
                 else if (!fleeing && entity.getAttackTarget() == null && enemies.size() > 0)
                 {
-                    if (entity.getAgePercentage() > 75)
+                    if (entity.getAgePercentage() > 50)
                     {
                         entity.setAttackTarget(enemies.get(random.nextInt(enemies.size())));
                     }

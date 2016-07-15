@@ -57,6 +57,7 @@ import org.jurassicraft.server.entity.ai.FleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
+import org.jurassicraft.server.entity.ai.ProtectInfantEntityAI;
 import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
@@ -179,6 +180,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             this.tasks.addTask(2, new FleeEntityAI(this));
         }
+
+        this.tasks.addTask(2, new ProtectInfantEntityAI<>(this));
 
         this.tasks.addTask(3, new DinosaurWanderEntityAI(this, 0.8F, 20));
         this.tasks.addTask(3, new FollowOwnerEntityAI(this));
