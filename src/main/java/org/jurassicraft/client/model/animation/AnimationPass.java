@@ -57,6 +57,8 @@ public class AnimationPass
         this.initTweenTicks(entity);
 
         this.initIncrements(entity);
+
+        this.updatePreviousPose();
     }
 
     public void initPoseModel()
@@ -349,8 +351,7 @@ public class AnimationPass
 
     protected void setNextSequence(DinosaurEntity entity, Animation requestedAnimation)
     {
-        this.prevRotationIncrements = new float[parts.length][3];
-        this.prevPositionIncrements = new float[parts.length][3];
+        updatePreviousPose();
 
         if (poseSequences.get(requestedAnimation) != null && !(animation != DinosaurAnimation.IDLE.get() && animation == requestedAnimation && isEntityAnimationDependent()))
         {

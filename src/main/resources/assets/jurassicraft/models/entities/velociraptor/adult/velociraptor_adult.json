@@ -21,7 +21,7 @@
     ],
     "SLEEPING": [
       {
-        "pose": "velociraptor_adult_resting",
+        "pose": "velociraptor_adult_sleeping",
         "time": 10
       }
     ],
