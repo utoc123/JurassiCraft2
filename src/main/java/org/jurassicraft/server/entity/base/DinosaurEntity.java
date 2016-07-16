@@ -348,7 +348,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     this.isSittingNaturally = false;
                 }
 
-                if (getAnimation() == DinosaurAnimation.IDLE.get())
+                if (!worldObj.isRemote && getAnimation() == DinosaurAnimation.IDLE.get())
                 {
                     this.setAnimation(DinosaurAnimation.INJURED.get());
                 }
@@ -491,13 +491,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             this.respondToAttack((EntityLivingBase) cause.getSourceOfDamage());
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void performHurtAnimation()
-    {
-        this.setAnimation(DinosaurAnimation.INJURED.get());
     }
 
     @Override

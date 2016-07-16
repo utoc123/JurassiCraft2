@@ -19,7 +19,7 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
         AdvancedModelRenderer frillRightBottom = model.getCube("Frill Lower Right");
         AdvancedModelRenderer frillRightTop = model.getCube("Frill Upper Right");
 
-        boolean hasTarget = entity.hasTarget();
+        boolean hasTarget = entity.hasTarget() && !entity.isCarcass();
 
         frillLeftBottom.showModel = hasTarget;
         frillLeftTop.showModel = hasTarget;

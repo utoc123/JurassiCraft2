@@ -1,7 +1,6 @@
 package org.jurassicraft.server.event;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -27,7 +26,6 @@ import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraft.world.storage.loot.functions.SetMetadata;
 import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -62,16 +60,6 @@ public class ServerEventHandler
         if (!gameRules.hasRule(name))
         {
             gameRules.addGameRule(name, value + "", GameRules.ValueType.BOOLEAN_VALUE);
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void onEntityJoinWorld(EntityJoinWorldEvent event)
-    {
-        if (event.getEntity() instanceof EntityPlayer)
-        {
-            EntityPlayer player = (EntityPlayer) event.getEntity();
-            player.addStat(AchievementHandler.JURASSICRAFT, 1);
         }
     }
 
@@ -261,6 +249,10 @@ public class ServerEventHandler
             }
 
             table.addPool(new LootPool(fossilEntries, new LootCondition[0], new RandomValueRange(1, 2), new RandomValueRange(0, 0), "fossils"));
+
+            LootEntry[] recordEntries = new LootEntry[] { new LootEntryItem(ItemHandler.JURASSICRAFT_THEME_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "jurassicraft_theme"), new LootEntryItem(ItemHandler.DONT_MOVE_A_MUSCLE_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "dont_move_a_muscle"), new LootEntryItem(ItemHandler.TROODONS_AND_RAPTORS_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "troodons_and_raptors") };
+
+            table.addPool(new LootPool(recordEntries, new LootCondition[0], new RandomValueRange(0, 2), new RandomValueRange(0, 0), "records"));
         }
     }
 }

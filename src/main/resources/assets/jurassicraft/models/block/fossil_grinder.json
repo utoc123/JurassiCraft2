@@ -4,7 +4,8 @@
     "0": "jurassicraft:blocks/whitegraymetal",
     "1": "jurassicraft:blocks/glassiron",
     "2": "jurassicraft:blocks/glassiron",
-    "3": "jurassicraft:blocks/bluemetal"
+    "3": "jurassicraft:blocks/bluemetal",
+    "particle": "jurassicraft:blocks/bluemetal"
   },
   "parent": "block/block",
   "display": {
