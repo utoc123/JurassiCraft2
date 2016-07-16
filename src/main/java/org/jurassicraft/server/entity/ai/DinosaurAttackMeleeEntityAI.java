@@ -1,15 +1,17 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee
 {
-    public DinosaurAttackMeleeEntityAI(EntityCreature creature, double speed, boolean useLongMemory)
+    protected DinosaurEntity dinosaur;
+
+    public DinosaurAttackMeleeEntityAI(DinosaurEntity dinosaur, double speed, boolean useLongMemory)
     {
-        super(creature, speed, useLongMemory);
+        super(dinosaur, speed, useLongMemory);
+        this.dinosaur = dinosaur;
     }
 
     @Override

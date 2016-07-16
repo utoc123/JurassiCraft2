@@ -170,7 +170,7 @@ public class AnimationPass
         }
         else
         {
-            if (tick < tweenLength - 1)
+            if (tick < tweenLength)
             {
                 this.tick += incrementAmount;
 
@@ -245,7 +245,7 @@ public class AnimationPass
 
         if (DinosaurAnimation.getAnimation(animation).shouldHold())
         {
-            this.tick = this.tweenLength - 1;
+            this.tick = this.tweenLength;
         }
         else
         {
@@ -353,7 +353,7 @@ public class AnimationPass
     {
         updatePreviousPose();
 
-        if (poseSequences.get(requestedAnimation) != null && !(animation != DinosaurAnimation.IDLE.get() && animation == requestedAnimation && isEntityAnimationDependent()))
+        if (poseSequences.get(requestedAnimation) != null)
         {
             animation = requestedAnimation;
         }

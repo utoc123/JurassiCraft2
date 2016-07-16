@@ -641,7 +641,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (!this.dinosaur.isMarineAnimal())
             {
-                if (this.isInsideOfMaterial(Material.WATER) || (this.isInWater() && AIUtils.getWaterDepth(this) == 2))
+                if (this.isInsideOfMaterial(Material.WATER) || (this.isSwimming() && AIUtils.getWaterDepth(this) == 2))
                 {
                     this.getJumpHelper().setJumping();
                 }
@@ -1351,9 +1351,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public void applyEntityCollision(Entity entity)
+    public void collideWithEntity(Entity entity)
     {
-        super.applyEntityCollision(entity);
+        super.collideWithEntity(entity);
 
         if (this.isSleeping && !this.isRidingSameEntity(entity))
         {

@@ -17,7 +17,7 @@ public class LookAnimationAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return !dinosaur.isDead && dinosaur.getAttackTarget() == null && !dinosaur.isSleeping() && dinosaur.getRNG().nextDouble() < 0.003;
+        return !dinosaur.isDead && dinosaur.getAttackTarget() == null && !dinosaur.isSleeping() && !dinosaur.isSwimming() && dinosaur.getRNG().nextDouble() < 0.003;
     }
 
     @Override

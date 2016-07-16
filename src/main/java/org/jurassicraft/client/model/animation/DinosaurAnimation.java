@@ -28,7 +28,8 @@ public enum DinosaurAnimation
     SPITTING,
     PECKING,
     WALKING(false, false, false), RUNNING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false),
-    VELOCIRAPTOR_PREPARE_POUNCE(false, false), VELOCIRAPTOR_LEAP(true, false), VELOCIRAPTOR_LAND(true, false, false);
+    VELOCIRAPTOR_PREPARE_POUNCE(false, false), VELOCIRAPTOR_LEAP(true, false), VELOCIRAPTOR_LAND(true, false, false),
+    DILOPHOSAURUS_SPIT(false, false);
 
     private Animation animation;
     private boolean hold;
