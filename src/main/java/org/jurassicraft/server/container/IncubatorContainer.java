@@ -14,7 +14,7 @@ import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.function.Predicate;
 
-public class IncubatorContainer extends SyncedFieldContainer
+public class IncubatorContainer extends MachineContainer
 {
     private IncubatorTile incubator;
 
@@ -63,11 +63,5 @@ public class IncubatorContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return incubator.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

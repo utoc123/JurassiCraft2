@@ -4,12 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.GrindableItemSlot;
 import org.jurassicraft.server.tile.FossilGrinderTile;
 
-public class FossilGrinderContainer extends SyncedFieldContainer
+public class FossilGrinderContainer extends MachineContainer
 {
     private FossilGrinderTile fossilGrinder;
 
@@ -26,7 +26,7 @@ public class FossilGrinderContainer extends SyncedFieldContainer
         {
             for (int j = 0; j < 2; j++)
             {
-                this.addSlotToContainer(new Slot(fossilGrinder, i + (j * 3) + 1, i * 18 + 93 + 15, j * 18 + 26));
+                this.addSlotToContainer(new CustomSlot(fossilGrinder, i + (j * 3) + 1, i * 18 + 93 + 15, j * 18 + 26, stack -> false));
             }
         }
 
@@ -59,11 +59,5 @@ public class FossilGrinderContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return fossilGrinder.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

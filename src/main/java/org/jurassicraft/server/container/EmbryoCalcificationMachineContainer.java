@@ -5,13 +5,12 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.SyringeSlot;
 import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 
-public class EmbryoCalcificationMachineContainer extends SyncedFieldContainer
+public class EmbryoCalcificationMachineContainer extends MachineContainer
 {
     private EmbryoCalcificationMachineTile calcificationMachine;
 
@@ -55,11 +54,5 @@ public class EmbryoCalcificationMachineContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return calcificationMachine.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot)
-    {
-        return null;
     }
 }

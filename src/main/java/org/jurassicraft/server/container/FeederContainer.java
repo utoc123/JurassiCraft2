@@ -2,20 +2,20 @@ package org.jurassicraft.server.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.tile.FeederTile;
 
-public class FeederContainer extends Container
+public class FeederContainer extends MachineContainer
 {
     private FeederTile tile;
 
     public FeederContainer(InventoryPlayer inventory, FeederTile tile)
     {
+        super(tile);
+
         this.tile = tile;
 
         int id = 0;
@@ -60,11 +60,5 @@ public class FeederContainer extends Container
     public boolean canInteractWith(EntityPlayer player)
     {
         return tile.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index)
-    {
-        return null;
     }
 }

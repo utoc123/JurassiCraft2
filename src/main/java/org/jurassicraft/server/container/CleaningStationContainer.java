@@ -5,14 +5,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.container.slot.CleanableItemSlot;
 import org.jurassicraft.server.container.slot.FossilSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
-import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
-import org.jurassicraft.server.tile.CleaningStationTile;
 
-public class CleaningStationContainer extends SyncedFieldContainer
+public class CleaningStationContainer extends MachineContainer
 {
     private final IInventory tileCleaningStation;
 
@@ -58,78 +55,5 @@ public class CleaningStationContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return this.tileCleaningStation.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index)
-    {
-        ItemStack stack = null;
-        Slot slot = this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack())
-        {
-            ItemStack transferFrom = slot.getStack();
-            stack = transferFrom.copy();
-
-            if (index == 2)
-            {
-                if (!this.mergeItemStack(transferFrom, 3, 39, true))
-                {
-                    return null;
-                }
-
-                slot.onSlotChange(transferFrom, stack);
-            }
-            else if (index != 1 && index != 0)
-            {
-                if (transferFrom.getItem() instanceof EncasedFossilItemBlock)
-                {
-                    if (!this.mergeItemStack(transferFrom, 0, 1, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (CleaningStationTile.isItemFuel(transferFrom))
-                {
-                    if (!this.mergeItemStack(transferFrom, 1, 2, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (index >= 3 && index < 30)
-                {
-                    if (!this.mergeItemStack(transferFrom, 30, 39, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (index >= 30 && index < 39 && !this.mergeItemStack(transferFrom, 3, 30, false))
-                {
-                    return null;
-                }
-            }
-            else if (!this.mergeItemStack(transferFrom, 3, 39, false))
-            {
-                return null;
-            }
-
-            if (transferFrom.stackSize == 0)
-            {
-                slot.putStack(null);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
-
-            if (transferFrom.stackSize == stack.stackSize)
-            {
-                return null;
-            }
-
-            slot.onPickupFromSlot(player, transferFrom);
-        }
-
-        return stack;
     }
 }

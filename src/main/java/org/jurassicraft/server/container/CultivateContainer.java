@@ -4,13 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.SyringeSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
 import org.jurassicraft.server.tile.CultivatorTile;
 
-public class CultivateContainer extends SyncedFieldContainer
+public class CultivateContainer extends MachineContainer
 {
     private CultivatorTile cultivator;
 
@@ -54,11 +53,5 @@ public class CultivateContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return cultivator.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

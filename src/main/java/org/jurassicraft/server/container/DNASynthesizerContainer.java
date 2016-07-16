@@ -4,14 +4,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.SynthesizableItemSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tile.DNASynthesizerTile;
 
-public class DNASynthesizerContainer extends SyncedFieldContainer
+public class DNASynthesizerContainer extends MachineContainer
 {
     private DNASynthesizerTile dnaSynthesizer;
 
@@ -63,11 +62,5 @@ public class DNASynthesizerContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return dnaSynthesizer.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

@@ -4,13 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.SequencableItemSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
 import org.jurassicraft.server.tile.DNASequencerTile;
 
-public class DNASequencerContainer extends SyncedFieldContainer
+public class DNASequencerContainer extends MachineContainer
 {
     private DNASequencerTile dnaSequencer;
 
@@ -60,11 +59,5 @@ public class DNASequencerContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return dnaSequencer.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

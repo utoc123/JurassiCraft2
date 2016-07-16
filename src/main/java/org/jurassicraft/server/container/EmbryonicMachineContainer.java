@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.PetriDishSlot;
@@ -12,7 +11,7 @@ import org.jurassicraft.server.container.slot.TestTubeSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
-public class EmbryonicMachineContainer extends SyncedFieldContainer
+public class EmbryonicMachineContainer extends MachineContainer
 {
     private EmbryonicMachineTile embryonicMachine;
 
@@ -64,11 +63,5 @@ public class EmbryonicMachineContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return embryonicMachine.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

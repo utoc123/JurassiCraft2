@@ -4,13 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.DNAExtractionSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
 import org.jurassicraft.server.tile.DNAExtractorTile;
 
-public class DNAExtractorContainer extends SyncedFieldContainer
+public class DNAExtractorContainer extends MachineContainer
 {
     private DNAExtractorTile extractor;
 
@@ -56,11 +55,5 @@ public class DNAExtractorContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return extractor.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }

@@ -4,12 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.container.slot.StorageSlot;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
-public class DNACombinatorHybridizerContainer extends SyncedFieldContainer
+public class DNACombinatorHybridizerContainer extends MachineContainer
 {
     private DNACombinatorHybridizerTile dnaHybridizer;
     private InventoryPlayer playerInventory;
@@ -77,11 +76,5 @@ public class DNACombinatorHybridizerContainer extends SyncedFieldContainer
     public boolean canInteractWith(EntityPlayer player)
     {
         return dnaHybridizer.isUseableByPlayer(player);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int i)
-    {
-        return null;
     }
 }
