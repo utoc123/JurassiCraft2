@@ -20,7 +20,7 @@ archivesBaseName = "JurassiCraft"
 sourceCompatibility = targetCompatibility = "1.8"
 
 minecraft {
-    version = "1954"
+    version = "1976"
     runDir = "minecraft"
     mappings = "snapshot_20160518"
 }

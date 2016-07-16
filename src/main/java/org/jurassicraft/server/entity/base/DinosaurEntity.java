@@ -787,60 +787,63 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             adjustHitbox();
         }
 
-        if (isCarcass)
+        if (!worldObj.isRemote)
         {
-            this.renderYawOffset = this.rotationYaw;
-            this.rotationYawHead = this.rotationYaw;
+            if (isCarcass)
+            {
+                this.renderYawOffset = this.rotationYaw;
+                this.rotationYawHead = this.rotationYaw;
 
-            if (getAnimation() != DinosaurAnimation.DYING.get())
-            {
-                this.setAnimation(DinosaurAnimation.DYING.get());
-            }
-
-            if (ticksExisted % 1000 == 0)
-            {
-                this.attackEntityFrom(DamageSource.generic, 1.0F);
-            }
-        }
-        else
-        {
-            if (isSleeping)
-            {
-                if (getAnimation() != DinosaurAnimation.SLEEPING.get())
+                if (getAnimation() != DinosaurAnimation.DYING.get())
                 {
-                    this.setAnimation(DinosaurAnimation.SLEEPING.get());
+                    this.setAnimation(DinosaurAnimation.DYING.get());
                 }
 
-                if (ticksExisted % 20 == 0)
+                if (ticksExisted % 1000 == 0)
                 {
-                    if (stayAwakeTime <= 0 && this.hasPredators())
+                    this.attackEntityFrom(DamageSource.generic, 1.0F);
+                }
+            }
+            else
+            {
+                if (isSleeping)
+                {
+                    if (getAnimation() != DinosaurAnimation.SLEEPING.get())
                     {
-                        this.disturbSleep();
+                        this.setAnimation(DinosaurAnimation.SLEEPING.get());
+                    }
+
+                    if (ticksExisted % 20 == 0)
+                    {
+                        if (stayAwakeTime <= 0 && this.hasPredators())
+                        {
+                            this.disturbSleep();
+                        }
+                    }
+
+                    if (!shouldSleep() && !worldObj.isRemote)
+                    {
+                        isSleeping = false;
                     }
                 }
-
-                if (!shouldSleep() && !worldObj.isRemote)
-                {
-                    isSleeping = false;
-                }
-            }
-            else if (getAnimation() == DinosaurAnimation.SLEEPING.get())
-            {
-                this.setAnimation(DinosaurAnimation.IDLE.get());
-            }
-
-            if (!isSleeping && !worldObj.isRemote)
-            {
-                if (order == Order.SIT)
-                {
-                    if (getAnimation() != DinosaurAnimation.RESTING.get())
-                    {
-                        this.setAnimation(DinosaurAnimation.RESTING.get());
-                    }
-                }
-                else if (!this.isSittingNaturally && getAnimation() == DinosaurAnimation.RESTING.get())
+                else if (getAnimation() == DinosaurAnimation.SLEEPING.get())
                 {
                     this.setAnimation(DinosaurAnimation.IDLE.get());
+                }
+
+                if (!isSleeping && !worldObj.isRemote)
+                {
+                    if (order == Order.SIT)
+                    {
+                        if (getAnimation() != DinosaurAnimation.RESTING.get())
+                        {
+                            this.setAnimation(DinosaurAnimation.RESTING.get());
+                        }
+                    }
+                    else if (!this.isSittingNaturally && getAnimation() == DinosaurAnimation.RESTING.get())
+                    {
+                        this.setAnimation(DinosaurAnimation.IDLE.get());
+                    }
                 }
             }
         }
@@ -848,11 +851,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (!shouldSleep() && !isSleeping && stayAwakeTime > 0)
         {
             stayAwakeTime = 0;
-        }
-
-        if (getAnimation() != DinosaurAnimation.IDLE.get())
-        {
-            animationTick++;
         }
 
         if (this.isServerWorld())

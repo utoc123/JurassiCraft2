@@ -14,6 +14,7 @@ public class SleepEntityAI extends EntityAIBase
     protected DinosaurEntity dinosaur;
 
     protected Path path;
+    protected int giveUpTime;
 
     public SleepEntityAI(DinosaurEntity dinosaur)
     {
@@ -67,6 +68,12 @@ public class SleepEntityAI extends EntityAIBase
     }
 
     @Override
+    public void startExecuting()
+    {
+        this.giveUpTime = 400;
+    }
+
+    @Override
     public void updateTask()
     {
         Path currentPath = dinosaur.getNavigator().getPath();
@@ -83,10 +90,12 @@ public class SleepEntityAI extends EntityAIBase
             }
         }
 
-        if (dinosaur.getStayAwakeTime() <= 0 && (this.path == null || this.path.isFinished()))
+        if (giveUpTime <= 0 || (dinosaur.getStayAwakeTime() <= 0 && (this.path == null || this.path.isFinished())))
         {
             dinosaur.setSleeping(true);
         }
+
+        giveUpTime--;
     }
 
     @Override
