@@ -15,7 +15,7 @@ public class BrachiosaurusDinosaur extends Dinosaur
         this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x87987F, 0x607343);
         this.setEggColorFemale(0xAA987D, 0x4F4538);
-        this.setHealth(20, 100);
+        this.setHealth(20, 150);
         this.setSpeed(0.25, 0.31);
         this.setStrength(5, 15);
         this.setMaximumAge(fromDays(85));
@@ -28,7 +28,7 @@ public class BrachiosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("head");
         this.setScale(2.5F, 0.3F);
         this.setOffset(0.0F, 0.0F, 1.0F);
-        this.setAttackBias(1000.0);
+        this.setAttackBias(1200.0);
         this.setMaxHerdSize(5);
     }
 }

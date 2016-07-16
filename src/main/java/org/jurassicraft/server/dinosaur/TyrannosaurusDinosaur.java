@@ -15,10 +15,10 @@ public class TyrannosaurusDinosaur extends Dinosaur
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x6B6628, 0x39363B);
         this.setEggColorFemale(0xBA997E, 0x7D5D48);
-        this.setHealth(10, 60);
+        this.setHealth(10, 80);
         this.setSpeed(0.35, 0.42);
         this.setAttackSpeed(1.2);
-        this.setStrength(5, 15);
+        this.setStrength(5, 20);
         this.setMaximumAge(fromDays(60));
         this.setEyeHeight(0.6F, 3.8F);
         this.setSizeX(0.45F, 4.5F);
@@ -29,6 +29,6 @@ public class TyrannosaurusDinosaur extends Dinosaur
         this.setHeadCubeName("Head");
         this.setScale(2.4F, 0.35F);
         this.setMaxHerdSize(2);
-        this.setAttackBias(800.0);
+        this.setAttackBias(1000.0);
     }
 }

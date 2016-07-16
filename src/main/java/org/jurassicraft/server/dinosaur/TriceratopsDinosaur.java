@@ -17,7 +17,7 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setEggColorFemale(0x8F7B76, 0x73676A);
         this.setSpeed(0.3, 0.35);
         this.setAttackSpeed(1.2);
-        this.setHealth(10, 50);
+        this.setHealth(10, 70);
         this.setStrength(2, 10);
         this.setMaximumAge(fromDays(45));
         this.setEyeHeight(0.45F, 1.8F);
@@ -32,6 +32,6 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setImprintable(true);
         this.setDefendOwner(true);
         this.setMaxHerdSize(20);
-        this.setAttackBias(200.0);
+        this.setAttackBias(400.0);
     }
 }
