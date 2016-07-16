@@ -26,7 +26,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -71,6 +70,7 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
+import org.jurassicraft.server.entity.ai.util.AIUtils;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
@@ -641,7 +641,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (!this.dinosaur.isMarineAnimal())
             {
-                if (this.isInsideOfMaterial(Material.WATER))
+                if (this.isInsideOfMaterial(Material.WATER) || (this.isInWater() && AIUtils.getWaterDepth(this) == 2))
                 {
                     this.getJumpHelper().setJumping();
                 }

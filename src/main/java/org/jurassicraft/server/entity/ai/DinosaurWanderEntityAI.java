@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
@@ -25,50 +24,46 @@ public class DinosaurWanderEntityAI extends EntityAIBase
     {
         this.entity = creatureIn;
         this.speed = speedIn;
-        //TODO: edit once you are pleased with the wander.
-        this.executionChance = 0;//chance;
+        this.executionChance = chance;
         this.setMutexBits(1);
     }
 
-    /**
-     * Returns whether the EntityAIBase should begin execution.
-     */
+    @Override
     public boolean shouldExecute()
     {
         if (!this.mustUpdate)
         {
-            if (this.entity.getAge() >= 100)
+            if (this.entity.getRNG().nextInt(this.executionChance) != 0)
             {
                 return false;
             }
-    //TODO: edit once you are pleased with the wander.
-            //if (this.entity.getRNG().nextInt(this.executionChance) != 0)
-            //{
-            //    return false;
-            //}
         }
 
-        Vec3d vec3d = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
+        if (this.entity.getNavigator().noPath())
+        {
+            Vec3d wanderPosition = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
 
-        if (vec3d == null)
-        {
-            return false;
+            if (wanderPosition != null)
+            {
+                this.xPosition = wanderPosition.xCoord;
+                this.yPosition = wanderPosition.yCoord;
+                this.zPosition = wanderPosition.zCoord;
+                this.mustUpdate = false;
+
+                return true;
+            }
         }
-        else
-        {
-            this.xPosition = vec3d.xCoord;
-            this.yPosition = vec3d.yCoord;
-            this.zPosition = vec3d.zCoord;
-            this.mustUpdate = false;
-            return true;
-        }
+
+        return false;
     }
 
+    @Override
     public boolean continueExecuting()
     {
         return !this.entity.getNavigator().noPath();
     }
 
+    @Override
     public void startExecuting()
     {
         this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, this.speed);
@@ -79,8 +74,8 @@ public class DinosaurWanderEntityAI extends EntityAIBase
         this.mustUpdate = true;
     }
 
-    public void setExecutionChance(int newchance)
+    public void setExecutionChance(int chance)
     {
-        this.executionChance = newchance;
+        this.executionChance = chance;
     }
 }
