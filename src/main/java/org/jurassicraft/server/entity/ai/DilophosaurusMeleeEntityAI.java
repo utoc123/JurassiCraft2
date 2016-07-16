@@ -2,7 +2,6 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
 public class DilophosaurusMeleeEntityAI extends DinosaurAttackMeleeEntityAI
@@ -17,12 +16,5 @@ public class DilophosaurusMeleeEntityAI extends DinosaurAttackMeleeEntityAI
     {
         EntityLivingBase target = attacker.getAttackTarget();
         return super.shouldExecute() && target.getHealth() < target.getMaxHealth() * 0.9F && target.isPotionActive(Potion.getPotionFromResourceLocation("blindness"));
-    }
-
-    @Override
-    public void startExecuting()
-    {
-        super.startExecuting();
-        this.dinosaur.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
     }
 }

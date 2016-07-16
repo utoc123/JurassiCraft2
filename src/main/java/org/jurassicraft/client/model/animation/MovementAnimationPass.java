@@ -28,13 +28,59 @@ public class MovementAnimationPass extends AnimationPass
     @Override
     protected float getAnimationDegree(DinosaurEntity entity)
     {
-        return Math.min(1.0F, entity.isCarcass() ? 0.0F : (animation == DinosaurAnimation.WALKING.get() || animation == DinosaurAnimation.RUNNING.get() || animation == DinosaurAnimation.SWIMMING.get()) ? limbSwingAmount * ((entity.isInWater() || entity.isInLava()) ? 4.0F : 1.0F) : super.getAnimationDegree(entity));
+        float degree;
+
+        if (animation == DinosaurAnimation.WALKING.get() || animation == DinosaurAnimation.RUNNING.get() || animation == DinosaurAnimation.SWIMMING.get())
+        {
+            if (entity.isInWater() || entity.isInLava())
+            {
+                degree = limbSwingAmount * 4.0F;
+            }
+            else
+            {
+                degree = limbSwingAmount * 1.0F;
+            }
+        }
+        else
+        {
+            return super.getAnimationDegree(entity);
+        }
+
+        return Math.min(1.0F, degree);
     }
 
     @Override
     protected Animation getRequestedAnimation(DinosaurEntity entity)
     {
-        return isMoving(entity) ? entity.isSwimming() ? DinosaurAnimation.SWIMMING.get() : limbSwingAmount > 1.0 ? DinosaurAnimation.RUNNING.get() : DinosaurAnimation.WALKING.get() : DinosaurAnimation.IDLE.get();
+        if (entity.isCarcass())
+        {
+            return DinosaurAnimation.IDLE.get();
+        }
+        else
+        {
+            if (isMoving(entity))
+            {
+                if (entity.isSwimming())
+                {
+                    return DinosaurAnimation.SWIMMING.get();
+                }
+                else
+                {
+                    if (limbSwingAmount > 1.0)
+                    {
+                        return DinosaurAnimation.RUNNING.get();
+                    }
+                    else
+                    {
+                        return DinosaurAnimation.WALKING.get();
+                    }
+                }
+            }
+            else
+            {
+                return DinosaurAnimation.IDLE.get();
+            }
+        }
     }
 
     private boolean isMoving(DinosaurEntity entity)

@@ -144,8 +144,11 @@ public class Herd implements Iterable<DinosaurEntity>
                             centerDistance *= 4.0F;
                         }
 
-                        entityMoveX += (center.xCoord - entity.posX) / centerDistance;
-                        entityMoveZ += (center.zCoord - entity.posZ) / centerDistance;
+                        if (centerDistance > 0)
+                        {
+                            entityMoveX += (center.xCoord - entity.posX) / centerDistance;
+                            entityMoveZ += (center.zCoord - entity.posZ) / centerDistance;
+                        }
 
                         for (DinosaurEntity other : this)
                         {

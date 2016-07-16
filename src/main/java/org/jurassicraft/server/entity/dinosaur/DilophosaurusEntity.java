@@ -38,6 +38,8 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distance)
     {
+        this.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
+
         VenomEntity venom = new VenomEntity(this.worldObj, this);
         double deltaX = target.posX - venom.posX;
         double deltaY = target.posY + (double) target.getEyeHeight() - 1.100000023841858D - venom.posY;
