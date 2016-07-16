@@ -4,6 +4,7 @@ import net.ilexiconn.llibrary.client.lang.LanguageHandler;
 import net.ilexiconn.llibrary.server.util.WebUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -35,7 +36,9 @@ import org.jurassicraft.client.gui.IncubatorGui;
 import org.jurassicraft.client.gui.OrderDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.client.render.RenderingHandler;
+import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.particle.VenomParticle;
 import org.jurassicraft.server.entity.vehicle.CarEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tile.CleaningStationTile;
@@ -224,5 +227,17 @@ public class ClientProxy extends ServerProxy
     public static void stopSound(CarEntity entity)
     {
         stopSound(entity.sound);
+    }
+
+    public static void spawnVenomParticles(VenomEntity entity)
+    {
+        ParticleManager particleManager = Minecraft.getMinecraft().effectRenderer;
+
+        float size = 0.35F;
+
+        for (int i = 0; i < 16; ++i)
+        {
+            particleManager.addEffect(new VenomParticle(entity.worldObj, size * Math.random() - size / 2, size * Math.random() - size / 2, size * Math.random() - size / 2, 0.0F, 0.0F, 0.0F, 1.0F, entity));
+        }
     }
 }

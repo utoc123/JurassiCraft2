@@ -1,7 +1,5 @@
 package org.jurassicraft.server.entity;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.Potion;
@@ -9,8 +7,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import org.jurassicraft.client.proxy.ClientProxy;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
-import org.jurassicraft.server.entity.particle.VenomParticle;
 
 public class VenomEntity extends EntityThrowable
 {
@@ -61,13 +59,6 @@ public class VenomEntity extends EntityThrowable
 
     private void spawnParticles()
     {
-        ParticleManager particleManager = Minecraft.getMinecraft().effectRenderer;
-
-        float size = 0.35F;
-
-        for (int i = 0; i < 16; ++i)
-        {
-            particleManager.addEffect(new VenomParticle(worldObj, size * Math.random() - size / 2, size * Math.random() - size / 2, size * Math.random() - size / 2, 0.0F, 0.0F, 0.0F, 1.0F, this));
-        }
+        ClientProxy.spawnVenomParticles(this);
     }
 }

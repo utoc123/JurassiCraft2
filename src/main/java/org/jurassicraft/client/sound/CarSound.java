@@ -15,7 +15,6 @@ public class CarSound extends MovingSound
     {
         super(SoundHandler.CAR_MOVE, SoundCategory.BLOCKS);
         this.entity = entity;
-        this.attenuationType = AttenuationType.NONE;
     }
 
     @Override
