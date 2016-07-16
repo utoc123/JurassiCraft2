@@ -8,7 +8,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.VelociraptorBlueEntity;
 public class VelociraptorBlueAnimator extends DinosaurAnimator<VelociraptorBlueEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel parModel, VelociraptorBlueEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel parModel, VelociraptorBlueEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = parModel.getCube("body3");
         AdvancedModelRenderer chest = parModel.getCube("body2");

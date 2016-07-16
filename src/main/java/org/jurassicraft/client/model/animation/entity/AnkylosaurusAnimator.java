@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.AnkylosaurusEntity;
 public class AnkylosaurusAnimator extends DinosaurAnimator<AnkylosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, AnkylosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, AnkylosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("head ");
         AdvancedModelRenderer headback = model.getCube("head back");

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.LambeosaurusEntity;
 public class LambeosaurusAnimator extends DinosaurAnimator<LambeosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, LambeosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, LambeosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 

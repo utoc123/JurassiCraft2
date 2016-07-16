@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.SpinosaurusEntity;
 public class SpinosaurusAnimator extends DinosaurAnimator<SpinosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, SpinosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, SpinosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.45F;
         float globalDegree = 0.4F;

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.MetriacanthosaurusEntity
 public class MetriacanthosaurusAnimator extends DinosaurAnimator<MetriacanthosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, MetriacanthosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, MetriacanthosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.65F;
         float globalDegree = 0.4F;

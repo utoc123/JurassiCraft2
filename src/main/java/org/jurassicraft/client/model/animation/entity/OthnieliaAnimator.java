@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.OthnieliaEntity;
 public class OthnieliaAnimator extends DinosaurAnimator<OthnieliaEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, OthnieliaEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, OthnieliaEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float speed = 0.8F;
         float height = 12F * f1;

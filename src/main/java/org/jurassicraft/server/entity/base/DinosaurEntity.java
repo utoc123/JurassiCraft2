@@ -641,7 +641,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
             if (!this.dinosaur.isMarineAnimal())
             {
-                if (this.isInsideOfMaterial(Material.WATER) || (this.isSwimming() && AIUtils.getWaterDepth(this) == 2))
+                int depth = 0;
+
+                if (this.isSwimming())
+                {
+                    depth = AIUtils.getWaterDepth(this);
+                }
+
+                if (this.isInsideOfMaterial(Material.WATER) || (this.isSwimming() && depth <= Math.ceil(height) && depth > 1))
                 {
                     this.getJumpHelper().setJumping();
                 }

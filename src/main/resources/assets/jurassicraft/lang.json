@@ -1,0 +1,16 @@
+{
+  "languages": [
+    {
+      "locale": "en_US",
+      "downloadURL": "https://raw.githubusercontent.com/TimelessModdingTeam/JurassiCraftLocalizations/master/en_US.lang"
+    },
+    {
+      "locale": "es_ES",
+      "downloadURL": "https://raw.githubusercontent.com/TimelessModdingTeam/JurassiCraftLocalizations/master/es_ES.lang"
+    },
+    {
+      "locale": "nl_NL",
+      "downloadURL": "https://raw.githubusercontent.com/TimelessModdingTeam/JurassiCraftLocalizations/master/nl_NL.lang"
+    }
+  ]
+}

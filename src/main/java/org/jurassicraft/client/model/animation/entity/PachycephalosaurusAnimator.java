@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.PachycephalosaurusEntity
 public class PachycephalosaurusAnimator extends DinosaurAnimator<PachycephalosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, PachycephalosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, PachycephalosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = model.getCube("Body Rear");
         AdvancedModelRenderer chest = model.getCube("Body Middle");

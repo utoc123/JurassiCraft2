@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.CompsognathusEntity;
 public class CompsognathusAnimator extends DinosaurAnimator<CompsognathusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CompsognathusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, CompsognathusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer abdomen = model.getCube("abdomen");
         AdvancedModelRenderer upperBody = model.getCube("Upper body");

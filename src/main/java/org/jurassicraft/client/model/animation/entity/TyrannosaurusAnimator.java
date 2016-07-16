@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;
 public class TyrannosaurusAnimator extends DinosaurAnimator<TyrannosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TyrannosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, TyrannosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = model.getCube("Body 1");
         AdvancedModelRenderer stomach = model.getCube("Body 2");

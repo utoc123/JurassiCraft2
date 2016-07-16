@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.GallimimusEntity;
 public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, GallimimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, GallimimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer neck1 = model.getCube("Neck part 1");
         AdvancedModelRenderer neck2 = model.getCube("Neck part 2");

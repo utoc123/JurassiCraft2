@@ -46,29 +46,11 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
 
         if (entity.getAnimation() != DinosaurAnimation.DYING.get()) // still alive
         {
-            if (entity.isSwimming())
-            {
-                performMowzieSwimmingAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
-            }
-            else
-            {
-                performMowzieLandAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
-            }
+            performAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
         }
     }
 
-    /*
-     * @Override this if you want dino to have cyclical animations.
-     */
-    protected void performMowzieLandAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
-    }
-
-    /*
-     * @Override this if you want swimming dino to have different cyclical animations.
-     */
-    protected void performMowzieSwimmingAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
-        performMowzieLandAnimations(parModel, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
     }
 }

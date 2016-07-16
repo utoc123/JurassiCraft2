@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.TroodonEntity;
 public class TroodonAnimator extends DinosaurAnimator<TroodonEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TroodonEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, TroodonEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("head UPPER");
         AdvancedModelRenderer neck1 = model.getCube("neck1");

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.MoganopterusEntity;
 public class MoganopterusAnimator extends DinosaurAnimator<MoganopterusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, MoganopterusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, MoganopterusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
         AdvancedModelRenderer leftCalf = model.getCube("Left calf");

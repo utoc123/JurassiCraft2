@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.HypsilophodonEntity;
 public class HypsilophodonAnimator extends DinosaurAnimator<HypsilophodonEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, HypsilophodonEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, HypsilophodonEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float scaleFactor = 1F;
         float height = 12F * f1;

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.TherizinosaurusEntity;
 public class TherizinosaurusAnimator extends DinosaurAnimator<TherizinosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TherizinosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, TherizinosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer rightThigh = model.getCube("Right Thigh");
         AdvancedModelRenderer bodyHips = model.getCube("Body hips");

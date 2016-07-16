@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.MicroceratusEntity;
 public class MicroceratusAnimator extends DinosaurAnimator<MicroceratusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel parModel, MicroceratusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel parModel, MicroceratusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer body = parModel.getCube("Body MAIN");
 

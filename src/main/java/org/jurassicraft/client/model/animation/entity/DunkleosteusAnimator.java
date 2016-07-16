@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.DunkleosteusEntity;
 public class DunkleosteusAnimator extends DinosaurAnimator<DunkleosteusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, DunkleosteusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, DunkleosteusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         // tail
         AdvancedModelRenderer tail1 = model.getCube("Tail Section 1");

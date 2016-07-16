@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.TriceratopsEntity;
 public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, TriceratopsEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, TriceratopsEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Head");
         AdvancedModelRenderer neck3 = model.getCube("Neck 3");

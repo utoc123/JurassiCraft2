@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.BaryonyxEntity;
 public class BaryonyxAnimator extends DinosaurAnimator<BaryonyxEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, BaryonyxEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, BaryonyxEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float scaleFactor = 0.62F;
         float height = 2F * f1;

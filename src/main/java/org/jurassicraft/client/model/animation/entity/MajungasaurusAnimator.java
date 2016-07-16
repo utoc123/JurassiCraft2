@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.MajungasaurusEntity;
 public class MajungasaurusAnimator extends DinosaurAnimator<MajungasaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, MajungasaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, MajungasaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer tail1 = model.getCube("Tail Base");
         AdvancedModelRenderer tail2 = model.getCube("Tail 2");

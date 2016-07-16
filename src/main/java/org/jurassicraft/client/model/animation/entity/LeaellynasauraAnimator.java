@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.LeaellynasauraEntity;
 public class LeaellynasauraAnimator extends DinosaurAnimator<LeaellynasauraEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, LeaellynasauraEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, LeaellynasauraEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.4F;
         float globalHeight = 0.8F;

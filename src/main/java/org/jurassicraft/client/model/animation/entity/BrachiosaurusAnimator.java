@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.BrachiosaurusEntity;
 public class BrachiosaurusAnimator extends DinosaurAnimator<BrachiosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, BrachiosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, BrachiosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("head");
 

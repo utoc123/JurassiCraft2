@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.CearadactylusEntity;
 public class CearadactylusAnimator extends DinosaurAnimator<CearadactylusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CearadactylusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, CearadactylusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
         AdvancedModelRenderer leftCalf = model.getCube("Left calf");

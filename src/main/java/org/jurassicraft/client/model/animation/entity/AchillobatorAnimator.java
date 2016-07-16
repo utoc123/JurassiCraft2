@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.AchillobatorEntity;
 public class AchillobatorAnimator extends DinosaurAnimator<AchillobatorEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, AchillobatorEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, AchillobatorEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float speed = 0.75F;
         float height = 2F * f1;

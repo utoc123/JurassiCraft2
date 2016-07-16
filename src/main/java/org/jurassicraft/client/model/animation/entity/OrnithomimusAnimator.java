@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.OrnithomimusEntity;
 public class OrnithomimusAnimator extends DinosaurAnimator<OrnithomimusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, OrnithomimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, OrnithomimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.6F;
         float globalDegree = 1.0F;

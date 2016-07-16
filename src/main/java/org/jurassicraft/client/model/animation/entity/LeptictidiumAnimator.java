@@ -10,7 +10,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.LeptictidiumEntity;
 public class LeptictidiumAnimator extends DinosaurAnimator<LeptictidiumEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, LeptictidiumEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, LeptictidiumEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
     }
 }

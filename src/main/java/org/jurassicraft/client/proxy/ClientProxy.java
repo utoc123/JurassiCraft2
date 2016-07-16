@@ -1,5 +1,6 @@
 package org.jurassicraft.client.proxy;
 
+import net.ilexiconn.llibrary.client.lang.LanguageHandler;
 import net.ilexiconn.llibrary.server.util.WebUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.event.ClientEventHandler;
 import org.jurassicraft.client.gui.CleaningStationGui;
 import org.jurassicraft.client.gui.CultivateGui;
@@ -63,6 +65,15 @@ public class ClientProxy extends ServerProxy
     public void preInit(FMLPreInitializationEvent event)
     {
         super.preInit(event);
+
+        try
+        {
+            LanguageHandler.INSTANCE.loadRemoteLocalization(JurassiCraft.MODID);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         ClientEventHandler eventHandler = new ClientEventHandler();
         MinecraftForge.EVENT_BUS.register(eventHandler);

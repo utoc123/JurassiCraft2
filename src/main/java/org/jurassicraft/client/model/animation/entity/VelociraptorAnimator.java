@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, VelociraptorEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, VelociraptorEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer waist = model.getCube("body3");
         AdvancedModelRenderer chest = model.getCube("body2");

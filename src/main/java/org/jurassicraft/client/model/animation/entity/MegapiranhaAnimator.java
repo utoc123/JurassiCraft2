@@ -8,7 +8,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.MegapiranhaEntity;
 public class MegapiranhaAnimator extends DinosaurAnimator<MegapiranhaEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, MegapiranhaEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, MegapiranhaEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Neck ");
         AdvancedModelRenderer body1 = model.getCube("Body Section 1");

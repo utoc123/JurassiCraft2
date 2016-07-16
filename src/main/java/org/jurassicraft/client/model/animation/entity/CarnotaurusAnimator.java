@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.CarnotaurusEntity;
 public class CarnotaurusAnimator extends DinosaurAnimator<CarnotaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CarnotaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, CarnotaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         float globalSpeed = 0.8F;
         float globalDegree = 0.6F;

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.EdmontosaurusEntity;
 public class EdmontosaurusAnimator extends DinosaurAnimator<EdmontosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, EdmontosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, EdmontosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 

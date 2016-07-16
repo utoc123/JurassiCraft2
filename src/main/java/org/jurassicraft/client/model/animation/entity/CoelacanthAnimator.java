@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.CoelacanthEntity;
 public class CoelacanthAnimator extends DinosaurAnimator<CoelacanthEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, CoelacanthEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, CoelacanthEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         // NOTES: Because the animation does not need to be synced to the ground, global variables are not needed.
 

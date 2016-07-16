@@ -232,6 +232,60 @@
         "pose": "parasaurolophus_adult_idle",
         "time": 10
       }
+    ],
+    "WALKING": [
+      {
+        "pose": "parasaurolophus_adult_walk_1",
+        "time": 6
+      },
+      {
+        "pose": "parasaurolophus_adult_walk_2",
+        "time": 6
+      },
+      {
+        "pose": "parasaurolophus_adult_walk_3",
+        "time": 6
+      },
+      {
+        "pose": "parasaurolophus_adult_walk_4",
+        "time": 5
+      }
+    ],
+    "SWIMMING": [
+      {
+        "pose": "parasaurolophus_adult_swim_1",
+        "time": 4
+      },
+      {
+        "pose": "parasaurolophus_adult_swim_2",
+        "time": 4
+      },
+      {
+        "pose": "parasaurolophus_adult_swim_3",
+        "time": 4
+      },
+      {
+        "pose": "parasaurolophus_adult_swim_4",
+        "time": 4
+      }
+    ],
+    "RUNNING": [
+      {
+        "pose": "parasaurolophus_adult_run_1",
+        "time": 4
+      },
+      {
+        "pose": "parasaurolophus_adult_run_2",
+        "time": 4
+      },
+      {
+        "pose": "parasaurolophus_adult_run_3",
+        "time": 4
+      },
+      {
+        "pose": "parasaurolophus_adult_run_4",
+        "time": 4
+      }
     ]
   }
 }

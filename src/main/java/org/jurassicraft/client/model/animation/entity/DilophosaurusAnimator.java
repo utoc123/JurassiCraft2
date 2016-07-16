@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
         AdvancedModelRenderer frillLeftTop = model.getCube("Frill Upper Left");

@@ -11,7 +11,7 @@ import org.jurassicraft.server.entity.dinosaur.disabled.DodoEntity;
 public class DodoAnimator extends DinosaurAnimator<DodoEntity>
 {
     @Override
-    protected void performMowzieLandAnimations(DinosaurModel model, DodoEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
+    protected void performAnimations(DinosaurModel model, DodoEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
     {
         AdvancedModelRenderer head = model.getCube("Head");
 
