@@ -353,7 +353,7 @@ public class AnimationPass
     {
         updatePreviousPose();
 
-        if (poseSequences.get(requestedAnimation) != null)
+        if (poseSequences.get(requestedAnimation) != null && !(animation != DinosaurAnimation.IDLE.get() && animation == requestedAnimation))
         {
             animation = requestedAnimation;
         }
@@ -362,7 +362,7 @@ public class AnimationPass
             animation = DinosaurAnimation.IDLE.get();
         }
 
-        if (isEntityAnimationDependent())
+        if (isEntityAnimationDependent() && animation != entity.getAnimation())
         {
             entity.setAnimation(animation);
         }

@@ -48,7 +48,7 @@ public class RecipeHandler
 
         GameRegistry.addSmelting(new ItemStack(BlockHandler.GYPSUM_COBBLESTONE), new ItemStack(BlockHandler.GYPSUM_STONE), 1.5F);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.IRON_BLADES), "I I", " S ", "I I", 'I', Items.IRON_INGOT, 'S', Items.STICK);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.IRON_ROD), "ISI", "ISI", "ISI", 'I', Items.IRON_INGOT, 'S', Items.STICK);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.IRON_ROD, 4), "ISI", "ISI", "ISI", 'I', Items.IRON_INGOT, 'S', Items.STICK);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.FOSSIL_GRINDER), "lBl", "rRr", "IPI", 'I', Items.IRON_INGOT, 'R', ItemHandler.IRON_ROD, 'B', ItemHandler.IRON_BLADES, 'r', Items.REDSTONE, 'l', new ItemStack(Items.DYE, 1, 4), 'P', Blocks.PISTON);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.PLASTER_AND_BANDAGE, 9), "PGP", "GWG", "PGP", 'P', Items.PAPER, 'W', Blocks.WOOL, 'G', ItemHandler.GYPSUM_POWDER);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.GYPSUM_STONE), "GGG", "GGG", "GGG", 'G', ItemHandler.GYPSUM_POWDER);

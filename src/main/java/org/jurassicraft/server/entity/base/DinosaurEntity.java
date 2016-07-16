@@ -831,7 +831,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     this.setAnimation(DinosaurAnimation.IDLE.get());
                 }
 
-                if (!isSleeping && !worldObj.isRemote)
+                if (!isSleeping)
                 {
                     if (order == Order.SIT)
                     {
