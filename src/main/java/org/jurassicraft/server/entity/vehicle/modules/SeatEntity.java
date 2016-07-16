@@ -37,7 +37,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     public SeatEntity(World world, CarEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height)
     {
         super(world);
-        this.setSize(width, height);
+        this.setSize(width, height + offsetY);
         this.id = id;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -76,7 +76,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
         transform.rotY(Math.toRadians(180.0F - parent.rotationYaw));
         matrix.mul(transform);
         transform.setIdentity();
-        transform.setTranslation(new Vector3d(offsetX, offsetY, offsetZ));
+        transform.setTranslation(new Vector3d(offsetX, 0.0, offsetZ));
         matrix.mul(transform);
 
         this.setPosition(matrix.m03, matrix.m13, matrix.m23);
@@ -213,7 +213,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     @Override
     public double getMountedYOffset()
     {
-        return 0.0;
+        return offsetY;
     }
 
     public int getId()
