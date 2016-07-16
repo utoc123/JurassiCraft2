@@ -1,6 +1,8 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.RandomPositionGenerator;
+import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DinosaurWanderEntityAI extends EntityAIWander

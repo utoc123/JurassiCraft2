@@ -153,7 +153,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         {
 //            this.tasks.addTask(0, new EntityAISwimming(this));
             this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
-            this.setPathPriority(PathNodeType.WATER, 0.0F);
+            //this.setPathPriority(PathNodeType.WATER, 0.0F);
         }
 
         if (dinosaur.getDiet().isHerbivorous())
@@ -564,8 +564,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         float width = (float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX());
         float height = (float) transitionFromAge(dinosaur.getBabySizeY(), dinosaur.getAdultSizeY());
 
-        this.stepHeight = Math.max(0.6F, (float) (Math.ceil(height / 2.0F) / 2.0F));
-
+        //this.stepHeight = Math.max(0.6F, (float) (Math.ceil(height / 2.0F) / 2.0F));
+        this.stepHeight = 1;
         if (isCarcass)
         {
             setSize(height, width);
