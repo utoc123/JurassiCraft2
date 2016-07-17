@@ -13,7 +13,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -147,9 +146,9 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
         if (slots[index] != null)
         {
-            ItemStack itemstack = slots[index];
+            ItemStack slot = slots[index];
             slots[index] = null;
-            return itemstack;
+            return slot;
         }
         else
         {
@@ -172,13 +171,16 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
         if (!stacksEqual)
         {
-            int i = getProcess(index);
+            int process = getProcess(index);
 
-            if (i < getProcessCount())
+            if (process < getProcessCount())
             {
-                this.totalProcessTime[i] = this.getStackProcessTime(stack);
-                this.processTime[i] = 0;
-                this.markDirty();
+                if (!canProcess(process))
+                {
+                    this.totalProcessTime[process] = this.getStackProcessTime(stack);
+                    this.processTime[process] = 0;
+                    this.markDirty();
+                }
             }
         }
     }
@@ -247,36 +249,39 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
             if (!this.worldObj.isRemote)
             {
-                if (!this.isProcessing(process) && (slots[getInputs(process)[0]] == null))
+                boolean hasInput = false;
+
+                for (int input : getInputs(process))
                 {
-                    if (!this.isProcessing(process) && this.processTime[process] > 0)
+                    if (slots[input] != null)
                     {
-                        this.processTime[process] = MathHelper.clamp_int(this.processTime[process] - 2, 0, this.totalProcessTime[process]);
+                        hasInput = true;
+                        break;
                     }
                 }
-                else
-                {
-                    if (this.canProcess(process))
-                    {
-                        this.processTime[process]++;
 
-                        if (this.processTime[process] == this.totalProcessTime[process])
-                        {
-                            this.processTime[process] = 0;
-                            this.totalProcessTime[process] = this.getStackProcessTime(slots[getInputs()[0]]);
-                            this.processItem(process);
-                        }
-                    }
-                    else
+                if (hasInput && this.canProcess(process))
+                {
+                    this.processTime[process]++;
+
+                    if (this.processTime[process] == this.totalProcessTime[process])
                     {
-                        if (this.shouldResetProgress())
-                        {
-                            this.processTime[process] = 0;
-                        }
-                        else if (this.processTime[process] > 0)
-                        {
-                            this.processTime[process]--;
-                        }
+                        this.processTime[process] = 0;
+                        this.totalProcessTime[process] = this.getStackProcessTime(slots[getInputs()[0]]);
+                        this.processItem(process);
+                    }
+
+                    sync = true;
+                }
+                else if (this.isProcessing(process))
+                {
+                    if (this.shouldResetProgress())
+                    {
+                        this.processTime[process] = 0;
+                    }
+                    else if (this.processTime[process] > 0)
+                    {
+                        this.processTime[process]--;
                     }
 
                     sync = true;

@@ -18,29 +18,34 @@ public class FossilGrinderContainer extends MachineContainer
         super((IInventory) tileEntity);
 
         this.fossilGrinder = (FossilGrinderTile) tileEntity;
-        this.addSlotToContainer(new GrindableItemSlot(fossilGrinder, 0, 50, 35));
 
-        int i;
-
-        for (i = 0; i < 3; i++)
+        for (int row = 0; row < 3; row++)
         {
-            for (int j = 0; j < 2; j++)
+            for (int column = 0; column < 2; column++)
             {
-                this.addSlotToContainer(new CustomSlot(fossilGrinder, i + (j * 3) + 1, i * 18 + 93 + 15, j * 18 + 26, stack -> false));
+                this.addSlotToContainer(new GrindableItemSlot(fossilGrinder, row + (column * 3), row * 18 + 23, column * 18 + 26));
             }
         }
 
-        for (i = 0; i < 3; ++i)
+        for (int row = 0; row < 3; row++)
         {
-            for (int j = 0; j < 9; ++j)
+            for (int column = 0; column < 2; column++)
             {
-                this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlotToContainer(new CustomSlot(fossilGrinder, row + (column * 3) + 6, row * 18 + 93 + 15, column * 18 + 26, stack -> false));
             }
         }
 
-        for (i = 0; i < 9; ++i)
+        for (int row = 0; row < 3; ++row)
         {
-            this.addSlotToContainer(new Slot(playerInventory, i, 8 + i * 18, 142));
+            for (int column = 0; column < 9; ++column)
+            {
+                this.addSlotToContainer(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, 84 + row * 18));
+            }
+        }
+
+        for (int column = 0; column < 9; ++column)
+        {
+            this.addSlotToContainer(new Slot(playerInventory, column, 8 + column * 18, 142));
         }
     }
 

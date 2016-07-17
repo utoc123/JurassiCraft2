@@ -12,10 +12,10 @@ import java.util.Random;
 
 public class FossilGrinderTile extends MachineBaseTile
 {
-    private static final int[] INPUTS = new int[] { 0 };
-    private static final int[] OUTPUTS = new int[] { 1, 2, 3, 4, 5, 6 };
+    private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4, 5 };
+    private static final int[] OUTPUTS = new int[] { 6, 7, 8, 9, 10, 11 };
 
-    private ItemStack[] slots = new ItemStack[7];
+    private ItemStack[] slots = new ItemStack[12];
 
     @Override
     protected int getProcess(int slot)
@@ -26,17 +26,20 @@ public class FossilGrinderTile extends MachineBaseTile
     @Override
     protected boolean canProcess(int process)
     {
-        ItemStack input = slots[0];
-
-        GrindableItem grindableItem = GrindableItem.getGrindableItem(input);
-
-        if (grindableItem != null && grindableItem.isGrindable(input))
+        for (int inputIndex = 0; inputIndex < 6; inputIndex++)
         {
-            for (int i = 1; i < 7; i++)
+            ItemStack input = slots[inputIndex];
+
+            GrindableItem grindableItem = GrindableItem.getGrindableItem(input);
+
+            if (grindableItem != null && grindableItem.isGrindable(input))
             {
-                if (slots[i] == null)
+                for (int outputIndex = 6; outputIndex < 12; outputIndex++)
                 {
-                    return true;
+                    if (slots[outputIndex] == null)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -49,18 +52,33 @@ public class FossilGrinderTile extends MachineBaseTile
     {
         Random rand = new Random();
 
-        ItemStack input = slots[0];
+        ItemStack input = null;
+        int index = 0;
 
-        GrindableItem grindableItem = GrindableItem.getGrindableItem(input);
-
-        ItemStack output = grindableItem.getGroundItem(input, rand);
-
-        int emptySlot = getOutputSlot(output);
-
-        if (emptySlot != -1)
+        for (int inputIndex = 0; inputIndex < 6; inputIndex++)
         {
-            mergeStack(emptySlot, output);
-            decreaseStackSize(0);
+            input = slots[inputIndex];
+
+            if (input != null)
+            {
+                index = inputIndex;
+                break;
+            }
+        }
+
+        if (input != null)
+        {
+            GrindableItem grindableItem = GrindableItem.getGrindableItem(input);
+
+            ItemStack output = grindableItem.getGroundItem(input, rand);
+
+            int emptySlot = getOutputSlot(output);
+
+            if (emptySlot != -1)
+            {
+                mergeStack(emptySlot, output);
+                decreaseStackSize(index);
+            }
         }
     }
 
@@ -128,10 +146,5 @@ public class FossilGrinderTile extends MachineBaseTile
     public String getName()
     {
         return hasCustomName() ? customName : "container.fossil_grinder";
-    }
-
-    public String getCommandSenderName() // Forge Version compatibility, keep both getName and getCommandSenderName
-    {
-        return getName();
     }
 }

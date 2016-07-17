@@ -133,22 +133,26 @@ public class ActionFigureBlock extends OrientedBlock
     }
 
     @Override
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
+        if (!player.capabilities.isCreativeMode)
+        {
+            this.dropBlockAsItem(world, pos, state, 0);
+        }
+
+        super.onBlockHarvested(world, pos, state, player);
+    }
+
+    @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        List<ItemStack> drops = new ArrayList<>();
+        List<ItemStack> drops = new ArrayList<>(1);
 
-        Random rand = world instanceof World ? ((World) world).rand : RANDOM;
+        ActionFigureTile tile = getTile(world, pos);
 
-        int count = quantityDropped(state, fortune, rand);
-
-        for (int i = 0; i < count; i++)
+        if (tile != null)
         {
-            Item item = this.getItemDropped(state, rand, fortune);
-
-            if (item != null)
-            {
-                drops.add(new ItemStack(item, 1, getTile(world, pos).dinosaur));
-            }
+            drops.add(new ItemStack(ItemHandler.ACTION_FIGURE, 1, tile.dinosaur));
         }
 
         return drops;
