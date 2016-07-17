@@ -124,6 +124,8 @@ public class RecipeHandler
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.FIELD_GUIDE), "WBW", "PPP", "WBW", 'W', new ItemStack(Blocks.WOOL, 1, 3), 'B', Items.BONE, 'P', Items.PAPER);
 
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.CLEAR_GLASS, 8), "GGG", "GIG", "GGG", 'G', Blocks.GLASS, 'I', Items.IRON_INGOT);
+
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);
         addGrowthSerumRecipe(Items.COOKED_FISH);
