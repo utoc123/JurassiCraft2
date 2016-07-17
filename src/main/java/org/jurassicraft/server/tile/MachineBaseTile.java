@@ -264,7 +264,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
                 {
                     this.processTime[process]++;
 
-                    if (this.processTime[process] == this.totalProcessTime[process])
+                    if (this.processTime[process] >= this.totalProcessTime[process])
                     {
                         this.processTime[process] = 0;
                         this.totalProcessTime[process] = this.getStackProcessTime(slots[getInputs()[0]]);

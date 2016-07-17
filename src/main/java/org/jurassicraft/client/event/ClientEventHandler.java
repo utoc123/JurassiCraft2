@@ -82,6 +82,8 @@ public class ClientEventHandler
         {
             GlStateManager.pushMatrix();
 
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
             if (this.isGUI)
             {
                 OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);

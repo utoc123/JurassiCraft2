@@ -132,7 +132,7 @@ public class Herd implements Iterable<DinosaurEntity>
             {
                 if (enemies.size() == 0 || fleeing)
                 {
-                    if (!entity.isMovementBlocked() && !entity.isInWater() && (fleeing || entity.getNavigator().noPath()) && (state == State.MOVING || random.nextInt(50) == 0))
+                    if (!(entity.getMetabolism().isHungry() || entity.getMetabolism().isThirsty()) && !entity.isMovementBlocked() && !entity.isInWater() && (fleeing || entity.getNavigator().noPath()) && (state == State.MOVING || random.nextInt(50) == 0))
                     {
                         float entityMoveX = moveX * 2.0F;
                         float entityMoveZ = moveZ * 2.0F;

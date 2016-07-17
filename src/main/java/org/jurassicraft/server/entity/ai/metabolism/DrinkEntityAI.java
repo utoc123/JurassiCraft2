@@ -18,6 +18,8 @@ public class DrinkEntityAI extends EntityAIBase
     protected Path path;
     protected BlockPos pos;
 
+    protected int giveUpTime;
+
     public DrinkEntityAI(DinosaurEntity dinosaur)
     {
         this.dinosaur = dinosaur;
@@ -82,6 +84,7 @@ public class DrinkEntityAI extends EntityAIBase
                 {
                     this.pos = closestPos;
                     this.path = dinosaur.getNavigator().getPathToXYZ(closestPos.getX(), closestPos.getY(), closestPos.getZ());
+                    this.giveUpTime = 500;
                     return this.dinosaur.getNavigator().setPath(path, 1.0);
                 }
             }
@@ -93,6 +96,16 @@ public class DrinkEntityAI extends EntityAIBase
     @Override
     public void updateTask()
     {
+        giveUpTime--;
+
+        if (giveUpTime <= 0)
+        {
+            resetTask();
+            return;
+        }
+
+        dinosaur.getNavigator().setPath(path, 1.0);
+
         if (path.isFinished())
         {
             if (dinosaur.getAnimation() != DinosaurAnimation.DRINKING.get())
@@ -103,6 +116,15 @@ public class DrinkEntityAI extends EntityAIBase
             MetabolismContainer metabolism = dinosaur.getMetabolism();
             metabolism.setWater(metabolism.getMaxWater());
         }
+    }
+
+    @Override
+    public void resetTask()
+    {
+        super.resetTask();
+
+        path = null;
+        dinosaur.getNavigator().clearPathEntity();
     }
 
     @Override
