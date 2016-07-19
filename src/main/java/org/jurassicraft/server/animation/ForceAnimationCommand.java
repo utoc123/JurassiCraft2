@@ -31,6 +31,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -51,7 +52,7 @@ public class ForceAnimationCommand implements ICommand
     {
         try
         {
-            entity.setAnimation(DinosaurAnimation.valueOf(parAnimType.toUpperCase()).get());
+            entity.setAnimation(DinosaurAnimation.valueOf(parAnimType.toUpperCase(Locale.ENGLISH)).get());
         }
         catch (IllegalArgumentException iae)
         {
@@ -125,10 +126,10 @@ public class ForceAnimationCommand implements ICommand
         if (args.length == 1)
         {
             List<String> animations = Lists.newArrayList();
-            String current = args[0].toLowerCase();
+            String current = args[0].toLowerCase(Locale.ENGLISH);
             for (DinosaurAnimation animation : DinosaurAnimation.values())
             {
-                if (animation.name().toLowerCase().startsWith(current))
+                if (animation.name().toLowerCase(Locale.ENGLISH).startsWith(current))
                 {
                     animations.add(animation.name());
                 }

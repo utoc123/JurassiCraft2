@@ -7,6 +7,7 @@ import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.PlantHandler;
 
 import java.util.List;
+import java.util.Locale;
 
 public class PlantDNA
 {
@@ -48,7 +49,7 @@ public class PlantDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.getPlantById(plant).getName().toLowerCase().replaceAll(" ", "_") + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.getPlantById(plant).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name").build());
 
         TextFormatting formatting;
 

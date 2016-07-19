@@ -124,6 +124,7 @@ import org.jurassicraft.server.tile.FeederTile;
 import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
@@ -138,7 +139,7 @@ public enum RenderingHandler
     {
         for (Dinosaur dino : EntityHandler.getDinosaurs())
         {
-            String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
+            String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             if (!(dino instanceof Hybrid))
             {
@@ -191,7 +192,7 @@ public enum RenderingHandler
 
         for (Plant plant : PlantHandler.getPrehistoricPlants())
         {
-            String name = plant.getName().toLowerCase().replaceAll(" ", "_");
+            String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             ModelBakery.registerItemVariants(ItemHandler.PLANT_DNA, new ResourceLocation("jurassicraft:dna/plants/dna_" + name));
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name));
@@ -199,12 +200,12 @@ public enum RenderingHandler
 
 //        for (EnumDyeColor color : EnumDyeColor.values())
 //        {
-//            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase()));
+//            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
 //        }
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
         {
-            ModelBakery.registerItemVariants(ItemHandler.ATTRACTION_SIGN, new ResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase()));
+            ModelBakery.registerItemVariants(ItemHandler.ATTRACTION_SIGN, new ResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH)));
         }
 
         ModelBakery.registerItemVariants(ItemHandler.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
@@ -300,7 +301,7 @@ public enum RenderingHandler
 
         for (TreeType type : TreeType.values())
         {
-            String name = type.name().toLowerCase();
+            String name = type.name().toLowerCase(Locale.ENGLISH);
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_LEAVES.get(type), name + "_leaves", "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_SAPLINGS.get(type), name + "_sapling", "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_PLANKS.get(type), name + "_planks", "inventory");
@@ -313,7 +314,7 @@ public enum RenderingHandler
 
         for (EnumDyeColor color : EnumDyeColor.values())
         {
-            this.registerBlockRenderer(modelMesher, BlockHandler.CULTIVATOR_BOTTOM, color.ordinal(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(), "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.CULTIVATOR_BOTTOM, color.ordinal(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH), "inventory");
         }
 
         this.registerBlockRenderer(modelMesher, BlockHandler.SCALY_TREE_FERN, "scaly_tree_fern", "inventory");
@@ -431,7 +432,7 @@ public enum RenderingHandler
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
         {
-            this.registerItemRenderer(modelMesher, ItemHandler.ATTRACTION_SIGN, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(), "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.ATTRACTION_SIGN, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH), "inventory");
         }
 
         this.registerItemRenderer(modelMesher, ItemHandler.EMPTY_TEST_TUBE, "empty_test_tube", "inventory");
@@ -495,7 +496,7 @@ public enum RenderingHandler
 
         for (Dinosaur dino : EntityHandler.getDinosaurs())
         {
-            String dinoName = dino.getName().toLowerCase().replaceAll(" ", "_");
+            String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet())
             {
@@ -533,7 +534,7 @@ public enum RenderingHandler
         {
             meta = PlantHandler.getPlantId(plant);
 
-            String name = plant.getName().toLowerCase().replaceAll(" ", "_");
+            String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_DNA, meta, "dna/plants/dna_" + name, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");

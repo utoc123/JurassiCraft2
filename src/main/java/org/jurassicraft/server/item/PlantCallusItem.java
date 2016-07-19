@@ -16,6 +16,8 @@ import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 
+import java.util.Locale;
+
 public class PlantCallusItem extends Item
 {
     public PlantCallusItem()
@@ -28,7 +30,7 @@ public class PlantCallusItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new LangHelper("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.getPlantById(stack.getItemDamage()).getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
+        return new LangHelper("item.plant_callus.name").withProperty("plant", "plants." + PlantHandler.getPlantById(stack.getItemDamage()).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name").build();
     }
 
     @Override

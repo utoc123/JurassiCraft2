@@ -19,6 +19,7 @@ import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class ItemHandler
@@ -241,7 +242,7 @@ public class ItemHandler
 
     public static void registerItem(Item item, String name)
     {
-        String formattedName = name.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
+        String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_").replaceAll("'", "");
         item.setUnlocalizedName(formattedName);
 
         GameRegistry.register(item, new ResourceLocation(JurassiCraft.MODID, formattedName));

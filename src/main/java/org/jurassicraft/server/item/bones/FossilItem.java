@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -32,7 +33,7 @@ public class FossilItem extends Item implements GrindableItem
 
     public FossilItem(String type, boolean includeHybrids)
     {
-        this.type = type.toLowerCase().replaceAll(" ", "_");
+        this.type = type.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         this.includeHybrids = includeHybrids;
 
         this.setHasSubtypes(true);
@@ -69,7 +70,7 @@ public class FossilItem extends Item implements GrindableItem
 
         if (dinosaur != null)
         {
-            return new LangHelper(getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+            return new LangHelper(getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
         }
 
         return super.getItemStackDisplayName(stack);

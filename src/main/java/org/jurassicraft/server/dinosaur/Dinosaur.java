@@ -19,6 +19,7 @@ import javax.vecmathimpl.Vector3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class Dinosaur implements Comparable<Dinosaur>
@@ -155,7 +156,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     public void init()
     {
-        String formattedName = getName().toLowerCase().replaceAll(" ", "_");
+        String formattedName = getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         this.modelAdult = parseModel("adult");
 
@@ -165,7 +166,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
             {
                 if (this.doesSupportGrowthStage(stage))
                 {
-                    this.setModelContainer(stage, parseModel(stage.name().toLowerCase()));
+                    this.setModelContainer(stage, parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
                 }
                 else
                 {
@@ -178,11 +179,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
         for (GrowthStage growthStage : GrowthStage.values())
         {
-            String growthStageName = growthStage.name().toLowerCase();
+            String growthStageName = growthStage.name().toLowerCase(Locale.ENGLISH);
 
             if (!this.doesSupportGrowthStage(growthStage))
             {
-                growthStageName = GrowthStage.ADULT.name().toLowerCase();
+                growthStageName = GrowthStage.ADULT.name().toLowerCase(Locale.ENGLISH);
             }
 
             if (this instanceof Hybrid)
@@ -221,7 +222,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     protected TabulaModelContainer parseModel(String growthStage)
     {
-        String formattedName = getName().toLowerCase().replaceAll(" ", "_");
+        String formattedName = getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         String modelPath = "/assets/jurassicraft/models/entities/" + formattedName + "/" + growthStage + "/" + formattedName + "_" + growthStage + "_idle";
 
         try
@@ -451,7 +452,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
     protected String getDinosaurTexture(String subtype)
     {
-        String dinosaurName = getName().toLowerCase().replaceAll(" ", "_");
+        String dinosaurName = getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         String texture = "jurassicraft:textures/entities/" + dinosaurName + "/" + dinosaurName;
 

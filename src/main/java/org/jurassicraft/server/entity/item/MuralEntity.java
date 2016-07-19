@@ -22,6 +22,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MuralEntity extends EntityHanging implements IEntityAdditionalSpawnData
 {
@@ -240,7 +241,7 @@ public class MuralEntity extends EntityHanging implements IEntityAdditionalSpawn
         {
             this.sizeX = xSize;
             this.sizeY = ySize;
-            this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/murals/" + this.name().toLowerCase() + ".png");
+            this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/murals/" + this.name().toLowerCase(Locale.ENGLISH) + ".png");
         }
     }
 }

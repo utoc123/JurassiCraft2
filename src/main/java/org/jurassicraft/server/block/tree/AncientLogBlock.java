@@ -14,6 +14,7 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.tab.TabHandler;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class AncientLogBlock extends BlockLog implements GrindableItem
@@ -31,7 +32,7 @@ public class AncientLogBlock extends BlockLog implements GrindableItem
         this.petrified = petrified;
         this.type = treeType;
 
-        String name = treeType.name().toLowerCase() + "_log";
+        String name = treeType.name().toLowerCase(Locale.ENGLISH) + "_log";
 
         if (petrified)
         {

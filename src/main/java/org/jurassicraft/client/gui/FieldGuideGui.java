@@ -29,6 +29,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
@@ -45,7 +46,7 @@ public class FieldGuideGui extends GuiScreen
     {
         for (DinosaurStatus status : DinosaurStatus.values())
         {
-            STATUS_TEXTURES.put(status, new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/status/" + status.name().toLowerCase() + ".png"));
+            STATUS_TEXTURES.put(status, new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/status/" + status.name().toLowerCase(Locale.ENGLISH) + ".png"));
         }
     }
 
@@ -98,11 +99,11 @@ public class FieldGuideGui extends GuiScreen
 
         Dinosaur dinosaur = entity.getDinosaur();
 
-        drawScaledString(new LangHelper("entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build().toUpperCase(), x + 15, y + 10, 1.3F, 0);
+        drawScaledString(new LangHelper("entity.jurassicraft." + dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build().toUpperCase(Locale.ENGLISH), x + 15, y + 10, 1.3F, 0);
 
         if (page == 0)
         {
-            drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(), x + 16, y + 24, 1.0F, 0);
+            drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(Locale.ENGLISH), x + 16, y + 24, 1.0F, 0);
 
             int statisticsX = x + (SIZE_X / 2) + 15;
 
@@ -168,7 +169,7 @@ public class FieldGuideGui extends GuiScreen
 
                 if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size)
                 {
-                    this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase() + ".name").build(), mouseX, mouseY);
+                    this.drawCreativeTabHoveringText(new LangHelper("status." + status.name().toLowerCase(Locale.ENGLISH) + ".name").build(), mouseX, mouseY);
                 }
 
                 statusX += 18;
@@ -184,7 +185,7 @@ public class FieldGuideGui extends GuiScreen
         }
         else
         {
-            String text = new LangHelper("info." + dinosaur.getName().toLowerCase().replaceAll(" ", "_") + ".name").build();
+            String text = new LangHelper("info." + dinosaur.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name").build();
             List<String> lines = new ArrayList<>();
 
             int wrapX = 0;

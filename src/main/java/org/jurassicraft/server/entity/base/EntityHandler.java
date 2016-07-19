@@ -70,6 +70,7 @@ import org.jurassicraft.server.period.TimePeriod;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class EntityHandler
 {
@@ -260,7 +261,7 @@ public class EntityHandler
 
     private static void registerEntity(Class<? extends Entity> entity, String name)
     {
-        String formattedName = name.toLowerCase().replaceAll(" ", "_");
+        String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }

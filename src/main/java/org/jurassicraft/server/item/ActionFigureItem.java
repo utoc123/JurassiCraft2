@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ActionFigureItem extends Item
@@ -69,7 +70,7 @@ public class ActionFigureItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
+        String dinoName = getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.action_figure.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }

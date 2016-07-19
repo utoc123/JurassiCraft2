@@ -69,6 +69,7 @@ import org.jurassicraft.server.tile.IncubatorTile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class BlockHandler
@@ -340,12 +341,12 @@ public class BlockHandler
     {
         registerBlock(block, name);
 
-        GameRegistry.registerTileEntity(tileEntity, "jurassicraft:" + name.toLowerCase().replaceAll(" ", "_"));
+        GameRegistry.registerTileEntity(tileEntity, "jurassicraft:" + name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_"));
     }
 
     public static void registerBlock(Block block, String name)
     {
-        name = name.toLowerCase().replaceAll(" ", "_");
+        name = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         block.setUnlocalizedName(name);
 

@@ -22,6 +22,7 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class AncientLeavesBlock extends BlockLeaves
@@ -32,7 +33,7 @@ public class AncientLeavesBlock extends BlockLeaves
     {
         super();
         this.treeType = type;
-        this.setUnlocalizedName(type.name().toLowerCase() + "_leaves");
+        this.setUnlocalizedName(type.name().toLowerCase(Locale.ENGLISH) + "_leaves");
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);

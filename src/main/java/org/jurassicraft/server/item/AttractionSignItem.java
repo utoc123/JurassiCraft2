@@ -16,6 +16,7 @@ import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AttractionSignItem extends Item
 {
@@ -28,7 +29,7 @@ public class AttractionSignItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        return new LangHelper("item.attraction_sign.name").withProperty("type", "attraction_sign." + (AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()].name().toLowerCase()) + ".name").build();
+        return new LangHelper("item.attraction_sign.name").withProperty("type", "attraction_sign." + (AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()].name().toLowerCase(Locale.ENGLISH)) + ".name").build();
     }
 
     @Override

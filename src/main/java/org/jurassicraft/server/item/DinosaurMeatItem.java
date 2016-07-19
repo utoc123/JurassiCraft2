@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DinosaurMeatItem extends ItemFood
@@ -36,7 +37,7 @@ public class DinosaurMeatItem extends ItemFood
     {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
-        return new LangHelper("item.dinosaur_meat.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase() + ".name").build();
+        return new LangHelper("item.dinosaur_meat.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack)

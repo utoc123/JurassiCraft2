@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PlantDNAItem extends Item
@@ -31,7 +32,7 @@ public class PlantDNAItem extends Item
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
+        String plantName = getPlant(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.plant_dna.name").withProperty("plant", "plants." + plantName + ".name").build();
     }

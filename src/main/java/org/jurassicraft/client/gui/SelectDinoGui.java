@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SelectDinoGui extends GuiScreen
@@ -184,7 +185,7 @@ public class SelectDinoGui extends GuiScreen
 
                 if (texture == null)
                 {
-                    texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase() + ".png");
+                    texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase(Locale.ENGLISH) + ".png");
                     TEXTURES.put(id, texture);
                 }
 

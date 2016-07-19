@@ -24,6 +24,7 @@ import org.jurassicraft.server.item.itemblock.NestFossilItemBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableItem
@@ -142,7 +143,7 @@ public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableI
         @Override
         public String getName()
         {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.ENGLISH);
         }
     }
 }

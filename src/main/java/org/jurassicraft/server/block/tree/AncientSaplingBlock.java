@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class AncientSaplingBlock extends BlockBush implements IGrowable
@@ -29,7 +30,7 @@ public class AncientSaplingBlock extends BlockBush implements IGrowable
     public AncientSaplingBlock(TreeType type)
     {
         super();
-        this.setUnlocalizedName(type.name().toLowerCase() + "_sapling");
+        this.setUnlocalizedName(type.name().toLowerCase(Locale.ENGLISH) + "_sapling");
         this.setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(TabHandler.PLANTS);

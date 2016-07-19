@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class AncientDoubleSlabBlock extends AncientSlabBlock
@@ -20,7 +21,7 @@ public class AncientDoubleSlabBlock extends AncientSlabBlock
     public AncientDoubleSlabBlock(TreeType treeType, Block slab, IBlockState state)
     {
         super(treeType, state);
-        this.setUnlocalizedName(treeType.name().toLowerCase() + "_double_slab");
+        this.setUnlocalizedName(treeType.name().toLowerCase(Locale.ENGLISH) + "_double_slab");
         this.singleSlab = slab;
     }
 

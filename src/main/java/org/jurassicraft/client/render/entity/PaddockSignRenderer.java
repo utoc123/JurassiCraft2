@@ -21,6 +21,7 @@ import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
@@ -58,7 +59,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
 
             if (texture == null)
             {
-                texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase() + ".png");
+                texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase(Locale.ENGLISH) + ".png");
                 TEXTURES.put(id, texture);
             }
 

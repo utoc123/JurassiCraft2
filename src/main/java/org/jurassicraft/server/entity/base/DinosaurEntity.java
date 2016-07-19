@@ -80,6 +80,7 @@ import org.jurassicraft.server.message.SetOrderMessage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
@@ -279,7 +280,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (!owner.equals(prevOwner))
             {
-                player.addChatComponentMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build()));
+                player.addChatComponentMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build()));
             }
         }
     }
@@ -1407,7 +1408,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 if (player != null)
                 {
-                    player.addChatComponentMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase() + ".name").build()));
+                    player.addChatComponentMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase(Locale.ENGLISH) + ".name").build()));
                 }
             }
 

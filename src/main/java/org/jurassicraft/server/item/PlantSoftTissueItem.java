@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -32,7 +33,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        String plantName = getPlant(stack).getName().toLowerCase().replaceAll(" ", "_");
+        String plantName = getPlant(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.plant_soft_tissue.name").withProperty("plant", "plants." + plantName + ".name").build();
     }

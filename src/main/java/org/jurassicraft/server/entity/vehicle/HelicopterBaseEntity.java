@@ -37,6 +37,7 @@ import org.jurassicraft.server.message.HelicopterModulesMessage;
 import org.jurassicraft.server.util.Easings;
 import org.jurassicraft.server.util.MutableVec3;
 
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -156,7 +157,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         for (int i = 0; i < spots.tagCount(); i++)
         {
             NBTTagCompound spotData = spots.getCompoundTagAt(i);
-            ModulePosition position = ModulePosition.valueOf(spotData.getString("position").toUpperCase());
+            ModulePosition position = ModulePosition.valueOf(spotData.getString("position").toUpperCase(Locale.ENGLISH));
             getModuleSpot(position).readFromNBT(spotData);
         }
 
@@ -193,7 +194,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         {
             NBTTagCompound spotData = new NBTTagCompound();
             spot.writeToNBT(spotData);
-            String position = spot.getPosition().name().toLowerCase();
+            String position = spot.getPosition().name().toLowerCase(Locale.ENGLISH);
             spotData.setString("position", position);
             spots.appendTag(spotData);
         }

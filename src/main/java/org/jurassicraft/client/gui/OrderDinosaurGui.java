@@ -8,6 +8,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.lang.LangHelper;
 
+import java.util.Locale;
+
 @SideOnly(Side.CLIENT)
 public class OrderDinosaurGui extends GuiScreen
 {
@@ -27,7 +29,7 @@ public class OrderDinosaurGui extends GuiScreen
 
         for (DinosaurEntity.Order order : DinosaurEntity.Order.values())
         {
-            GuiButton button = new GuiButton(i, width / 2 - 100, i * 30 + height / 4, I18n.translateToLocal("order." + order.name().toLowerCase() + ".name"));
+            GuiButton button = new GuiButton(i, width / 2 - 100, i * 30 + height / 4, I18n.translateToLocal("order." + order.name().toLowerCase(Locale.ENGLISH) + ".name"));
             button.enabled = order != entity.getOrder();
 
             buttonList.add(button);

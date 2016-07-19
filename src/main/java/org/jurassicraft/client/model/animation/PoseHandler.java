@@ -39,7 +39,7 @@ public class PoseHandler
 
     public PoseHandler(Dinosaur dinosaur)
     {
-        String name = dinosaur.getName().toLowerCase().replaceAll(" ", "_");
+        String name = dinosaur.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         this.modelData = new EnumMap<>(GrowthStage.class);
         URI dinoDirURI;
 

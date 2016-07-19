@@ -18,6 +18,8 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.GrowthStage;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
+import java.util.Locale;
+
 @SideOnly(Side.CLIENT)
 public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 {
@@ -60,7 +62,7 @@ public class RenderDinosaurDefinition implements IRenderFactory<DinosaurEntity>
 
         try
         {
-            String name = dinosaur.getName().toLowerCase();
+            String name = dinosaur.getName().toLowerCase(Locale.ENGLISH);
             this.eggModel = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/egg/" + name));
             this.eggTexture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/egg/" + name + ".png");
         }

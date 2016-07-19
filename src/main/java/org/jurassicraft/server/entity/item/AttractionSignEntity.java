@@ -20,6 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.item.ItemHandler;
 
+import java.util.Locale;
+
 public class AttractionSignEntity extends EntityHanging implements IEntityAdditionalSpawnData
 {
     private static final Predicate<Entity> IS_ATTRACTION_SIGN = entity -> entity instanceof AttractionSignEntity;
@@ -224,8 +226,8 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
         {
             this.sizeX = xSize;
             this.sizeY = ySize;
-            this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/attraction_sign/" + this.name().toLowerCase() + ".png");
-            this.texturePopout = new ResourceLocation(JurassiCraft.MODID, "textures/attraction_sign/" + this.name().toLowerCase() + "_popout.png");
+            this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/attraction_sign/" + this.name().toLowerCase(Locale.ENGLISH) + ".png");
+            this.texturePopout = new ResourceLocation(JurassiCraft.MODID, "textures/attraction_sign/" + this.name().toLowerCase(Locale.ENGLISH) + "_popout.png");
         }
     }
 }

@@ -41,6 +41,7 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class ServerEventHandler
@@ -229,7 +230,7 @@ public class ServerEventHandler
             for (Dinosaur dinosaur : dinosaurs)
             {
                 int meta = EntityHandler.getDinosaurId(dinosaur);
-                actionFigureEntries[i++] = new LootEntryItem(ItemHandler.ACTION_FIGURE, 25, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase());
+                actionFigureEntries[i++] = new LootEntryItem(ItemHandler.ACTION_FIGURE, 25, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase(Locale.ENGLISH));
             }
 
             table.addPool(new LootPool(actionFigureEntries, new LootCondition[0], new RandomValueRange(1, 2), new RandomValueRange(0, 0), "action_figures"));
@@ -245,7 +246,7 @@ public class ServerEventHandler
             for (Dinosaur dinosaur : dinosaurs)
             {
                 int meta = EntityHandler.getDinosaurId(dinosaur);
-                fossilEntries[i++] = new LootEntryItem(ItemHandler.FOSSILS.get("skull"), 10, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase());
+                fossilEntries[i++] = new LootEntryItem(ItemHandler.FOSSILS.get("skull"), 10, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase(Locale.ENGLISH));
             }
 
             table.addPool(new LootPool(fossilEntries, new LootCondition[0], new RandomValueRange(1, 2), new RandomValueRange(0, 0), "fossils"));

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SyringeItem extends DNAContainerItem
@@ -29,7 +30,7 @@ public class SyringeItem extends DNAContainerItem
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        String dinoName = getDinosaur(stack).getName().toLowerCase().replaceAll(" ", "_");
+        String dinoName = getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.syringe.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }

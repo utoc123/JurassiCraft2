@@ -23,6 +23,7 @@ import org.jurassicraft.server.item.itemblock.FossilizedTrackwayItemBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
+import java.util.Locale;
 
 public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock
 {
@@ -109,7 +110,7 @@ public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock
         @Override
         public String getName()
         {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.ENGLISH);
         }
     }
 }

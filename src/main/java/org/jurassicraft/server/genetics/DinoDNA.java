@@ -8,6 +8,7 @@ import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.LangHelper;
 
 import java.util.List;
+import java.util.Locale;
 
 public class/* Bingo! */ DinoDNA
 {
@@ -52,7 +53,7 @@ public class/* Bingo! */ DinoDNA
 
     public void addInformation(ItemStack stack, List<String> tooltip)
     {
-        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().toLowerCase() + ".name").build());
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build());
 
         TextFormatting colour;
 
