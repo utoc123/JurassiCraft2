@@ -29,11 +29,7 @@ public class PlasterAndBandageItem extends Item
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote || !player.canPlayerEdit(pos.offset(side), side, stack))
-        {
-            return EnumActionResult.PASS;
-        }
-        else
+        if (player.canPlayerEdit(pos.offset(side), side, stack))
         {
             IBlockState state = world.getBlockState(pos);
 
@@ -41,29 +37,35 @@ public class PlasterAndBandageItem extends Item
 
             if (block instanceof FossilBlock)
             {
-                int id = BlockHandler.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
-
-                world.setBlockState(pos, BlockHandler.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.getMetadata(id)));
-
-                if (!player.capabilities.isCreativeMode)
+                if (!world.isRemote)
                 {
-                    stack.stackSize--;
-                }
+                    int id = BlockHandler.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
 
-                player.addStat(AchievementHandler.FOSSILS, 1);
+                    world.setBlockState(pos, BlockHandler.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.getMetadata(id)));
+
+                    if (!player.capabilities.isCreativeMode)
+                    {
+                        stack.stackSize--;
+                    }
+
+                    player.addStat(AchievementHandler.FOSSILS, 1);
+                }
 
                 return EnumActionResult.SUCCESS;
             }
             else if (block instanceof NestFossilBlock && !((NestFossilBlock) block).encased)
             {
-                world.setBlockState(pos, BlockHandler.ENCASED_NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, state.getValue(NestFossilBlock.VARIANT)));
-
-                if (!player.capabilities.isCreativeMode)
+                if (!world.isRemote)
                 {
-                    stack.stackSize--;
-                }
+                    world.setBlockState(pos, BlockHandler.ENCASED_NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, state.getValue(NestFossilBlock.VARIANT)));
 
-                player.addStat(AchievementHandler.FOSSILS, 1);
+                    if (!player.capabilities.isCreativeMode)
+                    {
+                        stack.stackSize--;
+                    }
+
+                    player.addStat(AchievementHandler.FOSSILS, 1);
+                }
 
                 return EnumActionResult.SUCCESS;
             }

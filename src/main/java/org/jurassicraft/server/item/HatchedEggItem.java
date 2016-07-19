@@ -114,31 +114,38 @@ public class HatchedEggItem extends DNAContainerItem
             hitZ = 1.0F - hitZ;
         }
 
-        if (player.canPlayerEdit(pos, side, stack) && !world.isRemote)
+        if (player.canPlayerEdit(pos, side, stack))
         {
-            Dinosaur dinosaur = getDinosaur(stack);
-
-            try
+            if (!world.isRemote)
             {
-                DinosaurEntity entity = dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(world);
+                Dinosaur dinosaur = getDinosaur(stack);
 
-                entity.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
-                entity.setAge(0);
-                entity.setGenetics(getGeneticCode(player, stack));
-                entity.setDNAQuality(getDNAQuality(player, stack));
-                entity.setMale(getGender(player, stack));
-                entity.setOwner(player);
-
-                world.spawnEntityInWorld(entity);
-
-                if (!player.capabilities.isCreativeMode)
+                try
                 {
-                    stack.stackSize--;
+                    DinosaurEntity entity = dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(world);
+
+                    entity.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
+                    entity.setAge(0);
+                    entity.setGenetics(getGeneticCode(player, stack));
+                    entity.setDNAQuality(getDNAQuality(player, stack));
+                    entity.setMale(getGender(player, stack));
+
+                    if (!player.isSneaking())
+                    {
+                        entity.setOwner(player);
+                    }
+
+                    world.spawnEntityInWorld(entity);
+
+                    if (!player.capabilities.isCreativeMode)
+                    {
+                        stack.stackSize--;
+                    }
                 }
-            }
-            catch (ReflectiveOperationException e)
-            {
-                e.printStackTrace();
+                catch (ReflectiveOperationException e)
+                {
+                    e.printStackTrace();
+                }
             }
 
             return EnumActionResult.SUCCESS;

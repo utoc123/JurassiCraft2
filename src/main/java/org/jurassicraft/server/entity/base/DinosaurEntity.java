@@ -851,6 +851,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (!shouldSleep() && !isSleeping && stayAwakeTime > 0)
         {
             stayAwakeTime = 0;
+
+            if (getAnimation() == DinosaurAnimation.SLEEPING.get())
+            {
+                this.setAnimation(DinosaurAnimation.IDLE.get());
+            }
         }
 
         if (this.isServerWorld())

@@ -78,7 +78,7 @@ public class ClientEventHandler
     {
         EntityPlayer player = event.getEntityPlayer();
 
-        if (!player.isPlayerSleeping() && !player.isDead && !player.isInvisible() && !player.isInvisibleToPlayer(MC.thePlayer) && ClientProxy.PATRONS.contains(player.getUniqueID()))
+        if (!player.isPlayerSleeping() && player.deathTime <= 0 && !player.isInvisible() && !player.isInvisibleToPlayer(MC.thePlayer) && ClientProxy.PATRONS.contains(player.getUniqueID()))
         {
             GlStateManager.pushMatrix();
 
