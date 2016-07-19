@@ -1,6 +1,7 @@
 package org.jurassicraft;
 
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
+import net.ilexiconn.llibrary.server.update.UpdateHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -46,6 +47,8 @@ public class JurassiCraft
     {
         LOGGER = event.getModLog();
         LOGGER.info("Loading JurassiCraft...");
+
+        UpdateHandler.INSTANCE.registerUpdateChecker(this, "http://pastebin.com/raw/Rb96SNWb");
 
         PROXY.preInit(event);
         LOGGER.debug("Finished pre-initialization for JurassiCraft!");
