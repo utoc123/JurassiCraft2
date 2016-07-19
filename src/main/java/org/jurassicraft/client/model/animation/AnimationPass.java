@@ -1,6 +1,5 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.util.SoundEvent;
@@ -57,8 +56,6 @@ public class AnimationPass
         this.initTweenTicks(entity);
 
         this.initIncrements(entity);
-
-        this.updatePreviousPose();
     }
 
     public void initPoseModel()
@@ -108,18 +105,23 @@ public class AnimationPass
     {
         this.animation = animation;
 
-        if (isEntityAnimationDependent())
+        if (this.poseSequences.get(animation) == null)
         {
-            if (this.poseSequences.get(animation) == null)
-            {
-                this.animation = DinosaurAnimation.IDLE.get();
-                entity.setAnimation(DinosaurAnimation.IDLE.get());
-            }
+            this.animation = DinosaurAnimation.IDLE.get();
 
-            if (this.animation != DinosaurAnimation.IDLE.get() && this.animation == animation) // finished sequence but no new sequence set
+            if (isEntityAnimationDependent())
             {
-                this.animation = DinosaurAnimation.IDLE.get();
-                entity.setAnimation(DinosaurAnimation.IDLE.get());
+                entity.setAnimation(this.animation);
+            }
+        }
+
+        if (this.animation != DinosaurAnimation.IDLE.get() && this.animation == animation) // finished sequence but no new sequence set
+        {
+            this.animation = DinosaurAnimation.IDLE.get();
+
+            if (isEntityAnimationDependent())
+            {
+                entity.setAnimation(this.animation);
             }
         }
     }
@@ -133,7 +135,7 @@ public class AnimationPass
             inertiaFactor = (float) (Math.sin(Math.PI * (inertiaFactor - 0.5D)) * 0.5D + 0.5D);
         }
 
-        return inertiaFactor;
+        return Math.min(1.0F, Math.max(0.0F, inertiaFactor));
     }
 
     public void performAnimations(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float ticks)
@@ -407,11 +409,6 @@ public class AnimationPass
     protected Animation getRequestedAnimation(DinosaurEntity entity)
     {
         return entity.getAnimation();
-    }
-
-    protected float getAnimationTick(DinosaurEntity entity)
-    {
-        return Math.min(entity.getAnimationLength(), entity.getAnimationTick() + LLibrary.PROXY.getPartialTicks());
     }
 
     protected boolean isEntityAnimationDependent()

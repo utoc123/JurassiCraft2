@@ -1,6 +1,7 @@
 package org.jurassicraft.server.entity.base;
 
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.Hybrid;
@@ -129,6 +130,8 @@ public class EntityHandler
     private static HashMap<TimePeriod, List<Dinosaur>> dinosaursFromPeriod = new HashMap<>();
     private static int entityId;
 
+    private static ProgressManager.ProgressBar dinosaurProgress;
+
     public static List<Dinosaur> getDinosaursFromSeaLampreys()
     {
         List<Dinosaur> marineDinos = new ArrayList<>();
@@ -200,6 +203,12 @@ public class EntityHandler
         registerDinosaur(TROODON);
         registerDinosaur(PACHYCEPHALOSAURUS);
 
+        dinosaurProgress = ProgressManager.push("Loading dinosaurs", dinosaurs.size());
+
+        initDinosaurs();
+
+        ProgressManager.pop(dinosaurProgress);
+
         registerEntity(AttractionSignEntity.class, "Attraction Sign");
         registerEntity(PaddockSignEntity.class, "Paddock Sign");
         registerEntity(MuralEntity.class, "Mural");
@@ -213,6 +222,42 @@ public class EntityHandler
 //        registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
     }
 
+    private static void initDinosaurs()
+    {
+        for (Dinosaur dinosaur : dinosaurs)
+        {
+            dinosaurProgress.step(dinosaur.getName());
+
+            dinosaur.init();
+
+            if (!(dinosaur instanceof Hybrid) && dinosaur.shouldRegister())
+            {
+                TimePeriod period = dinosaur.getPeriod();
+
+                List<Dinosaur> dinoList = dinosaursFromPeriod.get(period);
+
+                if (dinoList != null)
+                {
+                    dinoList.add(dinosaur);
+
+                    dinosaursFromPeriod.remove(period);
+                    dinosaursFromPeriod.put(period, dinoList);
+                }
+                else
+                {
+                    List<Dinosaur> newDinoList = new ArrayList<>();
+                    newDinoList.add(dinosaur);
+
+                    dinosaursFromPeriod.put(period, newDinoList);
+                }
+            }
+
+            Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
+
+            registerEntity(clazz, dinosaur.getName());
+        }
+    }
+
     private static void registerEntity(Class<? extends Entity> entity, String name)
     {
         String formattedName = name.toLowerCase().replaceAll(" ", "_");
@@ -222,35 +267,7 @@ public class EntityHandler
 
     public static void registerDinosaur(Dinosaur dinosaur)
     {
-        dinosaur.init();
-
         dinosaurs.add(dinosaur);
-
-        if (!(dinosaur instanceof Hybrid) && dinosaur.shouldRegister())
-        {
-            TimePeriod period = dinosaur.getPeriod();
-
-            List<Dinosaur> dinoList = dinosaursFromPeriod.get(period);
-
-            if (dinoList != null)
-            {
-                dinoList.add(dinosaur);
-
-                dinosaursFromPeriod.remove(period);
-                dinosaursFromPeriod.put(period, dinoList);
-            }
-            else
-            {
-                List<Dinosaur> newDinoList = new ArrayList<>();
-                newDinoList.add(dinosaur);
-
-                dinosaursFromPeriod.put(period, newDinoList);
-            }
-        }
-
-        Class<? extends DinosaurEntity> clazz = dinosaur.getDinosaurClass();
-
-        registerEntity(clazz, dinosaur.getName());
     }
 
     public static Dinosaur getDinosaurById(int id)
