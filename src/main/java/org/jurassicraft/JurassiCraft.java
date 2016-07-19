@@ -22,7 +22,7 @@ import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
 import org.jurassicraft.server.message.UpdateCarControlMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 
-@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.config.GUIFactory", dependencies = "required-after:llibrary@[" + JurassiCraft.LLIBRARY_VERSION + ",)")
+@Mod(modid = JurassiCraft.MODID, name = JurassiCraft.MODNAME, version = JurassiCraft.VERSION, dependencies = "required-after:llibrary@[" + JurassiCraft.LLIBRARY_VERSION + ",)")
 public class JurassiCraft
 {
     public static final String MODID = "jurassicraft";

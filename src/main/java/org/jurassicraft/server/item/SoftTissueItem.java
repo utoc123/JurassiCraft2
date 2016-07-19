@@ -45,7 +45,7 @@ public class SoftTissueItem extends Item implements SequencableItem
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.ACHILLOBATOR;
+            dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
         return dinosaur;

@@ -127,7 +127,7 @@ public class DinosaurSpawnEggItem extends Item
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.ACHILLOBATOR;
+            dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
         return dinosaur;

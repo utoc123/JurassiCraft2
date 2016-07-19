@@ -20,7 +20,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.proxy.ClientProxy;
 import org.jurassicraft.client.render.entity.IDinosaurRenderer;
-import org.jurassicraft.client.render.entity.IndominusRenderer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.lwjgl.opengl.GL11;
 
@@ -46,7 +45,7 @@ public class ClientEventHandler
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void postRender(RenderLivingEvent.Post event)
     {
-        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer && !(event.getRenderer() instanceof IndominusRenderer))
+        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F);
         }

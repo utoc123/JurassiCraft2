@@ -41,7 +41,7 @@ public class SyringeItem extends DNAContainerItem
 
         if (dinosaur == null)
         {
-            dinosaur = EntityHandler.ACHILLOBATOR;
+            dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
         return dinosaur;
