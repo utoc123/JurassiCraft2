@@ -1,5 +1,7 @@
 package org.jurassicraft.server.item;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -9,12 +11,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jurassicraft.server.block.plant.JCBlockCropsBase;
 import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 
 public class PlantCallusItem extends Item
 {
+    public PlantCallusItem()
+    {
+        super();
+
+        this.setHasSubtypes(true);
+    }
+
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
@@ -32,8 +42,14 @@ public class PlantCallusItem extends Item
 
                 if (plant != null)
                 {
-                    world.setBlockState(pos.up(), plant.getBlock().getDefaultState());
-                    world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+                    Block block = plant.getBlock();
+                    world.setBlockState(pos.up(), block.getDefaultState());
+
+                    if (!(block instanceof BlockCrops || block instanceof JCBlockCropsBase))
+                    {
+                        world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+                    }
+
                     --stack.stackSize;
                     return EnumActionResult.SUCCESS;
                 }

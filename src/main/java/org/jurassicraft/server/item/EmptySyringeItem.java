@@ -20,12 +20,19 @@ public class EmptySyringeItem extends Item
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (worldIn.getBlockState(pos).getBlock() instanceof BlockBush)
+        if (world.getBlockState(pos).getBlock() instanceof BlockBush)
         {
-            playerIn.inventory.addItemStackToInventory(new ItemStack(ItemHandler.PLANT_CELLS));
-            stack.stackSize--;
+            if (stack.stackSize == 1)
+            {
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(ItemHandler.PLANT_CELLS));
+            }
+            else
+            {
+                player.inventory.addItemStackToInventory(new ItemStack(ItemHandler.PLANT_CELLS));
+                stack.stackSize--;
+            }
 
             return EnumActionResult.SUCCESS;
         }

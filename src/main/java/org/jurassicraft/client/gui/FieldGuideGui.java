@@ -1,5 +1,7 @@
 package org.jurassicraft.client.gui;
 
+import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.client.util.ClientUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -295,7 +297,10 @@ public class FieldGuideGui extends GuiScreen
         RenderManager renderManager = mc.getRenderManager();
         renderManager.setPlayerViewY(180.0F);
         renderManager.setRenderShadow(false);
-        renderManager.doRenderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float partialTicks = LLibrary.PROXY.getPartialTicks();
+        GlStateManager.rotate(ClientUtils.interpolate(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks), 0.0F, 1.0F, 0.0F);
+        renderManager.doRenderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks, false);
         renderManager.setRenderShadow(true);
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();

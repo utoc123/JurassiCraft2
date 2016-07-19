@@ -4,9 +4,9 @@
         "name": "JurassiCraft",
         "version": "${version}",
 		"mcversion": "${mcversion}",
-        "authorList": ["TeamJC"],
-        "url": "https://jurassicraft.net/",
+        "authorList": ["JurassiCraft Team"],
+        "url": "http://minecraft.curseforge.com/projects/jurassicraft-2-0",
         "dependencies": [],
-        "description": "JurassiCraft is a mod made to bring prehistoric creatures to the world of Minecraft. It is inspired by Jurassic Park, but is not limited to all JP canon: as many creatures and features as possible will be added! Creatures are made Jurassic Park style, by obtaining fossils or amber, using the fossils or amber to create DNA, inserting the DNA into eggs, and hatching the eggs. The mod recently merged with two other mods, entitled the Bygone Age Mod and the Fossil Hunting Mod, which will bring users a more complete modded-Minecraft experience. "
+        "description": "JurassiCraft is a mod based on Jurassic Park on Jurassic World franchises, but is not only limited to it. This mod allows you to create dinosaurs by extracting DNA from fossils and amber, and putting that through a process until you get a baby dinosaur! Not only does this mod add dinosaurs, it also adds many prehistoric plants!"
     }
 ]
