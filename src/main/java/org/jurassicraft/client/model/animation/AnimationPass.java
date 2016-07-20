@@ -355,7 +355,7 @@ public class AnimationPass
     {
         updatePreviousPose();
 
-        if (poseSequences.get(requestedAnimation) != null && !(animation != DinosaurAnimation.IDLE.get() && animation == requestedAnimation))
+        if (poseSequences.get(requestedAnimation) != null && !(animation != DinosaurAnimation.IDLE.get() && animation == requestedAnimation && !this.isLooping()))
         {
             animation = requestedAnimation;
         }
@@ -414,5 +414,10 @@ public class AnimationPass
     protected boolean isEntityAnimationDependent()
     {
         return true;
+    }
+
+    public boolean isLooping()
+    {
+        return false;
     }
 }

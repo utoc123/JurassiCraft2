@@ -89,4 +89,10 @@ public class MovementAnimationPass extends AnimationPass
         double deltaZ = entity.posZ - entity.prevPosZ;
         return deltaX * deltaX + deltaZ * deltaZ > 0;
     }
+
+    @Override
+    public boolean isLooping()
+    {
+        return true;
+    }
 }
