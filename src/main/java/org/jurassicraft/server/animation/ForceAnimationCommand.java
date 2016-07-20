@@ -48,18 +48,6 @@ public class ForceAnimationCommand implements ICommand
         aliases.add("anim");
     }
 
-    private static void setDinoAnimation(ICommandSender sender, DinosaurEntity entity, String parAnimType) throws CommandException
-    {
-        try
-        {
-            entity.setAnimation(DinosaurAnimation.valueOf(parAnimType.toUpperCase(Locale.ENGLISH)).get());
-        }
-        catch (IllegalArgumentException iae)
-        {
-            throw new CommandException(parAnimType + " is not a valid animation.");
-        }
-    }
-
     @Override
     public int compareTo(ICommand o)
     {
@@ -87,9 +75,9 @@ public class ForceAnimationCommand implements ICommand
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        World theWorld = sender.getEntityWorld();
+        World world = sender.getEntityWorld();
 
-        if (theWorld.isRemote)
+        if (world.isRemote)
         {
             JurassiCraft.INSTANCE.getLogger().debug("Not processing on Client side");
         }
@@ -102,13 +90,23 @@ public class ForceAnimationCommand implements ICommand
             }
             String entitySelector = args.length < 2 ? "@e[c=1]" : args[1];
             List<DinosaurEntity> dinos = EntitySelector.matchEntities(new ProxySender(server, sender), entitySelector, DinosaurEntity.class);
-            if (dinos == null || dinos.size() == 0)
+
+            if (dinos.size() == 0)
             {
-                throw new EntityNotFoundException("No IAnimatedEntity to animate");
+                throw new EntityNotFoundException("No DinosaurEntity to animate");
             }
+
             for (DinosaurEntity entity : dinos)
             {
-                setDinoAnimation(sender, entity, args[0]);
+                try
+                {
+                    entity.setAnimation(DinosaurAnimation.valueOf(args[0].toUpperCase(Locale.ENGLISH)).get());
+                }
+                catch (IllegalArgumentException iae)
+                {
+                    throw new CommandException(args[0] + " is not a valid animation.");
+                }
+
                 sender.addChatMessage(new TextComponentString("Animating entity " + entity.getEntityId() + " with animation type " + args[0]));
             }
         }
@@ -127,6 +125,7 @@ public class ForceAnimationCommand implements ICommand
         {
             List<String> animations = Lists.newArrayList();
             String current = args[0].toLowerCase(Locale.ENGLISH);
+
             for (DinosaurAnimation animation : DinosaurAnimation.values())
             {
                 if (animation.name().toLowerCase(Locale.ENGLISH).startsWith(current))
@@ -134,6 +133,7 @@ public class ForceAnimationCommand implements ICommand
                     animations.add(animation.name());
                 }
             }
+
             return animations;
         }
         return null;

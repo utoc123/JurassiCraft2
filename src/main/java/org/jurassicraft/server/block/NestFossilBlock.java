@@ -15,6 +15,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.CleanableItem;
@@ -69,7 +70,7 @@ public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableI
     @Override
     public int damageDropped(IBlockState state)
     {
-        return state.getValue(VARIANT).ordinal();
+        return state.getValue(VARIANT).ordinal() & 3;
     }
 
     @Override
@@ -109,7 +110,22 @@ public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableI
     @Override
     public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player)
     {
-        return encased;
+        return true;
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
+        return true;
+    }
+
+    @Override
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune)
+    {
+        if (encased)
+        {
+            super.dropBlockAsItemWithChance(world, pos, state, chance, fortune);
+        }
     }
 
     @Override
