@@ -31,7 +31,7 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setOffset(0.0F, 0.45F, 0.0F);
         this.setImprintable(true);
         this.setDefendOwner(true);
-        this.setMaxHerdSize(20);
+        this.setMaxHerdSize(15);
         this.setAttackBias(400.0);
     }
 }

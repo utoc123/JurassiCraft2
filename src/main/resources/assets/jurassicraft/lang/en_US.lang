@@ -228,9 +228,9 @@ tile.calamites_stairs.name=Calamites Stairs
 tile.calamites_slab.name=Calamites Slab
 tile.calamites_log_petrified.name=Petrified Calamites Log
 
-tile.small_royal_fern.name=Small Royal Fern
-tile.small_chain_fern.name=Small Chain Fern
-tile.small_cycad.name=Small Cycad
+tile.small_royal_fern.name=Royal Fern
+tile.small_chain_fern.name=Chain Fern
+tile.small_cycad.name=Cycad
 tile.bennettitalean_cycadeoidea.name=Cycadeoidea
 tile.cry_pansy.name=Cry Pansy
 tile.scaly_tree_fern.name=Scaly Tree Fern

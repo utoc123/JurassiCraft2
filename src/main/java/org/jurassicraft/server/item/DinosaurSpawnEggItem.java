@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -43,6 +44,12 @@ public class DinosaurSpawnEggItem extends Item
         this.setHasSubtypes(true);
 
         this.setCreativeTab(TabHandler.ITEMS);
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand)
+    {
+        return true;
     }
 
     public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)
