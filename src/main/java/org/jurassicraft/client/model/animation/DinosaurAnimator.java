@@ -44,10 +44,7 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     {
         getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, limbSwing, limbSwingAmount, ticks);
 
-        if (entity.getAnimation() != DinosaurAnimation.DYING.get()) // still alive
-        {
-            performAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
-        }
+        performAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
     }
 
     protected void performAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)

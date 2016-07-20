@@ -24,6 +24,7 @@ import org.jurassicraft.server.item.itemblock.EncasedFossilItemBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class EncasedFossilBlock extends Block implements SubBlocksBlock, CleanableItem
@@ -79,18 +80,13 @@ public class EncasedFossilBlock extends Block implements SubBlocksBlock, Cleanab
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
-        List<Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
+        Map<Integer, Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
 
         for (int i = 0; i < 16; i++)
         {
-            int dinoIndex = i + start;
+            Dinosaur dinosaur = dinosaurs.get(i + start);
 
-            if (dinoIndex >= dinosaurs.size())
-            {
-                break;
-            }
-
-            if (dinosaurs.get(dinoIndex).shouldRegister())
+            if (dinosaur != null && dinosaur.shouldRegister())
             {
                 list.add(new ItemStack(this, 1, i));
             }

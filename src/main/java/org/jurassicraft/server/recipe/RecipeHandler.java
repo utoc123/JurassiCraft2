@@ -24,14 +24,11 @@ public class RecipeHandler
 {
     public static void init()
     {
-        for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs())
         {
-            if (dinosaur.shouldRegister())
-            {
-                int meta = EntityHandler.getDinosaurId(dinosaur);
+            int id = EntityHandler.getDinosaurId(dinosaur);
 
-                GameRegistry.addSmelting(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, meta), new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, meta), 5F);
-            }
+            GameRegistry.addSmelting(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, id), new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, id), 5F);
         }
 
         for (Map.Entry<TreeType, AncientPlanksBlock> entry : BlockHandler.ANCIENT_PLANKS.entrySet())
@@ -133,9 +130,9 @@ public class RecipeHandler
         addGrowthSerumRecipe(Items.COOKED_PORKCHOP);
         addGrowthSerumRecipe(Items.COOKED_RABBIT);
 
-        for (int i = 0; i < EntityHandler.getDinosaurs().size(); i++)
+        for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs())
         {
-            addGrowthSerumRecipe(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, i));
+            addGrowthSerumRecipe(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, EntityHandler.getDinosaurId(dinosaur)));
         }
 
         addPaleoBaleRecipe(BlockHandler.PALEO_BALE_CYCADEOIDEA);

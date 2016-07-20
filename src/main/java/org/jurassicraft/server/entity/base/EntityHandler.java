@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class EntityHandler
 {
@@ -36,12 +37,14 @@ public class EntityHandler
     public static final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
     public static final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
 
-    private static final List<Dinosaur> DINOSAURS = new ArrayList<>();
+    private static final Map<Integer, Dinosaur> DINOSAURS = new HashMap<>();
+    private static final Map<Dinosaur, Integer> DINOSAUR_IDS = new HashMap<>();
     private static final HashMap<TimePeriod, List<Dinosaur>> DINOSAUR_PERIODS = new HashMap<>();
 
     private static int entityId;
 
     private static ProgressManager.ProgressBar dinosaurProgress;
+    private static int highestID;
 
     public static List<Dinosaur> getDinosaursFromSeaLampreys()
     {
@@ -60,13 +63,13 @@ public class EntityHandler
 
     public static void init()
     {
-        registerDinosaur(VELOCIRAPTOR);
-        registerDinosaur(BRACHIOSAURUS);
-        registerDinosaur(DILOPHOSAURUS);
-        registerDinosaur(GALLIMIMUS);
-        registerDinosaur(PARASAUROLOPHUS);
-        registerDinosaur(TRICERATOPS);
-        registerDinosaur(TYRANNOSAURUS);
+        registerDinosaur(0, VELOCIRAPTOR);
+        registerDinosaur(3, BRACHIOSAURUS);
+        registerDinosaur(7, DILOPHOSAURUS);
+        registerDinosaur(9, GALLIMIMUS);
+        registerDinosaur(13, PARASAUROLOPHUS);
+        registerDinosaur(19, TRICERATOPS);
+        registerDinosaur(20, TYRANNOSAURUS);
 
         dinosaurProgress = ProgressManager.push("Loading dinosaurs", DINOSAURS.size());
 
@@ -89,8 +92,10 @@ public class EntityHandler
 
     private static void initDinosaurs()
     {
-        for (Dinosaur dinosaur : DINOSAURS)
+        for (Map.Entry<Integer, Dinosaur> entry : DINOSAURS.entrySet())
         {
+            Dinosaur dinosaur = entry.getValue();
+
             dinosaurProgress.step(dinosaur.getName());
 
             dinosaur.init();
@@ -130,24 +135,26 @@ public class EntityHandler
         EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }
 
-    public static void registerDinosaur(Dinosaur dinosaur)
+    public static void registerDinosaur(int id, Dinosaur dinosaur)
     {
-        DINOSAURS.add(dinosaur);
+        if (id > highestID)
+        {
+            highestID = id;
+        }
+
+        DINOSAURS.put(id, dinosaur);
+        DINOSAUR_IDS.put(dinosaur, id);
     }
 
     public static Dinosaur getDinosaurById(int id)
     {
-        if (id >= DINOSAURS.size() || id < 0)
-        {
-            return null;
-        }
-
-        return DINOSAURS.get(id);
+        Dinosaur dinosaur = DINOSAURS.get(id);
+        return dinosaur != null ? dinosaur : getDinosaurById(0);
     }
 
     public static int getDinosaurId(Dinosaur dinosaur)
     {
-        return DINOSAURS.indexOf(dinosaur);
+        return DINOSAUR_IDS.get(dinosaur);
     }
 
     public static List<Dinosaur> getDinosaursFromAmber()
@@ -165,7 +172,7 @@ public class EntityHandler
         return amberDinos;
     }
 
-    public static List<Dinosaur> getDinosaurs()
+    public static Map<Integer, Dinosaur> getDinosaurs()
     {
         return DINOSAURS;
     }
@@ -174,8 +181,10 @@ public class EntityHandler
     {
         List<Dinosaur> dinosaurs = new ArrayList<>();
 
-        for (Dinosaur dinosaur : EntityHandler.DINOSAURS)
+        for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.DINOSAURS.entrySet())
         {
+            Dinosaur dinosaur = entry.getValue();
+
             if (dinosaur.shouldRegister())
             {
                 dinosaurs.add(dinosaur);
@@ -189,8 +198,10 @@ public class EntityHandler
     {
         List<Dinosaur> dinosaurs = new ArrayList<>();
 
-        for (Dinosaur dinosaur : EntityHandler.DINOSAURS)
+        for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.DINOSAURS.entrySet())
         {
+            Dinosaur dinosaur = entry.getValue();
+
             if (dinosaur.shouldRegister() && !(dinosaur instanceof Hybrid))
             {
                 dinosaurs.add(dinosaur);
@@ -207,14 +218,21 @@ public class EntityHandler
 
     public static Dinosaur getDinosaurByClass(Class<? extends DinosaurEntity> clazz)
     {
-        for (Dinosaur dino : DINOSAURS)
+        for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.DINOSAURS.entrySet())
         {
-            if (dino.getDinosaurClass().equals(clazz))
+            Dinosaur dinosaur = entry.getValue();
+
+            if (dinosaur.getDinosaurClass().equals(clazz))
             {
-                return dino;
+                return dinosaur;
             }
         }
 
         return null;
+    }
+
+    public static int getHighestID()
+    {
+        return highestID;
     }
 }

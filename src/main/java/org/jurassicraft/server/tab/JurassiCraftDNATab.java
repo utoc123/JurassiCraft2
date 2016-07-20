@@ -10,6 +10,8 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
+import java.util.List;
+
 public class JurassiCraftDNATab extends CreativeTabs
 {
     private ItemStack[] stacks = null;
@@ -25,23 +27,22 @@ public class JurassiCraftDNATab extends CreativeTabs
     {
         if (stacks == null)
         {
-            int dinosaurs = EntityHandler.getRegisteredDinosaurs().size();
+            List<Dinosaur> registeredDinosaurs = EntityHandler.getRegisteredDinosaurs();
+
+            int dinosaurs = registeredDinosaurs.size();
             this.stacks = new ItemStack[dinosaurs * 3];
 
             int i = 0;
 
-            for (Dinosaur dino : EntityHandler.getDinosaurs())
+            for (Dinosaur dino : registeredDinosaurs)
             {
-                if (dino.shouldRegister())
-                {
-                    int id = EntityHandler.getDinosaurId(dino);
+                int id = EntityHandler.getDinosaurId(dino);
 
-                    stacks[i] = new ItemStack(ItemHandler.DNA, 1, id);
-                    stacks[i + dinosaurs] = new ItemStack(ItemHandler.SOFT_TISSUE, 1, id);
-                    stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.SYRINGE, 1, id);
+                stacks[i] = new ItemStack(ItemHandler.DNA, 1, id);
+                stacks[i + dinosaurs] = new ItemStack(ItemHandler.SOFT_TISSUE, 1, id);
+                stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.SYRINGE, 1, id);
 
-                    i++;
-                }
+                i++;
             }
         }
 

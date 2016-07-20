@@ -53,9 +53,9 @@ public class DNACombinatorHybridizerTile extends MachineBaseTile
             dinosaurs[i] = getDino(discs[i]);
         }
 
-        for (Dinosaur dino : EntityHandler.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.getRegisteredDinosaurs())
         {
-            if (dino instanceof Hybrid && dino.shouldRegister())
+            if (dino instanceof Hybrid)
             {
                 Hybrid dinoHybrid = (Hybrid) dino;
 

@@ -91,7 +91,7 @@ public enum RenderingHandler
 
     public void preInit()
     {
-        for (Dinosaur dino : EntityHandler.getDinosaurs())
+        for (Dinosaur dino : EntityHandler.getDinosaurs().values())
         {
             String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
@@ -400,19 +400,19 @@ public enum RenderingHandler
 
         this.registerItemRenderer(modelMesher, ItemHandler.MURAL, "mural", "inventory");
 
-        int meta = 0;
-
-        for (Dinosaur dino : EntityHandler.getDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.getDinosaurs().values())
         {
-            String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+            int meta = EntityHandler.getDinosaurId(dinosaur);
+
+            String formattedName = dinosaur.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet())
             {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
-                if (dinosaursForType.contains(dino))
+                if (dinosaursForType.contains(dinosaur))
                 {
-                    this.registerItemRenderer(modelMesher, entry.getValue(), meta, "bones/" + dinoName + "_" + entry.getKey(), "inventory");
+                    this.registerItemRenderer(modelMesher, entry.getValue(), meta, "bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
             }
 
@@ -420,27 +420,25 @@ public enum RenderingHandler
             {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
-                if (dinosaursForType.contains(dino))
+                if (dinosaursForType.contains(dinosaur))
                 {
-                    this.registerItemRenderer(modelMesher, entry.getValue(), meta, "fresh_bones/" + dinoName + "_" + entry.getKey(), "inventory");
+                    this.registerItemRenderer(modelMesher, entry.getValue(), meta, "fresh_bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
             }
 
-            this.registerItemRenderer(modelMesher, ItemHandler.DNA, meta, "dna/dna_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.EGG, meta, "egg/egg_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.DINOSAUR_MEAT, meta, "meat/meat_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.DINOSAUR_STEAK, meta, "meat/steak_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.SYRINGE, meta, "syringe/syringe_" + dinoName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + dinoName, "inventory");
-
-            meta++;
+            this.registerItemRenderer(modelMesher, ItemHandler.DNA, meta, "dna/dna_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.EGG, meta, "egg/egg_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.DINOSAUR_MEAT, meta, "meat/meat_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.DINOSAUR_STEAK, meta, "meat/steak_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.SYRINGE, meta, "syringe/syringe_" + formattedName, "inventory");
+            this.registerItemRenderer(modelMesher, ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName, "inventory");
         }
 
         for (Plant plant : PlantHandler.getPrehistoricPlants())
         {
-            meta = PlantHandler.getPlantId(plant);
+            int meta = PlantHandler.getPlantId(plant);
 
             String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 

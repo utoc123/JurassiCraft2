@@ -4,7 +4,6 @@ import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
@@ -21,6 +20,7 @@ import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.ai.DilophosaurusMeleeEntityAI;
+import org.jurassicraft.server.entity.ai.DilophosaurusSpitEntityAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttackMob
@@ -52,7 +52,7 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     @Override
     public EntityAIBase getAttackAI()
     {
-        return new EntityAIAttackRanged(this, dinosaur.getAttackSpeed(), 40, 10);
+        return new DilophosaurusSpitEntityAI(this, dinosaur.getAttackSpeed(), 40, 10);
     }
 
     @Override

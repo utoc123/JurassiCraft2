@@ -10,6 +10,8 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
+import java.util.List;
+
 public class JurassiCraftDecorationsTab extends CreativeTabs
 {
     private int[] metas;
@@ -17,18 +19,17 @@ public class JurassiCraftDecorationsTab extends CreativeTabs
     public JurassiCraftDecorationsTab(String label)
     {
         super(label);
-        this.metas = new int[EntityHandler.getRegisteredDinosaurs().size()];
+
+        List<Dinosaur> registeredDinosaurs = EntityHandler.getRegisteredDinosaurs();
+        this.metas = new int[registeredDinosaurs.size()];
 
         int i = 0;
 
-        for (Dinosaur dino : EntityHandler.getDinosaurs())
+        for (Dinosaur dino : registeredDinosaurs)
         {
-            if (dino.shouldRegister())
-            {
-                metas[i] = EntityHandler.getDinosaurId(dino);
+            metas[i] = EntityHandler.getDinosaurId(dino);
 
-                i++;
-            }
+            i++;
         }
     }
 

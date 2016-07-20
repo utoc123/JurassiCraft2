@@ -1,6 +1,5 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
@@ -8,7 +7,7 @@ import java.util.Map;
 
 public class MovementAnimationPass extends AnimationPass
 {
-    public MovementAnimationPass(Map<Animation, int[][]> poseSequences, AdvancedModelRenderer[][] poses, boolean useInertialTweens)
+    public MovementAnimationPass(Map<Animation, int[][]> poseSequences, PosedCuboid[][] poses, boolean useInertialTweens)
     {
         super(poseSequences, poses, useInertialTweens);
     }
@@ -66,7 +65,7 @@ public class MovementAnimationPass extends AnimationPass
                 }
                 else
                 {
-                    if (limbSwingAmount > 1.0)
+                    if (entity.isRunning())
                     {
                         return DinosaurAnimation.RUNNING.get();
                     }

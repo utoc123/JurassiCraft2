@@ -23,6 +23,7 @@ import org.jurassicraft.server.item.itemblock.FossilItemBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;
+import java.util.Map;
 
 public class FossilBlock extends Block implements SubBlocksBlock
 {
@@ -77,18 +78,13 @@ public class FossilBlock extends Block implements SubBlocksBlock
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
     {
-        List<Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
+        Map<Integer, Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
 
         for (int i = 0; i < 16; i++)
         {
-            int dinoIndex = i + start;
+            Dinosaur dinosaur = dinosaurs.get(i + start);
 
-            if (dinoIndex >= dinosaurs.size())
-            {
-                break;
-            }
-
-            if (dinosaurs.get(dinoIndex).shouldRegister())
+            if (dinosaur != null && dinosaur.shouldRegister())
             {
                 list.add(new ItemStack(this, 1, i));
             }

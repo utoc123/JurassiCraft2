@@ -86,14 +86,16 @@ import java.util.UUID;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity
 {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private static final DataParameter<Boolean> WATCHER_IS_CARCASS = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> WATCHER_AGE = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> WATCHER_IS_SLEEPING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> WATCHER_HAS_TRACKER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<String> WATCHER_OWNER = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.STRING);
     private static final DataParameter<Order> WATCHER_ORDER = EntityDataManager.createKey(DinosaurEntity.class, DinosaurSerializers.ORDER);
+    private static final DataParameter<Boolean> WATCHER_IS_RUNNING = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
 
-    private static final Logger LOGGER = LogManager.getLogger();
     private final InventoryDinosaur inventory;
     private final MetabolismContainer metabolism;
     protected Dinosaur dinosaur;
@@ -515,6 +517,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.dataManager.register(WATCHER_HAS_TRACKER, false);
         this.dataManager.register(WATCHER_OWNER, "");
         this.dataManager.register(WATCHER_ORDER, Order.WANDER);
+        this.dataManager.register(WATCHER_IS_RUNNING, false);
     }
 
     @Override
@@ -555,14 +558,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private void adjustHitbox()
     {
-        float width = (float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX());
+        float width = Math.min(5.0F, (float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX()));
         float height = (float) transitionFromAge(dinosaur.getBabySizeY(), dinosaur.getAdultSizeY());
 
-        //this.stepHeight = Math.max(0.6F, (float) (Math.ceil(height / 2.0F) / 2.0F));
-        this.stepHeight = 1;
+        this.stepHeight = Math.max(1.0F, (float) (Math.ceil(height / 2.0F) / 2.0F));
+
         if (isCarcass)
         {
-            setSize(height, width);
+            setSize(Math.min(5.0F, height), width);
         }
         else
         {
@@ -759,6 +762,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             dataManager.set(WATCHER_HAS_TRACKER, hasTracker);
             dataManager.set(WATCHER_ORDER, order);
             dataManager.set(WATCHER_OWNER, owner != null ? owner.toString() : "");
+            dataManager.set(WATCHER_IS_RUNNING, getAIMoveSpeed() > this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
         }
         else
         {
@@ -849,7 +853,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
         }
 
-        if (!shouldSleep() && !isSleeping && stayAwakeTime > 0)
+        if (!shouldSleep() && !isSleeping)
         {
             stayAwakeTime = 0;
 
@@ -1506,6 +1510,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public int getAnimationLength()
     {
         return animationLength;
+    }
+
+    public boolean isRunning()
+    {
+        return dataManager.get(WATCHER_IS_RUNNING);
     }
 
     public enum Order

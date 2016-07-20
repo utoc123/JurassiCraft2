@@ -43,7 +43,7 @@ public class FossilItem extends Item implements GrindableItem
 
     public static void init()
     {
-        for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
+        for (Dinosaur dinosaur : EntityHandler.getDinosaurs().values())
         {
             String[] boneTypes = dinosaur.getBones();
 
@@ -87,22 +87,15 @@ public class FossilItem extends Item implements GrindableItem
     {
         List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getRegisteredDinosaurs());
 
-        Map<Dinosaur, Integer> ids = new HashMap<>();
-
-        for (Dinosaur dino : dinosaurs)
-        {
-            ids.put(dino, EntityHandler.getDinosaurId(dino));
-        }
-
         Collections.sort(dinosaurs);
 
         List<Dinosaur> dinosaursForType = fossilDinosaurs.get(type);
 
-        for (Dinosaur dino : dinosaurs)
+        for (Dinosaur dinosaur : dinosaurs)
         {
-            if (dino.shouldRegister() && dinosaursForType.contains(dino) && !(!includeHybrids && dino instanceof Hybrid))
+            if (dinosaur.shouldRegister() && dinosaursForType.contains(dinosaur) && !(!includeHybrids && dinosaur instanceof Hybrid))
             {
-                subtypes.add(new ItemStack(item, 1, ids.get(dino)));
+                subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }

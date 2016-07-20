@@ -24,7 +24,7 @@ public class JabelarAnimationHandler
     private final AnimationPass DEFAULT_PASS;
     private final AnimationPass MOVEMENT_PASS;
 
-    public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, AdvancedModelRenderer[][] poses, Map<Animation, int[][]> poseSequences, boolean useInertialTweens)
+    public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, PosedCuboid[][] poses, Map<Animation, int[][]> poseSequences, boolean useInertialTweens)
     {
         this.DEFAULT_PASS = new AnimationPass(poseSequences, poses, useInertialTweens);
         this.MOVEMENT_PASS = new MovementAnimationPass(poseSequences, poses, useInertialTweens);
@@ -32,7 +32,7 @@ public class JabelarAnimationHandler
         this.init(entity, model);
     }
 
-    public static DinosaurModel getTabulaModel(String tabulaModel, int geneticVariant)
+    public static DinosaurModel loadModel(String tabulaModel, int geneticVariant)
     {
         // catch the exception so you can call method without further catching
         try
@@ -77,8 +77,8 @@ public class JabelarAnimationHandler
         return modelParts;
     }
 
-    public DinosaurModel getTabulaModel(String tabulaModel)
+    public DinosaurModel loadModel(String tabulaModel)
     {
-        return getTabulaModel(tabulaModel, 0);
+        return loadModel(tabulaModel, 0);
     }
 }

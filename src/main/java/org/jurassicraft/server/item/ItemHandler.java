@@ -129,8 +129,10 @@ public class ItemHandler
     {
         registerItem(FOSSILIZED_EGG, "Fossilized Egg");
 
-        for (Dinosaur dinosaur : EntityHandler.getDinosaurs())
+        for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.getDinosaurs().entrySet())
         {
+            Dinosaur dinosaur = entry.getValue();
+
             String[] boneTypes = dinosaur.getBones();
 
             for (String boneType : boneTypes)
