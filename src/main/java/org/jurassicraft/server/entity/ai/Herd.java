@@ -58,6 +58,8 @@ public class Herd implements Iterable<DinosaurEntity>
         {
             state = state == State.MOVING ? State.STATIC : State.MOVING;
             resetStateTicks();
+            enemies.clear();
+            fleeing = false;
         }
 
         if (leader != null)
@@ -196,13 +198,19 @@ public class Herd implements Iterable<DinosaurEntity>
 
             for (EntityLivingBase attacker : this.enemies)
             {
-                if (attacker.isDead || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) || attacker.getDistanceSq(center.xCoord, center.yCoord, center.zCoord) > 2048)
+                if (attacker.isDead || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) || attacker.getDistanceSq(center.xCoord, center.yCoord, center.zCoord) > 1024)
                 {
                     removeAttackers.add(attacker);
                 }
             }
 
             this.enemies.removeAll(removeAttackers);
+
+            if (enemies.size() == 0)
+            {
+                fleeing = false;
+                state = State.STATIC;
+            }
 
             if (state == State.STATIC)
             {
@@ -276,7 +284,9 @@ public class Herd implements Iterable<DinosaurEntity>
 
         for (Herd otherHerd : otherHerds)
         {
-            if (otherHerd.size() <= this.size() && otherHerd.size() + this.size() < herdType.getMaxHerdSize())
+            int originalSize = this.size();
+
+            if (otherHerd.size() <= originalSize && otherHerd.size() + originalSize < herdType.getMaxHerdSize())
             {
                 for (DinosaurEntity member : otherHerd)
                 {
@@ -286,7 +296,7 @@ public class Herd implements Iterable<DinosaurEntity>
 
                 otherHerd.disband();
             }
-            else if (this.size() + 1 >= herdType.getMaxHerdSize())
+            else if (originalSize + 1 >= herdType.getMaxHerdSize())
             {
                 if (herdType.getDiet().isCarnivorous())
                 {

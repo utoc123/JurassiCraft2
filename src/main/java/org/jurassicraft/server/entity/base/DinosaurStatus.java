@@ -70,6 +70,14 @@ public enum DinosaurStatus
                 {
                     return entity.isFieldGuideFlocking();
                 }
+            },
+    SCARED
+            {
+                @Override
+                public boolean apply(DinosaurEntity entity)
+                {
+                    return entity.isFieldGuideFleeing();
+                }
             };
 
     public static List<DinosaurStatus> getActiveStatuses(DinosaurEntity entity)

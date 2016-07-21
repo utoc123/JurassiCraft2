@@ -70,9 +70,9 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
         if (!worldObj.isRemote)
         {
-            if (getAttackTarget() != null && targetCooldown < 100)
+            if (getAttackTarget() != null && targetCooldown < 50)
             {
-                targetCooldown = 100 + getRNG().nextInt(30);
+                targetCooldown = 50 + getRNG().nextInt(30);
             }
             else if (targetCooldown > 0)
             {

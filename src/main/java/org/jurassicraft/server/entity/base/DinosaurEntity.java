@@ -130,6 +130,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int animationLength;
 
     private boolean fieldGuideFlocking;
+    private boolean fieldGuideFleeing;
 
     public DinosaurEntity(World world)
     {
@@ -223,14 +224,33 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public boolean shouldSleep()
     {
-        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving();
+        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving() && !(herd != null && herd.enemies.size() > 0);
     }
 
     private boolean hasPredators()
     {
         for (EntityLiving predator : this.getEntitiesWithinDistance(EntityLiving.class, 10.0F, 5.0F))
         {
-            if (this.getLastAttacker() == predator || predator.getAttackTarget() == this)
+            boolean hasDinosaurPredator = false;
+
+            if (predator instanceof DinosaurEntity)
+            {
+                DinosaurEntity dinosaur = (DinosaurEntity) predator;
+
+                if (!dinosaur.isCarcass() || dinosaur.isSleeping)
+                {
+                    for (Class<? extends EntityLivingBase> target : dinosaur.getAttackTargets())
+                    {
+                        if (target.isAssignableFrom(this.getClass()))
+                        {
+                            hasDinosaurPredator = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (this.getLastAttacker() == predator || predator.getAttackTarget() == this || hasDinosaurPredator)
             {
                 return true;
             }
@@ -1524,6 +1544,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void setFieldGuideFlocking(boolean flocking)
     {
         this.fieldGuideFlocking = flocking;
+    }
+
+    public void setFieldGuideFleeing(boolean fieldGuideFleeing)
+    {
+        this.fieldGuideFleeing = fieldGuideFleeing;
+    }
+
+    public boolean isFieldGuideFleeing()
+    {
+        return fieldGuideFleeing;
     }
 
     public enum Order

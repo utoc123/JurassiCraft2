@@ -18,6 +18,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
     private int hunger;
     private int thirst;
     private boolean flocking;
+    private boolean fleeing;
 
     public OpenFieldGuideGuiMessage()
     {
@@ -40,6 +41,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
             dinosaur.getMetabolism().setEnergy(message.hunger);
             dinosaur.getMetabolism().setWater(message.thirst);
             dinosaur.setFieldGuideFlocking(message.flocking);
+            dinosaur.setFieldGuideFleeing(message.fleeing);
 
             JurassiCraft.PROXY.openFieldGuide(dinosaur);
         }
@@ -57,6 +59,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
         this.hunger = buf.readInt();
         this.thirst = buf.readInt();
         this.flocking = buf.readBoolean();
+        this.fleeing = buf.readBoolean();
     }
 
     @Override
@@ -66,5 +69,6 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
         buf.writeInt(entity.getMetabolism().getEnergy());
         buf.writeInt(entity.getMetabolism().getWater());
         buf.writeBoolean(entity.herd != null && entity.herd.state == Herd.State.MOVING);
+        buf.writeBoolean(entity.herd != null && entity.herd.fleeing);
     }
 }
