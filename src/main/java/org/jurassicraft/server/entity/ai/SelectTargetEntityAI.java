@@ -73,7 +73,7 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
             }
         }
 
-        if (!(entity.herd != null && entity.herd.fleeing) && entity.getAgePercentage() > 75 && entity.getOwner() == null && !entity.isSleeping() && entity.getAttackCooldown() <= 0)
+        if (!(entity.herd != null && entity.herd.fleeing) && entity.getAgePercentage() > 50 && entity.getOwner() == null && !entity.isSleeping() && entity.getAttackCooldown() <= 0)
         {
             List<T> entities = this.entity.worldObj.getEntitiesWithinAABB(this.targetClass, entity.getEntityBoundingBox().expand(16, 16, 16));
 

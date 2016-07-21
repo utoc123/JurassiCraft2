@@ -21,7 +21,7 @@ public class DefendOwnerEntityAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (entity.getAgePercentage() > 75)
+        if (entity.getAgePercentage() > 50)
         {
             UUID ownerId = entity.getOwner();
 

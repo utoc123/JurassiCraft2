@@ -40,8 +40,7 @@ public class CallAnimationAI extends EntityAIBase
             {
                 if (this.dinosaur.getClass().isInstance(entity))
                 {
-                    float soundVolume = dinosaur.getSoundVolume();
-                    this.dinosaur.playSound(dinosaur.getSoundForAnimation(DinosaurAnimation.CALLING.get()), soundVolume > 0.0F ? soundVolume + 1.25F : soundVolume, dinosaur.getSoundPitch());
+                    dinosaur.playSound(dinosaur.getSoundForAnimation(DinosaurAnimation.CALLING.get()), dinosaur.getSoundVolume() > 0.0F ? dinosaur.getSoundVolume() + 1.25F : 0.0F, dinosaur.getSoundPitch());
                     return true;
                 }
             }
