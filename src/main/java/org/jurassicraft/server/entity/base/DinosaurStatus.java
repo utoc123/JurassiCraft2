@@ -62,6 +62,14 @@ public enum DinosaurStatus
                 {
                     return entity.shouldSleep();
                 }
+            },
+    FLOCKING
+            {
+                @Override
+                public boolean apply(DinosaurEntity entity)
+                {
+                    return entity.isFieldGuideFlocking();
+                }
             };
 
     public static List<DinosaurStatus> getActiveStatuses(DinosaurEntity entity)

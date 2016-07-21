@@ -129,6 +129,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int animationTick;
     private int animationLength;
 
+    private boolean fieldGuideFlocking;
+
     public DinosaurEntity(World world)
     {
         super(world);
@@ -1512,6 +1514,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean isRunning()
     {
         return dataManager.get(WATCHER_IS_RUNNING);
+    }
+
+    public boolean isFieldGuideFlocking()
+    {
+        return fieldGuideFlocking;
+    }
+
+    public void setFieldGuideFlocking(boolean flocking)
+    {
+        this.fieldGuideFlocking = flocking;
     }
 
     public enum Order

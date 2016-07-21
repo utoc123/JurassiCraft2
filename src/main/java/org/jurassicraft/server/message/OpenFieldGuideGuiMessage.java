@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiMessage>
@@ -16,6 +17,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
     private int entityId;
     private int hunger;
     private int thirst;
+    private boolean flocking;
 
     public OpenFieldGuideGuiMessage()
     {
@@ -35,8 +37,10 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
         if (entity instanceof DinosaurEntity)
         {
             DinosaurEntity dinosaur = (DinosaurEntity) entity;
-            dinosaur.getMetabolism().setEnergy(hunger);
-            dinosaur.getMetabolism().setWater(thirst);
+            dinosaur.getMetabolism().setEnergy(message.hunger);
+            dinosaur.getMetabolism().setWater(message.thirst);
+            dinosaur.setFieldGuideFlocking(message.flocking);
+
             JurassiCraft.PROXY.openFieldGuide(dinosaur);
         }
     }
@@ -52,6 +56,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
         this.entityId = buf.readInt();
         this.hunger = buf.readInt();
         this.thirst = buf.readInt();
+        this.flocking = buf.readBoolean();
     }
 
     @Override
@@ -60,5 +65,6 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
         buf.writeInt(entityId);
         buf.writeInt(entity.getMetabolism().getEnergy());
         buf.writeInt(entity.getMetabolism().getWater());
+        buf.writeBoolean(entity.herd != null && entity.herd.state == Herd.State.MOVING);
     }
 }
