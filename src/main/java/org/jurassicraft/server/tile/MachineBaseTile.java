@@ -1,10 +1,8 @@
 package org.jurassicraft.server.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -430,18 +428,8 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) // TODO
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
     {
-        if (direction == EnumFacing.DOWN && index == 1)
-        {
-            Item item = stack.getItem();
-
-            if (item != Items.WATER_BUCKET && item != Items.BUCKET)
-            {
-                return false;
-            }
-        }
-
         return true;
     }
 

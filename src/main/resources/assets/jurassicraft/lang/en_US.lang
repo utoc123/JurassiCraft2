@@ -396,11 +396,23 @@ message.not_owned.name=You do not own this dinosaur!
 message.too_young.name=This dinosaur is too young to hold items!
 message.set_order.name=You have commanded your dinosaur to {order}.
 
+growth_stage.infant.name=Infant
+growth_stage.juvenile.name=Juvenile
+growth_stage.adolescent.name=Adolescent
+growth_stage.adult.name=Adult
+
 order.wander.name=Wander
 order.sit.name=Sit
 order.follow.name=Follow
 
 gui.select_order.name=Select Order
+
+gui.dinosaur_statistics.name=Dinosaur Statistics:
+gui.health.name=Health:
+gui.hunger.name=Hunger:
+gui.thirst.name=Thirst:
+gui.age.name=Age:
+gui.days_old.name={value} days old
 
 status.drowning.name=Drowning
 status.hungry.name=Hungry

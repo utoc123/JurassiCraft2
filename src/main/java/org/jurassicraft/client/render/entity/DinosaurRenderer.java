@@ -45,9 +45,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     @Override
     public void preRenderCallback(DinosaurEntity entity, float partialTick)
     {
-        //this.renderDef.getModelAnimator().preRenderCallback(entity, partialTick); TODO
-
-        float scale = (float) entity.transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult()); //TODO scale offset
+        float scale = (float) entity.transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
 
         shadowSize = scale * renderDef.getShadowSize();
 

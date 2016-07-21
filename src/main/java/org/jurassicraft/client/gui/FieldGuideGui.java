@@ -103,19 +103,19 @@ public class FieldGuideGui extends GuiScreen
 
         if (page == 0)
         {
-            drawScaledString(entity.getGrowthStage().name() + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(Locale.ENGLISH), x + 16, y + 24, 1.0F, 0);
+            drawScaledString(entity.getGrowthStage().getLocalization().toUpperCase(Locale.ENGLISH) + " // " + new LangHelper("gender." + (entity.isMale() ? "male" : "female") + ".name").build().toUpperCase(Locale.ENGLISH), x + 16, y + 24, 1.0F, 0);
 
             int statisticsX = x + (SIZE_X / 2) + 15;
 
             DecimalFormat decimalFormat = new DecimalFormat("#.#");
             decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
 
-            drawScaledString("Dinosaur Statistics:", statisticsX, y + 10, 1.0F, 0);
+            drawScaledString(new LangHelper("gui.dinosaur_statistics.name").build(), statisticsX, y + 10, 1.0F, 0);
             int statisticTextX = x + (SIZE_X / 2 + SIZE_X / 4);
-            drawCenteredScaledString("Health:", statisticTextX, y + 35, 1.0F, 0);
-            drawCenteredScaledString("Hunger:", statisticTextX, y + 65, 1.0F, 0);
-            drawCenteredScaledString("Thirst:", statisticTextX, y + 95, 1.0F, 0);
-            drawCenteredScaledString("Age:", statisticTextX, y + 125, 1.0F, 0);
+            drawCenteredScaledString(new LangHelper("gui.health.name").build(), statisticTextX, y + 35, 1.0F, 0);
+            drawCenteredScaledString(new LangHelper("gui.hunger.name").build(), statisticTextX, y + 65, 1.0F, 0);
+            drawCenteredScaledString(new LangHelper("gui.thirst.name").build(), statisticTextX, y + 95, 1.0F, 0);
+            drawCenteredScaledString(new LangHelper("gui.age.name").build(), statisticTextX, y + 125, 1.0F, 0);
 
             this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
 
@@ -124,7 +124,7 @@ public class FieldGuideGui extends GuiScreen
             drawBar(statisticsX, y + 105, entity.getMetabolism().getWater(), entity.getMetabolism().getMaxWater(), 0x0000FF);
             drawBar(statisticsX, y + 135, entity.getDinosaurAge(), dinosaur.getMaximumAge(), 0x00FF00);
 
-            drawCenteredScaledString(entity.getDaysExisted() + " days old", statisticTextX, y + 155, 1.0F, 0);
+            drawCenteredScaledString(new LangHelper("gui.days_old.name").withProperty("value", String.valueOf(entity.getDaysExisted())).build(), statisticTextX, y + 155, 1.0F, 0);
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 

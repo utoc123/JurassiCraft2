@@ -41,15 +41,15 @@ public class PoseHandler
     {
         String name = dinosaur.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         this.modelData = new EnumMap<>(GrowthStage.class);
-        URI dinoDirURI;
+        URI dinosaurResourceURI;
 
         try
         {
-            dinoDirURI = new URI("/assets/jurassicraft/models/entities/" + name + "/");
+            dinosaurResourceURI = new URI("/assets/jurassicraft/models/entities/" + name + "/");
         }
-        catch (URISyntaxException urise)
+        catch (URISyntaxException e)
         {
-            JurassiCraft.INSTANCE.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", urise);
+            JurassiCraft.INSTANCE.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", e);
             return;
         }
 
@@ -57,18 +57,32 @@ public class PoseHandler
         {
             try
             {
-                GrowthStage fileGrowthStage = growth;
+                GrowthStage actualGrowth = growth;
 
-                if (!dinosaur.doesSupportGrowthStage(fileGrowthStage))
+                if (!dinosaur.doesSupportGrowthStage(actualGrowth))
                 {
-                    fileGrowthStage = GrowthStage.ADULT;
+                    actualGrowth = GrowthStage.ADULT;
                 }
 
-                this.modelData.put(growth, loadModelData(dinoDirURI, name, fileGrowthStage));
+                if (this.modelData.containsKey(actualGrowth))
+                {
+                    this.modelData.put(growth, modelData.get(actualGrowth));
+                }
+                else
+                {
+                    ModelData loaded = loadModelData(dinosaurResourceURI, name, actualGrowth);
+
+                    this.modelData.put(growth, loaded);
+
+                    if (actualGrowth != growth)
+                    {
+                        this.modelData.put(actualGrowth, loaded);
+                    }
+                }
             }
             catch (Exception e)
             {
-                JurassiCraft.INSTANCE.getLogger().fatal("Failed to parse growth state " + growth + " for dinosaur " + name, e);
+                JurassiCraft.INSTANCE.getLogger().fatal("Failed to parse growth stage " + growth + " for dinosaur " + name, e);
                 this.modelData.put(growth, new ModelData());
             }
         }
@@ -79,16 +93,16 @@ public class PoseHandler
         String growthName = growth.name().toLowerCase(Locale.ROOT);
         URI growthSensitiveDir = resourceURI.resolve(growthName + "/");
         URI definitionFile = growthSensitiveDir.resolve(name + "_" + growthName + ".json");
-        InputStream dinoDef = TabulaModelHelper.class.getResourceAsStream(definitionFile.toString());
+        InputStream modelIn = TabulaModelHelper.class.getResourceAsStream(definitionFile.toString());
 
-        if (dinoDef == null)
+        if (modelIn == null)
         {
             throw new IllegalArgumentException("No model definition for the dino " + name + " with grow-state " + growth + " exists. Expected at " + definitionFile);
         }
 
         try
         {
-            Reader reader = new InputStreamReader(dinoDef);
+            Reader reader = new InputStreamReader(modelIn);
             AnimationsDTO rawAnimations = GSON.fromJson(reader, AnimationsDTO.class);
             ModelData data = loadModelData(growthSensitiveDir, rawAnimations);
             JurassiCraft.INSTANCE.getLogger().debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);

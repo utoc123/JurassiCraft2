@@ -470,8 +470,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.motionX -= motionX / distance * multiplier;
             this.motionZ -= motionZ / distance * multiplier;
 
-            // TODO
-            // We should make knockback bigger and into air if dino is much smaller than attacking dino
+            // TODO We should make knockback bigger and into air if dino is much smaller than attacking dino
         }
     }
 
