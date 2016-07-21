@@ -272,7 +272,7 @@ public class AnimationPass
     {
         if (this.incrementCurrentPoseIndex())
         {
-            this.setAnimation(entity, getRequestedAnimation(entity));
+            this.setAnimation(entity, isEntityAnimationDependent() ? DinosaurAnimation.IDLE.get() : getRequestedAnimation(entity));
         }
         else
         {

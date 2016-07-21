@@ -738,15 +738,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (animationTick < animationLength)
             {
-                if (!shouldHold || animationTick < animationLength - 1)
-                {
-                    animationTick++;
-                }
+                animationTick += 2;
             }
             else if (!shouldHold)
             {
                 animationTick = 0;
-                animation = DinosaurAnimation.IDLE.get();
+                setAnimation(DinosaurAnimation.IDLE.get());
             }
             else
             {
@@ -1074,6 +1071,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (oldAnimation != newAnimation)
         {
+            this.animationTick = 0;
             this.animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
 
             AnimationHandler.INSTANCE.sendAnimationMessage(this, newAnimation);
