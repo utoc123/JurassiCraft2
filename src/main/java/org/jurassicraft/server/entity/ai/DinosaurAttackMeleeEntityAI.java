@@ -25,4 +25,9 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
             this.attacker.setAttackTarget(null);
         }
     }
+
+    @Override
+    protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+        return (double) (this.attacker.width * this.attacker.width + attackTarget.width);
+    }
 }
