@@ -12,12 +12,10 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
 
-public class JurassiCraftDecorationsTab extends CreativeTabs
-{
+public class JurassiCraftDecorationsTab extends CreativeTabs {
     private int[] metas;
 
-    public JurassiCraftDecorationsTab(String label)
-    {
+    public JurassiCraftDecorationsTab(String label) {
         super(label);
 
         List<Dinosaur> registeredDinosaurs = EntityHandler.getRegisteredDinosaurs();
@@ -25,9 +23,8 @@ public class JurassiCraftDecorationsTab extends CreativeTabs
 
         int i = 0;
 
-        for (Dinosaur dino : registeredDinosaurs)
-        {
-            metas[i] = EntityHandler.getDinosaurId(dino);
+        for (Dinosaur dino : registeredDinosaurs) {
+            this.metas[i] = EntityHandler.getDinosaurId(dino);
 
             i++;
         }
@@ -35,14 +32,12 @@ public class JurassiCraftDecorationsTab extends CreativeTabs
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack()
-    {
-        return new ItemStack(getTabIconItem(), 1, metas[((int) ((JurassiCraft.timerTicks / 20) % metas.length))]);
+    public ItemStack getIconItemStack() {
+        return new ItemStack(this.getTabIconItem(), 1, this.metas[((int) ((JurassiCraft.timerTicks / 20) % this.metas.length))]);
     }
 
     @Override
-    public Item getTabIconItem()
-    {
+    public Item getTabIconItem() {
         return ItemHandler.ACTION_FIGURE;
     }
 }

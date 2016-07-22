@@ -22,45 +22,36 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class HatchedEggItem extends DNAContainerItem
-{
-    public HatchedEggItem()
-    {
+public class HatchedEggItem extends DNAContainerItem {
+    public HatchedEggItem() {
         super();
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        String dinoName = getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public String getItemStackDisplayName(ItemStack stack) {
+        String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.hatched_egg.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         return EntityHandler.getDinosaurById(stack.getMetadata());
     }
 
-    public boolean getGender(EntityPlayer player, ItemStack stack)
-    {
+    public boolean getGender(EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
         boolean gender = player.worldObj.rand.nextBoolean();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
-        if (nbt.hasKey("Gender"))
-        {
+        if (nbt.hasKey("Gender")) {
             gender = nbt.getBoolean("Gender");
-        }
-        else
-        {
+        } else {
             nbt.setBoolean("Gender", gender);
         }
 
@@ -70,72 +61,57 @@ public class HatchedEggItem extends DNAContainerItem
     }
 
     @Override
-    public int getContainerId(ItemStack stack)
-    {
-        return EntityHandler.getDinosaurId(getDinosaur(stack));
+    public int getContainerId(ItemStack stack) {
+        return EntityHandler.getDinosaurId(this.getDinosaur(stack));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         pos = pos.offset(side);
 
-        if (side == EnumFacing.EAST || side == EnumFacing.WEST)
-        {
+        if (side == EnumFacing.EAST || side == EnumFacing.WEST) {
             hitX = 1.0F - hitX;
-        }
-        else if (side == EnumFacing.NORTH || side == EnumFacing.SOUTH)
-        {
+        } else if (side == EnumFacing.NORTH || side == EnumFacing.SOUTH) {
             hitZ = 1.0F - hitZ;
         }
 
-        if (player.canPlayerEdit(pos, side, stack))
-        {
-            if (!world.isRemote)
-            {
-                Dinosaur dinosaur = getDinosaur(stack);
+        if (player.canPlayerEdit(pos, side, stack)) {
+            if (!world.isRemote) {
+                Dinosaur dinosaur = this.getDinosaur(stack);
 
-                try
-                {
+                try {
                     DinosaurEntity entity = dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(world);
 
                     entity.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
                     entity.setAge(0);
-                    entity.setGenetics(getGeneticCode(player, stack));
-                    entity.setDNAQuality(getDNAQuality(player, stack));
-                    entity.setMale(getGender(player, stack));
+                    entity.setGenetics(this.getGeneticCode(player, stack));
+                    entity.setDNAQuality(this.getDNAQuality(player, stack));
+                    entity.setMale(this.getGender(player, stack));
 
-                    if (!player.isSneaking())
-                    {
+                    if (!player.isSneaking()) {
                         entity.setOwner(player);
                     }
 
                     world.spawnEntityInWorld(entity);
 
-                    if (!player.capabilities.isCreativeMode)
-                    {
+                    if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;
                     }
-                }
-                catch (ReflectiveOperationException e)
-                {
+                } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }
             }

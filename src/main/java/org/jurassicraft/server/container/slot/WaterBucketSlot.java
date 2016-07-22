@@ -5,10 +5,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.tile.CleaningStationTile;
 
-public class WaterBucketSlot extends Slot
-{
-    public WaterBucketSlot(IInventory inventoryIn, int slotIndex, int xPosition, int yPosition)
-    {
+public class WaterBucketSlot extends Slot {
+    public WaterBucketSlot(IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
         super(inventoryIn, slotIndex, xPosition, yPosition);
     }
 
@@ -16,14 +14,12 @@ public class WaterBucketSlot extends Slot
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
     @Override
-    public boolean isItemValid(ItemStack stack)
-    {
+    public boolean isItemValid(ItemStack stack) {
         return CleaningStationTile.isItemFuel(stack);
     }
 
     @Override
-    public int getItemStackLimit(ItemStack stack)
-    {
+    public int getItemStackLimit(ItemStack stack) {
         return 1;
     }
 }

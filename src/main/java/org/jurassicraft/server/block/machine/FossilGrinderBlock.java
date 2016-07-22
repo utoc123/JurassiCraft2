@@ -22,10 +22,8 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.FossilGrinderTile;
 
-public class FossilGrinderBlock extends OrientedBlock
-{
-    public FossilGrinderBlock()
-    {
+public class FossilGrinderBlock extends OrientedBlock {
+    public FossilGrinderBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("fossil_grinder");
         this.setHardness(2.0F);
@@ -34,28 +32,23 @@ public class FossilGrinderBlock extends OrientedBlock
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 
-        if (stack.hasDisplayName())
-        {
+        if (stack.hasDisplayName()) {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tile instanceof FossilGrinderTile)
-            {
+            if (tile instanceof FossilGrinderTile) {
                 ((FossilGrinderTile) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-    {
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof FossilGrinderTile)
-        {
+        if (tileentity instanceof FossilGrinderTile) {
             InventoryHelper.dropInventoryItems(worldIn, pos, (FossilGrinderTile) tileentity);
         }
 
@@ -63,22 +56,16 @@ public class FossilGrinderBlock extends OrientedBlock
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return true;
-        }
-        else if (!player.isSneaking())
-        {
+        } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof FossilGrinderTile)
-            {
+            if (tileEntity instanceof FossilGrinderTile) {
                 FossilGrinderTile fossilGrinder = (FossilGrinderTile) tileEntity;
 
-                if (fossilGrinder.isUseableByPlayer(player))
-                {
+                if (fossilGrinder.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
@@ -88,34 +75,29 @@ public class FossilGrinderBlock extends OrientedBlock
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new FossilGrinderTile();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 }

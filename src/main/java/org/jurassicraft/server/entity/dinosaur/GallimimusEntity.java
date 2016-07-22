@@ -8,19 +8,15 @@ import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.ai.animations.PeckGroundAnimationAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class GallimimusEntity extends DinosaurEntity
-{
-    public GallimimusEntity(World world)
-    {
+public class GallimimusEntity extends DinosaurEntity {
+    public GallimimusEntity(World world) {
         super(world);
         this.animationTasks.addTask(3, new PeckGroundAnimationAI(this));
     }
 
     @Override
-    public SoundEvent getSoundForAnimation(Animation animation)
-    {
-        switch (DinosaurAnimation.getAnimation(animation))
-        {
+    public SoundEvent getSoundForAnimation(Animation animation) {
+        switch (DinosaurAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.GALLIMIMUS_LIVING;
             case CALLING:

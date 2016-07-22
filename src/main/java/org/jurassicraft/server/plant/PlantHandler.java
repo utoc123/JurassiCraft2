@@ -3,8 +3,7 @@ package org.jurassicraft.server.plant;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PlantHandler
-{
+public class PlantHandler {
     public static final Plant AJUGINUCULA_SMITHII = new AjuginuculaSmithiiPlant();
     public static final Plant SMALL_ROYAL_FERN = new SmallRoyalFernPlant();
     public static final Plant CALAMITES = new CalamitesPlant();
@@ -30,8 +29,7 @@ public class PlantHandler
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
-    public static void init()
-    {
+    public static void init() {
         registerPlant(AJUGINUCULA_SMITHII);
         registerPlant(SMALL_ROYAL_FERN);
         registerPlant(CALAMITES);
@@ -56,42 +54,33 @@ public class PlantHandler
         registerPlant(ENCEPHALARTOS);
     }
 
-    public static Plant getPlantById(int id)
-    {
-        if (id >= PLANTS.size() || id < 0)
-        {
+    public static Plant getPlantById(int id) {
+        if (id >= PLANTS.size() || id < 0) {
             return null;
         }
 
         return PLANTS.get(id);
     }
 
-    public static int getPlantId(Plant plant)
-    {
+    public static int getPlantId(Plant plant) {
         return PLANTS.indexOf(plant);
     }
 
-    public static List<Plant> getPlants()
-    {
+    public static List<Plant> getPlants() {
         return PLANTS;
     }
 
-    public static void registerPlant(Plant plant)
-    {
-        if (!PLANTS.contains(plant))
-        {
+    public static void registerPlant(Plant plant) {
+        if (!PLANTS.contains(plant)) {
             PLANTS.add(plant);
         }
     }
 
-    public static List<Plant> getPrehistoricPlants()
-    {
+    public static List<Plant> getPrehistoricPlants() {
         List<Plant> prehistoricPlants = new LinkedList<>();
 
-        for (Plant plant : PLANTS)
-        {
-            if (plant.shouldRegister() && plant.isPrehistoric())
-            {
+        for (Plant plant : PLANTS) {
+            if (plant.shouldRegister() && plant.isPrehistoric()) {
                 prehistoricPlants.add(plant);
             }
         }

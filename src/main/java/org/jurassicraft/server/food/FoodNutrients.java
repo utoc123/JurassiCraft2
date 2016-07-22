@@ -6,8 +6,7 @@ import net.minecraft.item.Item;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum FoodNutrients
-{
+public enum FoodNutrients {
     APPLE(Items.APPLE, 0.060D, 0.065D, 0.100D, 0.010D),
     POTATO(Items.POTATO, 0.100D, 0.200D, 0.160D, 0.020D),
     BREAD(Items.BREAD, 0.300D, 0.400D, 0.430D, 0.180D),
@@ -30,10 +29,8 @@ public enum FoodNutrients
 
     public static final Map<Item, Integer> FOOD_LIST = new HashMap<>();
 
-    static
-    {
-        for (int i = 0; i < values().length; i++)
-        {
+    static {
+        for (int i = 0; i < values().length; i++) {
             FOOD_LIST.put(FoodNutrients.values()[i].getFoodItem(), i);
         }
     }
@@ -44,8 +41,7 @@ public enum FoodNutrients
     private final double lipids;
     private final Item food;
 
-    FoodNutrients(Item food, double foodProximates, double foodMinerals, double foodVitamins, double foodLipids)
-    {
+    FoodNutrients(Item food, double foodProximates, double foodMinerals, double foodVitamins, double foodLipids) {
         this.food = food;
         this.proximate = foodProximates;
         this.minerals = foodMinerals;
@@ -53,28 +49,23 @@ public enum FoodNutrients
         this.lipids = foodLipids;
     }
 
-    public Item getFoodItem()
-    {
-        return food;
+    public Item getFoodItem() {
+        return this.food;
     }
 
-    public double getProximate()
-    {
-        return proximate;
+    public double getProximate() {
+        return this.proximate;
     }
 
-    public double getMinerals()
-    {
-        return minerals;
+    public double getMinerals() {
+        return this.minerals;
     }
 
-    public double getVitamins()
-    {
-        return vitamins;
+    public double getVitamins() {
+        return this.vitamins;
     }
 
-    public double getLipids()
-    {
-        return lipids;
+    public double getLipids() {
+        return this.lipids;
     }
 }

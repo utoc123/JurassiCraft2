@@ -9,8 +9,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.GrowthStage;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 
-public class VelociraptorLeapEntityAI extends EntityAIBase
-{
+public class VelociraptorLeapEntityAI extends EntityAIBase {
     private VelociraptorEntity entity;
     private EntityLivingBase target;
 
@@ -24,22 +23,18 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
 
     private boolean ticked = false;
 
-    public VelociraptorLeapEntityAI(VelociraptorEntity entity)
-    {
+    public VelociraptorLeapEntityAI(VelociraptorEntity entity) {
         this.entity = entity;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        EntityLivingBase target = entity.getAttackTarget();
+    public boolean shouldExecute() {
+        EntityLivingBase target = this.entity.getAttackTarget();
 
-        if (target != null && target.isEntityAlive() && !(target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass()))
-        {
-            float distance = entity.getDistanceToEntity(target);
+        if (target != null && target.isEntityAlive() && !(target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass())) {
+            float distance = this.entity.getDistanceToEntity(target);
 
-            if (distance >= 5 && distance <= 6 && entity.onGround)
-            {
+            if (distance >= 5 && distance <= 6 && this.entity.onGround) {
                 this.target = target;
 
                 return true;
@@ -50,86 +45,74 @@ public class VelociraptorLeapEntityAI extends EntityAIBase
     }
 
     @Override
-    public void startExecuting()
-    {
-        animation = DinosaurAnimation.VELOCIRAPTOR_PREPARE_POUNCE;
-        PoseHandler poseHandler = entity.getDinosaur().getPoseHandler();
-        GrowthStage growthStage = entity.getGrowthStage();
-        leapLength = poseHandler.getAnimationLength(DinosaurAnimation.VELOCIRAPTOR_LEAP.get(), growthStage);
-        entity.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
-        ticked = false;
+    public void startExecuting() {
+        this.animation = DinosaurAnimation.VELOCIRAPTOR_PREPARE_POUNCE;
+        PoseHandler poseHandler = this.entity.getDinosaur().getPoseHandler();
+        GrowthStage growthStage = this.entity.getGrowthStage();
+        this.leapLength = poseHandler.getAnimationLength(DinosaurAnimation.VELOCIRAPTOR_LEAP.get(), growthStage);
+        this.entity.getLookHelper().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
+        this.ticked = false;
     }
 
     @Override
-    public void updateTask()
-    {
-        int tick = entity.getAnimationTick();
+    public void updateTask() {
+        int tick = this.entity.getAnimationTick();
 
-        if (animation == DinosaurAnimation.VELOCIRAPTOR_PREPARE_POUNCE && tick < prevTick)
-        {
-            animation = DinosaurAnimation.VELOCIRAPTOR_LEAP;
-            entity.setAnimation(animation.get());
+        if (this.animation == DinosaurAnimation.VELOCIRAPTOR_PREPARE_POUNCE && tick < this.prevTick) {
+            this.animation = DinosaurAnimation.VELOCIRAPTOR_LEAP;
+            this.entity.setAnimation(this.animation.get());
 
-            SoundEvent sound = entity.getHurtSound();
+            SoundEvent sound = this.entity.getHurtSound();
 
-            if (sound != null)
-            {
-                entity.playSound(sound, entity.getSoundVolume(), entity.getSoundPitch());
+            if (sound != null) {
+                this.entity.playSound(sound, this.entity.getSoundVolume(), this.entity.getSoundPitch());
             }
 
-            double targetSpeedX = target.posX - (!ticked ? target.prevPosX : targetPrevPosX);
-            double targetSpeedZ = target.posZ - (!ticked ? target.prevPosZ : targetPrevPosZ);
+            double targetSpeedX = this.target.posX - (!this.ticked ? this.target.prevPosX : this.targetPrevPosX);
+            double targetSpeedZ = this.target.posZ - (!this.ticked ? this.target.prevPosZ : this.targetPrevPosZ);
 
             double length = 6.0;
 
-            double destX = target.posX + targetSpeedX * length;
-            double destZ = target.posZ + targetSpeedZ * length;
+            double destX = this.target.posX + targetSpeedX * length;
+            double destZ = this.target.posZ + targetSpeedZ * length;
 
-            double delta = Math.sqrt((destX - entity.posX) * (destX - entity.posX) + (destZ - entity.posZ) * (destZ - entity.posZ));
-            double angle = Math.atan2(destZ - entity.posZ, destX - entity.posX);
+            double delta = Math.sqrt((destX - this.entity.posX) * (destX - this.entity.posX) + (destZ - this.entity.posZ) * (destZ - this.entity.posZ));
+            double angle = Math.atan2(destZ - this.entity.posZ, destX - this.entity.posX);
 
             this.entity.motionX = delta / length * Math.cos(angle);
             this.entity.motionZ = (delta / length * Math.sin(angle));
-            this.entity.motionY = Math.min(0.3, Math.max(0, (target.posY - entity.posY) * 0.1)) + 0.6;
-        }
-        else if (animation == DinosaurAnimation.VELOCIRAPTOR_LEAP && entity.motionY < 0)
-        {
-            animation = DinosaurAnimation.VELOCIRAPTOR_LAND;
-            entity.setAnimation(animation.get());
-        }
-        else if (animation == DinosaurAnimation.VELOCIRAPTOR_LAND && entity.onGround)
-        {
-            animation = DinosaurAnimation.IDLE;
-            entity.setAnimation(animation.get());
+            this.entity.motionY = Math.min(0.3, Math.max(0, (this.target.posY - this.entity.posY) * 0.1)) + 0.6;
+        } else if (this.animation == DinosaurAnimation.VELOCIRAPTOR_LEAP && this.entity.motionY < 0) {
+            this.animation = DinosaurAnimation.VELOCIRAPTOR_LAND;
+            this.entity.setAnimation(this.animation.get());
+        } else if (this.animation == DinosaurAnimation.VELOCIRAPTOR_LAND && this.entity.onGround) {
+            this.animation = DinosaurAnimation.IDLE;
+            this.entity.setAnimation(this.animation.get());
 
-            if (entity.getEntityBoundingBox() != null && target.getEntityBoundingBox() != null && entity.getEntityBoundingBox().intersectsWith(target.getEntityBoundingBox().expand(2.0, 2.0, 2.0)))
-            {
-                entity.attackEntityAsMob(target);
+            if (this.entity.getEntityBoundingBox() != null && this.target.getEntityBoundingBox() != null && this.entity.getEntityBoundingBox().intersectsWith(this.target.getEntityBoundingBox().expand(2.0, 2.0, 2.0))) {
+                this.entity.attackEntityAsMob(this.target);
             }
         }
 
-        targetPrevPosX = target.posX;
-        targetPrevPosZ = target.posZ;
-        ticked = true;
+        this.targetPrevPosX = this.target.posX;
+        this.targetPrevPosZ = this.target.posZ;
+        this.ticked = true;
 
-        if (entity.getAnimation() != animation.get())
-        {
-            entity.setAnimation(animation.get());
-            entity.setAnimationTick(prevTick + 1);
+        if (this.entity.getAnimation() != this.animation.get()) {
+            this.entity.setAnimation(this.animation.get());
+            this.entity.setAnimationTick(this.prevTick + 1);
         }
 
-        prevTick = tick;
+        this.prevTick = tick;
     }
 
     @Override
-    public void resetTask()
-    {
-        entity.setAnimation(DinosaurAnimation.IDLE.get());
+    public void resetTask() {
+        this.entity.setAnimation(DinosaurAnimation.IDLE.get());
     }
 
     @Override
-    public boolean continueExecuting()
-    {
-        return !target.isDead && !(target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass()) && animation != DinosaurAnimation.IDLE;
+    public boolean continueExecuting() {
+        return !this.target.isDead && !(this.target instanceof DinosaurEntity && ((DinosaurEntity) this.target).isCarcass()) && this.animation != DinosaurAnimation.IDLE;
     }
 }

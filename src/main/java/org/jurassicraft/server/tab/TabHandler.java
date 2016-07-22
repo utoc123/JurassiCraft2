@@ -5,31 +5,24 @@ import net.minecraft.item.Item;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
-public class TabHandler
-{
-    public static final CreativeTabs ITEMS = new CreativeTabs("jurassicraft.items")
-    {
+public class TabHandler {
+    public static final CreativeTabs ITEMS = new CreativeTabs("jurassicraft.items") {
         @Override
-        public Item getTabIconItem()
-        {
+        public Item getTabIconItem() {
             return ItemHandler.AMBER;
         }
     };
 
-    public static final CreativeTabs BLOCKS = new CreativeTabs("jurassicraft.blocks")
-    {
+    public static final CreativeTabs BLOCKS = new CreativeTabs("jurassicraft.blocks") {
         @Override
-        public Item getTabIconItem()
-        {
+        public Item getTabIconItem() {
             return Item.getItemFromBlock(BlockHandler.GYPSUM_BRICKS);
         }
     };
 
-    public static final CreativeTabs PLANTS = new CreativeTabs("jurassicraft.plants")
-    {
+    public static final CreativeTabs PLANTS = new CreativeTabs("jurassicraft.plants") {
         @Override
-        public Item getTabIconItem()
-        {
+        public Item getTabIconItem() {
             return Item.getItemFromBlock(BlockHandler.SMALL_ROYAL_FERN);
         }
     };

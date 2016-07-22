@@ -7,25 +7,18 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
-public interface CleanableItem
-{
-    static CleanableItem getCleanableItem(ItemStack stack)
-    {
-        if (stack != null)
-        {
+public interface CleanableItem {
+    static CleanableItem getCleanableItem(ItemStack stack) {
+        if (stack != null) {
             Item item = stack.getItem();
 
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).getBlock();
 
-                if (block instanceof CleanableItem)
-                {
+                if (block instanceof CleanableItem) {
                     return (CleanableItem) block;
                 }
-            }
-            else if (item instanceof CleanableItem)
-            {
+            } else if (item instanceof CleanableItem) {
                 return (CleanableItem) item;
             }
         }
@@ -33,8 +26,7 @@ public interface CleanableItem
         return null;
     }
 
-    static boolean isCleanableItem(ItemStack stack)
-    {
+    static boolean isCleanableItem(ItemStack stack) {
         return getCleanableItem(stack) != null;
     }
 

@@ -11,8 +11,7 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Random;
 
-public class DNASequencerTile extends MachineBaseTile
-{
+public class DNASequencerTile extends MachineBaseTile {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4, 5 };
     private static final int[] INPUTS_PROCESS_1 = new int[] { 0, 1 };
     private static final int[] INPUTS_PROCESS_2 = new int[] { 2, 3 };
@@ -23,27 +22,22 @@ public class DNASequencerTile extends MachineBaseTile
     private ItemStack[] slots = new ItemStack[9];
 
     @Override
-    protected int getProcess(int slot)
-    {
+    protected int getProcess(int slot) {
         return Math.min(5, (int) Math.floor(slot / 2));
     }
 
     @Override
-    protected boolean canProcess(int process)
-    {
+    protected boolean canProcess(int process) {
         int tissue = process * 2;
 
-        ItemStack input = slots[tissue];
-        ItemStack storage = slots[tissue + 1];
+        ItemStack input = this.slots[tissue];
+        ItemStack storage = this.slots[tissue + 1];
 
         SequencableItem sequencableItem = SequencableItem.getSequencableItem(input);
 
-        if (sequencableItem != null && sequencableItem.isSequencable(input))
-        {
-            if (storage != null && storage.getItem() == ItemHandler.STORAGE_DISC)
-            {
-                if (slots[process + 6] == null)
-                {
+        if (sequencableItem != null && sequencableItem.isSequencable(input)) {
+            if (storage != null && storage.getItem() == ItemHandler.STORAGE_DISC) {
+                if (this.slots[process + 6] == null) {
                     return true;
                 }
             }
@@ -53,53 +47,44 @@ public class DNASequencerTile extends MachineBaseTile
     }
 
     @Override
-    protected void processItem(int process)
-    {
+    protected void processItem(int process) {
         Random rand = new Random();
 
         int tissue = process * 2;
 
-        ItemStack sequencableStack = slots[tissue];
+        ItemStack sequencableStack = this.slots[tissue];
 
-        mergeStack(process + 6, SequencableItem.getSequencableItem(sequencableStack).getSequenceOutput(sequencableStack, rand));
+        this.mergeStack(process + 6, SequencableItem.getSequencableItem(sequencableStack).getSequenceOutput(sequencableStack, rand));
 
-        decreaseStackSize(tissue);
-        decreaseStackSize(tissue + 1);
+        this.decreaseStackSize(tissue);
+        this.decreaseStackSize(tissue + 1);
     }
 
     @Override
-    protected int getMainOutput(int process)
-    {
+    protected int getMainOutput(int process) {
         return (process * 2) + 1;
     }
 
     @Override
-    protected int getStackProcessTime(ItemStack stack)
-    {
+    protected int getStackProcessTime(ItemStack stack) {
         return 2000;
     }
 
     @Override
-    protected int getProcessCount()
-    {
+    protected int getProcessCount() {
         return 3;
     }
 
     @Override
-    protected int[] getInputs()
-    {
+    protected int[] getInputs() {
         return INPUTS;
     }
 
     @Override
-    protected int[] getInputs(int process)
-    {
-        if (process == 0)
-        {
+    protected int[] getInputs(int process) {
+        if (process == 0) {
             return INPUTS_PROCESS_1;
-        }
-        else if (process == 1)
-        {
+        } else if (process == 1) {
             return INPUTS_PROCESS_2;
         }
 
@@ -107,38 +92,32 @@ public class DNASequencerTile extends MachineBaseTile
     }
 
     @Override
-    protected int[] getOutputs()
-    {
+    protected int[] getOutputs() {
         return OUTPUTS;
     }
 
     @Override
-    protected ItemStack[] getSlots()
-    {
-        return slots;
+    protected ItemStack[] getSlots() {
+        return this.slots;
     }
 
     @Override
-    protected void setSlots(ItemStack[] slots)
-    {
+    protected void setSlots(ItemStack[] slots) {
         this.slots = slots;
     }
 
     @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
         return new DNASequencerContainer(playerInventory, this);
     }
 
     @Override
-    public String getGuiID()
-    {
+    public String getGuiID() {
         return JurassiCraft.MODID + ":dna_sequencer";
     }
 
     @Override
-    public String getName()
-    {
-        return hasCustomName() ? customName : "container.dna_sequencer";
+    public String getName() {
+        return this.hasCustomName() ? this.customName : "container.dna_sequencer";
     }
 }

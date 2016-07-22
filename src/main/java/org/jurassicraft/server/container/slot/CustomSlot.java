@@ -6,19 +6,16 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Predicate;
 
-public class CustomSlot extends Slot
-{
+public class CustomSlot extends Slot {
     private Predicate<ItemStack> item;
 
-    public CustomSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition, Predicate<ItemStack> item)
-    {
+    public CustomSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition, Predicate<ItemStack> item) {
         super(inventory, slotIndex, xPosition, yPosition);
         this.item = item;
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack)
-    {
-        return item.test(stack);
+    public boolean isItemValid(ItemStack stack) {
+        return this.item.test(stack);
     }
 }

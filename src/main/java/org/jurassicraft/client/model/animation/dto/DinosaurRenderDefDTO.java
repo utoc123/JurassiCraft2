@@ -18,26 +18,21 @@ import java.util.Map;
  *
  * @author WorldSEnder
  */
-public class DinosaurRenderDefDTO
-{
+public class DinosaurRenderDefDTO {
     public int version;
     public Map<GrowthStage, GrowthRenderDef> perStage;
 
-    public static class DinosaurDeserializer implements JsonDeserializer<DinosaurRenderDefDTO>
-    {
+    public static class DinosaurDeserializer implements JsonDeserializer<DinosaurRenderDefDTO> {
         @Override
-        public DinosaurRenderDefDTO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
-        {
+        public DinosaurRenderDefDTO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject def = json.getAsJsonObject();
             DinosaurRenderDefDTO built = new DinosaurRenderDefDTO();
             built.version = def.get("version") == null ? 0 : def.get("version").getAsInt();
             built.perStage = new EnumMap<>(GrowthStage.class);
-            for (GrowthStage g : GrowthStage.values)
-            {
+            for (GrowthStage g : GrowthStage.values) {
                 JsonElement perhaps = def.get(g.name());
                 GrowthRenderDef renderDef = perhaps == null ? new GrowthRenderDef() : context.<GrowthRenderDef>deserialize(perhaps, GrowthRenderDef.class);
-                if (renderDef.directory == null || renderDef.directory.isEmpty())
-                {
+                if (renderDef.directory == null || renderDef.directory.isEmpty()) {
                     renderDef.directory = g.name().toLowerCase(Locale.ROOT);
                 }
                 built.perStage.put(g, renderDef);

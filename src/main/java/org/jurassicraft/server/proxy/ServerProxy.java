@@ -51,8 +51,7 @@ import org.jurassicraft.server.tile.FossilGrinderTile;
 import org.jurassicraft.server.tile.IncubatorTile;
 import org.jurassicraft.server.world.WorldGenerator;
 
-public class ServerProxy implements IGuiHandler
-{
+public class ServerProxy implements IGuiHandler {
     public static final int GUI_CLEANING_STATION_ID = 0;
     public static final int GUI_FOSSIL_GRINDER_ID = 1;
     public static final int GUI_DNA_SEQUENCER_ID = 2;
@@ -65,8 +64,7 @@ public class ServerProxy implements IGuiHandler
     public static final int GUI_CULTIVATOR_ID = 9;
     public static final int GUI_FEEDER_ID = 10;
 
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         EntityHandler.init();
         DinosaurSerializers.register();
 
@@ -88,76 +86,49 @@ public class ServerProxy implements IGuiHandler
         MinecraftForge.EVENT_BUS.register(eventHandler);
     }
 
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
         FoodHelper.init();
     }
 
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
 
     }
 
-    public EntityPlayer getPlayer()
-    {
+    public EntityPlayer getPlayer() {
         return null;
     }
 
-    public EntityPlayer getPlayerEntityFromContext(MessageContext ctx)
-    {
+    public EntityPlayer getPlayerEntityFromContext(MessageContext ctx) {
         return ctx.getServerHandler().playerEntity;
     }
 
     @Override
-    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
-    {
+    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         BlockPos pos = new BlockPos(x, y, z);
         TileEntity tileEntity = world.getTileEntity(pos);
 
-        if (tileEntity != null)
-        {
-            if (tileEntity instanceof CleaningStationTile && id == GUI_CLEANING_STATION_ID)
-            {
+        if (tileEntity != null) {
+            if (tileEntity instanceof CleaningStationTile && id == GUI_CLEANING_STATION_ID) {
                 return new CleaningStationContainer(player.inventory, (CleaningStationTile) tileEntity);
-            }
-            else if (tileEntity instanceof FossilGrinderTile && id == GUI_FOSSIL_GRINDER_ID)
-            {
+            } else if (tileEntity instanceof FossilGrinderTile && id == GUI_FOSSIL_GRINDER_ID) {
                 return new FossilGrinderContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof DNASequencerTile && id == GUI_DNA_SEQUENCER_ID)
-            {
+            } else if (tileEntity instanceof DNASequencerTile && id == GUI_DNA_SEQUENCER_ID) {
                 return new DNASequencerContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof EmbryonicMachineTile && id == GUI_EMBRYONIC_MACHINE_ID)
-            {
+            } else if (tileEntity instanceof EmbryonicMachineTile && id == GUI_EMBRYONIC_MACHINE_ID) {
                 return new EmbryonicMachineContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof EmbryoCalcificationMachineTile && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID)
-            {
+            } else if (tileEntity instanceof EmbryoCalcificationMachineTile && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
                 return new EmbryoCalcificationMachineContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof DNASynthesizerTile && id == GUI_DNA_SYNTHESIZER_ID)
-            {
+            } else if (tileEntity instanceof DNASynthesizerTile && id == GUI_DNA_SYNTHESIZER_ID) {
                 return new DNASynthesizerContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof IncubatorTile && id == GUI_INCUBATOR_ID)
-            {
+            } else if (tileEntity instanceof IncubatorTile && id == GUI_INCUBATOR_ID) {
                 return new IncubatorContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof DNACombinatorHybridizerTile && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID)
-            {
+            } else if (tileEntity instanceof DNACombinatorHybridizerTile && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
                 return new DNACombinatorHybridizerContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof DNAExtractorTile && id == GUI_DNA_EXTRACTOR_ID)
-            {
+            } else if (tileEntity instanceof DNAExtractorTile && id == GUI_DNA_EXTRACTOR_ID) {
                 return new DNAExtractorContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID)
-            {
+            } else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID) {
                 return new CultivateContainer(player.inventory, tileEntity);
-            }
-            else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID)
-            {
+            } else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID) {
                 return new FeederContainer(player.inventory, (FeederTile) tileEntity);
             }
         }
@@ -166,20 +137,16 @@ public class ServerProxy implements IGuiHandler
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-    {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return null;
     }
 
-    public void openSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand)
-    {
+    public void openSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand) {
     }
 
-    public void openOrderGui(DinosaurEntity entity)
-    {
+    public void openOrderGui(DinosaurEntity entity) {
     }
 
-    public void openFieldGuide(DinosaurEntity entity)
-    {
+    public void openFieldGuide(DinosaurEntity entity) {
     }
 }

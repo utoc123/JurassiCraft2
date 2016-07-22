@@ -20,10 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class DinosaurMeatItem extends ItemFood
-{
-    public DinosaurMeatItem()
-    {
+public class DinosaurMeatItem extends ItemFood {
+    public DinosaurMeatItem() {
         super(3, 0.3F, true);
         this.setHasSubtypes(true);
 
@@ -31,52 +29,42 @@ public class DinosaurMeatItem extends ItemFood
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
+    public String getItemStackDisplayName(ItemStack stack) {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
         return new LangHelper("item.dinosaur_meat.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         return EntityHandler.getDinosaurById(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }
 
-    public int getDNAQuality(EntityPlayer player, ItemStack stack)
-    {
+    public int getDNAQuality(EntityPlayer player, ItemStack stack) {
         int quality = player.capabilities.isCreativeMode ? 100 : 0;
 
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
-        if (nbt.hasKey("DNAQuality"))
-        {
+        if (nbt.hasKey("DNAQuality")) {
             quality = nbt.getInteger("DNAQuality");
-        }
-        else
-        {
+        } else {
             nbt.setInteger("DNAQuality", quality);
         }
 
@@ -85,23 +73,18 @@ public class DinosaurMeatItem extends ItemFood
         return quality;
     }
 
-    public String getGeneticCode(EntityPlayer player, ItemStack stack)
-    {
+    public String getGeneticCode(EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
         String genetics = GeneticsHelper.randomGenetics(player.worldObj.rand);
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
-        if (nbt.hasKey("Genetics"))
-        {
+        if (nbt.hasKey("Genetics")) {
             genetics = nbt.getString("Genetics");
-        }
-        else
-        {
+        } else {
             nbt.setString("Genetics", genetics);
         }
 
@@ -111,30 +94,22 @@ public class DinosaurMeatItem extends ItemFood
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
-    {
-        int quality = getDNAQuality(player, stack);
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
+        int quality = this.getDNAQuality(player, stack);
 
         TextFormatting formatting;
 
-        if (quality > 75)
-        {
+        if (quality > 75) {
             formatting = TextFormatting.GREEN;
-        }
-        else if (quality > 50)
-        {
+        } else if (quality > 50) {
             formatting = TextFormatting.YELLOW;
-        }
-        else if (quality > 25)
-        {
+        } else if (quality > 25) {
             formatting = TextFormatting.GOLD;
-        }
-        else
-        {
+        } else {
             formatting = TextFormatting.RED;
         }
 
         lore.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
+        lore.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", this.getGeneticCode(player, stack)).build());
     }
 }

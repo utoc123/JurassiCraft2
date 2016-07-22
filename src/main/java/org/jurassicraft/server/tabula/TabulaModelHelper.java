@@ -13,16 +13,12 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class TabulaModelHelper
-{
-    public static TabulaCubeContainer getCubeByName(String name, TabulaModelContainer model)
-    {
+public class TabulaModelHelper {
+    public static TabulaCubeContainer getCubeByName(String name, TabulaModelContainer model) {
         List<TabulaCubeContainer> allCubes = getAllCubes(model);
 
-        for (TabulaCubeContainer cube : allCubes)
-        {
-            if (cube.getName().equals(name))
-            {
+        for (TabulaCubeContainer cube : allCubes) {
+            if (cube.getName().equals(name)) {
                 return cube;
             }
         }
@@ -30,14 +26,11 @@ public class TabulaModelHelper
         return null;
     }
 
-    public static TabulaCubeContainer getCubeByIdentifier(String identifier, TabulaModelContainer model)
-    {
+    public static TabulaCubeContainer getCubeByIdentifier(String identifier, TabulaModelContainer model) {
         List<TabulaCubeContainer> allCubes = getAllCubes(model);
 
-        for (TabulaCubeContainer cube : allCubes)
-        {
-            if (cube.getIdentifier().equals(identifier))
-            {
+        for (TabulaCubeContainer cube : allCubes) {
+            if (cube.getIdentifier().equals(identifier)) {
                 return cube;
             }
         }
@@ -45,63 +38,52 @@ public class TabulaModelHelper
         return null;
     }
 
-    public static List<TabulaCubeContainer> getAllCubes(TabulaModelContainer model)
-    {
+    public static List<TabulaCubeContainer> getAllCubes(TabulaModelContainer model) {
         List<TabulaCubeContainer> cubes = new ArrayList<>();
 
-        for (TabulaCubeGroupContainer cubeGroup : model.getCubeGroups())
-        {
+        for (TabulaCubeGroupContainer cubeGroup : model.getCubeGroups()) {
             cubes.addAll(traverse(cubeGroup));
         }
 
-        for (TabulaCubeContainer cube : model.getCubes())
-        {
+        for (TabulaCubeContainer cube : model.getCubes()) {
             cubes.addAll(traverse(cube));
         }
 
         return cubes;
     }
 
-    private static List<TabulaCubeContainer> traverse(TabulaCubeGroupContainer group)
-    {
+    private static List<TabulaCubeContainer> traverse(TabulaCubeGroupContainer group) {
         List<TabulaCubeContainer> retCubes = new ArrayList<>();
 
-        for (TabulaCubeContainer child : group.getCubes())
-        {
+        for (TabulaCubeContainer child : group.getCubes()) {
             retCubes.addAll(traverse(child));
         }
 
-        for (TabulaCubeGroupContainer child : group.getCubeGroups())
-        {
+        for (TabulaCubeGroupContainer child : group.getCubeGroups()) {
             retCubes.addAll(traverse(child));
         }
 
         return retCubes;
     }
 
-    private static List<TabulaCubeContainer> traverse(TabulaCubeContainer cube)
-    {
+    private static List<TabulaCubeContainer> traverse(TabulaCubeContainer cube) {
         List<TabulaCubeContainer> retCubes = new ArrayList<>();
 
         retCubes.add(cube);
 
-        for (TabulaCubeContainer child : cube.getChildren())
-        {
+        for (TabulaCubeContainer child : cube.getChildren()) {
             retCubes.addAll(traverse(child));
         }
 
         return retCubes;
     }
 
-    public static TabulaModelContainer loadTabulaModel(String path) throws IOException
-    {
-        if (!path.startsWith("/"))
-        {
+    public static TabulaModelContainer loadTabulaModel(String path) throws IOException {
+        if (!path.startsWith("/")) {
             path = "/" + path;
         }
 
-        if (!path.endsWith(".tbl"))
-        {
+        if (!path.endsWith(".tbl")) {
             path += ".tbl";
         }
 
@@ -109,20 +91,16 @@ public class TabulaModelHelper
         return TabulaModelHelper.loadTabulaModel(getModelJsonStream(path, stream));
     }
 
-    public static TabulaModelContainer loadTabulaModel(InputStream stream)
-    {
+    public static TabulaModelContainer loadTabulaModel(InputStream stream) {
         return new Gson().fromJson(new InputStreamReader(stream), TabulaModelContainer.class);
     }
 
-    private static InputStream getModelJsonStream(String name, InputStream file) throws IOException
-    {
+    private static InputStream getModelJsonStream(String name, InputStream file) throws IOException {
         ZipInputStream zip = new ZipInputStream(file);
         ZipEntry entry;
 
-        while ((entry = zip.getNextEntry()) != null)
-        {
-            if (entry.getName().equals("model.json"))
-            {
+        while ((entry = zip.getNextEntry()) != null) {
+            if (entry.getName().equals("model.json")) {
                 return zip;
             }
         }

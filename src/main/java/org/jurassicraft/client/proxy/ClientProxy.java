@@ -58,23 +58,18 @@ import java.util.List;
 import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
-public class ClientProxy extends ServerProxy
-{
+public class ClientProxy extends ServerProxy {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
     public static final List<UUID> PATRONS = new ArrayList<>();
 
     @Override
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
-        try
-        {
+        try {
             LanguageHandler.INSTANCE.loadRemoteLocalization(JurassiCraft.MODID);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -85,16 +80,14 @@ public class ClientProxy extends ServerProxy
     }
 
     @Override
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         super.init(event);
 
         RenderingHandler.INSTANCE.init();
     }
 
     @Override
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
 
         RenderingHandler.INSTANCE.postInit();
@@ -103,10 +96,8 @@ public class ClientProxy extends ServerProxy
         {
             List<String> patrons = WebUtils.readPastebinAsList("fgJQkCMa");
 
-            if (patrons != null)
-            {
-                for (String patron : patrons)
-                {
+            if (patrons != null) {
+                for (String patron : patrons) {
                     PATRONS.add(UUID.fromString(patron));
                 }
             }
@@ -114,76 +105,48 @@ public class ClientProxy extends ServerProxy
     }
 
     @Override
-    public EntityPlayer getPlayer()
-    {
+    public EntityPlayer getPlayer() {
         return MC.thePlayer;
     }
 
     @Override
-    public EntityPlayer getPlayerEntityFromContext(MessageContext ctx)
-    {
-        return (ctx.side.isClient() ? getPlayer() : super.getPlayerEntityFromContext(ctx));
+    public EntityPlayer getPlayerEntityFromContext(MessageContext ctx) {
+        return (ctx.side.isClient() ? this.getPlayer() : super.getPlayerEntityFromContext(ctx));
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
-    {
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         BlockPos pos = new BlockPos(x, y, z);
         TileEntity tileEntity = world.getTileEntity(pos);
 
-        if (tileEntity != null)
-        {
-            if (tileEntity instanceof CleaningStationTile && id == GUI_CLEANING_STATION_ID)
-            {
+        if (tileEntity != null) {
+            if (tileEntity instanceof CleaningStationTile && id == GUI_CLEANING_STATION_ID) {
                 return new CleaningStationGui(player.inventory, (CleaningStationTile) tileEntity);
-            }
-            else if (tileEntity instanceof FossilGrinderTile && id == GUI_FOSSIL_GRINDER_ID)
-            {
+            } else if (tileEntity instanceof FossilGrinderTile && id == GUI_FOSSIL_GRINDER_ID) {
                 return new FossilGrinderGui(player.inventory, (FossilGrinderTile) tileEntity);
-            }
-            else if (tileEntity instanceof DNASequencerTile && id == GUI_DNA_SEQUENCER_ID)
-            {
+            } else if (tileEntity instanceof DNASequencerTile && id == GUI_DNA_SEQUENCER_ID) {
                 return new DNASequencerGui(player.inventory, (DNASequencerTile) tileEntity);
-            }
-            else if (tileEntity instanceof EmbryonicMachineTile && id == GUI_EMBRYONIC_MACHINE_ID)
-            {
+            } else if (tileEntity instanceof EmbryonicMachineTile && id == GUI_EMBRYONIC_MACHINE_ID) {
                 return new EmbryonicMachineGui(player.inventory, (EmbryonicMachineTile) tileEntity);
-            }
-            else if (tileEntity instanceof EmbryoCalcificationMachineTile && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID)
-            {
+            } else if (tileEntity instanceof EmbryoCalcificationMachineTile && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
                 return new EmbryoCalcificationMachineGui(player.inventory, (EmbryoCalcificationMachineTile) tileEntity);
-            }
-            else if (tileEntity instanceof DNASynthesizerTile && id == GUI_DNA_SYNTHESIZER_ID)
-            {
+            } else if (tileEntity instanceof DNASynthesizerTile && id == GUI_DNA_SYNTHESIZER_ID) {
                 return new DNASynthesizerGui(player.inventory, (DNASynthesizerTile) tileEntity);
-            }
-            else if (tileEntity instanceof IncubatorTile && id == GUI_INCUBATOR_ID)
-            {
+            } else if (tileEntity instanceof IncubatorTile && id == GUI_INCUBATOR_ID) {
                 return new IncubatorGui(player.inventory, (IncubatorTile) tileEntity);
-            }
-            else if (tileEntity instanceof DNACombinatorHybridizerTile && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID)
-            {
+            } else if (tileEntity instanceof DNACombinatorHybridizerTile && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
                 return new DNACombinatorHybridizerGui(player.inventory, (DNACombinatorHybridizerTile) tileEntity);
-            }
-            else if (tileEntity instanceof DNAExtractorTile && id == GUI_DNA_EXTRACTOR_ID)
-            {
+            } else if (tileEntity instanceof DNAExtractorTile && id == GUI_DNA_EXTRACTOR_ID) {
                 return new DNAExtractorGui(player.inventory, (DNAExtractorTile) tileEntity);
-            }
-            else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID)
-            {
+            } else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID) {
                 CultivatorTile cultivator = (CultivatorTile) tileEntity;
 
-                if (cultivator.isProcessing(0))
-                {
+                if (cultivator.isProcessing(0)) {
                     return new CultivateProcessGui(cultivator);
-                }
-                else
-                {
+                } else {
                     return new CultivateGui(player.inventory, cultivator);
                 }
-            }
-            else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID)
-            {
+            } else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID) {
                 return new FeederGui(player.inventory, (FeederTile) tileEntity);
             }
         }
@@ -192,51 +155,42 @@ public class ClientProxy extends ServerProxy
     }
 
     @Override
-    public void openSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand)
-    {
+    public void openSelectDino(BlockPos pos, EnumFacing facing, EnumHand hand) {
         MC.displayGuiScreen(new SelectDinoGui(pos, facing, hand));
     }
 
     @Override
-    public void openOrderGui(DinosaurEntity entity)
-    {
+    public void openOrderGui(DinosaurEntity entity) {
         MC.displayGuiScreen(new OrderDinosaurGui(entity));
     }
 
     @Override
-    public void openFieldGuide(DinosaurEntity entity)
-    {
+    public void openFieldGuide(DinosaurEntity entity) {
         MC.displayGuiScreen(new FieldGuideGui(entity));
     }
 
-    public static void playSound(ISound sound)
-    {
+    public static void playSound(ISound sound) {
         MC.getSoundHandler().playSound(sound);
     }
 
-    public static void stopSound(ISound sound)
-    {
+    public static void stopSound(ISound sound) {
         MC.getSoundHandler().stopSound(sound);
     }
 
-    public static void playSound(CarEntity entity)
-    {
+    public static void playSound(CarEntity entity) {
         playSound(entity.sound);
     }
 
-    public static void stopSound(CarEntity entity)
-    {
+    public static void stopSound(CarEntity entity) {
         stopSound(entity.sound);
     }
 
-    public static void spawnVenomParticles(VenomEntity entity)
-    {
+    public static void spawnVenomParticles(VenomEntity entity) {
         ParticleManager particleManager = Minecraft.getMinecraft().effectRenderer;
 
         float size = 0.35F;
 
-        for (int i = 0; i < 16; ++i)
-        {
+        for (int i = 0; i < 16; ++i) {
             particleManager.addEffect(new VenomParticle(entity.worldObj, size * Math.random() - size / 2, size * Math.random() - size / 2, size * Math.random() - size / 2, 0.0F, 0.0F, 0.0F, 1.0F, entity));
         }
     }

@@ -7,41 +7,33 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Collection;
 
-public class HelicopterMinigun extends HelicopterModule
-{
-    public HelicopterMinigun()
-    {
+public class HelicopterMinigun extends HelicopterModule {
+    public HelicopterMinigun() {
         super("minigun");
     }
 
     @Override
-    public Collection<Class<? extends HelicopterModule>> createSupportedModuleList()
-    {
+    public Collection<Class<? extends HelicopterModule>> createSupportedModuleList() {
         return Lists.newArrayList();
     }
 
     @Override
-    public float getBaseRotationAngle()
-    {
+    public float getBaseRotationAngle() {
         return 0;
     }
 
     @Override
-    public boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec)
-    {
+    public boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec) {
         return false;
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
-    {
+    public void writeToNBT(NBTTagCompound compound) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
-    {
+    public void readFromNBT(NBTTagCompound compound) {
 
     }
-
 }

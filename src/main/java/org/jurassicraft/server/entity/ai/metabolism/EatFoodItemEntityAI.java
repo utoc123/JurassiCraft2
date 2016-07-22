@@ -12,54 +12,46 @@ import org.jurassicraft.server.food.FoodHelper;
 
 import java.util.List;
 
-public class EatFoodItemEntityAI extends EntityAIBase
-{
+public class EatFoodItemEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
 
     protected EntityItem item;
     protected boolean eaten;
 
-    public EatFoodItemEntityAI(DinosaurEntity dinosaur)
-    {
+    public EatFoodItemEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
-        {
-            if (dinosaur.getMetabolism().isHungry())
-            {
-                double posX = dinosaur.posX;
-                double posY = dinosaur.posY;
-                double posZ = dinosaur.posZ;
+    public boolean shouldExecute() {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) {
+            if (this.dinosaur.getMetabolism().isHungry()) {
+                double posX = this.dinosaur.posX;
+                double posY = this.dinosaur.posY;
+                double posZ = this.dinosaur.posZ;
 
                 double closestDist = Integer.MAX_VALUE;
                 EntityItem closest = null;
 
                 boolean found = false;
 
-                World world = dinosaur.worldObj;
+                World world = this.dinosaur.worldObj;
 
                 List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 16, posY - 16, posZ - 16, posX + 16, posY + 16, posZ + 16));
 
-                for (EntityItem entity : items)
-                {
+                for (EntityItem entity : items) {
                     ItemStack stack = entity.getEntityItem();
 
                     Item item = stack.getItem();
 
-                    if (FoodHelper.isEdible(dinosaur.getDinosaur().getDiet(), item))
-                    {
+                    if (FoodHelper.isEdible(this.dinosaur.getDinosaur().getDiet(), item)) {
                         double deltaX = Math.abs(posX - entity.posX);
                         double deltaY = Math.abs(posY - entity.posY);
                         double deltaZ = Math.abs(posZ - entity.posZ);
 
                         double distance = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
 
-                        if (distance < closestDist)
-                        {
+                        if (distance < closestDist) {
                             closestDist = distance;
                             closest = entity;
 
@@ -68,9 +60,8 @@ public class EatFoodItemEntityAI extends EntityAIBase
                     }
                 }
 
-                if (found)
-                {
-                    dinosaur.getNavigator().tryMoveToEntityLiving(closest, 1.0);
+                if (found) {
+                    this.dinosaur.getNavigator().tryMoveToEntityLiving(closest, 1.0);
                     this.item = closest;
 
                     return true;
@@ -82,33 +73,27 @@ public class EatFoodItemEntityAI extends EntityAIBase
     }
 
     @Override
-    public void updateTask()
-    {
-        if (dinosaur.getEntityBoundingBox().intersectsWith(item.getEntityBoundingBox().expand(1.0, 1.0, 1.0)))
-        {
-            dinosaur.setAnimation(DinosaurAnimation.EATING.get());
+    public void updateTask() {
+        if (this.dinosaur.getEntityBoundingBox().intersectsWith(this.item.getEntityBoundingBox().expand(1.0, 1.0, 1.0))) {
+            this.dinosaur.setAnimation(DinosaurAnimation.EATING.get());
 
-            if (item.getEntityItem().stackSize > 1)
-            {
-                item.getEntityItem().stackSize--;
-            }
-            else
-            {
-                item.setDead();
+            if (this.item.getEntityItem().stackSize > 1) {
+                this.item.getEntityItem().stackSize--;
+            } else {
+                this.item.setDead();
             }
 
             Item item = this.item.getEntityItem().getItem();
-            dinosaur.getMetabolism().eat(FoodHelper.getHealAmount(item));
-            FoodHelper.applyEatEffects(dinosaur, item);
-            dinosaur.heal(10.0F);
+            this.dinosaur.getMetabolism().eat(FoodHelper.getHealAmount(item));
+            FoodHelper.applyEatEffects(this.dinosaur, item);
+            this.dinosaur.heal(10.0F);
 
-            eaten = true;
+            this.eaten = true;
         }
     }
 
     @Override
-    public boolean continueExecuting()
-    {
-        return dinosaur != null && !this.dinosaur.getNavigator().noPath() && item != null && !item.isDead && !eaten;
+    public boolean continueExecuting() {
+        return this.dinosaur != null && !this.dinosaur.getNavigator().noPath() && this.item != null && !this.item.isDead && !this.eaten;
     }
 }

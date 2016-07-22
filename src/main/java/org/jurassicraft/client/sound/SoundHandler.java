@@ -5,8 +5,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.jurassicraft.JurassiCraft;
 
-public class SoundHandler
-{
+public class SoundHandler {
     public static final SoundEvent TROODONS_AND_RAPTORS = create("troodons_and_raptors");
     public static final SoundEvent JURASSICRAFT_THEME = create("jurassicraft_theme");
     public static final SoundEvent DONT_MOVE_A_MUSCLE = create("dont_move_a_muscle");
@@ -48,8 +47,7 @@ public class SoundHandler
     public static final SoundEvent VELOCIRAPTOR_CALL = create("velociraptor_call");
     public static final SoundEvent VELOCIRAPTOR_DEATH = create("velociraptor_death");
 
-    public static SoundEvent create(String name)
-    {
+    public static SoundEvent create(String name) {
         ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
         SoundEvent event = new SoundEvent(resource);
         GameRegistry.register(event, resource);

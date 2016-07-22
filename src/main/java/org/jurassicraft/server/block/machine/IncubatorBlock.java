@@ -22,10 +22,8 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.IncubatorTile;
 
-public class IncubatorBlock extends OrientedBlock
-{
-    public IncubatorBlock()
-    {
+public class IncubatorBlock extends OrientedBlock {
+    public IncubatorBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("incubator");
         this.setHardness(2.0F);
@@ -34,28 +32,23 @@ public class IncubatorBlock extends OrientedBlock
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-        if (stack.hasDisplayName())
-        {
+        if (stack.hasDisplayName()) {
             TileEntity tile = world.getTileEntity(pos);
 
-            if (tile instanceof IncubatorTile)
-            {
+            if (tile instanceof IncubatorTile) {
                 ((IncubatorTile) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-    {
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
 
-        if (tile instanceof IncubatorTile)
-        {
+        if (tile instanceof IncubatorTile) {
             InventoryHelper.dropInventoryItems(worldIn, pos, (IncubatorTile) tile);
         }
 
@@ -63,28 +56,21 @@ public class IncubatorBlock extends OrientedBlock
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new IncubatorTile();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return true;
-        }
-        else if (!player.isSneaking())
-        {
+        } else if (!player.isSneaking()) {
             TileEntity tile = world.getTileEntity(pos);
 
-            if (tile instanceof IncubatorTile)
-            {
+            if (tile instanceof IncubatorTile) {
                 IncubatorTile incubator = (IncubatorTile) tile;
 
-                if (incubator.isUseableByPlayer(player))
-                {
+                if (incubator.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_INCUBATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
@@ -96,27 +82,23 @@ public class IncubatorBlock extends OrientedBlock
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 }

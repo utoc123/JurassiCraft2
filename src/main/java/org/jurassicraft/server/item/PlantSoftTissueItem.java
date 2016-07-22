@@ -21,29 +21,24 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-public class PlantSoftTissueItem extends Item implements SequencableItem
-{
-    public PlantSoftTissueItem()
-    {
+public class PlantSoftTissueItem extends Item implements SequencableItem {
+    public PlantSoftTissueItem() {
         super();
         this.setHasSubtypes(true);
         this.setCreativeTab(TabHandler.PLANTS);
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        String plantName = getPlant(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public String getItemStackDisplayName(ItemStack stack) {
+        String plantName = this.getPlant(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.plant_soft_tissue.name").withProperty("plant", "plants." + plantName + ".name").build();
     }
 
-    public Plant getPlant(ItemStack stack)
-    {
+    public Plant getPlant(ItemStack stack) {
         Plant plant = PlantHandler.getPlantById(stack.getItemDamage());
 
-        if (plant == null)
-        {
+        if (plant == null) {
             plant = PlantHandler.SMALL_ROYAL_FERN;
         }
 
@@ -52,38 +47,32 @@ public class PlantSoftTissueItem extends Item implements SequencableItem
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Plant> plants = new LinkedList<>(PlantHandler.getPrehistoricPlants());
 
         Map<Plant, Integer> ids = new HashMap<>();
 
-        for (Plant plant : plants)
-        {
+        for (Plant plant : plants) {
             ids.put(plant, PlantHandler.getPlantId(plant));
         }
 
         Collections.sort(plants);
 
-        for (Plant plant : plants)
-        {
+        for (Plant plant : plants) {
             subtypes.add(new ItemStack(item, 1, ids.get(plant)));
         }
     }
 
     @Override
-    public boolean isSequencable(ItemStack stack)
-    {
+    public boolean isSequencable(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getSequenceOutput(ItemStack stack, Random random)
-    {
+    public ItemStack getSequenceOutput(ItemStack stack, Random random) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
             PlantDNA dna = new PlantDNA(stack.getItemDamage(), SequencableItem.randomQuality(random));
             dna.writeToNBT(nbt);

@@ -25,28 +25,23 @@ import java.util.Locale;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
-{
+public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
     @Override
-    public Render<? super PaddockSignEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super PaddockSignEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<PaddockSignEntity>
-    {
+    public static class Renderer extends Render<PaddockSignEntity> {
         private static int DISPLAY_LIST = -1;
         private static boolean HAS_COMPILED = false;
         private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
 
-        public Renderer(RenderManager manager)
-        {
+        public Renderer(RenderManager manager) {
             super(manager);
         }
 
         @Override
-        public void doRender(PaddockSignEntity entity, double x, double y, double z, float yaw, float partialTicks)
-        {
+        public void doRender(PaddockSignEntity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
@@ -55,22 +50,18 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
 
             int id = entity.getDinosaur();
 
-            ResourceLocation texture = TEXTURES.get(id);
+            ResourceLocation texture = this.TEXTURES.get(id);
 
-            if (texture == null)
-            {
+            if (texture == null) {
                 texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase(Locale.ENGLISH) + ".png");
-                TEXTURES.put(id, texture);
+                this.TEXTURES.put(id, texture);
             }
 
             this.bindTexture(texture);
 
-            if (HAS_COMPILED)
-            {
+            if (HAS_COMPILED) {
                 GlStateManager.callList(DISPLAY_LIST);
-            }
-            else
-            {
+            } else {
                 DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
                 GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
                 float scale = 0.0625F;
@@ -88,13 +79,11 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(PaddockSignEntity sign)
-        {
+        protected ResourceLocation getEntityTexture(PaddockSignEntity sign) {
             return null;
         }
 
-        private void renderLayer(PaddockSignEntity entity, int width, int height, int textureWidth, int textureHeight)
-        {
+        private void renderLayer(PaddockSignEntity entity, int width, int height, int textureWidth, int textureHeight) {
             float centerWidth = (float) -textureWidth / 2.0F;
             float centerHeight = (float) -textureHeight / 2.0F;
             float pixelSize = 0.0625F;
@@ -103,10 +92,8 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
 
             GlStateManager.disableCull();
 
-            for (int x = 0; x < textureWidth * pixelSize; x++)
-            {
-                for (int y = 0; y < textureHeight * pixelSize; y++)
-                {
+            for (int x = 0; x < textureWidth * pixelSize; x++) {
+                for (int y = 0; y < textureHeight * pixelSize; y++) {
                     float maxX = centerWidth + (x + 1) / pixelSize;
                     float minX = centerWidth + x / pixelSize;
                     float maxY = centerHeight + (y + 1) / pixelSize;
@@ -130,8 +117,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
                     buffer.pos(maxX, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                     tessellator.draw();
 
-                    for (float i = minX; i < maxX; i += 0.125F)
-                    {
+                    for (float i = minX; i < maxX; i += 0.125F) {
                         maxTextureX = (centerWidth - i) / textureWidth;
                         minTextureX = (centerWidth - (i - pixelSize)) / textureWidth;
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -151,8 +137,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
                     maxTextureX = (textureWidth - x / pixelSize) / textureWidth;
                     minTextureX = (textureWidth - (x + 1) / pixelSize) / textureWidth;
 
-                    for (float i = minY; i < maxY; i += 0.125F)
-                    {
+                    for (float i = minY; i < maxY; i += 0.125F) {
                         maxTextureY = (textureHeight - (i)) / (textureHeight);
                         minTextureY = (textureHeight - (i + 0.125F)) / (textureHeight);
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -174,28 +159,20 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity>
             GlStateManager.enableCull();
         }
 
-        private void setLightmap(PaddockSignEntity sign, float xzOffset, float yOffset)
-        {
+        private void setLightmap(PaddockSignEntity sign, float xzOffset, float yOffset) {
             int posX = MathHelper.floor_double(sign.posX);
             int posY = MathHelper.floor_double(sign.posY + (yOffset / 16.0F));
             int posZ = MathHelper.floor_double(sign.posZ);
 
             EnumFacing direction = sign.facingDirection;
 
-            if (direction == EnumFacing.NORTH)
-            {
+            if (direction == EnumFacing.NORTH) {
                 posX = MathHelper.floor_double(sign.posX + (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.WEST)
-            {
+            } else if (direction == EnumFacing.WEST) {
                 posZ = MathHelper.floor_double(sign.posZ - (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.SOUTH)
-            {
+            } else if (direction == EnumFacing.SOUTH) {
                 posX = MathHelper.floor_double(sign.posX - (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.EAST)
-            {
+            } else if (direction == EnumFacing.EAST) {
                 posZ = MathHelper.floor_double(sign.posZ + (xzOffset / 16.0F));
             }
 

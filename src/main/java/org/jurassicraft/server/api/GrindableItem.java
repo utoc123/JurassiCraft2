@@ -7,25 +7,18 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
-public interface GrindableItem
-{
-    static GrindableItem getGrindableItem(ItemStack stack)
-    {
-        if (stack != null)
-        {
+public interface GrindableItem {
+    static GrindableItem getGrindableItem(ItemStack stack) {
+        if (stack != null) {
             Item item = stack.getItem();
 
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).getBlock();
 
-                if (block instanceof GrindableItem)
-                {
+                if (block instanceof GrindableItem) {
                     return (GrindableItem) block;
                 }
-            }
-            else if (item instanceof GrindableItem)
-            {
+            } else if (item instanceof GrindableItem) {
                 return (GrindableItem) item;
             }
         }
@@ -33,8 +26,7 @@ public interface GrindableItem
         return null;
     }
 
-    static boolean isGrindableItem(ItemStack stack)
-    {
+    static boolean isGrindableItem(ItemStack stack) {
         return getGrindableItem(stack) != null;
     }
 

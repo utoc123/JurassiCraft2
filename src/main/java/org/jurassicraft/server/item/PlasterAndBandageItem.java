@@ -17,34 +17,27 @@ import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
-public class PlasterAndBandageItem extends Item
-{
-    public PlasterAndBandageItem()
-    {
+public class PlasterAndBandageItem extends Item {
+    public PlasterAndBandageItem() {
         super();
 
         this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (player.canPlayerEdit(pos.offset(side), side, stack))
-        {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (player.canPlayerEdit(pos.offset(side), side, stack)) {
             IBlockState state = world.getBlockState(pos);
 
             Block block = state.getBlock();
 
-            if (block instanceof FossilBlock)
-            {
-                if (!world.isRemote)
-                {
+            if (block instanceof FossilBlock) {
+                if (!world.isRemote) {
                     int id = BlockHandler.getDinosaurId((FossilBlock) block, block.getMetaFromState(state));
 
                     world.setBlockState(pos, BlockHandler.getEncasedFossil(id).getDefaultState().withProperty(EncasedFossilBlock.VARIANT, BlockHandler.getMetadata(id)));
 
-                    if (!player.capabilities.isCreativeMode)
-                    {
+                    if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;
                     }
 
@@ -52,15 +45,11 @@ public class PlasterAndBandageItem extends Item
                 }
 
                 return EnumActionResult.SUCCESS;
-            }
-            else if (block instanceof NestFossilBlock && !((NestFossilBlock) block).encased)
-            {
-                if (!world.isRemote)
-                {
+            } else if (block instanceof NestFossilBlock && !((NestFossilBlock) block).encased) {
+                if (!world.isRemote) {
                     world.setBlockState(pos, BlockHandler.ENCASED_NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, state.getValue(NestFossilBlock.VARIANT)));
 
-                    if (!player.capabilities.isCreativeMode)
-                    {
+                    if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;
                     }
 

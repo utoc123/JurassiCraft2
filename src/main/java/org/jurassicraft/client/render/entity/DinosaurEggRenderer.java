@@ -9,24 +9,19 @@ import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.client.render.entity.dinosaur.RenderDinosaurDefinition;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 
-public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
-{
+public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity> {
     @Override
-    public Render<? super DinosaurEggEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super DinosaurEggEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<DinosaurEggEntity>
-    {
-        public Renderer(RenderManager manager)
-        {
+    public static class Renderer extends Render<DinosaurEggEntity> {
+        public Renderer(RenderManager manager) {
             super(manager);
         }
 
         @Override
-        public void doRender(DinosaurEggEntity egg, double x, double y, double z, float yaw, float partialTicks)
-        {
+        public void doRender(DinosaurEggEntity egg, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
 
             GlStateManager.translate((float) x, (float) y + 1.5F, (float) z);
@@ -38,19 +33,17 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity>
             this.bindEntityTexture(egg);
             GlStateManager.scale(-1.0F, -1.0F, 1.0F);
 
-            getRenderDef(egg).getEggModel().render(egg, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+            this.getRenderDef(egg).getEggModel().render(egg, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
             GlStateManager.popMatrix();
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(DinosaurEggEntity entity)
-        {
-            return getRenderDef(entity).getEggTexture();
+        protected ResourceLocation getEntityTexture(DinosaurEggEntity entity) {
+            return this.getRenderDef(entity).getEggTexture();
         }
 
-        private RenderDinosaurDefinition getRenderDef(DinosaurEggEntity entity)
-        {
+        private RenderDinosaurDefinition getRenderDef(DinosaurEggEntity entity) {
             return RenderingHandler.INSTANCE.getRenderDef(entity.getDinosaur());
         }
     }

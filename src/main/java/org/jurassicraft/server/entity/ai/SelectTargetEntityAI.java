@@ -8,49 +8,39 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBase
-{
+public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBase {
     private DinosaurEntity entity;
     private Class<T> targetClass;
-    private T targetEntity;
+    private EntityLivingBase targetEntity;
 
-    public SelectTargetEntityAI(DinosaurEntity entity, Class<T> targetClass)
-    {
+    public SelectTargetEntityAI(DinosaurEntity entity, Class<T> targetClass) {
         this.entity = entity;
         this.targetClass = targetClass;
     }
 
     @Override
-    public void resetTask()
-    {
+    public void resetTask() {
         super.resetTask();
-        entity.resetAttackCooldown();
+        this.entity.resetAttackCooldown();
     }
 
     @Override
-    public void startExecuting()
-    {
-        entity.setAttackTarget(targetEntity);
+    public void startExecuting() {
+        this.entity.setAttackTarget(this.targetEntity);
 
-        Herd herd = entity.herd;
+        Herd herd = this.entity.herd;
 
-        if (herd != null && targetEntity != null)
-        {
+        if (herd != null && this.targetEntity != null) {
             List<EntityLivingBase> enemies = new LinkedList<>();
 
-            if (targetEntity instanceof DinosaurEntity && ((DinosaurEntity) targetEntity).herd != null)
-            {
-                enemies.addAll(((DinosaurEntity) targetEntity).herd.members);
-            }
-            else
-            {
-                enemies.add(targetEntity);
+            if (this.targetEntity instanceof DinosaurEntity && ((DinosaurEntity) this.targetEntity).herd != null) {
+                enemies.addAll(((DinosaurEntity) this.targetEntity).herd.members);
+            } else {
+                enemies.add(this.targetEntity);
             }
 
-            for (EntityLivingBase enemy : enemies)
-            {
-                if (!herd.enemies.contains(enemy))
-                {
+            for (EntityLivingBase enemy : enemies) {
+                if (!herd.enemies.contains(enemy)) {
                     herd.enemies.add(enemy);
                 }
             }
@@ -58,45 +48,41 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (this.entity.getRNG().nextInt(10) != 0)
-        {
+    public boolean shouldExecute() {
+        if (this.entity.getRNG().nextInt(10) != 0) {
             return false;
         }
 
-        if (!(EntityPlayer.class.isAssignableFrom(targetClass) || (DinosaurEntity.class.isAssignableFrom(targetClass) && entity.getDinosaur().getDiet().isCarnivorous())))
-        {
-            if (!entity.getMetabolism().isHungry())
-            {
+        if (!(EntityPlayer.class.isAssignableFrom(this.targetClass) || (DinosaurEntity.class.isAssignableFrom(this.targetClass) && this.entity.getDinosaur().getDiet().isCarnivorous()))) {
+            if (!this.entity.getMetabolism().isHungry()) {
                 return false;
             }
         }
 
-        if (!(entity.herd != null && entity.herd.fleeing) && entity.getAgePercentage() > 50 && entity.getOwner() == null && !entity.isSleeping() && entity.getAttackCooldown() <= 0)
-        {
-            List<T> entities = this.entity.worldObj.getEntitiesWithinAABB(this.targetClass, entity.getEntityBoundingBox().expand(16, 16, 16));
+        if (!(this.entity.herd != null && this.entity.herd.fleeing) && this.entity.getAgePercentage() > 50 && this.entity.getOwner() == null && !this.entity.isSleeping() && this.entity.getAttackCooldown() <= 0) {
+            List<T> entities = this.entity.worldObj.getEntitiesWithinAABB(this.targetClass, this.entity.getEntityBoundingBox().expand(16, 16, 16));
 
-            if (entities.size() > 0)
-            {
-                targetEntity = null;
+            if (entities.size() > 0) {
+                this.targetEntity = null;
                 double bestScore = Double.MAX_VALUE;
 
-                for (T entity : entities)
-                {
-                    if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode))
-                    {
+                for (T entity : entities) {
+                    if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode)) {
                         double score = entity.getHealth() <= 0.0F ? (this.entity.getDistanceSqToEntity(entity) / entity.getHealth()) : 0;
 
-                        if (score < bestScore)
-                        {
+                        if (score < bestScore) {
                             bestScore = score;
-                            targetEntity = entity;
+
+                            if (entity.getRidingEntity() instanceof EntityLivingBase) {
+                                this.targetEntity = (EntityLivingBase) entity.getRidingEntity();
+                            } else {
+                                this.targetEntity = entity;
+                            }
                         }
                     }
                 }
 
-                return targetEntity != null;
+                return this.targetEntity != null;
             }
         }
 

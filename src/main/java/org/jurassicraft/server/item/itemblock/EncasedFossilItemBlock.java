@@ -9,22 +9,18 @@ import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class EncasedFossilItemBlock extends ItemBlock
-{
-    public EncasedFossilItemBlock(Block block)
-    {
+public class EncasedFossilItemBlock extends ItemBlock {
+    public EncasedFossilItemBlock(Block block) {
         super(block);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        Dinosaur dinosaur = ((EncasedFossilBlock) block).getDinosaur(stack.getMetadata());
+    public String getItemStackDisplayName(ItemStack stack) {
+        Dinosaur dinosaur = ((EncasedFossilBlock) this.block).getDinosaur(stack.getMetadata());
 
-        if (dinosaur == null)
-        {
+        if (dinosaur == null) {
             dinosaur = EntityHandler.getDinosaurById(0);
         }
 
@@ -32,14 +28,12 @@ public class EncasedFossilItemBlock extends ItemBlock
     }
 
     @Override
-    public int getMetadata(int metadata)
-    {
+    public int getMetadata(int metadata) {
         return metadata;
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         TimePeriod timePeriod = EntityHandler.getDinosaurById(stack.getMetadata()).getPeriod();
         return super.getUnlocalizedName() + "." + timePeriod.getName();
     }

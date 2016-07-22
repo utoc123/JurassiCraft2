@@ -11,29 +11,24 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class InventoryDinosaur implements IInventory
-{
+public class InventoryDinosaur implements IInventory {
     private DinosaurEntity entity;
 
     private ItemStack[] inventory;
 
-    public InventoryDinosaur(DinosaurEntity entity)
-    {
+    public InventoryDinosaur(DinosaurEntity entity) {
         this.entity = entity;
         this.inventory = new ItemStack[entity.getDinosaur().getStorage()];
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
-    {
+    public void writeToNBT(NBTTagCompound nbt) {
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < inventory.length; ++i)
-        {
-            if (inventory[i] != null)
-            {
+        for (int i = 0; i < this.inventory.length; ++i) {
+            if (this.inventory[i] != null) {
                 NBTTagCompound slotTag = new NBTTagCompound();
                 slotTag.setByte("Slot", (byte) i);
-                inventory[i].writeToNBT(slotTag);
+                this.inventory[i].writeToNBT(slotTag);
                 nbttaglist.appendTag(slotTag);
             }
         }
@@ -41,193 +36,155 @@ public class InventoryDinosaur implements IInventory
         nbt.setTag("Items", nbttaglist);
     }
 
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+    public void readFromNBT(NBTTagCompound nbt) {
         NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-        inventory = new ItemStack[getSizeInventory()];
+        this.inventory = new ItemStack[this.getSizeInventory()];
 
-        for (int i = 0; i < nbttaglist.tagCount(); ++i)
-        {
+        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
             NBTTagCompound slotTag = nbttaglist.getCompoundTagAt(i);
             int j = slotTag.getByte("Slot") & 255;
 
-            if (j >= 0 && j < inventory.length)
-            {
-                setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(slotTag));
+            if (j >= 0 && j < this.inventory.length) {
+                this.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(slotTag));
             }
         }
     }
 
     @Override
-    public int getSizeInventory()
-    {
-        return inventory.length;
+    public int getSizeInventory() {
+        return this.inventory.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int index)
-    {
-        return inventory[index];
+    public ItemStack getStackInSlot(int index) {
+        return this.inventory[index];
     }
 
     @Override
-    public ItemStack decrStackSize(int index, int count)
-    {
-        if (inventory[index] != null)
-        {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.inventory[index] != null) {
             ItemStack itemstack;
 
-            if (inventory[index].stackSize <= count)
-            {
-                itemstack = inventory[index];
-                setInventorySlotContents(index, null);
+            if (this.inventory[index].stackSize <= count) {
+                itemstack = this.inventory[index];
+                this.setInventorySlotContents(index, null);
                 return itemstack;
-            }
-            else
-            {
-                itemstack = inventory[index].splitStack(count);
+            } else {
+                itemstack = this.inventory[index].splitStack(count);
 
-                if (inventory[index].stackSize == 0)
-                {
-                    setInventorySlotContents(index, null);
+                if (this.inventory[index].stackSize == 0) {
+                    this.setInventorySlotContents(index, null);
                 }
 
                 return itemstack;
             }
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public ItemStack removeStackFromSlot(int index)
-    {
-        if (inventory[index] != null)
-        {
-            ItemStack itemstack = inventory[index];
-            setInventorySlotContents(index, null);
+    public ItemStack removeStackFromSlot(int index) {
+        if (this.inventory[index] != null) {
+            ItemStack itemstack = this.inventory[index];
+            this.setInventorySlotContents(index, null);
             return itemstack;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack)
-    {
-        inventory[index] = stack;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        this.inventory[index] = stack;
 
-        if (stack != null && stack.stackSize > getInventoryStackLimit())
-        {
-            stack.stackSize = getInventoryStackLimit();
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+            stack.stackSize = this.getInventoryStackLimit();
         }
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
     @Override
-    public void markDirty()
-    {
+    public void markDirty() {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
-        return !entity.isDead && player.getDistanceSqToEntity(entity) <= 64.0D;
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return !this.entity.isDead && player.getDistanceSqToEntity(this.entity) <= 64.0D;
     }
 
     @Override
-    public void openInventory(EntityPlayer player)
-    {
+    public void openInventory(EntityPlayer player) {
     }
 
     @Override
-    public void closeInventory(EntityPlayer player)
-    {
+    public void closeInventory(EntityPlayer player) {
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack)
-    {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         return true;
     }
 
     @Override
-    public int getField(int id)
-    {
+    public int getField(int id) {
         return 0;
     }
 
     @Override
-    public void setField(int id, int value)
-    {
+    public void setField(int id, int value) {
 
     }
 
     @Override
-    public int getFieldCount()
-    {
+    public int getFieldCount() {
         return 0;
     }
 
     @Override
-    public void clear()
-    {
-        for (int i = 0; i < getSizeInventory(); i++)
-        {
-            setInventorySlotContents(i, null);
+    public void clear() {
+        for (int i = 0; i < this.getSizeInventory(); i++) {
+            this.setInventorySlotContents(i, null);
         }
     }
 
     @Override
-    public String getName()
-    {
-        return entity.getName();
+    public String getName() {
+        return this.entity.getName();
     }
 
     @Override
-    public boolean hasCustomName()
-    {
-        return entity.hasCustomName();
+    public boolean hasCustomName() {
+        return this.entity.hasCustomName();
     }
 
     @Override
-    public ITextComponent getDisplayName()
-    {
-        return entity.getDisplayName();
+    public ITextComponent getDisplayName() {
+        return this.entity.getDisplayName();
     }
 
-    public void dropItems(World worldObj, Random rand)
-    {
-        for (int i = 0; i < getSizeInventory(); ++i)
-        {
-            ItemStack itemstack = getStackInSlot(i);
+    public void dropItems(World worldObj, Random rand) {
+        for (int i = 0; i < this.getSizeInventory(); ++i) {
+            ItemStack itemstack = this.getStackInSlot(i);
 
-            if (itemstack != null)
-            {
+            if (itemstack != null) {
                 float offsetX = rand.nextFloat() * 0.8F + 0.1F;
                 float offsetY = rand.nextFloat() * 0.8F + 0.1F;
                 float offsetZ = rand.nextFloat() * 0.8F + 0.1F;
 
-                while (itemstack.stackSize > 0)
-                {
+                while (itemstack.stackSize > 0) {
                     int j = rand.nextInt(21) + 10;
 
-                    if (j > itemstack.stackSize)
-                    {
+                    if (j > itemstack.stackSize) {
                         j = itemstack.stackSize;
                     }
 
                     itemstack.stackSize -= j;
-                    EntityItem itemEntity = new EntityItem(worldObj, entity.posX + offsetX, entity.posY + offsetY, entity.posZ + offsetZ, new ItemStack(itemstack.getItem(), j, itemstack.getItemDamage()));
+                    EntityItem itemEntity = new EntityItem(worldObj, this.entity.posX + offsetX, this.entity.posY + offsetY, this.entity.posZ + offsetZ, new ItemStack(itemstack.getItem(), j, itemstack.getItemDamage()));
                     float multiplier = 0.05F;
                     itemEntity.motionX = (float) rand.nextGaussian() * multiplier;
                     itemEntity.motionY = (float) rand.nextGaussian() * multiplier + 0.2F;

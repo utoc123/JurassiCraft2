@@ -82,46 +82,37 @@ import java.util.Locale;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public enum RenderingHandler
-{
+public enum RenderingHandler {
     INSTANCE;
 
     private final Minecraft mc = Minecraft.getMinecraft();
     private Map<Dinosaur, RenderDinosaurDefinition> renderDefs = Maps.newHashMap();
 
-    public void preInit()
-    {
-        for (Dinosaur dino : EntityHandler.getDinosaurs().values())
-        {
+    public void preInit() {
+        for (Dinosaur dino : EntityHandler.getDinosaurs().values()) {
             String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-            if (!(dino instanceof Hybrid))
-            {
-                for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet())
-                {
+            if (!(dino instanceof Hybrid)) {
+                for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet()) {
                     List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
-                    if (dinosaursForType.contains(dino))
-                    {
+                    if (dinosaursForType.contains(dino)) {
                         ModelBakery.registerItemVariants(entry.getValue(), new ResourceLocation("jurassicraft:bones/" + dinoName + "_" + entry.getKey()));
                     }
                 }
             }
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.FRESH_FOSSILS.entrySet())
-            {
+            for (Map.Entry<String, FossilItem> entry : ItemHandler.FRESH_FOSSILS.entrySet()) {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
-                if (dinosaursForType.contains(dino))
-                {
+                if (dinosaursForType.contains(dino)) {
                     ModelBakery.registerItemVariants(entry.getValue(), new ResourceLocation("jurassicraft:fresh_bones/" + dinoName + "_" + entry.getKey()));
                 }
             }
 
             ModelBakery.registerItemVariants(ItemHandler.DNA, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
 
-            if (!dino.isMammal())
-            {
+            if (!dino.isMammal()) {
                 ModelBakery.registerItemVariants(ItemHandler.EGG, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
                 ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
             }
@@ -133,19 +124,16 @@ public enum RenderingHandler
             ModelBakery.registerItemVariants(ItemHandler.ACTION_FIGURE, new ResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName));
         }
 
-        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
-        {
+        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values()) {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName()));
         }
 
-        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values())
-        {
+        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.NEST_FOSSIL), new ResourceLocation("jurassicraft:nest_fossil_" + (variant.ordinal() + 1)));
             ModelBakery.registerItemVariants(ItemHandler.FOSSILIZED_EGG, new ResourceLocation("jurassicraft:fossilized_egg_" + (variant.ordinal() + 1)));
         }
 
-        for (Plant plant : PlantHandler.getPrehistoricPlants())
-        {
+        for (Plant plant : PlantHandler.getPrehistoricPlants()) {
             String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             ModelBakery.registerItemVariants(ItemHandler.PLANT_DNA, new ResourceLocation("jurassicraft:dna/plants/dna_" + name));
@@ -157,20 +145,19 @@ public enum RenderingHandler
 //            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
 //        }
 
-        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
-        {
+        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values()) {
             ModelBakery.registerItemVariants(ItemHandler.ATTRACTION_SIGN, new ResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH)));
         }
 
         ModelBakery.registerItemVariants(ItemHandler.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
 
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F));
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F));
-        registerRenderDef(new RenderDinosaurDefinition(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F));
+        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F));
 
         RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());
@@ -182,14 +169,12 @@ public enum RenderingHandler
         RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, new MuralRenderer());
     }
 
-    public void init()
-    {
-        ItemModelMesher modelMesher = mc.getRenderItem().getItemModelMesher();
+    public void init() {
+        ItemModelMesher modelMesher = this.mc.getRenderItem().getItemModelMesher();
 
         int i = 0;
 
-        for (EncasedFossilBlock fossil : BlockHandler.ENCASED_FOSSILS)
-        {
+        for (EncasedFossilBlock fossil : BlockHandler.ENCASED_FOSSILS) {
             this.registerBlockRenderer(modelMesher, fossil, "encased_fossil_" + i, "inventory");
 
             i++;
@@ -197,8 +182,7 @@ public enum RenderingHandler
 
         i = 0;
 
-        for (FossilBlock fossil : BlockHandler.FOSSILS)
-        {
+        for (FossilBlock fossil : BlockHandler.FOSSILS) {
             this.registerBlockRenderer(modelMesher, fossil, "fossil_block_" + i, "inventory");
 
             i++;
@@ -207,8 +191,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.PLANT_FOSSIL, "plant_fossil_block", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.FOSSILIZED_TRACKWAY, "fossilized_trackway", "inventory");
 
-        for (TreeType type : TreeType.values())
-        {
+        for (TreeType type : TreeType.values()) {
             String name = type.name().toLowerCase(Locale.ENGLISH);
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_LEAVES.get(type), name + "_leaves", "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_SAPLINGS.get(type), name + "_sapling", "inventory");
@@ -220,8 +203,7 @@ public enum RenderingHandler
             this.registerBlockRenderer(modelMesher, BlockHandler.PETRIFIED_LOGS.get(type), name + "_log_petrified", "inventory");
         }
 
-        for (EnumDyeColor color : EnumDyeColor.values())
-        {
+        for (EnumDyeColor color : EnumDyeColor.values()) {
             this.registerBlockRenderer(modelMesher, BlockHandler.CULTIVATOR_BOTTOM, color.ordinal(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH), "inventory");
         }
 
@@ -275,13 +257,11 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.RAPHAELIA, "raphaelia", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.ENCEPHALARTOS, "encephalartos", "inventory");
 
-        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values())
-        {
+        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values()) {
             this.registerBlockRenderer(modelMesher, BlockHandler.FOSSILIZED_TRACKWAY, trackwayType.ordinal(), "fossilized_trackway_" + trackwayType.getName(), "inventory");
         }
 
-        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values())
-        {
+        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {
             this.registerBlockRenderer(modelMesher, BlockHandler.NEST_FOSSIL, variant.ordinal(), "nest_fossil_" + (variant.ordinal() + 1), "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.ENCASED_NEST_FOSSIL, variant.ordinal(), "encased_nest_fossil", "inventory");
         }
@@ -292,11 +272,10 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_LEAVES, "paleo_bale_leaves", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.PALEO_BALE_OTHER, "paleo_bale_other", "inventory");
 
-        BlockColors blockColors = mc.getBlockColors();
+        BlockColors blockColors = this.mc.getBlockColors();
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.MOSS);
 
-        for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.ANCIENT_LEAVES.entrySet())
-        {
+        for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.ANCIENT_LEAVES.entrySet()) {
             blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> {
                 AncientLeavesBlock block = (AncientLeavesBlock) state.getBlock();
                 return pos == null || block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
@@ -308,8 +287,7 @@ public enum RenderingHandler
         this.registerBlockRenderer(modelMesher, BlockHandler.AJUGINUCULA_SMITHII, "ajuginucula_smithii", "inventory");
     }
 
-    public void postInit()
-    {
+    public void postInit() {
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerTile.class, new DNASequencerSpecialRenderer());
@@ -320,7 +298,7 @@ public enum RenderingHandler
         ClientRegistry.bindTileEntitySpecialRenderer(IncubatorTile.class, new IncubatorSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(FeederTile.class, new FeederSpecialRenderer());
 
-        RenderItem renderItem = mc.getRenderItem();
+        RenderItem renderItem = this.mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();
 
         // Items
@@ -338,8 +316,7 @@ public enum RenderingHandler
         this.registerItemRenderer(modelMesher, ItemHandler.SPAWN_EGG, "dino_spawn_egg", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.PADDOCK_SIGN, "paddock_sign", "inventory");
 
-        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values())
-        {
+        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values()) {
             this.registerItemRenderer(modelMesher, ItemHandler.ATTRACTION_SIGN, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH), "inventory");
         }
 
@@ -400,28 +377,23 @@ public enum RenderingHandler
 
         this.registerItemRenderer(modelMesher, ItemHandler.MURAL, "mural", "inventory");
 
-        for (Dinosaur dinosaur : EntityHandler.getDinosaurs().values())
-        {
+        for (Dinosaur dinosaur : EntityHandler.getDinosaurs().values()) {
             int meta = EntityHandler.getDinosaurId(dinosaur);
 
             String formattedName = dinosaur.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet())
-            {
+            for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet()) {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
-                if (dinosaursForType.contains(dinosaur))
-                {
+                if (dinosaursForType.contains(dinosaur)) {
                     this.registerItemRenderer(modelMesher, entry.getValue(), meta, "bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
             }
 
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.FRESH_FOSSILS.entrySet())
-            {
+            for (Map.Entry<String, FossilItem> entry : ItemHandler.FRESH_FOSSILS.entrySet()) {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
 
-                if (dinosaursForType.contains(dinosaur))
-                {
+                if (dinosaursForType.contains(dinosaur)) {
                     this.registerItemRenderer(modelMesher, entry.getValue(), meta, "fresh_bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
             }
@@ -436,8 +408,7 @@ public enum RenderingHandler
             this.registerItemRenderer(modelMesher, ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName, "inventory");
         }
 
-        for (Plant plant : PlantHandler.getPrehistoricPlants())
-        {
+        for (Plant plant : PlantHandler.getPrehistoricPlants()) {
             int meta = PlantHandler.getPlantId(plant);
 
             String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
@@ -446,31 +417,25 @@ public enum RenderingHandler
             this.registerItemRenderer(modelMesher, ItemHandler.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name, "inventory");
         }
 
-        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values())
-        {
+        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {
             this.registerItemRenderer(modelMesher, ItemHandler.FOSSILIZED_EGG, variant.ordinal(), "fossilized_egg_" + (variant.ordinal() + 1), "inventory");
         }
 
-        ItemColors itemColors = mc.getItemColors();
+        ItemColors itemColors = this.mc.getItemColors();
         itemColors.registerItemColorHandler((stack, tintIndex) -> {
             DinosaurSpawnEggItem item = (DinosaurSpawnEggItem) stack.getItem();
             Dinosaur dino = item.getDinosaur(stack);
 
-            if (dino != null)
-            {
+            if (dino != null) {
                 int mode = item.getMode(stack);
 
-                if (mode == 0)
-                {
+                if (mode == 0) {
                     mode = JurassiCraft.timerTicks % 64 > 32 ? 1 : 2;
                 }
 
-                if (mode == 1)
-                {
+                if (mode == 1) {
                     return tintIndex == 0 ? dino.getEggPrimaryColorMale() : dino.getEggSecondaryColorMale();
-                }
-                else
-                {
+                } else {
                     return tintIndex == 0 ? dino.getEggPrimaryColorFemale() : dino.getEggSecondaryColorFemale();
                 }
             }
@@ -479,34 +444,28 @@ public enum RenderingHandler
         }, ItemHandler.SPAWN_EGG);
     }
 
-    public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, final String path, final String type)
-    {
+    public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, final String path, final String type) {
         itemModelMesher.register(item, stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, int meta, String path, String type)
-    {
+    public void registerItemRenderer(ItemModelMesher itemModelMesher, Item item, int meta, String path, String type) {
         itemModelMesher.register(item, meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, int meta, String path, String type)
-    {
+    public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, int meta, String path, String type) {
         itemModelMesher.register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, final String path, final String type)
-    {
+    public void registerBlockRenderer(ItemModelMesher itemModelMesher, Block block, final String path, final String type) {
         itemModelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    private void registerRenderDef(RenderDinosaurDefinition renderDef)
-    {
-        renderDefs.put(renderDef.getDinosaur(), renderDef);
+    private void registerRenderDef(RenderDinosaurDefinition renderDef) {
+        this.renderDefs.put(renderDef.getDinosaur(), renderDef);
         RenderingRegistry.registerEntityRenderingHandler(renderDef.getDinosaur().getDinosaurClass(), renderDef);
     }
 
-    public RenderDinosaurDefinition getRenderDef(Dinosaur dino)
-    {
-        return renderDefs.get(dino);
+    public RenderDinosaurDefinition getRenderDef(Dinosaur dino) {
+        return this.renderDefs.get(dino);
     }
 }

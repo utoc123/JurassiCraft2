@@ -15,44 +15,36 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 import org.lwjgl.opengl.GL11;
 
-public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryoCalcificationMachineTile>
-{
+public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryoCalcificationMachineTile> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private TabulaModel modelWithEgg;
     private ResourceLocation texture;
 
-    public EmbryoCalcificationMachineSpecialRenderer()
-    {
-        try
-        {
+    public EmbryoCalcificationMachineSpecialRenderer() {
+        try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine"));
             this.modelWithEgg = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine_egg"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryo_calcification_machine.png");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(EmbryoCalcificationMachineTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(EmbryoCalcificationMachineTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.EMBRYO_CALCIFICATION_MACHINE)
-        {
+        if (state.getBlock() == BlockHandler.EMBRYO_CALCIFICATION_MACHINE) {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
 
             EnumFacing value = state.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
-            {
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH) {
                 value = value.getOpposite();
             }
 
@@ -68,9 +60,9 @@ public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecial
             double scale = 1.0;
             GlStateManager.scale(scale, -scale, scale);
 
-            mc.getTextureManager().bindTexture(texture);
+            this.mc.getTextureManager().bindTexture(this.texture);
 
-            ((tileEntity.getStackInSlot(1) != null || tileEntity.getStackInSlot(2) != null) ? modelWithEgg : model).render(null, 0, 0, 0, 0, 0, 0.0625F);
+            ((tileEntity.getStackInSlot(1) != null || tileEntity.getStackInSlot(2) != null) ? this.modelWithEgg : this.model).render(null, 0, 0, 0, 0, 0, 0.0625F);
 
             GlStateManager.popMatrix();
 

@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public abstract class Dinosaur implements Comparable<Dinosaur>
-{
+public abstract class Dinosaur implements Comparable<Dinosaur> {
     private final Map<GrowthStage, List<ResourceLocation>> overlays = new HashMap<>();
     private final Map<GrowthStage, ResourceLocation> maleTextures = new HashMap<>();
     private final Map<GrowthStage, ResourceLocation> femaleTextures = new HashMap<>();
@@ -75,18 +74,13 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     private double attackBias = 200.0;
     private int maxHerdSize = 32;
 
-    public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot)
-    {
+    public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
 
-        do
-        {
-            if (ignoreSelf)
-            {
+        do {
+            if (ignoreSelf) {
                 ignoreSelf = false;
-            }
-            else
-            {
+            } else {
                 parentCubes.add(cube);
             }
         }
@@ -99,8 +93,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         transform.rotY(rot / 180 * Math.PI);
         mat.mul(transform);
 
-        for (int i = parentCubes.size() - 1; i >= 0; i--)
-        {
+        for (int i = parentCubes.size() - 1; i >= 0; i--) {
             cube = parentCubes.get(i);
             transform.setIdentity();
             transform.setTranslation(new Vector3d(cube.getPosition()));
@@ -121,22 +114,18 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return mat;
     }
 
-    private static double[][] getTransformation(Matrix4d matrix)
-    {
+    private static double[][] getTransformation(Matrix4d matrix) {
         double sinRotationAngleY, cosRotationAngleY, sinRotationAngleX, cosRotationAngleX, sinRotationAngleZ, cosRotationAngleZ;
 
         sinRotationAngleY = -matrix.m20;
         cosRotationAngleY = Math.sqrt(1 - sinRotationAngleY * sinRotationAngleY);
 
-        if (Math.abs(cosRotationAngleY) > 0.0001)
-        {
+        if (Math.abs(cosRotationAngleY) > 0.0001) {
             sinRotationAngleX = matrix.m21 / cosRotationAngleY;
             cosRotationAngleX = matrix.m22 / cosRotationAngleY;
             sinRotationAngleZ = matrix.m10 / cosRotationAngleY;
             cosRotationAngleZ = matrix.m00 / cosRotationAngleY;
-        }
-        else
-        {
+        } else {
             sinRotationAngleX = -matrix.m12;
             cosRotationAngleX = matrix.m11;
             sinRotationAngleZ = 0;
@@ -149,27 +138,20 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return new double[][] { { epsilon(matrix.m03), epsilon(matrix.m13), epsilon(matrix.m23) }, { rotationAngleX, rotationAngleY, rotationAngleZ } };
     }
 
-    private static double epsilon(double x)
-    {
+    private static double epsilon(double x) {
         return x < 0 ? x > -0.0001 ? 0 : x : x < 0.0001 ? 0 : x;
     }
 
-    public void init()
-    {
-        String formattedName = getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public void init() {
+        String formattedName = this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-        this.modelAdult = parseModel("adult");
+        this.modelAdult = this.parseModel("adult");
 
-        for (GrowthStage stage : GrowthStage.values())
-        {
-            if (stage != GrowthStage.ADULT)
-            {
-                if (this.doesSupportGrowthStage(stage))
-                {
-                    this.setModelContainer(stage, parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
-                }
-                else
-                {
+        for (GrowthStage stage : GrowthStage.values()) {
+            if (stage != GrowthStage.ADULT) {
+                if (this.doesSupportGrowthStage(stage)) {
+                    this.setModelContainer(stage, this.parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
+                } else {
                     this.setModelContainer(stage, this.modelAdult);
                 }
             }
@@ -177,287 +159,234 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
 
         String baseTextures = "textures/entities/" + formattedName + "/";
 
-        for (GrowthStage growthStage : GrowthStage.values())
-        {
+        for (GrowthStage growthStage : GrowthStage.values()) {
             String growthStageName = growthStage.name().toLowerCase(Locale.ENGLISH);
 
-            if (!this.doesSupportGrowthStage(growthStage))
-            {
+            if (!this.doesSupportGrowthStage(growthStage)) {
                 growthStageName = GrowthStage.ADULT.name().toLowerCase(Locale.ENGLISH);
             }
 
-            if (this instanceof Hybrid)
-            {
+            if (this instanceof Hybrid) {
                 String baseName = baseTextures + formattedName + "_" + growthStageName;
 
                 ResourceLocation hybridTexture = new ResourceLocation(JurassiCraft.MODID, baseName + ".png");
 
-                maleTextures.put(growthStage, hybridTexture);
-                femaleTextures.put(growthStage, hybridTexture);
+                this.maleTextures.put(growthStage, hybridTexture);
+                this.femaleTextures.put(growthStage, hybridTexture);
 
                 ResourceLocation eyelidTexture = new ResourceLocation(JurassiCraft.MODID, baseName + "_eyelid.png");
-                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), eyelidTexture);
-                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), eyelidTexture);
-            }
-            else
-            {
-                maleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + ".png"));
-                femaleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + ".png"));
-                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + "_eyelid.png"));
-                eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + "_eyelid.png"));
+                this.eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), eyelidTexture);
+                this.eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), eyelidTexture);
+            } else {
+                this.maleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + ".png"));
+                this.femaleTextures.put(growthStage, new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + ".png"));
+                this.eyelidTextures.put(new GrowthStageGenderContainer(growthStage, true), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_male_" + growthStageName + "_eyelid.png"));
+                this.eyelidTextures.put(new GrowthStageGenderContainer(growthStage, false), new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_female_" + growthStageName + "_eyelid.png"));
             }
 
             List<ResourceLocation> overlaysForGrowthStage = new ArrayList<>();
 
-            for (int i = 1; i <= getOverlayCount(); i++)
-            {
+            for (int i = 1; i <= this.getOverlayCount(); i++) {
                 overlaysForGrowthStage.add(new ResourceLocation(JurassiCraft.MODID, baseTextures + formattedName + "_overlay_" + growthStageName + "_" + i + ".png"));
             }
 
-            overlays.put(growthStage, overlaysForGrowthStage);
+            this.overlays.put(growthStage, overlaysForGrowthStage);
         }
 
         this.poseHandler = new PoseHandler(this);
     }
 
-    protected TabulaModelContainer parseModel(String growthStage)
-    {
-        String formattedName = getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    protected TabulaModelContainer parseModel(String growthStage) {
+        String formattedName = this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         String modelPath = "/assets/jurassicraft/models/entities/" + formattedName + "/" + growthStage + "/" + formattedName + "_" + growthStage + "_idle";
 
-        try
-        {
+        try {
             return TabulaModelHelper.loadTabulaModel(modelPath);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             JurassiCraft.INSTANCE.getLogger().fatal("Couldn't load model " + modelPath, e);
         }
 
         return null;
     }
 
-    public void setEggColorMale(int primary, int secondary)
-    {
+    public void setEggColorMale(int primary, int secondary) {
         this.primaryEggColorMale = primary;
         this.secondaryEggColorMale = secondary;
     }
 
-    public void setEggColorFemale(int primary, int secondary)
-    {
+    public void setEggColorFemale(int primary, int secondary) {
         this.primaryEggColorFemale = primary;
         this.secondaryEggColorFemale = secondary;
     }
 
-    public void setTimePeriod(TimePeriod timePeriod)
-    {
+    public void setTimePeriod(TimePeriod timePeriod) {
         this.timePeriod = timePeriod;
     }
 
-    public void setHealth(double baby, double adult)
-    {
+    public void setHealth(double baby, double adult) {
         this.babyHealth = baby;
         this.adultHealth = adult;
     }
 
-    public void setStrength(double baby, double adult)
-    {
+    public void setStrength(double baby, double adult) {
         this.babyStrength = baby;
         this.adultStrength = adult;
     }
 
-    public void setSpeed(double baby, double adult)
-    {
+    public void setSpeed(double baby, double adult) {
         this.babySpeed = baby;
         this.adultSpeed = adult;
     }
 
-    public void setSizeX(float baby, float adult)
-    {
+    public void setSizeX(float baby, float adult) {
         this.babySizeX = baby;
         this.adultSizeX = adult;
     }
 
-    public void setSizeY(float baby, float adult)
-    {
+    public void setSizeY(float baby, float adult) {
         this.babySizeY = baby;
         this.adultSizeY = adult;
     }
 
-    public void setEyeHeight(float baby, float adult)
-    {
+    public void setEyeHeight(float baby, float adult) {
         this.babyEyeHeight = baby;
         this.adultEyeHeight = adult;
     }
 
-    public void setFlockSpeed(float speed)
-    {
+    public void setFlockSpeed(float speed) {
         this.flockSpeed = speed;
     }
 
-    public void setAttackBias(double bias)
-    {
+    public void setAttackBias(double bias) {
         this.attackBias = bias;
     }
 
-    public void setMaxHerdSize(int herdSize)
-    {
+    public void setMaxHerdSize(int herdSize) {
         this.maxHerdSize = herdSize;
     }
 
-    public void disableRegistry()
-    {
+    public void disableRegistry() {
         this.shouldRegister = false;
     }
 
-    public String getName()
-    {
-        return name;
+    public String getName() {
+        return this.name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Class<? extends DinosaurEntity> getDinosaurClass()
-    {
-        return dinoClazz;
+    public Class<? extends DinosaurEntity> getDinosaurClass() {
+        return this.dinoClazz;
     }
 
-    public void setDinosaurClass(Class<? extends DinosaurEntity> clazz)
-    {
+    public void setDinosaurClass(Class<? extends DinosaurEntity> clazz) {
         this.dinoClazz = clazz;
     }
 
-    public int getEggPrimaryColorMale()
-    {
-        return primaryEggColorMale;
+    public int getEggPrimaryColorMale() {
+        return this.primaryEggColorMale;
     }
 
-    public int getEggSecondaryColorMale()
-    {
-        return secondaryEggColorMale;
+    public int getEggSecondaryColorMale() {
+        return this.secondaryEggColorMale;
     }
 
-    public int getEggPrimaryColorFemale()
-    {
-        return primaryEggColorFemale;
+    public int getEggPrimaryColorFemale() {
+        return this.primaryEggColorFemale;
     }
 
-    public int getEggSecondaryColorFemale()
-    {
-        return secondaryEggColorFemale;
+    public int getEggSecondaryColorFemale() {
+        return this.secondaryEggColorFemale;
     }
 
-    public TimePeriod getPeriod()
-    {
-        return timePeriod;
+    public TimePeriod getPeriod() {
+        return this.timePeriod;
     }
 
-    public double getBabyHealth()
-    {
-        return babyHealth;
+    public double getBabyHealth() {
+        return this.babyHealth;
     }
 
-    public double getAdultHealth()
-    {
-        return adultHealth;
+    public double getAdultHealth() {
+        return this.adultHealth;
     }
 
-    public double getBabySpeed()
-    {
-        return babySpeed;
+    public double getBabySpeed() {
+        return this.babySpeed;
     }
 
-    public double getAdultSpeed()
-    {
-        return adultSpeed;
+    public double getAdultSpeed() {
+        return this.adultSpeed;
     }
 
-    public double getBabyStrength()
-    {
-        return babyStrength;
+    public double getBabyStrength() {
+        return this.babyStrength;
     }
 
-    public double getAdultStrength()
-    {
-        return adultStrength;
+    public double getAdultStrength() {
+        return this.adultStrength;
     }
 
-    public float getBabySizeX()
-    {
-        return babySizeX;
+    public float getBabySizeX() {
+        return this.babySizeX;
     }
 
-    public float getBabySizeY()
-    {
-        return babySizeY;
+    public float getBabySizeY() {
+        return this.babySizeY;
     }
 
-    public float getAdultSizeX()
-    {
-        return adultSizeX;
+    public float getAdultSizeX() {
+        return this.adultSizeX;
     }
 
-    public float getAdultSizeY()
-    {
-        return adultSizeY;
+    public float getAdultSizeY() {
+        return this.adultSizeY;
     }
 
-    public float getBabyEyeHeight()
-    {
-        return babyEyeHeight;
+    public float getBabyEyeHeight() {
+        return this.babyEyeHeight;
     }
 
-    public float getAdultEyeHeight()
-    {
-        return adultEyeHeight;
+    public float getAdultEyeHeight() {
+        return this.adultEyeHeight;
     }
 
-    public int getMaximumAge()
-    {
-        return maximumAge;
+    public int getMaximumAge() {
+        return this.maximumAge;
     }
 
-    public void setMaximumAge(int age)
-    {
+    public void setMaximumAge(int age) {
         this.maximumAge = age;
     }
 
-    public ResourceLocation getMaleTexture(GrowthStage stage)
-    {
-        return maleTextures.get(stage);
+    public ResourceLocation getMaleTexture(GrowthStage stage) {
+        return this.maleTextures.get(stage);
     }
 
-    public ResourceLocation getFemaleTexture(GrowthStage stage)
-    {
-        return femaleTextures.get(stage);
+    public ResourceLocation getFemaleTexture(GrowthStage stage) {
+        return this.femaleTextures.get(stage);
     }
 
-    public double getAttackSpeed()
-    {
-        return attackSpeed;
+    public double getAttackSpeed() {
+        return this.attackSpeed;
     }
 
-    public void setAttackSpeed(double attackSpeed)
-    {
+    public void setAttackSpeed(double attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
 
-    public boolean shouldRegister()
-    {
-        return shouldRegister;
+    public boolean shouldRegister() {
+        return this.shouldRegister;
     }
 
-    protected String getDinosaurTexture(String subtype)
-    {
-        String dinosaurName = getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    protected String getDinosaurTexture(String subtype) {
+        String dinosaurName = this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         String texture = "jurassicraft:textures/entities/" + dinosaurName + "/" + dinosaurName;
 
-        if (subtype.length() > 0)
-        {
+        if (subtype.length() > 0) {
             texture += "_" + subtype;
         }
 
@@ -465,54 +394,44 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
     }
 
     @Override
-    public int hashCode()
-    {
-        return getName().hashCode();
+    public int hashCode() {
+        return this.getName().hashCode();
     }
 
-    protected int fromDays(int days)
-    {
+    protected int fromDays(int days) {
         return (days * 24000) / 8;
     }
 
     @Override
-    public int compareTo(Dinosaur dinosaur)
-    {
+    public int compareTo(Dinosaur dinosaur) {
         return this.getName().compareTo(dinosaur.getName());
     }
 
-    public boolean isMarineAnimal()
-    {
-        return isMarineAnimal;
+    public boolean isMarineAnimal() {
+        return this.isMarineAnimal;
     }
 
-    public void setMarineAnimal(boolean marineAnimal)
-    {
+    public void setMarineAnimal(boolean marineAnimal) {
         this.isMarineAnimal = marineAnimal;
     }
 
-    public boolean isMammal()
-    {
-        return isMammal;
+    public boolean isMammal() {
+        return this.isMammal;
     }
 
-    public void setMammal(boolean isMammal)
-    {
+    public void setMammal(boolean isMammal) {
         this.isMammal = isMammal;
     }
 
-    public int getLipids()
-    {
+    public int getLipids() {
         return 1500;
     }
 
-    public int getMinerals()
-    {
+    public int getMinerals() {
         return 1500;
     }
 
-    public int getVitamins()
-    {
+    public int getVitamins() {
         return 1500;
     }
 
@@ -521,236 +440,193 @@ public abstract class Dinosaur implements Comparable<Dinosaur>
         return 1500;
     }
 
-    public int getStorage()
-    {
-        return storage;
+    public int getStorage() {
+        return this.storage;
     }
 
-    public void setStorage(int storage)
-    {
+    public void setStorage(int storage) {
         this.storage = storage;
     }
 
-    public ResourceLocation getOverlayTexture(GrowthStage stage, int overlay)
-    {
-        return overlays.containsKey(stage) ? overlays.get(stage).get(overlay) : null;
+    public ResourceLocation getOverlayTexture(GrowthStage stage, int overlay) {
+        return this.overlays.containsKey(stage) ? this.overlays.get(stage).get(overlay) : null;
     }
 
-    public int getOverlayCount()
-    {
-        return overlayCount;
+    public int getOverlayCount() {
+        return this.overlayCount;
     }
 
-    public void setOverlayCount(int count)
-    {
+    public void setOverlayCount(int count) {
         this.overlayCount = count;
     }
 
-    public ResourceLocation getEyelidTexture(DinosaurEntity entity)
-    {
-        return eyelidTextures.get(new GrowthStageGenderContainer(entity.getGrowthStage(), entity.isMale()));
+    public ResourceLocation getEyelidTexture(DinosaurEntity entity) {
+        return this.eyelidTextures.get(new GrowthStageGenderContainer(entity.getGrowthStage(), entity.isMale()));
     }
 
-    public Diet getDiet()
-    {
-        return diet;
+    public Diet getDiet() {
+        return this.diet;
     }
 
-    public void setDiet(Diet diet)
-    {
+    public void setDiet(Diet diet) {
         this.diet = diet;
     }
 
-    public SleepingSchedule getSleepingSchedule()
-    {
-        return sleepingSchedule;
+    public SleepingSchedule getSleepingSchedule() {
+        return this.sleepingSchedule;
     }
 
-    public void setSleepingSchedule(SleepingSchedule sleepingSchedule)
-    {
+    public void setSleepingSchedule(SleepingSchedule sleepingSchedule) {
         this.sleepingSchedule = sleepingSchedule;
     }
 
-    public String[] getBones()
-    {
-        return bones;
+    public String[] getBones() {
+        return this.bones;
     }
 
-    public void setBones(String... bones)
-    {
+    public void setBones(String... bones) {
         this.bones = bones;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
-        return object instanceof Dinosaur && ((Dinosaur) object).getName().equalsIgnoreCase(getName());
-
+    public boolean equals(Object object) {
+        return object instanceof Dinosaur && ((Dinosaur) object).getName().equalsIgnoreCase(this.getName());
     }
 
-    public String getHeadCubeName()
-    {
-        return headCubeName;
+    public String getHeadCubeName() {
+        return this.headCubeName;
     }
 
-    public void setHeadCubeName(String headCubeName)
-    {
+    public void setHeadCubeName(String headCubeName) {
         this.headCubeName = headCubeName;
     }
 
-    public double[] getCubePosition(String cubeName, GrowthStage stage)
-    {
-        TabulaModelContainer model = getModelContainer(stage);
+    public double[] getCubePosition(String cubeName, GrowthStage stage) {
+        TabulaModelContainer model = this.getModelContainer(stage);
 
         TabulaCubeContainer cube = TabulaModelHelper.getCubeByName(cubeName, model);
 
-        if (cube != null)
-        {
+        if (cube != null) {
             return cube.getPosition();
         }
 
         return new double[] { 0.0, 0.0, 0.0 };
     }
 
-    public double[] getParentedCubePosition(String cubeName, GrowthStage stage, float rot)
-    {
-        TabulaModelContainer model = getModelContainer(stage);
+    public double[] getParentedCubePosition(String cubeName, GrowthStage stage, float rot) {
+        TabulaModelContainer model = this.getModelContainer(stage);
 
         TabulaCubeContainer cube = TabulaModelHelper.getCubeByName(cubeName, model);
 
-        if (cube != null)
-        {
+        if (cube != null) {
             return getTransformation(getParentRotationMatrix(model, cube, true, false, rot))[0];
         }
 
         return new double[] { 0.0, 0.0, 0.0 };
     }
 
-    public double[] getHeadPosition(GrowthStage stage, float rot)
-    {
-        return getParentedCubePosition(getHeadCubeName(), stage, rot);
+    public double[] getHeadPosition(GrowthStage stage, float rot) {
+        return this.getParentedCubePosition(this.getHeadCubeName(), stage, rot);
     }
 
-    public TabulaModelContainer getModelContainer(GrowthStage stage)
-    {
-        switch (stage)
-        {
+    public TabulaModelContainer getModelContainer(GrowthStage stage) {
+        switch (stage) {
             case INFANT:
-                return modelInfant;
+                return this.modelInfant;
             case JUVENILE:
-                return modelJuvenile;
+                return this.modelJuvenile;
             case ADOLESCENT:
-                return modelAdolescent;
+                return this.modelAdolescent;
             default:
-                return modelAdult;
+                return this.modelAdult;
         }
     }
 
-    private void setModelContainer(GrowthStage stage, TabulaModelContainer model)
-    {
-        switch (stage)
-        {
+    private void setModelContainer(GrowthStage stage, TabulaModelContainer model) {
+        switch (stage) {
             case INFANT:
-                modelInfant = model;
+                this.modelInfant = model;
             case JUVENILE:
-                modelJuvenile = model;
+                this.modelJuvenile = model;
             case ADOLESCENT:
-                modelAdolescent = model;
+                this.modelAdolescent = model;
             default:
-                modelAdult = model;
+                this.modelAdult = model;
         }
     }
 
-    public void setScale(float scaleAdult, float scaleInfant)
-    {
+    public void setScale(float scaleAdult, float scaleInfant) {
         this.scaleInfant = scaleInfant;
         this.scaleAdult = scaleAdult;
     }
 
-    public void setOffset(float x, float y, float z)
-    {
+    public void setOffset(float x, float y, float z) {
         this.offsetX = x;
         this.offsetY = y;
         this.offsetZ = z;
     }
 
-    public void setDefendOwner(boolean defendOwner)
-    {
+    public void setDefendOwner(boolean defendOwner) {
         this.defendOwner = defendOwner;
     }
 
-    public void setFlee(boolean flee)
-    {
+    public void setFlee(boolean flee) {
         this.flee = flee;
     }
 
-    public double getScaleInfant()
-    {
-        return scaleInfant;
+    public double getScaleInfant() {
+        return this.scaleInfant;
     }
 
-    public double getScaleAdult()
-    {
-        return scaleAdult;
+    public double getScaleAdult() {
+        return this.scaleAdult;
     }
 
-    public float getOffsetX()
-    {
-        return offsetX;
+    public float getOffsetX() {
+        return this.offsetX;
     }
 
-    public float getOffsetY()
-    {
-        return offsetY;
+    public float getOffsetY() {
+        return this.offsetY;
     }
 
-    public float getOffsetZ()
-    {
-        return offsetZ;
+    public float getOffsetZ() {
+        return this.offsetZ;
     }
 
-    public PoseHandler getPoseHandler()
-    {
-        return poseHandler;
+    public PoseHandler getPoseHandler() {
+        return this.poseHandler;
     }
 
-    public boolean doesSupportGrowthStage(GrowthStage stage)
-    {
+    public boolean doesSupportGrowthStage(GrowthStage stage) {
         return stage == GrowthStage.ADULT;
     }
 
-    public boolean isImprintable()
-    {
-        return isImprintable;
+    public boolean isImprintable() {
+        return this.isImprintable;
     }
 
-    public void setImprintable(boolean imprintable)
-    {
+    public void setImprintable(boolean imprintable) {
         this.isImprintable = imprintable;
     }
 
-    public boolean shouldDefendOwner()
-    {
-        return defendOwner;
+    public boolean shouldDefendOwner() {
+        return this.defendOwner;
     }
 
-    public boolean shouldFlee()
-    {
-        return flee;
+    public boolean shouldFlee() {
+        return this.flee;
     }
 
-    public double getFlockSpeed()
-    {
-        return flockSpeed;
+    public double getFlockSpeed() {
+        return this.flockSpeed;
     }
 
-    public double getAttackBias()
-    {
-        return attackBias;
+    public double getAttackBias() {
+        return this.attackBias;
     }
 
-    public int getMaxHerdSize()
-    {
-        return maxHerdSize;
+    public int getMaxHerdSize() {
+        return this.maxHerdSize;
     }
 }

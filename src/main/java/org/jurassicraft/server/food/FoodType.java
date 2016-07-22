@@ -1,7 +1,6 @@
 package org.jurassicraft.server.food;
 
-public enum FoodType
-{
+public enum FoodType {
     MEAT,
     PLANT,
     FISH

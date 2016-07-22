@@ -22,26 +22,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class MuralRenderer implements IRenderFactory<MuralEntity>
-{
+public class MuralRenderer implements IRenderFactory<MuralEntity> {
     @Override
-    public Render<? super MuralEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super MuralEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<MuralEntity>
-    {
+    public static class Renderer extends Render<MuralEntity> {
         private static Map<MuralEntity.Type, Integer> DISPLAY_LIST = new HashMap<>();
 
-        public Renderer(RenderManager manager)
-        {
+        public Renderer(RenderManager manager) {
             super(manager);
         }
 
         @Override
-        public void doRender(MuralEntity entity, double x, double y, double z, float yaw, float partialTicks)
-        {
+        public void doRender(MuralEntity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
@@ -56,12 +51,9 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
 
             Integer displayList = DISPLAY_LIST.get(type);
 
-            if (displayList != null)
-            {
+            if (displayList != null) {
                 GlStateManager.callList(displayList);
-            }
-            else
-            {
+            } else {
                 displayList = GLAllocation.generateDisplayLists(1);
                 GlStateManager.glNewList(displayList, GL11.GL_COMPILE);
                 this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), type.sizeX, type.sizeY);
@@ -76,13 +68,11 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(MuralEntity entity)
-        {
+        protected ResourceLocation getEntityTexture(MuralEntity entity) {
             return entity.type.texture;
         }
 
-        private void renderLayer(MuralEntity entity, int width, int height, int textureWidth, int textureHeight)
-        {
+        private void renderLayer(MuralEntity entity, int width, int height, int textureWidth, int textureHeight) {
             float centerWidth = (float) -textureWidth / 2.0F;
             float centerHeight = (float) -textureHeight / 2.0F;
             float pixelSize = 0.0625F;
@@ -91,10 +81,8 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
 
             GlStateManager.disableCull();
 
-            for (int x = 0; x < textureWidth * pixelSize; x++)
-            {
-                for (int y = 0; y < textureHeight * pixelSize; y++)
-                {
+            for (int x = 0; x < textureWidth * pixelSize; x++) {
+                for (int y = 0; y < textureHeight * pixelSize; y++) {
                     float maxX = centerWidth + (x + 1) / pixelSize;
                     float minX = centerWidth + x / pixelSize;
                     float maxY = -textureHeight + (y + 1) / pixelSize;
@@ -118,8 +106,7 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
                     buffer.pos(maxX, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                     tessellator.draw();
 
-                    for (float i = minX; i < maxX; i++)
-                    {
+                    for (float i = minX; i < maxX; i++) {
                         maxTextureX = (centerWidth - i) / textureWidth;
                         minTextureX = (centerWidth - (i + pixelSize)) / textureWidth;
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -139,8 +126,7 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
                     maxTextureX = (textureWidth - x / pixelSize) / textureWidth;
                     minTextureX = (textureWidth - (x + 1) / pixelSize) / textureWidth;
 
-                    for (float i = minY; i < maxY; i++)
-                    {
+                    for (float i = minY; i < maxY; i++) {
                         maxTextureY = (centerHeight - (i)) / (textureHeight);
                         minTextureY = (centerHeight - (i + pixelSize)) / (textureHeight);
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -162,28 +148,20 @@ public class MuralRenderer implements IRenderFactory<MuralEntity>
             GlStateManager.enableCull();
         }
 
-        private void setLightmap(MuralEntity sign, float xzOffset, float yOffset)
-        {
+        private void setLightmap(MuralEntity sign, float xzOffset, float yOffset) {
             int posX = MathHelper.floor_double(sign.posX);
             int posY = MathHelper.floor_double(sign.posY + (yOffset / 16.0F));
             int posZ = MathHelper.floor_double(sign.posZ);
 
             EnumFacing direction = sign.facingDirection;
 
-            if (direction == EnumFacing.NORTH)
-            {
+            if (direction == EnumFacing.NORTH) {
                 posX = MathHelper.floor_double(sign.posX + (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.WEST)
-            {
+            } else if (direction == EnumFacing.WEST) {
                 posZ = MathHelper.floor_double(sign.posZ - (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.SOUTH)
-            {
+            } else if (direction == EnumFacing.SOUTH) {
                 posX = MathHelper.floor_double(sign.posX - (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.EAST)
-            {
+            } else if (direction == EnumFacing.EAST) {
                 posZ = MathHelper.floor_double(sign.posZ + (xzOffset / 16.0F));
             }
 

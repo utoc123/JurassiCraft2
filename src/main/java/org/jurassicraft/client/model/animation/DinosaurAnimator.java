@@ -13,25 +13,21 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 @SideOnly(Side.CLIENT)
-public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements ITabulaModelAnimator<ENTITY>
-{
+public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements ITabulaModelAnimator<ENTITY> {
     protected EnumMap<GrowthStage, Map<DinosaurEntity, JabelarAnimationHandler>> animationHandlers = new EnumMap<>(GrowthStage.class);
 
-    private JabelarAnimationHandler getAnimationHelper(DinosaurEntity entity, DinosaurModel model, boolean useInertialTweens)
-    {
+    private JabelarAnimationHandler getAnimationHelper(DinosaurEntity entity, DinosaurModel model, boolean useInertialTweens) {
         GrowthStage growth = entity.getGrowthStage();
-        Map<DinosaurEntity, JabelarAnimationHandler> growthToRender = animationHandlers.get(growth);
+        Map<DinosaurEntity, JabelarAnimationHandler> growthToRender = this.animationHandlers.get(growth);
 
-        if (growthToRender == null)
-        {
+        if (growthToRender == null) {
             growthToRender = new WeakHashMap<>();
-            animationHandlers.put(growth, growthToRender);
+            this.animationHandlers.put(growth, growthToRender);
         }
 
         JabelarAnimationHandler render = growthToRender.get(entity);
 
-        if (render == null)
-        {
+        if (render == null) {
             render = entity.getDinosaur().getPoseHandler().createAnimationHandler(entity, model, growth, useInertialTweens);
             growthToRender.put(entity, render);
         }
@@ -40,14 +36,12 @@ public abstract class DinosaurAnimator<ENTITY extends DinosaurEntity> implements
     }
 
     @Override
-    public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
-        getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+    public final void setRotationAngles(TabulaModel model, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
+        this.getAnimationHelper(entity, (DinosaurModel) model, entity.getUseInertialTweens()).performAnimations(entity, limbSwing, limbSwingAmount, ticks);
 
-        performAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
+        this.performAnimations((DinosaurModel) model, entity, limbSwing, limbSwingAmount, ticks, rotationYaw, rotationPitch, scale);
     }
 
-    protected void performAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
+    protected void performAnimations(DinosaurModel parModel, ENTITY entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
     }
 }

@@ -12,21 +12,17 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
 
-public class JurassiCraftDNATab extends CreativeTabs
-{
+public class JurassiCraftDNATab extends CreativeTabs {
     private ItemStack[] stacks = null;
 
-    public JurassiCraftDNATab(String label)
-    {
+    public JurassiCraftDNATab(String label) {
         super(label);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack()
-    {
-        if (stacks == null)
-        {
+    public ItemStack getIconItemStack() {
+        if (this.stacks == null) {
             List<Dinosaur> registeredDinosaurs = EntityHandler.getRegisteredDinosaurs();
 
             int dinosaurs = registeredDinosaurs.size();
@@ -34,24 +30,22 @@ public class JurassiCraftDNATab extends CreativeTabs
 
             int i = 0;
 
-            for (Dinosaur dino : registeredDinosaurs)
-            {
+            for (Dinosaur dino : registeredDinosaurs) {
                 int id = EntityHandler.getDinosaurId(dino);
 
-                stacks[i] = new ItemStack(ItemHandler.DNA, 1, id);
-                stacks[i + dinosaurs] = new ItemStack(ItemHandler.SOFT_TISSUE, 1, id);
-                stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.SYRINGE, 1, id);
+                this.stacks[i] = new ItemStack(ItemHandler.DNA, 1, id);
+                this.stacks[i + dinosaurs] = new ItemStack(ItemHandler.SOFT_TISSUE, 1, id);
+                this.stacks[i + (dinosaurs * 2)] = new ItemStack(ItemHandler.SYRINGE, 1, id);
 
                 i++;
             }
         }
 
-        return stacks[(int) ((JurassiCraft.timerTicks / 20) % stacks.length)];
+        return this.stacks[(int) ((JurassiCraft.timerTicks / 20) % this.stacks.length)];
     }
 
     @Override
-    public Item getTabIconItem()
-    {
+    public Item getTabIconItem() {
         return ItemHandler.DNA;
     }
 }

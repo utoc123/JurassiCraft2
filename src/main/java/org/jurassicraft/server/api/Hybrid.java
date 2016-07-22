@@ -1,6 +1,5 @@
 package org.jurassicraft.server.api;
 
-public interface Hybrid
-{
+public interface Hybrid {
     Class[] getDinosaurs();
 }

@@ -9,15 +9,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.VenomEntity;
 
 @SideOnly(Side.CLIENT)
-public class VenomParticle extends Particle
-{
+public class VenomParticle extends Particle {
     private VenomEntity entity;
     private double offsetX;
     private double offsetY;
     private double offsetZ;
 
-    public VenomParticle(World world, double x, double y, double z, double motionX, double motionY, double motionZ, float scale, VenomEntity entity)
-    {
+    public VenomParticle(World world, double x, double y, double z, double motionX, double motionY, double motionZ, float scale, VenomEntity entity) {
         super(world, entity.posX + x, entity.posY + y, entity.posZ + z, 0.0D, 0.0D, 0.0D);
         this.entity = entity;
         this.offsetX = x;
@@ -34,24 +32,21 @@ public class VenomParticle extends Particle
     }
 
     @Override
-    public void renderParticle(VertexBuffer buffer, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
-    {
+    public void renderParticle(VertexBuffer buffer, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         super.renderParticle(buffer, entity, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
-        this.posX = entity.posX + offsetX;
-        this.posY = entity.posY + offsetY;
-        this.posZ = entity.posZ + offsetZ;
+        this.posX = this.entity.posX + this.offsetX;
+        this.posY = this.entity.posY + this.offsetY;
+        this.posZ = this.entity.posZ + this.offsetZ;
 
-        if (entity.isDead)
-        {
+        if (this.entity.isDead) {
             this.setExpired();
         }
 

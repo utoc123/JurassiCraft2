@@ -22,10 +22,8 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.DNAExtractorTile;
 
-public class DNAExtractorBlock extends OrientedBlock
-{
-    public DNAExtractorBlock()
-    {
+public class DNAExtractorBlock extends OrientedBlock {
+    public DNAExtractorBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("dna_extractor");
         this.setHardness(2.0F);
@@ -34,28 +32,23 @@ public class DNAExtractorBlock extends OrientedBlock
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-        if (stack.hasDisplayName())
-        {
+        if (stack.hasDisplayName()) {
             TileEntity tileentity = world.getTileEntity(pos);
 
-            if (tileentity instanceof DNAExtractorTile)
-            {
+            if (tileentity instanceof DNAExtractorTile) {
                 ((DNAExtractorTile) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-    {
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof DNAExtractorTile)
-        {
+        if (tileentity instanceof DNAExtractorTile) {
             InventoryHelper.dropInventoryItems(worldIn, pos, (DNAExtractorTile) tileentity);
         }
 
@@ -63,28 +56,21 @@ public class DNAExtractorBlock extends OrientedBlock
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new DNAExtractorTile();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return true;
-        }
-        else if (!player.isSneaking())
-        {
+        } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof DNAExtractorTile)
-            {
+            if (tileEntity instanceof DNAExtractorTile) {
                 DNAExtractorTile dnaExtractor = (DNAExtractorTile) tileEntity;
 
-                if (dnaExtractor.isUseableByPlayer(player))
-                {
+                if (dnaExtractor.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_EXTRACTOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
@@ -95,27 +81,23 @@ public class DNAExtractorBlock extends OrientedBlock
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 }

@@ -15,42 +15,34 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.DNASynthesizerTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNASynthesizerTile>
-{
+public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNASynthesizerTile> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
 
-    public DNASynthesizerSpecialRenderer()
-    {
-        try
-        {
+    public DNASynthesizerSpecialRenderer() {
+        try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/dna_synthesizer"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_synthesizer.png");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(DNASynthesizerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(DNASynthesizerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.DNA_SYNTHESIZER)
-        {
+        if (blockState.getBlock() == BlockHandler.DNA_SYNTHESIZER) {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
 
             EnumFacing value = blockState.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
-            {
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH) {
                 value = value.getOpposite();
             }
 
@@ -66,9 +58,9 @@ public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNA
             double scale = 1.0;
             GlStateManager.scale(-scale, -scale, scale);
 
-            mc.getTextureManager().bindTexture(texture);
+            this.mc.getTextureManager().bindTexture(this.texture);
 
-            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
             GlStateManager.popMatrix();
 

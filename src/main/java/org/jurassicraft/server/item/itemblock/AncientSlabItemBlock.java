@@ -20,13 +20,11 @@ import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientSlabBlock;
 import org.jurassicraft.server.block.tree.AncientSlabHalfBlock;
 
-public class AncientSlabItemBlock extends ItemBlock
-{
+public class AncientSlabItemBlock extends ItemBlock {
     private final BlockSlab singleSlab;
     private final BlockSlab doubleSlab;
 
-    public AncientSlabItemBlock(Block block, AncientSlabHalfBlock singleSlab, AncientDoubleSlabBlock doubleSlab)
-    {
+    public AncientSlabItemBlock(Block block, AncientSlabHalfBlock singleSlab, AncientDoubleSlabBlock doubleSlab) {
         super(block);
         this.singleSlab = singleSlab;
         this.doubleSlab = doubleSlab;
@@ -35,34 +33,27 @@ public class AncientSlabItemBlock extends ItemBlock
     }
 
     @Override
-    public int getMetadata(int damage)
-    {
+    public int getMetadata(int damage) {
         return damage;
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return this.singleSlab.getUnlocalizedName(stack.getMetadata());
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-        if (stack.stackSize != 0 && player.canPlayerEdit(pos.offset(facing), facing, stack))
-        {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (stack.stackSize != 0 && player.canPlayerEdit(pos.offset(facing), facing, stack)) {
             IBlockState state = world.getBlockState(pos);
-            if (state.getBlock() == this.singleSlab)
-            {
+            if (state.getBlock() == this.singleSlab) {
                 AncientSlabBlock.EnumBlockHalf half = state.getValue(BlockSlab.HALF);
 
-                if ((facing == EnumFacing.UP && half == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && half == BlockSlab.EnumBlockHalf.TOP))
-                {
+                if ((facing == EnumFacing.UP && half == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && half == BlockSlab.EnumBlockHalf.TOP)) {
                     AxisAlignedBB collisionBox = state.getSelectedBoundingBox(world, pos);
                     IBlockState doubleSlabState = this.doubleSlab.getDefaultState();
 
-                    if (collisionBox != Block.NULL_AABB && world.checkNoEntityCollision(collisionBox.offset(pos)) && world.setBlockState(pos, doubleSlabState, 11))
-                    {
+                    if (collisionBox != Block.NULL_AABB && world.checkNoEntityCollision(collisionBox.offset(pos)) && world.setBlockState(pos, doubleSlabState, 11)) {
                         SoundType sound = this.doubleSlab.getSoundType();
                         world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
                         --stack.stackSize;
@@ -73,26 +64,21 @@ public class AncientSlabItemBlock extends ItemBlock
             }
 
             return this.tryPlace(player, stack, world, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
-        }
-        else
-        {
+        } else {
             return EnumActionResult.FAIL;
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack)
-    {
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
         BlockPos placePos = pos;
         IBlockState state = world.getBlockState(pos);
 
-        if (state.getBlock() == this.singleSlab)
-        {
+        if (state.getBlock() == this.singleSlab) {
             boolean flag = state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
 
-            if ((side == EnumFacing.UP && !flag || side == EnumFacing.DOWN && flag))
-            {
+            if ((side == EnumFacing.UP && !flag || side == EnumFacing.DOWN && flag)) {
                 return true;
             }
         }
@@ -102,16 +88,13 @@ public class AncientSlabItemBlock extends ItemBlock
         return iblockstate1.getBlock() == this.singleSlab || super.canPlaceBlockOnSide(world, placePos, side, player, stack);
     }
 
-    private boolean tryPlace(EntityPlayer player, ItemStack stack, World world, BlockPos pos)
-    {
+    private boolean tryPlace(EntityPlayer player, ItemStack stack, World world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
 
-        if (state.getBlock() == this.singleSlab)
-        {
+        if (state.getBlock() == this.singleSlab) {
             AxisAlignedBB collisionBounds = state.getSelectedBoundingBox(world, pos);
 
-            if (collisionBounds != Block.NULL_AABB && world.checkNoEntityCollision(collisionBounds.offset(pos)) && world.setBlockState(pos, state, 11))
-            {
+            if (collisionBounds != Block.NULL_AABB && world.checkNoEntityCollision(collisionBounds.offset(pos)) && world.setBlockState(pos, state, 11)) {
                 SoundType soundtype = this.doubleSlab.getSoundType();
                 world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 --stack.stackSize;

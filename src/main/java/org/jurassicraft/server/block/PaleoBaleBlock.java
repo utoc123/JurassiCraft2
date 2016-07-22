@@ -15,12 +15,10 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Locale;
 
-public class PaleoBaleBlock extends BlockRotatedPillar
-{
+public class PaleoBaleBlock extends BlockRotatedPillar {
     private PaleoBaleBlock.Variant variant;
 
-    public PaleoBaleBlock(PaleoBaleBlock.Variant variant)
-    {
+    public PaleoBaleBlock(PaleoBaleBlock.Variant variant) {
         super(Material.GRASS, MapColor.FOLIAGE);
         this.variant = variant;
         this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Y));
@@ -29,18 +27,15 @@ public class PaleoBaleBlock extends BlockRotatedPillar
     }
 
     @Override
-    public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance)
-    {
+    public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
         entity.fall(fallDistance, 0.2F);
     }
 
-    public PaleoBaleBlock.Variant getVariant()
-    {
-        return variant;
+    public PaleoBaleBlock.Variant getVariant() {
+        return this.variant;
     }
 
-    public enum Variant implements IStringSerializable
-    {
+    public enum Variant implements IStringSerializable {
         CYCADEOIDEA(BlockHandler.CYCADEOIDEA),
         CYCAD(BlockHandler.SMALL_CYCAD),
         FERN(BlockHandler.SMALL_CHAIN_FERN, BlockHandler.SMALL_ROYAL_FERN, BlockHandler.RAPHAELIA),
@@ -49,30 +44,25 @@ public class PaleoBaleBlock extends BlockRotatedPillar
 
         private Item[] ingredients;
 
-        Variant(Block... ingredients)
-        {
+        Variant(Block... ingredients) {
             this.ingredients = new Item[ingredients.length];
 
-            for (int i = 0; i < ingredients.length; i++)
-            {
+            for (int i = 0; i < ingredients.length; i++) {
                 this.ingredients[i] = Item.getItemFromBlock(ingredients[i]);
             }
         }
 
-        Variant(Item... ingredients)
-        {
+        Variant(Item... ingredients) {
             this.ingredients = ingredients;
         }
 
         @Override
-        public String getName()
-        {
-            return name().toLowerCase(Locale.ENGLISH);
+        public String getName() {
+            return this.name().toLowerCase(Locale.ENGLISH);
         }
 
-        public Item[] getIngredients()
-        {
-            return ingredients;
+        public Item[] getIngredients() {
+            return this.ingredients;
         }
     }
 }

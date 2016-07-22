@@ -1,5 +1,4 @@
 package org.jurassicraft.server.api;
 
-public interface IncubatorEnvironmentItem
-{
+public interface IncubatorEnvironmentItem {
 }

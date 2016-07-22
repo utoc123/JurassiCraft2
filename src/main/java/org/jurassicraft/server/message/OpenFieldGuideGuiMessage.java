@@ -11,8 +11,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiMessage>
-{
+public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiMessage> {
     private DinosaurEntity entity;
     private int entityId;
     private int hunger;
@@ -20,23 +19,19 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
     private boolean flocking;
     private boolean fleeing;
 
-    public OpenFieldGuideGuiMessage()
-    {
+    public OpenFieldGuideGuiMessage() {
     }
 
-    public OpenFieldGuideGuiMessage(DinosaurEntity entity)
-    {
+    public OpenFieldGuideGuiMessage(DinosaurEntity entity) {
         this.entity = entity;
         this.entityId = entity.getEntityId();
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, OpenFieldGuideGuiMessage message, EntityPlayer player, MessageContext context)
-    {
+    public void onClientReceived(Minecraft minecraft, OpenFieldGuideGuiMessage message, EntityPlayer player, MessageContext context) {
         Entity entity = player.worldObj.getEntityByID(message.entityId);
 
-        if (entity instanceof DinosaurEntity)
-        {
+        if (entity instanceof DinosaurEntity) {
             DinosaurEntity dinosaur = (DinosaurEntity) entity;
             dinosaur.getMetabolism().setEnergy(message.hunger);
             dinosaur.getMetabolism().setWater(message.thirst);
@@ -48,13 +43,11 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, OpenFieldGuideGuiMessage message, EntityPlayer player, MessageContext context)
-    {
+    public void onServerReceived(MinecraftServer server, OpenFieldGuideGuiMessage message, EntityPlayer player, MessageContext context) {
     }
 
     @Override
-    public void fromBytes(ByteBuf buf)
-    {
+    public void fromBytes(ByteBuf buf) {
         this.entityId = buf.readInt();
         this.hunger = buf.readInt();
         this.thirst = buf.readInt();
@@ -63,12 +56,11 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
     }
 
     @Override
-    public void toBytes(ByteBuf buf)
-    {
-        buf.writeInt(entityId);
-        buf.writeInt(entity.getMetabolism().getEnergy());
-        buf.writeInt(entity.getMetabolism().getWater());
-        buf.writeBoolean(entity.herd != null && entity.herd.state == Herd.State.MOVING);
-        buf.writeBoolean(entity.herd != null && entity.herd.fleeing);
+    public void toBytes(ByteBuf buf) {
+        buf.writeInt(this.entityId);
+        buf.writeInt(this.entity.getMetabolism().getEnergy());
+        buf.writeInt(this.entity.getMetabolism().getWater());
+        buf.writeBoolean(this.entity.herd != null && this.entity.herd.state == Herd.State.MOVING);
+        buf.writeBoolean(this.entity.herd != null && this.entity.herd.fleeing);
     }
 }

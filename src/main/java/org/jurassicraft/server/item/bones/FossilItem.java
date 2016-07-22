@@ -25,14 +25,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-public class FossilItem extends Item implements GrindableItem
-{
+public class FossilItem extends Item implements GrindableItem {
     public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<>();
     private String type;
     private boolean includeHybrids;
 
-    public FossilItem(String type, boolean includeHybrids)
-    {
+    public FossilItem(String type, boolean includeHybrids) {
         this.type = type.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         this.includeHybrids = includeHybrids;
 
@@ -41,18 +39,14 @@ public class FossilItem extends Item implements GrindableItem
         this.setCreativeTab(TabHandler.FOSSILS);
     }
 
-    public static void init()
-    {
-        for (Dinosaur dinosaur : EntityHandler.getDinosaurs().values())
-        {
+    public static void init() {
+        for (Dinosaur dinosaur : EntityHandler.getDinosaurs().values()) {
             String[] boneTypes = dinosaur.getBones();
 
-            for (String boneType : boneTypes)
-            {
+            for (String boneType : boneTypes) {
                 List<Dinosaur> dinosaursWithType = fossilDinosaurs.get(boneType);
 
-                if (dinosaursWithType == null)
-                {
+                if (dinosaursWithType == null) {
                     dinosaursWithType = new ArrayList<>();
                 }
 
@@ -64,67 +58,52 @@ public class FossilItem extends Item implements GrindableItem
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
+    public String getItemStackDisplayName(ItemStack stack) {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
-        if (dinosaur != null)
-        {
-            return new LangHelper(getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
+        if (dinosaur != null) {
+            return new LangHelper(this.getUnlocalizedName() + ".name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
         }
 
         return super.getItemStackDisplayName(stack);
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         return EntityHandler.getDinosaurById(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new ArrayList<>(EntityHandler.getRegisteredDinosaurs());
 
         Collections.sort(dinosaurs);
 
-        List<Dinosaur> dinosaursForType = fossilDinosaurs.get(type);
+        List<Dinosaur> dinosaursForType = fossilDinosaurs.get(this.type);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister() && dinosaursForType.contains(dinosaur) && !(!includeHybrids && dinosaur instanceof Hybrid))
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister() && dinosaursForType.contains(dinosaur) && !(!this.includeHybrids && dinosaur instanceof Hybrid)) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
-    {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt != null && nbt.hasKey("Genetics") && nbt.hasKey("DNAQuality"))
-        {
+        if (nbt != null && nbt.hasKey("Genetics") && nbt.hasKey("DNAQuality")) {
             int quality = nbt.getInteger("DNAQuality");
 
             TextFormatting colour;
 
-            if (quality > 75)
-            {
+            if (quality > 75) {
                 colour = TextFormatting.GREEN;
-            }
-            else if (quality > 50)
-            {
+            } else if (quality > 50) {
                 colour = TextFormatting.YELLOW;
-            }
-            else if (quality > 25)
-            {
+            } else if (quality > 25) {
                 colour = TextFormatting.GOLD;
-            }
-            else
-            {
+            } else {
                 colour = TextFormatting.RED;
             }
 
@@ -134,26 +113,21 @@ public class FossilItem extends Item implements GrindableItem
     }
 
     @Override
-    public boolean isGrindable(ItemStack stack)
-    {
+    public boolean isGrindable(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getGroundItem(ItemStack stack, Random random)
-    {
+    public ItemStack getGroundItem(ItemStack stack, Random random) {
         NBTTagCompound tag = stack.getTagCompound();
 
         int outputType = random.nextInt(6);
 
-        if (outputType == 5 || stack.getUnlocalizedName().contains("fresh"))
-        {
+        if (outputType == 5 || stack.getUnlocalizedName().contains("fresh")) {
             ItemStack output = new ItemStack(ItemHandler.SOFT_TISSUE, 1, stack.getItemDamage());
             output.setTagCompound(tag);
             return output;
-        }
-        else if (outputType < 3)
-        {
+        } else if (outputType < 3) {
             return new ItemStack(Items.DYE, 1, 15);
         }
 

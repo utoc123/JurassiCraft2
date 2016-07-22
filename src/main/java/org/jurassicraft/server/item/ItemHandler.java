@@ -22,8 +22,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class ItemHandler
-{
+public class ItemHandler {
     public static final PlasterAndBandageItem PLASTER_AND_BANDAGE = new PlasterAndBandageItem();
     public static final DinosaurSpawnEggItem SPAWN_EGG = new DinosaurSpawnEggItem();
 
@@ -125,30 +124,24 @@ public class ItemHandler
 
     public static final MuralItem MURAL = new MuralItem();
 
-    public static void init()
-    {
+    public static void init() {
         registerItem(FOSSILIZED_EGG, "Fossilized Egg");
 
-        for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.getDinosaurs().entrySet())
-        {
+        for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.getDinosaurs().entrySet()) {
             Dinosaur dinosaur = entry.getValue();
 
             String[] boneTypes = dinosaur.getBones();
 
-            for (String boneType : boneTypes)
-            {
-                if (!(dinosaur instanceof Hybrid))
-                {
-                    if (!FOSSILS.containsKey(boneType))
-                    {
+            for (String boneType : boneTypes) {
+                if (!(dinosaur instanceof Hybrid)) {
+                    if (!FOSSILS.containsKey(boneType)) {
                         FossilItem fossil = new FossilItem(boneType, false);
                         FOSSILS.put(boneType, fossil);
                         registerItem(fossil, boneType);
                     }
                 }
 
-                if (!FRESH_FOSSILS.containsKey(boneType))
-                {
+                if (!FRESH_FOSSILS.containsKey(boneType)) {
                     FossilItem fossil = new FossilItem(boneType, true);
                     FRESH_FOSSILS.put(boneType, fossil);
                     registerItem(fossil, boneType + " Fresh");
@@ -236,14 +229,12 @@ public class ItemHandler
         registerItem(JEEP_WRANGLER, "Jeep Wrangler");
     }
 
-    public static void registerItemOreDict(Item item, String name, String oreDict)
-    {
+    public static void registerItemOreDict(Item item, String name, String oreDict) {
         registerItem(item, name);
         OreDictionary.registerOre(oreDict, item);
     }
 
-    public static void registerItem(Item item, String name)
-    {
+    public static void registerItem(Item item, String name) {
         String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_").replaceAll("'", "");
         item.setUnlocalizedName(formattedName);
 

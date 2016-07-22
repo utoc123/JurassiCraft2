@@ -11,8 +11,7 @@ import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.MetabolismContainer;
 
-public class DrinkEntityAI extends EntityAIBase
-{
+public class DrinkEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
 
     protected Path path;
@@ -20,55 +19,43 @@ public class DrinkEntityAI extends EntityAIBase
 
     protected int giveUpTime;
 
-    public DrinkEntityAI(DinosaurEntity dinosaur)
-    {
+    public DrinkEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (!dinosaur.isDead && !dinosaur.isCarcass() && dinosaur.ticksExisted % 4 == 0 && dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism"))
-        {
-            if (dinosaur.getMetabolism().isThirsty())
-            {
-                int posX = (int) dinosaur.posX;
-                int posY = (int) dinosaur.posY;
-                int posZ = (int) dinosaur.posZ;
+    public boolean shouldExecute() {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.ticksExisted % 4 == 0 && this.dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) {
+            if (this.dinosaur.getMetabolism().isThirsty()) {
+                int posX = (int) this.dinosaur.posX;
+                int posY = (int) this.dinosaur.posY;
+                int posZ = (int) this.dinosaur.posZ;
 
                 int closestDistance = Integer.MAX_VALUE;
                 BlockPos closestPos = null;
 
-                World world = dinosaur.worldObj;
+                World world = this.dinosaur.worldObj;
 
                 int range = 32;
 
-                for (int x = posX - range; x < posX + range; x++)
-                {
-                    for (int y = posY - range; y < posY + range; y++)
-                    {
-                        for (int z = posZ - range; z < posZ + range; z++)
-                        {
+                for (int x = posX - range; x < posX + range; x++) {
+                    for (int y = posY - range; y < posY + range; y++) {
+                        for (int z = posZ - range; z < posZ + range; z++) {
                             Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
-                            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER)
-                            {
-                                for (int landX = x - 1; landX < x + 1; landX++)
-                                {
-                                    for (int landZ = z - 1; landZ < z + 1; landZ++)
-                                    {
+                            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER) {
+                                for (int landX = x - 1; landX < x + 1; landX++) {
+                                    for (int landZ = z - 1; landZ < z + 1; landZ++) {
                                         IBlockState state = world.getBlockState(new BlockPos(landX, y, landZ));
 
-                                        if (state.isOpaqueCube())
-                                        {
+                                        if (state.isOpaqueCube()) {
                                             int diffX = Math.abs(posX - landX);
                                             int diffY = Math.abs(posY - y);
                                             int diffZ = Math.abs(posZ - landZ);
 
                                             int distance = (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ);
 
-                                            if (distance < closestDistance)
-                                            {
+                                            if (distance < closestDistance) {
                                                 closestDistance = distance;
                                                 closestPos = new BlockPos(landX, y, landZ);
                                             }
@@ -80,12 +67,11 @@ public class DrinkEntityAI extends EntityAIBase
                     }
                 }
 
-                if (closestPos != null)
-                {
+                if (closestPos != null) {
                     this.pos = closestPos;
-                    this.path = dinosaur.getNavigator().getPathToXYZ(closestPos.getX(), closestPos.getY(), closestPos.getZ());
+                    this.path = this.dinosaur.getNavigator().getPathToXYZ(closestPos.getX(), closestPos.getY(), closestPos.getZ());
                     this.giveUpTime = 500;
-                    return this.dinosaur.getNavigator().setPath(path, 1.0);
+                    return this.dinosaur.getNavigator().setPath(this.path, 1.0);
                 }
             }
         }
@@ -94,44 +80,38 @@ public class DrinkEntityAI extends EntityAIBase
     }
 
     @Override
-    public void updateTask()
-    {
-        giveUpTime--;
+    public void updateTask() {
+        this.giveUpTime--;
 
-        if (giveUpTime <= 0)
-        {
-            resetTask();
+        if (this.giveUpTime <= 0) {
+            this.resetTask();
             return;
         }
 
-        dinosaur.getNavigator().setPath(path, 1.0);
+        this.dinosaur.getNavigator().setPath(this.path, 1.0);
 
-        if (path.isFinished())
-        {
-            if (dinosaur.getAnimation() != DinosaurAnimation.DRINKING.get())
-            {
-                dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
+        if (this.path.isFinished()) {
+            if (this.dinosaur.getAnimation() != DinosaurAnimation.DRINKING.get()) {
+                this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
             }
 
-            MetabolismContainer metabolism = dinosaur.getMetabolism();
+            MetabolismContainer metabolism = this.dinosaur.getMetabolism();
             metabolism.setWater(metabolism.getMaxWater());
         }
     }
 
     @Override
-    public void resetTask()
-    {
+    public void resetTask() {
         super.resetTask();
 
-        path = null;
-        dinosaur.getNavigator().clearPathEntity();
+        this.path = null;
+        this.dinosaur.getNavigator().clearPathEntity();
     }
 
     @Override
-    public boolean continueExecuting()
-    {
-        Block block = dinosaur.worldObj.getBlockState(pos).getBlock();
+    public boolean continueExecuting() {
+        Block block = this.dinosaur.worldObj.getBlockState(this.pos).getBlock();
 
-        return dinosaur != null && path != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.WATER || block == Blocks.FLOWING_WATER);
+        return this.dinosaur != null && this.path != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.WATER || block == Blocks.FLOWING_WATER);
     }
 }

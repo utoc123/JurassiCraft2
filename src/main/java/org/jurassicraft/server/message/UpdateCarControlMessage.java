@@ -9,53 +9,44 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.server.entity.vehicle.CarEntity;
 
-public class UpdateCarControlMessage extends AbstractMessage<UpdateCarControlMessage>
-{
+public class UpdateCarControlMessage extends AbstractMessage<UpdateCarControlMessage> {
     private int entityId;
     private byte state;
 
-    public UpdateCarControlMessage()
-    {
+    public UpdateCarControlMessage() {
     }
 
-    public UpdateCarControlMessage(CarEntity entity)
-    {
+    public UpdateCarControlMessage(CarEntity entity) {
         this.entityId = entity.getEntityId();
         this.state = entity.getState();
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, UpdateCarControlMessage message, EntityPlayer player, MessageContext context)
-    {
+    public void onClientReceived(Minecraft minecraft, UpdateCarControlMessage message, EntityPlayer player, MessageContext context) {
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, UpdateCarControlMessage message, EntityPlayer player, MessageContext context)
-    {
+    public void onServerReceived(MinecraftServer server, UpdateCarControlMessage message, EntityPlayer player, MessageContext context) {
         Entity entity = player.worldObj.getEntityByID(message.entityId);
 
-        if (entity instanceof CarEntity)
-        {
+        if (entity instanceof CarEntity) {
             CarEntity car = (CarEntity) entity;
 
-            if (car.getSeat(0) != null && car.getSeat(0).getControllingPassenger() == player)
-            {
+            if (car.getSeat(0) != null && car.getSeat(0).getControllingPassenger() == player) {
                 car.setState(message.state);
             }
         }
     }
 
     @Override
-    public void fromBytes(ByteBuf buf)
-    {
-        entityId = buf.readInt();
-        state = buf.readByte();
+    public void fromBytes(ByteBuf buf) {
+        this.entityId = buf.readInt();
+        this.state = buf.readByte();
     }
 
     @Override
-    public void toBytes(ByteBuf buf)
-    {
-        buf.writeInt(entityId);
-        buf.writeByte(state);
+    public void toBytes(ByteBuf buf) {
+        buf.writeInt(this.entityId);
+        buf.writeByte(this.state);
     }
 }

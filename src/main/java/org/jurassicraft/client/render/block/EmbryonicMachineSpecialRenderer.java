@@ -15,44 +15,36 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
 import org.lwjgl.opengl.GL11;
 
-public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryonicMachineTile>
-{
+public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryonicMachineTile> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
     private ResourceLocation textureNoTestTubes;
 
-    public EmbryonicMachineSpecialRenderer()
-    {
-        try
-        {
+    public EmbryonicMachineSpecialRenderer() {
+        try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryonic_machine"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryonic_machine.png");
             this.textureNoTestTubes = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryonic_machine_no_test_tubes.png");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(EmbryonicMachineTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(EmbryonicMachineTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.EMBRYONIC_MACHINE)
-        {
+        if (state.getBlock() == BlockHandler.EMBRYONIC_MACHINE) {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
 
             EnumFacing value = state.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
-            {
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH) {
                 value = value.getOpposite();
             }
 
@@ -71,12 +63,12 @@ public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<E
             boolean hasDNA = tileEntity.getStackInSlot(0) != null;
             boolean hasPetridish = tileEntity.getStackInSlot(1) != null;
 
-            model.getCube("Petri dish 1").showModel = hasPetridish;
-            model.getCube("Petri dish 2").showModel = hasPetridish;
+            this.model.getCube("Petri dish 1").showModel = hasPetridish;
+            this.model.getCube("Petri dish 2").showModel = hasPetridish;
 
-            mc.getTextureManager().bindTexture(hasDNA ? texture : textureNoTestTubes);
+            this.mc.getTextureManager().bindTexture(hasDNA ? this.texture : this.textureNoTestTubes);
 
-            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
             GlStateManager.popMatrix();
 

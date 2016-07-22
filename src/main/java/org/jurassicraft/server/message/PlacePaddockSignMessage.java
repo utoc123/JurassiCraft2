@@ -17,8 +17,7 @@ import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.item.ItemHandler;
 
-public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMessage>
-{
+public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMessage> {
     private int dino;
     private BlockPos pos;
     private int x;
@@ -27,14 +26,12 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
     private EnumFacing facing;
     private EnumHand hand;
 
-    public PlacePaddockSignMessage()
-    {
+    public PlacePaddockSignMessage() {
     }
 
-    public PlacePaddockSignMessage(EnumHand hand, EnumFacing facing, BlockPos pos, Dinosaur dino)
-    {
+    public PlacePaddockSignMessage(EnumHand hand, EnumFacing facing, BlockPos pos, Dinosaur dino) {
         this.dino = EntityHandler.getDinosaurId(dino);
-        this.pos = new BlockPos(x, y, z);
+        this.pos = new BlockPos(this.x, this.y, this.z);
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
@@ -43,13 +40,11 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onClientReceived(Minecraft minecraft, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext) {
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onServerReceived(MinecraftServer server, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext) {
         World world = player.worldObj;
 
         EnumFacing side = message.facing;
@@ -59,14 +54,11 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
         ItemStack heldItem = player.getHeldItem(message.hand);
 
-        if (heldItem != null && heldItem.getItem() == ItemHandler.PADDOCK_SIGN)
-        {
-            if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface())
-            {
+        if (heldItem != null && heldItem.getItem() == ItemHandler.PADDOCK_SIGN) {
+            if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface()) {
                 world.spawnEntityInWorld(paddockSign);
 
-                if (!player.capabilities.isCreativeMode)
-                {
+                if (!player.capabilities.isCreativeMode) {
                     InventoryPlayer inventory = player.inventory;
                     inventory.decrStackSize(inventory.currentItem, 1);
                 }
@@ -75,25 +67,23 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
     }
 
     @Override
-    public void toBytes(ByteBuf buffer)
-    {
-        buffer.writeInt(x);
-        buffer.writeInt(y);
-        buffer.writeInt(z);
-        buffer.writeInt(dino);
-        buffer.writeByte((byte) facing.getIndex());
-        buffer.writeByte((byte) hand.ordinal());
+    public void toBytes(ByteBuf buffer) {
+        buffer.writeInt(this.x);
+        buffer.writeInt(this.y);
+        buffer.writeInt(this.z);
+        buffer.writeInt(this.dino);
+        buffer.writeByte((byte) this.facing.getIndex());
+        buffer.writeByte((byte) this.hand.ordinal());
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer)
-    {
-        x = buffer.readInt();
-        y = buffer.readInt();
-        z = buffer.readInt();
-        dino = buffer.readInt();
-        facing = EnumFacing.getFront(buffer.readByte());
-        hand = EnumHand.values()[buffer.readByte()];
-        pos = new BlockPos(x, y, z);
+    public void fromBytes(ByteBuf buffer) {
+        this.x = buffer.readInt();
+        this.y = buffer.readInt();
+        this.z = buffer.readInt();
+        this.dino = buffer.readInt();
+        this.facing = EnumFacing.getFront(buffer.readByte());
+        this.hand = EnumHand.values()[buffer.readByte()];
+        this.pos = new BlockPos(this.x, this.y, this.z);
     }
 }

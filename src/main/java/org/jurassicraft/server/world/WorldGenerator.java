@@ -30,62 +30,51 @@ import org.jurassicraft.server.period.TimePeriod;
 import java.util.List;
 import java.util.Random;
 
-public enum WorldGenerator implements IWorldGenerator
-{
+public enum WorldGenerator implements IWorldGenerator {
     INSTANCE;
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
-    {
-        if (world.provider.getDimension() == 0)
-        {
-            generateOverworld(world, random, chunkX * 16, chunkZ * 16);
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        if (world.provider.getDimension() == 0) {
+            this.generateOverworld(world, random, chunkX * 16, chunkZ * 16);
         }
     }
 
-    public void generateOverworld(World world, Random random, int chunkX, int chunkZ)
-    {
+    public void generateOverworld(World world, Random random, int chunkX, int chunkZ) {
         Biome biome = world.getBiomeGenForCoords(new BlockPos(chunkX, 0, chunkZ));
 
-        for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++)
-        {
+        for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++) {
             int randPosX = chunkX + random.nextInt(16);
             int randPosZ = chunkZ + random.nextInt(16);
             int randPosY = random.nextInt(Math.max(0, world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10));
 
-            generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
+            this.generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
         }
 
-        for (int i = 0; i < 32; i++)
-        {
+        for (int i = 0; i < 32; i++) {
             int randPosX = chunkX + random.nextInt(16);
             int randPosY = random.nextInt(64);
             int randPosZ = chunkZ + random.nextInt(16);
 
             TimePeriod period = null;
 
-            for (TimePeriod p : TimePeriod.values())
-            {
-                if (randPosY < TimePeriod.getEndYLevel(p) && randPosY > TimePeriod.getStartYLevel(p))
-                {
+            for (TimePeriod p : TimePeriod.values()) {
+                if (randPosY < TimePeriod.getEndYLevel(p) && randPosY > TimePeriod.getStartYLevel(p)) {
                     period = p;
 
                     break;
                 }
             }
 
-            if (period != null)
-            {
+            if (period != null) {
                 randPosY += random.nextInt(8) - 4;
 
                 List<Dinosaur> dinos = EntityHandler.getDinosaursFromPeriod(period);
 
-                if (dinos != null && dinos.size() > 0)
-                {
+                if (dinos != null && dinos.size() > 0) {
                     Dinosaur dinosaur = dinos.get(random.nextInt(dinos.size()));
 
-                    if (dinosaur.shouldRegister())
-                    {
+                    if (dinosaur.shouldRegister()) {
                         int meta = BlockHandler.getMetadata(dinosaur);
 
                         new WorldGenMinable(BlockHandler.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
@@ -96,13 +85,11 @@ public enum WorldGenerator implements IWorldGenerator
 
         int nestChance = 100;
 
-        if (biome instanceof BiomeHills || biome instanceof BiomeMesa || biome instanceof BiomeDesert)
-        {
+        if (biome instanceof BiomeHills || biome instanceof BiomeMesa || biome instanceof BiomeDesert) {
             nestChance = 30;
         }
 
-        if (random.nextInt(nestChance) == 0)
-        {
+        if (random.nextInt(nestChance) == 0) {
             BlockPos pos = new BlockPos(chunkX + random.nextInt(16), random.nextInt(20) + 30, chunkZ + random.nextInt(16));
 
             IBlockState nest = BlockHandler.NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, NestFossilBlock.Variant.values()[random.nextInt(NestFossilBlock.Variant.values().length)]);
@@ -110,46 +97,34 @@ public enum WorldGenerator implements IWorldGenerator
 
             int size = random.nextInt(3) + 6;
 
-            for (int x = 0; x < size; x++)
-            {
-                for (int z = 0; z < size; z++)
-                {
+            for (int x = 0; x < size; x++) {
+                for (int z = 0; z < size; z++) {
                     BlockPos generationPos = pos.add(x, 0, z);
 
-                    if (!world.isAirBlock(generationPos))
-                    {
+                    if (!world.isAirBlock(generationPos)) {
                         IBlockState state = null;
 
-                        if (random.nextFloat() < 0.8F)
-                        {
-                            if (random.nextFloat() < 0.1F)
-                            {
+                        if (random.nextFloat() < 0.8F) {
+                            if (random.nextFloat() < 0.1F) {
                                 state = trackway;
-                            }
-                            else if (random.nextFloat() < 0.6F)
-                            {
+                            } else if (random.nextFloat() < 0.6F) {
                                 state = Blocks.GRAVEL.getDefaultState();
-                            }
-                            else
-                            {
+                            } else {
                                 state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, random.nextBoolean() ? EnumDyeColor.WHITE : EnumDyeColor.SILVER);
                             }
                         }
 
-                        if (state != null)
-                        {
+                        if (state != null) {
                             world.setBlockState(generationPos, state);
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < random.nextInt(2) + 1; i++)
-            {
+            for (int i = 0; i < random.nextInt(2) + 1; i++) {
                 BlockPos generationPos = pos.add(random.nextInt(size), 0, random.nextInt(size));
 
-                if (!world.isAirBlock(generationPos))
-                {
+                if (!world.isAirBlock(generationPos)) {
                     world.setBlockState(generationPos, nest);
                 }
             }
@@ -157,17 +132,15 @@ public enum WorldGenerator implements IWorldGenerator
 
         Predicate<IBlockState> defaultPredicate = BlockMatcher.forBlock(Blocks.STONE);
 
-        generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
+        this.generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
 //        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
-        generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
+        this.generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
     }
 
-    public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random, Predicate<IBlockState> predicate)
-    {
+    public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random, Predicate<IBlockState> predicate) {
         WorldGenMinable worldGenMinable = new WorldGenMinable(state, veinSize, predicate);
 
-        for (int i = 0; i < veinsPerChunk; i++)
-        {
+        for (int i = 0; i < veinsPerChunk; i++) {
             int randPosX = chunkX + random.nextInt(16);
             int randPosY = random.nextInt(minHeight);
             int randPosZ = chunkZ + random.nextInt(16);
@@ -176,8 +149,7 @@ public enum WorldGenerator implements IWorldGenerator
         }
     }
 
-    private void generatePetrifiedTree(World world, TreeType treeType, int x, int y, int z, Random rand)
-    {
+    private void generatePetrifiedTree(World world, TreeType treeType, int x, int y, int z, Random rand) {
         float rotX = (float) (rand.nextDouble() * 360.0F);
         float rotY = (float) (rand.nextDouble() * 360.0F) - 180.0F;
 
@@ -189,19 +161,16 @@ public enum WorldGenerator implements IWorldGenerator
         float xOffset = -MathHelper.sin(rotY * (float) Math.PI / 180.0F) * horizontal;
         float yOffset = MathHelper.cos(rotY * (float) Math.PI / 180.0F) * horizontal;
 
-        for (int i = 0; i < rand.nextInt(7) + 3; i++)
-        {
+        for (int i = 0; i < rand.nextInt(7) + 3; i++) {
             int blockX = x + Math.round(xOffset * i);
             int blockY = y + Math.round(vertical * i);
             int blockZ = z + Math.round(yOffset * i);
 
-            if (blockY > 0 && blockY < 256)
-            {
+            if (blockY > 0 && blockY < 256) {
                 BlockPos pos = new BlockPos(blockX, blockY, blockZ);
                 Block previousBlock = world.getBlockState(pos).getBlock();
 
-                if (previousBlock != Blocks.BEDROCK && previousBlock != Blocks.AIR)
-                {
+                if (previousBlock != Blocks.BEDROCK && previousBlock != Blocks.AIR) {
                     world.setBlockState(pos, state);
                 }
             }

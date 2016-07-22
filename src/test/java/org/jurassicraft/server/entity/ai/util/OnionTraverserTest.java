@@ -15,7 +15,7 @@ public class OnionTraverserTest
     public void testIterator()
     {
         OnionTraverser traverser = new OnionTraverser(new BlockPos(100,100,100), 1);
-        Queue<BlockPos> queue = get3x3BlockList();
+        Queue<BlockPos> queue = this.get3x3BlockList();
         for (BlockPos pos : traverser)
         {
             BlockPos valid = queue.poll();

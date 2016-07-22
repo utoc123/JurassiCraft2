@@ -10,30 +10,23 @@ import org.jurassicraft.server.lang.LangHelper;
 
 import java.util.List;
 
-public class DNAContainerItem extends Item
-{
-    public int getContainerId(ItemStack stack)
-    {
+public class DNAContainerItem extends Item {
+    public int getContainerId(ItemStack stack) {
         return 0;
     }
 
-    public int getDNAQuality(EntityPlayer player, ItemStack stack)
-    {
+    public int getDNAQuality(EntityPlayer player, ItemStack stack) {
         int quality = player.capabilities.isCreativeMode ? 100 : 0;
 
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
-        if (nbt.hasKey("DNAQuality"))
-        {
+        if (nbt.hasKey("DNAQuality")) {
             quality = nbt.getInteger("DNAQuality");
-        }
-        else
-        {
+        } else {
             nbt.setInteger("DNAQuality", quality);
         }
 
@@ -42,23 +35,18 @@ public class DNAContainerItem extends Item
         return quality;
     }
 
-    public String getGeneticCode(EntityPlayer player, ItemStack stack)
-    {
+    public String getGeneticCode(EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
         String genetics = GeneticsHelper.randomGenetics(player.worldObj.rand);
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
-        if (nbt.hasKey("Genetics"))
-        {
+        if (nbt.hasKey("Genetics")) {
             genetics = nbt.getString("Genetics");
-        }
-        else
-        {
+        } else {
             nbt.setString("Genetics", genetics);
         }
 
@@ -68,30 +56,22 @@ public class DNAContainerItem extends Item
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
-    {
-        int quality = getDNAQuality(player, stack);
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
+        int quality = this.getDNAQuality(player, stack);
 
         TextFormatting colour;
 
-        if (quality > 75)
-        {
+        if (quality > 75) {
             colour = TextFormatting.GREEN;
-        }
-        else if (quality > 50)
-        {
+        } else if (quality > 50) {
             colour = TextFormatting.YELLOW;
-        }
-        else if (quality > 25)
-        {
+        } else if (quality > 25) {
             colour = TextFormatting.GOLD;
-        }
-        else
-        {
+        } else {
             colour = TextFormatting.RED;
         }
 
         lore.add(colour + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        lore.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", getGeneticCode(player, stack)).build());
+        lore.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", this.getGeneticCode(player, stack)).build());
     }
 }

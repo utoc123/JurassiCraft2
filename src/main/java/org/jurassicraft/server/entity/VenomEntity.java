@@ -10,55 +10,45 @@ import net.minecraft.world.World;
 import org.jurassicraft.client.proxy.ClientProxy;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
-public class VenomEntity extends EntityThrowable
-{
-    public VenomEntity(World world)
-    {
+public class VenomEntity extends EntityThrowable {
+    public VenomEntity(World world) {
         super(world);
 
-        if (world.isRemote)
-        {
-            spawnParticles();
+        if (world.isRemote) {
+            this.spawnParticles();
         }
     }
 
-    public VenomEntity(World world, DilophosaurusEntity entity)
-    {
+    public VenomEntity(World world, DilophosaurusEntity entity) {
         super(world, entity);
 
-        if (world.isRemote)
-        {
-            spawnParticles();
+        if (world.isRemote) {
+            this.spawnParticles();
         }
     }
 
     @Override
-    protected void onImpact(RayTraceResult result)
-    {
-        EntityLivingBase thrower = getThrower();
+    protected void onImpact(RayTraceResult result) {
+        EntityLivingBase thrower = this.getThrower();
 
-        if (thrower instanceof DilophosaurusEntity)
-        {
+        if (thrower instanceof DilophosaurusEntity) {
             DilophosaurusEntity spitter = (DilophosaurusEntity) thrower;
 
-            if (result.entityHit != null && result.entityHit instanceof EntityLivingBase && result.entityHit != spitter && (result.entityHit == spitter.getAttackTarget() || !(result.entityHit instanceof DilophosaurusEntity)))
-            {
+            if (result.entityHit != null && result.entityHit instanceof EntityLivingBase && result.entityHit != spitter && (result.entityHit == spitter.getAttackTarget() || !(result.entityHit instanceof DilophosaurusEntity))) {
                 EntityLivingBase entityHit = (EntityLivingBase) result.entityHit;
 
                 entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 4.0F);
                 entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("blindness"), 300, 1, false, false));
                 entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("nausea"), 300, 1, false, false));
 
-                if (!this.worldObj.isRemote)
-                {
+                if (!this.worldObj.isRemote) {
                     this.setDead();
                 }
             }
         }
     }
 
-    private void spawnParticles()
-    {
+    private void spawnParticles() {
         ClientProxy.spawnVenomParticles(this);
     }
 }

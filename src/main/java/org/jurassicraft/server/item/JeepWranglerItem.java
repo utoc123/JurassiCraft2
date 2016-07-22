@@ -11,18 +11,14 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.tab.TabHandler;
 
-public class JeepWranglerItem extends Item
-{
-    public JeepWranglerItem()
-    {
+public class JeepWranglerItem extends Item {
+    public JeepWranglerItem() {
         this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (!world.isRemote)
-        {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!world.isRemote) {
             pos = pos.offset(side);
 
             JeepWranglerEntity entity = new JeepWranglerEntity(world);

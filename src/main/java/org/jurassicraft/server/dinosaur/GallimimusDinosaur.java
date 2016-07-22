@@ -4,10 +4,8 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.dinosaur.GallimimusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class GallimimusDinosaur extends Dinosaur
-{
-    public GallimimusDinosaur()
-    {
+public class GallimimusDinosaur extends Dinosaur {
+    public GallimimusDinosaur() {
         super();
 
         this.setName("Gallimimus");
@@ -18,7 +16,7 @@ public class GallimimusDinosaur extends Dinosaur
         this.setHealth(5, 30);
         this.setSpeed(0.3, 0.40);
         this.setStrength(1, 5);
-        this.setMaximumAge(fromDays(35));
+        this.setMaximumAge(this.fromDays(35));
         this.setEyeHeight(0.58F, 2.9F);
         this.setSizeX(0.3F, 1.5F);
         this.setSizeY(0.65F, 3.25F);

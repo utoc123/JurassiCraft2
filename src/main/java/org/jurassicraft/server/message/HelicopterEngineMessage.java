@@ -8,52 +8,43 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 
-public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMessage>
-{
+public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMessage> {
     private int heliID;
     private boolean engineState;
 
-    public HelicopterEngineMessage()
-    {
+    public HelicopterEngineMessage() {
     }
 
-    public HelicopterEngineMessage(int heliID, boolean engineState)
-    {
+    public HelicopterEngineMessage(int heliID, boolean engineState) {
         this.heliID = heliID;
         this.engineState = engineState;
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onClientReceived(Minecraft minecraft, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext) {
         HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
-        if (helicopter != null)
-        {
+        if (helicopter != null) {
             helicopter.setEngineRunning(message.engineState);
         }
     }
 
     @Override
-    public void onServerReceived(MinecraftServer minecraftServer, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onServerReceived(MinecraftServer minecraftServer, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext) {
         HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
-        if (helicopter != null)
-        {
+        if (helicopter != null) {
             helicopter.setEngineRunning(message.engineState);
         }
     }
 
     @Override
-    public void fromBytes(ByteBuf buf)
-    {
-        heliID = buf.readInt();
-        engineState = buf.readBoolean();
+    public void fromBytes(ByteBuf buf) {
+        this.heliID = buf.readInt();
+        this.engineState = buf.readBoolean();
     }
 
     @Override
-    public void toBytes(ByteBuf buf)
-    {
-        buf.writeInt(heliID);
-        buf.writeBoolean(engineState);
+    public void toBytes(ByteBuf buf) {
+        buf.writeInt(this.heliID);
+        buf.writeBoolean(this.engineState);
     }
 }

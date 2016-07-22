@@ -9,12 +9,10 @@ import org.jurassicraft.server.container.slot.CleanableItemSlot;
 import org.jurassicraft.server.container.slot.FossilSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
 
-public class CleaningStationContainer extends MachineContainer
-{
+public class CleaningStationContainer extends MachineContainer {
     private final IInventory tileCleaningStation;
 
-    public CleaningStationContainer(InventoryPlayer invPlayer, IInventory cleaningStation)
-    {
+    public CleaningStationContainer(InventoryPlayer invPlayer, IInventory cleaningStation) {
         super(cleaningStation);
         this.tileCleaningStation = cleaningStation;
         this.addSlotToContainer(new CleanableItemSlot(cleaningStation, 0, 56, 17));
@@ -22,38 +20,31 @@ public class CleaningStationContainer extends MachineContainer
 
         int i;
 
-        for (i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
+        for (i = 0; i < 3; i++) {
+            for (int j = 0; j < 2; j++) {
                 this.addSlotToContainer(new FossilSlot(cleaningStation, i + (j * 3) + 2, i * 18 + 93 + 15, j * 18 + 26));
             }
         }
 
-        for (i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 9; ++j)
-            {
+        for (i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
                 this.addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
-        for (i = 0; i < 9; ++i)
-        {
+        for (i = 0; i < 9; ++i) {
             this.addSlotToContainer(new Slot(invPlayer, i, 8 + i * 18, 142));
         }
     }
 
     @Override
-    public void addListener(IContainerListener listener)
-    {
+    public void addListener(IContainerListener listener) {
         super.addListener(listener);
         listener.sendAllWindowProperties(this, this.tileCleaningStation);
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player)
-    {
+    public boolean canInteractWith(EntityPlayer player) {
         return this.tileCleaningStation.isUseableByPlayer(player);
     }
 }

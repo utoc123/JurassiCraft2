@@ -14,12 +14,10 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
-public class PeatBlock extends Block
-{
+public class PeatBlock extends Block {
     public static final PropertyInteger MOISTURE = PropertyInteger.create("moisture", 0, 7);
 
-    public PeatBlock()
-    {
+    public PeatBlock() {
         super(Material.GROUND);
         this.setCreativeTab(TabHandler.PLANTS);
         this.setSoundType(SoundType.GROUND);
@@ -29,33 +27,23 @@ public class PeatBlock extends Block
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         int moisture = state.getValue(MOISTURE);
 
-        if (!this.hasWater(world, pos) && !world.isRainingAt(pos.up()) && !(world.getBiomeGenForCoords(pos) instanceof BiomeSwamp))
-        {
-            if (moisture > 0)
-            {
+        if (!this.hasWater(world, pos) && !world.isRainingAt(pos.up()) && !(world.getBiomeGenForCoords(pos) instanceof BiomeSwamp)) {
+            if (moisture > 0) {
                 world.setBlockState(pos, state.withProperty(MOISTURE, moisture - 1), 2);
-            }
-            else
-            {
+            } else {
                 world.setBlockState(pos, Blocks.DIRT.getDefaultState());
             }
-        }
-        else if (moisture < 7)
-        {
+        } else if (moisture < 7) {
             world.setBlockState(pos, state.withProperty(MOISTURE, 7), 2);
         }
     }
 
-    private boolean hasWater(World world, BlockPos pos)
-    {
-        for (BlockPos.MutableBlockPos nearPos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4)))
-        {
-            if (world.getBlockState(nearPos).getMaterial() == Material.WATER)
-            {
+    private boolean hasWater(World world, BlockPos pos) {
+        for (BlockPos.MutableBlockPos nearPos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
+            if (world.getBlockState(nearPos).getMaterial() == Material.WATER) {
                 return true;
             }
         }
@@ -64,20 +52,17 @@ public class PeatBlock extends Block
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(MOISTURE, meta & 7);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(MOISTURE);
     }
 
     @Override
-    public BlockStateContainer createBlockState()
-    {
+    public BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, MOISTURE);
     }
 }

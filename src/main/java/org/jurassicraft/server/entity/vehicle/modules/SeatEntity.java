@@ -21,21 +21,18 @@ import javax.vecmathimpl.Matrix4d;
 import javax.vecmathimpl.Vector3d;
 import java.util.List;
 
-public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
-{
+public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     private int id;
     private float offsetX, offsetY, offsetZ;
 
     private int parentId;
     private CarEntity parent;
 
-    public SeatEntity(World world)
-    {
+    public SeatEntity(World world) {
         super(world);
     }
 
-    public SeatEntity(World world, CarEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height)
-    {
+    public SeatEntity(World world, CarEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height) {
         super(world);
         this.setSize(width, height + offsetY);
         this.id = id;
@@ -47,69 +44,59 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (parent == null && !worldObj.isRemote)
-        {
+        if (this.parent == null && !this.worldObj.isRemote) {
             this.setDead();
             return;
-        }
-        else if (parent != null)
-        {
+        } else if (this.parent != null) {
             this.updatePosition();
         }
 
-        parent = null;
+        this.parent = null;
     }
 
-    private void updatePosition()
-    {
+    private void updatePosition() {
         Matrix4d matrix = new Matrix4d();
         matrix.setIdentity();
         Matrix4d transform = new Matrix4d();
         transform.setIdentity();
-        transform.setTranslation(new Vector3d(parent.posX, parent.posY, parent.posZ));
+        transform.setTranslation(new Vector3d(this.parent.posX, this.parent.posY, this.parent.posZ));
         matrix.mul(transform);
         transform.setIdentity();
-        transform.rotY(Math.toRadians(180.0F - parent.rotationYaw));
+        transform.rotY(Math.toRadians(180.0F - this.parent.rotationYaw));
         matrix.mul(transform);
         transform.setIdentity();
-        transform.setTranslation(new Vector3d(offsetX, 0.0, offsetZ));
+        transform.setTranslation(new Vector3d(this.offsetX, 0.0, this.offsetZ));
         matrix.mul(transform);
 
         this.setPosition(matrix.m03, matrix.m13, matrix.m23);
 
-        this.prevRotationYaw = parent.prevRotationYaw;
-        this.rotationYaw = parent.rotationYaw;
+        this.prevRotationYaw = this.parent.prevRotationYaw;
+        this.rotationYaw = this.parent.rotationYaw;
     }
 
     @Override
-    public Entity getControllingPassenger()
-    {
-        List<Entity> passengers = getPassengers();
+    public Entity getControllingPassenger() {
+        List<Entity> passengers = this.getPassengers();
 
         return passengers.size() > 0 ? passengers.get(0) : null;
     }
 
     @Override
-    public boolean canBeCollidedWith()
-    {
+    public boolean canBeCollidedWith() {
         return true;
     }
 
-    public void updateParent(CarEntity parent)
-    {
+    public void updateParent(CarEntity parent) {
         this.parent = parent;
         this.parentId = parent.getEntityId();
     }
 
     @Override
-    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d hitPosition, ItemStack stack, EnumHand hand)
-    {
-        if (getControllingPassenger() == null)
-        {
+    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d hitPosition, ItemStack stack, EnumHand hand) {
+        if (this.getControllingPassenger() == null) {
             player.startRiding(this);
 
             return EnumActionResult.SUCCESS;
@@ -119,38 +106,31 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
     }
 
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound compound)
-    {
+    protected void readEntityFromNBT(NBTTagCompound compound) {
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound compound)
-    {
+    protected void writeEntityToNBT(NBTTagCompound compound) {
     }
 
     @Override
-    public void updatePassenger(Entity passenger)
-    {
+    public void updatePassenger(Entity passenger) {
         super.updatePassenger(passenger);
 
-        if (this.isPassenger(passenger))
-        {
+        if (this.isPassenger(passenger)) {
             passenger.rotationYaw += this.rotationYaw - this.prevRotationYaw;
-            applyPassengerRotation(passenger);
+            this.applyPassengerRotation(passenger);
         }
     }
 
-    protected void applyPassengerRotation(Entity passenger)
-    {
+    protected void applyPassengerRotation(Entity passenger) {
         passenger.setRenderYawOffset(this.rotationYaw);
 
-        if (passenger instanceof EntityLivingBase)
-        {
+        if (passenger instanceof EntityLivingBase) {
             ((EntityLivingBase) passenger).prevRenderYawOffset = this.prevRotationYaw;
         }
 
@@ -163,67 +143,58 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void applyOrientationToEntity(Entity entityToUpdate)
-    {
+    public void applyOrientationToEntity(Entity entityToUpdate) {
         this.applyPassengerRotation(entityToUpdate);
     }
 
     @Override
-    public void writeSpawnData(ByteBuf buffer)
-    {
-        buffer.writeByte(id);
-        buffer.writeFloat(offsetX);
-        buffer.writeFloat(offsetY);
-        buffer.writeFloat(offsetZ);
-        buffer.writeFloat(width);
-        buffer.writeFloat(height);
-        buffer.writeInt(parentId);
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeByte(this.id);
+        buffer.writeFloat(this.offsetX);
+        buffer.writeFloat(this.offsetY);
+        buffer.writeFloat(this.offsetZ);
+        buffer.writeFloat(this.width);
+        buffer.writeFloat(this.height);
+        buffer.writeInt(this.parentId);
     }
 
     @Override
-    public void readSpawnData(ByteBuf buffer)
-    {
-        id = buffer.readByte();
-        offsetX = buffer.readFloat();
-        offsetY = buffer.readFloat();
-        offsetZ = buffer.readFloat();
-        setSize(buffer.readFloat(), buffer.readFloat());
+    public void readSpawnData(ByteBuf buffer) {
+        this.id = buffer.readByte();
+        this.offsetX = buffer.readFloat();
+        this.offsetY = buffer.readFloat();
+        this.offsetZ = buffer.readFloat();
+        this.setSize(buffer.readFloat(), buffer.readFloat());
 
-        Entity parent = worldObj.getEntityByID(buffer.readInt());
+        Entity parent = this.worldObj.getEntityByID(buffer.readInt());
 
-        if (parent instanceof CarEntity)
-        {
+        if (parent instanceof CarEntity) {
             this.parent = (CarEntity) parent;
             this.parent.addSeat(this);
         }
     }
 
     @Override
-    public AxisAlignedBB getCollisionBox(Entity entity)
-    {
-        return getEntityBoundingBox();
+    public AxisAlignedBB getCollisionBox(Entity entity) {
+        return this.getEntityBoundingBox();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
-    {
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
     }
 
     @Override
-    public double getMountedYOffset()
-    {
-        return offsetY;
+    public double getMountedYOffset() {
+        return this.offsetY;
     }
 
-    public int getId()
-    {
-        return id;
+    public int getId() {
+        return this.id;
     }
 
     @Override
-    protected boolean canTriggerWalking()
-    {
+    protected boolean canTriggerWalking() {
         return false;
     }
 }

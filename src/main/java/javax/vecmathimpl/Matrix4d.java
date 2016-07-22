@@ -30,8 +30,7 @@ package javax.vecmathimpl;
  * A double precision floating point 4 by 4 matrix.
  * Primarily to support 3D rotations.
  */
-public class Matrix4d implements java.io.Serializable, Cloneable
-{
+public class Matrix4d implements java.io.Serializable, Cloneable {
 
     // Compatible with 1.1
     static final long serialVersionUID = 8223903484171633710L;
@@ -122,7 +121,6 @@ public class Matrix4d implements java.io.Serializable, Cloneable
     */
     private static final double EPS = 1.0E-10;
 
-
     /**
      * Constructs and initializes a Matrix4d from the specified 16 values.
      *
@@ -146,8 +144,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
     public Matrix4d(double m00, double m01, double m02, double m03,
                     double m10, double m11, double m12, double m13,
                     double m20, double m21, double m22, double m23,
-                    double m30, double m31, double m32, double m33)
-    {
+                    double m30, double m31, double m32, double m33) {
         this.m00 = m00;
         this.m01 = m01;
         this.m02 = m02;
@@ -167,7 +164,6 @@ public class Matrix4d implements java.io.Serializable, Cloneable
         this.m31 = m31;
         this.m32 = m32;
         this.m33 = m33;
-
     }
 
     /**
@@ -176,8 +172,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param v the array of length 16 containing in order
      */
-    public Matrix4d(double[] v)
-    {
+    public Matrix4d(double[] v) {
         this.m00 = v[0];
         this.m01 = v[1];
         this.m02 = v[2];
@@ -197,7 +192,6 @@ public class Matrix4d implements java.io.Serializable, Cloneable
         this.m31 = v[13];
         this.m32 = v[14];
         this.m33 = v[15];
-
     }
 
     /**
@@ -206,8 +200,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param m1 the source matrix
      */
-    public Matrix4d(Matrix4d m1)
-    {
+    public Matrix4d(Matrix4d m1) {
         this.m00 = m1.m00;
         this.m01 = m1.m01;
         this.m02 = m1.m02;
@@ -227,14 +220,12 @@ public class Matrix4d implements java.io.Serializable, Cloneable
         this.m31 = m1.m31;
         this.m32 = m1.m32;
         this.m33 = m1.m33;
-
     }
 
     /**
      * Constructs and initializes a Matrix4d to all zeros.
      */
-    public Matrix4d()
-    {
+    public Matrix4d() {
         this.m00 = 0.0;
         this.m01 = 0.0;
         this.m02 = 0.0;
@@ -254,7 +245,6 @@ public class Matrix4d implements java.io.Serializable, Cloneable
         this.m31 = 0.0;
         this.m32 = 0.0;
         this.m33 = 0.0;
-
     }
 
     /**
@@ -263,8 +253,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      * @return the String representation
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return
                 this.m00 + ", " + this.m01 + ", " + this.m02 + ", " + this.m03 + "\n" +
                         this.m10 + ", " + this.m11 + ", " + this.m12 + ", " + this.m13 + "\n" +
@@ -275,8 +264,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
     /**
      * Sets this Matrix4d to identity.
      */
-    public final void setIdentity()
-    {
+    public final void setIdentity() {
         this.m00 = 1.0;
         this.m01 = 0.0;
         this.m02 = 0.0;
@@ -305,11 +293,10 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param trans the translational component
      */
-    public final void setTranslation(Vector3d trans)
-    {
-        m03 = trans.x;
-        m13 = trans.y;
-        m23 = trans.z;
+    public final void setTranslation(Vector3d trans) {
+        this.m03 = trans.x;
+        this.m13 = trans.y;
+        this.m23 = trans.z;
     }
 
     /**
@@ -318,8 +305,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param angle the angle to rotate about the X axis in radians
      */
-    public final void rotX(double angle)
-    {
+    public final void rotX(double angle) {
         double sinAngle, cosAngle;
 
         sinAngle = Math.sin(angle);
@@ -352,8 +338,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param angle the angle to rotate about the Y axis in radians
      */
-    public final void rotY(double angle)
-    {
+    public final void rotY(double angle) {
         double sinAngle, cosAngle;
 
         sinAngle = Math.sin(angle);
@@ -386,8 +371,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param angle the angle to rotate about the Z axis in radians
      */
-    public final void rotZ(double angle)
-    {
+    public final void rotZ(double angle) {
         double sinAngle, cosAngle;
 
         sinAngle = Math.sin(angle);
@@ -420,8 +404,7 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param m1 the other matrix
      */
-    public final void mul(Matrix4d m1)
-    {
+    public final void mul(Matrix4d m1) {
         double m00, m01, m02, m03,
                 m10, m11, m12, m13,
                 m20, m21, m22, m23,
@@ -488,22 +471,17 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      * @param m1 the matrix with which the comparison is made
      * @return true or false
      */
-    public boolean equals(Matrix4d m1)
-    {
-        try
-        {
+    public boolean equals(Matrix4d m1) {
+        try {
             return (this.m00 == m1.m00 && this.m01 == m1.m01 && this.m02 == m1.m02
                     && this.m03 == m1.m03 && this.m10 == m1.m10 && this.m11 == m1.m11
                     && this.m12 == m1.m12 && this.m13 == m1.m13 && this.m20 == m1.m20
                     && this.m21 == m1.m21 && this.m22 == m1.m22 && this.m23 == m1.m23
                     && this.m30 == m1.m30 && this.m31 == m1.m31 && this.m32 == m1.m32
                     && this.m33 == m1.m33);
-        }
-        catch (NullPointerException e2)
-        {
+        } catch (NullPointerException e2) {
             return false;
         }
-
     }
 
     /**
@@ -515,10 +493,8 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      * @return true or false
      */
     @Override
-    public boolean equals(Object t1)
-    {
-        try
-        {
+    public boolean equals(Object t1) {
+        try {
             Matrix4d m2 = (Matrix4d) t1;
             return (this.m00 == m2.m00 && this.m01 == m2.m01 && this.m02 == m2.m02
                     && this.m03 == m2.m03 && this.m10 == m2.m10 && this.m11 == m2.m11
@@ -526,13 +502,9 @@ public class Matrix4d implements java.io.Serializable, Cloneable
                     && this.m21 == m2.m21 && this.m22 == m2.m22 && this.m23 == m2.m23
                     && this.m30 == m2.m30 && this.m31 == m2.m31 && this.m32 == m2.m32
                     && this.m33 == m2.m33);
-        }
-        catch (ClassCastException e1)
-        {
+        } catch (ClassCastException e1) {
             return false;
-        }
-        catch (NullPointerException e2)
-        {
+        } catch (NullPointerException e2) {
             return false;
         }
     }
@@ -541,19 +513,17 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      * Transforms the normal parameter by this Matrix4d and places the value
      * into normalOut.  The fourth element of the normal is assumed to be zero.
      *
-     * @param normal    the input normal to be transformed.
+     * @param normal the input normal to be transformed.
      * @param normalOut the transformed normal
      */
-    public final void transform(Vector3d normal, Vector3d normalOut)
-    {
+    public final void transform(Vector3d normal, Vector3d normalOut) {
         double x, y;
-        x = m00 * normal.x + m01 * normal.y + m02 * normal.z;
-        y = m10 * normal.x + m11 * normal.y + m12 * normal.z;
-        normalOut.z = m20 * normal.x + m21 * normal.y + m22 * normal.z;
+        x = this.m00 * normal.x + this.m01 * normal.y + this.m02 * normal.z;
+        y = this.m10 * normal.x + this.m11 * normal.y + this.m12 * normal.z;
+        normalOut.z = this.m20 * normal.x + this.m21 * normal.y + this.m22 * normal.z;
         normalOut.x = x;
         normalOut.y = y;
     }
-
 
     /**
      * Transforms the normal parameter by this transform and places the value
@@ -561,13 +531,12 @@ public class Matrix4d implements java.io.Serializable, Cloneable
      *
      * @param normal the input normal to be transformed.
      */
-    public final void transform(Vector3d normal)
-    {
+    public final void transform(Vector3d normal) {
         double x, y;
 
-        x = m00 * normal.x + m01 * normal.y + m02 * normal.z;
-        y = m10 * normal.x + m11 * normal.y + m12 * normal.z;
-        normal.z = m20 * normal.x + m21 * normal.y + m22 * normal.z;
+        x = this.m00 * normal.x + this.m01 * normal.y + this.m02 * normal.z;
+        y = this.m10 * normal.x + this.m11 * normal.y + this.m12 * normal.z;
+        normal.z = this.m20 * normal.x + this.m21 * normal.y + this.m22 * normal.z;
         normal.x = x;
         normal.y = y;
     }

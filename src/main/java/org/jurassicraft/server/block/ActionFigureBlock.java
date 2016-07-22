@@ -24,12 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ActionFigureBlock extends OrientedBlock
-{
+public class ActionFigureBlock extends OrientedBlock {
     private static AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.7F, 0.6F, 0.7F);
 
-    public ActionFigureBlock()
-    {
+    public ActionFigureBlock() {
         super(Material.WOOD);
         this.setTickRandomly(true);
         this.setHardness(0.0F);
@@ -37,106 +35,88 @@ public class ActionFigureBlock extends OrientedBlock
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos)
-    {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
         return BOUNDS;
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos)
-    {
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos) {
         return BOUNDS.offset(pos);
     }
 
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos)
-    {
-        return super.canPlaceBlockAt(world, pos) && canBlockStay(world, pos);
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+        return super.canPlaceBlockAt(world, pos) && this.canBlockStay(world, pos);
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
-    {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
         super.neighborChanged(state, world, pos, block);
 
         this.checkAndDropBlock(world, pos, world.getBlockState(pos));
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         this.checkAndDropBlock(world, pos, state);
     }
 
-    protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state)
-    {
-        if (!this.canBlockStay(world, pos))
-        {
+    protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state) {
+        if (!this.canBlockStay(world, pos)) {
             this.dropBlockAsItem(world, pos, state, 0);
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
 
-    public boolean canBlockStay(World world, BlockPos pos)
-    {
+    public boolean canBlockStay(World world, BlockPos pos) {
         return world.getBlockState(pos.down()).isOpaqueCube();
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ItemHandler.ACTION_FIGURE;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
-    {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(ItemHandler.ACTION_FIGURE);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new ActionFigureTile();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 
-    protected ActionFigureTile getTile(IBlockAccess world, BlockPos pos)
-    {
+    protected ActionFigureTile getTile(IBlockAccess world, BlockPos pos) {
         return (ActionFigureTile) world.getTileEntity(pos);
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
-    {
-        if (!player.capabilities.isCreativeMode)
-        {
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        if (!player.capabilities.isCreativeMode) {
             this.dropBlockAsItem(world, pos, state, 0);
         }
 
@@ -144,14 +124,12 @@ public class ActionFigureBlock extends OrientedBlock
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> drops = new ArrayList<>(1);
 
-        ActionFigureTile tile = getTile(world, pos);
+        ActionFigureTile tile = this.getTile(world, pos);
 
-        if (tile != null)
-        {
+        if (tile != null) {
             drops.add(new ItemStack(ItemHandler.ACTION_FIGURE, 1, tile.dinosaur));
         }
 

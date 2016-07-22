@@ -20,31 +20,25 @@ import org.jurassicraft.server.plant.PlantHandler;
 import java.util.List;
 import java.util.Random;
 
-public class DNAExtractorTile extends MachineBaseTile
-{
+public class DNAExtractorTile extends MachineBaseTile {
     private static final int[] INPUTS = new int[] { 0, 1 };
     private static final int[] OUTPUTS = new int[] { 2, 3, 4, 5 };
 
     private ItemStack[] slots = new ItemStack[6];
 
     @Override
-    protected int getProcess(int slot)
-    {
+    protected int getProcess(int slot) {
         return 0;
     }
 
     @Override
-    protected boolean canProcess(int process)
-    {
-        ItemStack extraction = slots[0];
-        ItemStack storage = slots[1];
+    protected boolean canProcess(int process) {
+        ItemStack extraction = this.slots[0];
+        ItemStack storage = this.slots[1];
 
-        if (storage != null && storage.getItem() == ItemHandler.STORAGE_DISC && extraction != null && (extraction.getItem() == ItemHandler.AMBER || extraction.getItem() == ItemHandler.SEA_LAMPREY || extraction.getItem() == ItemHandler.DINOSAUR_MEAT) && (storage.getTagCompound() == null || !storage.getTagCompound().hasKey("Genetics")))
-        {
-            for (int i = 2; i < 6; i++)
-            {
-                if (slots[i] == null)
-                {
+        if (storage != null && storage.getItem() == ItemHandler.STORAGE_DISC && extraction != null && (extraction.getItem() == ItemHandler.AMBER || extraction.getItem() == ItemHandler.SEA_LAMPREY || extraction.getItem() == ItemHandler.DINOSAUR_MEAT) && (storage.getTagCompound() == null || !storage.getTagCompound().hasKey("Genetics"))) {
+            for (int i = 2; i < 6; i++) {
+                if (this.slots[i] == null) {
                     return true;
                 }
             }
@@ -54,21 +48,17 @@ public class DNAExtractorTile extends MachineBaseTile
     }
 
     @Override
-    protected void processItem(int process)
-    {
-        if (this.canProcess(process))
-        {
-            Random rand = worldObj.rand;
-            ItemStack input = slots[0];
+    protected void processItem(int process) {
+        if (this.canProcess(process)) {
+            Random rand = this.worldObj.rand;
+            ItemStack input = this.slots[0];
 
             ItemStack disc = null;
 
             Item item = input.getItem();
 
-            if (item == ItemHandler.AMBER || item == ItemHandler.SEA_LAMPREY)
-            {
-                if (input.getItemDamage() == 0)
-                {
+            if (item == ItemHandler.AMBER || item == ItemHandler.SEA_LAMPREY) {
+                if (input.getItemDamage() == 0) {
                     List<Dinosaur> possibleDinos = item == ItemHandler.AMBER ? EntityHandler.getDinosaursFromAmber() : EntityHandler.getDinosaursFromSeaLampreys();
 
                     Dinosaur dino = possibleDinos.get(rand.nextInt(possibleDinos.size()));
@@ -79,8 +69,7 @@ public class DNAExtractorTile extends MachineBaseTile
 
                     int quality = (rand.nextInt(10) + 1) * 5;
 
-                    if (rand.nextInt(2) > 0)
-                    {
+                    if (rand.nextInt(2) > 0) {
                         quality += 50;
                     }
 
@@ -90,9 +79,7 @@ public class DNAExtractorTile extends MachineBaseTile
                     dna.writeToNBT(nbt);
 
                     disc.setTagCompound(nbt);
-                }
-                else if (input.getItemDamage() == 1)
-                {
+                } else if (input.getItemDamage() == 1) {
                     List<Plant> possiblePlants = PlantHandler.getPrehistoricPlants();
                     Plant plant = possiblePlants.get(rand.nextInt(possiblePlants.size()));
 
@@ -102,8 +89,7 @@ public class DNAExtractorTile extends MachineBaseTile
 
                     int quality = (rand.nextInt(10) + 1) * 5;
 
-                    if (rand.nextInt(2) > 0)
-                    {
+                    if (rand.nextInt(2) > 0) {
                         quality += 50;
                     }
 
@@ -114,86 +100,73 @@ public class DNAExtractorTile extends MachineBaseTile
 
                     disc.setTagCompound(nbt);
                 }
-            }
-            else if (item == ItemHandler.DINOSAUR_MEAT)
-            {
+            } else if (item == ItemHandler.DINOSAUR_MEAT) {
                 disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, input.getItemDamage());
 
                 disc.setTagCompound(input.getTagCompound());
             }
 
-            int empty = getOutputSlot(disc);
+            int empty = this.getOutputSlot(disc);
 
-            mergeStack(empty, disc);
+            this.mergeStack(empty, disc);
 
-            decreaseStackSize(0);
-            decreaseStackSize(1);
+            this.decreaseStackSize(0);
+            this.decreaseStackSize(1);
         }
     }
 
     @Override
-    protected int getMainOutput(int process)
-    {
+    protected int getMainOutput(int process) {
         return 2;
     }
 
     @Override
-    protected int getStackProcessTime(ItemStack stack)
-    {
+    protected int getStackProcessTime(ItemStack stack) {
         return 2000;
     }
 
     @Override
-    protected int getProcessCount()
-    {
+    protected int getProcessCount() {
         return 1;
     }
 
     @Override
-    protected int[] getInputs()
-    {
+    protected int[] getInputs() {
         return INPUTS;
     }
 
     @Override
-    protected int[] getInputs(int process)
-    {
-        return getInputs();
+    protected int[] getInputs(int process) {
+        return this.getInputs();
     }
 
     @Override
-    protected int[] getOutputs()
-    {
+    protected int[] getOutputs() {
         return OUTPUTS;
     }
 
     @Override
-    protected ItemStack[] getSlots()
-    {
-        return slots;
+    protected ItemStack[] getSlots() {
+        return this.slots;
     }
 
     @Override
-    protected void setSlots(ItemStack[] slots)
-    {
+    protected void setSlots(ItemStack[] slots) {
         this.slots = slots;
     }
 
     @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
         return new DNAExtractorContainer(playerInventory, this);
     }
 
     @Override
-    public String getGuiID()
-    {
+    public String getGuiID() {
         return JurassiCraft.MODID + ":dna_extractor";
     }
 
     @Override
-    public String getName()
-    {
-        return hasCustomName() ? customName : "container.dna_extractor";
+    public String getName() {
+        return this.hasCustomName() ? this.customName : "container.dna_extractor";
     }
 }

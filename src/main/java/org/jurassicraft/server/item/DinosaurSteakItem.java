@@ -16,10 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class DinosaurSteakItem extends ItemFood
-{
-    public DinosaurSteakItem()
-    {
+public class DinosaurSteakItem extends ItemFood {
+    public DinosaurSteakItem() {
         super(8, 0.8F, true);
 
         this.setHasSubtypes(true);
@@ -28,19 +26,16 @@ public class DinosaurSteakItem extends ItemFood
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
+    public String getItemStackDisplayName(ItemStack stack) {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
         return new LangHelper("item.dinosaur_steak.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
-        if (dinosaur == null)
-        {
+        if (dinosaur == null) {
             dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
@@ -49,16 +44,13 @@ public class DinosaurSteakItem extends ItemFood
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }

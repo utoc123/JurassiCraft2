@@ -5,38 +5,28 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class RespondToAttackEntityAI extends EntityAIBase
-{
+public class RespondToAttackEntityAI extends EntityAIBase {
     private DinosaurEntity dinosaur;
     private EntityLivingBase attacker;
 
-    public RespondToAttackEntityAI(DinosaurEntity dinosaur)
-    {
+    public RespondToAttackEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        this.attacker = dinosaur.getAITarget();
+    public boolean shouldExecute() {
+        this.attacker = this.dinosaur.getAITarget();
 
-        if (attacker != null && !attacker.isDead && !(attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) && !(attacker instanceof EntityPlayer && ((EntityPlayer) attacker).capabilities.isCreativeMode))
-        {
-            return true;
-        }
-
-        return false;
+        return this.attacker != null && !this.attacker.isDead && !(this.attacker instanceof DinosaurEntity && ((DinosaurEntity) this.attacker).isCarcass()) && !(this.attacker instanceof EntityPlayer && ((EntityPlayer) this.attacker).capabilities.isCreativeMode);
     }
 
     @Override
-    public void startExecuting()
-    {
-        dinosaur.respondToAttack(attacker);
+    public void startExecuting() {
+        this.dinosaur.respondToAttack(this.attacker);
     }
 
     @Override
-    public boolean continueExecuting()
-    {
+    public boolean continueExecuting() {
         return false;
     }
 }

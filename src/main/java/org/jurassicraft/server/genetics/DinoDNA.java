@@ -10,76 +10,60 @@ import org.jurassicraft.server.lang.LangHelper;
 import java.util.List;
 import java.util.Locale;
 
-public class/* Bingo! */ DinoDNA
-{
+public class/* Bingo! */ DinoDNA {
     private int quality;
     private String genetics;
     private Dinosaur dinosaur;
 
-    public DinoDNA(Dinosaur dinosaur, int quality, String genetics)
-    {
+    public DinoDNA(Dinosaur dinosaur, int quality, String genetics) {
         this.quality = quality;
         this.genetics = genetics;
         this.dinosaur = dinosaur;
     }
 
-    public static DinoDNA fromStack(ItemStack stack)
-    {
+    public static DinoDNA fromStack(ItemStack stack) {
         return readFromNBT(stack.getTagCompound());
     }
 
-    public static DinoDNA readFromNBT(NBTTagCompound nbt)
-    {
+    public static DinoDNA readFromNBT(NBTTagCompound nbt) {
         return new DinoDNA(EntityHandler.getDinosaurById(nbt.getInteger("Dinosaur")), nbt.getInteger("DNAQuality"), nbt.getString("Genetics"));
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        nbt.setInteger("DNAQuality", quality);
-        nbt.setString("Genetics", genetics);
+    public void writeToNBT(NBTTagCompound nbt) {
+        nbt.setInteger("DNAQuality", this.quality);
+        nbt.setString("Genetics", this.genetics);
         nbt.setString("StorageId", "DinoDNA");
-        nbt.setInteger("Dinosaur", EntityHandler.getDinosaurId(dinosaur));
+        nbt.setInteger("Dinosaur", EntityHandler.getDinosaurId(this.dinosaur));
     }
 
-    public int getDNAQuality()
-    {
-        return quality;
+    public int getDNAQuality() {
+        return this.quality;
     }
 
-    public String getGenetics()
-    {
-        return genetics;
+    public String getGenetics() {
+        return this.genetics;
     }
 
-    public void addInformation(ItemStack stack, List<String> tooltip)
-    {
-        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build());
+    public void addInformation(ItemStack stack, List<String> tooltip) {
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.dinosaur.name").withProperty("dino", "entity.jurassicraft." + this.dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build());
 
         TextFormatting colour;
 
-        if (quality > 75)
-        {
+        if (this.quality > 75) {
             colour = TextFormatting.GREEN;
-        }
-        else if (quality > 50)
-        {
+        } else if (this.quality > 50) {
             colour = TextFormatting.YELLOW;
-        }
-        else if (quality > 25)
-        {
+        } else if (this.quality > 25) {
             colour = TextFormatting.GOLD;
-        }
-        else
-        {
+        } else {
             colour = TextFormatting.RED;
         }
 
-        tooltip.add(colour + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
-        tooltip.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", genetics).build());
+        tooltip.add(colour + new LangHelper("lore.dna_quality.name").withProperty("quality", this.quality + "").build());
+        tooltip.add(TextFormatting.BLUE + new LangHelper("lore.genetic_code.name").withProperty("code", this.genetics).build());
     }
 
-    public Dinosaur getDinosaur()
-    {
-        return dinosaur;
+    public Dinosaur getDinosaur() {
+        return this.dinosaur;
     }
 }

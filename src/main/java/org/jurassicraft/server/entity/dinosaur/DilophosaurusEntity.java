@@ -23,21 +23,18 @@ import org.jurassicraft.server.entity.ai.DilophosaurusMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.DilophosaurusSpitEntityAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttackMob
-{
+public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttackMob {
     private static final DataParameter<Boolean> WATCHER_HAS_TARGET = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
     private int targetCooldown;
 
-    public DilophosaurusEntity(World world)
-    {
+    public DilophosaurusEntity(World world) {
         super(world);
         this.target(EntityPlayer.class, EntityVillager.class, EntityAnimal.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, VelociraptorEntity.class);
-        this.tasks.addTask(1, new DilophosaurusMeleeEntityAI(this, dinosaur.getAttackSpeed()));
+        this.tasks.addTask(1, new DilophosaurusMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
     }
 
     @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase target, float distance)
-    {
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float distance) {
         this.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
 
         VenomEntity venom = new VenomEntity(this.worldObj, this);
@@ -50,46 +47,36 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     }
 
     @Override
-    public EntityAIBase getAttackAI()
-    {
-        return new DilophosaurusSpitEntityAI(this, dinosaur.getAttackSpeed(), 40, 10);
+    public EntityAIBase getAttackAI() {
+        return new DilophosaurusSpitEntityAI(this, this.dinosaur.getAttackSpeed(), 40, 10);
     }
 
     @Override
-    public void entityInit()
-    {
+    public void entityInit() {
         super.entityInit();
 
         this.dataManager.register(WATCHER_HAS_TARGET, false);
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (!worldObj.isRemote)
-        {
-            if (getAttackTarget() != null && targetCooldown < 50)
-            {
-                targetCooldown = 50 + getRNG().nextInt(30);
-            }
-            else if (targetCooldown > 0)
-            {
-                targetCooldown--;
+        if (!this.worldObj.isRemote) {
+            if (this.getAttackTarget() != null && this.targetCooldown < 50) {
+                this.targetCooldown = 50 + this.getRNG().nextInt(30);
+            } else if (this.targetCooldown > 0) {
+                this.targetCooldown--;
             }
 
-            this.dataManager.set(WATCHER_HAS_TARGET, hasTarget());
+            this.dataManager.set(WATCHER_HAS_TARGET, this.hasTarget());
         }
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entity)
-    {
-        if (super.attackEntityAsMob(entity))
-        {
-            if (entity instanceof EntityLivingBase)
-            {
+    public boolean attackEntityAsMob(Entity entity) {
+        if (super.attackEntityAsMob(entity)) {
+            if (entity instanceof EntityLivingBase) {
                 ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("poison"), 300, 1, false, false));
             }
 
@@ -99,16 +86,13 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
         return false;
     }
 
-    public boolean hasTarget()
-    {
-        return (worldObj.isRemote ? dataManager.get(WATCHER_HAS_TARGET) : getAttackTarget() != null || targetCooldown > 0) && !this.isCarcass() && !this.isSleeping();
+    public boolean hasTarget() {
+        return (this.worldObj.isRemote ? this.dataManager.get(WATCHER_HAS_TARGET) : this.getAttackTarget() != null || this.targetCooldown > 0) && !this.isCarcass() && !this.isSleeping();
     }
 
     @Override
-    public SoundEvent getSoundForAnimation(Animation animation)
-    {
-        switch (DinosaurAnimation.getAnimation(animation))
-        {
+    public SoundEvent getSoundForAnimation(Animation animation) {
+        switch (DinosaurAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.DILOPHOSAURUS_LIVING;
             case CALLING:

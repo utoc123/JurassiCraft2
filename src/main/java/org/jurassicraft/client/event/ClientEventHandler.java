@@ -23,18 +23,15 @@ import org.jurassicraft.client.render.entity.IDinosaurRenderer;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.lwjgl.opengl.GL11;
 
-public class ClientEventHandler
-{
+public class ClientEventHandler {
     private static final Minecraft MC = Minecraft.getMinecraft();
     private static final ResourceLocation PATREON_BADGE = new ResourceLocation(JurassiCraft.MODID, "textures/items/patreon_badge.png");
 
     private boolean isGUI;
 
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void preRender(RenderLivingEvent.Pre event)
-    {
-        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer)
-        {
+    public void preRender(RenderLivingEvent.Pre event) {
+        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer) {
             IDinosaurRenderer dinoRenderer = (IDinosaurRenderer) event.getRenderer();
             DinosaurEntity entityDinosaur = (DinosaurEntity) event.getEntity();
 
@@ -43,48 +40,39 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void postRender(RenderLivingEvent.Post event)
-    {
-        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer)
-        {
+    public void postRender(RenderLivingEvent.Post event) {
+        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer) {
             GlStateManager.color(1.0F, 1.0F, 1.0F);
         }
     }
 
     @SubscribeEvent
-    public void tick(TickEvent.ClientTickEvent event)
-    {
+    public void tick(TickEvent.ClientTickEvent event) {
         JurassiCraft.timerTicks++;
     }
 
     @SubscribeEvent
-    public void onGUIRender(GuiScreenEvent.DrawScreenEvent.Pre event)
-    {
-        isGUI = true;
+    public void onGUIRender(GuiScreenEvent.DrawScreenEvent.Pre event) {
+        this.isGUI = true;
     }
 
     @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent event)
-    {
-        if (event.phase == TickEvent.Phase.START)
-        {
-            isGUI = false;
+    public void onRenderTick(TickEvent.RenderTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            this.isGUI = false;
         }
     }
 
     @SubscribeEvent
-    public void onPlayerRender(RenderPlayerEvent.Post event)
-    {
+    public void onPlayerRender(RenderPlayerEvent.Post event) {
         EntityPlayer player = event.getEntityPlayer();
 
-        if (!player.isPlayerSleeping() && player.deathTime <= 0 && !player.isInvisible() && !player.isInvisibleToPlayer(MC.thePlayer) && ClientProxy.PATRONS.contains(player.getUniqueID()))
-        {
+        if (!player.isPlayerSleeping() && player.deathTime <= 0 && !player.isInvisible() && !player.isInvisibleToPlayer(MC.thePlayer) && ClientProxy.PATRONS.contains(player.getUniqueID())) {
             GlStateManager.pushMatrix();
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-            if (this.isGUI)
-            {
+            if (this.isGUI) {
                 OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
             }
 
@@ -94,15 +82,12 @@ public class ClientEventHandler
 
             GlStateManager.rotate(-ClientUtils.interpolate(this.isGUI ? player.renderYawOffset : player.prevRenderYawOffset, player.renderYawOffset, LLibrary.PROXY.getPartialTicks()), 0.0F, 1.0F, 0.0F);
 
-            if (player.isSneaking())
-            {
+            if (player.isSneaking()) {
                 GlStateManager.translate(0.0F, -0.2F, 0.0F);
                 GlStateManager.rotate((float) Math.toDegrees(-renderer.getMainModel().bipedBody.rotateAngleY), 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate((float) Math.toDegrees(0.5F), 1.0F, 0.0F, 0.0F);
                 GlStateManager.translate(0.0F, -0.15F, -0.68F);
-            }
-            else
-            {
+            } else {
                 renderer.getMainModel().bipedBody.postRender(0.0625F);
                 GlStateManager.rotate((float) Math.toDegrees(-renderer.getMainModel().bipedBody.rotateAngleY) * 2.0F, 0.0F, 1.0F, 0.0F);
             }
@@ -129,8 +114,7 @@ public class ClientEventHandler
 
             GlStateManager.popMatrix();
 
-            if (this.isGUI)
-            {
+            if (this.isGUI) {
                 OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
             }
         }

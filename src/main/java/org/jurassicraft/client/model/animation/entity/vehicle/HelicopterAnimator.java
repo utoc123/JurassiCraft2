@@ -8,11 +8,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 
 @SideOnly(Side.CLIENT)
-public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterBaseEntity>
-{
+public class HelicopterAnimator implements ITabulaModelAnimator<HelicopterBaseEntity> {
     @Override
-    public void setRotationAngles(TabulaModel model, HelicopterBaseEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
-    {
+    public void setRotationAngles(TabulaModel model, HelicopterBaseEntity entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch, float partialTicks) {
         AdvancedModelRenderer rotor = model.getCube("rotorbase_rotatehere");
         AdvancedModelRenderer tailrotor = model.getCube("tailrotor_rotatehere");
         rotor.rotateAngleY = entity.getRotorRotation();

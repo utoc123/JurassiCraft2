@@ -9,24 +9,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.VenomEntity;
 
 @SideOnly(Side.CLIENT)
-public class VenomRenderer implements IRenderFactory<VenomEntity>
-{
+public class VenomRenderer implements IRenderFactory<VenomEntity> {
     @Override
-    public Render<? super VenomEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super VenomEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<VenomEntity>
-    {
-        protected Renderer(RenderManager renderManager)
-        {
+    public static class Renderer extends Render<VenomEntity> {
+        protected Renderer(RenderManager renderManager) {
             super(renderManager);
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(VenomEntity entity)
-        {
+        protected ResourceLocation getEntityTexture(VenomEntity entity) {
             return null;
         }
     }

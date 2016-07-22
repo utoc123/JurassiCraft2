@@ -10,57 +10,47 @@ import org.jurassicraft.server.container.slot.SynthesizableItemSlot;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tile.DNASynthesizerTile;
 
-public class DNASynthesizerContainer extends MachineContainer
-{
+public class DNASynthesizerContainer extends MachineContainer {
     private DNASynthesizerTile dnaSynthesizer;
 
-    public DNASynthesizerContainer(InventoryPlayer playerInventory, TileEntity tileEntity)
-    {
+    public DNASynthesizerContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
 
         this.dnaSynthesizer = (DNASynthesizerTile) tileEntity;
-        this.addSlotToContainer(new SynthesizableItemSlot(dnaSynthesizer, 0, 38, 22));
-        this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 1, 24, 49, stack -> stack.getItem() == ItemHandler.EMPTY_TEST_TUBE));
-        this.addSlotToContainer(new CustomSlot(dnaSynthesizer, 2, 50, 49, stack -> stack.getItem() == ItemHandler.DNA_NUCLEOTIDES));
+        this.addSlotToContainer(new SynthesizableItemSlot(this.dnaSynthesizer, 0, 38, 22));
+        this.addSlotToContainer(new CustomSlot(this.dnaSynthesizer, 1, 24, 49, stack -> stack.getItem() == ItemHandler.EMPTY_TEST_TUBE));
+        this.addSlotToContainer(new CustomSlot(this.dnaSynthesizer, 2, 50, 49, stack -> stack.getItem() == ItemHandler.DNA_NUCLEOTIDES));
 
         int i;
 
-        for (i = 0; i < 2; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                this.addSlotToContainer(new Slot(dnaSynthesizer, i + (j * 2) + 3, i * 18 + 119, j * 18 + 26));
+        for (i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                this.addSlotToContainer(new Slot(this.dnaSynthesizer, i + (j * 2) + 3, i * 18 + 119, j * 18 + 26));
             }
         }
 
-        for (i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 9; ++j)
-            {
+        for (i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
                 this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
-        for (i = 0; i < 9; ++i)
-        {
+        for (i = 0; i < 9; ++i) {
             this.addSlotToContainer(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer player)
-    {
+    public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
 
-        if (!player.worldObj.isRemote)
-        {
-            dnaSynthesizer.closeInventory(player);
+        if (!player.worldObj.isRemote) {
+            this.dnaSynthesizer.closeInventory(player);
         }
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player)
-    {
-        return dnaSynthesizer.isUseableByPlayer(player);
+    public boolean canInteractWith(EntityPlayer player) {
+        return this.dnaSynthesizer.isUseableByPlayer(player);
     }
 }

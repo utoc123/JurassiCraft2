@@ -25,10 +25,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class ActionFigureItem extends Item
-{
-    public ActionFigureItem()
-    {
+public class ActionFigureItem extends Item {
+    public ActionFigureItem() {
         super();
 
         this.setCreativeTab(TabHandler.DECORATIONS);
@@ -36,16 +34,13 @@ public class ActionFigureItem extends Item
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         pos = pos.offset(side);
 
-        if (player.canPlayerEdit(pos, side, stack))
-        {
+        if (player.canPlayerEdit(pos, side, stack)) {
             Block block = BlockHandler.ACTION_FIGURE;
 
-            if (block.canPlaceBlockAt(world, pos))
-            {
+            if (block.canPlaceBlockAt(world, pos)) {
                 IBlockState state = block.getDefaultState();
                 world.setBlockState(pos, block.onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player));
                 block.onBlockPlacedBy(world, pos, state, player, stack);
@@ -53,8 +48,7 @@ public class ActionFigureItem extends Item
                 ActionFigureTile tile = (ActionFigureTile) world.getTileEntity(pos);
                 tile.setDinosaur(stack.getItemDamage());
 
-                if (!player.capabilities.isCreativeMode)
-                {
+                if (!player.capabilities.isCreativeMode) {
                     stack.stackSize--;
                 }
 
@@ -66,30 +60,25 @@ public class ActionFigureItem extends Item
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        String dinoName = getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public String getItemStackDisplayName(ItemStack stack) {
+        String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.action_figure.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         return EntityHandler.getDinosaurById(stack.getMetadata());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }

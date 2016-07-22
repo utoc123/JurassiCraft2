@@ -8,11 +8,9 @@ import org.jurassicraft.client.model.animation.DinosaurAnimator;
 import org.jurassicraft.server.entity.dinosaur.TriceratopsEntity;
 
 @SideOnly(Side.CLIENT)
-public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity>
-{
+public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, TriceratopsEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
+    protected void performAnimations(DinosaurModel model, TriceratopsEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer head = model.getCube("Head");
         AdvancedModelRenderer neck3 = model.getCube("Neck 3");
         AdvancedModelRenderer neck2 = model.getCube("Neck 2");

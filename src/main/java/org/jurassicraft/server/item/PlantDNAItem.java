@@ -20,29 +20,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PlantDNAItem extends Item
-{
-    public PlantDNAItem()
-    {
+public class PlantDNAItem extends Item {
+    public PlantDNAItem() {
         super();
         this.setCreativeTab(TabHandler.PLANTS);
         this.setHasSubtypes(true);
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        String plantName = getPlant(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public String getItemStackDisplayName(ItemStack stack) {
+        String plantName = this.getPlant(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.plant_dna.name").withProperty("plant", "plants." + plantName + ".name").build();
     }
 
-    public Plant getPlant(ItemStack stack)
-    {
+    public Plant getPlant(ItemStack stack) {
         Plant plant = PlantHandler.getPlantById(stack.getItemDamage());
 
-        if (plant == null)
-        {
+        if (plant == null) {
             plant = PlantHandler.SMALL_ROYAL_FERN;
         }
 
@@ -51,45 +46,36 @@ public class PlantDNAItem extends Item
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Plant> plants = new LinkedList<>(PlantHandler.getPrehistoricPlants());
 
         Map<Plant, Integer> ids = new HashMap<>();
 
-        for (Plant plant : plants)
-        {
+        for (Plant plant : plants) {
             ids.put(plant, PlantHandler.getPlantId(plant));
         }
 
         Collections.sort(plants);
 
-        for (Plant plant : plants)
-        {
-            if (plant.shouldRegister())
-            {
+        for (Plant plant : plants) {
+            if (plant.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, ids.get(plant)));
             }
         }
     }
 
-    public int getDNAQuality(EntityPlayer player, ItemStack stack)
-    {
+    public int getDNAQuality(EntityPlayer player, ItemStack stack) {
         int quality = player.capabilities.isCreativeMode ? 100 : 0;
 
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
-        if (nbt.hasKey("DNAQuality"))
-        {
+        if (nbt.hasKey("DNAQuality")) {
             quality = nbt.getInteger("DNAQuality");
-        }
-        else
-        {
+        } else {
             nbt.setInteger("DNAQuality", quality);
         }
 
@@ -99,26 +85,18 @@ public class PlantDNAItem extends Item
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
-    {
-        int quality = getDNAQuality(player, stack);
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
+        int quality = this.getDNAQuality(player, stack);
 
         TextFormatting formatting;
 
-        if (quality > 75)
-        {
+        if (quality > 75) {
             formatting = TextFormatting.GREEN;
-        }
-        else if (quality > 50)
-        {
+        } else if (quality > 50) {
             formatting = TextFormatting.YELLOW;
-        }
-        else if (quality > 25)
-        {
+        } else if (quality > 25) {
             formatting = TextFormatting.GOLD;
-        }
-        else
-        {
+        } else {
             formatting = TextFormatting.RED;
         }
 

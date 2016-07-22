@@ -5,29 +5,24 @@ import net.minecraft.init.PotionTypes;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.food.FoodHelper;
 
-public class OrontiumMackiiPlant extends Plant
-{
+public class OrontiumMackiiPlant extends Plant {
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Orontium Mackii";
     }
 
     @Override
-    public Block getBlock()
-    {
+    public Block getBlock() {
         return BlockHandler.ORONTIUM_MACKII;
     }
 
     @Override
-    public int getHealAmount()
-    {
+    public int getHealAmount() {
         return 1500;
     }
 
     @Override
-    public FoodHelper.FoodEffect[] getEffects()
-    {
+    public FoodHelper.FoodEffect[] getEffects() {
         return new FoodHelper.FoodEffect[] { new FoodHelper.FoodEffect(PotionTypes.WEAKNESS.getEffects().get(0), 50) };
     }
 }

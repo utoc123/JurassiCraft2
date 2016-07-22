@@ -13,8 +13,7 @@ import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 @SideOnly(Side.CLIENT)
-public class DNACombinatorHybridizerGui extends GuiContainer
-{
+public class DNACombinatorHybridizerGui extends GuiContainer {
     private static final ResourceLocation hybridizerTexture = new ResourceLocation("jurassicraft:textures/gui/dna_hybridizer.png");
     private static final ResourceLocation combinatorTexture = new ResourceLocation("jurassicraft:textures/gui/dna_combinator.png");
 
@@ -22,17 +21,15 @@ public class DNACombinatorHybridizerGui extends GuiContainer
     private DNACombinatorHybridizerTile inventory;
     private DNACombinatorHybridizerContainer container;
 
-    public DNACombinatorHybridizerGui(InventoryPlayer playerInv, DNACombinatorHybridizerTile inventory)
-    {
+    public DNACombinatorHybridizerGui(InventoryPlayer playerInv, DNACombinatorHybridizerTile inventory) {
         super(new DNACombinatorHybridizerContainer(playerInv, inventory));
         this.playerInventory = playerInv;
         this.inventory = inventory;
-        this.container = (DNACombinatorHybridizerContainer) inventorySlots;
+        this.container = (DNACombinatorHybridizerContainer) this.inventorySlots;
     }
 
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
         int guiX = (this.width - this.xSize) / 2;
@@ -42,31 +39,27 @@ public class DNACombinatorHybridizerGui extends GuiContainer
     }
 
     @Override
-    public void actionPerformed(GuiButton button)
-    {
-        if (button.id == 0)
-        {
-            boolean mode = !inventory.getMode();
-            container.updateSlots(mode);
-            inventory.setMode(mode);
-            JurassiCraft.NETWORK_WRAPPER.sendToServer(new SwitchHybridizerCombinatorMode(inventory.getPos(), mode));
+    public void actionPerformed(GuiButton button) {
+        if (button.id == 0) {
+            boolean mode = !this.inventory.getMode();
+            this.container.updateSlots(mode);
+            this.inventory.setMode(mode);
+            JurassiCraft.NETWORK_WRAPPER.sendToServer(new SwitchHybridizerCombinatorMode(this.inventory.getPos(), mode));
         }
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String name = this.inventory.getDisplayName().getUnformattedText();
         this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 4, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        boolean isHybridizer = inventory.getMode();
+        boolean isHybridizer = this.inventory.getMode();
         this.mc.getTextureManager().bindTexture(isHybridizer ? hybridizerTexture : combinatorTexture);
 
         int centerX = (this.width - this.xSize) / 2;
@@ -75,18 +68,14 @@ public class DNACombinatorHybridizerGui extends GuiContainer
 
         int progress = this.getProgress(isHybridizer ? 27 : 24);
 
-        if (isHybridizer)
-        {
+        if (isHybridizer) {
             this.drawTexturedModalRect(centerX + 86, centerY + 25, 176, 0, 4, progress);
-        }
-        else
-        {
+        } else {
             this.drawTexturedModalRect(centerX + 93, centerY + 30, 176, 0, 8, progress);
         }
     }
 
-    private int getProgress(int scale)
-    {
+    private int getProgress(int scale) {
         int j = this.inventory.getField(0);
         int k = this.inventory.getField(1);
         return k != 0 && j != 0 ? j * scale / k : 0;

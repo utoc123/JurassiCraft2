@@ -27,14 +27,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class EncasedFossilBlock extends Block implements SubBlocksBlock, CleanableItem
-{
+public class EncasedFossilBlock extends Block implements SubBlocksBlock, CleanableItem {
     public static final PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
 
     private int start;
 
-    public EncasedFossilBlock(int start)
-    {
+    public EncasedFossilBlock(int start) {
         super(Material.ROCK);
         this.setHardness(2.0F);
         this.setResistance(8.0F);
@@ -43,119 +41,100 @@ public class EncasedFossilBlock extends Block implements SubBlocksBlock, Cleanab
 
         this.start = start;
 
-        this.setDefaultState(blockState.getBaseState().withProperty(VARIANT, 0));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, 0));
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(VARIANT, meta);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(VARIANT);
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, VARIANT);
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state)
-    {
-        return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(state));
+    protected ItemStack createStackedBlock(IBlockState state) {
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(state));
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
-        return getMetaFromState(state);
+    public int damageDropped(IBlockState state) {
+        return this.getMetaFromState(state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
-    {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         Map<Integer, Dinosaur> dinosaurs = EntityHandler.getDinosaurs();
 
-        for (int i = 0; i < 16; i++)
-        {
-            Dinosaur dinosaur = dinosaurs.get(i + start);
+        for (int i = 0; i < 16; i++) {
+            Dinosaur dinosaur = dinosaurs.get(i + this.start);
 
-            if (dinosaur != null && dinosaur.shouldRegister())
-            {
+            if (dinosaur != null && dinosaur.shouldRegister()) {
                 list.add(new ItemStack(this, 1, i));
             }
         }
     }
 
-    public Dinosaur getDinosaur(int metadata)
-    {
-        return EntityHandler.getDinosaurById(start + metadata);
+    public Dinosaur getDinosaur(int metadata) {
+        return EntityHandler.getDinosaurById(this.start + metadata);
     }
 
     @Override
-    public ItemBlock getItemBlock()
-    {
+    public ItemBlock getItemBlock() {
         return new EncasedFossilItemBlock(this);
     }
 
     @Override
-    public String getHarvestTool(IBlockState state)
-    {
+    public String getHarvestTool(IBlockState state) {
         return "pickaxe";
     }
 
     @Override
-    public int getHarvestLevel(IBlockState state)
-    {
+    public int getHarvestLevel(IBlockState state) {
         return 1;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.SOLID;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return true;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return true;
     }
 
     @Override
-    public boolean canDropFromExplosion(Explosion explosion)
-    {
+    public boolean canDropFromExplosion(Explosion explosion) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public boolean isCleanable(ItemStack stack)
-    {
+    public boolean isCleanable(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getCleanedItem(ItemStack stack, Random random)
-    {
+    public ItemStack getCleanedItem(ItemStack stack, Random random) {
         int dinosaurId = BlockHandler.getDinosaurId((EncasedFossilBlock) Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
         String[] bones = EntityHandler.getDinosaurById(dinosaurId).getBones();
         return new ItemStack(ItemHandler.FOSSILS.get(bones[random.nextInt(bones.length)]), 1, dinosaurId);

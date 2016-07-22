@@ -17,14 +17,12 @@ import org.jurassicraft.server.tab.TabHandler;
 import java.util.Locale;
 import java.util.Random;
 
-public class AncientLogBlock extends BlockLog implements GrindableItem
-{
+public class AncientLogBlock extends BlockLog implements GrindableItem {
     private boolean petrified;
     private TreeType type;
 
-    public AncientLogBlock(TreeType treeType, boolean petrified)
-    {
-        this.setDefaultState(getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+    public AncientLogBlock(TreeType treeType, boolean petrified) {
+        this.setDefaultState(this.getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
         this.setHardness(2.0F);
         this.setResistance(0.5F);
         this.setSoundType(SoundType.WOOD);
@@ -34,8 +32,7 @@ public class AncientLogBlock extends BlockLog implements GrindableItem
 
         String name = treeType.name().toLowerCase(Locale.ENGLISH) + "_log";
 
-        if (petrified)
-        {
+        if (petrified) {
             name += "_petrified";
             this.setHarvestLevel("pickaxe", 2);
             this.setHardness(4.0F);
@@ -45,73 +42,60 @@ public class AncientLogBlock extends BlockLog implements GrindableItem
         this.setUnlocalizedName(name);
     }
 
-    public TreeType getType()
-    {
-        return type;
+    public TreeType getType() {
+        return this.type;
     }
 
-    public boolean isPetrified()
-    {
-        return petrified;
-    }
-
-    @Override
-    public Material getMaterial(IBlockState state)
-    {
-        return petrified ? Material.ROCK : super.getMaterial(state);
+    public boolean isPetrified() {
+        return this.petrified;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return getDefaultState().withProperty(LOG_AXIS, EnumAxis.values()[meta]);
+    public Material getMaterial(IBlockState state) {
+        return this.petrified ? Material.ROCK : super.getMaterial(state);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(LOG_AXIS, EnumAxis.values()[meta]);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(LOG_AXIS).ordinal();
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, LOG_AXIS);
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state)
-    {
+    protected ItemStack createStackedBlock(IBlockState state) {
         return new ItemStack(Item.getItemFromBlock(this), 1, 0);
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return 0;
     }
 
     @Override
-    public boolean isGrindable(ItemStack stack)
-    {
-        return isPetrified();
+    public boolean isGrindable(ItemStack stack) {
+        return this.isPetrified();
     }
 
     @Override
-    public ItemStack getGroundItem(ItemStack stack, Random random)
-    {
+    public ItemStack getGroundItem(ItemStack stack, Random random) {
         NBTTagCompound tag = stack.getTagCompound();
 
         int outputType = random.nextInt(6);
 
-        if (outputType == 5)
-        {
-            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, PlantHandler.getPlantId(type.getPlant()));
+        if (outputType == 5) {
+            ItemStack output = new ItemStack(ItemHandler.PLANT_SOFT_TISSUE, 1, PlantHandler.getPlantId(this.type.getPlant()));
             output.setTagCompound(tag);
             return output;
-        }
-        else if (outputType < 3)
-        {
+        } else if (outputType < 3) {
             return new ItemStack(Items.DYE, 1, 15);
         }
 

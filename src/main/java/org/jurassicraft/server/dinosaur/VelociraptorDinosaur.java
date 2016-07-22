@@ -4,10 +4,8 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class VelociraptorDinosaur extends Dinosaur
-{
-    public VelociraptorDinosaur()
-    {
+public class VelociraptorDinosaur extends Dinosaur {
+    public VelociraptorDinosaur() {
         super();
 
         this.setName("Velociraptor");
@@ -19,7 +17,7 @@ public class VelociraptorDinosaur extends Dinosaur
         this.setAttackSpeed(1.3);
         this.setHealth(10, 35);
         this.setStrength(1, 8);
-        this.setMaximumAge(fromDays(45));
+        this.setMaximumAge(this.fromDays(45));
         this.setEyeHeight(0.45F, 1.7F);
         this.setSizeX(0.5F, 1.0F);
         this.setSizeY(0.5F, 1.8F);

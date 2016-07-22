@@ -15,10 +15,8 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
-public class PlantFossilBlock extends Block implements CleanableItem
-{
-    public PlantFossilBlock()
-    {
+public class PlantFossilBlock extends Block implements CleanableItem {
+    public PlantFossilBlock() {
         super(Material.ROCK);
         this.setHardness(2.0F);
         this.setResistance(8.0F);
@@ -28,51 +26,37 @@ public class PlantFossilBlock extends Block implements CleanableItem
     }
 
     @Override
-    public boolean canDropFromExplosion(Explosion explosion)
-    {
+    public boolean canDropFromExplosion(Explosion explosion) {
         return false;
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
-        return getRandomOutput(rand, 1.0);
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return this.getRandomOutput(rand, 1.0);
     }
 
     @Override
-    public boolean isCleanable(ItemStack stack)
-    {
+    public boolean isCleanable(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getCleanedItem(ItemStack stack, Random random)
-    {
-        return new ItemStack(getRandomOutput(random, 2.0));
+    public ItemStack getCleanedItem(ItemStack stack, Random random) {
+        return new ItemStack(this.getRandomOutput(random, 2.0));
     }
 
-    private Item getRandomOutput(Random rand, double luck)
-    {
+    private Item getRandomOutput(Random rand, double luck) {
         double chance = rand.nextDouble() / luck;
 
-        if (chance < 0.35)
-        {
+        if (chance < 0.35) {
             return ItemHandler.PLANT_FOSSIL;
-        }
-        else if (chance < 0.50)
-        {
+        } else if (chance < 0.50) {
             return ItemHandler.TWIG_FOSSIL;
-        }
-        else if (chance < 0.75)
-        {
+        } else if (chance < 0.75) {
             return Items.COAL;
-        }
-        else if (chance < 0.85)
-        {
+        } else if (chance < 0.85) {
             return Items.FLINT;
-        }
-        else
-        {
+        } else {
             return Item.getItemFromBlock(Blocks.COBBLESTONE);
         }
     }

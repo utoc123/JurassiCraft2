@@ -14,36 +14,29 @@ import org.jurassicraft.server.tab.TabHandler;
 /**
  * Copyright 2016 Andrew O. Mellinger
  */
-public class DinoScannerItem extends Item
-{
+public class DinoScannerItem extends Item {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public DinoScannerItem()
-    {
+    public DinoScannerItem() {
         super();
         this.setCreativeTab(TabHandler.ITEMS);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand)
-    {
-        if (target instanceof DinosaurEntity && !player.getEntityWorld().isRemote)
-        {
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+        if (target instanceof DinosaurEntity && !player.getEntityWorld().isRemote) {
             DinosaurEntity dinosaur = (DinosaurEntity) target;
 
             // NOTE: Shift key is already used for some sort of inventory thing.
             // Command key on mac
-            if (GuiScreen.isCtrlKeyDown())
-            {
+            if (GuiScreen.isCtrlKeyDown()) {
                 int food = dinosaur.getMetabolism().getEnergy();
                 dinosaur.getMetabolism().setEnergy(food - 5000);
                 LOGGER.info("food: " + dinosaur.getMetabolism().getEnergy() + "/" + dinosaur.getMetabolism().getMaxEnergy() +
                         "(" + (dinosaur.getMetabolism().getMaxEnergy() * 0.875) + "/" +
                         (dinosaur.getMetabolism().getMaxEnergy() * 0.25) + ")");
-            }
-            else
-            {
+            } else {
                 dinosaur.writeStatsToLog();
             }
 

@@ -5,66 +5,54 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.List;
 
-public class TargetCarcassEntityAI extends EntityAIBase
-{
+public class TargetCarcassEntityAI extends EntityAIBase {
     private DinosaurEntity entity;
     private DinosaurEntity targetEntity;
 
-    public TargetCarcassEntityAI(DinosaurEntity entity)
-    {
+    public TargetCarcassEntityAI(DinosaurEntity entity) {
         this.entity = entity;
     }
 
     @Override
-    public void resetTask()
-    {
+    public void resetTask() {
         super.resetTask();
-        entity.resetAttackCooldown();
+        this.entity.resetAttackCooldown();
     }
 
     @Override
-    public void startExecuting()
-    {
-        entity.setAttackTarget(targetEntity);
+    public void startExecuting() {
+        this.entity.setAttackTarget(this.targetEntity);
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (!entity.getMetabolism().isHungry())
-        {
+    public boolean shouldExecute() {
+        if (!this.entity.getMetabolism().isHungry()) {
             return false;
         }
 
-        if (this.entity.getRNG().nextInt(10) != 0)
-        {
+        if (this.entity.getRNG().nextInt(10) != 0) {
             return false;
         }
 
-        if (!(entity.herd != null && entity.herd.fleeing) && !entity.isSleeping())
-        {
-            List<DinosaurEntity> entities = this.entity.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, entity.getEntityBoundingBox().expand(16, 16, 16));
+        if (!(this.entity.herd != null && this.entity.herd.fleeing) && !this.entity.isSleeping()) {
+            List<DinosaurEntity> entities = this.entity.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, this.entity.getEntityBoundingBox().expand(16, 16, 16));
 
-            if (entities.size() > 0)
-            {
-                targetEntity = null;
+            if (entities.size() > 0) {
+                this.targetEntity = null;
                 int bestScore = Integer.MAX_VALUE;
 
-                for (DinosaurEntity entity : entities)
-                {
-                    if (entity.isCarcass())
-                    {
+                for (DinosaurEntity entity : entities) {
+                    if (entity.isCarcass()) {
                         int score = (int) this.entity.getDistanceSqToEntity(entity);
 
-                        if (score < bestScore)
-                        {
+                        if (score < bestScore) {
                             bestScore = score;
-                            targetEntity = entity;
+                            this.targetEntity = entity;
                         }
                     }
                 }
 
-                return targetEntity != null;
+                return this.targetEntity != null;
             }
         }
 

@@ -8,28 +8,23 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.tile.FeederTile;
 
-public class FeederContainer extends MachineContainer
-{
+public class FeederContainer extends MachineContainer {
     private FeederTile tile;
 
-    public FeederContainer(InventoryPlayer inventory, FeederTile tile)
-    {
+    public FeederContainer(InventoryPlayer inventory, FeederTile tile) {
         super(tile);
 
         this.tile = tile;
 
         int id = 0;
 
-        for (int x = 0; x < 9; x++)
-        {
+        for (int x = 0; x < 9; x++) {
             this.addSlotToContainer(new Slot(inventory, id, 8 + x * 18, 142));
             id++;
         }
 
-        for (int y = 0; y < 3; y++)
-        {
-            for (int x = 0; x < 9; x++)
-            {
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 9; x++) {
                 this.addSlotToContainer(new Slot(inventory, id, 8 + x * 18, 84 + y * 18));
                 id++;
             }
@@ -37,19 +32,15 @@ public class FeederContainer extends MachineContainer
 
         id = 0;
 
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
                 this.addSlotToContainer(new CustomSlot(tile, id, 26 + x * 18, 18 + y * 18, stack -> FoodHelper.isEdible(Diet.CARNIVORE, stack.getItem())));
                 id++;
             }
         }
 
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
                 this.addSlotToContainer(new CustomSlot(tile, id, 98 + x * 18, 18 + y * 18, stack -> FoodHelper.isEdible(Diet.HERBIVORE, stack.getItem())));
                 id++;
             }
@@ -57,8 +48,7 @@ public class FeederContainer extends MachineContainer
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player)
-    {
-        return tile.isUseableByPlayer(player);
+    public boolean canInteractWith(EntityPlayer player) {
+        return this.tile.isUseableByPlayer(player);
     }
 }

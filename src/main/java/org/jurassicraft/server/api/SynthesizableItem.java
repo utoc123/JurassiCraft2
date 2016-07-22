@@ -7,25 +7,18 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
-public interface SynthesizableItem
-{
-    static SynthesizableItem getSynthesizableItem(ItemStack stack)
-    {
-        if (stack != null)
-        {
+public interface SynthesizableItem {
+    static SynthesizableItem getSynthesizableItem(ItemStack stack) {
+        if (stack != null) {
             Item item = stack.getItem();
 
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).getBlock();
 
-                if (block instanceof SynthesizableItem)
-                {
+                if (block instanceof SynthesizableItem) {
                     return (SynthesizableItem) block;
                 }
-            }
-            else if (item instanceof SynthesizableItem)
-            {
+            } else if (item instanceof SynthesizableItem) {
                 return (SynthesizableItem) item;
             }
         }
@@ -33,8 +26,7 @@ public interface SynthesizableItem
         return null;
     }
 
-    static boolean isSynthesizableItem(ItemStack stack)
-    {
+    static boolean isSynthesizableItem(ItemStack stack) {
         return getSynthesizableItem(stack) != null;
     }
 

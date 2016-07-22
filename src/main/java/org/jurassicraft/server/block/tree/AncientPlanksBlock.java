@@ -7,10 +7,8 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Locale;
 
-public class AncientPlanksBlock extends Block
-{
-    public AncientPlanksBlock(TreeType treeType)
-    {
+public class AncientPlanksBlock extends Block {
+    public AncientPlanksBlock(TreeType treeType) {
         super(Material.WOOD);
         this.setHardness(2.0F);
         this.setResistance(0.5F);

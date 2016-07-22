@@ -2,8 +2,7 @@ package org.jurassicraft.server.period;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum TimePeriod implements IStringSerializable
-{
+public enum TimePeriod implements IStringSerializable {
     QUATERNARY("quaternary", 2.588F, 0.0F),
     NEOGENE("neogene", 23.03F, 2.589F),
     PALEOGENE("paleogene", 66.0F, 23.04F),
@@ -21,42 +20,35 @@ public enum TimePeriod implements IStringSerializable
     private final float startTime;
     private final float endTime;
 
-    TimePeriod(String name, float startTime, float endTime)
-    {
+    TimePeriod(String name, float startTime, float endTime) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public static int getStartYLevel(TimePeriod period)
-    {
+    public static int getStartYLevel(TimePeriod period) {
         return 64 - (int) (period.getStartTime() != 0 ? period.getStartTime() * 64.0F / 541.0F : 0);
     }
 
-    public static int getEndYLevel(TimePeriod period)
-    {
+    public static int getEndYLevel(TimePeriod period) {
         return 64 - (int) (period.getEndTime() != 0 ? period.getEndTime() * 64.0F / 541.0F : 0);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.name;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public float getStartTime()
-    {
+    public float getStartTime() {
         return this.startTime;
     }
 
-    public float getEndTime()
-    {
+    public float getEndTime() {
         return this.endTime;
     }
 }

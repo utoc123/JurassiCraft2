@@ -11,15 +11,13 @@ import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.tile.CultivatorTile;
 
 @SideOnly(Side.CLIENT)
-public class CultivateGui extends GuiContainer
-{
+public class CultivateGui extends GuiContainer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator.png");
     private static final ResourceLocation NUTRIENTS_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_nutrients.png");
     private final InventoryPlayer playerInventory;
     private CultivatorTile cultivator;
 
-    public CultivateGui(InventoryPlayer inventoryPlayer, CultivatorTile entity)
-    {
+    public CultivateGui(InventoryPlayer inventoryPlayer, CultivatorTile entity) {
         super(new CultivateContainer(inventoryPlayer, entity));
         this.playerInventory = inventoryPlayer;
         this.cultivator = entity;
@@ -28,18 +26,15 @@ public class CultivateGui extends GuiContainer
     }
 
     @Override
-    public void updateScreen()
-    {
-        if (this.cultivator.isProcessing(0))
-        {
+    public void updateScreen() {
+        if (this.cultivator.isProcessing(0)) {
             this.mc.thePlayer.closeScreen();
-            this.mc.displayGuiScreen(new CultivateProcessGui(cultivator));
+            this.mc.displayGuiScreen(new CultivateProcessGui(this.cultivator));
         }
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int i, int j)
-    {
+    protected void drawGuiContainerForegroundLayer(int i, int j) {
         String name = this.cultivator.getDisplayName().getUnformattedText();
         this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2 - 45, 10, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
@@ -51,28 +46,26 @@ public class CultivateGui extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3)
-    {
-        mc.renderEngine.bindTexture(TEXTURE);
-        drawTexturedModalRect(this.width / 2 - xSize / 2, this.height / 2 - ySize / 2, 0, 0, 176, 188);
+    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+        this.mc.renderEngine.bindTexture(TEXTURE);
+        this.drawTexturedModalRect(this.width / 2 - this.xSize / 2, this.height / 2 - this.ySize / 2, 0, 0, 176, 188);
 
-        this.drawTexturedModalRect(guiLeft + 48, guiTop + 18, 0, 188, 42, 67 - getScaled(cultivator.getWaterLevel(), 3, 67));
+        this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 18, 0, 188, 42, 67 - this.getScaled(this.cultivator.getWaterLevel(), 3, 67));
 
-        mc.renderEngine.bindTexture(NUTRIENTS_TEXTURE);
-        drawTexturedModalRect(this.width / 2 + 1, this.height / 2 - ySize / 2, 0, 0, 176, 166);
+        this.mc.renderEngine.bindTexture(NUTRIENTS_TEXTURE);
+        this.drawTexturedModalRect(this.width / 2 + 1, this.height / 2 - this.ySize / 2, 0, 0, 176, 166);
 
-        int maxNutrients = cultivator.getMaxNutrients();
+        int maxNutrients = this.cultivator.getMaxNutrients();
 
-        int nutrientsX = guiLeft + 190;
+        int nutrientsX = this.guiLeft + 190;
 
-        this.drawTexturedModalRect(nutrientsX, guiTop + 56, 0, 166, getScaled(cultivator.getProximates(), maxNutrients, 150), 9);
-        this.drawTexturedModalRect(nutrientsX, guiTop + 82, 0, 175, getScaled(cultivator.getMinerals(), maxNutrients, 150), 9);
-        this.drawTexturedModalRect(nutrientsX, guiTop + 108, 0, 184, getScaled(cultivator.getVitamins(), maxNutrients, 150), 9);
-        this.drawTexturedModalRect(nutrientsX, guiTop + 134, 0, 193, getScaled(cultivator.getLipids(), maxNutrients, 150), 9);
+        this.drawTexturedModalRect(nutrientsX, this.guiTop + 56, 0, 166, this.getScaled(this.cultivator.getProximates(), maxNutrients, 150), 9);
+        this.drawTexturedModalRect(nutrientsX, this.guiTop + 82, 0, 175, this.getScaled(this.cultivator.getMinerals(), maxNutrients, 150), 9);
+        this.drawTexturedModalRect(nutrientsX, this.guiTop + 108, 0, 184, this.getScaled(this.cultivator.getVitamins(), maxNutrients, 150), 9);
+        this.drawTexturedModalRect(nutrientsX, this.guiTop + 134, 0, 193, this.getScaled(this.cultivator.getLipids(), maxNutrients, 150), 9);
     }
 
-    private int getScaled(int value, int maxValue, int scale)
-    {
+    private int getScaled(int value, int maxValue, int scale) {
         return maxValue != 0 && value != 0 ? value * scale / maxValue : 0;
     }
 }

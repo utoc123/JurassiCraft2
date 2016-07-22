@@ -11,8 +11,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.tile.CultivatorTile;
 
 @SideOnly(Side.CLIENT)
-public class CultivateProcessGui extends GuiScreen
-{
+public class CultivateProcessGui extends GuiScreen {
     private CultivatorTile cultivator;
     private int xSize;
     private int ySize;
@@ -21,8 +20,7 @@ public class CultivateProcessGui extends GuiScreen
 
     private ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_progress.png");
 
-    public CultivateProcessGui(CultivatorTile entity)
-    {
+    public CultivateProcessGui(CultivatorTile entity) {
         super();
         this.cultivator = entity;
         this.xSize = 176;
@@ -30,32 +28,26 @@ public class CultivateProcessGui extends GuiScreen
     }
 
     @Override
-    public void updateScreen()
-    {
-        if (!this.cultivator.isProcessing(0))
-        {
+    public void updateScreen() {
+        if (!this.cultivator.isProcessing(0)) {
             this.mc.thePlayer.closeScreen();
         }
     }
 
     @Override
-    public boolean doesGuiPauseGame()
-    {
+    public boolean doesGuiPauseGame() {
         return false;
     }
 
     @Override
-    protected void keyTyped(char c, int key)
-    {
-        if (key == 1 || key == this.mc.gameSettings.keyBindInventory.getKeyCode())
-        {
+    protected void keyTyped(char c, int key) {
+        if (key == 1 || key == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
             this.mc.thePlayer.closeScreen();
         }
     }
 
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
         this.buttonList.clear();
@@ -67,40 +59,34 @@ public class CultivateProcessGui extends GuiScreen
     }
 
     @Override
-    public void actionPerformed(GuiButton button)
-    {
-        if (button.id == 0)
-        {
+    public void actionPerformed(GuiButton button) {
+        if (button.id == 0) {
             this.mc.thePlayer.closeScreen();
         }
     }
 
     @Override
-    public void drawScreen(int x, int y, float f)
-    {
+    public void drawScreen(int x, int y, float f) {
         this.drawDefaultBackground();
-        this.mc.renderEngine.bindTexture(TEXTURE);
+        this.mc.renderEngine.bindTexture(this.TEXTURE);
 
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-        this.drawTexturedModalRect(this.guiLeft + 13, this.guiTop + 49, 0, 107, getScaled(cultivator.getField(0), cultivator.getField(1), 150), 9);
+        this.drawTexturedModalRect(this.guiLeft + 13, this.guiTop + 49, 0, 107, this.getScaled(this.cultivator.getField(0), this.cultivator.getField(1), 150), 9);
 
         Dinosaur dinosaur = this.cultivator.getDinosaur();
 
         String name;
 
-        if (dinosaur != null)
-        {
+        if (dinosaur != null) {
             name = dinosaur.getName();
-        }
-        else
-        {
+        } else {
             name = "Unknown";
         }
 
         String cultivatingLang = I18n.format("container.cultivator.cultivating");
         String progressLang = I18n.format("container.cultivator.progress");
 
-        String progress = progressLang + ": " + getScaled(cultivator.getField(0), cultivator.getField(1), 100) + "%";
+        String progress = progressLang + ": " + this.getScaled(this.cultivator.getField(0), this.cultivator.getField(1), 100) + "%";
         String cultivating = cultivatingLang + ": " + name;
 
         this.fontRendererObj.drawString(cultivating, this.guiLeft + (this.xSize - this.fontRendererObj.getStringWidth(cultivating)) / 2, this.guiTop + 10, 4210752);
@@ -109,8 +95,7 @@ public class CultivateProcessGui extends GuiScreen
         super.drawScreen(x, y, f);
     }
 
-    private int getScaled(int value, int maxValue, int scale)
-    {
+    private int getScaled(int value, int maxValue, int scale) {
         return maxValue != 0 && value != 0 ? value * scale / maxValue : 0;
     }
 }

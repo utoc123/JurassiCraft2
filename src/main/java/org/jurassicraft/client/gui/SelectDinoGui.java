@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class SelectDinoGui extends GuiScreen
-{
+public class SelectDinoGui extends GuiScreen {
     private final Map<Integer, ResourceLocation> TEXTURES = new HashMap<>();
     public int columnsPerPage = 5;
     public int rowsPerPage = 3;
@@ -41,68 +40,60 @@ public class SelectDinoGui extends GuiScreen
 
     private List<Dinosaur> dinosaurs;
 
-    public SelectDinoGui(BlockPos pos, EnumFacing facing, EnumHand hand)
-    {
+    public SelectDinoGui(BlockPos pos, EnumFacing facing, EnumHand hand) {
         this.pos = pos;
         this.facing = facing;
         this.hand = hand;
     }
 
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
         this.buttonList.add(new GuiButton(0, (this.width - 150) / 2, this.height / 5 + 150, 150, 20, I18n.format("gui.cancel")));
-        this.buttonList.add(backward = new GuiButton(1, this.width / 2 - 105, this.height / 5 + 150, 20, 20, "<"));
-        this.buttonList.add(forward = new GuiButton(2, this.width / 2 + 85, this.height / 5 + 150, 20, 20, ">"));
+        this.buttonList.add(this.backward = new GuiButton(1, this.width / 2 - 105, this.height / 5 + 150, 20, 20, "<"));
+        this.buttonList.add(this.forward = new GuiButton(2, this.width / 2 + 85, this.height / 5 + 150, 20, 20, ">"));
 
-        page = 0;
+        this.page = 0;
 
-        dinosaurs = new ArrayList<>(EntityHandler.getRegisteredDinosaurs());
+        this.dinosaurs = new ArrayList<>(EntityHandler.getRegisteredDinosaurs());
 
-        Collections.sort(dinosaurs);
+        Collections.sort(this.dinosaurs);
 
-        pageCount = dinosaurs.size() / (columnsPerPage * rowsPerPage);
+        this.pageCount = this.dinosaurs.size() / (this.columnsPerPage * this.rowsPerPage);
 
-        enableDisablePages();
+        this.enableDisablePages();
     }
 
     @Override
-    protected void mouseReleased(int mouseX, int mouseY, int state)
-    {
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
         super.mouseReleased(mouseX, mouseY, state);
 
-        if (state == 0)
-        {
-            int signsPerPage = columnsPerPage * rowsPerPage;
+        if (state == 0) {
+            int signsPerPage = this.columnsPerPage * this.rowsPerPage;
             int xOffset = 0;
             int yOffset = 0;
 
-            pageCount = dinosaurs.size() / signsPerPage;
+            this.pageCount = this.dinosaurs.size() / signsPerPage;
 
-            for (int i = 0; i < dinosaurs.size(); i++)
-            {
-                if (i >= signsPerPage * page && i < signsPerPage * (page + 1))
-                {
+            for (int i = 0; i < this.dinosaurs.size(); i++) {
+                if (i >= signsPerPage * this.page && i < signsPerPage * (this.page + 1)) {
                     float scale = 3F;
 
-                    int x = (int) ((width / 2 - 140 + xOffset) / scale);
-                    int y = (int) ((height / 8 + yOffset - 20) / scale);
+                    int x = (int) ((this.width / 2 - 140 + xOffset) / scale);
+                    int y = (int) ((this.height / 8 + yOffset - 20) / scale);
 
                     float scaledMouseX = mouseX / scale;
                     float scaledMouseY = mouseY / scale;
 
-                    if (scaledMouseX > x && scaledMouseY > y && scaledMouseX < x + 16 && scaledMouseY < y + 16)
-                    {
-                        selectDinosaur(dinosaurs.get(i));
+                    if (scaledMouseX > x && scaledMouseY > y && scaledMouseX < x + 16 && scaledMouseY < y + 16) {
+                        this.selectDinosaur(this.dinosaurs.get(i));
                         break;
                     }
 
                     xOffset += 180 / scale;
 
-                    if (i % columnsPerPage >= columnsPerPage - 1)
-                    {
+                    if (i % this.columnsPerPage >= this.columnsPerPage - 1) {
                         xOffset = 0;
                         yOffset += 180 / scale;
                     }
@@ -112,114 +103,96 @@ public class SelectDinoGui extends GuiScreen
     }
 
     @Override
-    public void actionPerformed(GuiButton button)
-    {
+    public void actionPerformed(GuiButton button) {
         int id = button.id;
 
-        if (id == 1)
-        {
-            if (page > 0)
-            {
-                page--;
+        if (id == 1) {
+            if (this.page > 0) {
+                this.page--;
             }
-
-        }
-        else if (id == 2)
-        {
-            if (page < pageCount)
-            {
-                page++;
+        } else if (id == 2) {
+            if (this.page < this.pageCount) {
+                this.page++;
             }
-        }
-        else
-        {
-            mc.displayGuiScreen(null);
+        } else {
+            this.mc.displayGuiScreen(null);
         }
 
-        enableDisablePages();
+        this.enableDisablePages();
     }
 
-    public void enableDisablePages()
-    {
-        backward.enabled = !(page <= 0);
-        forward.enabled = page < pageCount;
+    public void enableDisablePages() {
+        this.backward.enabled = !(this.page <= 0);
+        this.forward.enabled = this.page < this.pageCount;
     }
 
-    public void selectDinosaur(Dinosaur dinosaur)
-    {
-        mc.displayGuiScreen(null);
+    public void selectDinosaur(Dinosaur dinosaur) {
+        this.mc.displayGuiScreen(null);
 
-        if (!mc.thePlayer.capabilities.isCreativeMode)
-        {
-            InventoryPlayer inventory = mc.thePlayer.inventory;
+        if (!this.mc.thePlayer.capabilities.isCreativeMode) {
+            InventoryPlayer inventory = this.mc.thePlayer.inventory;
             inventory.decrStackSize(inventory.currentItem, 1);
         }
 
-        JurassiCraft.NETWORK_WRAPPER.sendToServer(new PlacePaddockSignMessage(hand, facing, pos, dinosaur));
+        JurassiCraft.NETWORK_WRAPPER.sendToServer(new PlacePaddockSignMessage(this.hand, this.facing, this.pos, dinosaur));
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        int signsPerPage = columnsPerPage * rowsPerPage;
+        int signsPerPage = this.columnsPerPage * this.rowsPerPage;
         int xOffset = 0;
         int yOffset = 0;
 
-        pageCount = dinosaurs.size() / signsPerPage;
+        this.pageCount = this.dinosaurs.size() / signsPerPage;
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         int i = 0;
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (i >= signsPerPage * page && i < signsPerPage * (page + 1))
-            {
+        for (Dinosaur dinosaur : this.dinosaurs) {
+            if (i >= signsPerPage * this.page && i < signsPerPage * (this.page + 1)) {
                 int id = EntityHandler.getDinosaurId(dinosaur);
 
                 GlStateManager.pushMatrix();
 
-                ResourceLocation texture = TEXTURES.get(id);
+                ResourceLocation texture = this.TEXTURES.get(id);
 
-                if (texture == null)
-                {
+                if (texture == null) {
                     texture = new ResourceLocation(JurassiCraft.MODID, "textures/paddock/" + EntityHandler.getDinosaurById(id).getName().toLowerCase(Locale.ENGLISH) + ".png");
-                    TEXTURES.put(id, texture);
+                    this.TEXTURES.put(id, texture);
                 }
 
-                mc.getTextureManager().bindTexture(texture);
+                this.mc.getTextureManager().bindTexture(texture);
 
                 float scale = 3.0F;
 
                 GlStateManager.scale(scale, scale, scale);
 
-                int x = (int) ((width / 2 - 140 + xOffset) / scale);
-                int y = (int) ((height / 8 + yOffset - 20) / scale);
+                int x = (int) ((this.width / 2 - 140 + xOffset) / scale);
+                int y = (int) ((this.height / 8 + yOffset - 20) / scale);
 
                 float scaledMouseX = mouseX / scale;
                 float scaledMouseY = mouseY / scale;
 
-                if (scaledMouseX > x && scaledMouseY > y && scaledMouseX < x + 16 && scaledMouseY < y + 16)
-                {
-                    drawBoxOutline(x - 1, y - 1, 18, 17, 1, 0x60606060);
+                if (scaledMouseX > x && scaledMouseY > y && scaledMouseX < x + 16 && scaledMouseY < y + 16) {
+                    this.drawBoxOutline(x - 1, y - 1, 18, 17, 1, 0x60606060);
                 }
 
-                drawTexturedModalRect(x, y, 0, 0, 16, 16, 16, 16);
+                this.drawTexturedModalRect(x, y, 0, 0, 16, 16, 16, 16);
 
                 float textScale = 0.22F;
 
                 GlStateManager.scale(textScale, textScale, textScale);
 
-                drawCenteredString(mc.fontRendererObj, dinosaur.getName(), (int) ((x + 8) / textScale), (int) ((y + 17) / textScale), 0xFFFFFF);
+                this.drawCenteredString(this.mc.fontRendererObj, dinosaur.getName(), (int) ((x + 8) / textScale), (int) ((y + 17) / textScale), 0xFFFFFF);
 
                 GlStateManager.popMatrix();
 
                 xOffset += 180 / scale;
 
-                if (i % columnsPerPage >= columnsPerPage - 1)
-                {
+                if (i % this.columnsPerPage >= this.columnsPerPage - 1) {
                     xOffset = 0;
                     yOffset += 180 / scale;
                 }
@@ -229,8 +202,7 @@ public class SelectDinoGui extends GuiScreen
         }
     }
 
-    public void drawScaledRect(int x, int y, int width, int height, int colour)
-    {
+    public void drawScaledRect(int x, int y, int width, int height, int colour) {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
 
         float red = (float) (colour >> 24 & 255) / 255.0F;
@@ -256,16 +228,14 @@ public class SelectDinoGui extends GuiScreen
         GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
 
-    public void drawBoxOutline(int x, int y, int sizeX, int sizeY, int borderSize, int colour)
-    {
-        drawScaledRect(x, y, sizeX, borderSize, colour);
-        drawScaledRect(x + sizeX, y, borderSize, sizeY + borderSize, colour);
-        drawScaledRect(x, y + borderSize, borderSize, sizeY, colour);
-        drawScaledRect(x + borderSize, y + sizeY, sizeX - borderSize, borderSize, colour);
+    public void drawBoxOutline(int x, int y, int sizeX, int sizeY, int borderSize, int colour) {
+        this.drawScaledRect(x, y, sizeX, borderSize, colour);
+        this.drawScaledRect(x + sizeX, y, borderSize, sizeY + borderSize, colour);
+        this.drawScaledRect(x, y + borderSize, borderSize, sizeY, colour);
+        this.drawScaledRect(x + borderSize, y + sizeY, sizeX - borderSize, borderSize, colour);
     }
 
-    public void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height, int textureWidth, int textureHeight)
-    {
+    public void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height, int textureWidth, int textureHeight) {
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer vertexbuffer = tessellator.getBuffer();
         vertexbuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
@@ -277,8 +247,7 @@ public class SelectDinoGui extends GuiScreen
     }
 
     @Override
-    public boolean doesGuiPauseGame()
-    {
+    public boolean doesGuiPauseGame() {
         return false;
     }
 }

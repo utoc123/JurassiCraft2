@@ -2,8 +2,7 @@ package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
 
-public enum DinosaurAnimation
-{
+public enum DinosaurAnimation {
     IDLE(false, false, false),
     ATTACKING(false, false),
     INJURED(false, false),
@@ -36,41 +35,33 @@ public enum DinosaurAnimation
     private boolean doesBlockMovement;
     private boolean useInertia;
 
-    DinosaurAnimation(boolean hold, boolean blockMovement)
-    {
+    DinosaurAnimation(boolean hold, boolean blockMovement) {
         this(hold, blockMovement, true);
     }
 
-    DinosaurAnimation(boolean hold, boolean blockMovement, boolean useInertia)
-    {
+    DinosaurAnimation(boolean hold, boolean blockMovement, boolean useInertia) {
         this.hold = hold;
         this.doesBlockMovement = blockMovement;
         this.useInertia = useInertia;
     }
 
-    DinosaurAnimation()
-    {
+    DinosaurAnimation() {
         this(false, true);
     }
 
-    public static Animation[] getAnimations()
-    {
+    public static Animation[] getAnimations() {
         Animation[] animations = new Animation[values().length];
 
-        for (int i = 0; i < animations.length; i++)
-        {
+        for (int i = 0; i < animations.length; i++) {
             animations[i] = values()[i].get();
         }
 
         return animations;
     }
 
-    public static DinosaurAnimation getAnimation(Animation animation)
-    {
-        for (DinosaurAnimation animations : values())
-        {
-            if (animation.equals(animations.animation))
-            {
+    public static DinosaurAnimation getAnimation(Animation animation) {
+        for (DinosaurAnimation animations : values()) {
+            if (animation.equals(animations.animation)) {
                 return animations;
             }
         }
@@ -78,28 +69,23 @@ public enum DinosaurAnimation
         return DinosaurAnimation.IDLE;
     }
 
-    public Animation get()
-    {
-        if (animation == null)
-        {
-            animation = Animation.create(-1);
+    public Animation get() {
+        if (this.animation == null) {
+            this.animation = Animation.create(-1);
         }
 
-        return animation;
+        return this.animation;
     }
 
-    public boolean shouldHold()
-    {
-        return hold;
+    public boolean shouldHold() {
+        return this.hold;
     }
 
-    public boolean doesBlockMovement()
-    {
-        return doesBlockMovement;
+    public boolean doesBlockMovement() {
+        return this.doesBlockMovement;
     }
 
-    public boolean useInertia()
-    {
-        return useInertia;
+    public boolean useInertia() {
+        return this.useInertia;
     }
 }

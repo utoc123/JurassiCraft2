@@ -14,35 +14,29 @@ import org.jurassicraft.server.item.bones.FossilItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JurassiCraftFossilTab extends CreativeTabs
-{
+public class JurassiCraftFossilTab extends CreativeTabs {
     private int[] metas;
 
-    public JurassiCraftFossilTab(String label)
-    {
+    public JurassiCraftFossilTab(String label) {
         super(label);
 
-        List<Dinosaur> fossilDinosaurs = getFossilDinosaurs();
+        List<Dinosaur> fossilDinosaurs = this.getFossilDinosaurs();
         this.metas = new int[fossilDinosaurs.size()];
 
         int i = 0;
 
-        for (Dinosaur dino : fossilDinosaurs)
-        {
-            metas[i] = EntityHandler.getDinosaurId(dino);
+        for (Dinosaur dino : fossilDinosaurs) {
+            this.metas[i] = EntityHandler.getDinosaurId(dino);
 
             i++;
         }
     }
 
-    public List<Dinosaur> getFossilDinosaurs()
-    {
+    public List<Dinosaur> getFossilDinosaurs() {
         List<Dinosaur> fossilDinosaurs = new ArrayList<>();
 
-        for (Dinosaur dino : FossilItem.fossilDinosaurs.get("skull"))
-        {
-            if (dino.shouldRegister())
-            {
+        for (Dinosaur dino : FossilItem.fossilDinosaurs.get("skull")) {
+            if (dino.shouldRegister()) {
                 fossilDinosaurs.add(dino);
             }
         }
@@ -52,14 +46,12 @@ public class JurassiCraftFossilTab extends CreativeTabs
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack()
-    {
-        return new ItemStack(getTabIconItem(), 1, metas[((int) ((JurassiCraft.timerTicks / 20) % metas.length))]);
+    public ItemStack getIconItemStack() {
+        return new ItemStack(this.getTabIconItem(), 1, this.metas[((int) ((JurassiCraft.timerTicks / 20) % this.metas.length))]);
     }
 
     @Override
-    public Item getTabIconItem()
-    {
+    public Item getTabIconItem() {
         return ItemHandler.FOSSILS.get("skull");
     }
 }

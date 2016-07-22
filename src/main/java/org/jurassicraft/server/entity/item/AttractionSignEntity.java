@@ -22,110 +22,92 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Locale;
 
-public class AttractionSignEntity extends EntityHanging implements IEntityAdditionalSpawnData
-{
+public class AttractionSignEntity extends EntityHanging implements IEntityAdditionalSpawnData {
     private static final Predicate<Entity> IS_ATTRACTION_SIGN = entity -> entity instanceof AttractionSignEntity;
 
     public AttractionSignType type;
 
-    public AttractionSignEntity(World world)
-    {
+    public AttractionSignEntity(World world) {
         super(world);
     }
 
-    public AttractionSignEntity(World world, BlockPos pos, EnumFacing side, AttractionSignType type)
-    {
+    public AttractionSignEntity(World world, BlockPos pos, EnumFacing side, AttractionSignType type) {
         super(world, pos);
         this.type = type;
         this.updateFacingWithBoundingBox(side);
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
-    {
+    public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setByte("Type", (byte) this.type.ordinal());
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound)
-    {
+    public void readEntityFromNBT(NBTTagCompound compound) {
         this.type = AttractionSignType.values()[compound.getByte("Type")];
 
         super.readEntityFromNBT(compound);
     }
 
     @Override
-    public int getWidthPixels()
-    {
+    public int getWidthPixels() {
         return this.type.sizeX;
     }
 
     @Override
-    public int getHeightPixels()
-    {
+    public int getHeightPixels() {
         return this.type.sizeY / 2;
     }
 
     @Override
-    public void onBroken(Entity entity)
-    {
-        if (this.worldObj.getGameRules().getBoolean("doTileDrops"))
-        {
-            if (entity instanceof EntityPlayer)
-            {
+    public void onBroken(Entity entity) {
+        if (this.worldObj.getGameRules().getBoolean("doTileDrops")) {
+            if (entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
 
-                if (player.capabilities.isCreativeMode)
-                {
+                if (player.capabilities.isCreativeMode) {
                     return;
                 }
             }
 
-            this.entityDropItem(new ItemStack(ItemHandler.ATTRACTION_SIGN, 1, type.ordinal()), 0.0F);
+            this.entityDropItem(new ItemStack(ItemHandler.ATTRACTION_SIGN, 1, this.type.ordinal()), 0.0F);
         }
     }
 
     @Override
-    public void playPlaceSound()
-    {
+    public void playPlaceSound() {
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
-    {
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
     }
 
     @Override
-    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
-    {
+    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch) {
         BlockPos positionOffset = new BlockPos(x - this.posX, y - this.posY, z - this.posZ);
         BlockPos newPosition = this.hangingPosition.add(positionOffset);
         this.setPosition(newPosition.getX(), newPosition.getY(), newPosition.getZ());
     }
 
     @Override
-    public void writeSpawnData(ByteBuf buffer)
-    {
-        buffer.writeByte(type.ordinal());
-        buffer.writeLong(hangingPosition.toLong());
-        buffer.writeByte(facingDirection.getHorizontalIndex());
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeByte(this.type.ordinal());
+        buffer.writeLong(this.hangingPosition.toLong());
+        buffer.writeByte(this.facingDirection.getHorizontalIndex());
     }
 
     @Override
-    public void readSpawnData(ByteBuf buf)
-    {
-        type = AttractionSignType.values()[buf.readByte()];
-        hangingPosition = BlockPos.fromLong(buf.readLong());
-        updateFacingWithBoundingBox(EnumFacing.getHorizontal(buf.readByte()));
+    public void readSpawnData(ByteBuf buf) {
+        this.type = AttractionSignType.values()[buf.readByte()];
+        this.hangingPosition = BlockPos.fromLong(buf.readLong());
+        this.updateFacingWithBoundingBox(EnumFacing.getHorizontal(buf.readByte()));
     }
 
     @Override
-    public boolean onValidSurface()
-    {
-        if (!this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty())
-        {
+    public boolean onValidSurface() {
+        if (!this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty()) {
             return false;
         }
 
@@ -134,17 +116,14 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
 
         EnumFacing facing = this.facingDirection.rotateYCCW();
 
-        BlockPos pos = this.hangingPosition.offset(facingDirection.getOpposite()).offset(facing, -(width / 2) + 1);
+        BlockPos pos = this.hangingPosition.offset(this.facingDirection.getOpposite()).offset(facing, -(width / 2) + 1);
 
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 BlockPos partPos = pos.offset(facing, x).down(y);
-                IBlockState state = worldObj.getBlockState(partPos);
+                IBlockState state = this.worldObj.getBlockState(partPos);
 
-                if (!(state.isSideSolid(worldObj, partPos, this.facingDirection) && state.getMaterial().isSolid()))
-                {
+                if (!(state.isSideSolid(this.worldObj, partPos, this.facingDirection) && state.getMaterial().isSolid())) {
                     return false;
                 }
             }
@@ -154,10 +133,8 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
     }
 
     @Override
-    protected void updateBoundingBox()
-    {
-        if (this.facingDirection != null)
-        {
+    protected void updateBoundingBox() {
+        if (this.facingDirection != null) {
             double x = this.hangingPosition.getX() + 0.5D;
             double y = this.hangingPosition.getY() + 0.5D;
             double z = this.hangingPosition.getZ() + 0.5D;
@@ -176,12 +153,9 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
             double sizeY = this.getHeightPixels();
             double sizeZ = this.getWidthPixels();
 
-            if (this.facingDirection.getAxis() == EnumFacing.Axis.Z)
-            {
+            if (this.facingDirection.getAxis() == EnumFacing.Axis.Z) {
                 sizeZ = 1.0D;
-            }
-            else
-            {
+            } else {
                 sizeX = 1.0D;
             }
 
@@ -194,13 +168,11 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
     }
 
     @Override
-    public ItemStack getPickedResult(RayTraceResult target)
-    {
+    public ItemStack getPickedResult(RayTraceResult target) {
         return new ItemStack(ItemHandler.ATTRACTION_SIGN, 1, this.type.ordinal());
     }
 
-    public enum AttractionSignType
-    {
+    public enum AttractionSignType {
         AQUARIUM,
         AQUARIUM_CORAL,
         AVIARY,
@@ -217,13 +189,11 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
         public final ResourceLocation texture;
         public final ResourceLocation texturePopout;
 
-        AttractionSignType()
-        {
+        AttractionSignType() {
             this(128, 128);
         }
 
-        AttractionSignType(int xSize, int ySize)
-        {
+        AttractionSignType(int xSize, int ySize) {
             this.sizeX = xSize;
             this.sizeY = ySize;
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/attraction_sign/" + this.name().toLowerCase(Locale.ENGLISH) + ".png");

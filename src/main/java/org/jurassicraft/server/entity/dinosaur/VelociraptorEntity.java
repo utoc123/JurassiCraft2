@@ -13,35 +13,28 @@ import org.jurassicraft.server.entity.ai.VelociraptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.VelociraptorMeleeEntityAI;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class VelociraptorEntity extends DinosaurEntity
-{
-    public VelociraptorEntity(World world)
-    {
+public class VelociraptorEntity extends DinosaurEntity {
+    public VelociraptorEntity(World world) {
         super(world);
         this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class);
-        this.tasks.addTask(1, new VelociraptorMeleeEntityAI(this, dinosaur.getAttackSpeed()));
+        this.tasks.addTask(1, new VelociraptorMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
     }
 
     @Override
-    public EntityAIBase getAttackAI()
-    {
+    public EntityAIBase getAttackAI() {
         return new VelociraptorLeapEntityAI(this);
     }
 
     @Override
-    public void fall(float distance, float damageMultiplier)
-    {
-        if (getAnimation() != DinosaurAnimation.VELOCIRAPTOR_LAND.get())
-        {
+    public void fall(float distance, float damageMultiplier) {
+        if (this.getAnimation() != DinosaurAnimation.VELOCIRAPTOR_LAND.get()) {
             super.fall(distance, damageMultiplier);
         }
     }
 
     @Override
-    public SoundEvent getSoundForAnimation(Animation animation)
-    {
-        switch (DinosaurAnimation.getAnimation(animation))
-        {
+    public SoundEvent getSoundForAnimation(Animation animation) {
+        switch (DinosaurAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.VELOCIRAPTOR_LIVING;
             case DYING:
@@ -56,8 +49,7 @@ public class VelociraptorEntity extends DinosaurEntity
     }
 
     @Override
-    public SoundEvent getBreathingSound()
-    {
+    public SoundEvent getBreathingSound() {
         return SoundHandler.VELOCIRAPTOR_BREATHING;
     }
 }

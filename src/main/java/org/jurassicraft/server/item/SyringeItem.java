@@ -15,10 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class SyringeItem extends DNAContainerItem
-{
-    public SyringeItem()
-    {
+public class SyringeItem extends DNAContainerItem {
+    public SyringeItem() {
         super();
 
         this.setCreativeTab(TabHandler.DNA);
@@ -26,19 +24,16 @@ public class SyringeItem extends DNAContainerItem
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        String dinoName = getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public String getItemStackDisplayName(ItemStack stack) {
+        String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.syringe.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
-        if (dinosaur == null)
-        {
+        if (dinosaur == null) {
             dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
@@ -46,23 +41,19 @@ public class SyringeItem extends DNAContainerItem
     }
 
     @Override
-    public int getContainerId(ItemStack stack)
-    {
-        return EntityHandler.getDinosaurId(getDinosaur(stack));
+    public int getContainerId(ItemStack stack) {
+        return EntityHandler.getDinosaurId(this.getDinosaur(stack));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }

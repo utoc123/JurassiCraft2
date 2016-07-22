@@ -16,10 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class IceShardBlock extends Block
-{
-    public IceShardBlock()
-    {
+public class IceShardBlock extends Block {
+    public IceShardBlock() {
         super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
@@ -28,18 +26,14 @@ public class IceShardBlock extends Block
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> ret = new ArrayList<>();
 
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
-        if (rand.nextDouble() < 0.2 + ((fortune / 3.0) * 0.8))
-        {
+        if (rand.nextDouble() < 0.2 + ((fortune / 3.0) * 0.8)) {
             ret.add(new ItemStack(ItemHandler.SEA_LAMPREY));
-        }
-        else if (rand.nextDouble() < 0.2)
-        {
+        } else if (rand.nextDouble() < 0.2) {
             ret.add(new ItemStack(Blocks.ICE));
         }
 
@@ -47,8 +41,7 @@ public class IceShardBlock extends Block
     }
 
     @Override
-    public boolean canDropFromExplosion(Explosion explosion)
-    {
+    public boolean canDropFromExplosion(Explosion explosion) {
         return false;
     }
 }

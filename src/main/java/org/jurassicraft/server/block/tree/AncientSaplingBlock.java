@@ -21,102 +21,84 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class AncientSaplingBlock extends BlockBush implements IGrowable
-{
+public class AncientSaplingBlock extends BlockBush implements IGrowable {
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1F, 0.0F, 0.1F, 0.6F, 0.8F, 0.6F);
     private TreeType treeType;
 
-    public AncientSaplingBlock(TreeType type)
-    {
+    public AncientSaplingBlock(TreeType type) {
         super();
         this.setUnlocalizedName(type.name().toLowerCase(Locale.ENGLISH) + "_sapling");
-        this.setDefaultState(blockState.getBaseState().withProperty(STAGE, 0));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(TabHandler.PLANTS);
         this.treeType = type;
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
-        if (!world.isRemote)
-        {
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (!world.isRemote) {
             super.updateTick(world, pos, state, rand);
 
-            if (world.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0)
-            {
+            if (world.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
                 this.grow(world, pos, state, rand);
             }
         }
     }
 
-    public void grow(World world, BlockPos pos, IBlockState state, Random rand)
-    {
-        if (state.getValue(STAGE) == 0)
-        {
+    public void grow(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (state.getValue(STAGE) == 0) {
             world.setBlockState(pos, state.cycleProperty(STAGE), 4);
-        }
-        else
-        {
-            treeType.getTreeGenerator().generate(world, rand, pos);
+        } else {
+            this.treeType.getTreeGenerator().generate(world, rand, pos);
         }
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return 0;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
-    {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         list.add(new ItemStack(item, 1, 0));
     }
 
     @Override
-    public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient)
-    {
+    public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
         return true;
     }
 
     @Override
-    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state)
-    {
+    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
         return (double) world.rand.nextFloat() < 0.45D;
     }
 
     @Override
-    public void grow(World world, Random rand, BlockPos pos, IBlockState state)
-    {
+    public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
         this.grow(world, pos, state, rand);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(STAGE, (meta & 8) >> 3);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         int i = 0;
         i |= state.getValue(STAGE) << 3;
         return i;
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, STAGE);
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos)
-    {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
         return BOUNDS;
     }
 }

@@ -28,138 +28,113 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableItem
-{
+public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableItem {
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
 
     public boolean encased;
 
-    public NestFossilBlock(boolean encased)
-    {
+    public NestFossilBlock(boolean encased) {
         super(Material.ROCK);
         this.encased = encased;
         this.setHardness(1.5F);
         this.setCreativeTab(TabHandler.FOSSILS);
-        this.setDefaultState(blockState.getBaseState().withProperty(VARIANT, Variant.VARIANT_1));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, Variant.VARIANT_1));
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(VARIANT, Variant.values()[meta & 3]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(VARIANT).ordinal() & 3;
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, VARIANT);
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state)
-    {
-        return new ItemStack(Item.getItemFromBlock(this), 1, damageDropped(state));
+    protected ItemStack createStackedBlock(IBlockState state) {
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.damageDropped(state));
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return state.getValue(VARIANT).ordinal() & 3;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
-    {
-        for (Variant type : Variant.values())
-        {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
+        for (Variant type : Variant.values()) {
             list.add(new ItemStack(item, 1, type.ordinal()));
         }
     }
 
     @Override
-    public ItemBlock getItemBlock()
-    {
-        return new NestFossilItemBlock(this, encased);
+    public ItemBlock getItemBlock() {
+        return new NestFossilItemBlock(this, this.encased);
     }
 
     @Override
-    public String getHarvestTool(IBlockState state)
-    {
+    public String getHarvestTool(IBlockState state) {
         return "pickaxe";
     }
 
     @Override
-    public int getHarvestLevel(IBlockState state)
-    {
+    public int getHarvestLevel(IBlockState state) {
         return 1;
     }
 
     @Override
-    public boolean canDropFromExplosion(Explosion explosion)
-    {
-        return encased;
+    public boolean canDropFromExplosion(Explosion explosion) {
+        return this.encased;
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player)
-    {
+    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
         return true;
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
-    {
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         return true;
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune)
-    {
-        if (encased)
-        {
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+        if (this.encased) {
             super.dropBlockAsItemWithChance(world, pos, state, chance, fortune);
         }
     }
 
     @Override
-    public boolean isCleanable(ItemStack stack)
-    {
-        return encased;
+    public boolean isCleanable(ItemStack stack) {
+        return this.encased;
     }
 
     @Override
-    public ItemStack getCleanedItem(ItemStack stack, Random random)
-    {
-        if (random.nextBoolean())
-        {
+    public ItemStack getCleanedItem(ItemStack stack, Random random) {
+        if (random.nextBoolean()) {
             return new ItemStack(ItemHandler.FOSSILIZED_EGG, random.nextInt(7) + 1, stack.getItemDamage());
         }
 
-        if (random.nextBoolean())
-        {
+        if (random.nextBoolean()) {
             return new ItemStack(Items.FLINT);
-        }
-        else
-        {
+        } else {
             return new ItemStack(Items.DYE, 1, 15);
         }
     }
 
-    public enum Variant implements IStringSerializable
-    {
+    public enum Variant implements IStringSerializable {
         VARIANT_1, VARIANT_2, VARIANT_3;
 
         @Override
-        public String getName()
-        {
-            return name().toLowerCase(Locale.ENGLISH);
+        public String getName() {
+            return this.name().toLowerCase(Locale.ENGLISH);
         }
     }
 }

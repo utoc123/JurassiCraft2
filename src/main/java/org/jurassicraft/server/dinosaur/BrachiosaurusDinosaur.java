@@ -4,10 +4,8 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.dinosaur.BrachiosaurusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class BrachiosaurusDinosaur extends Dinosaur
-{
-    public BrachiosaurusDinosaur()
-    {
+public class BrachiosaurusDinosaur extends Dinosaur {
+    public BrachiosaurusDinosaur() {
         super();
 
         this.setName("Brachiosaurus");
@@ -18,7 +16,7 @@ public class BrachiosaurusDinosaur extends Dinosaur
         this.setHealth(20, 150);
         this.setSpeed(0.3, 0.32);
         this.setStrength(5, 15);
-        this.setMaximumAge(fromDays(85));
+        this.setMaximumAge(this.fromDays(85));
         this.setEyeHeight(2.2F, 18.4F);
         this.setSizeX(0.9F, 6.5F);
         this.setSizeY(1.5F, 7.0F);

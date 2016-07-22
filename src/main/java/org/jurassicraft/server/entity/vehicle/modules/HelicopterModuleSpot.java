@@ -14,46 +14,38 @@ import org.jurassicraft.server.message.HelicopterModulesMessage;
 
 import java.util.List;
 
-public class HelicopterModuleSpot
-{
+public class HelicopterModuleSpot {
     private final List<HelicopterModule> modules;
     private final float angleFromCenter;
     private final ModulePosition position;
     private final HelicopterBaseEntity helicopter;
 
-    public HelicopterModuleSpot(ModulePosition pos, HelicopterBaseEntity helicopter, float angleFromCenter)
-    {
+    public HelicopterModuleSpot(ModulePosition pos, HelicopterBaseEntity helicopter, float angleFromCenter) {
         this.helicopter = helicopter;
         this.position = pos;
         this.angleFromCenter = angleFromCenter;
-        modules = Lists.newArrayList();
+        this.modules = Lists.newArrayList();
     }
 
     /**
      * List of modules present in this spot.
      */
-    public List<HelicopterModule> getModules()
-    {
-        return modules;
+    public List<HelicopterModule> getModules() {
+        return this.modules;
     }
 
-    public boolean addModule(HelicopterModule m)
-    {
-        return addModule(m, null, new Vec3d(0, 0, 0));
+    public boolean addModule(HelicopterModule m) {
+        return this.addModule(m, null, new Vec3d(0, 0, 0));
     }
 
-    public boolean addModule(HelicopterModule m, EntityPlayer player, Vec3d v)
-    {
-        if (!modules.contains(m))
-        {
-            modules.add(m);
-            if (player != null)
-            {
+    public boolean addModule(HelicopterModule m, EntityPlayer player, Vec3d v) {
+        if (!this.modules.contains(m)) {
+            this.modules.add(m);
+            if (player != null) {
                 m.onAdded(this, player, v);
             }
-            if (getHelicopter().shouldSyncModules() && !getHelicopter().worldObj.isRemote)
-            {
-                JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterModulesMessage(helicopter.getEntityId(), position, this));
+            if (this.getHelicopter().shouldSyncModules() && !this.getHelicopter().worldObj.isRemote) {
+                JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterModulesMessage(this.helicopter.getEntityId(), this.position, this));
             }
             return true;
         }
@@ -63,34 +55,28 @@ public class HelicopterModuleSpot
     /**
      * Angle of the module spot compared to the right door (in radians)
      */
-    public float getAngleFromCenter()
-    {
-        return angleFromCenter;
+    public float getAngleFromCenter() {
+        return this.angleFromCenter;
     }
 
-    public void readFromNBT(NBTTagCompound compound)
-    {
+    public void readFromNBT(NBTTagCompound compound) {
         System.out.println(">> " + compound);
-        modules.clear();
+        this.modules.clear();
         NBTTagList list = compound.getTagList("modules", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < list.tagCount(); i++)
-        {
+        for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound moduleData = list.getCompoundTagAt(i);
             String id = moduleData.getString("id");
             HelicopterModule module = HelicopterModule.createFromID(id);
-            addModule(module);
-            if (module == null)
-            {
+            this.addModule(module);
+            if (module == null) {
                 throw new IllegalArgumentException("Invalid module ID");
             }
         }
     }
 
-    public void writeToNBT(NBTTagCompound compound)
-    {
+    public void writeToNBT(NBTTagCompound compound) {
         NBTTagList list = new NBTTagList();
-        for (HelicopterModule m : modules)
-        {
+        for (HelicopterModule m : this.modules) {
             NBTTagCompound data = new NBTTagCompound();
             data.setString("id", m.getModuleID());
             m.writeToNBT(data);
@@ -99,33 +85,26 @@ public class HelicopterModuleSpot
         compound.setTag("modules", list);
     }
 
-    public void readSpawnData(ByteBuf data)
-    {
-        modules.clear();
+    public void readSpawnData(ByteBuf data) {
+        this.modules.clear();
         int size = data.readInt();
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             String id = ByteBufUtils.readUTF8String(data);
             HelicopterModule module = HelicopterModule.createFromID(id);
             NBTTagCompound nbt = ByteBufUtils.readTag(data);
-            if (module == null)
-            {
+            if (module == null) {
                 System.err.println("Null module for id " + id);
-            }
-            else
-            {
+            } else {
                 System.out.println(">> Read for " + id + " " + nbt);
                 module.readFromNBT(nbt);
-                addModule(module);
+                this.addModule(module);
             }
         }
     }
 
-    public void writeSpawnData(ByteBuf data)
-    {
-        data.writeInt(modules.size());
-        for (HelicopterModule m : modules)
-        {
+    public void writeSpawnData(ByteBuf data) {
+        data.writeInt(this.modules.size());
+        for (HelicopterModule m : this.modules) {
             ByteBufUtils.writeUTF8String(data, m.getModuleID());
             NBTTagCompound moduleData = new NBTTagCompound();
             m.writeToNBT(moduleData);
@@ -133,35 +112,28 @@ public class HelicopterModuleSpot
         }
     }
 
-    public ModulePosition getPosition()
-    {
-        return position;
+    public ModulePosition getPosition() {
+        return this.position;
     }
 
-    public boolean isClicked(Vec3d v)
-    {
-        return position.isClicked(v);
+    public boolean isClicked(Vec3d v) {
+        return this.position.isClicked(v);
     }
 
-    public void onClicked(EntityPlayer player, Vec3d vec)
-    {
-        for (HelicopterModule m : modules)
-        {
+    public void onClicked(EntityPlayer player, Vec3d vec) {
+        for (HelicopterModule m : this.modules) {
             System.out.println(">> Clicked on " + m.getModuleID());
-            if (m.onClicked(this, player, vec))
-            {
+            if (m.onClicked(this, player, vec)) {
                 return;
             }
         }
     }
 
-    public HelicopterBaseEntity getHelicopter()
-    {
-        return helicopter;
+    public HelicopterBaseEntity getHelicopter() {
+        return this.helicopter;
     }
 
-    public boolean has(HelicopterModule module)
-    {
-        return modules.contains(module);
+    public boolean has(HelicopterModule module) {
+        return this.modules.contains(module);
     }
 }

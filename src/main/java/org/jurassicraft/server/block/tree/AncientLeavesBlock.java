@@ -25,12 +25,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class AncientLeavesBlock extends BlockLeaves
-{
+public class AncientLeavesBlock extends BlockLeaves {
     private TreeType treeType;
 
-    public AncientLeavesBlock(TreeType type)
-    {
+    public AncientLeavesBlock(TreeType type) {
         super();
         this.treeType = type;
         this.setUnlocalizedName(type.name().toLowerCase(Locale.ENGLISH) + "_leaves");
@@ -41,61 +39,51 @@ public class AncientLeavesBlock extends BlockLeaves
         this.setCreativeTab(TabHandler.PLANTS);
     }
 
-    public TreeType getTreeType()
-    {
-        return treeType;
+    public TreeType getTreeType() {
+        return this.treeType;
     }
 
     @Override
-    protected void dropApple(World world, BlockPos pos, IBlockState state, int chance)
-    {
+    protected void dropApple(World world, BlockPos pos, IBlockState state, int chance) {
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return Blocks.LEAVES.isOpaqueCube(state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return Blocks.LEAVES.getBlockLayer();
     }
 
     @Override
-    public boolean isVisuallyOpaque()
-    {
+    public boolean isVisuallyOpaque() {
         return Blocks.LEAVES.isVisuallyOpaque();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> drops = new ArrayList<>();
         Random rand = world instanceof World ? ((World) world).rand : new Random();
         int chance = this.getSaplingDropChance(state);
 
-        if (fortune > 0)
-        {
+        if (fortune > 0) {
             chance -= 2 << fortune;
-            if (chance < 10)
-            {
+            if (chance < 10) {
                 chance = 10;
             }
         }
 
-        if (rand.nextInt(chance) == 0)
-        {
-            drops.add(new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state)));
+        if (rand.nextInt(chance) == 0) {
+            drops.add(new ItemStack(this.getItemDropped(state, rand, fortune), 1, this.damageDropped(state)));
         }
 
         this.captureDrops(true);
@@ -104,38 +92,32 @@ public class AncientLeavesBlock extends BlockLeaves
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
-        return Item.getItemFromBlock(BlockHandler.ANCIENT_SAPLINGS.get(treeType));
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Item.getItemFromBlock(BlockHandler.ANCIENT_SAPLINGS.get(this.treeType));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
-    {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         list.add(new ItemStack(item, 1, 0));
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         boolean dec = meta < 4;
         boolean check = meta < 8;
         return this.getDefaultState().withProperty(DECAYABLE, dec).withProperty(CHECK_DECAY, check);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         int i = 0;
 
-        if (!state.getValue(DECAYABLE))
-        {
+        if (!state.getValue(DECAYABLE)) {
             i = 4;
         }
 
-        if (!state.getValue(CHECK_DECAY))
-        {
+        if (!state.getValue(CHECK_DECAY)) {
             i = 8;
         }
 
@@ -143,26 +125,22 @@ public class AncientLeavesBlock extends BlockLeaves
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return 0;
     }
 
     @Override
-    public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune)
-    {
+    public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
         return Lists.newArrayList(new ItemStack(this, 1, 0));
     }
 
     @Override
-    public BlockPlanks.EnumType getWoodType(int meta)
-    {
+    public BlockPlanks.EnumType getWoodType(int meta) {
         return BlockPlanks.EnumType.BIRCH;
     }
 }

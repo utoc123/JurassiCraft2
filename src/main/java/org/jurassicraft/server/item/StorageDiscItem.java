@@ -16,55 +16,43 @@ import org.jurassicraft.server.tab.TabHandler;
 import java.util.List;
 import java.util.Random;
 
-public class StorageDiscItem extends Item implements SynthesizableItem
-{
-    public StorageDiscItem()
-    {
+public class StorageDiscItem extends Item implements SynthesizableItem {
+    public StorageDiscItem() {
         super();
         this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
-    {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt != null)
-        {
+        if (nbt != null) {
             String storageId = nbt.getString("StorageId");
             StorageType type = StorageTypeRegistry.getStorageType(storageId);
 
-            if (type != null)
-            {
+            if (type != null) {
                 type.readFromNBT(nbt);
                 type.addInformation(stack, tooltip);
             }
-        }
-        else
-        {
+        } else {
             tooltip.add(TextFormatting.RED + I18n.format("cage.empty.name"));
         }
     }
 
     @Override
-    public boolean isSynthesizable(ItemStack stack)
-    {
+    public boolean isSynthesizable(ItemStack stack) {
         NBTTagCompound tagCompound = stack.getTagCompound();
         return tagCompound != null && tagCompound.hasKey("DNAQuality") && tagCompound.getInteger("DNAQuality") == 100;
     }
 
     @Override
-    public ItemStack getSynthesizedItem(ItemStack stack, Random random)
-    {
+    public ItemStack getSynthesizedItem(ItemStack stack, Random random) {
         ItemStack output;
 
-        if (!stack.getTagCompound().getString("StorageId").equalsIgnoreCase("PlantDNA"))
-        {
+        if (!stack.getTagCompound().getString("StorageId").equalsIgnoreCase("PlantDNA")) {
             output = new ItemStack(ItemHandler.DNA, 1, stack.getItemDamage());
-        }
-        else
-        {
+        } else {
             output = new ItemStack(ItemHandler.PLANT_DNA, 1, stack.getItemDamage());
         }
 

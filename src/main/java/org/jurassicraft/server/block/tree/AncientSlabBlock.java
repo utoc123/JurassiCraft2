@@ -15,18 +15,15 @@ import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.itemblock.AncientSlabItemBlock;
 
-public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlock
-{
+public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlock {
     private TreeType type;
 
-    public AncientSlabBlock(TreeType type, IBlockState referenceState)
-    {
+    public AncientSlabBlock(TreeType type, IBlockState referenceState) {
         super(referenceState.getBlock().getMaterial(referenceState));
         this.type = type;
         IBlockState state = this.blockState.getBaseState();
 
-        if (!this.isDouble())
-        {
+        if (!this.isDouble()) {
             state = state.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
         }
 
@@ -41,18 +38,13 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
     }
 
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
+    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         IBlockState state = super.onBlockPlaced(world, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
 
-        if (!isDouble())
-        {
-            if ((facing == EnumFacing.UP || (double) hitY <= 0.5D) && facing != EnumFacing.DOWN)
-            {
+        if (!this.isDouble()) {
+            if ((facing == EnumFacing.UP || (double) hitY <= 0.5D) && facing != EnumFacing.DOWN) {
                 return state;
-            }
-            else
-            {
+            } else {
                 return state.withProperty(HALF, BlockSlab.EnumBlockHalf.TOP);
             }
         }
@@ -61,18 +53,15 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
     }
 
     @Override
-    public String getUnlocalizedName(int meta)
-    {
+    public String getUnlocalizedName(int meta) {
         return super.getUnlocalizedName();
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         IBlockState state = this.getDefaultState();
 
-        if (!this.isDouble())
-        {
+        if (!this.isDouble()) {
             state = state.withProperty(HALF, meta == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
         }
 
@@ -80,38 +69,32 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(HALF) == BlockSlab.EnumBlockHalf.BOTTOM ? 0 : 1;
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, HALF);
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return 0;
     }
 
     @Override
-    public Comparable<?> getTypeForItem(ItemStack stack)
-    {
+    public Comparable<?> getTypeForItem(ItemStack stack) {
         return null;
     }
 
     @Override
-    public IProperty<?> getVariantProperty()
-    {
+    public IProperty<?> getVariantProperty() {
         return null;
     }
 
     @Override
-    public ItemBlock getItemBlock()
-    {
-        return new AncientSlabItemBlock(this, BlockHandler.ANCIENT_SLABS.get(type), BlockHandler.ANCIENT_DOUBLE_SLABS.get(type));
+    public ItemBlock getItemBlock() {
+        return new AncientSlabItemBlock(this, BlockHandler.ANCIENT_SLABS.get(this.type), BlockHandler.ANCIENT_DOUBLE_SLABS.get(this.type));
     }
 }

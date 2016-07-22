@@ -11,25 +11,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.tab.TabHandler;
 
-public class EmptySyringeItem extends Item
-{
-    public EmptySyringeItem()
-    {
+public class EmptySyringeItem extends Item {
+    public EmptySyringeItem() {
         super();
         this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.getBlockState(pos).getBlock() instanceof BlockBush)
-        {
-            if (stack.stackSize == 1)
-            {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.getBlockState(pos).getBlock() instanceof BlockBush) {
+            if (stack.stackSize == 1) {
                 player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(ItemHandler.PLANT_CELLS));
-            }
-            else
-            {
+            } else {
                 player.inventory.addItemStackToInventory(new ItemStack(ItemHandler.PLANT_CELLS));
                 stack.stackSize--;
             }

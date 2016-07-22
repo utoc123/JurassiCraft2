@@ -9,67 +9,52 @@ import org.jurassicraft.server.plant.PlantHandler;
 import java.util.List;
 import java.util.Locale;
 
-public class PlantDNA
-{
+public class PlantDNA {
     private int plant;
     private int quality;
 
-    public PlantDNA(int plant, int quality)
-    {
+    public PlantDNA(int plant, int quality) {
         this.plant = plant;
         this.quality = quality;
     }
 
-    public static PlantDNA fromStack(ItemStack stack)
-    {
+    public static PlantDNA fromStack(ItemStack stack) {
         return readFromNBT(stack.getTagCompound());
     }
 
-    public static PlantDNA readFromNBT(NBTTagCompound nbt)
-    {
+    public static PlantDNA readFromNBT(NBTTagCompound nbt) {
         return new PlantDNA(nbt.getInteger("Plant"), nbt.getInteger("DNAQuality"));
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        nbt.setInteger("DNAQuality", quality);
-        nbt.setInteger("Plant", plant);
+    public void writeToNBT(NBTTagCompound nbt) {
+        nbt.setInteger("DNAQuality", this.quality);
+        nbt.setInteger("Plant", this.plant);
         nbt.setString("StorageId", "PlantDNA");
     }
 
-    public int getDNAQuality()
-    {
-        return quality;
+    public int getDNAQuality() {
+        return this.quality;
     }
 
-    public int getPlant()
-    {
-        return plant;
+    public int getPlant() {
+        return this.plant;
     }
 
-    public void addInformation(ItemStack stack, List<String> tooltip)
-    {
-        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.getPlantById(plant).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name").build());
+    public void addInformation(ItemStack stack, List<String> tooltip) {
+        tooltip.add(TextFormatting.DARK_AQUA + new LangHelper("lore.plant.name").withProperty("plant", "plants." + PlantHandler.getPlantById(this.plant).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name").build());
 
         TextFormatting formatting;
 
-        if (quality > 75)
-        {
+        if (this.quality > 75) {
             formatting = TextFormatting.GREEN;
-        }
-        else if (quality > 50)
-        {
+        } else if (this.quality > 50) {
             formatting = TextFormatting.YELLOW;
-        }
-        else if (quality > 25)
-        {
+        } else if (this.quality > 25) {
             formatting = TextFormatting.GOLD;
-        }
-        else
-        {
+        } else {
             formatting = TextFormatting.RED;
         }
 
-        tooltip.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", quality + "").build());
+        tooltip.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", this.quality + "").build());
     }
 }

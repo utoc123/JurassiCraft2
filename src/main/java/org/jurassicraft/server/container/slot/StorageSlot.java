@@ -5,26 +5,20 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.item.ItemHandler;
 
-public class StorageSlot extends Slot
-{
+public class StorageSlot extends Slot {
     private boolean stored;
 
-    public StorageSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition, boolean stored)
-    {
+    public StorageSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition, boolean stored) {
         super(inventory, slotIndex, xPosition, yPosition);
 
         this.stored = stored;
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack)
-    {
-        if (stored)
-        {
+    public boolean isItemValid(ItemStack stack) {
+        if (this.stored) {
             return stack.getItem() == ItemHandler.STORAGE_DISC && (stack.getTagCompound() != null && stack.getTagCompound().hasKey("DNAQuality"));
-        }
-        else
-        {
+        } else {
             return stack.getItem() == ItemHandler.STORAGE_DISC && (stack.getTagCompound() == null || !stack.getTagCompound().hasKey("DNAQuality"));
         }
     }

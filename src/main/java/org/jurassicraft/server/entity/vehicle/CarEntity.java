@@ -32,8 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CarEntity extends Entity
-{
+public abstract class CarEntity extends Entity {
     public static final DataParameter<Byte> WATCHER_STATE = EntityDataManager.createKey(CarEntity.class, DataSerializers.BYTE);
     public static final DataParameter<Float> WATCHER_HEALTH = EntityDataManager.createKey(CarEntity.class, DataSerializers.FLOAT);
     public static final float MAX_HEALTH = 40.0F;
@@ -57,37 +56,31 @@ public abstract class CarEntity extends Entity
     private float healAmount;
     private int healCooldown = 40;
 
-    public CarEntity(World world)
-    {
+    public CarEntity(World world) {
         super(world);
         this.setSize(3.0F, 2.5F);
 
         this.stepHeight = 1.5F;
 
-        if (world.isRemote)
-        {
-            updateSound();
+        if (world.isRemote) {
+            this.updateSound();
         }
 
         this.health = MAX_HEALTH;
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount)
-    {
-        if (!isEntityInvulnerable(source))
-        {
-            if (source.getEntity() instanceof EntityPlayer)
-            {
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (!this.isEntityInvulnerable(source)) {
+            if (source.getEntity() instanceof EntityPlayer) {
                 amount *= 10.0F;
-                healAmount += amount;
-                healCooldown = 40;
+                this.healAmount += amount;
+                this.healCooldown = 40;
             }
 
-            health -= amount;
+            this.health -= amount;
 
-            if (health < 0.0F)
-            {
+            if (this.health < 0.0F) {
                 this.setDead();
             }
 
@@ -98,53 +91,42 @@ public abstract class CarEntity extends Entity
     }
 
     @Override
-    public boolean isInRangeToRenderDist(double dist)
-    {
+    public boolean isInRangeToRenderDist(double dist) {
         return true;
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (!worldObj.isRemote)
-        {
-            if (healCooldown > 0)
-            {
-                healCooldown--;
-            }
-            else if (healAmount > 0)
-            {
-                health++;
-                healAmount--;
+        if (!this.worldObj.isRemote) {
+            if (this.healCooldown > 0) {
+                this.healCooldown--;
+            } else if (this.healAmount > 0) {
+                this.health++;
+                this.healAmount--;
 
-                if (health > MAX_HEALTH)
-                {
-                    health = MAX_HEALTH;
-                    healAmount = 0;
+                if (this.health > MAX_HEALTH) {
+                    this.health = MAX_HEALTH;
+                    this.healAmount = 0;
                 }
             }
         }
 
-        if (seats.size() == 0)
-        {
-            if (!worldObj.isRemote)
-            {
-                addSeat(new SeatEntity(worldObj, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
-                addSeat(new SeatEntity(worldObj, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
-                addSeat(new SeatEntity(worldObj, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
-                addSeat(new SeatEntity(worldObj, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+        if (this.seats.size() == 0) {
+            if (!this.worldObj.isRemote) {
+                this.addSeat(new SeatEntity(this.worldObj, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+                this.addSeat(new SeatEntity(this.worldObj, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+                this.addSeat(new SeatEntity(this.worldObj, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+                this.addSeat(new SeatEntity(this.worldObj, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
 
-                for (Map.Entry<Integer, SeatEntity> entry : seats.entrySet())
-                {
-                    worldObj.spawnEntityInWorld(entry.getValue());
+                for (Map.Entry<Integer, SeatEntity> entry : this.seats.entrySet()) {
+                    this.worldObj.spawnEntityInWorld(entry.getValue());
                 }
             }
         }
 
-        if (this.interpProgress > 0)
-        {
+        if (this.interpProgress > 0) {
             double interpolatedX = this.posX + (this.interpTargetX - this.posX) / (double) this.interpProgress;
             double interpolatedY = this.posY + (this.interpTargetY - this.posY) / (double) this.interpProgress;
             double interpolatedZ = this.posZ + (this.interpTargetZ - this.posZ) / (double) this.interpProgress;
@@ -156,44 +138,32 @@ public abstract class CarEntity extends Entity
             this.setRotation(this.rotationYaw, this.rotationPitch);
         }
 
-        for (Map.Entry<Integer, SeatEntity> entry : seats.entrySet())
-        {
+        for (Map.Entry<Integer, SeatEntity> entry : this.seats.entrySet()) {
             entry.getValue().updateParent(this);
         }
 
-        if (worldObj.isRemote)
-        {
-            updateKeyStates();
-        }
-        else if (getSeat(0) != null && getSeat(0).getControllingPassenger() == null)
-        {
-            setState((byte) 0);
+        if (this.worldObj.isRemote) {
+            this.updateKeyStates();
+        } else if (this.getSeat(0) != null && this.getSeat(0).getControllingPassenger() == null) {
+            this.setState((byte) 0);
         }
 
-        if (!this.isInWater())
-        {
+        if (!this.isInWater()) {
             float moveAmount = 0.0F;
 
-            if ((left() || right()) && !(forward() || backward()))
-            {
+            if ((this.left() || this.right()) && !(this.forward() || this.backward())) {
                 moveAmount += 0.05F;
             }
 
-            if (forward())
-            {
+            if (this.forward()) {
                 moveAmount += 0.1F;
-            }
-            else if (backward())
-            {
+            } else if (this.backward()) {
                 moveAmount -= 0.05F;
             }
 
-            if (left())
-            {
+            if (this.left()) {
                 this.rotationYaw -= 26.0F * moveAmount;
-            }
-            else if (right())
-            {
+            } else if (this.right()) {
                 this.rotationYaw += 26.0F * moveAmount;
             }
 
@@ -201,166 +171,138 @@ public abstract class CarEntity extends Entity
             this.motionZ += MathHelper.cos(this.rotationYaw * 0.017453292F) * moveAmount;
         }
 
-        motionY -= 0.1F;
+        this.motionY -= 0.1F;
 
-        motionX *= 0.85F;
-        motionY *= 0.85F;
-        motionZ *= 0.85F;
+        this.motionX *= 0.85F;
+        this.motionY *= 0.85F;
+        this.motionZ *= 0.85F;
 
-        moveEntity(motionX, motionY, motionZ);
+        this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
         this.prevWheelRotateAmount = this.wheelRotateAmount;
         double deltaX = this.posX - this.prevPosX;
         double deltaZ = this.posZ - this.prevPosZ;
         float delta = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ) * 4.0F;
 
-        if (delta > 1.0F)
-        {
+        if (delta > 1.0F) {
             delta = 1.0F;
         }
 
         this.wheelRotateAmount += (delta - this.wheelRotateAmount) * 0.4F;
         this.wheelRotation += this.wheelRotateAmount;
 
-        if (!worldObj.isRemote)
-        {
-            this.dataManager.set(WATCHER_HEALTH, health);
-        }
-        else
-        {
-            health = this.dataManager.get(WATCHER_HEALTH);
+        if (!this.worldObj.isRemote) {
+            this.dataManager.set(WATCHER_HEALTH, this.health);
+        } else {
+            this.health = this.dataManager.get(WATCHER_HEALTH);
         }
     }
 
-    private void updateKeyStates()
-    {
+    private void updateKeyStates() {
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
-        if (getSeat(0) != null && player == getSeat(0).getControllingPassenger())
-        {
+        if (this.getSeat(0) != null && player == this.getSeat(0).getControllingPassenger()) {
             MovementInput movementInput = player.movementInput;
 
-            byte previous = getState();
+            byte previous = this.getState();
 
-            left(movementInput.leftKeyDown);
-            right(movementInput.rightKeyDown);
-            forward(movementInput.forwardKeyDown);
-            backward(movementInput.backKeyDown);
+            this.left(movementInput.leftKeyDown);
+            this.right(movementInput.rightKeyDown);
+            this.forward(movementInput.forwardKeyDown);
+            this.backward(movementInput.backKeyDown);
 
-            if (getState() != previous)
-            {
+            if (this.getState() != previous) {
                 JurassiCraft.NETWORK_WRAPPER.sendToServer(new UpdateCarControlMessage(this));
             }
         }
     }
 
-    public boolean left()
-    {
-        return (dataManager.get(WATCHER_STATE) & 1) == 1;
+    public boolean left() {
+        return (this.dataManager.get(WATCHER_STATE) & 1) == 1;
     }
 
-    public boolean right()
-    {
-        return (dataManager.get(WATCHER_STATE) >> 1 & 1) == 1;
+    public boolean right() {
+        return (this.dataManager.get(WATCHER_STATE) >> 1 & 1) == 1;
     }
 
-    public boolean forward()
-    {
-        return (dataManager.get(WATCHER_STATE) >> 2 & 1) == 1;
+    public boolean forward() {
+        return (this.dataManager.get(WATCHER_STATE) >> 2 & 1) == 1;
     }
 
-    public boolean backward()
-    {
-        return (dataManager.get(WATCHER_STATE) >> 3 & 1) == 1;
+    public boolean backward() {
+        return (this.dataManager.get(WATCHER_STATE) >> 3 & 1) == 1;
     }
 
-    public void left(boolean left)
-    {
-        setStateField(0, left);
+    public void left(boolean left) {
+        this.setStateField(0, left);
     }
 
-    public void right(boolean right)
-    {
-        setStateField(1, right);
+    public void right(boolean right) {
+        this.setStateField(1, right);
     }
 
-    public void forward(boolean forward)
-    {
-        setStateField(2, forward);
+    public void forward(boolean forward) {
+        this.setStateField(2, forward);
     }
 
-    public void backward(boolean backward)
-    {
-        setStateField(3, backward);
+    public void backward(boolean backward) {
+        this.setStateField(3, backward);
     }
 
-    private void setStateField(int i, boolean newState)
-    {
-        byte prevState = dataManager.get(WATCHER_STATE);
+    private void setStateField(int i, boolean newState) {
+        byte prevState = this.dataManager.get(WATCHER_STATE);
 
-        if (newState)
-        {
-            dataManager.set(WATCHER_STATE, (byte) (prevState | (1 << i)));
-        }
-        else
-        {
-            dataManager.set(WATCHER_STATE, (byte) (prevState & ~(1 << i)));
+        if (newState) {
+            this.dataManager.set(WATCHER_STATE, (byte) (prevState | (1 << i)));
+        } else {
+            this.dataManager.set(WATCHER_STATE, (byte) (prevState & ~(1 << i)));
         }
     }
 
-    public byte getState()
-    {
-        return dataManager.get(WATCHER_STATE);
+    public byte getState() {
+        return this.dataManager.get(WATCHER_STATE);
     }
 
-    public void setState(byte state)
-    {
-        dataManager.set(WATCHER_STATE, state);
-    }
-
-    @Override
-    protected void entityInit()
-    {
-        dataManager.register(WATCHER_STATE, (byte) 0);
-        dataManager.register(WATCHER_HEALTH, 40.0F);
+    public void setState(byte state) {
+        this.dataManager.set(WATCHER_STATE, state);
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound compound)
-    {
+    protected void entityInit() {
+        this.dataManager.register(WATCHER_STATE, (byte) 0);
+        this.dataManager.register(WATCHER_HEALTH, 40.0F);
+    }
+
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound compound) {
         this.health = compound.getFloat("Health");
         this.healAmount = compound.getFloat("HealAmount");
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound compound)
-    {
-        compound.setFloat("Health", health);
-        compound.setFloat("HealAmount", healAmount);
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+        compound.setFloat("Health", this.health);
+        compound.setFloat("HealAmount", this.healAmount);
     }
 
     @Override
-    public AxisAlignedBB getCollisionBox(Entity entity)
-    {
-        return getEntityBoundingBox();
+    public AxisAlignedBB getCollisionBox(Entity entity) {
+        return this.getEntityBoundingBox();
     }
 
     @Override
-    public boolean canBeCollidedWith()
-    {
+    public boolean canBeCollidedWith() {
         return true;
     }
 
     @Override
-    protected boolean canTriggerWalking()
-    {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
-    {
+    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
         this.interpTargetX = x;
         this.interpTargetY = y;
         this.interpTargetZ = z;
@@ -370,8 +312,7 @@ public abstract class CarEntity extends Entity
     }
 
     @Override
-    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand)
-    {
+    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
         Entity pointedEntity = null;
 
         double reach = 5.0;
@@ -380,37 +321,27 @@ public abstract class CarEntity extends Entity
         Vec3d eyePosition = new Vec3d(player.posX, player.posY + player.eyeHeight, player.posZ);
         Vec3d vec3d2 = eyePosition.addVector(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach);
 
-        List<Entity> entities = worldObj.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach).expand(1.0F, 1.0F, 1.0F), Predicates.and(EntitySelectors.NOT_SPECTATING, entity -> entity != null && entity.canBeCollidedWith() && entity instanceof SeatEntity));
+        List<Entity> entities = this.worldObj.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach).expand(1.0F, 1.0F, 1.0F), Predicates.and(EntitySelectors.NOT_SPECTATING, entity -> entity != null && entity.canBeCollidedWith() && entity instanceof SeatEntity));
         double distance = reach;
 
-        for (Entity entity : entities)
-        {
+        for (Entity entity : entities) {
             AxisAlignedBB bounds = entity.getEntityBoundingBox().expandXyz((double) entity.getCollisionBorderSize());
             RayTraceResult result = bounds.calculateIntercept(eyePosition, vec3d2);
 
-            if (bounds.isVecInside(eyePosition))
-            {
-                if (distance >= 0.0D)
-                {
+            if (bounds.isVecInside(eyePosition)) {
+                if (distance >= 0.0D) {
                     pointedEntity = entity;
                     distance = 0.0D;
                 }
-            }
-            else if (result != null)
-            {
+            } else if (result != null) {
                 double vecDistance = eyePosition.distanceTo(result.hitVec);
 
-                if (vecDistance < distance || distance == 0.0D)
-                {
-                    if (entity.getLowestRidingEntity() == player.getLowestRidingEntity() && !player.canRiderInteract())
-                    {
-                        if (distance == 0.0D)
-                        {
+                if (vecDistance < distance || distance == 0.0D) {
+                    if (entity.getLowestRidingEntity() == player.getLowestRidingEntity() && !player.canRiderInteract()) {
+                        if (distance == 0.0D) {
                             pointedEntity = entity;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         pointedEntity = entity;
                         distance = vecDistance;
                     }
@@ -418,48 +349,37 @@ public abstract class CarEntity extends Entity
             }
         }
 
-        if (pointedEntity != null)
-        {
+        if (pointedEntity != null) {
             return pointedEntity.applyPlayerInteraction(player, vec, stack, hand);
         }
 
         return EnumActionResult.PASS;
     }
 
-    public void addSeat(SeatEntity entity)
-    {
-        seats.put(entity.getId(), entity);
+    public void addSeat(SeatEntity entity) {
+        this.seats.put(entity.getId(), entity);
     }
 
-    public Entity getSeat(int id)
-    {
-        return seats.get(id);
+    public Entity getSeat(int id) {
+        return this.seats.get(id);
     }
 
     @Override
-    public void setDead()
-    {
+    public void setDead() {
         super.setDead();
 
-        if (!worldObj.isRemote)
-        {
-            dropItems();
-        }
-        else
-        {
+        if (!this.worldObj.isRemote) {
+            this.dropItems();
+        } else {
             this.updateSound();
         }
     }
 
-    private void updateSound()
-    {
-        if (!isDead)
-        {
-            sound = new CarSound(this);
+    private void updateSound() {
+        if (!this.isDead) {
+            this.sound = new CarSound(this);
             ClientProxy.playSound(this);
-        }
-        else
-        {
+        } else {
             ClientProxy.stopSound(this);
         }
     }

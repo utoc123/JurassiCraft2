@@ -26,12 +26,10 @@ import org.jurassicraft.server.tile.CultivatorTile;
 
 import java.util.List;
 
-public class CultivatorBlock extends BlockContainer implements SubBlocksBlock
-{
+public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
     public static final PropertyEnum COLOR = PropertyEnum.create("color", EnumDyeColor.class);
 
-    public CultivatorBlock(String position)
-    {
+    public CultivatorBlock(String position) {
         super(Material.IRON);
         this.setUnlocalizedName("cultivator_" + position);
         this.setDefaultState(this.blockState.getBaseState().withProperty(COLOR, EnumDyeColor.WHITE));
@@ -40,97 +38,81 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock
     }
 
     @Override
-    public int damageDropped(IBlockState state)
-    {
+    public int damageDropped(IBlockState state) {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state)
-    {
-        if (world.getBlockState(pos).getBlock() == BlockHandler.CULTIVATOR_TOP)
-        {
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        if (world.getBlockState(pos).getBlock() == BlockHandler.CULTIVATOR_TOP) {
             pos.add(0, -1, 0);
         }
 
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile instanceof CultivatorTile)
-        {
+        if (tile instanceof CultivatorTile) {
             InventoryHelper.dropInventoryItems(world, pos, (CultivatorTile) tile);
         }
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         EnumDyeColor[] colors = EnumDyeColor.values();
 
-        for (EnumDyeColor color : colors)
-        {
+        for (EnumDyeColor color : colors) {
             subtypes.add(new ItemStack(item, 1, color.getMetadata()));
         }
     }
 
     @Override
-    public ItemBlock getItemBlock()
-    {
+    public ItemBlock getItemBlock() {
         return new CultivateItemBlock(this);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new CultivatorTile();
     }
 
     @Override
-    public MapColor getMapColor(IBlockState state)
-    {
+    public MapColor getMapColor(IBlockState state) {
         return ((EnumDyeColor) state.getValue(COLOR)).getMapColor();
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, COLOR);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 }

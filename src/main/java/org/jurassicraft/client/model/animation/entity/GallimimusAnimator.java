@@ -8,11 +8,9 @@ import org.jurassicraft.client.model.animation.DinosaurAnimator;
 import org.jurassicraft.server.entity.dinosaur.GallimimusEntity;
 
 @SideOnly(Side.CLIENT)
-public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity>
-{
+public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, GallimimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
+    protected void performAnimations(DinosaurModel model, GallimimusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer neck1 = model.getCube("Neck part 1");
         AdvancedModelRenderer neck2 = model.getCube("Neck part 2");
         AdvancedModelRenderer neck3 = model.getCube("Neck part 3");

@@ -72,8 +72,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class BlockHandler
-{
+public class BlockHandler {
     public static final Map<TreeType, AncientPlanksBlock> ANCIENT_PLANKS = new HashMap<>();
     public static final Map<TreeType, AncientLogBlock> ANCIENT_LOGS = new HashMap<>();
     public static final Map<TreeType, AncientLeavesBlock> ANCIENT_LEAVES = new HashMap<>();
@@ -155,15 +154,13 @@ public class BlockHandler
     public static PaleoBaleBlock PALEO_BALE_LEAVES;
     public static PaleoBaleBlock PALEO_BALE_OTHER;
 
-    public static void init()
-    {
+    public static void init() {
         registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
         registerBlock(FOSSILIZED_TRACKWAY, "Fossilized Trackway");
         registerBlock(NEST_FOSSIL, "Nest Fossil");
         registerBlock(ENCASED_NEST_FOSSIL, "Encased Nest Fossil");
 
-        for (int i = 0; i < (int) Math.ceil(EntityHandler.getHighestID() / 16.0F); i++)
-        {
+        for (int i = 0; i < (int) Math.ceil(EntityHandler.getHighestID() / 16.0F); i++) {
             FossilBlock fossil = new FossilBlock(i * 16);
             EncasedFossilBlock encasedFossil = new EncasedFossilBlock(i * 16);
 
@@ -176,8 +173,7 @@ public class BlockHandler
             OreDictionary.registerOre("fossil", fossil);
         }
 
-        for (TreeType type : TreeType.values())
-        {
+        for (TreeType type : TreeType.values()) {
             registerTreeType(type);
         }
 
@@ -244,8 +240,7 @@ public class BlockHandler
         registerBlock(PALEO_BALE_LEAVES, "Paleo Bale Leaves");
     }
 
-    public static void registerTreeType(TreeType type)
-    {
+    public static void registerTreeType(TreeType type) {
         AncientPlanksBlock planks = new AncientPlanksBlock(type);
         AncientLogBlock log = new AncientLogBlock(type, false);
         AncientLogBlock petrified_log = new AncientLogBlock(type, true);
@@ -292,73 +287,59 @@ public class BlockHandler
         Blocks.FIRE.setFireInfo(stair, 5, 20);
     }
 
-    public static FossilBlock getFossilBlock(Dinosaur dinosaur)
-    {
+    public static FossilBlock getFossilBlock(Dinosaur dinosaur) {
         return getFossilBlock(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    private static int getBlockId(int id)
-    {
+    private static int getBlockId(int id) {
         return (int) (Math.floor((((float) id + 1.0F) / 16.0F) - 0.0625F));
     }
 
-    public static EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur)
-    {
+    public static EncasedFossilBlock getEncasedFossil(Dinosaur dinosaur) {
         return getEncasedFossil(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    public static EncasedFossilBlock getEncasedFossil(int id)
-    {
+    public static EncasedFossilBlock getEncasedFossil(int id) {
         return ENCASED_FOSSILS.get(getBlockId(id));
     }
 
-    public static FossilBlock getFossilBlock(int id)
-    {
+    public static FossilBlock getFossilBlock(int id) {
         return FOSSILS.get(getBlockId(id));
     }
 
-    public static int getDinosaurId(FossilBlock fossil, int metadata)
-    {
+    public static int getDinosaurId(FossilBlock fossil, int metadata) {
         return (FOSSILS.indexOf(fossil) * 16) + metadata;
     }
 
-    public static int getDinosaurId(EncasedFossilBlock fossil, int metadata)
-    {
+    public static int getDinosaurId(EncasedFossilBlock fossil, int metadata) {
         return (ENCASED_FOSSILS.indexOf(fossil) * 16) + metadata;
     }
 
-    public static int getMetadata(int id)
-    {
+    public static int getMetadata(int id) {
         return id % 16;
     }
 
-    public static int getMetadata(Dinosaur dinosaur)
-    {
+    public static int getMetadata(Dinosaur dinosaur) {
         return getMetadata(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    public static void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name)
-    {
+    public static void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name) {
         registerBlock(block, name);
 
         GameRegistry.registerTileEntity(tileEntity, "jurassicraft:" + name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_"));
     }
 
-    public static void registerBlock(Block block, String name)
-    {
+    public static void registerBlock(Block block, String name) {
         name = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         block.setUnlocalizedName(name);
 
         ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
 
-        if (block instanceof SubBlocksBlock)
-        {
+        if (block instanceof SubBlocksBlock) {
             GameRegistry.register(block, resource);
             GameRegistry.register(((SubBlocksBlock) block).getItemBlock(), resource);
-        }
-        else
-        {
+        } else {
             GameRegistry.register(block, resource);
             GameRegistry.register(new ItemBlock(block), resource);
         }

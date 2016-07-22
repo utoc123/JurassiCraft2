@@ -4,19 +4,16 @@ import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class MateEntityAI extends EntityAIBase
-{
+public class MateEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
     protected DinosaurEntity mate;
 
-    public MateEntityAI(DinosaurEntity dinosaur)
-    {
+    public MateEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
+    public boolean shouldExecute() {
         // int minEnergy = 12000;
         //
         // if (dinosaur.getEnergy() > minEnergy)
@@ -45,13 +42,11 @@ public class MateEntityAI extends EntityAIBase
     }
 
     @Override
-    public void updateTask()
-    {
-        if (dinosaur.getEntityBoundingBox().intersectsWith(mate.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D)))
-        {
-            dinosaur.setAnimation(DinosaurAnimation.MATING.get());
+    public void updateTask() {
+        if (this.dinosaur.getEntityBoundingBox().intersectsWith(this.mate.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D))) {
+            this.dinosaur.setAnimation(DinosaurAnimation.MATING.get());
 
-            dinosaur.getMetabolism().decreaseEnergy(1000);
+            this.dinosaur.getMetabolism().decreaseEnergy(1000);
         }
     }
 
@@ -59,8 +54,7 @@ public class MateEntityAI extends EntityAIBase
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting()
-    {
-        return dinosaur != null && !this.dinosaur.getNavigator().noPath() && mate != null && !mate.isDead;
+    public boolean continueExecuting() {
+        return this.dinosaur != null && !this.dinosaur.getNavigator().noPath() && this.mate != null && !this.mate.isDead;
     }
 }

@@ -4,10 +4,8 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.dinosaur.TriceratopsEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class TriceratopsDinosaur extends Dinosaur
-{
-    public TriceratopsDinosaur()
-    {
+public class TriceratopsDinosaur extends Dinosaur {
+    public TriceratopsDinosaur() {
         super();
 
         this.setName("Triceratops");
@@ -19,7 +17,7 @@ public class TriceratopsDinosaur extends Dinosaur
         this.setAttackSpeed(1.3);
         this.setHealth(10, 70);
         this.setStrength(2, 10);
-        this.setMaximumAge(fromDays(45));
+        this.setMaximumAge(this.fromDays(45));
         this.setEyeHeight(0.45F, 1.8F);
         this.setSizeX(0.35F, 2.5F);
         this.setSizeY(0.6F, 3.0F);

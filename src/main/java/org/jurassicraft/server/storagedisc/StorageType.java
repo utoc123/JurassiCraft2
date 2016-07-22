@@ -5,8 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
-public interface StorageType
-{
+public interface StorageType {
     void writeToNBT(NBTTagCompound nbt);
 
     void readFromNBT(NBTTagCompound nbt);

@@ -17,12 +17,10 @@ import net.minecraftforge.common.IPlantable;
 /**
  * Copyright 2016 Timeless Modding Team
  */
-public class GracilariaItem extends Item implements IPlantable
-{
+public class GracilariaItem extends Item implements IPlantable {
     private Block seaweedBlock;
 
-    public GracilariaItem(Block crops)
-    {
+    public GracilariaItem(Block crops) {
         this.seaweedBlock = crops;
         this.setUnlocalizedName("gracilaria");
     }
@@ -34,17 +32,13 @@ public class GracilariaItem extends Item implements IPlantable
     // |___|\__\___|_| |_| |_|
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         // NOTE:  Pos is the block we are placing ON
 
         // Based on ItemSeeds.
-        if (side != EnumFacing.UP || !player.canPlayerEdit(pos.offset(side), side, stack))
-        {
+        if (side != EnumFacing.UP || !player.canPlayerEdit(pos.offset(side), side, stack)) {
             return EnumActionResult.PASS;
-        }
-        else if (seaweedBlock.canPlaceBlockAt(world, pos.up()))
-        {
+        } else if (this.seaweedBlock.canPlaceBlockAt(world, pos.up())) {
             world.setBlockState(pos.up(), this.seaweedBlock.getDefaultState());
             --stack.stackSize;
             return EnumActionResult.SUCCESS;
@@ -60,14 +54,12 @@ public class GracilariaItem extends Item implements IPlantable
     // |___|_|   |_|\__,_|_| |_|\__\__,_|_.__/|_|\___|
 
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos)
-    {
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
     @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos)
-    {
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         return this.seaweedBlock.getDefaultState();
     }
 }

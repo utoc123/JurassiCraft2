@@ -10,8 +10,7 @@ import net.minecraft.world.World;
  * <p>
  * This mod is used to compute and update the break status on the mod.
  */
-public class BlockBreaker
-{
+public class BlockBreaker {
     // This is a base factor use to adjust break time.
     public static final float BASE_BREAK_FACTOR = 2.5F;
     private final World world;
@@ -24,17 +23,16 @@ public class BlockBreaker
     /**
      * Constructs a block breaker that used to breaks blocks over time.
      *
-     * @param entity     Entity doing the breaking.
-     * @param digSpeed   The speed of breaking.  See {@link #breakSeconds(World, double, BlockPos) } for details.
-     * @param pos        The block to break.
+     * @param entity Entity doing the breaking.
+     * @param digSpeed The speed of breaking.  See {@link #breakSeconds(World, double, BlockPos) } for details.
+     * @param pos The block to break.
      * @param minSeconds The minimum amount of seconds to break.
      */
-    public BlockBreaker(Entity entity, double digSpeed, BlockPos pos, double minSeconds)
-    {
+    public BlockBreaker(Entity entity, double digSpeed, BlockPos pos, double minSeconds) {
         this.world = entity.getEntityWorld();
         this.entityID = entity.getEntityId();
         this.pos = pos;
-        this.totalProgress = (int) Math.max(breakSeconds(world, digSpeed, pos), minSeconds) * 20;
+        this.totalProgress = (int) Math.max(breakSeconds(this.world, digSpeed, pos), minSeconds) * 20;
     }
 
     /**
@@ -50,14 +48,13 @@ public class BlockBreaker
      * Thus, Steve with a stone pickaxe has a 4.0 work speed which results in 18.75 ticks.
      * This is based on dig factors from the base minecraft.
      *
-     * @param world    The world
+     * @param world The world
      * @param digSpeed Dig speed of the digger.  Should combine entity dig speed
-     *                 and the work speed factor.
-     * @param pos      The pos of the block to dig.
+     * and the work speed factor.
+     * @param pos The pos of the block to dig.
      * @return The number of seconds to break.
      */
-    public static double breakSeconds(World world, double digSpeed, BlockPos pos)
-    {
+    public static double breakSeconds(World world, double digSpeed, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         float hardness = state.getBlockHardness(world, pos);
 
@@ -67,9 +64,8 @@ public class BlockBreaker
     /**
      * @return The number of ticks left to break;
      */
-    public int ticksLeft()
-    {
-        return totalProgress - progress;
+    public int ticksLeft() {
+        return this.totalProgress - this.progress;
     }
 
     /**
@@ -77,39 +73,35 @@ public class BlockBreaker
      *
      * @return True if time to break.
      */
-    public boolean tickUpdate()
-    {
+    public boolean tickUpdate() {
         // we have 10 stages
-        ++progress;
-        int i = (int) ((float) progress / totalProgress * 10.0F);
+        ++this.progress;
+        int i = (int) ((float) this.progress / this.totalProgress * 10.0F);
 
-        if (i != this.previousProgress)
-        {
-            world.sendBlockBreakProgress(entityID, pos, i);
+        if (i != this.previousProgress) {
+            this.world.sendBlockBreakProgress(this.entityID, this.pos, i);
             this.previousProgress = i;
         }
 
-        return (progress > totalProgress);
+        return (this.progress > this.totalProgress);
     }
 
     /**
      * Reset the break progress on this block.
      */
-    public void reset()
-    {
-        progress = 0;
-        previousProgress = 0;
-        world.sendBlockBreakProgress(entityID, pos, 0);
+    public void reset() {
+        this.progress = 0;
+        this.previousProgress = 0;
+        this.world.sendBlockBreakProgress(this.entityID, this.pos, 0);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "BlockBreaker{" +
-                "_pos=" + pos +
-                ", _ticksNeeded=" + totalProgress +
-                ", _entityID=" + entityID +
-                ", _ticksDone=" + progress +
+                "_pos=" + this.pos +
+                ", _ticksNeeded=" + this.totalProgress +
+                ", _entityID=" + this.entityID +
+                ", _ticksDone=" + this.progress +
                 '}';
     }
 

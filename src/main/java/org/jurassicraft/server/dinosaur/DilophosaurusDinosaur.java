@@ -5,10 +5,8 @@ import org.jurassicraft.server.entity.base.SleepingSchedule;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class DilophosaurusDinosaur extends Dinosaur
-{
-    public DilophosaurusDinosaur()
-    {
+public class DilophosaurusDinosaur extends Dinosaur {
+    public DilophosaurusDinosaur() {
         super();
 
         this.setName("Dilophosaurus");
@@ -19,7 +17,7 @@ public class DilophosaurusDinosaur extends Dinosaur
         this.setHealth(10, 30);
         this.setSpeed(0.35, 0.40);
         this.setStrength(2, 6);
-        this.setMaximumAge(fromDays(40));
+        this.setMaximumAge(this.fromDays(40));
         this.setEyeHeight(0.35F, 1.8F);
         this.setSizeX(0.3F, 1.25F);
         this.setSizeY(0.4F, 2.0F);

@@ -10,8 +10,7 @@ import java.util.Map;
  *
  * @author WorldSEnder
  */
-public class AnimationsDTO
-{
+public class AnimationsDTO {
     /**
      * Maps an {@link DinosaurAnimation} as a string to the list of sequential poses
      */

@@ -15,44 +15,36 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerTile>
-{
+public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerTile> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation textureCombinator;
     private ResourceLocation textureHybridizer;
 
-    public DNACombinatorHybridizerSpecialRenderer()
-    {
-        try
-        {
+    public DNACombinatorHybridizerSpecialRenderer() {
+        try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/dna_combinator_hybridizer"));
             this.textureCombinator = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_combinator.png");
             this.textureHybridizer = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_hybridizer.png");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(DNACombinatorHybridizerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(DNACombinatorHybridizerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.DNA_COMBINATOR_HYBRIDIZER)
-        {
+        if (blockState.getBlock() == BlockHandler.DNA_COMBINATOR_HYBRIDIZER) {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
 
             EnumFacing value = blockState.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
-            {
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH) {
                 value = value.getOpposite();
             }
 
@@ -68,9 +60,9 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
             double scale = 0.75;
             GlStateManager.scale(scale, -scale, scale);
 
-            mc.getTextureManager().bindTexture(tileEntity.getMode() ? textureHybridizer : textureCombinator);
+            this.mc.getTextureManager().bindTexture(tileEntity.getMode() ? this.textureHybridizer : this.textureCombinator);
 
-            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
             GlStateManager.popMatrix();
 

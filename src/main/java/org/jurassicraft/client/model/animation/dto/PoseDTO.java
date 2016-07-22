@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model.animation.dto;
 
-public class PoseDTO
-{
+public class PoseDTO {
     /**
      * The pose's tabular file location
      */

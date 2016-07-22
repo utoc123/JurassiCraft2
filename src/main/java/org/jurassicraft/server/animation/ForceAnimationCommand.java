@@ -37,73 +37,57 @@ import java.util.Objects;
 /**
  * @author jabelar
  */
-public class ForceAnimationCommand implements ICommand
-{
+public class ForceAnimationCommand implements ICommand {
     private final List<String> aliases;
 
-    public ForceAnimationCommand()
-    {
-        aliases = new ArrayList<>();
-        aliases.add("animate");
-        aliases.add("anim");
+    public ForceAnimationCommand() {
+        this.aliases = new ArrayList<>();
+        this.aliases.add("animate");
+        this.aliases.add("anim");
     }
 
     @Override
-    public int compareTo(ICommand o)
-    {
+    public int compareTo(ICommand o) {
         return 0;
     }
 
     @Override
-    public String getCommandName()
-    {
+    public String getCommandName() {
         return "animate";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender parSender)
-    {
+    public String getCommandUsage(ICommandSender parSender) {
         return "animate <AnimID> [<entitySelector>]";
     }
 
     @Override
-    public List<String> getCommandAliases()
-    {
-        return aliases;
+    public List<String> getCommandAliases() {
+        return this.aliases;
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
-    {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         World world = sender.getEntityWorld();
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             JurassiCraft.INSTANCE.getLogger().debug("Not processing on Client side");
-        }
-        else
-        {
+        } else {
             JurassiCraft.INSTANCE.getLogger().debug("Processing on Server side");
-            if (args.length < 1)
-            {
+            if (args.length < 1) {
                 throw new WrongUsageException("Missing the animation to set");
             }
             String entitySelector = args.length < 2 ? "@e[c=1]" : args[1];
             List<DinosaurEntity> dinos = EntitySelector.matchEntities(new ProxySender(server, sender), entitySelector, DinosaurEntity.class);
 
-            if (dinos.size() == 0)
-            {
+            if (dinos.size() == 0) {
                 throw new EntityNotFoundException("No DinosaurEntity to animate");
             }
 
-            for (DinosaurEntity entity : dinos)
-            {
-                try
-                {
+            for (DinosaurEntity entity : dinos) {
+                try {
                     entity.setAnimation(DinosaurAnimation.valueOf(args[0].toUpperCase(Locale.ENGLISH)).get());
-                }
-                catch (IllegalArgumentException iae)
-                {
+                } catch (IllegalArgumentException iae) {
                     throw new CommandException(args[0] + " is not a valid animation.");
                 }
 
@@ -113,23 +97,18 @@ public class ForceAnimationCommand implements ICommand
     }
 
     @Override
-    public boolean checkPermission(MinecraftServer server, ICommandSender sender)
-    {
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;
     }
 
     @Override
-    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos)
-    {
-        if (args.length == 1)
-        {
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+        if (args.length == 1) {
             List<String> animations = Lists.newArrayList();
             String current = args[0].toLowerCase(Locale.ENGLISH);
 
-            for (DinosaurAnimation animation : DinosaurAnimation.values())
-            {
-                if (animation.name().toLowerCase(Locale.ENGLISH).startsWith(current))
-                {
+            for (DinosaurAnimation animation : DinosaurAnimation.values()) {
+                if (animation.name().toLowerCase(Locale.ENGLISH).startsWith(current)) {
                     animations.add(animation.name());
                 }
             }
@@ -140,8 +119,7 @@ public class ForceAnimationCommand implements ICommand
     }
 
     @Override
-    public boolean isUsernameIndex(String[] var1, int var2)
-    {
+    public boolean isUsernameIndex(String[] var1, int var2) {
         return false;
     }
 
@@ -150,81 +128,68 @@ public class ForceAnimationCommand implements ICommand
      *
      * @author WorldSEnder
      */
-    private static class ProxySender implements ICommandSender
-    {
+    private static class ProxySender implements ICommandSender {
         private final ICommandSender original;
         private MinecraftServer server;
 
-        public ProxySender(MinecraftServer server, ICommandSender proxy)
-        {
+        public ProxySender(MinecraftServer server, ICommandSender proxy) {
             this.original = Objects.requireNonNull(proxy);
             this.server = server;
         }
 
         @Override
-        public void addChatMessage(ITextComponent component)
-        {
-            original.addChatMessage(component);
+        public void addChatMessage(ITextComponent component) {
+            this.original.addChatMessage(component);
         }
 
         @Override
-        public boolean canCommandSenderUseCommand(int permLevel, String commandName)
-        {
-            return commandName.equals("@") || original.canCommandSenderUseCommand(permLevel, commandName);
+        public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
+            return commandName.equals("@") || this.original.canCommandSenderUseCommand(permLevel, commandName);
         }
 
         @Override
-        public Entity getCommandSenderEntity()
-        {
-            return original.getCommandSenderEntity();
+        public Entity getCommandSenderEntity() {
+            return this.original.getCommandSenderEntity();
         }
 
         @Override
-        public String getName()
-        {
-            return original.getName();
+        public String getName() {
+            return this.original.getName();
         }
 
         @Override
-        public ITextComponent getDisplayName()
-        {
-            return original.getDisplayName();
+        public ITextComponent getDisplayName() {
+            return this.original.getDisplayName();
         }
 
         @Override
-        public World getEntityWorld()
-        {
-            return original.getEntityWorld();
+        public World getEntityWorld() {
+            return this.original.getEntityWorld();
         }
 
         @Override
-        public BlockPos getPosition()
-        {
-            return original.getPosition();
+        public BlockPos getPosition() {
+            return this.original.getPosition();
         }
 
         @Override
-        public Vec3d getPositionVector()
-        {
-            return original.getPositionVector();
+        public Vec3d getPositionVector() {
+            return this.original.getPositionVector();
         }
 
         @Override
-        public boolean sendCommandFeedback()
-        {
-            return original.sendCommandFeedback();
+        public boolean sendCommandFeedback() {
+            return this.original.sendCommandFeedback();
         }
 
         @Override
-        public void setCommandStat(Type type, int amount)
-        {
-            original.setCommandStat(type, amount);
+        public void setCommandStat(Type type, int amount) {
+            this.original.setCommandStat(type, amount);
         }
 
         @Override
-        public MinecraftServer getServer()
-        {
-            return server;
+        public MinecraftServer getServer() {
+            return this.server;
         }
     }
 }

@@ -16,10 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AmberBlock extends Block
-{
-    public AmberBlock()
-    {
+public class AmberBlock extends Block {
+    public AmberBlock() {
         super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
@@ -28,25 +26,21 @@ public class AmberBlock extends Block
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> ret = new ArrayList<>();
 
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
         int count = rand.nextInt(fortune + 2) - 1;
 
-        if (count < 0)
-        {
+        if (count < 0) {
             count = 0;
         }
 
-        for (int i = 0; i < count + 1; i++)
-        {
+        for (int i = 0; i < count + 1; i++) {
             Item item = ItemHandler.AMBER;
 
-            if (item != null)
-            {
+            if (item != null) {
                 ret.add(new ItemStack(item, 1, rand.nextBoolean() ? 1 : 0));
             }
         }
@@ -55,8 +49,7 @@ public class AmberBlock extends Block
     }
 
     @Override
-    public boolean canDropFromExplosion(Explosion explosion)
-    {
+    public boolean canDropFromExplosion(Explosion explosion) {
         return false;
     }
 }

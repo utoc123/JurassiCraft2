@@ -19,27 +19,22 @@ import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class AttractionSignRenderer implements IRenderFactory<AttractionSignEntity>
-{
+public class AttractionSignRenderer implements IRenderFactory<AttractionSignEntity> {
     @Override
-    public Render<? super AttractionSignEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super AttractionSignEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<AttractionSignEntity>
-    {
+    public static class Renderer extends Render<AttractionSignEntity> {
         private static int DISPLAY_LIST = -1;
         private static boolean HAS_COMPILED = false;
 
-        public Renderer(RenderManager manager)
-        {
+        public Renderer(RenderManager manager) {
             super(manager);
         }
 
         @Override
-        public void doRender(AttractionSignEntity entity, double x, double y, double z, float yaw, float partialTicks)
-        {
+        public void doRender(AttractionSignEntity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
@@ -52,12 +47,9 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
             float scale = 0.0625F;
             GlStateManager.scale(scale, scale, scale);
 
-            if (HAS_COMPILED)
-            {
+            if (HAS_COMPILED) {
                 GlStateManager.callList(DISPLAY_LIST);
-            }
-            else
-            {
+            } else {
                 DISPLAY_LIST = GLAllocation.generateDisplayLists(1);
                 GlStateManager.glNewList(DISPLAY_LIST, GL11.GL_COMPILE);
                 this.renderLayer(entity, entity.getWidthPixels(), entity.getHeightPixels(), type.sizeX, type.sizeY);
@@ -76,13 +68,11 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(AttractionSignEntity entity)
-        {
+        protected ResourceLocation getEntityTexture(AttractionSignEntity entity) {
             return entity.type.texture;
         }
 
-        private void renderLayer(AttractionSignEntity entity, int width, int height, int textureWidth, int textureHeight)
-        {
+        private void renderLayer(AttractionSignEntity entity, int width, int height, int textureWidth, int textureHeight) {
             float centerWidth = (float) -textureWidth / 2.0F;
             float centerHeight = (float) -textureHeight;
             float pixelSize = 0.0625F;
@@ -91,10 +81,8 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
 
             GlStateManager.disableCull();
 
-            for (int x = 0; x < textureWidth * pixelSize; x++)
-            {
-                for (int y = 0; y < textureHeight * pixelSize; y++)
-                {
+            for (int x = 0; x < textureWidth * pixelSize; x++) {
+                for (int y = 0; y < textureHeight * pixelSize; y++) {
                     float maxX = centerWidth + (x + 1) / pixelSize;
                     float minX = centerWidth + x / pixelSize;
                     float maxY = centerHeight + (y + 1) / pixelSize;
@@ -118,8 +106,7 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
                     buffer.pos(maxX, maxY, depth).tex(minTextureX, minTextureY).normal(0.0F, 0.0F, -1.0F).endVertex();
                     tessellator.draw();
 
-                    for (float i = minX; i < maxX; i++)
-                    {
+                    for (float i = minX; i < maxX; i++) {
                         maxTextureX = (centerWidth - i) / textureWidth;
                         minTextureX = (centerWidth - (i - pixelSize)) / textureWidth;
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -140,8 +127,7 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
                     maxTextureX = (textureWidth - x / pixelSize) / textureWidth;
                     minTextureX = (textureWidth - (x + 1) / pixelSize) / textureWidth;
 
-                    for (float i = minY; i < maxY; i++)
-                    {
+                    for (float i = minY; i < maxY; i++) {
                         minTextureY = ((height - i + 1.0F) / textureHeight) + 1.0F;
                         maxTextureY = ((height - i) / textureHeight) + 1.0F;
                         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -161,28 +147,20 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
             GlStateManager.enableCull();
         }
 
-        private void setLightmap(AttractionSignEntity sign, float xzOffset, float yOffset)
-        {
+        private void setLightmap(AttractionSignEntity sign, float xzOffset, float yOffset) {
             int posX = MathHelper.floor_double(sign.posX);
             int posY = MathHelper.floor_double(sign.posY + (yOffset / 16.0F));
             int posZ = MathHelper.floor_double(sign.posZ);
 
             EnumFacing direction = sign.facingDirection;
 
-            if (direction == EnumFacing.NORTH)
-            {
+            if (direction == EnumFacing.NORTH) {
                 posX = MathHelper.floor_double(sign.posX + (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.WEST)
-            {
+            } else if (direction == EnumFacing.WEST) {
                 posZ = MathHelper.floor_double(sign.posZ - (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.SOUTH)
-            {
+            } else if (direction == EnumFacing.SOUTH) {
                 posX = MathHelper.floor_double(sign.posX - (xzOffset / 16.0F));
-            }
-            else if (direction == EnumFacing.EAST)
-            {
+            } else if (direction == EnumFacing.EAST) {
                 posZ = MathHelper.floor_double(sign.posZ + (xzOffset / 16.0F));
             }
 

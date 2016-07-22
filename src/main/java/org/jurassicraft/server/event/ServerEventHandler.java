@@ -44,65 +44,48 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class ServerEventHandler
-{
+public class ServerEventHandler {
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event)
-    {
+    public void onWorldLoad(WorldEvent.Load event) {
         GameRules gameRules = event.getWorld().getGameRules();
 
-        registerGameRule(gameRules, "dinoMetabolism", true);
-        registerGameRule(gameRules, "dinoGrowth", true);
-        registerGameRule(gameRules, "plantSpreading", true);
+        this.registerGameRule(gameRules, "dinoMetabolism", true);
+        this.registerGameRule(gameRules, "dinoGrowth", true);
+        this.registerGameRule(gameRules, "plantSpreading", true);
     }
 
-    private void registerGameRule(GameRules gameRules, String name, boolean value)
-    {
-        if (!gameRules.hasRule(name))
-        {
+    private void registerGameRule(GameRules gameRules, String name, boolean value) {
+        if (!gameRules.hasRule(name)) {
             gameRules.addGameRule(name, value + "", GameRules.ValueType.BOOLEAN_VALUE);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onItemPickup(PlayerEvent.ItemPickupEvent event)
-    {
-        if (event.pickedUp.getEntityItem().getItem() == ItemHandler.AMBER)
-        {
+    public void onItemPickup(PlayerEvent.ItemPickupEvent event) {
+        if (event.pickedUp.getEntityItem().getItem() == ItemHandler.AMBER) {
             event.player.addStat(AchievementHandler.AMBER, 1);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onCraft(PlayerEvent.ItemCraftedEvent event)
-    {
+    public void onCraft(PlayerEvent.ItemCraftedEvent event) {
         Item item = event.crafting.getItem();
 
-        if (item == ItemHandler.PLASTER_AND_BANDAGE)
-        {
+        if (item == ItemHandler.PLASTER_AND_BANDAGE) {
             event.player.addStat(AchievementHandler.PALEONTOLOGY, 1);
-        }
-        else if (item == Item.getItemFromBlock(BlockHandler.CLEANING_STATION))
-        {
+        } else if (item == Item.getItemFromBlock(BlockHandler.CLEANING_STATION)) {
             event.player.addStat(AchievementHandler.CLEANING_STATION, 1);
-        }
-        else if (item == Item.getItemFromBlock(BlockHandler.FOSSIL_GRINDER))
-        {
+        } else if (item == Item.getItemFromBlock(BlockHandler.FOSSIL_GRINDER)) {
             event.player.addStat(AchievementHandler.FOSSIL_GRINDER, 1);
-        }
-        else if (item == Item.getItemFromBlock(BlockHandler.REINFORCED_STONE))
-        {
+        } else if (item == Item.getItemFromBlock(BlockHandler.REINFORCED_STONE)) {
             event.player.addStat(AchievementHandler.REINFORCED_STONE, 1);
-        }
-        else if (item == Item.getItemFromBlock(BlockHandler.REINFORCED_BRICKS))
-        {
+        } else if (item == Item.getItemFromBlock(BlockHandler.REINFORCED_BRICKS)) {
             event.player.addStat(AchievementHandler.REINFORCED_STONE, 1);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void decorate(DecorateBiomeEvent.Pre event)
-    {
+    public void decorate(DecorateBiomeEvent.Pre event) {
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         Random rand = event.getRand();
@@ -111,79 +94,63 @@ public class ServerEventHandler
 
         BiomeDecorator decorator = biome.theBiomeDecorator;
 
-        if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal))
-        {
+        if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal)) {
             decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
         }
 
-        if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome instanceof BiomeSwamp || biome instanceof BiomeJungle)
-        {
-            if (rand.nextInt(8) == 0)
-            {
+        if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome instanceof BiomeSwamp || biome instanceof BiomeJungle) {
+            if (rand.nextInt(8) == 0) {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
-                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid())
-                {
+                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
                     world.setBlockState(topBlock, BlockHandler.MOSS.getDefaultState(), 2);
                 }
             }
         }
 
-        if (biome instanceof BiomeJungle || biome instanceof BiomeSwamp)
-        {
-            if (rand.nextInt(8) == 0)
-            {
+        if (biome instanceof BiomeJungle || biome instanceof BiomeSwamp) {
+            if (rand.nextInt(8) == 0) {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
-                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid())
-                {
+                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
                     world.setBlockState(topBlock.up(), BlockHandler.WEST_INDIAN_LILAC.getDefaultState(), 2);
                     world.setBlockState(topBlock, BlockHandler.WEST_INDIAN_LILAC.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.LOWER), 2);
                 }
             }
         }
 
-        if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN)
-        {
-            if (rand.nextInt(8) == 0)
-            {
+        if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN) {
+            if (rand.nextInt(8) == 0) {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
-                if (topBlock.getY() < 62)
-                {
+                if (topBlock.getY() < 62) {
                     IBlockState state = world.getBlockState(topBlock.down());
 
-                    if (state.isOpaqueCube())
-                    {
+                    if (state.isOpaqueCube()) {
                         world.setBlockState(topBlock, BlockHandler.GRACILARIA.getDefaultState(), 2);
                     }
                 }
             }
         }
 
-        if (biome instanceof BiomeSwamp)
-        {
-            if (rand.nextInt(2) == 0)
-            {
+        if (biome instanceof BiomeSwamp) {
+            if (rand.nextInt(2) == 0) {
                 new WorldGenMinable(BlockHandler.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
             }
         }
 
         int footprintChance = 20;
 
-        if (biome == Biomes.RIVER)
-        {
+        if (biome == Biomes.RIVER) {
             footprintChance = 10;
         }
 
-        if (rand.nextInt(footprintChance) == 0)
-        {
+        if (rand.nextInt(footprintChance) == 0) {
             int y = rand.nextInt(20) + 30;
 
             FossilizedTrackwayBlock.TrackwayType type = FossilizedTrackwayBlock.TrackwayType.values()[rand.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)];
 
-            for (int i = 0; i < rand.nextInt(2) + 1; i++)
-            {
+            for (int i = 0; i < rand.nextInt(2) + 1; i++) {
                 BlockPos basePos = new BlockPos(pos.getX() + rand.nextInt(10) - 5, y, pos.getZ() + rand.nextInt(10) - 5);
 
                 float angle = (float) (rand.nextDouble() * 360.0F);
@@ -193,12 +160,10 @@ public class ServerEventHandler
                 float xOffset = -MathHelper.sin((float) Math.toRadians(angle));
                 float zOffset = MathHelper.cos((float) Math.toRadians(angle));
 
-                for (int l = 0; l < rand.nextInt(2) + 3; l++)
-                {
+                for (int l = 0; l < rand.nextInt(2) + 3; l++) {
                     BlockPos trackwayPos = basePos.add(xOffset * l, 0, zOffset * l);
 
-                    if (world.getBlockState(trackwayPos).getBlock() == Blocks.STONE)
-                    {
+                    if (world.getBlockState(trackwayPos).getBlock() == Blocks.STONE) {
                         world.setBlockState(trackwayPos, trackway);
                     }
                 }
@@ -207,28 +172,23 @@ public class ServerEventHandler
     }
 
     @SubscribeEvent
-    public void onLootTableLoad(LootTableLoadEvent event)
-    {
+    public void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
 
         LootTable table = event.getTable();
 
-        if (name == LootTableList.GAMEPLAY_FISHING)
-        {
+        if (name == LootTableList.GAMEPLAY_FISHING) {
             LootEntry[] entries = new LootEntry[] { new LootEntryItem(ItemHandler.GRACILARIA, 25, 0, new LootFunction[0], new LootCondition[0], "gracilaria") };
             LootPool pool = new LootPool(entries, new LootCondition[0], new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft");
             table.addPool(pool);
-        }
-        else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID)
-        {
+        } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID) {
             List<Dinosaur> dinosaurs = EntityHandler.getRegisteredDinosaurs();
 
             LootEntry[] actionFigureEntries = new LootEntry[dinosaurs.size()];
 
             int i = 0;
 
-            for (Dinosaur dinosaur : dinosaurs)
-            {
+            for (Dinosaur dinosaur : dinosaurs) {
                 int meta = EntityHandler.getDinosaurId(dinosaur);
                 actionFigureEntries[i++] = new LootEntryItem(ItemHandler.ACTION_FIGURE, 25, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase(Locale.ENGLISH));
             }
@@ -243,8 +203,7 @@ public class ServerEventHandler
 
             i = 3;
 
-            for (Dinosaur dinosaur : dinosaurs)
-            {
+            for (Dinosaur dinosaur : dinosaurs) {
                 int meta = EntityHandler.getDinosaurId(dinosaur);
                 fossilEntries[i++] = new LootEntryItem(ItemHandler.FOSSILS.get("skull"), 10, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase(Locale.ENGLISH));
             }

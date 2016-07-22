@@ -14,38 +14,32 @@ import org.jurassicraft.client.gui.DNACombinatorHybridizerGui;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
-public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybridizerCombinatorMode>
-{
+public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybridizerCombinatorMode> {
     private BlockPos pos;
     private boolean hybridizer;
 
-    public SwitchHybridizerCombinatorMode()
-    {
+    public SwitchHybridizerCombinatorMode() {
     }
 
-    public SwitchHybridizerCombinatorMode(BlockPos pos, boolean hybridizer)
-    {
+    public SwitchHybridizerCombinatorMode(BlockPos pos, boolean hybridizer) {
         this.hybridizer = hybridizer;
         this.pos = pos;
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onClientReceived(Minecraft minecraft, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext) {
         DNACombinatorHybridizerTile tile = (DNACombinatorHybridizerTile) player.worldObj.getTileEntity(message.pos);
         tile.setMode(message.hybridizer);
 
         GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
-        if (screen instanceof DNACombinatorHybridizerGui)
-        {
+        if (screen instanceof DNACombinatorHybridizerGui) {
             ((DNACombinatorHybridizerContainer) ((DNACombinatorHybridizerGui) screen).inventorySlots).updateSlots(message.hybridizer);
         }
     }
 
     @Override
-    public void onServerReceived(MinecraftServer minecraftServer, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onServerReceived(MinecraftServer minecraftServer, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext) {
         boolean mode = message.hybridizer;
         BlockPos pos = message.pos;
 
@@ -56,23 +50,20 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
 
         Container openContainer = player.openContainer;
 
-        if (openContainer instanceof DNACombinatorHybridizerContainer)
-        {
+        if (openContainer instanceof DNACombinatorHybridizerContainer) {
             ((DNACombinatorHybridizerContainer) openContainer).updateSlots(mode);
         }
     }
 
     @Override
-    public void toBytes(ByteBuf buffer)
-    {
-        buffer.writeBoolean(hybridizer);
-        buffer.writeLong(pos.toLong());
+    public void toBytes(ByteBuf buffer) {
+        buffer.writeBoolean(this.hybridizer);
+        buffer.writeLong(this.pos.toLong());
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer)
-    {
-        hybridizer = buffer.readBoolean();
-        pos = BlockPos.fromLong(buffer.readLong());
+    public void fromBytes(ByteBuf buffer) {
+        this.hybridizer = buffer.readBoolean();
+        this.pos = BlockPos.fromLong(buffer.readLong());
     }
 }

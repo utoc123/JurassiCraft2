@@ -20,19 +20,15 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Map;
 
-public class RecipeHandler
-{
-    public static void init()
-    {
-        for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs())
-        {
+public class RecipeHandler {
+    public static void init() {
+        for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs()) {
             int id = EntityHandler.getDinosaurId(dinosaur);
 
             GameRegistry.addSmelting(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, id), new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, id), 5F);
         }
 
-        for (Map.Entry<TreeType, AncientPlanksBlock> entry : BlockHandler.ANCIENT_PLANKS.entrySet())
-        {
+        for (Map.Entry<TreeType, AncientPlanksBlock> entry : BlockHandler.ANCIENT_PLANKS.entrySet()) {
             TreeType type = entry.getKey();
             AncientPlanksBlock planks = entry.getValue();
 
@@ -130,8 +126,7 @@ public class RecipeHandler
         addGrowthSerumRecipe(Items.COOKED_PORKCHOP);
         addGrowthSerumRecipe(Items.COOKED_RABBIT);
 
-        for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs())
-        {
+        for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs()) {
             addGrowthSerumRecipe(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, EntityHandler.getDinosaurId(dinosaur)));
         }
 
@@ -145,12 +140,10 @@ public class RecipeHandler
 
         AttractionSignEntity.AttractionSignType[] types = AttractionSignEntity.AttractionSignType.values();
 
-        for (int i = 0; i < types.length; i++)
-        {
+        for (int i = 0; i < types.length; i++) {
             int previous = i - 1;
 
-            if (previous < 0)
-            {
+            if (previous < 0) {
                 previous = types.length - 1;
             }
 
@@ -158,21 +151,17 @@ public class RecipeHandler
         }
     }
 
-    private static void addPaleoBaleRecipe(PaleoBaleBlock block)
-    {
-        for (Item ingredient : block.getVariant().getIngredients())
-        {
+    private static void addPaleoBaleRecipe(PaleoBaleBlock block) {
+        for (Item ingredient : block.getVariant().getIngredients()) {
             GameRegistry.addRecipe(new ItemStack(block, Block.getBlockFromItem(ingredient) instanceof DoublePlantBlock ? 2 : 1), "###", "###", "###", '#', ingredient);
         }
     }
 
-    private static void addGrowthSerumRecipe(Item meat)
-    {
+    private static void addGrowthSerumRecipe(Item meat) {
         addGrowthSerumRecipe(new ItemStack(meat));
     }
 
-    private static void addGrowthSerumRecipe(ItemStack meat)
-    {
+    private static void addGrowthSerumRecipe(ItemStack meat) {
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.GROWTH_SERUM), Items.GOLDEN_CARROT, ItemHandler.EMPTY_SYRINGE, Items.WATER_BUCKET, meat);
     }
 }

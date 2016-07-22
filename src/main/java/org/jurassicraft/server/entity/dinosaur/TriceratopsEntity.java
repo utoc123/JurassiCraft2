@@ -7,18 +7,14 @@ import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class TriceratopsEntity extends DinosaurEntity
-{
-    public TriceratopsEntity(World world)
-    {
+public class TriceratopsEntity extends DinosaurEntity {
+    public TriceratopsEntity(World world) {
         super(world);
     }
 
     @Override
-    public SoundEvent getSoundForAnimation(Animation animation)
-    {
-        switch (DinosaurAnimation.getAnimation(animation))
-        {
+    public SoundEvent getSoundForAnimation(Animation animation) {
+        switch (DinosaurAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.TRICERATOPS_LIVING;
             case CALLING:

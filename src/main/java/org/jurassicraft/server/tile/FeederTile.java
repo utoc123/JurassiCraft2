@@ -21,8 +21,7 @@ import org.jurassicraft.server.food.FoodHelper;
 
 import java.util.Random;
 
-public class FeederTile extends TileEntityLockable implements ITickable, ISidedInventory
-{
+public class FeederTile extends TileEntityLockable implements ITickable, ISidedInventory {
     private static final int[] CARNIVOROUS_SLOTS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
     private static final int[] HERBIVOROUS_SLOTS = new int[] { 9, 10, 11, 12, 13, 14, 15, 16, 17 };
     public int prevOpenAnimation;
@@ -34,212 +33,170 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
     private DinosaurEntity feeding;
 
     @Override
-    public Container createContainer(InventoryPlayer inventory, EntityPlayer player)
-    {
+    public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
         return null;
     }
 
     @Override
-    public String getGuiID()
-    {
+    public String getGuiID() {
         return JurassiCraft.MODID + ":feeder";
     }
 
     @Override
-    public int[] getSlotsForFace(EnumFacing side)
-    {
+    public int[] getSlotsForFace(EnumFacing side) {
         return side.getAxis() == EnumFacing.Axis.Y ? CARNIVOROUS_SLOTS : HERBIVOROUS_SLOTS;
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction)
-    {
+    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
         return this.isItemValidForSlot(index, stack);
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
-    {
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
         return true;
     }
 
     @Override
-    public int getSizeInventory()
-    {
-        return slots.length;
+    public int getSizeInventory() {
+        return this.slots.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int index)
-    {
-        return slots[index];
+    public ItemStack getStackInSlot(int index) {
+        return this.slots[index];
     }
 
     @Override
-    public ItemStack decrStackSize(int index, int count)
-    {
-        if (slots[index] != null)
-        {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.slots[index] != null) {
             ItemStack stack;
 
-            if (slots[index].stackSize <= count)
-            {
-                stack = slots[index];
-                slots[index] = null;
+            if (this.slots[index].stackSize <= count) {
+                stack = this.slots[index];
+                this.slots[index] = null;
                 return stack;
-            }
-            else
-            {
-                stack = slots[index].splitStack(count);
+            } else {
+                stack = this.slots[index].splitStack(count);
 
-                if (slots[index].stackSize == 0)
-                {
-                    slots[index] = null;
+                if (this.slots[index].stackSize == 0) {
+                    this.slots[index] = null;
                 }
 
                 return stack;
             }
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public ItemStack removeStackFromSlot(int index)
-    {
-        if (slots[index] != null)
-        {
-            ItemStack itemstack = slots[index];
-            slots[index] = null;
+    public ItemStack removeStackFromSlot(int index) {
+        if (this.slots[index] != null) {
+            ItemStack itemstack = this.slots[index];
+            this.slots[index] = null;
             return itemstack;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack)
-    {
-        slots[index] = stack;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        this.slots[index] = stack;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
-        {
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();
         }
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override
-    public void openInventory(EntityPlayer player)
-    {
+    public void openInventory(EntityPlayer player) {
     }
 
     @Override
-    public void closeInventory(EntityPlayer player)
-    {
+    public void closeInventory(EntityPlayer player) {
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack)
-    {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         return true;
     }
 
     @Override
-    public int getField(int id)
-    {
+    public int getField(int id) {
         return 0;
     }
 
     @Override
-    public void setField(int id, int value)
-    {
+    public void setField(int id, int value) {
     }
 
     @Override
-    public int getFieldCount()
-    {
+    public int getFieldCount() {
         return 0;
     }
 
     @Override
-    public boolean receiveClientEvent(int id, int type)
-    {
-        if (id == 0)
-        {
-            open = type == 1;
-            worldObj.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, open ? 1.0F : 0.9F, false);
+    public boolean receiveClientEvent(int id, int type) {
+        if (id == 0) {
+            this.open = type == 1;
+            this.worldObj.playSound(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, this.open ? 1.0F : 0.9F, false);
             return true;
-        }
-        else
-        {
+        } else {
             return super.receiveClientEvent(id, type);
         }
     }
 
     @Override
-    public void clear()
-    {
-        for (int i = 0; i < slots.length; ++i)
-        {
-            slots[i] = null;
+    public void clear() {
+        for (int i = 0; i < this.slots.length; ++i) {
+            this.slots[i] = null;
         }
     }
 
     @Override
-    public String getName()
-    {
-        return hasCustomName() ? customName : "container.feeder";
+    public String getName() {
+        return this.hasCustomName() ? this.customName : "container.feeder";
     }
 
     @Override
-    public boolean hasCustomName()
-    {
+    public boolean hasCustomName() {
         return this.customName != null && this.customName.length() > 0;
     }
 
-    public void setCustomInventoryName(String customName)
-    {
+    public void setCustomInventoryName(String customName) {
         this.customName = customName;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
-    {
+    public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         NBTTagList itemList = compound.getTagList("Items", 10);
         ItemStack[] slots = new ItemStack[this.slots.length];
 
-        for (int i = 0; i < itemList.tagCount(); ++i)
-        {
+        for (int i = 0; i < itemList.tagCount(); ++i) {
             NBTTagCompound item = itemList.getCompoundTagAt(i);
 
             byte slot = item.getByte("Slot");
 
-            if (slot >= 0 && slot < slots.length)
-            {
+            if (slot >= 0 && slot < slots.length) {
                 slots[slot] = ItemStack.loadItemStackFromNBT(item);
             }
         }
 
-        if (compound.hasKey("CustomName", 8))
-        {
+        if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
         }
 
@@ -247,28 +204,24 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound = super.writeToNBT(compound);
 
         NBTTagList itemList = new NBTTagList();
 
-        for (int slot = 0; slot < getSizeInventory(); ++slot)
-        {
-            if (slots[slot] != null)
-            {
+        for (int slot = 0; slot < this.getSizeInventory(); ++slot) {
+            if (this.slots[slot] != null) {
                 NBTTagCompound itemTag = new NBTTagCompound();
                 itemTag.setByte("Slot", (byte) slot);
 
-                slots[slot].writeToNBT(itemTag);
+                this.slots[slot].writeToNBT(itemTag);
                 itemList.appendTag(itemTag);
             }
         }
 
         compound.setTag("Items", itemList);
 
-        if (this.hasCustomName())
-        {
+        if (this.hasCustomName()) {
             compound.setString("CustomName", this.customName);
         }
 
@@ -276,33 +229,25 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
     }
 
     @Override
-    public void update()
-    {
-        prevOpenAnimation = openAnimation;
+    public void update() {
+        this.prevOpenAnimation = this.openAnimation;
 
-        if (open && openAnimation < 20)
-        {
-            openAnimation++;
-        }
-        else if (!open && openAnimation > 0)
-        {
-            openAnimation--;
+        if (this.open && this.openAnimation < 20) {
+            this.openAnimation++;
+        } else if (!this.open && this.openAnimation > 0) {
+            this.openAnimation--;
         }
 
-        if (open && openAnimation == 19)
-        {
-            stayOpen = 20;
+        if (this.open && this.openAnimation == 19) {
+            this.stayOpen = 20;
         }
 
-        if (open && openAnimation == 20)
-        {
-            if (stayOpen > 0)
-            {
-                stayOpen--;
+        if (this.open && this.openAnimation == 20) {
+            if (this.stayOpen > 0) {
+                this.stayOpen--;
 
-                if (stayOpen == 10 && feeding != null)
-                {
-                    int feedSlot = getFoodForDinosaur(feeding.getDinosaur());
+                if (this.stayOpen == 10 && this.feeding != null) {
+                    int feedSlot = this.getFoodForDinosaur(this.feeding.getDinosaur());
 
                     Random random = new Random();
 
@@ -314,8 +259,7 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
                     float motionY = 0.0F;
                     float motionZ = 0.0F;
 
-                    switch (worldObj.getBlockState(pos).getValue(FeederBlock.FACING))
-                    {
+                    switch (this.worldObj.getBlockState(this.pos).getValue(FeederBlock.FACING)) {
                         case UP:
                             offsetY = 1.0F;
                             motionY = 1.0F;
@@ -347,58 +291,48 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
                             break;
                     }
 
-                    ItemStack stack = slots[feedSlot];
+                    ItemStack stack = this.slots[feedSlot];
 
-                    if (stack != null)
-                    {
-                        EntityItem itemEntity = new EntityItem(worldObj, pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
+                    if (stack != null) {
+                        EntityItem itemEntity = new EntityItem(this.worldObj, this.pos.getX() + offsetX, this.pos.getY() + offsetY, this.pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
                         itemEntity.setDefaultPickupDelay();
                         itemEntity.motionX = motionX * 0.3F;
                         itemEntity.motionY = motionY * 0.3F;
                         itemEntity.motionZ = motionZ * 0.3F;
-                        worldObj.spawnEntityInWorld(itemEntity);
+                        this.worldObj.spawnEntityInWorld(itemEntity);
 
-                        decrStackSize(feedSlot, 1);
+                        this.decrStackSize(feedSlot, 1);
                     }
 
-                    feeding = null;
+                    this.feeding = null;
                 }
-            }
-            else
-            {
-                setOpen(false);
+            } else {
+                this.setOpen(false);
             }
         }
     }
 
-    public void setOpen(boolean open)
-    {
+    public void setOpen(boolean open) {
         this.open = open;
 
-        if (!worldObj.isRemote)
-        {
+        if (!this.worldObj.isRemote) {
             this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 0, open ? 1 : 0);
         }
 
-        if (!open)
-        {
-            feeding = null;
+        if (!open) {
+            this.feeding = null;
         }
     }
 
-    public boolean canFeedDinosaur(Dinosaur dinosaur)
-    {
-        return getFoodForDinosaur(dinosaur) != -1;
+    public boolean canFeedDinosaur(Dinosaur dinosaur) {
+        return this.getFoodForDinosaur(dinosaur) != -1;
     }
 
-    private int getFoodForDinosaur(Dinosaur dinosaur)
-    {
+    private int getFoodForDinosaur(Dinosaur dinosaur) {
         int i = 0;
 
-        for (ItemStack stack : slots)
-        {
-            if (stack != null && stack.stackSize > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem()))
-            {
+        for (ItemStack stack : this.slots) {
+            if (stack != null && stack.stackSize > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem())) {
                 return i;
             }
 
@@ -408,13 +342,11 @@ public class FeederTile extends TileEntityLockable implements ITickable, ISidedI
         return -1;
     }
 
-    public DinosaurEntity getFeeding()
-    {
-        return feeding;
+    public DinosaurEntity getFeeding() {
+        return this.feeding;
     }
 
-    public void setFeeding(DinosaurEntity feeding)
-    {
+    public void setFeeding(DinosaurEntity feeding) {
         this.feeding = feeding;
     }
 }

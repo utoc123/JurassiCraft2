@@ -24,8 +24,7 @@ import org.jurassicraft.server.message.UpdateCarControlMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 @Mod(modid = JurassiCraft.MODID, name = JurassiCraft.NAME, version = JurassiCraft.VERSION, dependencies = "required-after:llibrary@[" + JurassiCraft.LLIBRARY_VERSION + ",)")
-public class JurassiCraft
-{
+public class JurassiCraft {
     public static final String MODID = "jurassicraft";
     public static final String NAME = "JurassiCraft";
     public static final String VERSION = "2.0.1";
@@ -45,39 +44,34 @@ public class JurassiCraft
     private Logger LOGGER;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        LOGGER = event.getModLog();
-        LOGGER.info("Loading JurassiCraft...");
+    public void preInit(FMLPreInitializationEvent event) {
+        this.LOGGER = event.getModLog();
+        this.LOGGER.info("Loading JurassiCraft...");
 
         UpdateHandler.INSTANCE.registerUpdateChecker(this, "http://pastebin.com/raw/Rb96SNWb");
 
         PROXY.preInit(event);
-        LOGGER.debug("Finished pre-initialization for JurassiCraft!");
+        this.LOGGER.debug("Finished pre-initialization for JurassiCraft!");
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         PROXY.init(event);
-        LOGGER.debug("Finished initialization for JurassiCraft");
+        this.LOGGER.debug("Finished initialization for JurassiCraft");
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
         PROXY.postInit(event);
-        LOGGER.info("Finished loading JurassiCraft");
+        this.LOGGER.info("Finished loading JurassiCraft");
     }
 
     @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event)
-    {
+    public void serverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new ForceAnimationCommand());
     }
 
-    public Logger getLogger()
-    {
-        return LOGGER;
+    public Logger getLogger() {
+        return this.LOGGER;
     }
 }

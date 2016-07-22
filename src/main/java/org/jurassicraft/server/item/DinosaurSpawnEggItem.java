@@ -35,43 +35,35 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class DinosaurSpawnEggItem extends Item
-{
-    public DinosaurSpawnEggItem()
-    {
+public class DinosaurSpawnEggItem extends Item {
+    public DinosaurSpawnEggItem() {
         this.setHasSubtypes(true);
 
         this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand)
-    {
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
         return true;
     }
 
-    public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z)
-    {
-        Dinosaur dinoInEgg = getDinosaur(stack);
+    public DinosaurEntity spawnCreature(World world, EntityPlayer player, ItemStack stack, double x, double y, double z) {
+        Dinosaur dinoInEgg = this.getDinosaur(stack);
 
-        if (dinoInEgg != null)
-        {
+        if (dinoInEgg != null) {
             Class<? extends DinosaurEntity> dinoClass = dinoInEgg.getDinosaurClass();
 
-            try
-            {
+            try {
                 DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(player.worldObj);
                 dino.setDNAQuality(100);
 
-                int mode = getMode(stack);
+                int mode = this.getMode(stack);
 
-                if (mode > 0)
-                {
+                if (mode > 0) {
                     dino.setMale(mode == 1);
                 }
 
-                if (player.isSneaking())
-                {
+                if (player.isSneaking()) {
                     dino.setAge(0);
                 }
 
@@ -80,9 +72,7 @@ public class DinosaurSpawnEggItem extends Item
                 dino.rotationYawHead = dino.rotationYaw;
                 dino.renderYawOffset = dino.rotationYaw;
                 return dino;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -91,24 +81,17 @@ public class DinosaurSpawnEggItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
-    {
-        int mode = changeMode(stack);
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+        int mode = this.changeMode(stack);
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             String modeString = "";
 
-            if (mode == 0)
-            {
+            if (mode == 0) {
                 modeString = "random";
-            }
-            else if (mode == 1)
-            {
+            } else if (mode == 1) {
                 modeString = "male";
-            }
-            else if (mode == 2)
-            {
+            } else if (mode == 2) {
                 modeString = "female";
             }
 
@@ -119,19 +102,16 @@ public class DinosaurSpawnEggItem extends Item
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
+    public String getItemStackDisplayName(ItemStack stack) {
         Dinosaur dinosaur = this.getDinosaur(stack);
 
         return new LangHelper("item.dino_spawn_egg.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
-        if (dinosaur == null)
-        {
+        if (dinosaur == null) {
             dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
@@ -140,48 +120,36 @@ public class DinosaurSpawnEggItem extends Item
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return EnumActionResult.SUCCESS;
-        }
-        else if (!player.canPlayerEdit(pos.offset(side), side, stack))
-        {
+        } else if (!player.canPlayerEdit(pos.offset(side), side, stack)) {
             return EnumActionResult.PASS;
-        }
-        else
-        {
+        } else {
             IBlockState iblockstate = world.getBlockState(pos);
 
-            if (iblockstate.getBlock() == Blocks.MOB_SPAWNER)
-            {
+            if (iblockstate.getBlock() == Blocks.MOB_SPAWNER) {
                 TileEntity tile = world.getTileEntity(pos);
 
-                if (tile instanceof TileEntityMobSpawner)
-                {
+                if (tile instanceof TileEntityMobSpawner) {
                     MobSpawnerBaseLogic spawnerLogic = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic();
-                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(getDinosaur(stack).getDinosaurClass()));
+                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(this.getDinosaur(stack).getDinosaurClass()));
                     tile.markDirty();
 
-                    if (!player.capabilities.isCreativeMode)
-                    {
+                    if (!player.capabilities.isCreativeMode) {
                         --stack.stackSize;
                     }
 
@@ -192,22 +160,18 @@ public class DinosaurSpawnEggItem extends Item
             pos = pos.offset(side);
             double yOffset = 0.0D;
 
-            if (side == EnumFacing.UP && iblockstate.getBlock() instanceof BlockFence)
-            {
+            if (side == EnumFacing.UP && iblockstate.getBlock() instanceof BlockFence) {
                 yOffset = 0.5D;
             }
 
-            DinosaurEntity dinosaur = spawnCreature(world, player, stack, (double) pos.getX() + 0.5D, (double) pos.getY() + yOffset, (double) pos.getZ() + 0.5D);
+            DinosaurEntity dinosaur = this.spawnCreature(world, player, stack, (double) pos.getX() + 0.5D, (double) pos.getY() + yOffset, (double) pos.getZ() + 0.5D);
 
-            if (dinosaur != null)
-            {
-                if (stack.hasDisplayName())
-                {
+            if (dinosaur != null) {
+                if (stack.hasDisplayName()) {
                     dinosaur.setCustomNameTag(stack.getDisplayName());
                 }
 
-                if (!player.capabilities.isCreativeMode)
-                {
+                if (!player.capabilities.isCreativeMode) {
                     --stack.stackSize;
                 }
 
@@ -219,20 +183,17 @@ public class DinosaurSpawnEggItem extends Item
         }
     }
 
-    public int getMode(ItemStack stack)
-    {
-        return getNBT(stack).getInteger("GenderMode");
+    public int getMode(ItemStack stack) {
+        return this.getNBT(stack).getInteger("GenderMode");
     }
 
-    public int changeMode(ItemStack stack)
-    {
-        NBTTagCompound nbt = getNBT(stack);
+    public int changeMode(ItemStack stack) {
+        NBTTagCompound nbt = this.getNBT(stack);
 
-        int mode = getMode(stack);
+        int mode = this.getMode(stack);
         mode++;
 
-        if (mode > 2)
-        {
+        if (mode > 2) {
             mode = 0;
         }
 
@@ -243,12 +204,10 @@ public class DinosaurSpawnEggItem extends Item
         return mode;
     }
 
-    public NBTTagCompound getNBT(ItemStack stack)
-    {
+    public NBTTagCompound getNBT(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
         }
 
@@ -258,8 +217,7 @@ public class DinosaurSpawnEggItem extends Item
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced)
-    {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
         lore.add(I18n.format("lore.baby_dino.name"));
         lore.add(I18n.format("lore.change_gender.name"));
     }

@@ -8,12 +8,10 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Collection;
 import java.util.Map;
 
-public abstract class HelicopterModule
-{
+public abstract class HelicopterModule {
     public static final Map<String, Class<? extends HelicopterModule>> registry;
 
-    static
-    {
+    static {
         // register default modules
         registry = Maps.newHashMap();
         registry.put("door", HelicopterDoor.class);
@@ -23,23 +21,17 @@ public abstract class HelicopterModule
     private final String moduleID;
     private final Collection<Class<? extends HelicopterModule>> supported;
 
-    protected HelicopterModule(String id)
-    {
+    protected HelicopterModule(String id) {
         this.moduleID = id;
-        supported = createSupportedModuleList();
+        this.supported = this.createSupportedModuleList();
     }
 
-    public static HelicopterModule createFromID(String id)
-    {
+    public static HelicopterModule createFromID(String id) {
         Class<? extends HelicopterModule> clazz = registry.get(id);
-        if (clazz != null)
-        {
-            try
-            {
+        if (clazz != null) {
+            try {
                 return clazz.newInstance();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -48,27 +40,23 @@ public abstract class HelicopterModule
 
     protected abstract Collection<Class<? extends HelicopterModule>> createSupportedModuleList();
 
-    public Collection<Class<? extends HelicopterModule>> getSupportedModules()
-    {
-        return supported;
+    public Collection<Class<? extends HelicopterModule>> getSupportedModules() {
+        return this.supported;
     }
 
     public abstract float getBaseRotationAngle();
 
-    public String getModuleID()
-    {
-        return moduleID;
+    public String getModuleID() {
+        return this.moduleID;
     }
 
     public abstract boolean onClicked(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec);
 
-    public void onAdded(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec)
-    {
+    public void onAdded(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec) {
 
     }
 
-    public void onRemoved(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec)
-    {
+    public void onRemoved(HelicopterModuleSpot m, EntityPlayer player, Vec3d vec) {
 
     }
 
@@ -77,18 +65,15 @@ public abstract class HelicopterModule
     public abstract void readFromNBT(NBTTagCompound compound);
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof HelicopterModule)
-        {
-            return getModuleID().equals(((HelicopterModule) obj).getModuleID());
+    public boolean equals(Object obj) {
+        if (obj instanceof HelicopterModule) {
+            return this.getModuleID().equals(((HelicopterModule) obj).getModuleID());
         }
         return super.equals(obj);
     }
 
     @Override
-    public int hashCode()
-    {
-        return getModuleID().hashCode();
+    public int hashCode() {
+        return this.getModuleID().hashCode();
     }
 }

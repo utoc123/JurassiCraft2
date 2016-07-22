@@ -5,16 +5,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import org.jurassicraft.server.item.bones.FossilItem;
 
-public class FossilSlot extends Slot
-{
-    public FossilSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition)
-    {
+public class FossilSlot extends Slot {
+    public FossilSlot(IInventory inventory, int slotIndex, int xPosition, int yPosition) {
         super(inventory, slotIndex, xPosition, yPosition);
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack)
-    {
+    public boolean isItemValid(ItemStack stack) {
         return stack.getItem() instanceof FossilItem;
     }
 }

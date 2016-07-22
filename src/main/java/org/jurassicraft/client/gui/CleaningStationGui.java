@@ -11,31 +11,27 @@ import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.tile.CleaningStationTile;
 
 @SideOnly(Side.CLIENT)
-public class CleaningStationGui extends GuiContainer
-{
+public class CleaningStationGui extends GuiContainer {
     private static final ResourceLocation TEXTURE = new ResourceLocation("jurassicraft:textures/gui/cleaning_station.png");
 
     private final InventoryPlayer playerInventory;
     private IInventory inventory;
 
-    public CleaningStationGui(InventoryPlayer playerInv, IInventory inventory)
-    {
+    public CleaningStationGui(InventoryPlayer playerInv, IInventory inventory) {
         super(new CleaningStationContainer(playerInv, inventory));
         this.playerInventory = playerInv;
         this.inventory = inventory;
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String name = this.inventory.getDisplayName().getUnformattedText();
         this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(TEXTURE);
         int x = (this.width - this.xSize) / 2;
@@ -43,8 +39,7 @@ public class CleaningStationGui extends GuiContainer
         this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
         int progress;
 
-        if (CleaningStationTile.isCleaning(this.inventory))
-        {
+        if (CleaningStationTile.isCleaning(this.inventory)) {
             progress = this.func_175382_i(51);
             this.drawTexturedModalRect(x + 46, y + 18 + 51 - progress, 176, 81 - progress, 14, progress + 1);
         }
@@ -53,19 +48,16 @@ public class CleaningStationGui extends GuiContainer
         this.drawTexturedModalRect(x + 79, y + 34, 176, 14, progress + 1, 16);
     }
 
-    private int getProgress(int scale)
-    {
+    private int getProgress(int scale) {
         int j = this.inventory.getField(2);
         int k = this.inventory.getField(3);
         return k != 0 && j != 0 ? j * scale / k : 0;
     }
 
-    private int func_175382_i(int p_175382_1_)
-    {
+    private int func_175382_i(int p_175382_1_) {
         int j = this.inventory.getField(1);
 
-        if (j == 0)
-        {
+        if (j == 0) {
             j = 200;
         }
 

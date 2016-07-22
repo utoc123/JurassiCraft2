@@ -10,8 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.JurassiCraft;
 
-public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureMessage>
-{
+public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureMessage> {
     private int slot;
     private int temp;
     private int x;
@@ -19,54 +18,48 @@ public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureM
     private int z;
     private BlockPos pos;
 
-    public ChangeTemperatureMessage()
-    {
+    public ChangeTemperatureMessage() {
     }
 
-    public ChangeTemperatureMessage(BlockPos pos, int slot, int temp)
-    {
+    public ChangeTemperatureMessage(BlockPos pos, int slot, int temp) {
         this.slot = slot;
         this.temp = temp;
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
-        this.pos = new BlockPos(x, y, z);
+        this.pos = new BlockPos(this.x, this.y, this.z);
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onClientReceived(Minecraft minecraft, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext) {
         IInventory incubator = (IInventory) player.worldObj.getTileEntity(message.pos);
         incubator.setField(message.slot + 10, message.temp);
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext)
-    {
+    public void onServerReceived(MinecraftServer server, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext) {
         IInventory incubator = (IInventory) player.worldObj.getTileEntity(message.pos);
         incubator.setField(message.slot + 10, message.temp);
         JurassiCraft.NETWORK_WRAPPER.sendToAll(new ChangeTemperatureMessage(message.pos, message.slot, message.temp));
     }
 
     @Override
-    public void toBytes(ByteBuf buffer)
-    {
-        buffer.writeInt(slot);
-        buffer.writeInt(temp);
-        buffer.writeInt(x);
-        buffer.writeInt(y);
-        buffer.writeInt(z);
+    public void toBytes(ByteBuf buffer) {
+        buffer.writeInt(this.slot);
+        buffer.writeInt(this.temp);
+        buffer.writeInt(this.x);
+        buffer.writeInt(this.y);
+        buffer.writeInt(this.z);
     }
 
     @Override
-    public void fromBytes(ByteBuf buffer)
-    {
-        slot = buffer.readInt();
-        temp = buffer.readInt();
-        x = buffer.readInt();
-        y = buffer.readInt();
-        z = buffer.readInt();
+    public void fromBytes(ByteBuf buffer) {
+        this.slot = buffer.readInt();
+        this.temp = buffer.readInt();
+        this.x = buffer.readInt();
+        this.y = buffer.readInt();
+        this.z = buffer.readInt();
 
-        pos = new BlockPos(x, y, z);
+        this.pos = new BlockPos(this.x, this.y, this.z);
     }
 }

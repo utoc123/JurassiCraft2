@@ -22,10 +22,8 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
-public class EmbryonicMachineBlock extends OrientedBlock
-{
-    public EmbryonicMachineBlock()
-    {
+public class EmbryonicMachineBlock extends OrientedBlock {
+    public EmbryonicMachineBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("embryonic_machine");
         this.setHardness(2.0F);
@@ -34,28 +32,23 @@ public class EmbryonicMachineBlock extends OrientedBlock
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-        if (stack.hasDisplayName())
-        {
+        if (stack.hasDisplayName()) {
             TileEntity tileentity = world.getTileEntity(pos);
 
-            if (tileentity instanceof EmbryonicMachineTile)
-            {
+            if (tileentity instanceof EmbryonicMachineTile) {
                 ((EmbryonicMachineTile) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state)
-    {
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tileentity = world.getTileEntity(pos);
 
-        if (tileentity instanceof EmbryonicMachineTile)
-        {
+        if (tileentity instanceof EmbryonicMachineTile) {
             InventoryHelper.dropInventoryItems(world, pos, (EmbryonicMachineTile) tileentity);
         }
 
@@ -63,22 +56,16 @@ public class EmbryonicMachineBlock extends OrientedBlock
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return true;
-        }
-        else if (!player.isSneaking())
-        {
+        } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof EmbryonicMachineTile)
-            {
+            if (tileEntity instanceof EmbryonicMachineTile) {
                 EmbryonicMachineTile embryonicMachine = (EmbryonicMachineTile) tileEntity;
 
-                if (embryonicMachine.isUseableByPlayer(player))
-                {
+                if (embryonicMachine.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_EMBRYONIC_MACHINE_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
@@ -88,34 +75,29 @@ public class EmbryonicMachineBlock extends OrientedBlock
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new EmbryonicMachineTile();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
 }

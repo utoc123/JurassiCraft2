@@ -18,42 +18,34 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.DNASequencerTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerTile>
-{
+public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerTile> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
 
-    public DNASequencerSpecialRenderer()
-    {
-        try
-        {
+    public DNASequencerSpecialRenderer() {
+        try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/dna_sequencer"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_sequencer.png");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(DNASequencerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(DNASequencerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.DNA_SEQUENCER)
-        {
+        if (state.getBlock() == BlockHandler.DNA_SEQUENCER) {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
 
             EnumFacing value = state.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH)
-            {
+            if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH) {
                 value = value.getOpposite();
             }
 
@@ -68,22 +60,19 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
                 GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
 
                 GlStateManager.scale(0.75F * 0.5F, 0.75F * 0.5F, 0.75F * 0.5F);
-                mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+                this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
-                RenderItem renderItem = mc.getRenderItem();
+                RenderItem renderItem = this.mc.getRenderItem();
 
-                GlStateManager.translate(0.0, 0.0, Math.sin((mc.thePlayer.ticksExisted + mc.getRenderPartialTicks()) * 0.05F) * 0.025F);
+                GlStateManager.translate(0.0, 0.0, Math.sin((this.mc.thePlayer.ticksExisted + this.mc.getRenderPartialTicks()) * 0.05F) * 0.025F);
 
-                for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP))
-                {
+                for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP)) {
                     GlStateManager.translate(0.0, 0.0, 0.4);
 
-                    if (inputSlot % 2 == 0)
-                    {
+                    if (inputSlot % 2 == 0) {
                         ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
 
-                        if (sequence != null)
-                        {
+                        if (sequence != null) {
                             renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
                         }
                     }
@@ -101,9 +90,9 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
                 double scale = 1.0;
                 GlStateManager.scale(scale, -scale, scale);
 
-                mc.getTextureManager().bindTexture(texture);
+                this.mc.getTextureManager().bindTexture(this.texture);
 
-                model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+                this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
             }
             GlStateManager.popMatrix();
 

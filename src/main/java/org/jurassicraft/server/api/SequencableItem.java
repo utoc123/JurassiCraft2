@@ -7,25 +7,18 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
-public interface SequencableItem
-{
-    static SequencableItem getSequencableItem(ItemStack stack)
-    {
-        if (stack != null)
-        {
+public interface SequencableItem {
+    static SequencableItem getSequencableItem(ItemStack stack) {
+        if (stack != null) {
             Item item = stack.getItem();
 
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).getBlock();
 
-                if (block instanceof SequencableItem)
-                {
+                if (block instanceof SequencableItem) {
                     return (SequencableItem) block;
                 }
-            }
-            else if (item instanceof SequencableItem)
-            {
+            } else if (item instanceof SequencableItem) {
                 return (SequencableItem) item;
             }
         }
@@ -33,13 +26,11 @@ public interface SequencableItem
         return null;
     }
 
-    static boolean isSequencableItem(ItemStack stack)
-    {
+    static boolean isSequencableItem(ItemStack stack) {
         return getSequencableItem(stack) != null;
     }
 
-    static int randomQuality(Random rand)
-    {
+    static int randomQuality(Random rand) {
         return (rand.nextInt(20) + 1) * 5;
     }
 

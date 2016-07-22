@@ -4,10 +4,8 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class TyrannosaurusDinosaur extends Dinosaur
-{
-    public TyrannosaurusDinosaur()
-    {
+public class TyrannosaurusDinosaur extends Dinosaur {
+    public TyrannosaurusDinosaur() {
         super();
 
         this.setName("Tyrannosaurus");
@@ -19,7 +17,7 @@ public class TyrannosaurusDinosaur extends Dinosaur
         this.setSpeed(0.35, 0.42);
         this.setAttackSpeed(1.2);
         this.setStrength(5, 20);
-        this.setMaximumAge(fromDays(60));
+        this.setMaximumAge(this.fromDays(60));
         this.setEyeHeight(0.6F, 3.8F);
         this.setSizeX(0.45F, 4.0F);
         this.setSizeY(0.8F, 4.0F);

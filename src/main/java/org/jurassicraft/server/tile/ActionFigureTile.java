@@ -8,71 +8,59 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 
-public class ActionFigureTile extends TileEntity
-{
+public class ActionFigureTile extends TileEntity {
     public int dinosaur;
     public DinosaurEntity entity;
 
-    public void setDinosaur(int dinosaur)
-    {
+    public void setDinosaur(int dinosaur) {
         this.dinosaur = dinosaur;
 
-        updateEntity();
+        this.updateEntity();
 
         this.markDirty();
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+    public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
-        dinosaur = nbt.getInteger("DinosaurId");
+        this.dinosaur = nbt.getInteger("DinosaurId");
 
-        updateEntity();
+        this.updateEntity();
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt = super.writeToNBT(nbt);
 
-        nbt.setInteger("DinosaurId", dinosaur);
+        nbt.setInteger("DinosaurId", this.dinosaur);
 
         return nbt;
     }
 
-    public void updateEntity()
-    {
-        if (worldObj != null)
-        {
-            try
-            {
-                entity = EntityHandler.getDinosaurById(dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(worldObj);
-                entity.applySettingsForActionFigure();
-            }
-            catch (Exception e)
-            {
+    public void updateEntity() {
+        if (this.worldObj != null) {
+            try {
+                this.entity = EntityHandler.getDinosaurById(this.dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(this.worldObj);
+                this.entity.applySettingsForActionFigure();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
+    public SPacketUpdateTileEntity getUpdatePacket() {
         return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
-    {
+    public NBTTagCompound getUpdateTag() {
         return this.writeToNBT(new NBTTagCompound());
     }
 
     @Override
-    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet)
-    {
+    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet) {
         this.readFromNBT(packet.getNbtCompound());
     }
 }

@@ -5,8 +5,7 @@ import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class DinosaurWanderEntityAI extends EntityAIBase
-{
+public class DinosaurWanderEntityAI extends EntityAIBase {
     private DinosaurEntity entity;
     private double xPosition;
     private double yPosition;
@@ -15,13 +14,11 @@ public class DinosaurWanderEntityAI extends EntityAIBase
     private int executionChance;
     private boolean mustUpdate;
 
-    public DinosaurWanderEntityAI(DinosaurEntity creatureIn, double speedIn)
-    {
+    public DinosaurWanderEntityAI(DinosaurEntity creatureIn, double speedIn) {
         this(creatureIn, speedIn, 120);
     }
 
-    public DinosaurWanderEntityAI(DinosaurEntity creatureIn, double speedIn, int chance)
-    {
+    public DinosaurWanderEntityAI(DinosaurEntity creatureIn, double speedIn, int chance) {
         this.entity = creatureIn;
         this.speed = speedIn;
         this.executionChance = chance;
@@ -29,22 +26,17 @@ public class DinosaurWanderEntityAI extends EntityAIBase
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (!this.mustUpdate)
-        {
-            if (this.entity.getRNG().nextInt(this.executionChance) != 0)
-            {
+    public boolean shouldExecute() {
+        if (!this.mustUpdate) {
+            if (this.entity.getRNG().nextInt(this.executionChance) != 0) {
                 return false;
             }
         }
 
-        if (this.entity.getNavigator().noPath())
-        {
+        if (this.entity.getNavigator().noPath()) {
             Vec3d wanderPosition = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
 
-            if (wanderPosition != null)
-            {
+            if (wanderPosition != null) {
                 this.xPosition = wanderPosition.xCoord;
                 this.yPosition = wanderPosition.yCoord;
                 this.zPosition = wanderPosition.zCoord;
@@ -58,24 +50,20 @@ public class DinosaurWanderEntityAI extends EntityAIBase
     }
 
     @Override
-    public boolean continueExecuting()
-    {
+    public boolean continueExecuting() {
         return !this.entity.getNavigator().noPath();
     }
 
     @Override
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, this.speed);
     }
 
-    public void makeUpdate()
-    {
+    public void makeUpdate() {
         this.mustUpdate = true;
     }
 
-    public void setExecutionChance(int chance)
-    {
+    public void setExecutionChance(int chance) {
         this.executionChance = chance;
     }
 }

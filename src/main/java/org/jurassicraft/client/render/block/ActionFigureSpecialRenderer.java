@@ -14,19 +14,16 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.tile.ActionFigureTile;
 
-public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureTile>
-{
+public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureTile> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void renderTileEntityAt(ActionFigureTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(ActionFigureTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.ACTION_FIGURE)
-        {
+        if (state.getBlock() == BlockHandler.ACTION_FIGURE) {
             Dinosaur dino = EntityHandler.getDinosaurById(tileEntity.dinosaur);
 
             GlStateManager.pushMatrix();
@@ -35,12 +32,9 @@ public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<Actio
 
             EnumFacing value = state.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.EAST)
-            {
+            if (value == EnumFacing.EAST) {
                 value = EnumFacing.WEST;
-            }
-            else if (value == EnumFacing.WEST)
-            {
+            } else if (value == EnumFacing.WEST) {
                 value = EnumFacing.EAST;
             }
 
@@ -49,14 +43,11 @@ public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<Actio
             double scale = 0.15;
             GlStateManager.scale(scale, scale, scale);
 
-            Render<DinosaurEntity> renderer = (Render<DinosaurEntity>) mc.getRenderManager().entityRenderMap.get(dino.getDinosaurClass());
+            Render<DinosaurEntity> renderer = (Render<DinosaurEntity>) this.mc.getRenderManager().entityRenderMap.get(dino.getDinosaurClass());
 
-            if (tileEntity.entity != null)
-            {
+            if (tileEntity.entity != null) {
                 renderer.doRender(tileEntity.entity, 0, 0, 0, 0, 0);
-            }
-            else
-            {
+            } else {
                 tileEntity.updateEntity();
             }
 

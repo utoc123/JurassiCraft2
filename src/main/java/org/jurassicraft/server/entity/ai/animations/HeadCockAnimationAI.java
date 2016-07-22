@@ -5,31 +5,26 @@ import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class HeadCockAnimationAI extends EntityAIBase
-{
+public class HeadCockAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
 
-    public HeadCockAnimationAI(IAnimatedEntity entity)
-    {
+    public HeadCockAnimationAI(IAnimatedEntity entity) {
         super();
         this.dinosaur = (DinosaurEntity) entity;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        return !dinosaur.isDead && !dinosaur.isSwimming() && !dinosaur.isCarcass() && dinosaur.getAttackTarget() == null && !dinosaur.isSwimming() && dinosaur.getRNG().nextDouble() < 0.003;
+    public boolean shouldExecute() {
+        return !this.dinosaur.isDead && !this.dinosaur.isSwimming() && !this.dinosaur.isCarcass() && this.dinosaur.getAttackTarget() == null && !this.dinosaur.isSwimming() && this.dinosaur.getRNG().nextDouble() < 0.003;
     }
 
     @Override
-    public void startExecuting()
-    {
-        dinosaur.setAnimation(DinosaurAnimation.HEAD_COCKING.get());
+    public void startExecuting() {
+        this.dinosaur.setAnimation(DinosaurAnimation.HEAD_COCKING.get());
     }
 
     @Override
-    public boolean continueExecuting()
-    {
+    public boolean continueExecuting() {
         return false;
     }
 }

@@ -4,10 +4,8 @@ import org.jurassicraft.server.entity.base.Diet;
 import org.jurassicraft.server.entity.dinosaur.ParasaurolophusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-public class ParasaurolophusDinosaur extends Dinosaur
-{
-    public ParasaurolophusDinosaur()
-    {
+public class ParasaurolophusDinosaur extends Dinosaur {
+    public ParasaurolophusDinosaur() {
         super();
 
         this.setName("Parasaurolophus");
@@ -18,7 +16,7 @@ public class ParasaurolophusDinosaur extends Dinosaur
         this.setHealth(10, 55);
         this.setSpeed(0.35, 0.41);
         this.setStrength(2, 8);
-        this.setMaximumAge(fromDays(45));
+        this.setMaximumAge(this.fromDays(45));
         this.setEyeHeight(0.45F, 2.45F);
         this.setSizeX(0.5F, 2.5F);
         this.setSizeY(0.8F, 3.5F);

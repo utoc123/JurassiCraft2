@@ -20,29 +20,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class SoftTissueItem extends Item implements SequencableItem
-{
-    public SoftTissueItem()
-    {
+public class SoftTissueItem extends Item implements SequencableItem {
+    public SoftTissueItem() {
         this.setHasSubtypes(true);
 
         this.setCreativeTab(TabHandler.DNA);
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        String dinoName = getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+    public String getItemStackDisplayName(ItemStack stack) {
+        String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
         return new LangHelper("item.soft_tissue.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack)
-    {
+    public Dinosaur getDinosaur(ItemStack stack) {
         Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
 
-        if (dinosaur == null)
-        {
+        if (dinosaur == null) {
             dinosaur = EntityHandler.VELOCIRAPTOR;
         }
 
@@ -51,34 +46,28 @@ public class SoftTissueItem extends Item implements SequencableItem
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
 
-        for (Dinosaur dinosaur : dinosaurs)
-        {
-            if (dinosaur.shouldRegister())
-            {
+        for (Dinosaur dinosaur : dinosaurs) {
+            if (dinosaur.shouldRegister()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
     }
 
     @Override
-    public boolean isSequencable(ItemStack stack)
-    {
+    public boolean isSequencable(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getSequenceOutput(ItemStack stack, Random random)
-    {
+    public ItemStack getSequenceOutput(ItemStack stack, Random random) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        if (nbt == null)
-        {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
             int quality = SequencableItem.randomQuality(random);
             DinoDNA dna = new DinoDNA(EntityHandler.getDinosaurById(stack.getItemDamage()), quality, GeneticsHelper.randomGenetics(random));

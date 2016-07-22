@@ -9,13 +9,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
-public class DinosaurDamageSource extends DamageSource
-{
+public class DinosaurDamageSource extends DamageSource {
     protected Entity entity;
     private boolean isThornsDamage = false;
 
-    public DinosaurDamageSource(String damageType, Entity entity)
-    {
+    public DinosaurDamageSource(String damageType, Entity entity) {
         super(damageType);
         this.entity = entity;
     }
@@ -23,26 +21,22 @@ public class DinosaurDamageSource extends DamageSource
     /**
      * Sets this EntityDamageSource as originating from Thorns armor
      */
-    public DinosaurDamageSource setIsThornsDamage()
-    {
+    public DinosaurDamageSource setIsThornsDamage() {
         this.isThornsDamage = true;
         return this;
     }
 
-    public boolean getIsThornsDamage()
-    {
+    public boolean getIsThornsDamage() {
         return this.isThornsDamage;
     }
 
     @Override
-    public Entity getEntity()
-    {
+    public Entity getEntity() {
         return this.entity;
     }
 
     @Override
-    public ITextComponent getDeathMessage(EntityLivingBase entity)
-    {
+    public ITextComponent getDeathMessage(EntityLivingBase entity) {
         ItemStack stack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;
         String deathMessage = "death.attack." + this.damageType;
         String itemDeathMessage = deathMessage + ".item";
@@ -50,14 +44,12 @@ public class DinosaurDamageSource extends DamageSource
     }
 
     @Override
-    public Vec3d getDamageLocation()
-    {
+    public Vec3d getDamageLocation() {
         return new Vec3d(this.entity.posX, this.entity.posY, this.entity.posZ);
     }
 
     @Override
-    public boolean isDifficultyScaled()
-    {
+    public boolean isDifficultyScaled() {
         return false;
     }
 }

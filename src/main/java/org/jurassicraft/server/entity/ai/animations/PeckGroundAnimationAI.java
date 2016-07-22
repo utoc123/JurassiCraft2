@@ -6,31 +6,26 @@ import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class PeckGroundAnimationAI extends EntityAIBase
-{
+public class PeckGroundAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
 
-    public PeckGroundAnimationAI(IAnimatedEntity entity)
-    {
+    public PeckGroundAnimationAI(IAnimatedEntity entity) {
         super();
         this.dinosaur = (DinosaurEntity) entity;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        return !(dinosaur.isDead || dinosaur.getAttackTarget() != null || dinosaur.isSleeping() || (dinosaur.herd != null && dinosaur.herd.state == Herd.State.MOVING) || dinosaur.getAnimation() != DinosaurAnimation.IDLE.get()) && !dinosaur.isSwimming() && dinosaur.getRNG().nextDouble() < 0.02;
+    public boolean shouldExecute() {
+        return !(this.dinosaur.isDead || this.dinosaur.getAttackTarget() != null || this.dinosaur.isSleeping() || (this.dinosaur.herd != null && this.dinosaur.herd.state == Herd.State.MOVING) || this.dinosaur.getAnimation() != DinosaurAnimation.IDLE.get()) && !this.dinosaur.isSwimming() && this.dinosaur.getRNG().nextDouble() < 0.02;
     }
 
     @Override
-    public void startExecuting()
-    {
-        dinosaur.setAnimation(DinosaurAnimation.PECKING.get());
+    public void startExecuting() {
+        this.dinosaur.setAnimation(DinosaurAnimation.PECKING.get());
     }
 
     @Override
-    public boolean continueExecuting()
-    {
+    public boolean continueExecuting() {
         return false;
     }
 }

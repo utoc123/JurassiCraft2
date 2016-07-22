@@ -22,8 +22,7 @@ import org.jurassicraft.server.entity.base.GrowthStage;
 import java.util.Random;
 
 @SideOnly(Side.CLIENT)
-public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements IDinosaurRenderer
-{
+public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements IDinosaurRenderer {
     private static final DynamicTexture dynamicTexture = new DynamicTexture(16, 16);
 
     public Dinosaur dinosaur;
@@ -31,30 +30,27 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
 
     public Random random;
 
-    public DinosaurRenderer(RenderDinosaurDefinition renderDef, RenderManager renderManager)
-    {
+    public DinosaurRenderer(RenderDinosaurDefinition renderDef, RenderManager renderManager) {
         super(renderManager, renderDef.getModel(GrowthStage.INFANT), renderDef.getShadowSize());
 
         this.dinosaur = renderDef.getDinosaur();
         this.random = new Random();
         this.renderDef = renderDef;
 
-        addLayer(new LayerEyelid(this));
+        this.addLayer(new LayerEyelid(this));
     }
 
     @Override
-    public void preRenderCallback(DinosaurEntity entity, float partialTick)
-    {
-        float scale = (float) entity.transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
+    public void preRenderCallback(DinosaurEntity entity, float partialTick) {
+        float scale = (float) entity.transitionFromAge(this.dinosaur.getScaleInfant(), this.dinosaur.getScaleAdult());
 
-        shadowSize = scale * renderDef.getShadowSize();
+        this.shadowSize = scale * this.renderDef.getShadowSize();
 
-        GlStateManager.translate(dinosaur.getOffsetX() * scale, dinosaur.getOffsetY() * scale, dinosaur.getOffsetZ() * scale);
+        GlStateManager.translate(this.dinosaur.getOffsetX() * scale, this.dinosaur.getOffsetY() * scale, this.dinosaur.getOffsetZ() * scale);
 
         String name = entity.getCustomNameTag();
 
-        switch (name)
-        {
+        switch (name) {
             case "iLexiconn":
             case "JTGhawk137":
                 GlStateManager.scale(0.1F, scale, scale);
@@ -68,8 +64,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
                 float[] colors = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
                 float[] colors2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
                 GlStateManager.color(colors[0] * (1.0F - time) + colors2[0] * time, colors[1] * (1.0F - time) + colors2[1] * time, colors[2] * (1.0F - time) + colors2[2] * time);
-                if (time > 0.5F)
-                {
+                if (time > 0.5F) {
                     time = 1 - time;
                 }
                 GlStateManager.scale(scale * (0.5F + time * 0.5F), scale * (1 + time * 0.5F), scale * (0.9F + time * 0.25F));
@@ -87,61 +82,49 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         }
     }
 
-
     @Override
-    public ResourceLocation getEntityTexture(DinosaurEntity entity)
-    {
+    public ResourceLocation getEntityTexture(DinosaurEntity entity) {
         GrowthStage growthStage = entity.getGrowthStage();
 
-        if (!dinosaur.doesSupportGrowthStage(growthStage))
-        {
+        if (!this.dinosaur.doesSupportGrowthStage(growthStage)) {
             growthStage = GrowthStage.ADULT;
         }
 
-        return entity.isMale() ? dinosaur.getMaleTexture(growthStage) : dinosaur.getFemaleTexture(growthStage);
+        return entity.isMale() ? this.dinosaur.getMaleTexture(growthStage) : this.dinosaur.getFemaleTexture(growthStage);
     }
 
     @Override
-    protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float partialTicks)
-    {
+    protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float partialTicks) {
         GlStateManager.rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
     }
 
     @Override
-    public void setModel(ModelBase model)
-    {
+    public void setModel(ModelBase model) {
         this.mainModel = model;
     }
 
     @Override
-    public RenderDinosaurDefinition getRenderDef()
-    {
-        return renderDef;
+    public RenderDinosaurDefinition getRenderDef() {
+        return this.renderDef;
     }
 
     @SideOnly(Side.CLIENT)
-    public class LayerEyelid implements LayerRenderer<DinosaurEntity>
-    {
+    public class LayerEyelid implements LayerRenderer<DinosaurEntity> {
         private final DinosaurRenderer renderer;
 
-        public LayerEyelid(DinosaurRenderer renderer)
-        {
+        public LayerEyelid(DinosaurRenderer renderer) {
             this.renderer = renderer;
         }
 
         @Override
-        public void doRenderLayer(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, float scale)
-        {
-            if (!entity.isInvisible())
-            {
-                ResourceLocation texture = renderer.dinosaur.getEyelidTexture(entity);
+        public void doRenderLayer(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, float scale) {
+            if (!entity.isInvisible()) {
+                ResourceLocation texture = this.renderer.dinosaur.getEyelidTexture(entity);
 
-                if (texture != null && entity.areEyelidsClosed())
-                {
+                if (texture != null && entity.areEyelidsClosed()) {
                     ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
 
-                    if (textureObject != TextureUtil.MISSING_TEXTURE)
-                    {
+                    if (textureObject != TextureUtil.MISSING_TEXTURE) {
                         this.renderer.bindTexture(texture);
 
                         this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
@@ -152,8 +135,7 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
         }
 
         @Override
-        public boolean shouldCombineTextures()
-        {
+        public boolean shouldCombineTextures() {
             return true;
         }
     }

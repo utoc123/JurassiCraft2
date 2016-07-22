@@ -8,11 +8,9 @@ import org.jurassicraft.client.model.animation.DinosaurAnimator;
 import org.jurassicraft.server.entity.dinosaur.ParasaurolophusEntity;
 
 @SideOnly(Side.CLIENT)
-public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEntity>
-{
+public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, ParasaurolophusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
+    protected void performAnimations(DinosaurModel model, ParasaurolophusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer head = model.getCube("Head");
 
         AdvancedModelRenderer neck1 = model.getCube("Neck1");

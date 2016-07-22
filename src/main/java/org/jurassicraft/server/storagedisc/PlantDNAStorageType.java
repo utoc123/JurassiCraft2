@@ -6,25 +6,21 @@ import org.jurassicraft.server.genetics.PlantDNA;
 
 import java.util.List;
 
-public class PlantDNAStorageType implements StorageType
-{
+public class PlantDNAStorageType implements StorageType {
     private PlantDNA dna;
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        dna.writeToNBT(nbt);
+    public void writeToNBT(NBTTagCompound nbt) {
+        this.dna.writeToNBT(nbt);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
-        dna = PlantDNA.readFromNBT(nbt);
+    public void readFromNBT(NBTTagCompound nbt) {
+        this.dna = PlantDNA.readFromNBT(nbt);
     }
 
     @Override
-    public void addInformation(ItemStack stack, List<String> tooltip)
-    {
-        dna.addInformation(stack, tooltip);
+    public void addInformation(ItemStack stack, List<String> tooltip) {
+        this.dna.addInformation(stack, tooltip);
     }
 }

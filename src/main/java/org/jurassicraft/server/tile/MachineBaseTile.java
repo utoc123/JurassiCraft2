@@ -14,72 +14,61 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class MachineBaseTile extends TileEntityLockable implements ITickable, ISidedInventory
-{
+public abstract class MachineBaseTile extends TileEntityLockable implements ITickable, ISidedInventory {
     protected String customName;
 
-    protected int[] processTime = new int[getProcessCount()];
-    protected int[] totalProcessTime = new int[getProcessCount()];
+    protected int[] processTime = new int[this.getProcessCount()];
+    protected int[] totalProcessTime = new int[this.getProcessCount()];
 
     @SideOnly(Side.CLIENT)
-    public static boolean isProcessing(IInventory inventory, int index)
-    {
+    public static boolean isProcessing(IInventory inventory, int index) {
         return inventory.getField(index) > 0;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
-    {
+    public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         NBTTagList itemList = compound.getTagList("Items", 10);
-        ItemStack[] slots = new ItemStack[getSlots().length];
+        ItemStack[] slots = new ItemStack[this.getSlots().length];
 
-        for (int i = 0; i < itemList.tagCount(); ++i)
-        {
+        for (int i = 0; i < itemList.tagCount(); ++i) {
             NBTTagCompound item = itemList.getCompoundTagAt(i);
 
             byte slot = item.getByte("Slot");
 
-            if (slot >= 0 && slot < slots.length)
-            {
+            if (slot >= 0 && slot < slots.length) {
                 slots[slot] = ItemStack.loadItemStackFromNBT(item);
             }
         }
 
-        for (int i = 0; i < getProcessCount(); i++)
-        {
-            processTime[i] = compound.getShort("ProcessTime" + i);
-            totalProcessTime[i] = compound.getShort("ProcessTimeTotal" + i);
+        for (int i = 0; i < this.getProcessCount(); i++) {
+            this.processTime[i] = compound.getShort("ProcessTime" + i);
+            this.totalProcessTime[i] = compound.getShort("ProcessTimeTotal" + i);
         }
 
-        if (compound.hasKey("CustomName", 8))
-        {
+        if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
         }
 
-        setSlots(slots);
+        this.setSlots(slots);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound = super.writeToNBT(compound);
 
-        for (int i = 0; i < getProcessCount(); i++)
-        {
+        for (int i = 0; i < this.getProcessCount(); i++) {
             compound.setShort("ProcessTime" + i, (short) this.processTime[i]);
             compound.setShort("ProcessTimeTotal" + i, (short) this.totalProcessTime[i]);
         }
 
-        ItemStack[] slots = getSlots();
+        ItemStack[] slots = this.getSlots();
 
         NBTTagList itemList = new NBTTagList();
 
-        for (int slot = 0; slot < getSizeInventory(); ++slot)
-        {
-            if (slots[slot] != null)
-            {
+        for (int slot = 0; slot < this.getSizeInventory(); ++slot) {
+            if (slots[slot] != null) {
                 NBTTagCompound itemTag = new NBTTagCompound();
                 itemTag.setByte("Slot", (byte) slot);
 
@@ -90,8 +79,7 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
         compound.setTag("Items", itemList);
 
-        if (this.hasCustomName())
-        {
+        if (this.hasCustomName()) {
             compound.setString("CustomName", this.customName);
         }
 
@@ -99,82 +87,64 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     }
 
     @Override
-    public ItemStack getStackInSlot(int index)
-    {
-        return getSlots()[index];
+    public ItemStack getStackInSlot(int index) {
+        return this.getSlots()[index];
     }
 
     @Override
-    public ItemStack decrStackSize(int index, int count)
-    {
-        ItemStack[] slots = getSlots();
+    public ItemStack decrStackSize(int index, int count) {
+        ItemStack[] slots = this.getSlots();
 
-        if (slots[index] != null)
-        {
+        if (slots[index] != null) {
             ItemStack stack;
 
-            if (slots[index].stackSize <= count)
-            {
+            if (slots[index].stackSize <= count) {
                 stack = slots[index];
                 slots[index] = null;
                 return stack;
-            }
-            else
-            {
+            } else {
                 stack = slots[index].splitStack(count);
 
-                if (slots[index].stackSize == 0)
-                {
+                if (slots[index].stackSize == 0) {
                     slots[index] = null;
                 }
 
                 return stack;
             }
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public ItemStack removeStackFromSlot(int index)
-    {
-        ItemStack[] slots = getSlots();
+    public ItemStack removeStackFromSlot(int index) {
+        ItemStack[] slots = this.getSlots();
 
-        if (slots[index] != null)
-        {
+        if (slots[index] != null) {
             ItemStack slot = slots[index];
             slots[index] = null;
             return slot;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack)
-    {
-        ItemStack[] slots = getSlots();
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        ItemStack[] slots = this.getSlots();
 
         boolean stacksEqual = stack != null && stack.isItemEqual(slots[index]) && ItemStack.areItemStackTagsEqual(stack, slots[index]);
         slots[index] = stack;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
-        {
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();
         }
 
-        if (!stacksEqual)
-        {
-            int process = getProcess(index);
+        if (!stacksEqual) {
+            int process = this.getProcess(index);
 
-            if (process < getProcessCount())
-            {
-                if (!canProcess(process))
-                {
+            if (process < this.getProcessCount()) {
+                if (!this.canProcess(process)) {
                     this.totalProcessTime[process] = this.getStackProcessTime(stack);
                     this.processTime[process] = 0;
                     this.markDirty();
@@ -183,14 +153,11 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         }
     }
 
-    private boolean isInput(int slot)
-    {
-        int[] inputs = getInputs();
+    private boolean isInput(int slot) {
+        int[] inputs = this.getInputs();
 
-        for (int input : inputs)
-        {
-            if (input == slot)
-            {
+        for (int input : inputs) {
+            if (input == slot) {
                 return true;
             }
         }
@@ -198,14 +165,11 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
         return false;
     }
 
-    private boolean isOutput(int slot)
-    {
-        int[] outputs = getOutputs();
+    private boolean isOutput(int slot) {
+        int[] outputs = this.getOutputs();
 
-        for (int output : outputs)
-        {
-            if (output == slot)
-            {
+        for (int output : outputs) {
+            if (output == slot) {
                 return true;
             }
         }
@@ -214,84 +178,66 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     }
 
     @Override
-    public boolean hasCustomName()
-    {
+    public boolean hasCustomName() {
         return this.customName != null && this.customName.length() > 0;
     }
 
-    public void setCustomInventoryName(String customName)
-    {
+    public void setCustomInventoryName(String customName) {
         this.customName = customName;
     }
 
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return this.getSlots().length;
     }
 
-    public boolean isProcessing(int index)
-    {
+    public boolean isProcessing(int index) {
         return this.processTime[index] > 0;
     }
 
     @Override
-    public void update()
-    {
-        ItemStack[] slots = getSlots();
+    public void update() {
+        ItemStack[] slots = this.getSlots();
 
-        for (int process = 0; process < getProcessCount(); process++)
-        {
+        for (int process = 0; process < this.getProcessCount(); process++) {
             boolean flag = this.isProcessing(process);
             boolean sync = false;
 
-            if (!this.worldObj.isRemote)
-            {
+            if (!this.worldObj.isRemote) {
                 boolean hasInput = false;
 
-                for (int input : getInputs(process))
-                {
-                    if (slots[input] != null)
-                    {
+                for (int input : this.getInputs(process)) {
+                    if (slots[input] != null) {
                         hasInput = true;
                         break;
                     }
                 }
 
-                if (hasInput && this.canProcess(process))
-                {
+                if (hasInput && this.canProcess(process)) {
                     this.processTime[process]++;
 
-                    if (this.processTime[process] >= this.totalProcessTime[process])
-                    {
+                    if (this.processTime[process] >= this.totalProcessTime[process]) {
                         this.processTime[process] = 0;
-                        this.totalProcessTime[process] = this.getStackProcessTime(slots[getInputs()[0]]);
+                        this.totalProcessTime[process] = this.getStackProcessTime(slots[this.getInputs()[0]]);
                         this.processItem(process);
                     }
 
                     sync = true;
-                }
-                else if (this.isProcessing(process))
-                {
-                    if (this.shouldResetProgress())
-                    {
+                } else if (this.isProcessing(process)) {
+                    if (this.shouldResetProgress()) {
                         this.processTime[process] = 0;
-                    }
-                    else if (this.processTime[process] > 0)
-                    {
+                    } else if (this.processTime[process] > 0) {
                         this.processTime[process]--;
                     }
 
                     sync = true;
                 }
 
-                if (flag != this.isProcessing(process))
-                {
+                if (flag != this.isProcessing(process)) {
                     sync = true;
                 }
 
-                if (sync)
-                {
+                if (sync) {
                     this.markDirty();
                 }
             }
@@ -299,36 +245,30 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override
-    public void openInventory(EntityPlayer player)
-    {
+    public void openInventory(EntityPlayer player) {
     }
 
     @Override
-    public void closeInventory(EntityPlayer player)
-    {
+    public void closeInventory(EntityPlayer player) {
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack)
-    {
-        return !isOutput(index);
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        return !this.isOutput(index);
     }
 
     @Override
-    public int[] getSlotsForFace(EnumFacing side)
-    {
-        return side == EnumFacing.DOWN ? getOutputs() : getInputs();
+    public int[] getSlotsForFace(EnumFacing side) {
+        return side == EnumFacing.DOWN ? this.getOutputs() : this.getInputs();
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction)
-    {
+    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
         return this.isItemValidForSlot(index, stack);
     }
 
@@ -354,23 +294,19 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
 
     protected abstract void setSlots(ItemStack[] slots);
 
-    public boolean hasOutputSlot(ItemStack output)
-    {
-        return getOutputSlot(output) != -1;
+    public boolean hasOutputSlot(ItemStack output) {
+        return this.getOutputSlot(output) != -1;
     }
 
-    public int getOutputSlot(ItemStack output)
-    {
-        ItemStack[] slots = getSlots();
+    public int getOutputSlot(ItemStack output) {
+        ItemStack[] slots = this.getSlots();
 
-        int[] outputs = getOutputs();
+        int[] outputs = this.getOutputs();
 
-        for (int slot : outputs)
-        {
+        for (int slot : outputs) {
             ItemStack stack = slots[slot];
 
-            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.stackSize + output.stackSize <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage()))
-            {
+            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.stackSize + output.stackSize <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage())) {
                 return slot;
             }
         }
@@ -379,112 +315,89 @@ public abstract class MachineBaseTile extends TileEntityLockable implements ITic
     }
 
     @Override
-    public int getField(int id)
-    {
-        int processCount = getProcessCount();
+    public int getField(int id) {
+        int processCount = this.getProcessCount();
 
-        if (id < processCount)
-        {
-            return processTime[id];
-        }
-        else if (id < processCount * 2)
-        {
-            return totalProcessTime[id - processCount];
+        if (id < processCount) {
+            return this.processTime[id];
+        } else if (id < processCount * 2) {
+            return this.totalProcessTime[id - processCount];
         }
 
         return 0;
     }
 
     @Override
-    public void setField(int id, int value)
-    {
-        int processCount = getProcessCount();
+    public void setField(int id, int value) {
+        int processCount = this.getProcessCount();
 
-        if (id < processCount)
-        {
-            processTime[id] = value;
-        }
-        else if (id < processCount * 2)
-        {
-            totalProcessTime[id - processCount] = value;
+        if (id < processCount) {
+            this.processTime[id] = value;
+        } else if (id < processCount * 2) {
+            this.totalProcessTime[id - processCount] = value;
         }
     }
 
     @Override
-    public int getFieldCount()
-    {
-        return getProcessCount() * 2;
+    public int getFieldCount() {
+        return this.getProcessCount() * 2;
     }
 
     @Override
-    public void clear()
-    {
-        ItemStack[] slots = getSlots();
+    public void clear() {
+        ItemStack[] slots = this.getSlots();
 
-        for (int i = 0; i < slots.length; ++i)
-        {
+        for (int i = 0; i < slots.length; ++i) {
             slots[i] = null;
         }
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
-    {
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
         return true;
     }
 
-    protected void mergeStack(int slot, ItemStack stack)
-    {
-        ItemStack[] slots = getSlots();
+    protected void mergeStack(int slot, ItemStack stack) {
+        ItemStack[] slots = this.getSlots();
 
-        if (slots[slot] == null)
-        {
+        if (slots[slot] == null) {
             slots[slot] = stack;
-        }
-        else if (slots[slot].getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(slots[slot], stack))
-        {
+        } else if (slots[slot].getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
             slots[slot].stackSize += stack.stackSize;
         }
     }
 
-    protected void decreaseStackSize(int slot)
-    {
-        ItemStack[] slots = getSlots();
+    protected void decreaseStackSize(int slot) {
+        ItemStack[] slots = this.getSlots();
 
         slots[slot].stackSize--;
 
-        if (slots[slot].stackSize <= 0)
-        {
+        if (slots[slot].stackSize <= 0) {
             slots[slot] = null;
         }
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
+    public SPacketUpdateTileEntity getUpdatePacket() {
         return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
-    {
+    public NBTTagCompound getUpdateTag() {
         return this.writeToNBT(new NBTTagCompound());
     }
 
     @Override
-    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet)
-    {
+    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet) {
         this.readFromNBT(packet.getNbtCompound());
     }
 
-    protected boolean shouldResetProgress()
-    {
+    protected boolean shouldResetProgress() {
         return true;
     }
 }

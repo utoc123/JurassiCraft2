@@ -18,35 +18,27 @@ import org.jurassicraft.server.tab.TabHandler;
 import java.util.List;
 import java.util.Locale;
 
-public class AttractionSignItem extends Item
-{
-    public AttractionSignItem()
-    {
+public class AttractionSignItem extends Item {
+    public AttractionSignItem() {
         this.setCreativeTab(TabHandler.DECORATIONS);
         this.setHasSubtypes(true);
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
+    public String getItemStackDisplayName(ItemStack stack) {
         return new LangHelper("item.attraction_sign.name").withProperty("type", "attraction_sign." + (AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()].name().toLowerCase(Locale.ENGLISH)) + ".name").build();
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (side != EnumFacing.DOWN && side != EnumFacing.UP)
-        {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (side != EnumFacing.DOWN && side != EnumFacing.UP) {
             BlockPos offset = pos.offset(side);
 
-            if (player.canPlayerEdit(offset, side, stack))
-            {
+            if (player.canPlayerEdit(offset, side, stack)) {
                 AttractionSignEntity sign = new AttractionSignEntity(world, offset, side, AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()]);
 
-                if (sign.onValidSurface())
-                {
-                    if (!world.isRemote)
-                    {
+                if (sign.onValidSurface()) {
+                    if (!world.isRemote) {
                         world.spawnEntityInWorld(sign);
                     }
 
@@ -62,10 +54,8 @@ public class AttractionSignItem extends Item
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems)
-    {
-        for (AttractionSignEntity.AttractionSignType signType : AttractionSignEntity.AttractionSignType.values())
-        {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems) {
+        for (AttractionSignEntity.AttractionSignType signType : AttractionSignEntity.AttractionSignType.values()) {
             subItems.add(new ItemStack(item, 1, signType.ordinal()));
         }
     }

@@ -21,16 +21,13 @@ import org.lwjgl.opengl.GL11;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class JeepWranglerRenderer implements IRenderFactory<JeepWranglerEntity>
-{
+public class JeepWranglerRenderer implements IRenderFactory<JeepWranglerEntity> {
     @Override
-    public Render<? super JeepWranglerEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super JeepWranglerEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<JeepWranglerEntity>
-    {
+    public static class Renderer extends Render<JeepWranglerEntity> {
         private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/entities/jeep_wrangler/jeep_wrangler.png");
         protected static final ResourceLocation[] DESTROY_STAGES = new ResourceLocation[] { new ResourceLocation("textures/blocks/destroy_stage_0.png"), new ResourceLocation("textures/blocks/destroy_stage_1.png"), new ResourceLocation("textures/blocks/destroy_stage_2.png"), new ResourceLocation("textures/blocks/destroy_stage_3.png"), new ResourceLocation("textures/blocks/destroy_stage_4.png"), new ResourceLocation("textures/blocks/destroy_stage_5.png"), new ResourceLocation("textures/blocks/destroy_stage_6.png"), new ResourceLocation("textures/blocks/destroy_stage_7.png"), new ResourceLocation("textures/blocks/destroy_stage_8.png"), new ResourceLocation("textures/blocks/destroy_stage_9.png") };
 
@@ -38,58 +35,50 @@ public class JeepWranglerRenderer implements IRenderFactory<JeepWranglerEntity>
         private TabulaModel windscreen;
         private TabulaModel destroyModel;
 
-        public Renderer(RenderManager manager)
-        {
+        public Renderer(RenderManager manager) {
             super(manager);
 
-            try
-            {
+            try {
                 JeepWranglerAnimator animator = new JeepWranglerAnimator();
 
                 TabulaModelContainer container = TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/jeep_wrangler/jeep_wrangler.tbl");
 
-                baseModel = new ResetControlTabulaModel(container, animator);
-                baseModel.getCube("Windscreen").showModel = false;
+                this.baseModel = new ResetControlTabulaModel(container, animator);
+                this.baseModel.getCube("Windscreen").showModel = false;
 
-                windscreen = new TabulaModel(container);
+                this.windscreen = new TabulaModel(container);
 
-                for (Map.Entry<String, AdvancedModelRenderer> entry : windscreen.getCubes().entrySet())
-                {
+                for (Map.Entry<String, AdvancedModelRenderer> entry : this.windscreen.getCubes().entrySet()) {
                     entry.getValue().showModel = entry.getKey().equals("Windscreen");
                 }
 
-                destroyModel = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/jeep_wrangler/jeep_wrangler_break.tbl"), animator);
-            }
-            catch (Exception e)
-            {
+                this.destroyModel = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/jeep_wrangler/jeep_wrangler_break.tbl"), animator);
+            } catch (Exception e) {
                 JurassiCraft.INSTANCE.getLogger().fatal("Failed to load the models for the Jeep Wrangler", e);
             }
         }
 
         @Override
-        public void doRender(JeepWranglerEntity entity, double x, double y, double z, float yaw, float partialTicks)
-        {
+        public void doRender(JeepWranglerEntity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.enableBlend();
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             this.bindEntityTexture(entity);
-            renderModel(entity, x, y, z, yaw, false, false);
-            renderModel(entity, x, y, z, yaw, true, false);
+            this.renderModel(entity, x, y, z, yaw, false, false);
+            this.renderModel(entity, x, y, z, yaw, true, false);
 
             int destroyStage = (int) (10.0F - (entity.health / CarEntity.MAX_HEALTH) * 10.0F) - 1;
 
-            if (destroyStage >= 0)
-            {
+            if (destroyStage >= 0) {
                 GlStateManager.color(0.4F, 0.4F, 0.4F, destroyStage / 10.0F / 2.0F + 0.1F);
                 this.bindTexture(DESTROY_STAGES[destroyStage]);
-                renderModel(entity, x, y, z, yaw, false, true);
+                this.renderModel(entity, x, y, z, yaw, false, true);
             }
 
             GlStateManager.disableBlend();
             super.doRender(entity, x, y, z, yaw, partialTicks);
         }
 
-        private void renderModel(JeepWranglerEntity entity, double x, double y, double z, float yaw, boolean windscreen, boolean destroy)
-        {
+        private void renderModel(JeepWranglerEntity entity, double x, double y, double z, float yaw, boolean windscreen, boolean destroy) {
             GlStateManager.pushMatrix();
             GlStateManager.translate((float) x, (float) y + 1.25F, (float) z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
@@ -99,8 +88,7 @@ public class JeepWranglerRenderer implements IRenderFactory<JeepWranglerEntity>
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(JeepWranglerEntity entity)
-        {
+        protected ResourceLocation getEntityTexture(JeepWranglerEntity entity) {
             return TEXTURE;
         }
     }

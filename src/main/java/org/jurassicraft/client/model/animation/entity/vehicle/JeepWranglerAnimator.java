@@ -9,11 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 
 @SideOnly(Side.CLIENT)
-public class JeepWranglerAnimator implements ITabulaModelAnimator<JeepWranglerEntity>
-{
+public class JeepWranglerAnimator implements ITabulaModelAnimator<JeepWranglerEntity> {
     @Override
-    public void setRotationAngles(TabulaModel model, JeepWranglerEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale)
-    {
+    public void setRotationAngles(TabulaModel model, JeepWranglerEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer wheelHolderFront = model.getCube("wheel holder front");
         AdvancedModelRenderer wheelHolderBack = model.getCube("wheel holder back");
 
@@ -21,8 +19,7 @@ public class JeepWranglerAnimator implements ITabulaModelAnimator<JeepWranglerEn
         float wheelRotation = entity.prevWheelRotateAmount + (entity.wheelRotateAmount - entity.prevWheelRotateAmount) * partialTicks;
         float wheelRotationAmount = entity.wheelRotation - entity.wheelRotateAmount * (1.0F - partialTicks);
 
-        if (entity.backward())
-        {
+        if (entity.backward()) {
             wheelRotationAmount = -wheelRotationAmount;
         }
 

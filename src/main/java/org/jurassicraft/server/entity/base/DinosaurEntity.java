@@ -26,6 +26,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -76,6 +77,7 @@ import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.message.SetOrderMessage;
+import org.jurassicraft.server.tile.FeederTile;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -84,8 +86,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
-public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity
-{
+public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final DataParameter<Boolean> WATCHER_IS_CARCASS = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
@@ -132,8 +133,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private boolean fieldGuideFlocking;
     private boolean fieldGuideFleeing;
 
-    public DinosaurEntity(World world)
-    {
+    public DinosaurEntity(World world) {
         super(world);
 
         this.setFullyGrown();
@@ -141,8 +141,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.metabolism = new MetabolismContainer(this);
         this.inventory = new InventoryDinosaur(this);
 
-        this.genetics = GeneticsHelper.randomGenetics(rand);
-        this.isMale = rand.nextBoolean();
+        this.genetics = GeneticsHelper.randomGenetics(this.rand);
+        this.isMale = this.rand.nextBoolean();
 
         this.resetAttackCooldown();
 
@@ -155,20 +155,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         //tasks.addTask(0, new EscapeBlockEntityAI(this));
 
-        if (!dinosaur.isMarineAnimal())
-        {
+        if (!this.dinosaur.isMarineAnimal()) {
 //            this.tasks.addTask(0, new EntityAISwimming(this));
             this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
             //this.setPathPriority(PathNodeType.WATER, 0.0F);
         }
 
-        if (dinosaur.getDiet().isHerbivorous())
-        {
+        if (this.dinosaur.getDiet().isHerbivorous()) {
             this.tasks.addTask(1, new GrazeEntityAI(this));
         }
 
-        if (dinosaur.getDiet().isCarnivorous())
-        {
+        if (this.dinosaur.getDiet().isCarnivorous()) {
             this.tasks.addTask(1, new TargetCarcassEntityAI(this));
         }
 
@@ -176,14 +173,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.tasks.addTask(1, new TemptNonAdultEntityAI(this, 0.6));
 
-        if (dinosaur.shouldDefendOwner())
-        {
+        if (this.dinosaur.shouldDefendOwner()) {
             this.tasks.addTask(2, new DefendOwnerEntityAI(this));
             this.tasks.addTask(2, new AssistOwnerEntityAI(this));
         }
 
-        if (dinosaur.shouldFlee())
-        {
+        if (this.dinosaur.shouldFlee()) {
             this.tasks.addTask(2, new FleeEntityAI(this));
         }
 
@@ -192,7 +187,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.tasks.addTask(3, new DinosaurWanderEntityAI(this, 0.8F, 20));
         this.tasks.addTask(3, new FollowOwnerEntityAI(this));
 
-        this.tasks.addTask(3, getAttackAI());
+        this.tasks.addTask(3, this.getAttackAI());
 
         this.tasks.addTask(4, new EntityAILookIdle(this));
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 6.0F));
@@ -209,40 +204,31 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.animationTasks.addTask(3, new LookAnimationAI(this));
         this.animationTasks.addTask(3, new HeadCockAnimationAI(this));
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             this.initClient();
         }
 
-        ignoreFrustumCheck = true;
+        this.ignoreFrustumCheck = true;
     }
 
-    private void initClient()
-    {
+    private void initClient() {
         this.tailBuffer = new ChainBuffer();
     }
 
-    public boolean shouldSleep()
-    {
-        return getDinosaurTime() > getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving() && !(herd != null && herd.enemies.size() > 0);
+    public boolean shouldSleep() {
+        return this.getDinosaurTime() > this.getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving() && !(this.herd != null && this.herd.enemies.size() > 0);
     }
 
-    private boolean hasPredators()
-    {
-        for (EntityLiving predator : this.getEntitiesWithinDistance(EntityLiving.class, 10.0F, 5.0F))
-        {
+    private boolean hasPredators() {
+        for (EntityLiving predator : this.getEntitiesWithinDistance(EntityLiving.class, 10.0F, 5.0F)) {
             boolean hasDinosaurPredator = false;
 
-            if (predator instanceof DinosaurEntity)
-            {
+            if (predator instanceof DinosaurEntity) {
                 DinosaurEntity dinosaur = (DinosaurEntity) predator;
 
-                if (!dinosaur.isCarcass() || dinosaur.isSleeping)
-                {
-                    for (Class<? extends EntityLivingBase> target : dinosaur.getAttackTargets())
-                    {
-                        if (target.isAssignableFrom(this.getClass()))
-                        {
+                if (!dinosaur.isCarcass() || dinosaur.isSleeping) {
+                    for (Class<? extends EntityLivingBase> target : dinosaur.getAttackTargets()) {
+                        if (target.isAssignableFrom(this.getClass())) {
                             hasDinosaurPredator = true;
                             break;
                         }
@@ -250,8 +236,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 }
             }
 
-            if (this.getLastAttacker() == predator || predator.getAttackTarget() == this || hasDinosaurPredator)
-            {
+            if (this.getLastAttacker() == predator || predator.getAttackTarget() == this || hasDinosaurPredator) {
                 return true;
             }
         }
@@ -259,84 +244,68 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return false;
     }
 
-    private <T extends Entity> List<T> getEntitiesWithinDistance(Class<T> entity, double width, double height)
-    {
+    private <T extends Entity> List<T> getEntitiesWithinDistance(Class<T> entity, double width, double height) {
         List<T> entities = this.worldObj.getEntitiesWithinAABB(entity, new AxisAlignedBB(this.posX - width, this.posY - height, this.posZ - width, this.posX + width, this.posY + height, this.posZ + width));
         entities.remove(this);
         return entities;
     }
 
-    public int getDinosaurTime()
-    {
-        SleepingSchedule sleepingSchedule = getDinosaur().getSleepingSchedule();
+    public int getDinosaurTime() {
+        SleepingSchedule sleepingSchedule = this.getDinosaur().getSleepingSchedule();
 
-        long time = (worldObj.getWorldTime() % 24000) - sleepingSchedule.getWakeUpTime();
+        long time = (this.worldObj.getWorldTime() % 24000) - sleepingSchedule.getWakeUpTime();
 
-        if (time < 0)
-        {
+        if (time < 0) {
             time += 24000;
         }
 
         return (int) time;
     }
 
-    public boolean hasTracker()
-    {
-        return hasTracker;
+    public boolean hasTracker() {
+        return this.hasTracker;
     }
 
-    public void setHasTracker(boolean hasTracker)
-    {
+    public void setHasTracker(boolean hasTracker) {
         this.hasTracker = hasTracker;
     }
 
-    public UUID getOwner()
-    {
-        return owner;
+    public UUID getOwner() {
+        return this.owner;
     }
 
-    public void setOwner(EntityPlayer player)
-    {
-        if (dinosaur.isImprintable())
-        {
+    public void setOwner(EntityPlayer player) {
+        if (this.dinosaur.isImprintable()) {
             UUID prevOwner = this.owner;
             this.owner = player.getUniqueID();
 
-            if (!owner.equals(prevOwner))
-            {
-                player.addChatComponentMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build()));
+            if (!this.owner.equals(prevOwner)) {
+                player.addChatComponentMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + this.dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build()));
             }
         }
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entity)
-    {
-        if (entity instanceof DinosaurEntity && ((DinosaurEntity) entity).isCarcass())
-        {
+    public boolean attackEntityAsMob(Entity entity) {
+        if (entity instanceof DinosaurEntity && ((DinosaurEntity) entity).isCarcass()) {
             this.setAnimation(DinosaurAnimation.EATING.get());
-        }
-        else
-        {
+        } else {
             this.setAnimation(DinosaurAnimation.ATTACKING.get());
         }
 
-        float damage = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        float damage = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int knockback = 0;
 
-        if (entity instanceof EntityLivingBase)
-        {
-            damage += EnchantmentHelper.getModifierForCreature(getHeldItemMainhand(), ((EntityLivingBase) entity).getCreatureAttribute());
+        if (entity instanceof EntityLivingBase) {
+            damage += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) entity).getCreatureAttribute());
             knockback += EnchantmentHelper.getKnockbackModifier(this);
         }
 
-        if (entity.attackEntityFrom(new DinosaurDamageSource("mob", this), damage))
-        {
-            if (knockback > 0)
-            {
-                entity.addVelocity(-MathHelper.sin(rotationYaw * (float) Math.PI / 180.0F) * knockback * 0.5F, 0.1D, MathHelper.cos(rotationYaw * (float) Math.PI / 180.0F) * knockback * 0.5F);
-                motionX *= 0.6D;
-                motionZ *= 0.6D;
+        if (entity.attackEntityFrom(new DinosaurDamageSource("mob", this), damage)) {
+            if (knockback > 0) {
+                entity.addVelocity(-MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F) * knockback * 0.5F, 0.1D, MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F) * knockback * 0.5F);
+                this.motionX *= 0.6D;
+                this.motionZ *= 0.6D;
             }
 
             this.applyEnchantments(this, entity);
@@ -348,67 +317,51 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource damageSource, float amount)
-    {
+    public boolean attackEntityFrom(DamageSource damageSource, float amount) {
         boolean canHarmInCreative = damageSource.canHarmInCreative();
 
-        if (!isCarcass())
-        {
-            if (getHealth() - amount <= 0.0F)
-            {
-                if (!canHarmInCreative)
-                {
-                    this.setHealth(getMaxHealth());
+        if (!this.isCarcass()) {
+            if (this.getHealth() - amount <= 0.0F) {
+                if (!canHarmInCreative) {
+                    this.setHealth(this.getMaxHealth());
                     this.setCarcass(true);
                     return false;
                 }
 
                 return super.attackEntityFrom(damageSource, amount);
-            }
-            else
-            {
-                if (getAnimation() == DinosaurAnimation.RESTING.get())
-                {
+            } else {
+                if (this.getAnimation() == DinosaurAnimation.RESTING.get()) {
                     this.setAnimation(DinosaurAnimation.IDLE.get());
                     this.isSittingNaturally = false;
                 }
 
-                if (!worldObj.isRemote && getAnimation() == DinosaurAnimation.IDLE.get())
-                {
+                if (!this.worldObj.isRemote && this.getAnimation() == DinosaurAnimation.IDLE.get()) {
                     this.setAnimation(DinosaurAnimation.INJURED.get());
                 }
 
-                if (shouldSleep())
-                {
-                    disturbSleep();
+                if (this.shouldSleep()) {
+                    this.disturbSleep();
                 }
 
                 return super.attackEntityFrom(damageSource, amount);
             }
-        }
-        else if (!worldObj.isRemote)
-        {
-            if (canHarmInCreative)
-            {
+        } else if (!this.worldObj.isRemote) {
+            if (canHarmInCreative) {
                 return super.attackEntityFrom(damageSource, amount);
             }
 
-            if (this.hurtResistantTime <= this.maxHurtResistantTime / 2.0F)
-            {
+            if (this.hurtResistantTime <= this.maxHurtResistantTime / 2.0F) {
                 this.hurtTime = this.maxHurtTime = 10;
             }
 
-            if (damageSource != DamageSource.drown)
-            {
-                carcassHealth--;
+            if (damageSource != DamageSource.drown) {
+                this.carcassHealth--;
 
-                if (!dead && carcassHealth >= 0 && worldObj.getGameRules().getBoolean("doMobLoot"))
-                {
-                    dropMeat(damageSource.getEntity());
+                if (!this.dead && this.carcassHealth >= 0 && this.worldObj.getGameRules().getBoolean("doMobLoot")) {
+                    this.dropMeat(damageSource.getEntity());
                 }
 
-                if (carcassHealth < 0)
-                {
+                if (this.carcassHealth < 0) {
                     this.onDeath(damageSource);
                     this.setDead();
                 }
@@ -418,72 +371,56 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return false;
     }
 
-    private void dropMeat(Entity attacker)
-    {
+    private void dropMeat(Entity attacker) {
         int fortune = 0;
 
-        if (attacker instanceof EntityLivingBase)
-        {
+        if (attacker instanceof EntityLivingBase) {
             fortune = EnchantmentHelper.getLootingModifier((EntityLivingBase) attacker);
         }
 
-        int count = rand.nextInt(2) + 1 + fortune;
+        int count = this.rand.nextInt(2) + 1 + fortune;
 
-        boolean burning = isBurning();
+        boolean burning = this.isBurning();
 
-        for (int i = 0; i < count; ++i)
-        {
-            int meta = EntityHandler.getDinosaurId(dinosaur);
+        for (int i = 0; i < count; ++i) {
+            int meta = EntityHandler.getDinosaurId(this.dinosaur);
 
-            if (burning)
-            {
-                entityDropItem(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, meta), 0.0F);
-            }
-            else
-            {
-                dropStackWithGenetics(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, meta));
+            if (burning) {
+                this.entityDropItem(new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, meta), 0.0F);
+            } else {
+                this.dropStackWithGenetics(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, meta));
             }
         }
     }
 
     @Override
-    public boolean canBePushed()
-    {
+    public boolean canBePushed() {
         return super.canBePushed() && !this.isCarcass() && !this.isSleeping();
     }
 
     @Override
-    public EntityItem entityDropItem(ItemStack stack, float offsetY)
-    {
-        if (stack.stackSize != 0 && stack.getItem() != null)
-        {
+    public EntityItem entityDropItem(ItemStack stack, float offsetY) {
+        if (stack.stackSize != 0 && stack.getItem() != null) {
             Random rand = new Random();
 
-            EntityItem item = new EntityItem(this.worldObj, this.posX + ((rand.nextFloat() * width) - width / 2), this.posY + (double) offsetY, this.posZ + ((rand.nextFloat() * width) - width / 2), stack);
+            EntityItem item = new EntityItem(this.worldObj, this.posX + ((rand.nextFloat() * this.width) - this.width / 2), this.posY + (double) offsetY, this.posZ + ((rand.nextFloat() * this.width) - this.width / 2), stack);
             item.setDefaultPickupDelay();
 
-            if (captureDrops)
-            {
+            if (this.captureDrops) {
                 this.capturedDrops.add(item);
-            }
-            else
-            {
+            } else {
                 this.worldObj.spawnEntityInWorld(item);
             }
 
             return item;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void knockBack(Entity entity, float p_70653_2_, double motionX, double motionZ)
-    {
-        if (rand.nextDouble() >= getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue())
-        {
+    public void knockBack(Entity entity, float p_70653_2_, double motionX, double motionZ) {
+        if (this.rand.nextDouble() >= this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()) {
             this.isAirBorne = true;
             float distance = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
             float multiplier = 0.4F;
@@ -497,39 +434,32 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public void onDeath(DamageSource cause)
-    {
+    public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        if (herd != null)
-        {
-            if (herd.leader == this)
-            {
-                herd.updateLeader();
+        if (this.herd != null) {
+            if (this.herd.leader == this) {
+                this.herd.updateLeader();
             }
 
-            herd.members.remove(this);
+            this.herd.members.remove(this);
         }
 
-        if (cause.getSourceOfDamage() instanceof EntityLivingBase)
-        {
+        if (cause.getSourceOfDamage() instanceof EntityLivingBase) {
             this.respondToAttack((EntityLivingBase) cause.getSourceOfDamage());
         }
     }
 
     @Override
-    public void playLivingSound()
-    {
-        if (getAnimation() == DinosaurAnimation.IDLE.get())
-        {
+    public void playLivingSound() {
+        if (this.getAnimation() == DinosaurAnimation.IDLE.get()) {
             this.setAnimation(DinosaurAnimation.SPEAK.get());
             super.playLivingSound();
         }
     }
 
     @Override
-    public void entityInit()
-    {
+    public void entityInit() {
         super.entityInit();
 
         this.dataManager.register(WATCHER_IS_CARCASS, false);
@@ -542,66 +472,57 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        dinosaur = EntityHandler.getDinosaurByClass(getClass());
+        this.dinosaur = EntityHandler.getDinosaurByClass(this.getClass());
 
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        updateCreatureData();
-        adjustHitbox();
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        this.updateCreatureData();
+        this.adjustHitbox();
     }
 
-    public void updateCreatureData()
-    {
-        double prevHealth = getMaxHealth();
-        double newHealth = transitionFromAge(dinosaur.getBabyHealth(), dinosaur.getAdultHealth());
+    public void updateCreatureData() {
+        double prevHealth = this.getMaxHealth();
+        double newHealth = this.transitionFromAge(this.dinosaur.getBabyHealth(), this.dinosaur.getAdultHealth());
 
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(newHealth);
-        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(transitionFromAge(dinosaur.getBabySpeed(), dinosaur.getAdultSpeed()));
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(newHealth);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.transitionFromAge(this.dinosaur.getBabySpeed(), this.dinosaur.getAdultSpeed()));
 //        getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(transitionFromAge(dinosaur.getBabyKnockback(), dinosaur.getAdultKnockback())); TODO
 
         // adjustHitbox();
 
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(transitionFromAge(dinosaur.getBabyStrength(), dinosaur.getAdultStrength()));
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.transitionFromAge(this.dinosaur.getBabyStrength(), this.dinosaur.getAdultStrength()));
 
         // EntityLiving has a base of 16 the AI needs to have longer range for things like Herding
         // DO NOT CHANGE FOR NOW - Eventually we'll make the AI work in smaller increments and probably
         //                         have different ranges for different eyesights, but for now please keep it long.
-        getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 
-        if (prevHealth != newHealth)
-        {
-            heal((float) (newHealth - lastDamage));
+        if (prevHealth != newHealth) {
+            this.heal((float) (newHealth - this.lastDamage));
         }
     }
 
-    private void adjustHitbox()
-    {
-        float width = Math.min(5.0F, (float) transitionFromAge(dinosaur.getBabySizeX(), dinosaur.getAdultSizeX()));
-        float height = (float) transitionFromAge(dinosaur.getBabySizeY(), dinosaur.getAdultSizeY());
+    private void adjustHitbox() {
+        float width = Math.min(5.0F, (float) this.transitionFromAge(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()));
+        float height = (float) this.transitionFromAge(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY());
 
         this.stepHeight = Math.max(1.0F, (float) (Math.ceil(height / 2.0F) / 2.0F));
 
-        if (isCarcass)
-        {
-            setSize(Math.min(5.0F, height), width);
-        }
-        else
-        {
-            setSize(width, height);
+        if (this.isCarcass) {
+            this.setSize(Math.min(5.0F, height), width);
+        } else {
+            this.setSize(width, height);
         }
     }
 
-    public double transitionFromAge(double baby, double adult)
-    {
+    public double transitionFromAge(double baby, double adult) {
         int dinosaurAge = this.dinosaurAge;
 
-        int maxAge = dinosaur.getMaximumAge();
+        int maxAge = this.dinosaur.getMaximumAge();
 
-        if (dinosaurAge > maxAge)
-        {
+        if (dinosaurAge > maxAge) {
             dinosaurAge = maxAge;
         }
 
@@ -610,428 +531,326 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean isInRangeToRenderDist(double distance)
-    {
+    public boolean isInRangeToRenderDist(double distance) {
         return true;
     }
 
-    public void applySettingsForActionFigure()
-    {
+    public void applySettingsForActionFigure() {
         this.setFullyGrown();
         this.setMale(true);
         this.ticksExisted = 4;
     }
 
     @Override
-    public int getTalkInterval()
-    {
+    public int getTalkInterval() {
         return 200;
     }
 
     @Override
-    public float getSoundPitch()
-    {
-        return (float) transitionFromAge(2.5F, 1.0F) + ((rand.nextFloat() - 0.5F) * 0.125F);
+    public float getSoundPitch() {
+        return (float) this.transitionFromAge(2.5F, 1.0F) + ((this.rand.nextFloat() - 0.5F) * 0.125F);
     }
 
     @Override
-    public float getSoundVolume()
-    {
-        return (isCarcass() || isSleeping) ? 0.0F : (2.0F * ((float) transitionFromAge(0.2F, 1.0F)));
+    public float getSoundVolume() {
+        return (this.isCarcass() || this.isSleeping) ? 0.0F : (2.0F * ((float) this.transitionFromAge(0.2F, 1.0F)));
     }
 
-    public String getGenetics()
-    {
-        return genetics;
+    public String getGenetics() {
+        return this.genetics;
     }
 
-    public void setGenetics(String genetics)
-    {
+    public void setGenetics(String genetics) {
         this.genetics = genetics;
     }
 
     @Override
-    public void onLivingUpdate()
-    {
+    public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!worldObj.isRemote)
-        {
-            if (!this.dinosaur.isMarineAnimal())
-            {
+        if (!this.worldObj.isRemote) {
+            if (!this.dinosaur.isMarineAnimal()) {
                 int depth = 0;
 
-                if (this.isSwimming())
-                {
+                if (this.isSwimming()) {
                     depth = AIUtils.getWaterDepth(this);
                 }
 
-                if (this.isInsideOfMaterial(Material.WATER) || (this.isSwimming() && depth <= Math.ceil(height) && depth > 1))
-                {
+                if (this.isInsideOfMaterial(Material.WATER) || (this.isSwimming() && depth <= Math.ceil(this.height) && depth > 1)) {
                     this.getJumpHelper().setJumping();
                 }
             }
 
-            if (herd == null)
-            {
-                herd = new Herd(this);
+            if (this.herd == null) {
+                this.herd = new Herd(this);
             }
 
-            if (order == Order.WANDER)
-            {
-                if (herd.state == Herd.State.STATIC && this.getAttackTarget() == null)
-                {
-                    if (!this.isSleeping && !this.isSwimming() && this.getAnimation() == DinosaurAnimation.IDLE.get() && rand.nextInt(400) == 0)
-                    {
+            if (this.order == Order.WANDER) {
+                if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null) {
+                    if (!this.isSleeping && !this.isSwimming() && this.getAnimation() == DinosaurAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
                         this.setAnimation(DinosaurAnimation.RESTING.get());
                         this.isSittingNaturally = true;
                     }
-                }
-                else if (this.getAnimation() == DinosaurAnimation.RESTING.get())
-                {
+                } else if (this.getAnimation() == DinosaurAnimation.RESTING.get()) {
                     this.setAnimation(DinosaurAnimation.IDLE.get());
                     this.isSittingNaturally = false;
                 }
             }
 
-            if (this == herd.leader)
-            {
+            if (this == this.herd.leader) {
                 this.herd.onUpdate();
             }
         }
 
-        if (!isCarcass)
-        {
-            if (firstUpdate)
-            {
-                updateCreatureData();
+        if (!this.isCarcass) {
+            if (this.firstUpdate) {
+                this.updateCreatureData();
             }
 
-            updateGrowth();
+            this.updateGrowth();
 
-            if (!worldObj.isRemote)
-            {
-                metabolism.update();
+            if (!this.worldObj.isRemote) {
+                this.metabolism.update();
             }
 
-            if (this.ticksExisted % 62 == 0)
-            {
-                this.playSound(getBreathingSound(), this.getSoundVolume(), this.getSoundPitch());
+            if (this.ticksExisted % 62 == 0) {
+                this.playSound(this.getBreathingSound(), this.getSoundVolume(), this.getSoundPitch());
             }
         }
     }
 
-    private void updateGrowth()
-    {
-        if (!this.isDead && ticksExisted % 8 == 0 && !worldObj.isRemote)
-        {
-            if (worldObj.getGameRules().getBoolean("dinoGrowth"))
-            {
-                dinosaurAge += Math.min(growthSpeedOffset, 960) + 1;
-                metabolism.decreaseEnergy((int) ((Math.min(growthSpeedOffset, 960) + 1) * 0.1));
+    private void updateGrowth() {
+        if (!this.isDead && this.ticksExisted % 8 == 0 && !this.worldObj.isRemote) {
+            if (this.worldObj.getGameRules().getBoolean("dinoGrowth")) {
+                this.dinosaurAge += Math.min(this.growthSpeedOffset, 960) + 1;
+                this.metabolism.decreaseEnergy((int) ((Math.min(this.growthSpeedOffset, 960) + 1) * 0.1));
             }
 
-            if (growthSpeedOffset > 0)
-            {
-                growthSpeedOffset -= 10;
+            if (this.growthSpeedOffset > 0) {
+                this.growthSpeedOffset -= 10;
 
-                if (growthSpeedOffset < 0)
-                {
-                    growthSpeedOffset = 0;
+                if (this.growthSpeedOffset < 0) {
+                    this.growthSpeedOffset = 0;
                 }
             }
         }
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (attackCooldown > 0)
-        {
-            attackCooldown--;
+        if (this.attackCooldown > 0) {
+            this.attackCooldown--;
         }
 
-        if (animation != null && animation != DinosaurAnimation.IDLE.get())
-        {
-            boolean shouldHold = DinosaurAnimation.getAnimation(animation).shouldHold();
+        if (this.animation != null && this.animation != DinosaurAnimation.IDLE.get()) {
+            boolean shouldHold = DinosaurAnimation.getAnimation(this.animation).shouldHold();
 
-            if (animationTick < animationLength)
-            {
-                animationTick += 2;
-            }
-            else if (!shouldHold)
-            {
-                animationTick = 0;
-                setAnimation(DinosaurAnimation.IDLE.get());
-            }
-            else
-            {
-                animationTick = animationLength - 1;
+            if (this.animationTick < this.animationLength) {
+                this.animationTick += 2;
+            } else if (!shouldHold) {
+                this.animationTick = 0;
+                this.setAnimation(DinosaurAnimation.IDLE.get());
+            } else {
+                this.animationTick = this.animationLength - 1;
             }
         }
 
-        if (!worldObj.isRemote)
-        {
-            dataManager.set(WATCHER_AGE, dinosaurAge);
-            dataManager.set(WATCHER_IS_SLEEPING, isSleeping);
-            dataManager.set(WATCHER_IS_CARCASS, isCarcass);
-            dataManager.set(WATCHER_HAS_TRACKER, hasTracker);
-            dataManager.set(WATCHER_ORDER, order);
-            dataManager.set(WATCHER_OWNER, owner != null ? owner.toString() : "");
-            dataManager.set(WATCHER_IS_RUNNING, getAIMoveSpeed() > this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
-        }
-        else
-        {
-            updateTailBuffer();
+        if (!this.worldObj.isRemote) {
+            this.dataManager.set(WATCHER_AGE, this.dinosaurAge);
+            this.dataManager.set(WATCHER_IS_SLEEPING, this.isSleeping);
+            this.dataManager.set(WATCHER_IS_CARCASS, this.isCarcass);
+            this.dataManager.set(WATCHER_HAS_TRACKER, this.hasTracker);
+            this.dataManager.set(WATCHER_ORDER, this.order);
+            this.dataManager.set(WATCHER_OWNER, this.owner != null ? this.owner.toString() : "");
+            this.dataManager.set(WATCHER_IS_RUNNING, this.getAIMoveSpeed() > this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
+        } else {
+            this.updateTailBuffer();
 
-            dinosaurAge = dataManager.get(WATCHER_AGE);
-            isSleeping = dataManager.get(WATCHER_IS_SLEEPING);
-            isCarcass = dataManager.get(WATCHER_IS_CARCASS);
-            hasTracker = dataManager.get(WATCHER_HAS_TRACKER);
-            order = dataManager.get(WATCHER_ORDER);
+            this.dinosaurAge = this.dataManager.get(WATCHER_AGE);
+            this.isSleeping = this.dataManager.get(WATCHER_IS_SLEEPING);
+            this.isCarcass = this.dataManager.get(WATCHER_IS_CARCASS);
+            this.hasTracker = this.dataManager.get(WATCHER_HAS_TRACKER);
+            this.order = this.dataManager.get(WATCHER_ORDER);
 
-            String owner = dataManager.get(WATCHER_OWNER);
+            String owner = this.dataManager.get(WATCHER_OWNER);
 
-            if (owner.length() > 0 && (this.owner == null || !owner.equals(this.owner.toString())))
-            {
+            if (owner.length() > 0 && (this.owner == null || !owner.equals(this.owner.toString()))) {
                 this.owner = UUID.fromString(owner);
-            }
-            else if (owner.length() == 0)
-            {
+            } else if (owner.length() == 0) {
                 this.owner = null;
             }
         }
 
-        if (ticksExisted % 16 == 0)
-        {
-            updateCreatureData();
-            adjustHitbox();
+        if (this.ticksExisted % 16 == 0) {
+            this.updateCreatureData();
+            this.adjustHitbox();
         }
 
-        if (!worldObj.isRemote)
-        {
-            if (isCarcass)
-            {
+        if (!this.worldObj.isRemote) {
+            if (this.isCarcass) {
                 this.renderYawOffset = this.rotationYaw;
                 this.rotationYawHead = this.rotationYaw;
 
-                if (getAnimation() != DinosaurAnimation.DYING.get())
-                {
+                if (this.getAnimation() != DinosaurAnimation.DYING.get()) {
                     this.setAnimation(DinosaurAnimation.DYING.get());
                 }
 
-                if (ticksExisted % 1000 == 0)
-                {
+                if (this.ticksExisted % 1000 == 0) {
                     this.attackEntityFrom(DamageSource.generic, 1.0F);
                 }
-            }
-            else
-            {
-                if (isSleeping)
-                {
-                    if (getAnimation() != DinosaurAnimation.SLEEPING.get())
-                    {
+            } else {
+                if (this.isSleeping) {
+                    if (this.getAnimation() != DinosaurAnimation.SLEEPING.get()) {
                         this.setAnimation(DinosaurAnimation.SLEEPING.get());
                     }
 
-                    if (ticksExisted % 20 == 0)
-                    {
-                        if (stayAwakeTime <= 0 && this.hasPredators())
-                        {
+                    if (this.ticksExisted % 20 == 0) {
+                        if (this.stayAwakeTime <= 0 && this.hasPredators()) {
                             this.disturbSleep();
                         }
                     }
 
-                    if (!shouldSleep() && !worldObj.isRemote)
-                    {
-                        isSleeping = false;
+                    if (!this.shouldSleep() && !this.worldObj.isRemote) {
+                        this.isSleeping = false;
                     }
-                }
-                else if (getAnimation() == DinosaurAnimation.SLEEPING.get())
-                {
+                } else if (this.getAnimation() == DinosaurAnimation.SLEEPING.get()) {
                     this.setAnimation(DinosaurAnimation.IDLE.get());
                 }
 
-                if (!isSleeping)
-                {
-                    if (order == Order.SIT)
-                    {
-                        if (getAnimation() != DinosaurAnimation.RESTING.get())
-                        {
+                if (!this.isSleeping) {
+                    if (this.order == Order.SIT) {
+                        if (this.getAnimation() != DinosaurAnimation.RESTING.get()) {
                             this.setAnimation(DinosaurAnimation.RESTING.get());
                         }
-                    }
-                    else if (!this.isSittingNaturally && getAnimation() == DinosaurAnimation.RESTING.get())
-                    {
+                    } else if (!this.isSittingNaturally && this.getAnimation() == DinosaurAnimation.RESTING.get()) {
                         this.setAnimation(DinosaurAnimation.IDLE.get());
                     }
                 }
             }
         }
 
-        if (!shouldSleep() && !isSleeping)
-        {
-            stayAwakeTime = 0;
+        if (!this.shouldSleep() && !this.isSleeping) {
+            this.stayAwakeTime = 0;
 
-            if (getAnimation() == DinosaurAnimation.SLEEPING.get())
-            {
+            if (this.getAnimation() == DinosaurAnimation.SLEEPING.get()) {
                 this.setAnimation(DinosaurAnimation.IDLE.get());
             }
         }
 
-        if (this.isServerWorld())
-        {
-            animationTasks.onUpdateTasks();
+        if (this.isServerWorld()) {
+            this.animationTasks.onUpdateTasks();
         }
 
-        if (stayAwakeTime > 0)
-        {
-            stayAwakeTime--;
+        if (this.stayAwakeTime > 0) {
+            this.stayAwakeTime--;
         }
 
-        prevAge = dinosaurAge;
+        this.prevAge = this.dinosaurAge;
     }
 
-    private void updateTailBuffer()
-    {
+    private void updateTailBuffer() {
         this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
     }
 
     @Override
-    public boolean isMovementBlocked()
-    {
-        return isCarcass() || isSleeping() || (animation != null && DinosaurAnimation.getAnimation(animation).doesBlockMovement());
+    public boolean isMovementBlocked() {
+        return this.isCarcass() || this.isSleeping() || (this.animation != null && DinosaurAnimation.getAnimation(this.animation).doesBlockMovement());
     }
 
-    public int getDaysExisted()
-    {
-        return (int) Math.floor((dinosaurAge * 8.0F) / 24000.0F);
+    public int getDaysExisted() {
+        return (int) Math.floor((this.dinosaurAge * 8.0F) / 24000.0F);
     }
 
-    public void setFullyGrown()
-    {
-        dinosaurAge = dinosaur.getMaximumAge();
+    public void setFullyGrown() {
+        this.dinosaurAge = this.dinosaur.getMaximumAge();
     }
 
-    public Dinosaur getDinosaur()
-    {
-        return dinosaur;
+    public Dinosaur getDinosaur() {
+        return this.dinosaur;
     }
 
     @Override
-    public boolean canDespawn()
-    {
+    public boolean canDespawn() {
         return false;
     }
 
-    public int getDinosaurAge()
-    {
-        return dinosaurAge;
+    public int getDinosaurAge() {
+        return this.dinosaurAge;
     }
 
-    public void setAge(int age)
-    {
-        dinosaurAge = age;
-    }
-
-    @Override
-    public float getEyeHeight()
-    {
-        return (float) transitionFromAge(dinosaur.getBabyEyeHeight(), dinosaur.getAdultEyeHeight());
+    public void setAge(int age) {
+        this.dinosaurAge = age;
     }
 
     @Override
-    protected void dropFewItems(boolean playerAttack, int looting)
-    {
-        for (String bone : dinosaur.getBones())
-        {
-            if (rand.nextInt(10) != 0)
-            {
-                dropStackWithGenetics(new ItemStack(ItemHandler.FRESH_FOSSILS.get(bone), 1, EntityHandler.getDinosaurId(dinosaur)));
+    public float getEyeHeight() {
+        return (float) this.transitionFromAge(this.dinosaur.getBabyEyeHeight(), this.dinosaur.getAdultEyeHeight());
+    }
+
+    @Override
+    protected void dropFewItems(boolean playerAttack, int looting) {
+        for (String bone : this.dinosaur.getBones()) {
+            if (this.rand.nextInt(10) != 0) {
+                this.dropStackWithGenetics(new ItemStack(ItemHandler.FRESH_FOSSILS.get(bone), 1, EntityHandler.getDinosaurId(this.dinosaur)));
             }
         }
     }
 
-    private void dropStackWithGenetics(ItemStack stack)
-    {
+    private void dropStackWithGenetics(ItemStack stack) {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("DNAQuality", geneticsQuality);
-        nbt.setString("Genetics", genetics);
+        nbt.setInteger("DNAQuality", this.geneticsQuality);
+        nbt.setString("Genetics", this.genetics);
         stack.setTagCompound(nbt);
 
-        entityDropItem(stack, 0.0F);
+        this.entityDropItem(stack, 0.0F);
     }
 
-    public boolean isCarcass()
-    {
-        return isCarcass;
+    public boolean isCarcass() {
+        return this.isCarcass;
     }
 
-    public void setCarcass(boolean carcass)
-    {
-        isCarcass = carcass;
+    public void setCarcass(boolean carcass) {
+        this.isCarcass = carcass;
 
-        if (carcass)
-        {
-            carcassHealth = (int) Math.sqrt(width * height) * 2;
-            ticksExisted = 0;
-            inventory.dropItems(worldObj, rand);
+        if (carcass) {
+            this.carcassHealth = (int) Math.sqrt(this.width * this.height) * 2;
+            this.ticksExisted = 0;
+            this.inventory.dropItems(this.worldObj, this.rand);
         }
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
-    {
-        if (player.isSneaking() && hand == EnumHand.MAIN_HAND)
-        {
-            if (isOwner(player))
-            {
-                if (getAgePercentage() > 75)
-                {
-                    player.displayGUIChest(inventory);
-                }
-                else
-                {
-                    if (worldObj.isRemote)
-                    {
+    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
+        if (player.isSneaking() && hand == EnumHand.MAIN_HAND) {
+            if (this.isOwner(player)) {
+                if (this.getAgePercentage() > 75) {
+                    player.displayGUIChest(this.inventory);
+                } else {
+                    if (this.worldObj.isRemote) {
                         player.addChatComponentMessage(new TextComponentTranslation("message.too_young.name"));
                     }
                 }
-            }
-            else
-            {
-                if (worldObj.isRemote)
-                {
+            } else {
+                if (this.worldObj.isRemote) {
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
-        }
-        else
-        {
-            if (stack == null && hand == EnumHand.MAIN_HAND && worldObj.isRemote)
-            {
-                if (isOwner(player))
-                {
+        } else {
+            if (stack == null && hand == EnumHand.MAIN_HAND && this.worldObj.isRemote) {
+                if (this.isOwner(player)) {
                     JurassiCraft.PROXY.openOrderGui(this);
-                }
-                else
-                {
+                } else {
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
-            }
-            else if (stack != null && metabolism.isHungry() && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem()))
-            {
-                if (isOwner(player) && !worldObj.isRemote)
-                {
+            } else if (stack != null && this.metabolism.isHungry() && FoodHelper.isEdible(this.dinosaur.getDiet(), stack.getItem())) {
+                if (this.isOwner(player) && !this.worldObj.isRemote) {
                     Item item = stack.getItem();
-                    metabolism.eat(FoodHelper.getHealAmount(item));
+                    this.metabolism.eat(FoodHelper.getHealAmount(item));
                     FoodHelper.applyEatEffects(this, item);
                     stack.stackSize--;
-                }
-                else if (worldObj.isRemote)
-                {
+                } else if (this.worldObj.isRemote) {
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
@@ -1040,292 +859,254 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return false;
     }
 
-    public boolean isOwner(EntityPlayer player)
-    {
-        return player.getUniqueID().equals(getOwner());
+    public boolean isOwner(EntityPlayer player) {
+        return player.getUniqueID().equals(this.getOwner());
     }
 
     @Override
-    public boolean canBeLeashedTo(EntityPlayer player)
-    {
-        return !getLeashed() && (width < 1.5);
+    public boolean canBeLeashedTo(EntityPlayer player) {
+        return !this.getLeashed() && (this.width < 1.5);
     }
 
-    public int getDNAQuality()
-    {
-        return geneticsQuality;
+    public int getDNAQuality() {
+        return this.geneticsQuality;
     }
 
-    public void setDNAQuality(int quality)
-    {
+    public void setDNAQuality(int quality) {
         this.geneticsQuality = quality;
     }
 
     @Override
-    public Animation[] getAnimations()
-    {
+    public Animation[] getAnimations() {
         return DinosaurAnimation.getAnimations();
     }
 
     @Override
-    public Animation getAnimation()
-    {
-        return animation;
+    public Animation getAnimation() {
+        return this.animation;
     }
 
     @Override
-    public void setAnimation(Animation newAnimation)
-    {
-        if (isSleeping())
-        {
+    public void setAnimation(Animation newAnimation) {
+        if (this.isSleeping()) {
             newAnimation = DinosaurAnimation.SLEEPING.get();
         }
 
-        if (isCarcass())
-        {
+        if (this.isCarcass()) {
             newAnimation = DinosaurAnimation.DYING.get();
         }
 
-        Animation oldAnimation = animation;
+        Animation oldAnimation = this.animation;
 
         this.animation = newAnimation;
 
-        if (oldAnimation != newAnimation)
-        {
+        if (oldAnimation != newAnimation) {
             this.animationTick = 0;
-            this.animationLength = dinosaur.getPoseHandler().getAnimationLength(animation, this.getGrowthStage());
+            this.animationLength = this.dinosaur.getPoseHandler().getAnimationLength(this.animation, this.getGrowthStage());
 
             AnimationHandler.INSTANCE.sendAnimationMessage(this, newAnimation);
         }
     }
 
     @Override
-    public int getAnimationTick()
-    {
-        return animationTick;
+    public int getAnimationTick() {
+        return this.animationTick;
     }
 
     @Override
-    public void setAnimationTick(int tick)
-    {
-        animationTick = tick;
+    public void setAnimationTick(int tick) {
+        this.animationTick = tick;
     }
 
     @Override
-    public SoundEvent getAmbientSound()
-    {
-        return getSoundForAnimation(DinosaurAnimation.SPEAK.get());
+    public SoundEvent getAmbientSound() {
+        return this.getSoundForAnimation(DinosaurAnimation.SPEAK.get());
     }
 
     @Override
-    public SoundEvent getHurtSound()
-    {
-        return getSoundForAnimation(DinosaurAnimation.INJURED.get());
+    public SoundEvent getHurtSound() {
+        return this.getSoundForAnimation(DinosaurAnimation.INJURED.get());
     }
 
     @Override
-    public SoundEvent getDeathSound()
-    {
-        return getSoundForAnimation(DinosaurAnimation.DYING.get());
+    public SoundEvent getDeathSound() {
+        return this.getSoundForAnimation(DinosaurAnimation.DYING.get());
     }
 
-    public SoundEvent getSoundForAnimation(Animation animation)
-    {
+    public SoundEvent getSoundForAnimation(Animation animation) {
         return null;
     }
 
-    public SoundEvent getBreathingSound()
-    {
+    public SoundEvent getBreathingSound() {
         return null;
     }
 
-    public double getAttackDamage()
-    {
-        return transitionFromAge(dinosaur.getBabyStrength(), dinosaur.getAdultStrength());
+    public double getAttackDamage() {
+        return this.transitionFromAge(this.dinosaur.getBabyStrength(), this.dinosaur.getAdultStrength());
     }
 
-    public boolean isMale()
-    {
-        return isMale;
+    public boolean isMale() {
+        return this.isMale;
     }
 
-    public void setMale(boolean male)
-    {
-        isMale = male;
+    public void setMale(boolean male) {
+        this.isMale = male;
     }
 
-    public int getAgePercentage()
-    {
-        int age = getDinosaurAge();
-        return age != 0 ? age * 100 / getDinosaur().getMaximumAge() : 0;
+    public int getAgePercentage() {
+        int age = this.getDinosaurAge();
+        return age != 0 ? age * 100 / this.getDinosaur().getMaximumAge() : 0;
     }
 
-    public GrowthStage getGrowthStage()
-    {
-        int percent = getAgePercentage();
+    public GrowthStage getGrowthStage() {
+        int percent = this.getAgePercentage();
 
         return percent > 75 ? GrowthStage.ADULT : percent > 50 ? GrowthStage.ADOLESCENT : percent > 25 ? GrowthStage.JUVENILE : GrowthStage.INFANT;
     }
 
-    public void increaseGrowthSpeed()
-    {
-        growthSpeedOffset += 240;
+    public void increaseGrowthSpeed() {
+        this.growthSpeedOffset += 240;
     }
 
-    public boolean isSwimming()
-    {
-        return (isInWater() || isInLava()) && !onGround;
+    public boolean isSwimming() {
+        return (this.isInWater() || this.isInLava()) && !this.onGround;
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt = super.writeToNBT(nbt);
 
-        nbt.setInteger("DinosaurAge", dinosaurAge);
-        nbt.setBoolean("IsCarcass", isCarcass);
-        nbt.setInteger("DNAQuality", geneticsQuality);
-        nbt.setString("Genetics", genetics);
-        nbt.setBoolean("IsMale", isMale);
-        nbt.setInteger("GrowthSpeedOffset", growthSpeedOffset);
-        nbt.setInteger("StayAwakeTime", stayAwakeTime);
-        nbt.setBoolean("IsSleeping", isSleeping);
-        nbt.setByte("Order", (byte) order.ordinal());
-        nbt.setInteger("CarcassHealth", carcassHealth);
+        nbt.setInteger("DinosaurAge", this.dinosaurAge);
+        nbt.setBoolean("IsCarcass", this.isCarcass);
+        nbt.setInteger("DNAQuality", this.geneticsQuality);
+        nbt.setString("Genetics", this.genetics);
+        nbt.setBoolean("IsMale", this.isMale);
+        nbt.setInteger("GrowthSpeedOffset", this.growthSpeedOffset);
+        nbt.setInteger("StayAwakeTime", this.stayAwakeTime);
+        nbt.setBoolean("IsSleeping", this.isSleeping);
+        nbt.setByte("Order", (byte) this.order.ordinal());
+        nbt.setInteger("CarcassHealth", this.carcassHealth);
 
-        metabolism.writeToNBT(nbt);
+        this.metabolism.writeToNBT(nbt);
 
-        if (owner != null)
-        {
-            nbt.setString("OwnerUUID", owner.toString());
+        if (this.owner != null) {
+            nbt.setString("OwnerUUID", this.owner.toString());
         }
 
-        inventory.writeToNBT(nbt);
+        this.inventory.writeToNBT(nbt);
 
         return nbt;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+    public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        dinosaurAge = nbt.getInteger("DinosaurAge");
-        isCarcass = nbt.getBoolean("IsCarcass");
-        geneticsQuality = nbt.getInteger("DNAQuality");
-        genetics = nbt.getString("Genetics");
-        isMale = nbt.getBoolean("IsMale");
-        growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
-        stayAwakeTime = nbt.getInteger("StayAwakeTime");
-        isSleeping = nbt.getBoolean("IsSleeping");
-        carcassHealth = nbt.getInteger("CarcassHealth");
-        order = Order.values()[nbt.getByte("Order")];
+        this.dinosaurAge = nbt.getInteger("DinosaurAge");
+        this.isCarcass = nbt.getBoolean("IsCarcass");
+        this.geneticsQuality = nbt.getInteger("DNAQuality");
+        this.genetics = nbt.getString("Genetics");
+        this.isMale = nbt.getBoolean("IsMale");
+        this.growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
+        this.stayAwakeTime = nbt.getInteger("StayAwakeTime");
+        this.isSleeping = nbt.getBoolean("IsSleeping");
+        this.carcassHealth = nbt.getInteger("CarcassHealth");
+        this.order = Order.values()[nbt.getByte("Order")];
 
-        metabolism.readFromNBT(nbt);
+        this.metabolism.readFromNBT(nbt);
 
         String ownerUUID = nbt.getString("OwnerUUID");
 
-        if (ownerUUID.length() > 0)
-        {
-            owner = UUID.fromString(ownerUUID);
+        if (ownerUUID.length() > 0) {
+            this.owner = UUID.fromString(ownerUUID);
         }
 
-        inventory.readFromNBT(nbt);
+        this.inventory.readFromNBT(nbt);
 
         this.updateCreatureData();
         this.adjustHitbox();
     }
 
     @Override
-    public void writeSpawnData(ByteBuf buffer)
-    {
-        buffer.writeInt(dinosaurAge);
-        buffer.writeBoolean(isCarcass);
-        buffer.writeInt(geneticsQuality);
-        buffer.writeBoolean(isMale);
-        buffer.writeInt(growthSpeedOffset);
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeInt(this.dinosaurAge);
+        buffer.writeBoolean(this.isCarcass);
+        buffer.writeInt(this.geneticsQuality);
+        buffer.writeBoolean(this.isMale);
+        buffer.writeInt(this.growthSpeedOffset);
     }
 
     @Override
-    public void readSpawnData(ByteBuf additionalData)
-    {
-        dinosaurAge = additionalData.readInt();
-        isCarcass = additionalData.readBoolean();
-        geneticsQuality = additionalData.readInt();
-        isMale = additionalData.readBoolean();
-        growthSpeedOffset = additionalData.readInt();
+    public void readSpawnData(ByteBuf additionalData) {
+        this.dinosaurAge = additionalData.readInt();
+        this.isCarcass = additionalData.readBoolean();
+        this.geneticsQuality = additionalData.readInt();
+        this.isMale = additionalData.readBoolean();
+        this.growthSpeedOffset = additionalData.readInt();
 
-        updateCreatureData();
-        adjustHitbox();
+        this.updateCreatureData();
+        this.adjustHitbox();
     }
 
-    public MetabolismContainer getMetabolism()
-    {
-        return metabolism;
+    public MetabolismContainer getMetabolism() {
+        return this.metabolism;
     }
 
-    public boolean setSleepLocation(BlockPos sleepLocation, boolean moveTo)
-    {
-        return !moveTo || getNavigator().tryMoveToXYZ(sleepLocation.getX(), sleepLocation.getY(), sleepLocation.getZ(), 1.0);
+    public boolean setSleepLocation(BlockPos sleepLocation, boolean moveTo) {
+        return !moveTo || this.getNavigator().tryMoveToXYZ(sleepLocation.getX(), sleepLocation.getY(), sleepLocation.getZ(), 1.0);
     }
 
-    public boolean isSleeping()
-    {
-        return isSleeping;
+    public boolean isSleeping() {
+        return this.isSleeping;
     }
 
-    public void setSleeping(boolean sleeping)
-    {
+    public void setSleeping(boolean sleeping) {
         this.isSleeping = sleeping;
     }
 
-    public int getStayAwakeTime()
-    {
-        return stayAwakeTime;
+    public int getStayAwakeTime() {
+        return this.stayAwakeTime;
     }
 
-    public void disturbSleep()
-    {
+    public void disturbSleep() {
         this.isSleeping = false;
         this.stayAwakeTime = 400;
     }
 
-    public void writeStatsToLog()
-    {
+    public void writeStatsToLog() {
         LOGGER.info(this);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "DinosaurEntity{ " +
-                dinosaur.getName() +
-                ", id=" + getEntityId() +
-                ", remote=" + getEntityWorld().isRemote +
-                ", isDead=" + isDead +
-                ", isCarcass=" + isCarcass +
-                ", isSleeping=" + isSleeping +
-                ", stayAwakeTime=" + stayAwakeTime +
+                this.dinosaur.getName() +
+                ", id=" + this.getEntityId() +
+                ", remote=" + this.getEntityWorld().isRemote +
+                ", isDead=" + this.isDead +
+                ", isCarcass=" + this.isCarcass +
+                ", isSleeping=" + this.isSleeping +
+                ", stayAwakeTime=" + this.stayAwakeTime +
                 "\n    " +
-                ", dinosaurAge=" + dinosaurAge +
-                ", prevAge=" + prevAge +
-                ", maxAge" + dinosaur.getMaximumAge() +
-                ", ticksExisted=" + ticksExisted +
-                ", entityAge=" + entityAge +
-                ", isMale=" + isMale +
-                ", growthSpeedOffset=" + growthSpeedOffset +
+                ", dinosaurAge=" + this.dinosaurAge +
+                ", prevAge=" + this.prevAge +
+                ", maxAge" + this.dinosaur.getMaximumAge() +
+                ", ticksExisted=" + this.ticksExisted +
+                ", entityAge=" + this.entityAge +
+                ", isMale=" + this.isMale +
+                ", growthSpeedOffset=" + this.growthSpeedOffset +
                 "\n    " +
-                ", food=" + metabolism.getEnergy() + " / " + metabolism.getMaxEnergy() + " (" + metabolism.getMaxEnergy() * 0.875 + ")" +
-                ", water=" + metabolism.getWater() + " / " + metabolism.getMaxWater() + " (" + metabolism.getMaxWater() * 0.875 + ")" +
-                ", digestingFood=" + metabolism.getDigestingFood() + " / " + MetabolismContainer.MAX_DIGESTION_AMOUNT +
-                ", health=" + getHealth() + " / " + getMaxHealth() +
+                ", food=" + this.metabolism.getEnergy() + " / " + this.metabolism.getMaxEnergy() + " (" + this.metabolism.getMaxEnergy() * 0.875 + ")" +
+                ", water=" + this.metabolism.getWater() + " / " + this.metabolism.getMaxWater() + " (" + this.metabolism.getMaxWater() * 0.875 + ")" +
+                ", digestingFood=" + this.metabolism.getDigestingFood() + " / " + MetabolismContainer.MAX_DIGESTION_AMOUNT +
+                ", health=" + this.getHealth() + " / " + this.getMaxHealth() +
                 "\n    " +
-                ", pos=" + getPosition() +
-                ", eyePos=" + getHeadPos() +
-                ", eyeHeight=" + getEyeHeight() +
-                ", lookX=" + getLookHelper().getLookPosX() + ", lookY=" + getLookHelper().getLookPosY() + ", lookZ=" + getLookHelper().getLookPosZ() +
+                ", pos=" + this.getPosition() +
+                ", eyePos=" + this.getHeadPos() +
+                ", eyeHeight=" + this.getEyeHeight() +
+                ", lookX=" + this.getLookHelper().getLookPosX() + ", lookY=" + this.getLookHelper().getLookPosY() + ", lookZ=" + this.getLookHelper().getLookPosZ() +
                 "\n    " +
-                ", width=" + width +
-                ", bb=" + getEntityBoundingBox() +
+                ", width=" + this.width +
+                ", bb=" + this.getEntityBoundingBox() +
 //                "\n    " +
 //                ", anim=" + animation + (animation != null ? ", duration" + animation.duration : "" ) +
 
@@ -1343,51 +1124,42 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 " }";
     }
 
-    public Vec3d getHeadPos()
-    {
-        double scale = transitionFromAge(dinosaur.getScaleInfant(), dinosaur.getScaleAdult());
+    public Vec3d getHeadPos() {
+        double scale = this.transitionFromAge(this.dinosaur.getScaleInfant(), this.dinosaur.getScaleAdult());
 
-        double[] headPos = dinosaur.getHeadPosition(getGrowthStage(), ((360 - rotationYawHead)) % 360 - 180);
+        double[] headPos = this.dinosaur.getHeadPosition(this.getGrowthStage(), ((360 - this.rotationYawHead)) % 360 - 180);
 
-        double headX = ((headPos[0] * 0.0625F) - dinosaur.getOffsetX()) * scale;
-        double headY = (((24 - headPos[1]) * 0.0625F) - dinosaur.getOffsetY()) * scale;
-        double headZ = ((headPos[2] * 0.0625F) - dinosaur.getOffsetZ()) * scale;
+        double headX = ((headPos[0] * 0.0625F) - this.dinosaur.getOffsetX()) * scale;
+        double headY = (((24 - headPos[1]) * 0.0625F) - this.dinosaur.getOffsetY()) * scale;
+        double headZ = ((headPos[2] * 0.0625F) - this.dinosaur.getOffsetZ()) * scale;
 
-        return new Vec3d(posX + headX, posY + (headY), posZ + headZ);
+        return new Vec3d(this.posX + headX, this.posY + (headY), this.posZ + headZ);
     }
 
-    public boolean areEyelidsClosed()
-    {
-        return (isCarcass || isSleeping) || ticksExisted % 100 < 4;
+    public boolean areEyelidsClosed() {
+        return (this.isCarcass || this.isSleeping) || this.ticksExisted % 100 < 4;
     }
 
-    public boolean getUseInertialTweens()
-    {
-        return useInertialTweens;
+    public boolean getUseInertialTweens() {
+        return this.useInertialTweens;
     }
 
-    public void setUseInertialTweens(boolean parUseInertialTweens)
-    {
-        useInertialTweens = parUseInertialTweens;
+    public void setUseInertialTweens(boolean parUseInertialTweens) {
+        this.useInertialTweens = parUseInertialTweens;
     }
 
     @Override
-    public ItemStack getPickedResult(RayTraceResult target)
-    {
-        return new ItemStack(ItemHandler.SPAWN_EGG, 1, EntityHandler.getDinosaurId(dinosaur));
+    public ItemStack getPickedResult(RayTraceResult target) {
+        return new ItemStack(ItemHandler.SPAWN_EGG, 1, EntityHandler.getDinosaurId(this.dinosaur));
     }
 
     @Override
-    public void collideWithEntity(Entity entity)
-    {
+    public void collideWithEntity(Entity entity) {
         super.collideWithEntity(entity);
 
-        if (this.isSleeping && !this.isRidingSameEntity(entity))
-        {
-            if (!entity.noClip && !this.noClip)
-            {
-                if (entity.getClass() != this.getClass())
-                {
+        if (this.isSleeping && !this.isRidingSameEntity(entity)) {
+            if (!entity.noClip && !this.noClip) {
+                if (entity.getClass() != this.getClass()) {
                     this.disturbSleep();
                 }
             }
@@ -1395,10 +1167,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    protected void setSize(float width, float height)
-    {
-        if (width != this.width || height != this.height)
-        {
+    protected void setSize(float width, float height) {
+        if (width != this.width || height != this.height) {
             float prevWidth = this.width;
 
             this.width = width;
@@ -1407,30 +1177,24 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             AxisAlignedBB bounds = this.getEntityBoundingBox();
             this.setEntityBoundingBox(new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + (double) this.width, bounds.minY + (double) this.height, bounds.minZ + (double) this.width));
 
-            if (this.width > prevWidth && !this.firstUpdate && !this.worldObj.isRemote)
-            {
+            if (this.width > prevWidth && !this.firstUpdate && !this.worldObj.isRemote) {
                 this.moveEntity(prevWidth - this.width, 0.0, prevWidth - this.width);
             }
         }
     }
 
-    public Order getOrder()
-    {
-        return order;
+    public Order getOrder() {
+        return this.order;
     }
 
-    public void setOrder(Order order)
-    {
+    public void setOrder(Order order) {
         this.order = order;
 
-        if (worldObj.isRemote)
-        {
-            if (owner != null)
-            {
-                EntityPlayer player = worldObj.getPlayerEntityByUUID(owner);
+        if (this.worldObj.isRemote) {
+            if (this.owner != null) {
+                EntityPlayer player = this.worldObj.getPlayerEntityByUUID(this.owner);
 
-                if (player != null)
-                {
+                if (player != null) {
                     player.addChatComponentMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase(Locale.ENGLISH) + ".name").build()));
                 }
             }
@@ -1440,124 +1204,139 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @SafeVarargs
-    public final void target(Class<? extends EntityLivingBase>... targets)
-    {
-        for (Class<? extends EntityLivingBase> target : targets)
-        {
-            targetTasks.addTask(1, new SelectTargetEntityAI<>(this, target));
+    public final void target(Class<? extends EntityLivingBase>... targets) {
+        for (Class<? extends EntityLivingBase> target : targets) {
+            this.targetTasks.addTask(1, new SelectTargetEntityAI<>(this, target));
         }
 
-        attackTargets.addAll(Lists.newArrayList(targets));
+        this.attackTargets.addAll(Lists.newArrayList(targets));
     }
 
-    public EntityAIBase getAttackAI()
-    {
-        return new DinosaurAttackMeleeEntityAI(this, dinosaur.getAttackSpeed(), false);
+    public EntityAIBase getAttackAI() {
+        return new DinosaurAttackMeleeEntityAI(this, this.dinosaur.getAttackSpeed(), false);
     }
 
-    public List<Class<? extends EntityLivingBase>> getAttackTargets()
-    {
-        return attackTargets;
+    public List<Class<? extends EntityLivingBase>> getAttackTargets() {
+        return this.attackTargets;
     }
 
     @Override
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData data)
-    {
-        metabolism.setEnergy(metabolism.getMaxEnergy());
-        metabolism.setWater(metabolism.getMaxWater());
-        genetics = GeneticsHelper.randomGenetics(rand);
-        setFullyGrown();
-        setMale(rand.nextBoolean());
-        setDNAQuality(100);
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData data) {
+        this.metabolism.setEnergy(this.metabolism.getMaxEnergy());
+        this.metabolism.setWater(this.metabolism.getMaxWater());
+        this.genetics = GeneticsHelper.randomGenetics(this.rand);
+        this.setFullyGrown();
+        this.setMale(this.rand.nextBoolean());
+        this.setDNAQuality(100);
         return data;
     }
 
-    public int getAttackCooldown()
-    {
-        return attackCooldown;
+    public int getAttackCooldown() {
+        return this.attackCooldown;
     }
 
-    public void resetAttackCooldown()
-    {
-        attackCooldown = 100 + getRNG().nextInt(20);
+    public void resetAttackCooldown() {
+        this.attackCooldown = 100 + this.getRNG().nextInt(20);
     }
 
-    public void respondToAttack(EntityLivingBase attacker)
-    {
-        if (attacker != null && !attacker.isDead && !(attacker instanceof EntityPlayer && ((EntityPlayer) attacker).capabilities.isCreativeMode))
-        {
+    public void respondToAttack(EntityLivingBase attacker) {
+        if (attacker != null && !attacker.isDead && !(attacker instanceof EntityPlayer && ((EntityPlayer) attacker).capabilities.isCreativeMode)) {
             List<EntityLivingBase> enemies = new LinkedList<>();
 
-            if (attacker instanceof DinosaurEntity)
-            {
+            if (attacker instanceof DinosaurEntity) {
                 DinosaurEntity enemyDinosaur = (DinosaurEntity) attacker;
 
-                if (enemyDinosaur.herd != null)
-                {
+                if (enemyDinosaur.herd != null) {
                     enemies.addAll(enemyDinosaur.herd.members);
                 }
-            }
-            else
-            {
+            } else {
                 enemies.add(attacker);
             }
 
-            if (enemies.size() > 0)
-            {
+            if (enemies.size() > 0) {
                 Herd herd = this.herd;
 
-                if (herd != null)
-                {
-                    herd.fleeing = !herd.shouldDefend(enemies) || dinosaur.shouldFlee();
+                if (herd != null) {
+                    herd.fleeing = !herd.shouldDefend(enemies) || this.dinosaur.shouldFlee();
 
-                    for (EntityLivingBase entity : enemies)
-                    {
-                        if (!herd.enemies.contains(entity))
-                        {
+                    for (EntityLivingBase entity : enemies) {
+                        if (!herd.enemies.contains(entity)) {
                             herd.enemies.add(entity);
                         }
                     }
-                }
-                else
-                {
+                } else {
                     this.setAttackTarget(enemies.get(this.getRNG().nextInt(enemies.size())));
                 }
             }
         }
     }
 
-    public int getAnimationLength()
-    {
-        return animationLength;
+    public int getAnimationLength() {
+        return this.animationLength;
     }
 
-    public boolean isRunning()
-    {
-        return dataManager.get(WATCHER_IS_RUNNING);
+    public boolean isRunning() {
+        return this.dataManager.get(WATCHER_IS_RUNNING);
     }
 
-    public boolean isFieldGuideFlocking()
-    {
-        return fieldGuideFlocking;
+    public boolean isFieldGuideFlocking() {
+        return this.fieldGuideFlocking;
     }
 
-    public void setFieldGuideFlocking(boolean flocking)
-    {
+    public void setFieldGuideFlocking(boolean flocking) {
         this.fieldGuideFlocking = flocking;
     }
 
-    public void setFieldGuideFleeing(boolean fieldGuideFleeing)
-    {
+    public void setFieldGuideFleeing(boolean fieldGuideFleeing) {
         this.fieldGuideFleeing = fieldGuideFleeing;
     }
 
-    public boolean isFieldGuideFleeing()
-    {
-        return fieldGuideFleeing;
+    public boolean isFieldGuideFleeing() {
+        return this.fieldGuideFleeing;
     }
 
-    public enum Order
-    {
+    public BlockPos getClosestFeeder() {
+        int posX = (int) this.posX;
+        int posY = (int) this.posY;
+        int posZ = (int) this.posZ;
+
+        int closestDist = Integer.MAX_VALUE;
+        BlockPos closestPos = null;
+
+        int range = 16;
+
+        for (int x = posX - range; x < posX + range; x++) {
+            for (int y = posY - 8; y < posY + 8; y++) {
+                for (int z = posZ - range; z < posZ + range; z++) {
+                    if (y > 0 && y < this.worldObj.getHeight()) {
+                        BlockPos pos = new BlockPos(x, y, z);
+                        TileEntity tile = this.worldObj.getTileEntity(pos);
+
+                        if (tile instanceof FeederTile) {
+                            FeederTile feeder = (FeederTile) tile;
+
+                            if (feeder.canFeedDinosaur(this.dinosaur) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
+                                int deltaX = Math.abs(posX - x);
+                                int deltaY = Math.abs(posY - y);
+                                int deltaZ = Math.abs(posZ - z);
+
+                                int distance = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
+
+                                if (distance < closestDist) {
+                                    closestDist = distance;
+                                    closestPos = pos;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return closestPos;
+    }
+
+    public enum Order {
         WANDER, FOLLOW, SIT
     }
 }

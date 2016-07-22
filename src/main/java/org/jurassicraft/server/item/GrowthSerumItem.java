@@ -8,29 +8,23 @@ import net.minecraft.util.EnumHand;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.tab.TabHandler;
 
-public class GrowthSerumItem extends Item
-{
-    public GrowthSerumItem()
-    {
+public class GrowthSerumItem extends Item {
+    public GrowthSerumItem() {
         super();
         this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand)
-    {
-        if (target instanceof DinosaurEntity)
-        {
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+        if (target instanceof DinosaurEntity) {
             DinosaurEntity dinosaur = (DinosaurEntity) target;
 
-            if (!dinosaur.isCarcass())
-            {
+            if (!dinosaur.isCarcass()) {
                 dinosaur.increaseGrowthSpeed();
 
                 stack.stackSize--;
 
-                if (!player.capabilities.isCreativeMode)
-                {
+                if (!player.capabilities.isCreativeMode) {
                     player.inventory.addItemStackToInventory(new ItemStack(ItemHandler.EMPTY_SYRINGE));
                 }
 

@@ -9,10 +9,8 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
-public class GypsumStoneBlock extends Block
-{
-    public GypsumStoneBlock()
-    {
+public class GypsumStoneBlock extends Block {
+    public GypsumStoneBlock() {
         super(Material.ROCK);
         this.setCreativeTab(TabHandler.BLOCKS);
         this.setHardness(1.5F);
@@ -20,14 +18,12 @@ public class GypsumStoneBlock extends Block
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ItemHandler.GYPSUM_POWDER;
     }
 
     @Override
-    public int quantityDropped(Random random)
-    {
+    public int quantityDropped(Random random) {
         return random.nextInt(5) + 4;
     }
 }

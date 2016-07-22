@@ -8,10 +8,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.ai.MoveUnderwaterEntityAI;
 
-public abstract class SwimmingDinosaurEntity extends DinosaurEntity
-{
-    public SwimmingDinosaurEntity(World world)
-    {
+public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
+    public SwimmingDinosaurEntity(World world) {
         super(world);
         this.moveHelper = new SwimmingDinosaurEntity.SwimmingMoveHelper();
         this.tasks.addTask(1, new MoveUnderwaterEntityAI(this));
@@ -19,35 +17,28 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity
     }
 
     @Override
-    public void onEntityUpdate()
-    {
+    public void onEntityUpdate() {
         int i = this.getAir();
         super.onEntityUpdate();
 
-        if (this.isEntityAlive() && !this.isInWater())
-        {
+        if (this.isEntityAlive() && !this.isInWater()) {
             --i;
             this.setAir(i);
 
-            if (this.getAir() == -20)
-            {
+            if (this.getAir() == -20) {
                 this.setAir(0);
                 this.attackEntityFrom(DamageSource.drown, 2.0F);
             }
-        }
-        else
-        {
+        } else {
             this.setAir(300);
         }
     }
 
     @Override
-    public void onLivingUpdate()
-    {
+    public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!this.isInWater() && this.onGround && this.rand.nextInt(20) == 0)
-        {
+        if (!this.isInWater() && this.onGround && this.rand.nextInt(20) == 0) {
             this.motionY += 0.4D;
             this.motionX += (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F);
             this.motionZ += (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F);
@@ -58,48 +49,38 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity
     }
 
     @Override
-    protected boolean canTriggerWalking()
-    {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
     @Override
-    public float getEyeHeight()
-    {
+    public float getEyeHeight() {
         return this.height * 0.5F;
     }
 
     @Override
-    public void moveEntityWithHeading(float strafe, float forward)
-    {
-        if (this.isServerWorld() && this.isInWater())
-        {
+    public void moveEntityWithHeading(float strafe, float forward) {
+        if (this.isServerWorld() && this.isInWater()) {
             this.moveRelative(strafe, forward, 0.1F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.7D;
             this.motionY *= 0.7D;
             this.motionZ *= 0.7D;
-        }
-        else
-        {
+        } else {
             super.moveEntityWithHeading(strafe, forward);
         }
     }
 
-    class SwimmingMoveHelper extends EntityMoveHelper
-    {
+    class SwimmingMoveHelper extends EntityMoveHelper {
         private SwimmingDinosaurEntity swimmingEntity = SwimmingDinosaurEntity.this;
 
-        public SwimmingMoveHelper()
-        {
+        public SwimmingMoveHelper() {
             super(SwimmingDinosaurEntity.this);
         }
 
         @Override
-        public void onUpdateMoveHelper()
-        {
-            if (this.action == EntityMoveHelper.Action.MOVE_TO && !this.swimmingEntity.getNavigator().noPath())
-            {
+        public void onUpdateMoveHelper() {
+            if (this.action == EntityMoveHelper.Action.MOVE_TO && !this.swimmingEntity.getNavigator().noPath()) {
                 double distanceX = this.posX - this.swimmingEntity.posX;
                 double distanceY = this.posY - this.swimmingEntity.posY;
                 double distanceZ = this.posZ - this.swimmingEntity.posZ;
@@ -110,9 +91,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity
                 this.swimmingEntity.rotationYaw = this.limitAngle(this.swimmingEntity.rotationYaw, f, 30.0F);
                 this.swimmingEntity.setAIMoveSpeed((float) (this.swimmingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 0.5));
                 this.swimmingEntity.motionY += (double) this.swimmingEntity.getAIMoveSpeed() * distanceY * 0.1D;
-            }
-            else
-            {
+            } else {
                 this.swimmingEntity.setAIMoveSpeed(0.0F);
             }
         }

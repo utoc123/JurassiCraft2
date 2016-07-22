@@ -14,20 +14,16 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 
-public class CultivatorTopBlock extends CultivatorBlock
-{
-    public CultivatorTopBlock()
-    {
+public class CultivatorTopBlock extends CultivatorBlock {
+    public CultivatorTopBlock() {
         super("top");
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult result, World world, BlockPos pos, EntityPlayer player)
-    {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult result, World world, BlockPos pos, EntityPlayer player) {
         Item item = Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM);
 
-        if (item == null)
-        {
+        if (item == null) {
             return null;
         }
 
@@ -36,8 +32,7 @@ public class CultivatorTopBlock extends CultivatorBlock
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
         BlockPos add = pos.add(0, -1, 0);
         IBlockState blockState = world.getBlockState(add);
 
@@ -45,19 +40,16 @@ public class CultivatorTopBlock extends CultivatorBlock
     }
 
     @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState state)
-    {
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
         BlockPos bottomBlock = pos.add(0, -1, 0);
 
-        if (world.getBlockState(bottomBlock).getBlock() != BlockHandler.CULTIVATOR_BOTTOM)
-        {
+        if (world.getBlockState(bottomBlock).getBlock() != BlockHandler.CULTIVATOR_BOTTOM) {
             world.setBlockState(bottomBlock, BlockHandler.CULTIVATOR_BOTTOM.getDefaultState().withProperty(COLOR, state.getValue(COLOR)));
         }
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state)
-    {
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
         world.setBlockState(pos.add(0, -1, 0), Blocks.AIR.getDefaultState());
         super.breakBlock(world, pos, state);
     }

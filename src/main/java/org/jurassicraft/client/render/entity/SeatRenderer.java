@@ -9,29 +9,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 
 @SideOnly(Side.CLIENT)
-public class SeatRenderer implements IRenderFactory<SeatEntity>
-{
+public class SeatRenderer implements IRenderFactory<SeatEntity> {
     @Override
-    public Render<? super SeatEntity> createRenderFor(RenderManager manager)
-    {
+    public Render<? super SeatEntity> createRenderFor(RenderManager manager) {
         return new Renderer(manager);
     }
 
-    public static class Renderer extends Render<SeatEntity>
-    {
-        public Renderer(RenderManager manager)
-        {
+    public static class Renderer extends Render<SeatEntity> {
+        public Renderer(RenderManager manager) {
             super(manager);
         }
 
         @Override
-        public void doRender(SeatEntity entity, double x, double y, double z, float yaw, float partialTicks)
-        {
+        public void doRender(SeatEntity entity, double x, double y, double z, float yaw, float partialTicks) {
         }
 
         @Override
-        protected ResourceLocation getEntityTexture(SeatEntity entity)
-        {
+        protected ResourceLocation getEntityTexture(SeatEntity entity) {
             return null;
         }
     }

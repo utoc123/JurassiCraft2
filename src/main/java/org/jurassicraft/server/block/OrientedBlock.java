@@ -15,46 +15,34 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class OrientedBlock extends BlockContainer
-{
+public abstract class OrientedBlock extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-    public OrientedBlock(Material material)
-    {
+    public OrientedBlock(Material material) {
         super(material);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 
     @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
-    {
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         this.setDefaultFacing(worldIn, pos, state);
     }
 
-    private void setDefaultFacing(World world, BlockPos pos, IBlockState state)
-    {
-        if (!world.isRemote)
-        {
+    private void setDefaultFacing(World world, BlockPos pos, IBlockState state) {
+        if (!world.isRemote) {
             IBlockState blockNorth = world.getBlockState(pos.north());
             IBlockState blockSouth = world.getBlockState(pos.south());
             IBlockState blockWest = world.getBlockState(pos.west());
             IBlockState blockEast = world.getBlockState(pos.east());
             EnumFacing facing = state.getValue(FACING);
 
-            if (facing == EnumFacing.NORTH && blockNorth.isFullBlock() && !blockSouth.isFullBlock())
-            {
+            if (facing == EnumFacing.NORTH && blockNorth.isFullBlock() && !blockSouth.isFullBlock()) {
                 facing = EnumFacing.SOUTH;
-            }
-            else if (facing == EnumFacing.SOUTH && blockSouth.isFullBlock() && !blockNorth.isFullBlock())
-            {
+            } else if (facing == EnumFacing.SOUTH && blockSouth.isFullBlock() && !blockNorth.isFullBlock()) {
                 facing = EnumFacing.NORTH;
-            }
-            else if (facing == EnumFacing.WEST && blockWest.isFullBlock() && !blockEast.isFullBlock())
-            {
+            } else if (facing == EnumFacing.WEST && blockWest.isFullBlock() && !blockEast.isFullBlock()) {
                 facing = EnumFacing.EAST;
-            }
-            else if (facing == EnumFacing.EAST && blockEast.isFullBlock() && !blockWest.isFullBlock())
-            {
+            } else if (facing == EnumFacing.EAST && blockEast.isFullBlock() && !blockWest.isFullBlock()) {
                 facing = EnumFacing.WEST;
             }
 
@@ -63,24 +51,20 @@ public abstract class OrientedBlock extends BlockContainer
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
+    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getFront(meta);
 
-        if (facing.getAxis() == EnumFacing.Axis.Y)
-        {
+        if (facing.getAxis() == EnumFacing.Axis.Y) {
             facing = EnumFacing.NORTH;
         }
 
@@ -88,39 +72,33 @@ public abstract class OrientedBlock extends BlockContainer
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getIndex();
     }
 
     @Override
-    protected BlockStateContainer createBlockState()
-    {
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.SOLID;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return true;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return true;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 }

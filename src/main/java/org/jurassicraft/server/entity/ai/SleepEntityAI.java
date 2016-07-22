@@ -9,41 +9,33 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 
-public class SleepEntityAI extends EntityAIBase
-{
+public class SleepEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
 
     protected Path path;
     protected int giveUpTime;
 
-    public SleepEntityAI(DinosaurEntity dinosaur)
-    {
+    public SleepEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        World world = dinosaur.worldObj;
+    public boolean shouldExecute() {
+        World world = this.dinosaur.worldObj;
 
-        if ((dinosaur.onGround || dinosaur.isRiding()) && !dinosaur.isDead && !world.isRemote && dinosaur.shouldSleep() && !dinosaur.isSleeping() && dinosaur.getStayAwakeTime() <= 0)
-        {
+        if ((this.dinosaur.onGround || this.dinosaur.isRiding()) && !this.dinosaur.isDead && !world.isRemote && this.dinosaur.shouldSleep() && !this.dinosaur.isSleeping() && this.dinosaur.getStayAwakeTime() <= 0) {
             int range = 8;
 
-            int posX = (int) dinosaur.posX;
-            int posZ = (int) dinosaur.posZ;
+            int posX = (int) this.dinosaur.posX;
+            int posZ = (int) this.dinosaur.posZ;
 
-            for (int x = posX - range; x < posX + range; x++)
-            {
-                for (int z = posZ - range; z < posZ + range; z++)
-                {
+            for (int x = posX - range; x < posX + range; x++) {
+                for (int z = posZ - range; z < posZ + range; z++) {
                     BlockPos possiblePos = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
 
-                    if (world.isAirBlock(possiblePos) && world.getBlockState(possiblePos.add(0, -1, 0)).getBlock() != Blocks.WATER)
-                    {
-                        if (canFit(possiblePos) && !world.canSeeSky(possiblePos) && dinosaur.setSleepLocation(possiblePos, true))
-                        {
-                            path = dinosaur.getNavigator().getPath();
+                    if (world.isAirBlock(possiblePos) && world.getBlockState(possiblePos.add(0, -1, 0)).getBlock() != Blocks.WATER) {
+                        if (this.canFit(possiblePos) && !world.canSeeSky(possiblePos) && this.dinosaur.setSleepLocation(possiblePos, true)) {
+                            this.path = this.dinosaur.getNavigator().getPath();
                             return true;
                         }
                     }
@@ -56,57 +48,49 @@ public class SleepEntityAI extends EntityAIBase
         return false;
     }
 
-    private boolean canFit(BlockPos pos)
-    {
+    private boolean canFit(BlockPos pos) {
         double x = pos.getX() + 0.5;
         double y = pos.getY();
         double z = pos.getZ() + 0.5;
 
-        AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + dinosaur.width, y + dinosaur.height, z + dinosaur.width);
+        AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + this.dinosaur.width, y + this.dinosaur.height, z + this.dinosaur.width);
 
-        return dinosaur.worldObj.getCollisionBoxes(dinosaur, boundingBox).isEmpty() && dinosaur.worldObj.getEntitiesWithinAABBExcludingEntity(dinosaur, boundingBox).isEmpty();
+        return this.dinosaur.worldObj.getCollisionBoxes(this.dinosaur, boundingBox).isEmpty() && this.dinosaur.worldObj.getEntitiesWithinAABBExcludingEntity(this.dinosaur, boundingBox).isEmpty();
     }
 
     @Override
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.giveUpTime = 400;
     }
 
     @Override
-    public void updateTask()
-    {
-        Path currentPath = dinosaur.getNavigator().getPath();
+    public void updateTask() {
+        Path currentPath = this.dinosaur.getNavigator().getPath();
 
-        if (this.path != null)
-        {
+        if (this.path != null) {
             PathPoint finalPathPoint = this.path.getFinalPathPoint();
 
-            if (currentPath == null || !currentPath.getFinalPathPoint().equals(finalPathPoint))
-            {
-                Path path = dinosaur.getNavigator().getPathToXYZ(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord);
-                dinosaur.getNavigator().setPath(path, 1.0);
+            if (currentPath == null || !currentPath.getFinalPathPoint().equals(finalPathPoint)) {
+                Path path = this.dinosaur.getNavigator().getPathToXYZ(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord);
+                this.dinosaur.getNavigator().setPath(path, 1.0);
                 this.path = path;
             }
         }
 
-        if (giveUpTime <= 0 || (dinosaur.getStayAwakeTime() <= 0 && (this.path == null || this.path.isFinished())))
-        {
-            dinosaur.setSleeping(true);
+        if (this.giveUpTime <= 0 || (this.dinosaur.getStayAwakeTime() <= 0 && (this.path == null || this.path.isFinished()))) {
+            this.dinosaur.setSleeping(true);
         }
 
-        giveUpTime--;
+        this.giveUpTime--;
     }
 
     @Override
-    public boolean continueExecuting()
-    {
-        return dinosaur != null && !dinosaur.isCarcass() && !dinosaur.isSleeping() && dinosaur.shouldSleep();
+    public boolean continueExecuting() {
+        return this.dinosaur != null && !this.dinosaur.isCarcass() && !this.dinosaur.isSleeping() && this.dinosaur.shouldSleep();
     }
 
     @Override
-    public void resetTask()
-    {
-        dinosaur.setSleeping(true);
+    public void resetTask() {
+        this.dinosaur.setSleeping(true);
     }
 }

@@ -17,15 +17,13 @@ import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
 
-public class MossBlock extends Block
-{
+public class MossBlock extends Block {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
 
     private static final int DENSITY_PER_AREA = 8;
     private static final int SPREAD_RADIUS = 3;
 
-    public MossBlock()
-    {
+    public MossBlock() {
         super(Material.LEAVES);
 
         this.setHardness(0.2F);
@@ -37,35 +35,27 @@ public class MossBlock extends Block
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
-        if (world.getBlockState(pos.down()).getBlock() instanceof PeatBlock)
-        {
-            if (rand.nextInt(8) <= 3)
-            {
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (world.getBlockState(pos.down()).getBlock() instanceof PeatBlock) {
+            if (rand.nextInt(8) <= 3) {
                 int allowedInArea = DENSITY_PER_AREA;
 
                 BlockPos nextPos = null;
                 int placementAttempts = 3;
 
-                while (nextPos == null && placementAttempts > 0)
-                {
+                while (nextPos == null && placementAttempts > 0) {
                     int doubleRadius = SPREAD_RADIUS * 2;
                     BlockPos tmp = pos.add(rand.nextInt(doubleRadius) - SPREAD_RADIUS, -SPREAD_RADIUS, rand.nextInt(doubleRadius) - SPREAD_RADIUS);
-                    nextPos = findGround(world, tmp);
+                    nextPos = this.findGround(world, tmp);
                     placementAttempts--;
                 }
 
-                if (nextPos != null)
-                {
-                    for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-2, -3, -2), nextPos.add(2, 3, 2)))
-                    {
-                        if (world.getBlockState(neighbourPos).getBlock() == this)
-                        {
+                if (nextPos != null) {
+                    for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-2, -3, -2), nextPos.add(2, 3, 2))) {
+                        if (world.getBlockState(neighbourPos).getBlock() == this) {
                             allowedInArea--;
 
-                            if (allowedInArea <= 0)
-                            {
+                            if (allowedInArea <= 0) {
                                 return;
                             }
                         }
@@ -77,18 +67,15 @@ public class MossBlock extends Block
         }
     }
 
-    private BlockPos findGround(World world, BlockPos start)
-    {
+    private BlockPos findGround(World world, BlockPos start) {
         BlockPos pos = start;
 
         Block down = world.getBlockState(pos.down()).getBlock();
         Block here = world.getBlockState(pos).getBlock();
         Block up = world.getBlockState(pos.up()).getBlock();
 
-        for (int i = 0; i < 8; ++i)
-        {
-            if (down instanceof PeatBlock)
-            {
+        for (int i = 0; i < 8; ++i) {
+            if (down instanceof PeatBlock) {
                 return pos;
             }
 
@@ -102,67 +89,55 @@ public class MossBlock extends Block
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos)
-    {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
         return BOUNDS;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos)
-    {
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
         IBlockState below = world.getBlockState(pos.down());
         return super.canPlaceBlockAt(world, pos) && this.canBlockStay(world, pos) && (below.isFullCube());
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
-    {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
         super.neighborChanged(state, world, pos, block);
         this.checkForDrop(world, pos, state);
     }
 
-    private boolean checkForDrop(World world, BlockPos pos, IBlockState state)
-    {
-        if (!this.canBlockStay(world, pos))
-        {
+    private boolean checkForDrop(World world, BlockPos pos, IBlockState state) {
+        if (!this.canBlockStay(world, pos)) {
             this.dropBlockAsItem(world, pos, state, 0);
             world.setBlockToAir(pos);
             return false;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
 
-    private boolean canBlockStay(World world, BlockPos pos)
-    {
+    private boolean canBlockStay(World world, BlockPos pos) {
         return !world.isAirBlock(pos.down());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return side == EnumFacing.UP || super.shouldSideBeRendered(state, world, pos, side);
     }
 }

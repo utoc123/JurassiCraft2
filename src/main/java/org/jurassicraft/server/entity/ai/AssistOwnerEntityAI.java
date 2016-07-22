@@ -7,33 +7,27 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 import java.util.UUID;
 
-public class AssistOwnerEntityAI extends EntityAIBase
-{
+public class AssistOwnerEntityAI extends EntityAIBase {
     private DinosaurEntity entity;
     private EntityPlayer owner;
     private EntityLivingBase target;
 
-    public AssistOwnerEntityAI(DinosaurEntity entity)
-    {
+    public AssistOwnerEntityAI(DinosaurEntity entity) {
         this.entity = entity;
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (entity.getAgePercentage() > 50)
-        {
-            UUID ownerId = entity.getOwner();
+    public boolean shouldExecute() {
+        if (this.entity.getAgePercentage() > 50) {
+            UUID ownerId = this.entity.getOwner();
 
-            if (ownerId != null)
-            {
-                owner = entity.worldObj.getPlayerEntityByUUID(ownerId);
+            if (ownerId != null) {
+                this.owner = this.entity.worldObj.getPlayerEntityByUUID(ownerId);
 
-                if (owner != null)
-                {
-                    target = owner.getLastAttacker();
+                if (this.owner != null) {
+                    this.target = this.owner.getLastAttacker();
 
-                    return target != null && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+                    return this.target != null && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW;
                 }
             }
         }
@@ -42,25 +36,21 @@ public class AssistOwnerEntityAI extends EntityAIBase
     }
 
     @Override
-    public boolean continueExecuting()
-    {
-        return !isDead(target) && entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+    public boolean continueExecuting() {
+        return !this.isDead(this.target) && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW;
     }
 
-    private boolean isDead(EntityLivingBase attacker)
-    {
+    private boolean isDead(EntityLivingBase attacker) {
         return !attacker.isEntityAlive() || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass());
     }
 
     @Override
-    public void updateTask()
-    {
-        entity.setAttackTarget(target);
+    public void updateTask() {
+        this.entity.setAttackTarget(this.target);
     }
 
     @Override
-    public void resetTask()
-    {
-        entity.setAttackTarget(null);
+    public void resetTask() {
+        this.entity.setAttackTarget(null);
     }
 }

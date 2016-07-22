@@ -17,33 +17,26 @@ import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.jurassicraft.server.tile.DNAExtractorTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorTile>
-{
+public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorTile> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     private TabulaModel model;
     private ResourceLocation texture;
 
-    public DNAExtractorSpecialRenderer()
-    {
-        try
-        {
+    public DNAExtractorSpecialRenderer() {
+        try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/dna_extractor"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_extractor.png");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(DNAExtractorTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_)
-    {
+    public void renderTileEntityAt(DNAExtractorTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         IBlockState blockState = tileEntity.getWorld().getBlockState(tileEntity.getPos());
 
-        if (blockState.getBlock() == BlockHandler.DNA_EXTRACTOR)
-        {
+        if (blockState.getBlock() == BlockHandler.DNA_EXTRACTOR) {
             GlStateManager.pushMatrix();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
@@ -54,8 +47,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
 
             EnumFacing value = blockState.getValue(OrientedBlock.FACING);
 
-            if (value == EnumFacing.EAST || value == EnumFacing.WEST)
-            {
+            if (value == EnumFacing.EAST || value == EnumFacing.WEST) {
                 value = value.getOpposite();
             }
 
@@ -66,18 +58,17 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
             double scale = 1.0;
             GlStateManager.scale(scale, -scale, scale);
 
-            mc.getTextureManager().bindTexture(texture);
+            this.mc.getTextureManager().bindTexture(this.texture);
 
-            model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
-            mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+            this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
             ItemStack extraction = tileEntity.getStackInSlot(0);
 
-            RenderItem renderItem = mc.getRenderItem();
+            RenderItem renderItem = this.mc.getRenderItem();
 
-            if (extraction != null)
-            {
+            if (extraction != null) {
                 GlStateManager.translate(0.225, 1.25, -0.125);
                 GlStateManager.rotate(-90, 1, 0, 0);
                 GlStateManager.scale(-0.75 * 0.5, -0.75 * 0.5, 0.75 * 0.5);

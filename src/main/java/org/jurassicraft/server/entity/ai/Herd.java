@@ -14,8 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Herd implements Iterable<DinosaurEntity>
-{
+public class Herd implements Iterable<DinosaurEntity> {
     public List<DinosaurEntity> members = new LinkedList<>();
     public DinosaurEntity leader;
 
@@ -35,133 +34,105 @@ public class Herd implements Iterable<DinosaurEntity>
 
     private Dinosaur herdType;
 
-    public Herd(DinosaurEntity leader)
-    {
+    public Herd(DinosaurEntity leader) {
         this.herdType = leader.getDinosaur();
         this.members.add(leader);
         this.leader = leader;
         this.resetStateTicks();
     }
 
-    public void onUpdate()
-    {
-        if (leader == null || leader.isCarcass() || leader.isDead)
-        {
-            updateLeader();
+    public void onUpdate() {
+        if (this.leader == null || this.leader.isCarcass() || this.leader.isDead) {
+            this.updateLeader();
         }
 
-        if (stateTicks > 0)
-        {
-            stateTicks--;
-        }
-        else
-        {
-            state = state == State.MOVING ? State.STATIC : State.MOVING;
-            resetStateTicks();
-            enemies.clear();
-            fleeing = false;
+        if (this.stateTicks > 0) {
+            this.stateTicks--;
+        } else {
+            this.state = this.state == State.MOVING ? State.STATIC : State.MOVING;
+            this.resetStateTicks();
+            this.enemies.clear();
+            this.fleeing = false;
         }
 
-        if (leader != null)
-        {
-            if (leader.shouldSleep())
-            {
-                state = State.STATIC;
-                resetStateTicks();
+        if (this.leader != null) {
+            if (this.leader.shouldSleep()) {
+                this.state = State.STATIC;
+                this.resetStateTicks();
             }
 
-            this.center = getCenterPosition();
+            this.center = this.getCenterPosition();
 
-            if (enemies.size() > 0)
-            {
-                if (fleeing)
-                {
-                    state = State.MOVING;
+            if (this.enemies.size() > 0) {
+                if (this.fleeing) {
+                    this.state = State.MOVING;
 
                     float angle = 0.0F;
 
-                    for (EntityLivingBase attacker : enemies)
-                    {
-                        angle += Math.atan2(center.zCoord - attacker.posZ, center.xCoord - attacker.posX);
+                    for (EntityLivingBase attacker : this.enemies) {
+                        angle += Math.atan2(this.center.zCoord - attacker.posZ, this.center.xCoord - attacker.posX);
                     }
 
-                    angle /= enemies.size();
+                    angle /= this.enemies.size();
 
-                    moveX = (float) -Math.cos(angle);
-                    moveZ = (float) Math.sin(angle);
+                    this.moveX = (float) -Math.cos(angle);
+                    this.moveZ = (float) Math.sin(angle);
 
-                    normalizeMovement();
+                    this.normalizeMovement();
+                } else {
+                    this.state = State.STATIC;
                 }
-                else
-                {
-                    state = State.STATIC;
-                }
-            }
-            else
-            {
-                fleeing = false;
+            } else {
+                this.fleeing = false;
             }
 
             List<DinosaurEntity> remove = new LinkedList<>();
 
-            for (DinosaurEntity entity : this)
-            {
-                double distance = entity.getDistanceSq(center.xCoord, center.yCoord, center.zCoord);
+            for (DinosaurEntity entity : this) {
+                double distance = entity.getDistanceSq(this.center.xCoord, this.center.yCoord, this.center.zCoord);
 
-                if (distance > 2048)
-                {
+                if (distance > 2048) {
                     remove.add(entity);
                 }
             }
 
-            for (DinosaurEntity entity : remove)
-            {
-                members.remove(entity);
+            for (DinosaurEntity entity : remove) {
+                this.members.remove(entity);
                 entity.herd = null;
 
-                if (entity == leader)
-                {
-                    updateLeader();
+                if (entity == this.leader) {
+                    this.updateLeader();
                 }
             }
 
-            if (leader == null)
-            {
+            if (this.leader == null) {
                 return;
             }
 
-            for (DinosaurEntity entity : this)
-            {
-                if (enemies.size() == 0 || fleeing)
-                {
-                    if (!(entity.getMetabolism().isHungry() || entity.getMetabolism().isThirsty()) && !entity.isMovementBlocked() && !entity.isInWater() && (fleeing || entity.getNavigator().noPath()) && (state == State.MOVING || random.nextInt(50) == 0))
-                    {
-                        float entityMoveX = moveX * 2.0F;
-                        float entityMoveZ = moveZ * 2.0F;
+            for (DinosaurEntity entity : this) {
+                if (this.enemies.size() == 0 || this.fleeing) {
+                    if (!(entity.getMetabolism().isHungry() || entity.getMetabolism().isThirsty()) && !entity.isMovementBlocked() && !entity.isInWater() && (this.fleeing || entity.getNavigator().noPath()) && (this.state == State.MOVING || this.random.nextInt(50) == 0)) {
+                        float entityMoveX = this.moveX * 2.0F;
+                        float entityMoveZ = this.moveZ * 2.0F;
 
-                        float centerDistance = (float) Math.abs(entity.getDistance(center.xCoord, entity.posY, center.zCoord));
+                        float centerDistance = (float) Math.abs(entity.getDistance(this.center.xCoord, entity.posY, this.center.zCoord));
 
-                        if (fleeing)
-                        {
+                        if (this.fleeing) {
                             centerDistance *= 4.0F;
                         }
 
-                        if (centerDistance > 0)
-                        {
-                            entityMoveX += (center.xCoord - entity.posX) / centerDistance;
-                            entityMoveZ += (center.zCoord - entity.posZ) / centerDistance;
+                        if (centerDistance > 0) {
+                            entityMoveX += (this.center.xCoord - entity.posX) / centerDistance;
+                            entityMoveZ += (this.center.zCoord - entity.posZ) / centerDistance;
                         }
 
-                        for (DinosaurEntity other : this)
-                        {
-                            if (other != entity)
-                            {
+                        for (DinosaurEntity other : this) {
+                            if (other != entity) {
                                 float distance = Math.abs(entity.getDistanceToEntity(other));
 
                                 float separation = (entity.width * 1.5F) + 1.5F;
 
-                                if (distance < separation)
-                                {
+                                if (distance < separation) {
                                     float scale = distance / separation;
                                     entityMoveX += (entity.posX - other.posX) / scale;
                                     entityMoveZ += (entity.posZ - other.posZ) / scale;
@@ -172,139 +143,108 @@ public class Herd implements Iterable<DinosaurEntity>
                         double navigateX = entity.posX + entityMoveX;
                         double navigateZ = entity.posZ + entityMoveZ;
 
-                        double speed = state == State.STATIC ? 0.8 : entity.getDinosaur().getFlockSpeed();
+                        double speed = this.state == State.STATIC ? 0.8 : entity.getDinosaur().getFlockSpeed();
 
-                        if (fleeing)
-                        {
-                            if (entity.getDinosaur().getAttackSpeed() > speed)
-                            {
+                        if (this.fleeing) {
+                            if (entity.getDinosaur().getAttackSpeed() > speed) {
                                 speed = entity.getDinosaur().getAttackSpeed();
                             }
                         }
 
                         entity.getNavigator().tryMoveToXYZ(navigateX, entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).getY() + 1, navigateZ, speed);
                     }
-                }
-                else if (!fleeing && entity.getAttackTarget() == null && enemies.size() > 0)
-                {
-                    if (entity.getAgePercentage() > 50)
-                    {
-                        entity.setAttackTarget(enemies.get(random.nextInt(enemies.size())));
+                } else if (!this.fleeing && entity.getAttackTarget() == null && this.enemies.size() > 0) {
+                    if (entity.getAgePercentage() > 50) {
+                        entity.setAttackTarget(this.enemies.get(this.random.nextInt(this.enemies.size())));
                     }
                 }
             }
 
             List<EntityLivingBase> removeAttackers = new LinkedList<>();
 
-            for (EntityLivingBase attacker : this.enemies)
-            {
-                if (attacker.isDead || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) || attacker.getDistanceSq(center.xCoord, center.yCoord, center.zCoord) > 1024)
-                {
+            for (EntityLivingBase attacker : this.enemies) {
+                if (attacker.isDead || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) || attacker.getDistanceSq(this.center.xCoord, this.center.yCoord, this.center.zCoord) > 1024) {
                     removeAttackers.add(attacker);
                 }
             }
 
             this.enemies.removeAll(removeAttackers);
 
-            if (enemies.size() == 0)
-            {
-                fleeing = false;
-                state = State.STATIC;
+            if (this.enemies.size() == 0) {
+                this.fleeing = false;
+                this.state = State.STATIC;
             }
 
-            if (state == State.STATIC)
-            {
-                moveX = 0.0F;
-                moveZ = 0.0F;
-            }
-            else
-            {
-                moveX += (random.nextFloat() - 0.5F) * 0.1F;
-                moveZ += (random.nextFloat() - 0.5F) * 0.1F;
+            if (this.state == State.STATIC) {
+                this.moveX = 0.0F;
+                this.moveZ = 0.0F;
+            } else {
+                this.moveX += (this.random.nextFloat() - 0.5F) * 0.1F;
+                this.moveZ += (this.random.nextFloat() - 0.5F) * 0.1F;
 
-                normalizeMovement();
+                this.normalizeMovement();
             }
 
             this.refreshMembers();
         }
     }
 
-    private void resetStateTicks()
-    {
-        stateTicks = random.nextInt(state == State.MOVING ? 2000 : 4000) + 1000;
+    private void resetStateTicks() {
+        this.stateTicks = this.random.nextInt(this.state == State.MOVING ? 2000 : 4000) + 1000;
     }
 
-    public void refreshMembers()
-    {
+    public void refreshMembers() {
         List<DinosaurEntity> remove = new LinkedList<>();
 
-        for (DinosaurEntity entity : this)
-        {
-            if (entity.isCarcass() || entity.isDead || entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())
-            {
+        for (DinosaurEntity entity : this) {
+            if (entity.isCarcass() || entity.isDead || entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated()) {
                 remove.add(entity);
             }
         }
 
-        members.removeAll(remove);
+        this.members.removeAll(remove);
 
-        AxisAlignedBB searchBounds = new AxisAlignedBB(center.xCoord - 16, center.yCoord - 5, center.zCoord - 16, center.xCoord + 16, center.yCoord + 5, center.zCoord + 16);
+        AxisAlignedBB searchBounds = new AxisAlignedBB(this.center.xCoord - 16, this.center.yCoord - 5, this.center.zCoord - 16, this.center.xCoord + 16, this.center.yCoord + 5, this.center.zCoord + 16);
 
         List<Herd> otherHerds = new LinkedList<>();
 
-        for (DinosaurEntity entity : leader.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, searchBounds))
-        {
-            if (leader.getClass().isAssignableFrom(entity.getClass()))
-            {
-                if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated()))
-                {
+        for (DinosaurEntity entity : this.leader.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, searchBounds)) {
+            if (this.leader.getClass().isAssignableFrom(entity.getClass())) {
+                if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
                     Herd otherHerd = entity.herd;
 
-                    if (otherHerd == null)
-                    {
-                        if (size() >= herdType.getMaxHerdSize())
-                        {
-                            if (herdType.getDiet().isCarnivorous() && !enemies.contains(entity))
-                            {
-                                enemies.add(entity);
+                    if (otherHerd == null) {
+                        if (this.size() >= this.herdType.getMaxHerdSize()) {
+                            if (this.herdType.getDiet().isCarnivorous() && !this.enemies.contains(entity)) {
+                                this.enemies.add(entity);
                             }
 
                             return;
                         }
 
                         this.addMember(entity);
-                    }
-                    else if (otherHerd != this && !otherHerds.contains(otherHerd))
-                    {
+                    } else if (otherHerd != this && !otherHerds.contains(otherHerd)) {
                         otherHerds.add(otherHerd);
                     }
                 }
             }
         }
 
-        for (Herd otherHerd : otherHerds)
-        {
+        for (Herd otherHerd : otherHerds) {
             int originalSize = this.size();
 
-            if (otherHerd.size() <= originalSize && otherHerd.size() + originalSize < herdType.getMaxHerdSize())
-            {
-                for (DinosaurEntity member : otherHerd)
-                {
+            if (otherHerd.size() <= originalSize && otherHerd.size() + originalSize < this.herdType.getMaxHerdSize()) {
+                for (DinosaurEntity member : otherHerd) {
                     this.members.add(member);
                     member.herd = this;
                 }
 
                 otherHerd.disband();
-            }
-            else if (originalSize + 1 >= herdType.getMaxHerdSize())
-            {
-                if (herdType.getDiet().isCarnivorous())
-                {
-                    for (DinosaurEntity entity : otherHerd)
-                    {
-                        if (!enemies.contains(entity))
-                        {
-                            enemies.add(entity);
+            } else if (originalSize + 1 >= this.herdType.getMaxHerdSize()) {
+                if (this.herdType.getDiet().isCarnivorous()) {
+                    for (DinosaurEntity entity : otherHerd) {
+                        if (!this.enemies.contains(entity)) {
+                            this.enemies.add(entity);
                         }
                     }
                 }
@@ -312,29 +252,22 @@ public class Herd implements Iterable<DinosaurEntity>
         }
     }
 
-    public void updateLeader()
-    {
-        if (members.size() > 0)
-        {
-            leader = members.get(new Random().nextInt(members.size()));
-        }
-        else
-        {
-            leader = null;
+    public void updateLeader() {
+        if (this.members.size() > 0) {
+            this.leader = this.members.get(new Random().nextInt(this.members.size()));
+        } else {
+            this.leader = null;
         }
     }
 
-    public Vec3d getCenterPosition()
-    {
+    public Vec3d getCenterPosition() {
         double x = 0.0;
         double z = 0.0;
 
         int count = 0;
 
-        for (DinosaurEntity member : members)
-        {
-            if (!member.isCarcass() && !member.isInWater())
-            {
+        for (DinosaurEntity member : this.members) {
+            if (!member.isCarcass() && !member.isInWater()) {
                 x += member.posX;
                 z += member.posZ;
 
@@ -345,69 +278,58 @@ public class Herd implements Iterable<DinosaurEntity>
         x /= count;
         z /= count;
 
-        return new Vec3d(x, leader.worldObj.getHeight(new BlockPos(x, 0, z)).getY(), z);
+        return new Vec3d(x, this.leader.worldObj.getHeight(new BlockPos(x, 0, z)).getY(), z);
     }
 
-    public void addMember(DinosaurEntity entity)
-    {
-        if (entity.herd != null)
-        {
+    public void addMember(DinosaurEntity entity) {
+        if (entity.herd != null) {
             entity.herd.members.remove(entity);
 
-            if (entity.herd.leader == entity)
-            {
+            if (entity.herd.leader == entity) {
                 entity.herd.updateLeader();
             }
         }
 
         entity.herd = this;
-        members.add(entity);
+        this.members.add(entity);
     }
 
-    public void disband()
-    {
-        leader = null;
-        members.clear();
+    public void disband() {
+        this.leader = null;
+        this.members.clear();
     }
 
-    public int size()
-    {
-        return members.size();
+    public int size() {
+        return this.members.size();
     }
 
     @Override
-    public Iterator<DinosaurEntity> iterator()
-    {
-        return members.iterator();
+    public Iterator<DinosaurEntity> iterator() {
+        return this.members.iterator();
     }
 
-    public void normalizeMovement()
-    {
-        float length = (float) Math.sqrt(Math.pow(moveX, 2) + Math.pow(moveZ, 2));
-        moveX = moveX / length;
-        moveZ = moveZ / length;
+    public void normalizeMovement() {
+        float length = (float) Math.sqrt(Math.pow(this.moveX, 2) + Math.pow(this.moveZ, 2));
+        this.moveX = this.moveX / length;
+        this.moveZ = this.moveZ / length;
     }
 
-    public boolean shouldDefend(List<EntityLivingBase> entities)
-    {
-        return this.getScore(this) + herdType.getAttackBias() > this.getScore(entities);
+    public boolean shouldDefend(List<EntityLivingBase> entities) {
+        return this.getScore(this) + this.herdType.getAttackBias() > this.getScore(entities);
     }
 
-    public double getScore(Iterable<? extends EntityLivingBase> entities)
-    {
+    public double getScore(Iterable<? extends EntityLivingBase> entities) {
         double score = 0.0F;
 
-        for (EntityLivingBase entity : entities)
-        {
+        for (EntityLivingBase entity : entities) {
             score += entity.getHealth() * entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
         }
 
         return score;
     }
 
-    public enum State
-    {
+    public enum State {
         MOVING,
-        STATIC,
+        STATIC
     }
 }
