@@ -25,6 +25,7 @@ import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraft.world.storage.loot.functions.SetMetadata;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -98,7 +99,7 @@ public class ServerEventHandler {
             decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
         }
 
-        if (biome == Biomes.FOREST || biome == Biomes.BIRCH_FOREST || biome == Biomes.TAIGA || biome == Biomes.REDWOOD_TAIGA || biome instanceof BiomeSwamp || biome instanceof BiomeJungle) {
+        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.FOREST) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.CONIFEROUS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
             if (rand.nextInt(8) == 0) {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
@@ -108,7 +109,7 @@ public class ServerEventHandler {
             }
         }
 
-        if (biome instanceof BiomeJungle || biome instanceof BiomeSwamp) {
+        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
             if (rand.nextInt(8) == 0) {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
@@ -119,7 +120,7 @@ public class ServerEventHandler {
             }
         }
 
-        if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN) {
+        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.OCEAN)) {
             if (rand.nextInt(8) == 0) {
                 BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
@@ -133,7 +134,7 @@ public class ServerEventHandler {
             }
         }
 
-        if (biome instanceof BiomeSwamp) {
+        if ( BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP)) {
             if (rand.nextInt(2) == 0) {
                 new WorldGenMinable(BlockHandler.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
             }
@@ -141,7 +142,7 @@ public class ServerEventHandler {
 
         int footprintChance = 20;
 
-        if (biome == Biomes.RIVER) {
+        if ( BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.RIVER)) {
             footprintChance = 10;
         }
 

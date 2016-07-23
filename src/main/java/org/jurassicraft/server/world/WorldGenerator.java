@@ -18,6 +18,7 @@ import net.minecraft.world.biome.BiomeMesa;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
@@ -84,8 +85,7 @@ public enum WorldGenerator implements IWorldGenerator {
         }
 
         int nestChance = 100;
-
-        if (biome instanceof BiomeHills || biome instanceof BiomeMesa || biome instanceof BiomeDesert) {
+        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MOUNTAIN) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.HILLS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MESA) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SANDY)) {
             nestChance = 30;
         }
 
