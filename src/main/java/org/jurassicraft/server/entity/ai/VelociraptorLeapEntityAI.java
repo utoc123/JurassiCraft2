@@ -2,9 +2,9 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.SoundEvent;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.base.GrowthStage;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
@@ -62,11 +62,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase {
             this.animation = DinosaurAnimation.VELOCIRAPTOR_LEAP;
             this.entity.setAnimation(this.animation.get());
 
-            SoundEvent sound = this.entity.getHurtSound();
-
-            if (sound != null) {
-                this.entity.playSound(sound, this.entity.getSoundVolume(), this.entity.getSoundPitch());
-            }
+            this.entity.playSound(SoundHandler.VELOCIRAPTOR_ATTACK, this.entity.getSoundVolume(), this.entity.getSoundPitch());
 
             double targetSpeedX = this.target.posX - (!this.ticked ? this.target.prevPosX : this.targetPrevPosX);
             double targetSpeedZ = this.target.posZ - (!this.ticked ? this.target.prevPosZ : this.targetPrevPosZ);

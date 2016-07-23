@@ -2,23 +2,29 @@
   "troodons_and_raptors": {
     "category": "record",
     "sounds": [
-      "jurassicraft:music/troodons_and_raptors"
-    ],
-    "stream": true
+      {
+        "name": "jurassicraft:music/troodons_and_raptors",
+        "stream": true
+      }
+    ]
   },
   "jurassicraft_theme": {
     "category": "record",
     "sounds": [
-      "jurassicraft:music/jurassicraft_theme"
-    ],
-    "stream": true
+      {
+        "name": "jurassicraft:music/jurassicraft_theme",
+        "stream": true
+      }
+    ]
   },
   "dont_move_a_muscle": {
     "category": "record",
     "sounds": [
-      "jurassicraft:music/dont_move_a_muscle"
-    ],
-    "stream": true
+      {
+        "name": "jurassicraft:music/dont_move_a_muscle",
+        "stream": true
+      }
+    ]
   },
   "triceratops_living": {
     "category": "hostile",
@@ -94,7 +100,9 @@
   "velociraptor_hurt": {
     "category": "hostile",
     "sounds": [
-      "jurassicraft:dinosaurs/velociraptor/velociraptor_hurt_1"
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_hurt_1",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_hurt_2",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_hurt_3"
     ]
   },
   "velociraptor_breathing": {
@@ -108,7 +116,10 @@
     "sounds": [
       "jurassicraft:dinosaurs/velociraptor/velociraptor_living_1",
       "jurassicraft:dinosaurs/velociraptor/velociraptor_living_2",
-      "jurassicraft:dinosaurs/velociraptor/velociraptor_living_3"
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_living_3",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_living_4",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_living_5",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_living_6"
     ]
   },
   "velociraptor_call": {
@@ -117,6 +128,14 @@
       "jurassicraft:dinosaurs/velociraptor/velociraptor_bark_1",
       "jurassicraft:dinosaurs/velociraptor/velociraptor_bark_2",
       "jurassicraft:dinosaurs/velociraptor/velociraptor_bark_3"
+    ]
+  },
+  "velociraptor_attack": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_attack_1",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_attack_2",
+      "jurassicraft:dinosaurs/velociraptor/velociraptor_attack_3"
     ]
   },
   "velociraptor_death": {

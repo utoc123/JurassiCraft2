@@ -195,17 +195,13 @@ public class ItemHandler {
 //        registerItem(HELICOPTER, "Helicopter Spawner");
 //        registerItem(MINIGUN_MODULE, "Helicopter Minigun");
 
-        registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
-        registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");
-        registerItem(DONT_MOVE_A_MUSCLE_DISC, "Disc Don't Move A Muscle");
-
         registerItem(AMBER_CANE, "Amber Cane");
         registerItem(AMBER_KEYCHAIN, "Amber Keychain");
         registerItem(MR_DNA_KEYCHAIN, "Mr DNA Keychain");
 
         registerItem(ACTION_FIGURE, "Action Figure");
 
-        registerItem(DINO_SCANNER, "Dino Scanner");
+//        registerItem(DINO_SCANNER, "Dino Scanner");
 
         registerItem(GYPSUM_POWDER, "Gypsum Powder");
 
@@ -227,6 +223,10 @@ public class ItemHandler {
         registerItem(CAR_WINDSCREEN, "Car Windscreen");
         registerItem(UNFINISHED_CAR, "Unfinished Car");
         registerItem(JEEP_WRANGLER, "Jeep Wrangler");
+
+        registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
+        registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");
+        registerItem(DONT_MOVE_A_MUSCLE_DISC, "Disc Don't Move A Muscle");
     }
 
     public static void registerItemOreDict(Item item, String name, String oreDict) {

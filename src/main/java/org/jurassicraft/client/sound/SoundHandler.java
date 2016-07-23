@@ -46,6 +46,7 @@ public class SoundHandler {
     public static final SoundEvent VELOCIRAPTOR_BREATHING = create("velociraptor_breathing");
     public static final SoundEvent VELOCIRAPTOR_CALL = create("velociraptor_call");
     public static final SoundEvent VELOCIRAPTOR_DEATH = create("velociraptor_death");
+    public static final SoundEvent VELOCIRAPTOR_ATTACK = create("velociraptor_attack");
 
     public static SoundEvent create(String name) {
         ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
