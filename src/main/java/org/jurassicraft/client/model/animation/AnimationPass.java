@@ -47,22 +47,21 @@ public class AnimationPass {
         this.rotationIncrements = new float[parts.length][3];
         this.positionIncrements = new float[parts.length][3];
 
-        this.animation = DinosaurAnimation.IDLE.get();
+        this.animation = this.getRequestedAnimation(entity);
         this.initPoseModel();
         this.initAnimation(entity, this.getRequestedAnimation(entity));
         this.initAnimationTicks(entity);
 
+        this.prevTicks = 0.0F;
         this.initIncrements(entity);
+        this.performAnimations(entity, 0.0F, 0.0F, 0.0F);
     }
 
     public void initPoseModel() {
         int[][] pose = this.animations.get(this.animation);
-
         if (pose != null) {
             this.poseCount = pose.length;
-
             this.poseIndex = 0;
-
             this.pose = this.poses[pose[this.poseIndex][0]];
         }
     }
@@ -91,10 +90,6 @@ public class AnimationPass {
         this.animation = animation;
 
         if (this.animations.get(animation) == null) {
-            this.animation = DinosaurAnimation.IDLE.get();
-        }
-
-        if (this.animation != DinosaurAnimation.IDLE.get() && this.animation == animation) {
             this.animation = DinosaurAnimation.IDLE.get();
         }
     }
@@ -199,9 +194,9 @@ public class AnimationPass {
 
     protected void initAnimationTicks(DinosaurEntity entity) {
         this.startAnimation(entity);
-
         if (DinosaurAnimation.getAnimation(this.animation).shouldHold()) {
-            this.animationTick = this.poseLength;
+            this.poseIndex = this.poseCount - 1;
+            this.animationTick = this.animations.get(this.animation)[this.poseIndex][1];
         } else {
             this.animationTick = 0;
         }

@@ -466,10 +466,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void entityInit() {
         super.entityInit();
 
-        this.dataManager.register(WATCHER_IS_CARCASS, false);
-        this.dataManager.register(WATCHER_AGE, 0);
-        this.dataManager.register(WATCHER_IS_SLEEPING, false);
-        this.dataManager.register(WATCHER_HAS_TRACKER, false);
+        this.dataManager.register(WATCHER_IS_CARCASS, this.isCarcass);
+        this.dataManager.register(WATCHER_AGE, this.dinosaurAge);
+        this.dataManager.register(WATCHER_IS_SLEEPING, this.isSleeping);
+        this.dataManager.register(WATCHER_HAS_TRACKER, this.hasTracker);
         this.dataManager.register(WATCHER_OWNER, "");
         this.dataManager.register(WATCHER_ORDER, Order.WANDER);
         this.dataManager.register(WATCHER_IS_RUNNING, false);
@@ -692,11 +692,19 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.adjustHitbox();
         }
 
+        if (this.isCarcass) {
+            this.renderYawOffset = this.rotationYaw;
+            this.rotationYawHead = this.rotationYaw;
+        }
+
+        if (this.isSleeping) {
+            if (this.getAnimation() != DinosaurAnimation.SLEEPING.get()) {
+                this.setAnimation(DinosaurAnimation.SLEEPING.get());
+            }
+        }
+
         if (!this.worldObj.isRemote) {
             if (this.isCarcass) {
-                this.renderYawOffset = this.rotationYaw;
-                this.rotationYawHead = this.rotationYaw;
-
                 if (this.getAnimation() != DinosaurAnimation.DYING.get()) {
                     this.setAnimation(DinosaurAnimation.DYING.get());
                 }
@@ -706,10 +714,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 }
             } else {
                 if (this.isSleeping) {
-                    if (this.getAnimation() != DinosaurAnimation.SLEEPING.get()) {
-                        this.setAnimation(DinosaurAnimation.SLEEPING.get());
-                    }
-
                     if (this.ticksExisted % 20 == 0) {
                         if (this.stayAwakeTime <= 0 && this.hasPredators()) {
                             this.disturbSleep();
@@ -768,7 +772,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public void setFullyGrown() {
-        this.dinosaurAge = this.dinosaur.getMaximumAge();
+        this.setAge(this.dinosaur.getMaximumAge());
     }
 
     public Dinosaur getDinosaur() {
@@ -786,6 +790,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setAge(int age) {
         this.dinosaurAge = age;
+        if (!this.worldObj.isRemote) {
+            this.dataManager.set(WATCHER_AGE, this.dinosaurAge);
+        }
     }
 
     @Override
@@ -817,8 +824,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setCarcass(boolean carcass) {
         this.isCarcass = carcass;
-
+        if (!this.worldObj.isRemote) {
+            this.dataManager.set(WATCHER_IS_CARCASS, this.isCarcass);
+        }
         if (carcass) {
+            this.setAnimation(DinosaurAnimation.DYING.get());
             this.carcassHealth = (int) Math.sqrt(this.width * this.height) * 2;
             this.ticksExisted = 0;
             this.inventory.dropItems(this.worldObj, this.rand);
@@ -1005,14 +1015,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        this.dinosaurAge = nbt.getInteger("DinosaurAge");
-        this.isCarcass = nbt.getBoolean("IsCarcass");
+        this.setAge(nbt.getInteger("DinosaurAge"));
+        this.setCarcass(nbt.getBoolean("IsCarcass"));
         this.geneticsQuality = nbt.getInteger("DNAQuality");
         this.genetics = nbt.getString("Genetics");
         this.isMale = nbt.getBoolean("IsMale");
         this.growthSpeedOffset = nbt.getInteger("GrowthSpeedOffset");
         this.stayAwakeTime = nbt.getInteger("StayAwakeTime");
-        this.isSleeping = nbt.getBoolean("IsSleeping");
+        this.setSleeping(nbt.getBoolean("IsSleeping"));
         this.carcassHealth = nbt.getInteger("CarcassHealth");
         this.order = Order.values()[nbt.getByte("Order")];
 
@@ -1047,6 +1057,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.isMale = additionalData.readBoolean();
         this.growthSpeedOffset = additionalData.readInt();
 
+        if (this.isCarcass) {
+            this.setAnimation(DinosaurAnimation.DYING.get());
+        }
+
         this.updateCreatureData();
         this.adjustHitbox();
     }
@@ -1065,6 +1079,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setSleeping(boolean sleeping) {
         this.isSleeping = sleeping;
+        if (!this.worldObj.isRemote) {
+            this.dataManager.set(WATCHER_IS_SLEEPING, this.isSleeping);
+        }
     }
 
     public int getStayAwakeTime() {
