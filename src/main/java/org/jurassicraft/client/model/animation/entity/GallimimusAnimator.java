@@ -39,6 +39,9 @@ public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity> {
         AdvancedModelRenderer handRight = model.getCube("Right wrist");
         AdvancedModelRenderer handLeft = model.getCube("Left wrist");
 
+        AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
+        AdvancedModelRenderer rightThigh = model.getCube("Right thigh");
+
         AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck5, neck4, neck3, neck2, neck1, body1, body2, body3 };
 
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
@@ -46,6 +49,17 @@ public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity> {
         AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { handLeft, lowerArmLeft, upperArmLeft };
         AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { handRight, lowerArmRight, upperArmRight };
 
+        float globalSpeed = 1.5F;
+        float globalDegree = 1.0F;
+
+        model.bob(body1, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(leftThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+
+        model.chainWave(tail, globalSpeed * 0.25F, globalDegree * 0.05F, 1, f, f1);
+        model.chainSwing(tail, globalSpeed * 0.25F, globalDegree * 0.2F, 2, f, f1);
+        model.chainWave(body, globalSpeed * 0.25F, globalDegree * 0.025F, 3, f, f1);
+        
         model.chainWave(tail, 0.1F, 0.05F, 1, ticks, 0.25F);
         model.chainWave(body, 0.1F, -0.05F, 4, ticks, 0.25F);
         model.chainWave(armRight, 0.1F, -0.15F, 4, ticks, 0.25F);

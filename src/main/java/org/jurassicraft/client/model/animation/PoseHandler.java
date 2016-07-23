@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
-import net.ilexiconn.llibrary.server.util.ListHashMap;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -132,12 +132,12 @@ public class PoseHandler {
             }
         }
 
-        Map<Animation, int[][]> animations = new ListHashMap<>();
+        Map<Animation, float[][]> animations = new HashMap<>();
 
         for (Map.Entry<String, PoseDTO[]> entry : animationsDefinition.poses.entrySet()) {
             Animation animation = DinosaurAnimation.valueOf(entry.getKey()).get();
             PoseDTO[] poses = entry.getValue();
-            int[][] poseSequence = new int[poses.length][2];
+            float[][] poseSequence = new float[poses.length][2];
 
             for (int i = 0; i < poses.length; i++) {
                 poseSequence[i][0] = poses[i].index;
@@ -203,23 +203,21 @@ public class PoseHandler {
         return new JabelarAnimationHandler(entity, model, growthModel.poses, growthModel.animations, useInertialTweens);
     }
 
-    public Map<Animation, int[][]> getAnimations(GrowthStage growthStage) {
+    public Map<Animation, float[][]> getAnimations(GrowthStage growthStage) {
         return this.modelData.get(growthStage).animations;
     }
 
     public int getAnimationLength(Animation animation, GrowthStage growthStage) {
-        Map<Animation, int[][]> animations = this.modelData.get(growthStage).animations;
+        Map<Animation, float[][]> animations = this.modelData.get(growthStage).animations;
 
         int duration = 0;
 
         if (animation != null) {
-            int[][] poses = animations.get(animation);
+            float[][] poses = animations.get(animation);
 
             if (poses != null) {
-                for (int[] pose : poses) {
-                    for (int tween : pose) {
-                        duration += tween;
-                    }
+                for (float[] pose : poses) {
+                    duration += pose[1];
                 }
             }
         }
@@ -235,13 +233,13 @@ public class PoseHandler {
         @SideOnly(Side.CLIENT)
         PosedCuboid[][] poses;
 
-        Map<Animation, int[][]> animations;
+        Map<Animation, float[][]> animations;
 
         public ModelData() {
             this(null);
         }
 
-        public ModelData(PosedCuboid[][] cuboids, Map<Animation, int[][]> animations) {
+        public ModelData(PosedCuboid[][] cuboids, Map<Animation, float[][]> animations) {
             this(animations);
 
             if (cuboids == null) {
@@ -251,7 +249,7 @@ public class PoseHandler {
             this.poses = cuboids;
         }
 
-        public ModelData(Map<Animation, int[][]> animations) {
+        public ModelData(Map<Animation, float[][]> animations) {
             if (animations == null) {
                 animations = new LinkedHashMap<>();
             }

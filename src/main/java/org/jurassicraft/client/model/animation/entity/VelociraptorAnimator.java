@@ -33,11 +33,25 @@ public class VelociraptorAnimator extends DinosaurAnimator<VelociraptorEntity> {
         AdvancedModelRenderer Hand_Right = model.getCube("Right hand");
         AdvancedModelRenderer Hand_Left = model.getCube("Left hand");
 
+        AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
+        AdvancedModelRenderer rightThigh = model.getCube("Right thigh");
+
         AdvancedModelRenderer[] rightArmParts = new AdvancedModelRenderer[] { Hand_Right, lowerArmRight, upperArmRight };
         AdvancedModelRenderer[] leftArmParts = new AdvancedModelRenderer[] { Hand_Left, lowerArmLeft, upperArmLeft };
         AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { waist, chest, shoulders, neck4, neck3, neck2, neck1, head };
 
+        float globalSpeed = 1.0F;
+        float globalDegree = 1.0F;
+
+        model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+        model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+        model.bob(leftThigh, globalSpeed * 0.5F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+
+        model.chainWave(tailParts, globalSpeed * 0.5F, globalDegree * 0.05F, 1, limbSwing, limbSwingAmount);
+        model.chainSwing(tailParts, globalSpeed * 0.5F, globalDegree * 0.1F, 2, limbSwing, limbSwingAmount);
+        model.chainWave(bodyParts, globalSpeed * 0.5F, globalDegree * 0.025F, 3, limbSwing, limbSwingAmount);
+        
         model.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.25F);
         model.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.25F);
         model.chainWave(rightArmParts, 0.1F, -0.1F, 4, ticks, 0.25F);

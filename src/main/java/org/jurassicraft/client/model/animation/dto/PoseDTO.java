@@ -9,5 +9,5 @@ public class PoseDTO {
     /**
      * The ticks it takes to transition into the pose
      */
-    public int time;
+    public float time;
 }

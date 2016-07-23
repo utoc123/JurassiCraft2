@@ -23,7 +23,7 @@ public class JabelarAnimationHandler {
     private final AnimationPass DEFAULT_PASS;
     private final AnimationPass MOVEMENT_PASS;
 
-    public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, PosedCuboid[][] poses, Map<Animation, int[][]> poseSequences, boolean useInertialTweens) {
+    public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, PosedCuboid[][] poses, Map<Animation, float[][]> poseSequences, boolean useInertialTweens) {
         this.DEFAULT_PASS = new AnimationPass(poseSequences, poses, useInertialTweens);
         this.MOVEMENT_PASS = new MovementAnimationPass(poseSequences, poses, useInertialTweens);
 

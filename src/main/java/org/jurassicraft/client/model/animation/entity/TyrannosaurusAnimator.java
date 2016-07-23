@@ -37,10 +37,23 @@ public class TyrannosaurusAnimator extends DinosaurAnimator<TyrannosaurusEntity>
         AdvancedModelRenderer handRight = model.getCube("Hand Right");
         AdvancedModelRenderer lowerArmRight = model.getCube("Lower Arm Right");
 
+        AdvancedModelRenderer leftThigh = model.getCube("Left Thigh");
+        AdvancedModelRenderer rightThigh = model.getCube("Right Thigh");
+
         AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail7, tail6, tail5, tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { head, neck5, neck4, neck3, neck2, neck1, chest, stomach, waist };
         AdvancedModelRenderer[] leftArmParts = new AdvancedModelRenderer[] { handLeft, lowerArmLeft };
         AdvancedModelRenderer[] rightArmParts = new AdvancedModelRenderer[] { handRight, lowerArmRight };
+
+        float globalSpeed = 0.5F;
+        float globalDegree = 0.5F;
+
+        model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(leftThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+
+        model.chainWave(tailParts, globalSpeed * 0.5F, globalDegree * 0.05F, 1, f, f1);
+        model.chainWave(bodyParts, globalSpeed * 0.5F, globalDegree * 0.025F, 3, f, f1);
 
         model.chainWave(bodyParts, 0.1F, -0.03F, 3, ticks, 0.25F);
         model.chainWave(rightArmParts, -0.1F, 0.2F, 4, ticks, 0.25F);

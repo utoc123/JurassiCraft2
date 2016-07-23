@@ -8,7 +8,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import java.util.Map;
 
 public class AnimationPass {
-    protected final Map<Animation, int[][]> animations;
+    protected final Map<Animation, float[][]> animations;
     protected final PosedCuboid[][] poses;
     protected float[][] rotationIncrements;
     protected float[][] positionIncrements;
@@ -16,7 +16,7 @@ public class AnimationPass {
     protected float[][] prevPositionIncrements;
     protected int poseCount;
     protected int poseIndex;
-    protected int poseLength;
+    protected float poseLength;
 
     protected float animationTick;
     protected float prevTicks;
@@ -33,7 +33,7 @@ public class AnimationPass {
     protected float limbSwing;
     protected float limbSwingAmount;
 
-    public AnimationPass(Map<Animation, int[][]> animations, PosedCuboid[][] poses, boolean useInertia) {
+    public AnimationPass(Map<Animation, float[][]> animations, PosedCuboid[][] poses, boolean useInertia) {
         this.animations = animations;
         this.poses = poses;
         this.useInertia = useInertia;
@@ -58,11 +58,11 @@ public class AnimationPass {
     }
 
     public void initPoseModel() {
-        int[][] pose = this.animations.get(this.animation);
+        float[][] pose = this.animations.get(this.animation);
         if (pose != null) {
             this.poseCount = pose.length;
             this.poseIndex = 0;
-            this.pose = this.poses[pose[this.poseIndex][0]];
+            this.pose = this.poses[(int) pose[this.poseIndex][0]];
         }
     }
 
@@ -189,7 +189,7 @@ public class AnimationPass {
     protected void setPose(int poseIndex) {
         this.poseCount = this.animations.get(this.animation).length;
         this.poseIndex = poseIndex;
-        this.pose = this.poses[this.animations.get(this.animation)[this.poseIndex][0]];
+        this.pose = this.poses[(int) this.animations.get(this.animation)[this.poseIndex][0]];
     }
 
     protected void initAnimationTicks(DinosaurEntity entity) {
@@ -203,7 +203,7 @@ public class AnimationPass {
     }
 
     protected void startAnimation(DinosaurEntity entity) {
-        int[][] pose = this.animations.get(this.animation);
+        float[][] pose = this.animations.get(this.animation);
 
         if (pose != null) {
             this.poseLength = Math.max(1, pose[this.poseIndex][1]);
@@ -215,7 +215,7 @@ public class AnimationPass {
     }
 
     protected void setPose(DinosaurEntity entity, float ticks) {
-        this.pose = this.poses[this.animations.get(this.animation)[this.poseIndex][0]];
+        this.pose = this.poses[(int) this.animations.get(this.animation)[this.poseIndex][0]];
         this.poseLength = this.animations.get(this.animation)[this.poseIndex][1];
         this.animationTick = 0;
         this.prevTicks = ticks;

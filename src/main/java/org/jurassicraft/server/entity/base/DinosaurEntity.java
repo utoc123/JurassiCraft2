@@ -652,7 +652,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             boolean shouldHold = DinosaurAnimation.getAnimation(this.animation).shouldHold();
 
             if (this.animationTick < this.animationLength) {
-                this.animationTick += 2;
+                this.animationTick++;
             } else if (!shouldHold) {
                 this.animationTick = 0;
                 this.setAnimation(DinosaurAnimation.IDLE.get());

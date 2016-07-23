@@ -6,7 +6,7 @@ import org.jurassicraft.server.entity.base.DinosaurEntity;
 import java.util.Map;
 
 public class MovementAnimationPass extends AnimationPass {
-    public MovementAnimationPass(Map<Animation, int[][]> poseSequences, PosedCuboid[][] poses, boolean useInertialTweens) {
+    public MovementAnimationPass(Map<Animation, float[][]> poseSequences, PosedCuboid[][] poses, boolean useInertialTweens) {
         super(poseSequences, poses, useInertialTweens);
     }
 
@@ -61,7 +61,7 @@ public class MovementAnimationPass extends AnimationPass {
     private boolean isMoving(DinosaurEntity entity) {
         double deltaX = entity.posX - entity.prevPosX;
         double deltaZ = entity.posZ - entity.prevPosZ;
-        return deltaX * deltaX + deltaZ * deltaZ > 0;
+        return deltaX * deltaX + deltaZ * deltaZ > 0.01;
     }
 
     @Override
