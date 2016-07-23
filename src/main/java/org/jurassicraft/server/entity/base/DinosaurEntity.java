@@ -293,6 +293,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.setAnimation(DinosaurAnimation.ATTACKING.get());
         }
 
+        while (entity.getRidingEntity() != null) {
+            entity = entity.getRidingEntity();
+        }
+
         float damage = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int knockback = 0;
 

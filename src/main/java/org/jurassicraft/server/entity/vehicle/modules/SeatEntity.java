@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -196,5 +197,20 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     @Override
     protected boolean canTriggerWalking() {
         return false;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        CarEntity parent = this.parent;
+        if (parent == null) {
+            List<CarEntity> cars = this.worldObj.getEntitiesWithinAABB(CarEntity.class, this.getEntityBoundingBox());
+            for (CarEntity car : cars) {
+                if (car.getSeat(this.getId()) == this) {
+                    parent = car;
+                    break;
+                }
+            }
+        }
+        return parent != null && parent.attackEntityFrom(source, amount);
     }
 }
