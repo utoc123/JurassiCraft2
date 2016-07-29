@@ -7,17 +7,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
 import org.jurassicraft.server.container.CultivateContainer;
-import org.jurassicraft.server.tile.CultivatorTile;
 
 @SideOnly(Side.CLIENT)
 public class CultivateGui extends GuiContainer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator.png");
     private static final ResourceLocation NUTRIENTS_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_nutrients.png");
     private final InventoryPlayer playerInventory;
-    private CultivatorTile cultivator;
+    private CultivatorBlockEntity cultivator;
 
-    public CultivateGui(InventoryPlayer inventoryPlayer, CultivatorTile entity) {
+    public CultivateGui(InventoryPlayer inventoryPlayer, CultivatorBlockEntity entity) {
         super(new CultivateContainer(inventoryPlayer, entity));
         this.playerInventory = inventoryPlayer;
         this.cultivator = entity;

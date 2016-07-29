@@ -19,9 +19,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.DinosaurStatus;
-import org.jurassicraft.server.lang.LangHelper;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurStatus;
+import org.jurassicraft.server.util.LangHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.math.RoundingMode;
@@ -48,12 +48,14 @@ public class FieldGuideGui extends GuiScreen {
     }
 
     private DinosaurEntity entity;
+    private DinosaurEntity.FieldGuideInfo fieldGuideInfo;
     private PageButton nextPage;
     private PageButton previousPage;
     private int page;
 
-    public FieldGuideGui(DinosaurEntity entity) {
+    public FieldGuideGui(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo fieldGuideInfo) {
         this.entity = entity;
+        this.fieldGuideInfo = fieldGuideInfo;
     }
 
     @Override
@@ -112,8 +114,8 @@ public class FieldGuideGui extends GuiScreen {
             this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
 
             this.drawBar(statisticsX, y + 45, this.entity.isCarcass() ? 0 : this.entity.getHealth(), this.entity.getMaxHealth(), 0xFF0000);
-            this.drawBar(statisticsX, y + 75, this.entity.getMetabolism().getEnergy(), this.entity.getMetabolism().getMaxEnergy(), 0x94745A);
-            this.drawBar(statisticsX, y + 105, this.entity.getMetabolism().getWater(), this.entity.getMetabolism().getMaxWater(), 0x0000FF);
+            this.drawBar(statisticsX, y + 75, this.fieldGuideInfo.hunger, this.entity.getMetabolism().getMaxEnergy(), 0x94745A);
+            this.drawBar(statisticsX, y + 105, this.fieldGuideInfo.thirst, this.entity.getMetabolism().getMaxWater(), 0x0000FF);
             this.drawBar(statisticsX, y + 135, this.entity.getDinosaurAge(), dinosaur.getMaximumAge(), 0x00FF00);
 
             this.drawCenteredScaledString(new LangHelper("gui.days_old.name").withProperty("value", String.valueOf(this.entity.getDaysExisted())).build(), statisticTextX, y + 155, 1.0F, 0);
@@ -130,14 +132,14 @@ public class FieldGuideGui extends GuiScreen {
             int statusX = 0;
             int statusY = 0;
 
-            List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(this.entity);
+            List<DinosaurStatus> activeStatuses = DinosaurStatus.getActiveStatuses(this.entity, this.fieldGuideInfo);
 
             for (DinosaurStatus status : activeStatuses) {
                 this.mc.getTextureManager().bindTexture(STATUS_TEXTURES.get(status));
 
                 int size = 16;
 
-                this.drawFullTexturedRect(statusX + x + 35, statusY + y + (SIZE_Y - 40), size, size);
+                this.drawFullTexturedRect(statusX + x + 31, statusY + y + (SIZE_Y - 40), size, size);
 
                 statusX += 18;
 
@@ -153,7 +155,7 @@ public class FieldGuideGui extends GuiScreen {
             for (DinosaurStatus status : activeStatuses) {
                 int size = 16;
 
-                int renderX = statusX + x + 35;
+                int renderX = statusX + x + 31;
                 int renderY = statusY + y + (SIZE_Y - 40);
 
                 if (mouseX >= renderX && mouseY >= renderY && mouseX <= renderX + size && mouseY <= renderY + size) {

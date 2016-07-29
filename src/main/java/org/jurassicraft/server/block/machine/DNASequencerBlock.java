@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.DNASequencerTile;
 
 public class DNASequencerBlock extends OrientedBlock {
     public DNASequencerBlock() {
@@ -38,8 +38,8 @@ public class DNASequencerBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = world.getTileEntity(pos);
 
-            if (tileentity instanceof DNASequencerTile) {
-                ((DNASequencerTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tileentity instanceof DNASequencerBlockEntity) {
+                ((DNASequencerBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class DNASequencerBlock extends OrientedBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
 
-        if (tile instanceof DNASequencerTile) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (DNASequencerTile) tile);
+        if (tile instanceof DNASequencerBlockEntity) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (DNASequencerBlockEntity) tile);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -62,8 +62,8 @@ public class DNASequencerBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof DNASequencerTile) {
-                DNASequencerTile dnaSequencer = (DNASequencerTile) tileEntity;
+            if (tileEntity instanceof DNASequencerBlockEntity) {
+                DNASequencerBlockEntity dnaSequencer = (DNASequencerBlockEntity) tileEntity;
 
                 if (dnaSequencer.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_SEQUENCER_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -98,6 +98,6 @@ public class DNASequencerBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new DNASequencerTile();
+        return new DNASequencerBlockEntity();
     }
 }

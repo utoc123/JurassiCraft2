@@ -5,16 +5,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 public class DNACombinatorHybridizerContainer extends MachineContainer {
-    private DNACombinatorHybridizerTile dnaHybridizer;
+    private DNACombinatorHybridizerBlockEntity dnaHybridizer;
     private InventoryPlayer playerInventory;
 
     public DNACombinatorHybridizerContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
-        this.dnaHybridizer = (DNACombinatorHybridizerTile) tileEntity;
+        this.dnaHybridizer = (DNACombinatorHybridizerBlockEntity) tileEntity;
         this.playerInventory = playerInventory;
         this.updateSlots(this.dnaHybridizer.getMode());
     }

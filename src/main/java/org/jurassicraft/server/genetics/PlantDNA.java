@@ -3,8 +3,8 @@ package org.jurassicraft.server.genetics;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
-import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.List;
 import java.util.Locale;

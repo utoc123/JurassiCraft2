@@ -7,8 +7,9 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
+import java.util.Map;
 import java.util.Set;
 
 @SideOnly(Side.CLIENT)
@@ -46,6 +47,10 @@ public class DinosaurModel extends TabulaModel {
         }
 
         return cubeIdentifiers;
+    }
+
+    public Map<String, AdvancedModelRenderer> getIdentifierCubes() {
+        return this.identifierMap;
     }
 
     @Override

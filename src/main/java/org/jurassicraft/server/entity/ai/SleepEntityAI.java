@@ -7,7 +7,7 @@ import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class SleepEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;

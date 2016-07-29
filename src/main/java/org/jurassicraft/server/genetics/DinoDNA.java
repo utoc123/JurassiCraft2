@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.LangHelper;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.List;
 import java.util.Locale;

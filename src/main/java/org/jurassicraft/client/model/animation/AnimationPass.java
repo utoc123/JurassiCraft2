@@ -3,7 +3,7 @@ package org.jurassicraft.client.model.animation;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 import java.util.Map;
 
@@ -67,14 +67,14 @@ public class AnimationPass {
     }
 
     protected void initIncrements(DinosaurEntity entity) {
+        float animationDegree = this.getAnimationDegree(entity);
+
         for (int partIndex = 0; partIndex < this.parts.length; partIndex++) {
             AdvancedModelRenderer part = this.parts[partIndex];
             PosedCuboid nextPose = this.pose[partIndex];
 
             float[] rotationIncrements = this.rotationIncrements[partIndex];
             float[] positionIncrements = this.positionIncrements[partIndex];
-
-            float animationDegree = this.getAnimationDegree(entity);
 
             rotationIncrements[0] = (nextPose.rotationX - (part.defaultRotationX + this.prevRotationIncrements[partIndex][0])) * animationDegree;
             rotationIncrements[1] = (nextPose.rotationY - (part.defaultRotationY + this.prevRotationIncrements[partIndex][1])) * animationDegree;
@@ -120,19 +120,21 @@ public class AnimationPass {
 
         this.inertiaFactor = this.calculateInertiaFactor();
 
-        for (int partIndex = 0; partIndex < this.parts.length; partIndex++) {
-            if (this.pose == null) {
-                JurassiCraft.INSTANCE.getLogger().error("Trying to animate to a null pose array");
-            } else if (this.pose[partIndex] == null) {
-                JurassiCraft.INSTANCE.getLogger().error("The part index " + partIndex + " in next pose is null");
-            } else {
-                this.applyRotations(partIndex);
-                this.applyTranslations(partIndex);
+        if (this.pose == null) {
+            JurassiCraft.INSTANCE.getLogger().error("Trying to animate to a null pose array");
+        } else {
+            for (int partIndex = 0; partIndex < this.parts.length; partIndex++) {
+                if (this.pose[partIndex] == null) {
+                    JurassiCraft.INSTANCE.getLogger().error("Part " + partIndex + " in pose is null");
+                } else {
+                    this.applyRotations(partIndex);
+                    this.applyTranslations(partIndex);
+                }
             }
         }
 
         if (this.updateAnimationTick(entity, ticks)) {
-            this.handleFinishedPose(entity, ticks);
+            this.onPoseFinish(entity, ticks);
         }
 
         this.prevTicks = ticks;
@@ -204,10 +206,8 @@ public class AnimationPass {
 
     protected void startAnimation(DinosaurEntity entity) {
         float[][] pose = this.animations.get(this.animation);
-
         if (pose != null) {
             this.poseLength = Math.max(1, pose[this.poseIndex][1]);
-
             this.animationTick = 0;
 
             this.initIncrements(entity);
@@ -222,22 +222,19 @@ public class AnimationPass {
         this.initIncrements(entity);
     }
 
-    protected void handleFinishedPose(DinosaurEntity entity, float ticks) {
-        if (this.incrementCurrentPoseIndex()) {
+    protected void onPoseFinish(DinosaurEntity entity, float ticks) {
+        if (this.incrementPose()) {
             this.setAnimation(entity, this.isEntityAnimationDependent() ? DinosaurAnimation.IDLE.get() : this.getRequestedAnimation(entity));
         } else {
             this.updatePreviousPose();
         }
-
         this.setPose(entity, ticks);
     }
 
-    public boolean incrementCurrentPoseIndex() {
+    public boolean incrementPose() {
         this.poseIndex++;
-
         if (this.poseIndex >= this.poseCount) {
             DinosaurAnimation animation = DinosaurAnimation.getAnimation(this.animation);
-
             if (animation != null && animation.shouldHold()) {
                 this.poseIndex = this.poseCount - 1;
             } else {
@@ -245,7 +242,6 @@ public class AnimationPass {
                 return true;
             }
         }
-
         return false;
     }
 

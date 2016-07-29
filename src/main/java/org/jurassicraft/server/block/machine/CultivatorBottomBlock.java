@@ -13,9 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.CultivatorTile;
 
 public class CultivatorBottomBlock extends CultivatorBlock {
     public CultivatorBottomBlock() {
@@ -35,8 +35,8 @@ public class CultivatorBottomBlock extends CultivatorBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof CultivatorTile) {
-                ((CultivatorTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tileentity instanceof CultivatorBlockEntity) {
+                ((CultivatorBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class CultivatorBottomBlock extends CultivatorBlock {
         } else if (!player.isSneaking()) {
             TileEntity tile = world.getTileEntity(pos);
 
-            if (tile instanceof CultivatorTile) {
-                CultivatorTile cultivator = (CultivatorTile) tile;
+            if (tile instanceof CultivatorBlockEntity) {
+                CultivatorBlockEntity cultivator = (CultivatorBlockEntity) tile;
 
                 if (cultivator.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_CULTIVATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());

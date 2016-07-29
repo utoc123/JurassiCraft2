@@ -14,7 +14,7 @@ import org.jurassicraft.server.block.plant.DoublePlantBlock;
 import org.jurassicraft.server.block.tree.AncientPlanksBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.item.ItemHandler;
 

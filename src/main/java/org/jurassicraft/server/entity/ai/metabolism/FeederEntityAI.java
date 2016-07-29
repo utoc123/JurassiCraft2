@@ -6,8 +6,9 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.tile.FeederTile;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 public class FeederEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
@@ -21,7 +22,7 @@ public class FeederEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && !this.dinosaur.isMovementBlocked() && this.dinosaur.ticksExisted % 16 == 0 && this.dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && !this.dinosaur.isMovementBlocked() && this.dinosaur.ticksExisted % 16 == 0 && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
             if (this.dinosaur.getMetabolism().isHungry()) {
                 BlockPos feeder = this.dinosaur.getClosestFeeder();
 
@@ -41,8 +42,8 @@ public class FeederEntityAI extends EntityAIBase {
         if (this.dinosaur.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) < this.dinosaur.width + 2.0) {
             TileEntity tile = this.dinosaur.worldObj.getTileEntity(this.pos);
 
-            if (tile instanceof FeederTile) {
-                FeederTile feeder = (FeederTile) tile;
+            if (tile instanceof FeederBlockEntity) {
+                FeederBlockEntity feeder = (FeederBlockEntity) tile;
                 feeder.setOpen(true);
                 feeder.setFeeding(this.dinosaur);
             }

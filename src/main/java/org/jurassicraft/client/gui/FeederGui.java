@@ -7,8 +7,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.container.FeederContainer;
-import org.jurassicraft.server.tile.FeederTile;
 
 @SideOnly(Side.CLIENT)
 public class FeederGui extends GuiContainer {
@@ -17,7 +17,7 @@ public class FeederGui extends GuiContainer {
     private IInventory inventory;
 
     public FeederGui(InventoryPlayer playerInventory, IInventory inventory) {
-        super(new FeederContainer(playerInventory, (FeederTile) inventory));
+        super(new FeederContainer(playerInventory, (FeederBlockEntity) inventory));
         this.playerInventory = playerInventory;
         this.inventory = inventory;
     }

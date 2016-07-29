@@ -21,8 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.item.itemblock.CultivateItemBlock;
-import org.jurassicraft.server.tile.CultivatorTile;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
+import org.jurassicraft.server.item.block.CultivateItemBlock;
 
 import java.util.List;
 
@@ -50,8 +50,8 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
 
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile instanceof CultivatorTile) {
-            InventoryHelper.dropInventoryItems(world, pos, (CultivatorTile) tile);
+        if (tile instanceof CultivatorBlockEntity) {
+            InventoryHelper.dropInventoryItems(world, pos, (CultivatorBlockEntity) tile);
         }
     }
 
@@ -72,7 +72,7 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new CultivatorTile();
+        return new CultivatorBlockEntity();
     }
 
     @Override

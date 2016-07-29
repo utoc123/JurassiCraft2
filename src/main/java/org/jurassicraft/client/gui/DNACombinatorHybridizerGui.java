@@ -8,9 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
 import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 @SideOnly(Side.CLIENT)
 public class DNACombinatorHybridizerGui extends GuiContainer {
@@ -18,10 +18,10 @@ public class DNACombinatorHybridizerGui extends GuiContainer {
     private static final ResourceLocation combinatorTexture = new ResourceLocation("jurassicraft:textures/gui/dna_combinator.png");
 
     private final InventoryPlayer playerInventory;
-    private DNACombinatorHybridizerTile inventory;
+    private DNACombinatorHybridizerBlockEntity inventory;
     private DNACombinatorHybridizerContainer container;
 
-    public DNACombinatorHybridizerGui(InventoryPlayer playerInv, DNACombinatorHybridizerTile inventory) {
+    public DNACombinatorHybridizerGui(InventoryPlayer playerInv, DNACombinatorHybridizerBlockEntity inventory) {
         super(new DNACombinatorHybridizerContainer(playerInv, inventory));
         this.playerInventory = playerInv;
         this.inventory = inventory;

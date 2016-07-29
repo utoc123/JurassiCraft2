@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,12 +51,6 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
     public boolean shouldExecute() {
         if (this.entity.getRNG().nextInt(10) != 0) {
             return false;
-        }
-
-        if (!(EntityPlayer.class.isAssignableFrom(this.targetClass) || (DinosaurEntity.class.isAssignableFrom(this.targetClass) && this.entity.getDinosaur().getDiet().isCarnivorous()))) {
-            if (!this.entity.getMetabolism().isHungry()) {
-                return false;
-            }
         }
 
         if (!(this.entity.herd != null && this.entity.herd.fleeing) && this.entity.getAgePercentage() > 50 && this.entity.getOwner() == null && !this.entity.isSleeping() && this.entity.getAttackCooldown() <= 0) {

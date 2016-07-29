@@ -1,6 +1,7 @@
 package org.jurassicraft.server.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,18 +18,19 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.tile.ActionFigureTile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ActionFigureBlock extends OrientedBlock {
-    private static AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.7F, 0.6F, 0.7F);
-
     public ActionFigureBlock() {
         super(Material.WOOD);
+        this.setSoundType(SoundType.WOOD);
         this.setTickRandomly(true);
         this.setHardness(0.0F);
         this.setResistance(0.0F);
@@ -36,12 +38,25 @@ public class ActionFigureBlock extends OrientedBlock {
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
-        return BOUNDS;
+        return this.getBounds(blockAccess, pos);
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos) {
-        return BOUNDS.offset(pos);
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
+        return this.getBounds(world, pos).offset(pos);
+    }
+
+    private AxisAlignedBB getBounds(IBlockAccess world, BlockPos pos) {
+        TileEntity entity = world.getTileEntity(pos);
+        if (entity instanceof ActionFigureBlockEntity) {
+            Dinosaur dinosaur = EntityHandler.getDinosaurById(((ActionFigureBlockEntity) entity).dinosaur);
+            if (dinosaur != null) {
+                float width = dinosaur.getAdultSizeX() * 0.2F / 2.0F;
+                float height = dinosaur.getAdultSizeY() * 0.2F;
+                return new AxisAlignedBB(0.5 - width, 0, 0.5 - width, width + 0.5, height, width + 0.5);
+            }
+        }
+        return new AxisAlignedBB(0, 0, 0, 0, 0, 0);
     }
 
     @Override
@@ -52,7 +67,6 @@ public class ActionFigureBlock extends OrientedBlock {
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
         super.neighborChanged(state, world, pos, block);
-
         this.checkAndDropBlock(world, pos, world.getBlockState(pos));
     }
 
@@ -85,7 +99,7 @@ public class ActionFigureBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new ActionFigureTile();
+        return new ActionFigureBlockEntity();
     }
 
     @Override
@@ -110,8 +124,8 @@ public class ActionFigureBlock extends OrientedBlock {
         return true;
     }
 
-    protected ActionFigureTile getTile(IBlockAccess world, BlockPos pos) {
-        return (ActionFigureTile) world.getTileEntity(pos);
+    protected ActionFigureBlockEntity getTile(IBlockAccess world, BlockPos pos) {
+        return (ActionFigureBlockEntity) world.getTileEntity(pos);
     }
 
     @Override
@@ -127,7 +141,7 @@ public class ActionFigureBlock extends OrientedBlock {
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> drops = new ArrayList<>(1);
 
-        ActionFigureTile tile = this.getTile(world, pos);
+        ActionFigureBlockEntity tile = this.getTile(world, pos);
 
         if (tile != null) {
             drops.add(new ItemStack(ItemHandler.ACTION_FIGURE, 1, tile.dinosaur));

@@ -11,11 +11,11 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.jurassicraft.server.tile.DNASynthesizerTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNASynthesizerTile> {
+public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNASynthesizerBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
@@ -30,7 +30,7 @@ public class DNASynthesizerSpecialRenderer extends TileEntitySpecialRenderer<DNA
     }
 
     @Override
-    public void renderTileEntityAt(DNASynthesizerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(DNASynthesizerBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());

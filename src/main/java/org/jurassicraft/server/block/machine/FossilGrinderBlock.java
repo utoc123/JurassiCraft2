@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.FossilGrinderTile;
 
 public class FossilGrinderBlock extends OrientedBlock {
     public FossilGrinderBlock() {
@@ -38,8 +38,8 @@ public class FossilGrinderBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tile instanceof FossilGrinderTile) {
-                ((FossilGrinderTile) tile).setCustomInventoryName(stack.getDisplayName());
+            if (tile instanceof FossilGrinderBlockEntity) {
+                ((FossilGrinderBlockEntity) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class FossilGrinderBlock extends OrientedBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof FossilGrinderTile) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (FossilGrinderTile) tileentity);
+        if (tileentity instanceof FossilGrinderBlockEntity) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (FossilGrinderBlockEntity) tileentity);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -62,8 +62,8 @@ public class FossilGrinderBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof FossilGrinderTile) {
-                FossilGrinderTile fossilGrinder = (FossilGrinderTile) tileEntity;
+            if (tileEntity instanceof FossilGrinderBlockEntity) {
+                FossilGrinderBlockEntity fossilGrinder = (FossilGrinderBlockEntity) tileEntity;
 
                 if (fossilGrinder.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -76,7 +76,7 @@ public class FossilGrinderBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new FossilGrinderTile();
+        return new FossilGrinderBlockEntity();
     }
 
     @Override

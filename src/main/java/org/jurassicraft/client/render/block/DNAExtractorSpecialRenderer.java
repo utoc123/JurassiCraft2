@@ -13,11 +13,11 @@ import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.jurassicraft.server.tile.DNAExtractorTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorTile> {
+public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     private TabulaModel model;
@@ -33,7 +33,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
     }
 
     @Override
-    public void renderTileEntityAt(DNAExtractorTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(DNAExtractorBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         IBlockState blockState = tileEntity.getWorld().getBlockState(tileEntity.getPos());
 
         if (blockState.getBlock() == BlockHandler.DNA_EXTRACTOR) {

@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.CleanableItem;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.itemblock.NestFossilItemBlock;
+import org.jurassicraft.server.item.block.NestFossilItemBlock;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;

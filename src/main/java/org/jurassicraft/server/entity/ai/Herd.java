@@ -2,11 +2,13 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -153,22 +155,22 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                         entity.getNavigator().tryMoveToXYZ(navigateX, entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).getY() + 1, navigateZ, speed);
                     }
-                } else if (!this.fleeing && entity.getAttackTarget() == null && this.enemies.size() > 0) {
+                } else if (!this.fleeing && (entity.getAttackTarget() == null || this.random.nextInt(20) == 0) && this.enemies.size() > 0) {
                     if (entity.getAgePercentage() > 50) {
                         entity.setAttackTarget(this.enemies.get(this.random.nextInt(this.enemies.size())));
                     }
                 }
             }
 
-            List<EntityLivingBase> removeAttackers = new LinkedList<>();
+            List<EntityLivingBase> invalidEnemies = new LinkedList<>();
 
-            for (EntityLivingBase attacker : this.enemies) {
-                if (attacker.isDead || (attacker instanceof DinosaurEntity && ((DinosaurEntity) attacker).isCarcass()) || attacker.getDistanceSq(this.center.xCoord, this.center.yCoord, this.center.zCoord) > 1024) {
-                    removeAttackers.add(attacker);
+            for (EntityLivingBase enemy : this.enemies) {
+                if (enemy.isDead || (enemy instanceof DinosaurEntity && ((DinosaurEntity) enemy).isCarcass()) || (enemy instanceof EntityPlayer && ((EntityPlayer) enemy).capabilities.isCreativeMode) || enemy.getDistanceSq(this.center.xCoord, this.center.yCoord, this.center.zCoord) > 1024 || this.members.contains(enemy)) {
+                    invalidEnemies.add(enemy);
                 }
             }
 
-            this.enemies.removeAll(removeAttackers);
+            this.enemies.removeAll(invalidEnemies);
 
             if (this.enemies.size() == 0) {
                 this.fleeing = false;
@@ -212,16 +214,13 @@ public class Herd implements Iterable<DinosaurEntity> {
             if (this.leader.getClass().isAssignableFrom(entity.getClass())) {
                 if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
                     Herd otherHerd = entity.herd;
-
                     if (otherHerd == null) {
                         if (this.size() >= this.herdType.getMaxHerdSize()) {
-                            if (this.herdType.getDiet().isCarnivorous() && !this.enemies.contains(entity)) {
+                            if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDiet().isCarnivorous() && !this.enemies.contains(entity)) {
                                 this.enemies.add(entity);
                             }
-
                             return;
                         }
-
                         this.addMember(entity);
                     } else if (otherHerd != this && !otherHerds.contains(otherHerd)) {
                         otherHerds.add(otherHerd);
@@ -241,7 +240,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                 otherHerd.disband();
             } else if (originalSize + 1 >= this.herdType.getMaxHerdSize()) {
-                if (this.herdType.getDiet().isCarnivorous()) {
+                if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDiet().isCarnivorous()) {
                     for (DinosaurEntity entity : otherHerd) {
                         if (!this.enemies.contains(entity)) {
                             this.enemies.add(entity);
@@ -315,7 +314,7 @@ public class Herd implements Iterable<DinosaurEntity> {
     }
 
     public boolean shouldDefend(List<EntityLivingBase> entities) {
-        return this.getScore(this) + this.herdType.getAttackBias() > this.getScore(entities);
+        return this.getScore(this) + (this.herdType.getAttackBias() * this.members.size()) > this.getScore(entities);
     }
 
     public double getScore(Iterable<? extends EntityLivingBase> entities) {

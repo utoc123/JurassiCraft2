@@ -9,16 +9,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.tile.ActionFigureTile;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.EntityHandler;
 
-public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureTile> {
+public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void renderTileEntityAt(ActionFigureTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(ActionFigureBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());

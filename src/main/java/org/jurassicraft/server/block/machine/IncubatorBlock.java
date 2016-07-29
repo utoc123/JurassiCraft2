@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.IncubatorTile;
 
 public class IncubatorBlock extends OrientedBlock {
     public IncubatorBlock() {
@@ -38,8 +38,8 @@ public class IncubatorBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tile = world.getTileEntity(pos);
 
-            if (tile instanceof IncubatorTile) {
-                ((IncubatorTile) tile).setCustomInventoryName(stack.getDisplayName());
+            if (tile instanceof IncubatorBlockEntity) {
+                ((IncubatorBlockEntity) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class IncubatorBlock extends OrientedBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
 
-        if (tile instanceof IncubatorTile) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (IncubatorTile) tile);
+        if (tile instanceof IncubatorBlockEntity) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (IncubatorBlockEntity) tile);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -57,7 +57,7 @@ public class IncubatorBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new IncubatorTile();
+        return new IncubatorBlockEntity();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class IncubatorBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tile = world.getTileEntity(pos);
 
-            if (tile instanceof IncubatorTile) {
-                IncubatorTile incubator = (IncubatorTile) tile;
+            if (tile instanceof IncubatorBlockEntity) {
+                IncubatorBlockEntity incubator = (IncubatorBlockEntity) tile;
 
                 if (incubator.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_INCUBATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());

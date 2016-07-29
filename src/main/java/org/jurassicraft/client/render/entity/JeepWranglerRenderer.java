@@ -53,7 +53,7 @@ public class JeepWranglerRenderer implements IRenderFactory<JeepWranglerEntity> 
             this.bindEntityTexture(entity);
             this.renderModel(entity, x, y, z, yaw, false);
 
-            int destroyStage = (int) (10.0F - (entity.health / CarEntity.MAX_HEALTH) * 10.0F) - 1;
+            int destroyStage = Math.min(10, (int) (10.0F - (entity.health / CarEntity.MAX_HEALTH) * 10.0F)) - 1;
 
             if (destroyStage >= 0) {
                 GlStateManager.color(0.4F, 0.4F, 0.4F, destroyStage / 10.0F / 2.0F + 0.1F);

@@ -9,10 +9,11 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.MetabolismContainer;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.MetabolismContainer;
 import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 public class GrazeEntityAI extends EntityAIBase {
     public static final int EAT_RADIUS = 6;// was 25
@@ -33,7 +34,7 @@ public class GrazeEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return !(this.dinosaur.isDead || this.dinosaur.isCarcass() || !this.dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) && this.dinosaur.getMetabolism().isHungry() && this.dinosaur.getClosestFeeder() == null;
+        return !(this.dinosaur.isDead || this.dinosaur.isCarcass() || !GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) && this.dinosaur.getMetabolism().isHungry() && this.dinosaur.getClosestFeeder() == null;
     }
 
     @Override

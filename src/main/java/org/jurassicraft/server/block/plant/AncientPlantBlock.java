@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public class AncientPlantBlock extends BlockBush {
 
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        if (world.getGameRules().getBoolean("plantSpreading")) {
+        if (GameRuleHandler.PLANT_SPREADING.getBoolean(world)) {
             int light = world.getLight(pos);
 
             if (light >= 5) {

@@ -7,8 +7,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.container.CleaningStationContainer;
-import org.jurassicraft.server.tile.CleaningStationTile;
 
 @SideOnly(Side.CLIENT)
 public class CleaningStationGui extends GuiContainer {
@@ -39,7 +39,7 @@ public class CleaningStationGui extends GuiContainer {
         this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
         int progress;
 
-        if (CleaningStationTile.isCleaning(this.inventory)) {
+        if (CleaningStationBlockEntity.isCleaning(this.inventory)) {
             progress = this.func_175382_i(51);
             this.drawTexturedModalRect(x + 46, y + 18 + 51 - progress, 176, 81 - progress, 14, progress + 1);
         }

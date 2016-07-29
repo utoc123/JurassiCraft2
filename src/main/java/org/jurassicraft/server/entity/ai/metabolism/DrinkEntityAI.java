@@ -8,8 +8,9 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.MetabolismContainer;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.MetabolismContainer;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 public class DrinkEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
@@ -25,7 +26,7 @@ public class DrinkEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.ticksExisted % 4 == 0 && this.dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.ticksExisted % 4 == 0 && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
             if (this.dinosaur.getMetabolism().isThirsty()) {
                 int posX = (int) this.dinosaur.posX;
                 int posY = (int) this.dinosaur.posY;

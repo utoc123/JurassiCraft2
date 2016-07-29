@@ -12,7 +12,7 @@ import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;

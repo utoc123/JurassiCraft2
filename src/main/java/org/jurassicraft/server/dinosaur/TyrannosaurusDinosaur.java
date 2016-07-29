@@ -1,6 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.base.Diet;
+import net.minecraftforge.common.BiomeDictionary;
+import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
@@ -11,7 +12,7 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setName("Tyrannosaurus");
         this.setDinosaurClass(TyrannosaurusEntity.class);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
-        this.setEggColorMale(0x6B6628, 0x39363B);
+        this.setEggColorMale(0x4E502C, 0x353731);
         this.setEggColorFemale(0xBA997E, 0x7D5D48);
         this.setHealth(10, 80);
         this.setSpeed(0.35, 0.42);
@@ -28,5 +29,6 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setScale(2.4F, 0.35F);
         this.setMaxHerdSize(2);
         this.setAttackBias(1000.0);
+        this.setSpawn(5, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
     }
 }

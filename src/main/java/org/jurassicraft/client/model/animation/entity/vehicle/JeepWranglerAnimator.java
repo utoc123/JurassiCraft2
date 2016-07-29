@@ -26,7 +26,7 @@ public class JeepWranglerAnimator implements ITabulaModelAnimator<JeepWranglerEn
         wheelHolderFront.rotateAngleX = wheelRotationAmount * 0.5F;
         wheelHolderBack.rotateAngleX = wheelRotationAmount * 0.5F;
 
-        float steerAmount = (float) (Math.toRadians(entity.right() ? -40.0F : entity.left() ? 40.0F : 0.0F) * wheelRotation);
+        float steerAmount = (float) (Math.toRadians(entity.left() ? 40.0F : entity.right() ? -40.0F : 0.0F) * wheelRotation);
 
         model.getCube("steering wheel main").rotateAngleZ = steerAmount;
         wheelHolderFront.rotateAngleY = -steerAmount * 0.15F;

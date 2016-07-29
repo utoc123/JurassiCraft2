@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai.animations;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class RoarAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
@@ -15,7 +15,7 @@ public class RoarAnimationAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return !this.dinosaur.isDead && this.dinosaur.getAttackTarget() == null && this.dinosaur.getAgePercentage() > 75 && !this.dinosaur.isSleeping() && this.dinosaur.getRNG().nextDouble() < 0.003;
+        return !this.dinosaur.isDead && this.dinosaur.getAttackTarget() == null && this.dinosaur.getAgePercentage() > 75 && !this.dinosaur.isSleeping() && this.dinosaur.getRNG().nextDouble() < 0.002;
     }
 
     @Override

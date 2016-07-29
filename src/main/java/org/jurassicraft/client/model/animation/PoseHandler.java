@@ -13,8 +13,8 @@ import org.jurassicraft.client.model.animation.dto.AnimationsDTO;
 import org.jurassicraft.client.model.animation.dto.DinosaurRenderDefDTO;
 import org.jurassicraft.client.model.animation.dto.PoseDTO;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GrowthStage;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
 import java.io.IOException;
@@ -149,7 +149,7 @@ public class PoseHandler {
 
         if (FMLCommonHandler.instance().getSide().isClient()) {
             PosedCuboid[][] posedCuboids = new PosedCuboid[posedModelResources.size()][];
-            DinosaurModel mainModel = JabelarAnimationHandler.loadModel(posedModelResources.get(0), 0);
+            DinosaurModel mainModel = JabelarAnimationHandler.loadModel(posedModelResources.get(0));
 
             if (mainModel == null) {
                 throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
@@ -160,7 +160,7 @@ public class PoseHandler {
 
             for (int i = 0; i < posedModelResources.size(); i++) {
                 String resource = posedModelResources.get(i);
-                DinosaurModel model = JabelarAnimationHandler.loadModel(resource, 0);
+                DinosaurModel model = JabelarAnimationHandler.loadModel(resource);
 
                 if (model == null) {
                     throw new IllegalArgumentException("Couldn't load the model from " + resource);
@@ -207,10 +207,10 @@ public class PoseHandler {
         return this.modelData.get(growthStage).animations;
     }
 
-    public int getAnimationLength(Animation animation, GrowthStage growthStage) {
-        Map<Animation, float[][]> animations = this.modelData.get(growthStage).animations;
+    public float getAnimationLength(Animation animation, GrowthStage growthStage) {
+        Map<Animation, float[][]> animations = this.getAnimations(growthStage);
 
-        int duration = 0;
+        float duration = 0;
 
         if (animation != null) {
             float[][] poses = animations.get(animation);

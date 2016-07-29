@@ -7,8 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class EatFoodItemEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.worldObj.getGameRules().getBoolean("dinoMetabolism")) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
             if (this.dinosaur.getMetabolism().isHungry()) {
                 double posX = this.dinosaur.posX;
                 double posY = this.dinosaur.posY;

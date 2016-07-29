@@ -10,7 +10,7 @@ import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 @SideOnly(Side.CLIENT)
 public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, DilophosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
+    protected void performAnimations(DinosaurModel model, DilophosaurusEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
         AdvancedModelRenderer frillLeftTop = model.getCube("Frill Upper Left");
 
@@ -44,6 +44,9 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
         AdvancedModelRenderer tail5 = model.getCube("Tail 5");
         AdvancedModelRenderer tail6 = model.getCube("Tail 6");
 
+        AdvancedModelRenderer rightThigh = model.getCube("Leg Right UPPER");
+        AdvancedModelRenderer leftThigh = model.getCube("Leg Left UPPER");
+
         AdvancedModelRenderer upperArmRight = model.getCube("Right arm");
         AdvancedModelRenderer upperArmLeft = model.getCube("Left arm");
 
@@ -53,20 +56,31 @@ public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity>
         AdvancedModelRenderer handRight = model.getCube("Right hand");
         AdvancedModelRenderer handLeft = model.getCube("Left hand");
 
-        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck6, neck5, neck4, neck3, neck2, neck1, body1, body2, body3 };
-        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { head, neck6, neck5, neck4, neck3, neck2, neck1, body1, body2, body3 };
+        AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
 
         AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { handRight, lowerArmRight, upperArmRight };
         AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { handLeft, lowerArmLeft, upperArmLeft };
 
-        model.chainWave(tail, 0.15F, -0.03F, 2, ticks, 0.25F);
-        model.chainWave(body, 0.15F, 0.03F, 3.5F, ticks, 0.25F);
+        float globalSpeed = 1.0F;
+        float globalDegree = 1.0F;
+
+        model.bob(body3, globalSpeed * 0.5F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+        model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+        model.bob(leftThigh, globalSpeed * 0.5F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+
+        model.chainWave(tailParts, globalSpeed * 0.5F, globalDegree * 0.05F, 1, limbSwing, limbSwingAmount);
+        model.chainSwing(tailParts, globalSpeed * 0.5F, globalDegree * 0.1F, 2, limbSwing, limbSwingAmount);
+        model.chainWave(bodyParts, globalSpeed * 0.5F, globalDegree * 0.025F, 3, limbSwing, limbSwingAmount);
+
+        model.chainWave(tailParts, 0.15F, -0.03F, 2, ticks, 0.25F);
+        model.chainWave(bodyParts, 0.15F, 0.03F, 3.5F, ticks, 0.25F);
         model.chainWave(armRight, 0.15F, -0.1F, 4, ticks, 0.25F);
         model.chainWave(armLeft, 0.15F, -0.1F, 4, ticks, 0.25F);
-        model.chainSwing(tail, 0.15F, -0.1F, 3, ticks, 0.25F);
+        model.chainSwing(tailParts, 0.15F, -0.1F, 3, ticks, 0.25F);
 
         model.faceTarget(rotationYaw, rotationPitch, 1.0F, neck1, head);
 
-        entity.tailBuffer.applyChainSwingBuffer(tail);
+        entity.tailBuffer.applyChainSwingBuffer(tailParts);
     }
 }

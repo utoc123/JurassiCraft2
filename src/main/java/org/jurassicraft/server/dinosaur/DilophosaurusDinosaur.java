@@ -1,7 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.entity.base.SleepingSchedule;
+import net.minecraftforge.common.BiomeDictionary;
+import org.jurassicraft.server.entity.Diet;
+import org.jurassicraft.server.entity.SleepingSchedule;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
@@ -12,8 +13,8 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setName("Dilophosaurus");
         this.setDinosaurClass(DilophosaurusEntity.class);
         this.setTimePeriod(TimePeriod.JURASSIC);
-        this.setEggColorMale(0x62702B, 0x26292A);
-        this.setEggColorFemale(0x5E6E2B, 0x2D221A);
+        this.setEggColorMale(0x6B7834, 0x2A2E30);
+        this.setEggColorFemale(0x62712E, 0x30241C);
         this.setHealth(10, 30);
         this.setSpeed(0.35, 0.40);
         this.setStrength(2, 6);
@@ -31,5 +32,6 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setDefendOwner(true);
         this.setMaxHerdSize(10);
         this.setAttackBias(1200.0);
+        this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
     }
 }

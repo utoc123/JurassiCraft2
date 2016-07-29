@@ -12,20 +12,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeDesert;
-import net.minecraft.world.biome.BiomeHills;
-import net.minecraft.world.biome.BiomeMesa;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.period.TimePeriod;
 
 import java.util.List;
@@ -44,97 +42,108 @@ public enum WorldGenerator implements IWorldGenerator {
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ) {
         Biome biome = world.getBiomeGenForCoords(new BlockPos(chunkX, 0, chunkZ));
 
-        for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++) {
-            int randPosX = chunkX + random.nextInt(16);
-            int randPosZ = chunkZ + random.nextInt(16);
-            int randPosY = random.nextInt(Math.max(0, world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10));
+        if (JurassiCraft.CONFIG.petrifiedTreeGeneration) {
+            for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++) {
+                int randPosX = chunkX + random.nextInt(16);
+                int randPosZ = chunkZ + random.nextInt(16);
+                int randPosY = random.nextInt(Math.max(0, world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10));
 
-            this.generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
+                this.generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
+            }
         }
 
-        for (int i = 0; i < 32; i++) {
-            int randPosX = chunkX + random.nextInt(16);
-            int randPosY = random.nextInt(64);
-            int randPosZ = chunkZ + random.nextInt(16);
+        if (JurassiCraft.CONFIG.fossilGeneration) {
+            for (int i = 0; i < 32; i++) {
+                int randPosX = chunkX + random.nextInt(16);
+                int randPosY = random.nextInt(64);
+                int randPosZ = chunkZ + random.nextInt(16);
 
-            TimePeriod period = null;
+                TimePeriod period = null;
 
-            for (TimePeriod p : TimePeriod.values()) {
-                if (randPosY < TimePeriod.getEndYLevel(p) && randPosY > TimePeriod.getStartYLevel(p)) {
-                    period = p;
+                for (TimePeriod p : TimePeriod.values()) {
+                    if (randPosY < TimePeriod.getEndYLevel(p) && randPosY > TimePeriod.getStartYLevel(p)) {
+                        period = p;
 
-                    break;
+                        break;
+                    }
                 }
-            }
 
-            if (period != null) {
-                randPosY += random.nextInt(8) - 4;
+                if (period != null) {
+                    randPosY += random.nextInt(8) - 4;
 
-                List<Dinosaur> dinos = EntityHandler.getDinosaursFromPeriod(period);
+                    List<Dinosaur> dinos = EntityHandler.getDinosaursFromPeriod(period);
 
-                if (dinos != null && dinos.size() > 0) {
-                    Dinosaur dinosaur = dinos.get(random.nextInt(dinos.size()));
+                    if (dinos != null && dinos.size() > 0) {
+                        Dinosaur dinosaur = dinos.get(random.nextInt(dinos.size()));
 
-                    if (dinosaur.shouldRegister()) {
-                        int meta = BlockHandler.getMetadata(dinosaur);
+                        if (dinosaur.shouldRegister()) {
+                            int meta = BlockHandler.getMetadata(dinosaur);
 
-                        new WorldGenMinable(BlockHandler.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+                            new WorldGenMinable(BlockHandler.getFossilBlock(dinosaur).getStateFromMeta(meta), 5).generate(world, random, new BlockPos(randPosX, randPosY, randPosZ));
+                        }
                     }
                 }
             }
         }
 
-        int nestChance = 100;
-        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MOUNTAIN) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.HILLS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MESA) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SANDY)) {
-            nestChance = 30;
-        }
+        if (JurassiCraft.CONFIG.nestFossilGeneration) {
+            int nestChance = 100;
 
-        if (random.nextInt(nestChance) == 0) {
-            BlockPos pos = new BlockPos(chunkX + random.nextInt(16), random.nextInt(20) + 30, chunkZ + random.nextInt(16));
+            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MOUNTAIN) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.HILLS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MESA) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SANDY)) {
+                nestChance = 30;
+            }
 
-            IBlockState nest = BlockHandler.NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, NestFossilBlock.Variant.values()[random.nextInt(NestFossilBlock.Variant.values().length)]);
-            IBlockState trackway = BlockHandler.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.VARIANT, FossilizedTrackwayBlock.TrackwayType.values()[random.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)]).withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.getHorizontal(random.nextInt(4)));
+            if (random.nextInt(nestChance) == 0) {
+                BlockPos pos = new BlockPos(chunkX + random.nextInt(16), random.nextInt(20) + 30, chunkZ + random.nextInt(16));
 
-            int size = random.nextInt(3) + 6;
+                IBlockState nest = BlockHandler.NEST_FOSSIL.getDefaultState().withProperty(NestFossilBlock.VARIANT, NestFossilBlock.Variant.values()[random.nextInt(NestFossilBlock.Variant.values().length)]);
+                IBlockState trackway = BlockHandler.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.VARIANT, FossilizedTrackwayBlock.TrackwayType.values()[random.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)]).withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.getHorizontal(random.nextInt(4)));
 
-            for (int x = 0; x < size; x++) {
-                for (int z = 0; z < size; z++) {
-                    BlockPos generationPos = pos.add(x, 0, z);
+                int size = random.nextInt(3) + 6;
 
-                    if (!world.isAirBlock(generationPos)) {
-                        IBlockState state = null;
+                for (int x = 0; x < size; x++) {
+                    for (int z = 0; z < size; z++) {
+                        BlockPos generationPos = pos.add(x, 0, z);
 
-                        if (random.nextFloat() < 0.8F) {
-                            if (random.nextFloat() < 0.1F) {
-                                state = trackway;
-                            } else if (random.nextFloat() < 0.6F) {
-                                state = Blocks.GRAVEL.getDefaultState();
-                            } else {
-                                state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, random.nextBoolean() ? EnumDyeColor.WHITE : EnumDyeColor.SILVER);
+                        if (!world.isAirBlock(generationPos)) {
+                            IBlockState state = null;
+
+                            if (random.nextFloat() < 0.8F) {
+                                if (random.nextFloat() < 0.1F) {
+                                    state = trackway;
+                                } else if (random.nextFloat() < 0.6F) {
+                                    state = Blocks.GRAVEL.getDefaultState();
+                                } else {
+                                    state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, random.nextBoolean() ? EnumDyeColor.WHITE : EnumDyeColor.SILVER);
+                                }
+                            }
+
+                            if (state != null) {
+                                world.setBlockState(generationPos, state);
                             }
                         }
-
-                        if (state != null) {
-                            world.setBlockState(generationPos, state);
-                        }
                     }
                 }
-            }
 
-            for (int i = 0; i < random.nextInt(2) + 1; i++) {
-                BlockPos generationPos = pos.add(random.nextInt(size), 0, random.nextInt(size));
+                for (int i = 0; i < random.nextInt(2) + 1; i++) {
+                    BlockPos generationPos = pos.add(random.nextInt(size), 0, random.nextInt(size));
 
-                if (!world.isAirBlock(generationPos)) {
-                    world.setBlockState(generationPos, nest);
+                    if (!world.isAirBlock(generationPos)) {
+                        world.setBlockState(generationPos, nest);
+                    }
                 }
             }
         }
 
         Predicate<IBlockState> defaultPredicate = BlockMatcher.forBlock(Blocks.STONE);
 
-        this.generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
+        if (JurassiCraft.CONFIG.amberGeneration) {
+            this.generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
+        }
 //        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
-        this.generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
+        if (JurassiCraft.CONFIG.gypsumGeneration) {
+            this.generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
+        }
     }
 
     public void generateOre(World world, int chunkX, int chunkZ, int minHeight, int veinsPerChunk, int veinSize, IBlockState state, Random random, Predicate<IBlockState> predicate) {

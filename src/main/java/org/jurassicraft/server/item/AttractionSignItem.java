@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
-import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.List;
 import java.util.Locale;

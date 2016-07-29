@@ -11,8 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.gui.DNACombinatorHybridizerGui;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 
 public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybridizerCombinatorMode> {
     private BlockPos pos;
@@ -28,7 +28,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
 
     @Override
     public void onClientReceived(Minecraft minecraft, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext) {
-        DNACombinatorHybridizerTile tile = (DNACombinatorHybridizerTile) player.worldObj.getTileEntity(message.pos);
+        DNACombinatorHybridizerBlockEntity tile = (DNACombinatorHybridizerBlockEntity) player.worldObj.getTileEntity(message.pos);
         tile.setMode(message.hybridizer);
 
         GuiScreen screen = Minecraft.getMinecraft().currentScreen;
@@ -43,7 +43,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
         boolean mode = message.hybridizer;
         BlockPos pos = message.pos;
 
-        DNACombinatorHybridizerTile tile = (DNACombinatorHybridizerTile) player.worldObj.getTileEntity(pos);
+        DNACombinatorHybridizerBlockEntity tile = (DNACombinatorHybridizerBlockEntity) player.worldObj.getTileEntity(pos);
 
         tile.setMode(mode);
         JurassiCraft.NETWORK_WRAPPER.sendToAll(new SwitchHybridizerCombinatorMode(pos, mode));

@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class FleeEntityAI extends EntityAIBase {
         this.attackers = new LinkedList<>();
 
         for (DinosaurEntity entity : entities) {
-            if (entity != this.dinosaur) {
+            if (entity != this.dinosaur && !entity.isCarcass()) {
                 for (Class<? extends EntityLivingBase> target : entity.getAttackTargets()) {
                     if (target.isAssignableFrom(this.dinosaur.getClass())) {
                         this.attackers.add(entity);

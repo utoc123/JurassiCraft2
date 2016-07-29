@@ -1,6 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.base.Diet;
+import net.minecraftforge.common.BiomeDictionary;
+import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.dinosaur.TriceratopsEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
@@ -31,5 +32,6 @@ public class TriceratopsDinosaur extends Dinosaur {
         this.setDefendOwner(true);
         this.setMaxHerdSize(15);
         this.setAttackBias(400.0);
+        this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.SPARSE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
     }
 }

@@ -7,12 +7,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.tile.CultivatorTile;
 
 @SideOnly(Side.CLIENT)
 public class CultivateProcessGui extends GuiScreen {
-    private CultivatorTile cultivator;
+    private CultivatorBlockEntity cultivator;
     private int xSize;
     private int ySize;
     private int guiLeft;
@@ -20,7 +20,7 @@ public class CultivateProcessGui extends GuiScreen {
 
     private ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_progress.png");
 
-    public CultivateProcessGui(CultivatorTile entity) {
+    public CultivateProcessGui(CultivatorBlockEntity entity) {
         super();
         this.cultivator = entity;
         this.xSize = 176;

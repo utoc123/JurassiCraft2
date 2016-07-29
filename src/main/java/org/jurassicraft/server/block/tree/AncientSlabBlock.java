@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.item.itemblock.AncientSlabItemBlock;
+import org.jurassicraft.server.item.block.AncientSlabItemBlock;
 
 public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlock {
     private TreeType type;

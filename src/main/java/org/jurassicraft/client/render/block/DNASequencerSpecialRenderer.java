@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.jurassicraft.server.tile.DNASequencerTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerTile> {
+public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
@@ -33,7 +33,7 @@ public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASe
     }
 
     @Override
-    public void renderTileEntityAt(DNASequencerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(DNASequencerBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());

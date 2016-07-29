@@ -27,7 +27,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 import java.util.ArrayList;
 import java.util.List;

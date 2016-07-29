@@ -5,17 +5,17 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.container.slot.SequencableItemSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tile.DNASequencerTile;
 
 public class DNASequencerContainer extends MachineContainer {
-    private DNASequencerTile dnaSequencer;
+    private DNASequencerBlockEntity dnaSequencer;
 
     public DNASequencerContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
 
-        this.dnaSequencer = (DNASequencerTile) tileEntity;
+        this.dnaSequencer = (DNASequencerBlockEntity) tileEntity;
 
         this.addSlotToContainer(new SequencableItemSlot(this.dnaSequencer, 0, 44, 16));
         this.addSlotToContainer(new StorageSlot(this.dnaSequencer, 1, 66, 16, false));

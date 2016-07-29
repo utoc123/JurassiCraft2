@@ -21,9 +21,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.FeederTile;
 
 public class FeederBlock extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
@@ -49,8 +49,8 @@ public class FeederBlock extends BlockContainer {
         if (stack.hasDisplayName()) {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tile instanceof FeederTile) {
-                ((FeederTile) tile).setCustomInventoryName(stack.getDisplayName());
+            if (tile instanceof FeederBlockEntity) {
+                ((FeederBlockEntity) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -59,8 +59,8 @@ public class FeederBlock extends BlockContainer {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tileentity = world.getTileEntity(pos);
 
-        if (tileentity instanceof FeederTile) {
-            InventoryHelper.dropInventoryItems(world, pos, (FeederTile) tileentity);
+        if (tileentity instanceof FeederBlockEntity) {
+            InventoryHelper.dropInventoryItems(world, pos, (FeederBlockEntity) tileentity);
         }
 
         super.breakBlock(world, pos, state);
@@ -73,8 +73,8 @@ public class FeederBlock extends BlockContainer {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof FeederTile) {
-                FeederTile feeder = (FeederTile) tileEntity;
+            if (tileEntity instanceof FeederBlockEntity) {
+                FeederBlockEntity feeder = (FeederBlockEntity) tileEntity;
 
                 if (feeder.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FEEDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -87,7 +87,7 @@ public class FeederBlock extends BlockContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new FeederTile();
+        return new FeederBlockEntity();
     }
 
     @Override

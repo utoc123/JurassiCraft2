@@ -10,9 +10,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.GrindableItem;
 import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.LangHelper;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.List;
 import java.util.Random;

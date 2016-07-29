@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.DNAExtractorTile;
 
 public class DNAExtractorBlock extends OrientedBlock {
     public DNAExtractorBlock() {
@@ -38,8 +38,8 @@ public class DNAExtractorBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = world.getTileEntity(pos);
 
-            if (tileentity instanceof DNAExtractorTile) {
-                ((DNAExtractorTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tileentity instanceof DNAExtractorBlockEntity) {
+                ((DNAExtractorBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class DNAExtractorBlock extends OrientedBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof DNAExtractorTile) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (DNAExtractorTile) tileentity);
+        if (tileentity instanceof DNAExtractorBlockEntity) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (DNAExtractorBlockEntity) tileentity);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -57,7 +57,7 @@ public class DNAExtractorBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new DNAExtractorTile();
+        return new DNAExtractorBlockEntity();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class DNAExtractorBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof DNAExtractorTile) {
-                DNAExtractorTile dnaExtractor = (DNAExtractorTile) tileEntity;
+            if (tileEntity instanceof DNAExtractorBlockEntity) {
+                DNAExtractorBlockEntity dnaExtractor = (DNAExtractorBlockEntity) tileEntity;
 
                 if (dnaExtractor.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_EXTRACTOR_ID, world, pos.getX(), pos.getY(), pos.getZ());

@@ -3,14 +3,15 @@ package org.jurassicraft.server.dinosaur;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.server.api.GrowthStageGenderContainer;
 import org.jurassicraft.server.api.Hybrid;
-import org.jurassicraft.server.entity.base.Diet;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.GrowthStage;
-import org.jurassicraft.server.entity.base.SleepingSchedule;
+import org.jurassicraft.server.entity.Diet;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GrowthStage;
+import org.jurassicraft.server.entity.SleepingSchedule;
 import org.jurassicraft.server.period.TimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
@@ -18,6 +19,7 @@ import javax.vecmathimpl.Matrix4d;
 import javax.vecmathimpl.Vector3d;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -73,6 +75,9 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     private double attackBias = 200.0;
     private int maxHerdSize = 32;
+
+    private int spawnChance;
+    private Biome[] spawnBiomes;
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
@@ -628,5 +633,30 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public int getMaxHerdSize() {
         return this.maxHerdSize;
+    }
+
+    public void setSpawn(int chance, Biome[]... allBiomes) {
+        this.spawnChance = chance;
+        List<Biome> spawnBiomes = new LinkedList<>();
+        for (Biome[] biomes : allBiomes) {
+            for (Biome biome : biomes) {
+                if (!spawnBiomes.contains(biome)) {
+                    spawnBiomes.add(biome);
+                }
+            }
+        }
+        this.spawnBiomes = spawnBiomes.toArray(new Biome[0]);
+    }
+
+    public int getSpawnChance() {
+        return this.spawnChance;
+    }
+
+    public Biome[] getSpawnBiomes() {
+        return this.spawnBiomes;
+    }
+
+    public String getLocalizationName() {
+        return "entity.jurassicraft." + this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name";
     }
 }

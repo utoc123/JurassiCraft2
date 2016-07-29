@@ -1,7 +1,7 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 import java.util.Map;
 
@@ -28,13 +28,13 @@ public class MovementAnimationPass extends AnimationPass {
             if (entity.isInWater() || entity.isInLava()) {
                 degree = this.limbSwingAmount * 4.0F;
             } else {
-                degree = this.limbSwingAmount * 1.0F;
+                degree = this.limbSwingAmount;
             }
         } else {
             return super.getAnimationDegree(entity);
         }
 
-        return Math.min(1.0F, degree);
+        return Math.max(this.isMoving(entity) ? 0.5F : 0.0F, Math.min(1.0F, degree));
     }
 
     @Override
@@ -59,9 +59,9 @@ public class MovementAnimationPass extends AnimationPass {
     }
 
     private boolean isMoving(DinosaurEntity entity) {
-        double deltaX = entity.posX - entity.prevPosX;
-        double deltaZ = entity.posZ - entity.prevPosZ;
-        return deltaX * deltaX + deltaZ * deltaZ > 0.01;
+        float deltaX = (float) (entity.posX - entity.prevPosX);
+        float deltaZ = (float) (entity.posZ - entity.prevPosZ);
+        return deltaX * deltaX + deltaZ * deltaZ > 0.001F;
     }
 
     @Override

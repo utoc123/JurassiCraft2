@@ -11,11 +11,11 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
 import org.lwjgl.opengl.GL11;
 
-public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerTile> {
+public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRenderer<DNACombinatorHybridizerBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation textureCombinator;
@@ -32,7 +32,7 @@ public class DNACombinatorHybridizerSpecialRenderer extends TileEntitySpecialRen
     }
 
     @Override
-    public void renderTileEntityAt(DNACombinatorHybridizerTile tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(DNACombinatorHybridizerBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState blockState = world.getBlockState(tileEntity.getPos());

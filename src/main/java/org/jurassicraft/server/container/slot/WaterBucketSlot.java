@@ -3,7 +3,7 @@ package org.jurassicraft.server.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.jurassicraft.server.tile.CleaningStationTile;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 
 public class WaterBucketSlot extends Slot {
     public WaterBucketSlot(IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
@@ -15,7 +15,7 @@ public class WaterBucketSlot extends Slot {
      */
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return CleaningStationTile.isItemFuel(stack);
+        return CleaningStationBlockEntity.isItemFuel(stack);
     }
 
     @Override

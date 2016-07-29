@@ -5,7 +5,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class ParasaurolophusEntity extends DinosaurEntity {
     public ParasaurolophusEntity(World world) {

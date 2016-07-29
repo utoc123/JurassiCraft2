@@ -9,7 +9,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class TyrannosaurusEntity extends DinosaurEntity {
     private int stepCount = 0;
@@ -46,11 +46,13 @@ public class TyrannosaurusEntity extends DinosaurEntity {
     public void onUpdate() {
         super.onUpdate();
 
-        if (this.moveForward > 0 && this.stepCount <= 0) {
-            this.playSound(SoundHandler.STOMP, (float) this.transitionFromAge(0.1F, 1.0F), this.getSoundPitch());
-            this.stepCount = 65;
-        }
+        if (this.onGround && !this.isSwimming()) {
+            if (this.moveForward > 0 && this.stepCount <= 0) {
+                this.playSound(SoundHandler.STOMP, (float) this.interpolate(0.1F, 1.0F), this.getSoundPitch());
+                this.stepCount = 65;
+            }
 
-        this.stepCount -= this.moveForward * 9.5;
+            this.stepCount -= this.moveForward * 9.5;
+        }
     }
 }

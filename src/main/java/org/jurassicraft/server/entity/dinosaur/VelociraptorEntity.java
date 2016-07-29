@@ -9,9 +9,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
+import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.VelociraptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.VelociraptorMeleeEntityAI;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class VelociraptorEntity extends DinosaurEntity {
     public VelociraptorEntity(World world) {

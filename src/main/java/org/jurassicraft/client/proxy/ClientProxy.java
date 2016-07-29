@@ -36,22 +36,22 @@ import org.jurassicraft.client.gui.IncubatorGui;
 import org.jurassicraft.client.gui.OrderDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.client.render.RenderingHandler;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
+import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
+import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
+import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
+import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
+import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.VenomEntity;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.jurassicraft.server.entity.particle.VenomParticle;
 import org.jurassicraft.server.entity.vehicle.CarEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
-import org.jurassicraft.server.tile.CleaningStationTile;
-import org.jurassicraft.server.tile.CultivatorTile;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tile.DNAExtractorTile;
-import org.jurassicraft.server.tile.DNASequencerTile;
-import org.jurassicraft.server.tile.DNASynthesizerTile;
-import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tile.EmbryonicMachineTile;
-import org.jurassicraft.server.tile.FeederTile;
-import org.jurassicraft.server.tile.FossilGrinderTile;
-import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,34 +120,34 @@ public class ClientProxy extends ServerProxy {
         TileEntity tileEntity = world.getTileEntity(pos);
 
         if (tileEntity != null) {
-            if (tileEntity instanceof CleaningStationTile && id == GUI_CLEANING_STATION_ID) {
-                return new CleaningStationGui(player.inventory, (CleaningStationTile) tileEntity);
-            } else if (tileEntity instanceof FossilGrinderTile && id == GUI_FOSSIL_GRINDER_ID) {
-                return new FossilGrinderGui(player.inventory, (FossilGrinderTile) tileEntity);
-            } else if (tileEntity instanceof DNASequencerTile && id == GUI_DNA_SEQUENCER_ID) {
-                return new DNASequencerGui(player.inventory, (DNASequencerTile) tileEntity);
-            } else if (tileEntity instanceof EmbryonicMachineTile && id == GUI_EMBRYONIC_MACHINE_ID) {
-                return new EmbryonicMachineGui(player.inventory, (EmbryonicMachineTile) tileEntity);
-            } else if (tileEntity instanceof EmbryoCalcificationMachineTile && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
-                return new EmbryoCalcificationMachineGui(player.inventory, (EmbryoCalcificationMachineTile) tileEntity);
-            } else if (tileEntity instanceof DNASynthesizerTile && id == GUI_DNA_SYNTHESIZER_ID) {
-                return new DNASynthesizerGui(player.inventory, (DNASynthesizerTile) tileEntity);
-            } else if (tileEntity instanceof IncubatorTile && id == GUI_INCUBATOR_ID) {
-                return new IncubatorGui(player.inventory, (IncubatorTile) tileEntity);
-            } else if (tileEntity instanceof DNACombinatorHybridizerTile && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
-                return new DNACombinatorHybridizerGui(player.inventory, (DNACombinatorHybridizerTile) tileEntity);
-            } else if (tileEntity instanceof DNAExtractorTile && id == GUI_DNA_EXTRACTOR_ID) {
-                return new DNAExtractorGui(player.inventory, (DNAExtractorTile) tileEntity);
-            } else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID) {
-                CultivatorTile cultivator = (CultivatorTile) tileEntity;
+            if (tileEntity instanceof CleaningStationBlockEntity && id == GUI_CLEANING_STATION_ID) {
+                return new CleaningStationGui(player.inventory, (CleaningStationBlockEntity) tileEntity);
+            } else if (tileEntity instanceof FossilGrinderBlockEntity && id == GUI_FOSSIL_GRINDER_ID) {
+                return new FossilGrinderGui(player.inventory, (FossilGrinderBlockEntity) tileEntity);
+            } else if (tileEntity instanceof DNASequencerBlockEntity && id == GUI_DNA_SEQUENCER_ID) {
+                return new DNASequencerGui(player.inventory, (DNASequencerBlockEntity) tileEntity);
+            } else if (tileEntity instanceof EmbryonicMachineBlockEntity && id == GUI_EMBRYONIC_MACHINE_ID) {
+                return new EmbryonicMachineGui(player.inventory, (EmbryonicMachineBlockEntity) tileEntity);
+            } else if (tileEntity instanceof EmbryoCalcificationMachineBlockEntity && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
+                return new EmbryoCalcificationMachineGui(player.inventory, (EmbryoCalcificationMachineBlockEntity) tileEntity);
+            } else if (tileEntity instanceof DNASynthesizerBlockEntity && id == GUI_DNA_SYNTHESIZER_ID) {
+                return new DNASynthesizerGui(player.inventory, (DNASynthesizerBlockEntity) tileEntity);
+            } else if (tileEntity instanceof IncubatorBlockEntity && id == GUI_INCUBATOR_ID) {
+                return new IncubatorGui(player.inventory, (IncubatorBlockEntity) tileEntity);
+            } else if (tileEntity instanceof DNACombinatorHybridizerBlockEntity && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
+                return new DNACombinatorHybridizerGui(player.inventory, (DNACombinatorHybridizerBlockEntity) tileEntity);
+            } else if (tileEntity instanceof DNAExtractorBlockEntity && id == GUI_DNA_EXTRACTOR_ID) {
+                return new DNAExtractorGui(player.inventory, (DNAExtractorBlockEntity) tileEntity);
+            } else if (tileEntity instanceof CultivatorBlockEntity && id == GUI_CULTIVATOR_ID) {
+                CultivatorBlockEntity cultivator = (CultivatorBlockEntity) tileEntity;
 
                 if (cultivator.isProcessing(0)) {
                     return new CultivateProcessGui(cultivator);
                 } else {
                     return new CultivateGui(player.inventory, cultivator);
                 }
-            } else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID) {
-                return new FeederGui(player.inventory, (FeederTile) tileEntity);
+            } else if (tileEntity instanceof FeederBlockEntity && id == GUI_FEEDER_ID) {
+                return new FeederGui(player.inventory, (FeederBlockEntity) tileEntity);
             }
         }
 
@@ -165,8 +165,8 @@ public class ClientProxy extends ServerProxy {
     }
 
     @Override
-    public void openFieldGuide(DinosaurEntity entity) {
-        MC.displayGuiScreen(new FieldGuideGui(entity));
+    public void openFieldGuide(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo fieldGuideInfo) {
+        MC.displayGuiScreen(new FieldGuideGui(entity, fieldGuideInfo));
     }
 
     public static void playSound(ISound sound) {

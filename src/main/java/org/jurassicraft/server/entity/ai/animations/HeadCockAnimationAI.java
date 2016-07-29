@@ -3,7 +3,7 @@ package org.jurassicraft.server.entity.ai.animations;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class HeadCockAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;

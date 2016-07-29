@@ -16,7 +16,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.lwjgl.opengl.GL11;
 

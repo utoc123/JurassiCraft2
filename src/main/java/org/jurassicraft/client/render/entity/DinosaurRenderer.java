@@ -1,12 +1,10 @@
 package org.jurassicraft.client.render.entity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.entity.passive.EntitySheep;
@@ -14,37 +12,35 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.render.entity.dinosaur.RenderDinosaurDefinition;
+import org.jurassicraft.client.render.entity.dinosaur.DinosaurRenderInfo;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GrowthStage;
 
 import java.util.Random;
 
 @SideOnly(Side.CLIENT)
-public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements IDinosaurRenderer {
-    private static final DynamicTexture dynamicTexture = new DynamicTexture(16, 16);
-
+public class DinosaurRenderer extends RenderLiving<DinosaurEntity> {
     public Dinosaur dinosaur;
-    public RenderDinosaurDefinition renderDef;
+    public DinosaurRenderInfo renderInfo;
 
     public Random random;
 
-    public DinosaurRenderer(RenderDinosaurDefinition renderDef, RenderManager renderManager) {
-        super(renderManager, renderDef.getModel(GrowthStage.INFANT), renderDef.getShadowSize());
+    public DinosaurRenderer(DinosaurRenderInfo renderInfo, RenderManager renderManager) {
+        super(renderManager, renderInfo.getModel(GrowthStage.INFANT), renderInfo.getShadowSize());
 
-        this.dinosaur = renderDef.getDinosaur();
+        this.dinosaur = renderInfo.getDinosaur();
         this.random = new Random();
-        this.renderDef = renderDef;
+        this.renderInfo = renderInfo;
 
         this.addLayer(new LayerEyelid(this));
     }
 
     @Override
     public void preRenderCallback(DinosaurEntity entity, float partialTick) {
-        float scale = (float) entity.transitionFromAge(this.dinosaur.getScaleInfant(), this.dinosaur.getScaleAdult());
+        float scale = (float) entity.interpolate(this.dinosaur.getScaleInfant(), this.dinosaur.getScaleAdult());
 
-        this.shadowSize = scale * this.renderDef.getShadowSize();
+        this.shadowSize = scale * this.renderInfo.getShadowSize();
 
         GlStateManager.translate(this.dinosaur.getOffsetX() * scale, this.dinosaur.getOffsetY() * scale, this.dinosaur.getOffsetZ() * scale);
 
@@ -83,29 +79,23 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> implements ID
     }
 
     @Override
+    public void doRender(DinosaurEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        this.mainModel = this.renderInfo.getModel(entity.getGrowthStage());
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    }
+
+    @Override
     public ResourceLocation getEntityTexture(DinosaurEntity entity) {
         GrowthStage growthStage = entity.getGrowthStage();
-
         if (!this.dinosaur.doesSupportGrowthStage(growthStage)) {
             growthStage = GrowthStage.ADULT;
         }
-
         return entity.isMale() ? this.dinosaur.getMaleTexture(growthStage) : this.dinosaur.getFemaleTexture(growthStage);
     }
 
     @Override
     protected void rotateCorpse(DinosaurEntity entity, float p_77043_2_, float p_77043_3_, float partialTicks) {
         GlStateManager.rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
-    }
-
-    @Override
-    public void setModel(ModelBase model) {
-        this.mainModel = model;
-    }
-
-    @Override
-    public RenderDinosaurDefinition getRenderDef() {
-        return this.renderDef;
     }
 
     @SideOnly(Side.CLIENT)

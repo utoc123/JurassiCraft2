@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.DNASynthesizerTile;
 
 public class DNASynthesizerBlock extends OrientedBlock {
     public DNASynthesizerBlock() {
@@ -38,8 +38,8 @@ public class DNASynthesizerBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof DNASynthesizerTile) {
-                ((DNASynthesizerTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tileentity instanceof DNASynthesizerBlockEntity) {
+                ((DNASynthesizerBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class DNASynthesizerBlock extends OrientedBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof DNASynthesizerTile) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (DNASynthesizerTile) tileentity);
+        if (tileentity instanceof DNASynthesizerBlockEntity) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (DNASynthesizerBlockEntity) tileentity);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -62,8 +62,8 @@ public class DNASynthesizerBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof DNASynthesizerTile) {
-                DNASynthesizerTile dnaSynthesizer = (DNASynthesizerTile) tileEntity;
+            if (tileEntity instanceof DNASynthesizerBlockEntity) {
+                DNASynthesizerBlockEntity dnaSynthesizer = (DNASynthesizerBlockEntity) tileEntity;
 
                 if (dnaSynthesizer.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_SYNTHESIZER_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -76,7 +76,7 @@ public class DNASynthesizerBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new DNASynthesizerTile();
+        return new DNASynthesizerBlockEntity();
     }
 
     @Override

@@ -5,17 +5,17 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.GrindableItemSlot;
-import org.jurassicraft.server.tile.FossilGrinderTile;
 
 public class FossilGrinderContainer extends MachineContainer {
-    private FossilGrinderTile fossilGrinder;
+    private FossilGrinderBlockEntity fossilGrinder;
 
     public FossilGrinderContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
 
-        this.fossilGrinder = (FossilGrinderTile) tileEntity;
+        this.fossilGrinder = (FossilGrinderBlockEntity) tileEntity;
 
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 2; column++) {

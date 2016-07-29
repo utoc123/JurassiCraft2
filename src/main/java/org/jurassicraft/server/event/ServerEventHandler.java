@@ -1,19 +1,15 @@
 package org.jurassicraft.server.event;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.biome.BiomeJungle;
-import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
@@ -32,13 +28,15 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.plant.DoublePlantBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.util.GameRuleHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
 import java.util.List;
@@ -48,17 +46,7 @@ import java.util.Random;
 public class ServerEventHandler {
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
-        GameRules gameRules = event.getWorld().getGameRules();
-
-        this.registerGameRule(gameRules, "dinoMetabolism", true);
-        this.registerGameRule(gameRules, "dinoGrowth", true);
-        this.registerGameRule(gameRules, "plantSpreading", true);
-    }
-
-    private void registerGameRule(GameRules gameRules, String name, boolean value) {
-        if (!gameRules.hasRule(name)) {
-            gameRules.addGameRule(name, value + "", GameRules.ValueType.BOOLEAN_VALUE);
-        }
+        GameRuleHandler.register(event.getWorld());
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
@@ -95,77 +83,88 @@ public class ServerEventHandler {
 
         BiomeDecorator decorator = biome.theBiomeDecorator;
 
-        if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal)) {
-            decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
-        }
-
-        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.FOREST) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.CONIFEROUS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
-            if (rand.nextInt(8) == 0) {
-                BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
-
-                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
-                    world.setBlockState(topBlock, BlockHandler.MOSS.getDefaultState(), 2);
-                }
+        if (JurassiCraft.CONFIG.plantFossilGeneration) {
+            if (decorator != null && decorator.chunkProviderSettings != null && !(decorator.coalGen instanceof WorldGenCoal)) {
+                decorator.coalGen = new WorldGenCoal(Blocks.COAL_ORE.getDefaultState(), decorator.chunkProviderSettings.coalSize);
             }
         }
 
-        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
-            if (rand.nextInt(8) == 0) {
-                BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
+        if (JurassiCraft.CONFIG.mossGeneration) {
+            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.FOREST) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.CONIFEROUS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
+                if (rand.nextInt(8) == 0) {
+                    BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
-                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
-                    world.setBlockState(topBlock.up(), BlockHandler.WEST_INDIAN_LILAC.getDefaultState(), 2);
-                    world.setBlockState(topBlock, BlockHandler.WEST_INDIAN_LILAC.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.LOWER), 2);
-                }
-            }
-        }
-
-        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.OCEAN)) {
-            if (rand.nextInt(8) == 0) {
-                BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
-
-                if (topBlock.getY() < 62) {
-                    IBlockState state = world.getBlockState(topBlock.down());
-
-                    if (state.isOpaqueCube()) {
-                        world.setBlockState(topBlock, BlockHandler.GRACILARIA.getDefaultState(), 2);
+                    if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
+                        world.setBlockState(topBlock, BlockHandler.MOSS.getDefaultState(), 2);
                     }
                 }
             }
         }
 
-        if ( BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP)) {
-            if (rand.nextInt(2) == 0) {
-                new WorldGenMinable(BlockHandler.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
+        if (JurassiCraft.CONFIG.flowerGeneration) {
+            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
+                if (rand.nextInt(8) == 0) {
+                    BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
+                    if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
+                        world.setBlockState(topBlock.up(), BlockHandler.WEST_INDIAN_LILAC.getDefaultState(), 2);
+                        world.setBlockState(topBlock, BlockHandler.WEST_INDIAN_LILAC.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.LOWER), 2);
+                    }
+                }
             }
         }
 
-        int footprintChance = 20;
+        if (JurassiCraft.CONFIG.gracilariaGeneration) {
+            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.OCEAN)) {
+                if (rand.nextInt(8) == 0) {
+                    BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
-        if ( BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.RIVER)) {
-            footprintChance = 10;
+                    if (topBlock.getY() < 62) {
+                        IBlockState state = world.getBlockState(topBlock.down());
+
+                        if (state.isOpaqueCube()) {
+                            world.setBlockState(topBlock, BlockHandler.GRACILARIA.getDefaultState(), 2);
+                        }
+                    }
+                }
+            }
         }
 
-        if (rand.nextInt(footprintChance) == 0) {
-            int y = rand.nextInt(20) + 30;
+        if (JurassiCraft.CONFIG.peatGeneration) {
+            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP)) {
+                if (rand.nextInt(2) == 0) {
+                    new WorldGenMinable(BlockHandler.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
+                }
+            }
+        }
 
-            FossilizedTrackwayBlock.TrackwayType type = FossilizedTrackwayBlock.TrackwayType.values()[rand.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)];
+        if (JurassiCraft.CONFIG.trackwayGeneration) {
+            int footprintChance = 20;
 
-            for (int i = 0; i < rand.nextInt(2) + 1; i++) {
-                BlockPos basePos = new BlockPos(pos.getX() + rand.nextInt(10) - 5, y, pos.getZ() + rand.nextInt(10) - 5);
+            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.RIVER)) {
+                footprintChance = 10;
+            }
 
-                float angle = (float) (rand.nextDouble() * 360.0F);
+            if (rand.nextInt(footprintChance) == 0) {
+                int y = rand.nextInt(20) + 30;
 
-                IBlockState trackway = BlockHandler.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.fromAngle(angle)).withProperty(FossilizedTrackwayBlock.VARIANT, type);
+                FossilizedTrackwayBlock.TrackwayType type = FossilizedTrackwayBlock.TrackwayType.values()[rand.nextInt(FossilizedTrackwayBlock.TrackwayType.values().length)];
 
-                float xOffset = -MathHelper.sin((float) Math.toRadians(angle));
-                float zOffset = MathHelper.cos((float) Math.toRadians(angle));
+                for (int i = 0; i < rand.nextInt(2) + 1; i++) {
+                    BlockPos basePos = new BlockPos(pos.getX() + rand.nextInt(10) - 5, y, pos.getZ() + rand.nextInt(10) - 5);
 
-                for (int l = 0; l < rand.nextInt(2) + 3; l++) {
-                    BlockPos trackwayPos = basePos.add(xOffset * l, 0, zOffset * l);
+                    float angle = (float) (rand.nextDouble() * 360.0F);
 
-                    if (world.getBlockState(trackwayPos).getBlock() == Blocks.STONE) {
-                        world.setBlockState(trackwayPos, trackway);
+                    IBlockState trackway = BlockHandler.FOSSILIZED_TRACKWAY.getDefaultState().withProperty(FossilizedTrackwayBlock.FACING, EnumFacing.fromAngle(angle)).withProperty(FossilizedTrackwayBlock.VARIANT, type);
+
+                    float xOffset = -MathHelper.sin((float) Math.toRadians(angle));
+                    float zOffset = MathHelper.cos((float) Math.toRadians(angle));
+
+                    for (int l = 0; l < rand.nextInt(2) + 3; l++) {
+                        BlockPos trackwayPos = basePos.add(xOffset * l, 0, zOffset * l);
+
+                        if (world.getBlockState(trackwayPos).getBlock() == Blocks.STONE) {
+                            world.setBlockState(trackwayPos, trackway);
+                        }
                     }
                 }
             }
@@ -182,7 +181,7 @@ public class ServerEventHandler {
             LootEntry[] entries = new LootEntry[] { new LootEntryItem(ItemHandler.GRACILARIA, 25, 0, new LootFunction[0], new LootCondition[0], "gracilaria") };
             LootPool pool = new LootPool(entries, new LootCondition[0], new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft");
             table.addPool(pool);
-        } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID) {
+        } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID || name == LootTableList.CHESTS_ABANDONED_MINESHAFT) {
             List<Dinosaur> dinosaurs = EntityHandler.getRegisteredDinosaurs();
 
             LootEntry[] actionFigureEntries = new LootEntry[dinosaurs.size()];

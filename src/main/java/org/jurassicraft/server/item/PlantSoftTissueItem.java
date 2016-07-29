@@ -8,10 +8,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.SequencableItem;
 import org.jurassicraft.server.genetics.PlantDNA;
-import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.Collections;
 import java.util.HashMap;

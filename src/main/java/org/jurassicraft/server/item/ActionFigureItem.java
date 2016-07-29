@@ -2,23 +2,28 @@ package org.jurassicraft.server.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
-import org.jurassicraft.server.lang.LangHelper;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.ActionFigureTile;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -28,7 +33,6 @@ import java.util.Locale;
 public class ActionFigureItem extends Item {
     public ActionFigureItem() {
         super();
-
         this.setCreativeTab(TabHandler.DECORATIONS);
         this.setHasSubtypes(true);
     }
@@ -45,11 +49,15 @@ public class ActionFigureItem extends Item {
                 world.setBlockState(pos, block.onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player));
                 block.onBlockPlacedBy(world, pos, state, player, stack);
 
-                ActionFigureTile tile = (ActionFigureTile) world.getTileEntity(pos);
-                tile.setDinosaur(stack.getItemDamage());
+                int mode = this.getMode(stack);
 
-                if (!player.capabilities.isCreativeMode) {
-                    stack.stackSize--;
+                ActionFigureBlockEntity tile = (ActionFigureBlockEntity) world.getTileEntity(pos);
+
+                if (tile != null) {
+                    tile.setDinosaur(stack.getItemDamage(), mode > 0 ? mode == 1 : world.rand.nextBoolean());
+                    if (!player.capabilities.isCreativeMode) {
+                        stack.stackSize--;
+                    }
                 }
 
                 return EnumActionResult.SUCCESS;
@@ -83,4 +91,53 @@ public class ActionFigureItem extends Item {
             }
         }
     }
+
+    public int getMode(ItemStack stack) {
+        return this.getNBT(stack).getInteger("GenderMode");
+    }
+
+    public int changeMode(ItemStack stack) {
+        NBTTagCompound nbt = this.getNBT(stack);
+
+        int mode = this.getMode(stack) + 1;
+        mode %= 3;
+
+        nbt.setInteger("GenderMode", mode);
+
+        stack.setTagCompound(nbt);
+
+        return mode;
+    }
+
+    public NBTTagCompound getNBT(ItemStack stack) {
+        NBTTagCompound nbt = stack.getTagCompound();
+        if (nbt == null) {
+            nbt = new NBTTagCompound();
+        }
+        stack.setTagCompound(nbt);
+        return nbt;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
+        lore.add(TextFormatting.BLUE + I18n.format("lore.change_gender.name"));
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+        int mode = this.changeMode(stack);
+        if (world.isRemote) {
+            String modeString = "";
+            if (mode == 0) {
+                modeString = "random";
+            } else if (mode == 1) {
+                modeString = "male";
+            } else if (mode == 2) {
+                modeString = "female";
+            }
+            player.addChatMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+        }
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+    }
 }
+

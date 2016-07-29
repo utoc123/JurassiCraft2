@@ -10,12 +10,12 @@ import net.minecraft.util.ResourceLocation;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.ResetControlTabulaModel;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.jurassicraft.server.tile.FeederTile;
 import org.lwjgl.opengl.GL11;
 
-public class FeederSpecialRenderer extends TileEntitySpecialRenderer<FeederTile> {
+public class FeederSpecialRenderer extends TileEntitySpecialRenderer<FeederBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     private ResetControlTabulaModel model;
@@ -32,7 +32,7 @@ public class FeederSpecialRenderer extends TileEntitySpecialRenderer<FeederTile>
     }
 
     @Override
-    public void renderTileEntityAt(FeederTile tile, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void renderTileEntityAt(FeederBlockEntity tile, double x, double y, double z, float partialTicks, int destroyStage) {
         IBlockState blockState = tile.getWorld().getBlockState(tile.getPos());
 
         if (blockState.getBlock() == BlockHandler.FEEDER) {

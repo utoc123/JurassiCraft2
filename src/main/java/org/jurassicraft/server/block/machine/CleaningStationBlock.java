@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.CleaningStationTile;
 
 public class CleaningStationBlock extends OrientedBlock {
     public CleaningStationBlock() {
@@ -39,8 +39,8 @@ public class CleaningStationBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof CleaningStationTile) {
-                ((CleaningStationTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tileentity instanceof CleaningStationBlockEntity) {
+                ((CleaningStationBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -49,8 +49,8 @@ public class CleaningStationBlock extends OrientedBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof CleaningStationTile) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (CleaningStationTile) tileentity);
+        if (tileentity instanceof CleaningStationBlockEntity) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (CleaningStationBlockEntity) tileentity);
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -63,8 +63,8 @@ public class CleaningStationBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof CleaningStationTile) {
-                CleaningStationTile cleaningStation = (CleaningStationTile) tileEntity;
+            if (tileEntity instanceof CleaningStationBlockEntity) {
+                CleaningStationBlockEntity cleaningStation = (CleaningStationBlockEntity) tileEntity;
 
                 if (cleaningStation.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_CLEANING_STATION_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -77,7 +77,7 @@ public class CleaningStationBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new CleaningStationTile();
+        return new CleaningStationBlockEntity();
     }
 
     @Override

@@ -4,7 +4,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.math.MathHelper;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
 public class DilophosaurusSpitEntityAI extends EntityAIBase {
@@ -81,7 +82,7 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
             if (distance > (double) this.maxAttackDistance || !canSee) {
                 return;
             }
-
+            this.dilophosaurus.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
             float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;
             this.dilophosaurus.attackEntityWithRangedAttack(this.target, MathHelper.clamp_float(scaledDistance, 0.1F, 1.0F));
             this.rangedAttackTime = MathHelper.floor_float(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);

@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai.animations;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class LookAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;

@@ -5,16 +5,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.container.slot.DNAExtractionSlot;
 import org.jurassicraft.server.container.slot.StorageSlot;
-import org.jurassicraft.server.tile.DNAExtractorTile;
 
 public class DNAExtractorContainer extends MachineContainer {
-    private DNAExtractorTile extractor;
+    private DNAExtractorBlockEntity extractor;
 
     public DNAExtractorContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
-        this.extractor = (DNAExtractorTile) tileEntity;
+        this.extractor = (DNAExtractorBlockEntity) tileEntity;
         this.addSlotToContainer(new StorageSlot(this.extractor, 1, 55, 47, false));
         this.addSlotToContainer(new DNAExtractionSlot(this.extractor, 0, 55, 26));
         this.addSlotToContainer(new StorageSlot(this.extractor, 2, 108, 28, true));

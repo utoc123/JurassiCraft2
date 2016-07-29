@@ -5,15 +5,15 @@ import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.client.sound.SoundHandler;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GrowthStage;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 
 public class VelociraptorLeapEntityAI extends EntityAIBase {
     private VelociraptorEntity entity;
     private EntityLivingBase target;
 
-    private int leapLength;
+    private float leapLength;
 
     private int prevTick;
     private DinosaurAnimation animation;
@@ -29,6 +29,10 @@ public class VelociraptorLeapEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
+        if (this.entity.herd != null && this.entity.herd.fleeing) {
+            return false;
+        }
+
         EntityLivingBase target = this.entity.getAttackTarget();
 
         if (target != null && target.isEntityAlive() && !(target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass())) {
@@ -81,7 +85,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase {
         } else if (this.animation == DinosaurAnimation.VELOCIRAPTOR_LEAP && this.entity.motionY < 0) {
             this.animation = DinosaurAnimation.VELOCIRAPTOR_LAND;
             this.entity.setAnimation(this.animation.get());
-        } else if (this.animation == DinosaurAnimation.VELOCIRAPTOR_LAND && this.entity.onGround) {
+        } else if (this.animation == DinosaurAnimation.VELOCIRAPTOR_LAND && (this.entity.onGround || this.entity.isSwimming())) {
             this.animation = DinosaurAnimation.IDLE;
             this.entity.setAnimation(this.animation.get());
 

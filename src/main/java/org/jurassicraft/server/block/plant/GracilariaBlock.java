@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.util.GameRuleHandler;
 
 import java.util.Random;
 
@@ -117,7 +118,7 @@ public class GracilariaBlock extends BlockBush {
 
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        if (world.getGameRules().getBoolean("plantSpreading")) {
+        if (GameRuleHandler.PLANT_SPREADING.getBoolean(world)) {
             // Make sure we have enough light.
             int spreadChance = BAD_LIGHT_SPREAD_CHANCE;
             int light = world.getLight(pos);

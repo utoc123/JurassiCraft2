@@ -3,15 +3,15 @@ package org.jurassicraft.server.container;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
-import org.jurassicraft.server.entity.base.Diet;
+import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.food.FoodHelper;
-import org.jurassicraft.server.tile.FeederTile;
 
 public class FeederContainer extends MachineContainer {
-    private FeederTile tile;
+    private FeederBlockEntity tile;
 
-    public FeederContainer(InventoryPlayer inventory, FeederTile tile) {
+    public FeederContainer(InventoryPlayer inventory, FeederBlockEntity tile) {
         super(tile);
 
         this.tile = tile;

@@ -43,18 +43,27 @@ import org.jurassicraft.client.render.entity.MuralRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.entity.SeatRenderer;
 import org.jurassicraft.client.render.entity.VenomRenderer;
-import org.jurassicraft.client.render.entity.dinosaur.RenderDinosaurDefinition;
+import org.jurassicraft.client.render.entity.dinosaur.DinosaurRenderInfo;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.NestFossilBlock;
+import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
+import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
+import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
+import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
+import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.entity.VenomEntity;
-import org.jurassicraft.server.entity.base.EntityHandler;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.MuralEntity;
@@ -67,15 +76,6 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
-import org.jurassicraft.server.tile.ActionFigureTile;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tile.DNAExtractorTile;
-import org.jurassicraft.server.tile.DNASequencerTile;
-import org.jurassicraft.server.tile.DNASynthesizerTile;
-import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tile.EmbryonicMachineTile;
-import org.jurassicraft.server.tile.FeederTile;
-import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.List;
 import java.util.Locale;
@@ -86,7 +86,7 @@ public enum RenderingHandler {
     INSTANCE;
 
     private final Minecraft mc = Minecraft.getMinecraft();
-    private Map<Dinosaur, RenderDinosaurDefinition> renderDefs = Maps.newHashMap();
+    private Map<Dinosaur, DinosaurRenderInfo> renderDefs = Maps.newHashMap();
 
     public void preInit() {
         for (Dinosaur dino : EntityHandler.getDinosaurs().values()) {
@@ -151,13 +151,13 @@ public enum RenderingHandler {
 
         ModelBakery.registerItemVariants(ItemHandler.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
 
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F));
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F));
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F));
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F));
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F));
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F));
-        this.registerRenderDef(new RenderDinosaurDefinition(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F));
 
         RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());
@@ -288,15 +288,15 @@ public enum RenderingHandler {
     }
 
     public void postInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorTile.class, new DNAExtractorSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureTile.class, new ActionFigureSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerTile.class, new DNASequencerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(EmbryoCalcificationMachineTile.class, new EmbryoCalcificationMachineSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(DNACombinatorHybridizerTile.class, new DNACombinatorHybridizerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(EmbryonicMachineTile.class, new EmbryonicMachineSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(DNASynthesizerTile.class, new DNASynthesizerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(IncubatorTile.class, new IncubatorSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(FeederTile.class, new FeederSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorBlockEntity.class, new DNAExtractorSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureBlockEntity.class, new ActionFigureSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerBlockEntity.class, new DNASequencerSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(EmbryoCalcificationMachineBlockEntity.class, new EmbryoCalcificationMachineSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNACombinatorHybridizerBlockEntity.class, new DNACombinatorHybridizerSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(EmbryonicMachineBlockEntity.class, new EmbryonicMachineSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNASynthesizerBlockEntity.class, new DNASynthesizerSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(IncubatorBlockEntity.class, new IncubatorSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(FeederBlockEntity.class, new FeederSpecialRenderer());
 
         RenderItem renderItem = this.mc.getRenderItem();
         ItemModelMesher modelMesher = renderItem.getItemModelMesher();
@@ -460,12 +460,12 @@ public enum RenderingHandler {
         itemModelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    private void registerRenderDef(RenderDinosaurDefinition renderDef) {
+    private void registerRenderDef(DinosaurRenderInfo renderDef) {
         this.renderDefs.put(renderDef.getDinosaur(), renderDef);
         RenderingRegistry.registerEntityRenderingHandler(renderDef.getDinosaur().getDinosaurClass(), renderDef);
     }
 
-    public RenderDinosaurDefinition getRenderDef(Dinosaur dino) {
+    public DinosaurRenderInfo getRenderDef(Dinosaur dino) {
         return this.renderDefs.get(dino);
     }
 }

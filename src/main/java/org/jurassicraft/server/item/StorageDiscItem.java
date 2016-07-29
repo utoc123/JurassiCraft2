@@ -9,8 +9,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.SynthesizableItem;
-import org.jurassicraft.server.storagedisc.StorageType;
-import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
+import org.jurassicraft.server.genetics.StorageType;
+import org.jurassicraft.server.genetics.StorageTypeRegistry;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.List;

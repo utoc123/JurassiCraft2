@@ -1,6 +1,7 @@
 package org.jurassicraft.server.dinosaur;
 
-import org.jurassicraft.server.entity.base.Diet;
+import net.minecraftforge.common.BiomeDictionary;
+import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.dinosaur.ParasaurolophusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
@@ -27,6 +28,7 @@ public class ParasaurolophusDinosaur extends Dinosaur {
         this.setScale(1.9F, 0.4F);
         this.setImprintable(true);
         this.setFlockSpeed(1.5F);
-        this.setAttackBias(-400.0);
+        this.setAttackBias(-100.0);
+        this.setSpawn(15, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
     }
 }

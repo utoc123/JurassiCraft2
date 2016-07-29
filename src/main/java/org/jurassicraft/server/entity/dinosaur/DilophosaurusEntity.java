@@ -18,10 +18,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
+import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.ai.DilophosaurusMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.DilophosaurusSpitEntityAI;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 
 public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttackMob {
     private static final DataParameter<Boolean> WATCHER_HAS_TARGET = EntityDataManager.createKey(DinosaurEntity.class, DataSerializers.BOOLEAN);
@@ -35,8 +35,6 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distance) {
-        this.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
-
         VenomEntity venom = new VenomEntity(this.worldObj, this);
         double deltaX = target.posX - venom.posX;
         double deltaY = target.posY + (double) target.getEyeHeight() - 1.100000023841858D - venom.posY;

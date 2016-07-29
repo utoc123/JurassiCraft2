@@ -5,19 +5,19 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.PetriDishSlot;
 import org.jurassicraft.server.container.slot.TestTubeSlot;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
 public class EmbryonicMachineContainer extends MachineContainer {
-    private EmbryonicMachineTile embryonicMachine;
+    private EmbryonicMachineBlockEntity embryonicMachine;
 
     public EmbryonicMachineContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
 
-        this.embryonicMachine = (EmbryonicMachineTile) tileEntity;
+        this.embryonicMachine = (EmbryonicMachineBlockEntity) tileEntity;
         this.addSlotToContainer(new TestTubeSlot(this.embryonicMachine, 0, 24, 49));
         this.addSlotToContainer(new PetriDishSlot(this.embryonicMachine, 1, 50, 49));
         this.addSlotToContainer(new CustomSlot(this.embryonicMachine, 2, 50, 13, stack -> stack.getItem() == ItemHandler.EMPTY_SYRINGE));

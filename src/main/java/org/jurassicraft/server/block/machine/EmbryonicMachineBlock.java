@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.tile.EmbryonicMachineTile;
 
 public class EmbryonicMachineBlock extends OrientedBlock {
     public EmbryonicMachineBlock() {
@@ -38,8 +38,8 @@ public class EmbryonicMachineBlock extends OrientedBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = world.getTileEntity(pos);
 
-            if (tileentity instanceof EmbryonicMachineTile) {
-                ((EmbryonicMachineTile) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tileentity instanceof EmbryonicMachineBlockEntity) {
+                ((EmbryonicMachineBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -48,8 +48,8 @@ public class EmbryonicMachineBlock extends OrientedBlock {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tileentity = world.getTileEntity(pos);
 
-        if (tileentity instanceof EmbryonicMachineTile) {
-            InventoryHelper.dropInventoryItems(world, pos, (EmbryonicMachineTile) tileentity);
+        if (tileentity instanceof EmbryonicMachineBlockEntity) {
+            InventoryHelper.dropInventoryItems(world, pos, (EmbryonicMachineBlockEntity) tileentity);
         }
 
         super.breakBlock(world, pos, state);
@@ -62,8 +62,8 @@ public class EmbryonicMachineBlock extends OrientedBlock {
         } else if (!player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if (tileEntity instanceof EmbryonicMachineTile) {
-                EmbryonicMachineTile embryonicMachine = (EmbryonicMachineTile) tileEntity;
+            if (tileEntity instanceof EmbryonicMachineBlockEntity) {
+                EmbryonicMachineBlockEntity embryonicMachine = (EmbryonicMachineBlockEntity) tileEntity;
 
                 if (embryonicMachine.isUseableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_EMBRYONIC_MACHINE_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -76,7 +76,7 @@ public class EmbryonicMachineBlock extends OrientedBlock {
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new EmbryonicMachineTile();
+        return new EmbryonicMachineBlockEntity();
     }
 
     @Override

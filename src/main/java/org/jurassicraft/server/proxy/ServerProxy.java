@@ -17,6 +17,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
+import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
+import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
+import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
+import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
+import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
+import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
@@ -28,27 +39,16 @@ import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FeederContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.DinosaurSerializers;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.DinosaurSerializers;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.genetics.StorageTypeRegistry;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.recipe.RecipeHandler;
-import org.jurassicraft.server.storagedisc.StorageTypeRegistry;
-import org.jurassicraft.server.tile.CleaningStationTile;
-import org.jurassicraft.server.tile.CultivatorTile;
-import org.jurassicraft.server.tile.DNACombinatorHybridizerTile;
-import org.jurassicraft.server.tile.DNAExtractorTile;
-import org.jurassicraft.server.tile.DNASequencerTile;
-import org.jurassicraft.server.tile.DNASynthesizerTile;
-import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
-import org.jurassicraft.server.tile.EmbryonicMachineTile;
-import org.jurassicraft.server.tile.FeederTile;
-import org.jurassicraft.server.tile.FossilGrinderTile;
-import org.jurassicraft.server.tile.IncubatorTile;
 import org.jurassicraft.server.world.WorldGenerator;
 
 public class ServerProxy implements IGuiHandler {
@@ -108,28 +108,28 @@ public class ServerProxy implements IGuiHandler {
         TileEntity tileEntity = world.getTileEntity(pos);
 
         if (tileEntity != null) {
-            if (tileEntity instanceof CleaningStationTile && id == GUI_CLEANING_STATION_ID) {
-                return new CleaningStationContainer(player.inventory, (CleaningStationTile) tileEntity);
-            } else if (tileEntity instanceof FossilGrinderTile && id == GUI_FOSSIL_GRINDER_ID) {
+            if (tileEntity instanceof CleaningStationBlockEntity && id == GUI_CLEANING_STATION_ID) {
+                return new CleaningStationContainer(player.inventory, (CleaningStationBlockEntity) tileEntity);
+            } else if (tileEntity instanceof FossilGrinderBlockEntity && id == GUI_FOSSIL_GRINDER_ID) {
                 return new FossilGrinderContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof DNASequencerTile && id == GUI_DNA_SEQUENCER_ID) {
+            } else if (tileEntity instanceof DNASequencerBlockEntity && id == GUI_DNA_SEQUENCER_ID) {
                 return new DNASequencerContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof EmbryonicMachineTile && id == GUI_EMBRYONIC_MACHINE_ID) {
+            } else if (tileEntity instanceof EmbryonicMachineBlockEntity && id == GUI_EMBRYONIC_MACHINE_ID) {
                 return new EmbryonicMachineContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof EmbryoCalcificationMachineTile && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
+            } else if (tileEntity instanceof EmbryoCalcificationMachineBlockEntity && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
                 return new EmbryoCalcificationMachineContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof DNASynthesizerTile && id == GUI_DNA_SYNTHESIZER_ID) {
+            } else if (tileEntity instanceof DNASynthesizerBlockEntity && id == GUI_DNA_SYNTHESIZER_ID) {
                 return new DNASynthesizerContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof IncubatorTile && id == GUI_INCUBATOR_ID) {
+            } else if (tileEntity instanceof IncubatorBlockEntity && id == GUI_INCUBATOR_ID) {
                 return new IncubatorContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof DNACombinatorHybridizerTile && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
+            } else if (tileEntity instanceof DNACombinatorHybridizerBlockEntity && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
                 return new DNACombinatorHybridizerContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof DNAExtractorTile && id == GUI_DNA_EXTRACTOR_ID) {
+            } else if (tileEntity instanceof DNAExtractorBlockEntity && id == GUI_DNA_EXTRACTOR_ID) {
                 return new DNAExtractorContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof CultivatorTile && id == GUI_CULTIVATOR_ID) {
+            } else if (tileEntity instanceof CultivatorBlockEntity && id == GUI_CULTIVATOR_ID) {
                 return new CultivateContainer(player.inventory, tileEntity);
-            } else if (tileEntity instanceof FeederTile && id == GUI_FEEDER_ID) {
-                return new FeederContainer(player.inventory, (FeederTile) tileEntity);
+            } else if (tileEntity instanceof FeederBlockEntity && id == GUI_FEEDER_ID) {
+                return new FeederContainer(player.inventory, (FeederBlockEntity) tileEntity);
             }
         }
 
@@ -137,7 +137,7 @@ public class ServerProxy implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         return null;
     }
 
@@ -147,6 +147,6 @@ public class ServerProxy implements IGuiHandler {
     public void openOrderGui(DinosaurEntity entity) {
     }
 
-    public void openFieldGuide(DinosaurEntity entity) {
+    public void openFieldGuide(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo fieldGuideInfo) {
     }
 }

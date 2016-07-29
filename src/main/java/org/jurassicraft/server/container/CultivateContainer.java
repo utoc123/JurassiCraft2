@@ -5,16 +5,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
 import org.jurassicraft.server.container.slot.SyringeSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
-import org.jurassicraft.server.tile.CultivatorTile;
 
 public class CultivateContainer extends MachineContainer {
-    private CultivatorTile cultivator;
+    private CultivatorBlockEntity cultivator;
 
     public CultivateContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
-        this.cultivator = (CultivatorTile) tileEntity;
+        this.cultivator = (CultivatorBlockEntity) tileEntity;
         this.addSlotToContainer(new SyringeSlot(this.cultivator, 0, 122, 44));
         this.addSlotToContainer(new Slot(this.cultivator, 1, 208, 20));
         this.addSlotToContainer(new WaterBucketSlot(this.cultivator, 2, 12, 20));

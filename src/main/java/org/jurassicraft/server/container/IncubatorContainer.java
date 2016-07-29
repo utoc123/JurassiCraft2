@@ -8,19 +8,19 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.api.IncubatorEnvironmentItem;
+import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.tile.IncubatorTile;
 
 import java.util.function.Predicate;
 
 public class IncubatorContainer extends MachineContainer {
-    private IncubatorTile incubator;
+    private IncubatorBlockEntity incubator;
 
     public IncubatorContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
 
-        this.incubator = (IncubatorTile) tileEntity;
+        this.incubator = (IncubatorBlockEntity) tileEntity;
         Predicate<ItemStack> eggPredicate = stack -> stack.getItem() == ItemHandler.EGG;
         this.addSlotToContainer(new CustomSlot(this.incubator, 0, 33, 28, eggPredicate));
         this.addSlotToContainer(new CustomSlot(this.incubator, 1, 56, 21, eggPredicate));

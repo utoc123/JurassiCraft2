@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.GrindableItem;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.base.EntityHandler;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.lang.LangHelper;
 import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;

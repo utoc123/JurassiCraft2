@@ -6,17 +6,17 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
+import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.container.slot.SyringeSlot;
-import org.jurassicraft.server.tile.EmbryoCalcificationMachineTile;
 
 public class EmbryoCalcificationMachineContainer extends MachineContainer {
-    private EmbryoCalcificationMachineTile calcificationMachine;
+    private EmbryoCalcificationMachineBlockEntity calcificationMachine;
 
     public EmbryoCalcificationMachineContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
 
-        this.calcificationMachine = (EmbryoCalcificationMachineTile) tileEntity;
+        this.calcificationMachine = (EmbryoCalcificationMachineBlockEntity) tileEntity;
 
         this.addSlotToContainer(new SyringeSlot(this.calcificationMachine, 0, 34, 14));
         this.addSlotToContainer(new CustomSlot(this.calcificationMachine, 1, 34, 50, stack -> stack.getItem() == Items.EGG));

@@ -5,8 +5,8 @@ import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
-import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GrowthStage;
 
 import java.util.EnumMap;
 import java.util.Map;

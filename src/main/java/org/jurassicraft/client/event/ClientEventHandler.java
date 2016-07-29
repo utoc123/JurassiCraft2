@@ -12,15 +12,11 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.proxy.ClientProxy;
-import org.jurassicraft.client.render.entity.IDinosaurRenderer;
-import org.jurassicraft.server.entity.base.DinosaurEntity;
 import org.lwjgl.opengl.GL11;
 
 public class ClientEventHandler {
@@ -28,23 +24,6 @@ public class ClientEventHandler {
     private static final ResourceLocation PATREON_BADGE = new ResourceLocation(JurassiCraft.MODID, "textures/items/patreon_badge.png");
 
     private boolean isGUI;
-
-    @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void preRender(RenderLivingEvent.Pre event) {
-        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer) {
-            IDinosaurRenderer dinoRenderer = (IDinosaurRenderer) event.getRenderer();
-            DinosaurEntity entityDinosaur = (DinosaurEntity) event.getEntity();
-
-            dinoRenderer.setModel(dinoRenderer.getRenderDef().getModel(entityDinosaur.getGrowthStage()));
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-    public void postRender(RenderLivingEvent.Post event) {
-        if (event.getEntity() instanceof DinosaurEntity && event.getRenderer() instanceof IDinosaurRenderer) {
-            GlStateManager.color(1.0F, 1.0F, 1.0F);
-        }
-    }
 
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event) {

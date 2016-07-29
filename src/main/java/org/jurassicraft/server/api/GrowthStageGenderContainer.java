@@ -1,6 +1,6 @@
 package org.jurassicraft.server.api;
 
-import org.jurassicraft.server.entity.base.GrowthStage;
+import org.jurassicraft.server.entity.GrowthStage;
 
 public class GrowthStageGenderContainer {
     public GrowthStage growthStage;
