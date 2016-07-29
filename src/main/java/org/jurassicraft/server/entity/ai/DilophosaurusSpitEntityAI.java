@@ -5,6 +5,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.math.MathHelper;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
@@ -18,6 +19,7 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
     private int maxRangedAttackTime;
     private float attackRadius;
     private float maxAttackDistance;
+    private int animationTimer = -1;
 
     public DilophosaurusSpitEntityAI(DilophosaurusEntity dilophosaurus, double speed, int maxAttackTime, float maxAttackDistance) {
         this(dilophosaurus, speed, maxAttackTime, maxAttackTime, maxAttackDistance);
@@ -57,6 +59,7 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
         this.target = null;
         this.seeTime = 0;
         this.rangedAttackTime = -1;
+        this.animationTimer = -1;
     }
 
     @Override
@@ -82,12 +85,20 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
             if (distance > (double) this.maxAttackDistance || !canSee) {
                 return;
             }
+            this.dilophosaurus.playSound(SoundHandler.DILOPHOSAURUS_SPIT, this.dilophosaurus.getSoundVolume(), this.dilophosaurus.getSoundPitch());
             this.dilophosaurus.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
-            float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;
-            this.dilophosaurus.attackEntityWithRangedAttack(this.target, MathHelper.clamp_float(scaledDistance, 0.1F, 1.0F));
-            this.rangedAttackTime = MathHelper.floor_float(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
+            this.animationTimer = 20;
         } else if (this.rangedAttackTime < 0) {
             float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;
+            this.rangedAttackTime = MathHelper.floor_float(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
+        }
+
+        if (this.animationTimer >= 0) {
+            this.animationTimer--;
+        }
+        if (this.animationTimer == 0) {
+            float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;
+            this.dilophosaurus.attackEntityWithRangedAttack(this.target, MathHelper.clamp_float(scaledDistance, 0.1F, 1.0F));
             this.rangedAttackTime = MathHelper.floor_float(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
         }
     }

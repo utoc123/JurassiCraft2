@@ -51,7 +51,9 @@
     "sounds": [
       "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_living_1",
       "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_living_2",
-      "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_living_3"
+      "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_living_3",
+      "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_living_4",
+      "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_living_5"
     ]
   },
   "dilophosaurus_hurt": {
@@ -59,6 +61,12 @@
     "sounds": [
       "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_hurt_1",
       "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_hurt_2"
+    ]
+  },
+  "dilophosaurus_spit": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/dilophosaurus/dilophosaurus_spit"
     ]
   },
   "dilophosaurus_death": {

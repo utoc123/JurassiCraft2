@@ -28,6 +28,7 @@ public class SoundHandler {
     public static final SoundEvent TRICERATOPS_HURT = create("triceratops_hurt");
 
     public static final SoundEvent DILOPHOSAURUS_LIVING = create("dilophosaurus_living");
+    public static final SoundEvent DILOPHOSAURUS_SPIT = create("dilophosaurus_spit");
     public static final SoundEvent DILOPHOSAURUS_HURT = create("dilophosaurus_hurt");
     public static final SoundEvent DILOPHOSAURUS_DEATH = create("dilophosaurus_death");
 
