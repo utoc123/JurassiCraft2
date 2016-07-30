@@ -142,13 +142,12 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
         if (!stacksEqual) {
             int process = this.getProcess(index);
-
-            if (process < this.getProcessCount()) {
+            if (process >= 0 && process < this.getProcessCount()) {
+                this.totalProcessTime[process] = this.getStackProcessTime(stack);
                 if (!this.canProcess(process)) {
-                    this.totalProcessTime[process] = this.getStackProcessTime(stack);
                     this.processTime[process] = 0;
-                    this.markDirty();
                 }
+                this.markDirty();
             }
         }
     }

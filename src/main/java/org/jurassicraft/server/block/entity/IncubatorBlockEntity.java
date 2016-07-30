@@ -44,7 +44,7 @@ public class IncubatorBlockEntity extends MachineBaseBlockEntity {
     @Override
     protected int getProcess(int slot) {
         if (slot == 5) {
-            return 0;
+            return -1;
         } else {
             return slot;
         }
