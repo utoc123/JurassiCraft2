@@ -15,6 +15,8 @@ public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity> {
         AdvancedModelRenderer neck3 = model.getCube("Neck 3");
         AdvancedModelRenderer neck2 = model.getCube("Neck 2");
         AdvancedModelRenderer neck1 = model.getCube("Neck 1");
+        AdvancedModelRenderer shoulders = model.getCube("Body shoulders");
+        AdvancedModelRenderer main = model.getCube("Body MAIN");
         AdvancedModelRenderer waist = model.getCube("Body hips");
         AdvancedModelRenderer tail1 = model.getCube("Tail 1");
         AdvancedModelRenderer tail2 = model.getCube("Tail 2");
@@ -28,8 +30,22 @@ public class TriceratopsAnimator extends DinosaurAnimator<TriceratopsEntity> {
         AdvancedModelRenderer armUpperRight = model.getCube("FrontLeg Upper Right");
         AdvancedModelRenderer armLowerRight = model.getCube("FrontLeg MID Right");
         AdvancedModelRenderer handRight = model.getCube("FrontLeg FOOT Right");
+        AdvancedModelRenderer leftThigh = model.getCube("RearLeg Upper Left");
+        AdvancedModelRenderer rightThigh = model.getCube("RearLeg Upper Right");
 
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck3, neck2, neck1, shoulders, main, waist };
+
+        float globalSpeed = 1.0F;
+        float globalDegree = 0.8F;
+
+        model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(leftThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+
+        model.chainWave(tail, globalSpeed * 0.25F, globalDegree * 0.1F, 1, f, f1);
+        model.chainSwing(tail, globalSpeed * 0.25F, globalDegree * 0.25F, 2, f, f1);
+        model.chainWave(body, globalSpeed * 0.25F, globalDegree * 0.05F, 3, f, f1);
 
         model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticks, 1F);
         model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticks, 1F);

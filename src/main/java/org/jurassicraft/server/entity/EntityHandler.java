@@ -141,7 +141,7 @@ public class EntityHandler {
     }
 
     public static List<Dinosaur> getDinosaursFromAmber() {
-        List<Dinosaur> amberDinos = new ArrayList<>();
+        List<Dinosaur> amberDinos = new LinkedList<>();
 
         for (Dinosaur dino : getRegisteredDinosaurs()) {
             if (!dino.isMarineAnimal() && !(dino instanceof Hybrid)) {
@@ -157,7 +157,7 @@ public class EntityHandler {
     }
 
     public static List<Dinosaur> getRegisteredDinosaurs() {
-        List<Dinosaur> dinosaurs = new ArrayList<>();
+        List<Dinosaur> dinosaurs = new LinkedList<>();
 
         for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.DINOSAURS.entrySet()) {
             Dinosaur dinosaur = entry.getValue();
@@ -171,7 +171,7 @@ public class EntityHandler {
     }
 
     public static List<Dinosaur> getPrehistoricDinosaurs() {
-        List<Dinosaur> dinosaurs = new ArrayList<>();
+        List<Dinosaur> dinosaurs = new LinkedList<>();
 
         for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.DINOSAURS.entrySet()) {
             Dinosaur dinosaur = entry.getValue();

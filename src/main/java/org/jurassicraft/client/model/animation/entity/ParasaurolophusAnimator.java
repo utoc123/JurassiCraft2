@@ -15,8 +15,11 @@ public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEnt
 
         AdvancedModelRenderer neck1 = model.getCube("Neck1");
         AdvancedModelRenderer neck2 = model.getCube("Neck2");
+        AdvancedModelRenderer neck3 = model.getCube("Neck3");
 
         AdvancedModelRenderer waist = model.getCube("Body1");
+        AdvancedModelRenderer body2 = model.getCube("Body2");
+        AdvancedModelRenderer body3 = model.getCube("Body3");
 
         AdvancedModelRenderer tail1 = model.getCube("Tail1");
         AdvancedModelRenderer tail2 = model.getCube("Tail2");
@@ -33,7 +36,22 @@ public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEnt
         AdvancedModelRenderer lowerArmLeft = model.getCube("Lower Arm Left");
         AdvancedModelRenderer leftHand = model.getCube("Left Hand");
 
+        AdvancedModelRenderer leftThigh = model.getCube("Thigh Left");
+        AdvancedModelRenderer rightThigh = model.getCube("Thigh Right");
+
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
+        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck3, neck2, neck1, waist, body2, body3 };
+
+        float globalSpeed = 0.5F;
+        float globalDegree = 0.8F;
+
+        model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+        model.bob(leftThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
+
+        model.chainWave(tail, globalSpeed * 0.25F, globalDegree * 0.1F, 1, f, f1);
+        model.chainSwing(tail, globalSpeed * 0.25F, globalDegree * 0.25F, 2, f, f1);
+        model.chainWave(body, globalSpeed * 0.25F, globalDegree * 0.05F, 3, f, f1);
 
         model.walk(neck1, 0.1F, 0.07F, false, -1F, 0F, ticks, 0.25F);
         model.walk(head, 0.1F, 0.07F, true, 0F, 0F, ticks, 0.25F);

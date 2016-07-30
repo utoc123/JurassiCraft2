@@ -3,6 +3,7 @@ package org.jurassicraft.server.entity.ai;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.DinosaurEntity;
 
 import java.util.LinkedList;
@@ -50,6 +51,10 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
     @Override
     public boolean shouldExecute() {
         if (this.entity.getRNG().nextInt(10) != 0) {
+            return false;
+        }
+
+        if (!this.entity.getMetabolism().isHungry() && JurassiCraft.CONFIG.huntWhenHungry) {
             return false;
         }
 
