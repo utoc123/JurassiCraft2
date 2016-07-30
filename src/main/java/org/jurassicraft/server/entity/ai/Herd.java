@@ -321,7 +321,9 @@ public class Herd implements Iterable<DinosaurEntity> {
         double score = 0.0F;
 
         for (EntityLivingBase entity : entities) {
-            score += entity.getHealth() * entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
+            if (entity != null && entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null) {
+                score += entity.getHealth() * entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
+            }
         }
 
         return score;
