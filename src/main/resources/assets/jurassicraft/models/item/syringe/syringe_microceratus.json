@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "jurassicraft:items/syringe/syringe",
-    "layer1": "jurassicraft:items/overlay/microceratus"
-  }
-}

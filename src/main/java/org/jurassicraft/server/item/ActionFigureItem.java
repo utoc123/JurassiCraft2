@@ -135,7 +135,7 @@ public class ActionFigureItem extends Item {
             } else if (mode == 2) {
                 modeString = "female";
             }
-            player.addChatMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+            player.addChatMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }

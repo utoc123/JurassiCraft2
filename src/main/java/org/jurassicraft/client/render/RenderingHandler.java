@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.entity.BrachiosaurusAnimator;
+import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
 import org.jurassicraft.client.model.animation.entity.DilophosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.GallimimusAnimator;
 import org.jurassicraft.client.model.animation.entity.ParasaurolophusAnimator;
@@ -152,6 +153,7 @@ public enum RenderingHandler {
         ModelBakery.registerItemVariants(ItemHandler.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
 
         this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F));
+        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F));
         this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F));
         this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F));
         this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F));
@@ -223,7 +225,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(modelMesher, BlockHandler.CULTIVATOR_TOP, "cultivate_bottom", "inventory");
 
         this.registerBlockRenderer(modelMesher, BlockHandler.AMBER_ORE, "amber_ore", "inventory");
-//        this.registerBlockRenderer(modelMesher, BlockHandler.ICE_SHARD, "ice_shard", "inventory");
+        this.registerBlockRenderer(modelMesher, BlockHandler.ICE_SHARD, "ice_shard", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.CLEANING_STATION, "cleaning_station", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.FOSSIL_GRINDER, "fossil_grinder", "inventory");
         this.registerBlockRenderer(modelMesher, BlockHandler.DNA_SEQUENCER, "dna_sequencer", "inventory");
@@ -326,7 +328,7 @@ public enum RenderingHandler {
         this.registerItemRenderer(modelMesher, ItemHandler.HARD_DRIVE, "disc_reader", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.LASER, "laser", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.DNA_NUCLEOTIDES, "dna_base_material", "inventory");
-//        this.registerItemRenderer(modelMesher, ItemHandler.SEA_LAMPREY, "sea_lamprey", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.SEA_LAMPREY, "sea_lamprey", "inventory");
 
         this.registerItemRenderer(modelMesher, ItemHandler.AMBER, 0, "amber_mosquito", "inventory");
         this.registerItemRenderer(modelMesher, ItemHandler.AMBER, 1, "amber_aphid", "inventory");

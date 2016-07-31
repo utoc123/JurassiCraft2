@@ -23,7 +23,13 @@ public class SleepEntityAI extends EntityAIBase {
     public boolean shouldExecute() {
         World world = this.dinosaur.worldObj;
 
-        if ((this.dinosaur.onGround || this.dinosaur.isRiding()) && !this.dinosaur.isDead && !world.isRemote && this.dinosaur.shouldSleep() && !this.dinosaur.isSleeping() && this.dinosaur.getStayAwakeTime() <= 0) {
+        boolean marineAnimal = this.dinosaur.getDinosaur().isMarineAnimal();
+
+        if ((this.dinosaur.onGround || this.dinosaur.isRiding() || marineAnimal) && !this.dinosaur.isDead && this.dinosaur.shouldSleep() && !this.dinosaur.isSleeping() && this.dinosaur.getStayAwakeTime() <= 0) {
+            if (marineAnimal) {
+                return true;
+            }
+
             int range = 8;
 
             int posX = (int) this.dinosaur.posX;

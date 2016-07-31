@@ -1174,7 +1174,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public boolean areEyelidsClosed() {
-        return (this.isCarcass || this.isSleeping) || this.ticksExisted % 100 < 4;
+        return !this.dinosaur.isMarineAnimal() && ((this.isCarcass || this.isSleeping) || this.ticksExisted % 100 < 4);
     }
 
     public boolean getUseInertialTweens() {

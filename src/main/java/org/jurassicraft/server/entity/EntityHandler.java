@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.dinosaur.BrachiosaurusDinosaur;
+import org.jurassicraft.server.dinosaur.CoelacanthDinosaur;
 import org.jurassicraft.server.dinosaur.DilophosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.dinosaur.GallimimusDinosaur;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 public class EntityHandler {
     public static final Dinosaur BRACHIOSAURUS = new BrachiosaurusDinosaur();
+    public static final Dinosaur COELACANTH = new CoelacanthDinosaur();
     public static final Dinosaur DILOPHOSAURUS = new DilophosaurusDinosaur();
     public static final Dinosaur GALLIMIMUS = new GallimimusDinosaur();
     public static final Dinosaur PARASAUROLOPHUS = new ParasaurolophusDinosaur();
@@ -60,6 +62,7 @@ public class EntityHandler {
 
     public static void init() {
         registerDinosaur(0, VELOCIRAPTOR);
+        registerDinosaur(1, COELACANTH);
         registerDinosaur(3, BRACHIOSAURUS);
         registerDinosaur(7, DILOPHOSAURUS);
         registerDinosaur(9, GALLIMIMUS);

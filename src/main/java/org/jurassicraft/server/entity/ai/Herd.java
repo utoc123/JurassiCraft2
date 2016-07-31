@@ -210,21 +210,19 @@ public class Herd implements Iterable<DinosaurEntity> {
 
         List<Herd> otherHerds = new LinkedList<>();
 
-        for (DinosaurEntity entity : this.leader.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, searchBounds)) {
-            if (this.leader.getClass().isAssignableFrom(entity.getClass())) {
-                if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
-                    Herd otherHerd = entity.herd;
-                    if (otherHerd == null) {
-                        if (this.size() >= this.herdType.getMaxHerdSize()) {
-                            if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDiet().isCarnivorous() && !this.enemies.contains(entity)) {
-                                this.enemies.add(entity);
-                            }
-                            return;
+        for (DinosaurEntity entity : this.leader.worldObj.getEntitiesWithinAABB(this.leader.getClass(), searchBounds)) {
+            if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
+                Herd otherHerd = entity.herd;
+                if (otherHerd == null) {
+                    if (this.size() >= this.herdType.getMaxHerdSize()) {
+                        if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDiet().isCarnivorous() && !this.enemies.contains(entity)) {
+                            this.enemies.add(entity);
                         }
-                        this.addMember(entity);
-                    } else if (otherHerd != this && !otherHerds.contains(otherHerd)) {
-                        otherHerds.add(otherHerd);
+                        return;
                     }
+                    this.addMember(entity);
+                } else if (otherHerd != this && !otherHerds.contains(otherHerd)) {
+                    otherHerds.add(otherHerd);
                 }
             }
         }
@@ -260,6 +258,10 @@ public class Herd implements Iterable<DinosaurEntity> {
     }
 
     public Vec3d getCenterPosition() {
+        if (this.members.size() == 1) {
+            return this.leader.getPositionVector();
+        }
+
         double x = 0.0;
         double z = 0.0;
 

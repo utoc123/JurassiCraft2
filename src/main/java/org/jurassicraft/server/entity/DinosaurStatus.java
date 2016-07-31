@@ -10,6 +10,12 @@ public enum DinosaurStatus {
             return entity.getDinosaur().getDiet().isCarnivorous();
         }
     },
+    PISCIVOROUS {
+        @Override
+        public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
+            return entity.getDinosaur().getDiet().isPiscivorous();
+        }
+    },
     HERBIVOROUS {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {

@@ -142,7 +142,9 @@ public class AnimationPass {
 
     public boolean updateAnimationTick(DinosaurEntity entity, float ticks) {
         float incrementAmount = (ticks - this.prevTicks) * this.getAnimationSpeed(entity);
-
+        if (this.animationTick < 0.0F) {
+            this.animationTick = 0.0F;
+        }
         if (!DinosaurAnimation.getAnimation(this.animation).shouldHold() || this.poseIndex < this.poseCount) {
             this.animationTick += incrementAmount;
 
@@ -207,6 +209,7 @@ public class AnimationPass {
     protected void startAnimation(DinosaurEntity entity) {
         float[][] pose = this.animations.get(this.animation);
         if (pose != null) {
+            this.pose = this.poses[(int) this.animations.get(this.animation)[this.poseIndex][0]];
             this.poseLength = Math.max(1, pose[this.poseIndex][1]);
             this.animationTick = 0;
 

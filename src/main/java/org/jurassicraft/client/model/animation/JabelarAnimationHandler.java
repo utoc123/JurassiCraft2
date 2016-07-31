@@ -22,10 +22,12 @@ public class JabelarAnimationHandler {
 
     private final AnimationPass DEFAULT_PASS;
     private final AnimationPass MOVEMENT_PASS;
+    private final AnimationPass ON_LAND_PASS;
 
     public JabelarAnimationHandler(DinosaurEntity entity, DinosaurModel model, PosedCuboid[][] poses, Map<Animation, float[][]> poseSequences, boolean useInertialTweens) {
         this.DEFAULT_PASS = new AnimationPass(poseSequences, poses, useInertialTweens);
         this.MOVEMENT_PASS = new MovementAnimationPass(poseSequences, poses, useInertialTweens);
+        this.ON_LAND_PASS = new OnLandAnimationPass(poseSequences, poses, useInertialTweens);
 
         this.init(entity, model);
     }
@@ -44,11 +46,17 @@ public class JabelarAnimationHandler {
 
         this.DEFAULT_PASS.init(parts, entity);
         this.MOVEMENT_PASS.init(parts, entity);
+        if (entity.getDinosaur().isMarineAnimal()) {
+            this.ON_LAND_PASS.init(parts, entity);
+        }
     }
 
     public void performAnimations(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float ticks) {
         this.DEFAULT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
-        this.MOVEMENT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+        if (!entity.isCarcass() && entity.getDinosaur().isMarineAnimal()) {
+            this.MOVEMENT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+            this.ON_LAND_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+        }
     }
 
     private AdvancedModelRenderer[] getParts(DinosaurModel model) {

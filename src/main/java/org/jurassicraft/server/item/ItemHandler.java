@@ -152,7 +152,7 @@ public class ItemHandler {
         registerItem(SPAWN_EGG, "Dino Spawn Egg");
         registerItem(FIELD_GUIDE, "Field Guide");
         registerItem(AMBER, "Amber");
-//        registerItem(SEA_LAMPREY, "Sea Lamprey");
+        registerItem(SEA_LAMPREY, "Sea Lamprey");
         registerItem(PLASTER_AND_BANDAGE, "Plaster And Bandage");
         registerItem(EMPTY_TEST_TUBE, "Empty Test Tube");
         registerItem(EMPTY_SYRINGE, "Empty Syringe");

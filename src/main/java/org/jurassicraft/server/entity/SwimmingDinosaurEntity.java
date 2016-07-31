@@ -6,6 +6,7 @@ import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.ai.MoveUnderwaterEntityAI;
 
 public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
@@ -18,12 +19,12 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
 
     @Override
     public void onEntityUpdate() {
-        int i = this.getAir();
+        int air = this.getAir();
         super.onEntityUpdate();
 
         if (this.isEntityAlive() && !this.isInWater()) {
-            --i;
-            this.setAir(i);
+            --air;
+            this.setAir(air);
 
             if (this.getAir() == -20) {
                 this.setAir(0);
@@ -31,20 +32,6 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
             }
         } else {
             this.setAir(300);
-        }
-    }
-
-    @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-
-        if (!this.isInWater() && this.onGround && this.rand.nextInt(20) == 0) {
-            this.motionY += 0.4D;
-            this.motionX += (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F);
-            this.motionZ += (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 0.2F);
-            this.rotationYaw = this.rand.nextFloat() * 360.0F;
-            this.onGround = false;
-            this.isAirBorne = true;
         }
     }
 
@@ -60,7 +47,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
 
     @Override
     public void moveEntityWithHeading(float strafe, float forward) {
-        if (this.isServerWorld() && this.isInWater()) {
+        if (this.isServerWorld() && this.isInWater() && !this.isCarcass()) {
             this.moveRelative(strafe, forward, 0.1F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.7D;
@@ -84,13 +71,13 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
                 double distanceX = this.posX - this.swimmingEntity.posX;
                 double distanceY = this.posY - this.swimmingEntity.posY;
                 double distanceZ = this.posZ - this.swimmingEntity.posZ;
-                double distance = distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ;
+                double distance = Math.abs(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
                 distance = (double) MathHelper.sqrt_double(distance);
                 distanceY /= distance;
                 float f = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
                 this.swimmingEntity.rotationYaw = this.limitAngle(this.swimmingEntity.rotationYaw, f, 30.0F);
-                this.swimmingEntity.setAIMoveSpeed((float) (this.swimmingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 0.5));
-                this.swimmingEntity.motionY += (double) this.swimmingEntity.getAIMoveSpeed() * distanceY * 0.1D;
+                this.swimmingEntity.setAIMoveSpeed((float) (this.swimmingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * this.speed));
+                this.swimmingEntity.motionY += (double) this.swimmingEntity.getAIMoveSpeed() * distanceY * 0.05D;
             } else {
                 this.swimmingEntity.setAIMoveSpeed(0.0F);
             }

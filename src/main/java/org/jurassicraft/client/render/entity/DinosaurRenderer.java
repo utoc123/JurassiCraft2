@@ -109,16 +109,16 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> {
         @Override
         public void doRenderLayer(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, float scale) {
             if (!entity.isInvisible()) {
-                ResourceLocation texture = this.renderer.dinosaur.getEyelidTexture(entity);
+                if (entity.areEyelidsClosed()) {
+                    ResourceLocation texture = this.renderer.dinosaur.getEyelidTexture(entity);
+                    if (texture != null) {
+                        ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
+                        if (textureObject != TextureUtil.MISSING_TEXTURE) {
+                            this.renderer.bindTexture(texture);
 
-                if (texture != null && entity.areEyelidsClosed()) {
-                    ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
-
-                    if (textureObject != TextureUtil.MISSING_TEXTURE) {
-                        this.renderer.bindTexture(texture);
-
-                        this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
-                        this.renderer.setLightmap(entity, partialTicks);
+                            this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
+                            this.renderer.setLightmap(entity, partialTicks);
+                        }
                     }
                 }
             }
