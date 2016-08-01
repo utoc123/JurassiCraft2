@@ -31,6 +31,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
     private int stayOpen;
     private boolean open;
     private DinosaurEntity feeding;
+    private int feedingExpire;
 
     @Override
     public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
@@ -150,8 +151,11 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
     @Override
     public boolean receiveClientEvent(int id, int type) {
         if (id == 0) {
-            this.open = type == 1;
-            this.worldObj.playSound(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, this.open ? 1.0F : 0.9F, false);
+            boolean newOpen = type == 1;
+            if (newOpen != this.open) {
+                this.worldObj.playSound(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, newOpen ? 1.0F : 0.9F, false);
+            }
+            this.open = newOpen;
             return true;
         } else {
             return super.receiveClientEvent(id, type);
@@ -242,6 +246,18 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
             this.stayOpen = 20;
         }
 
+        if (this.feeding != null && (this.feeding.isCarcass() || this.feeding.isDead)) {
+            this.feeding = null;
+        }
+
+        if (this.feeding != null) {
+            if (this.feedingExpire > 0) {
+                this.feedingExpire--;
+            } else {
+                this.feeding = null;
+            }
+        }
+
         if (this.open && this.openAnimation == 20) {
             if (this.stayOpen > 0) {
                 this.stayOpen--;
@@ -302,22 +318,23 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
                         this.worldObj.spawnEntityInWorld(itemEntity);
 
                         this.decrStackSize(feedSlot, 1);
+                        this.feeding.getNavigator().tryMoveToXYZ(itemEntity.posX + motionX, itemEntity.posY + motionY, itemEntity.posZ + motionZ, 0.8);
                     }
 
                     this.feeding = null;
                 }
-            } else {
+            } else if (!this.worldObj.isRemote) {
                 this.setOpen(false);
             }
         }
     }
 
     public void setOpen(boolean open) {
-        this.open = open;
-
-        if (!this.worldObj.isRemote) {
+        if (!this.worldObj.isRemote && this.open != open) {
             this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 0, open ? 1 : 0);
         }
+
+        this.open = open;
 
         if (!open) {
             this.feeding = null;
@@ -348,5 +365,10 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
 
     public void setFeeding(DinosaurEntity feeding) {
         this.feeding = feeding;
+        if (this.feeding != null) {
+            this.feedingExpire = 400;
+        } else {
+            this.feedingExpire = 0;
+        }
     }
 }

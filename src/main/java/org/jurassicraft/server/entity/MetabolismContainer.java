@@ -5,8 +5,6 @@ import net.minecraft.util.DamageSource;
 import org.jurassicraft.server.util.GameRuleHandler;
 
 public class MetabolismContainer {
-    public static final double STARVING_THRESHOLD = 0.1;
-
     public static final int MAX_DIGESTION_AMOUNT = 3000;
 
     private final int MAX_ENERGY;
