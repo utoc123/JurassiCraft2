@@ -19,12 +19,12 @@ public class FollowOwnerEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        UUID ownerId = this.entity.getOwner();
-
-        if (ownerId != null) {
-            EntityPlayer owner = this.entity.worldObj.getPlayerEntityByUUID(ownerId);
-
-            return owner != null && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW && this.isOwnerFar(owner);
+        if (this.entity.getNavigator().noPath() && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW) {
+            UUID ownerId = this.entity.getOwner();
+            if (ownerId != null) {
+                EntityPlayer owner = this.entity.worldObj.getPlayerEntityByUUID(ownerId);
+                return owner != null && this.isOwnerFar(owner);
+            }
         }
 
         return false;

@@ -39,7 +39,7 @@ public class FeederEntityAI extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        if (this.dinosaur.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) < this.dinosaur.width + 2.0) {
+        if (!this.dinosaur.worldObj.isRemote && this.dinosaur.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.dinosaur.width * 2.0) {
             TileEntity tile = this.dinosaur.worldObj.getTileEntity(this.pos);
 
             if (tile instanceof FeederBlockEntity) {
@@ -61,6 +61,6 @@ public class FeederEntityAI extends EntityAIBase {
     public boolean continueExecuting() {
         Block block = this.dinosaur.worldObj.getBlockState(this.pos).getBlock();
 
-        return this.dinosaur != null && this.path != null && this.path.equals(this.dinosaur.getNavigator().getPath()) && block == BlockHandler.FEEDER;
+        return this.dinosaur != null && this.path != null && !this.dinosaur.getNavigator().noPath() && block == BlockHandler.FEEDER;
     }
 }

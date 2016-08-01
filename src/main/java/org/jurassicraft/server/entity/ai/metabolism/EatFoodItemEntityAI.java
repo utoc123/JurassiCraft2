@@ -17,7 +17,6 @@ public class EatFoodItemEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
 
     protected EntityItem item;
-    protected boolean eaten;
 
     public EatFoodItemEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
@@ -74,27 +73,7 @@ public class EatFoodItemEntityAI extends EntityAIBase {
     }
 
     @Override
-    public void updateTask() {
-        if (this.dinosaur.getEntityBoundingBox().intersectsWith(this.item.getEntityBoundingBox().expand(1.0, 1.0, 1.0))) {
-            this.dinosaur.setAnimation(DinosaurAnimation.EATING.get());
-
-            if (this.item.getEntityItem().stackSize > 1) {
-                this.item.getEntityItem().stackSize--;
-            } else {
-                this.item.setDead();
-            }
-
-            Item item = this.item.getEntityItem().getItem();
-            this.dinosaur.getMetabolism().eat(FoodHelper.getHealAmount(item));
-            FoodHelper.applyEatEffects(this.dinosaur, item);
-            this.dinosaur.heal(10.0F);
-
-            this.eaten = true;
-        }
-    }
-
-    @Override
     public boolean continueExecuting() {
-        return this.dinosaur != null && !this.dinosaur.getNavigator().noPath() && this.item != null && !this.item.isDead && !this.eaten;
+        return this.dinosaur != null && !this.dinosaur.getNavigator().noPath() && this.item != null && !this.item.isDead;
     }
 }

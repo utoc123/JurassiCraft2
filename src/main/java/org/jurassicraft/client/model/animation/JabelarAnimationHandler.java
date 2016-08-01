@@ -53,9 +53,11 @@ public class JabelarAnimationHandler {
 
     public void performAnimations(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float ticks) {
         this.DEFAULT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
-        if (!entity.isCarcass() && entity.getDinosaur().isMarineAnimal()) {
+        if (!entity.isCarcass()) {
             this.MOVEMENT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
-            this.ON_LAND_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+            if (entity.getDinosaur().isMarineAnimal()) {
+                this.ON_LAND_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
+            }
         }
     }
 
