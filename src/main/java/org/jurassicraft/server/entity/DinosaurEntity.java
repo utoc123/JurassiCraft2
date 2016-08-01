@@ -628,24 +628,26 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.updateGrowth();
 
             if (!this.worldObj.isRemote) {
-                List<EntityItem> entitiesWithinAABB = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
-                for (EntityItem itemEntity : entitiesWithinAABB) {
-                    Item item = itemEntity.getEntityItem().getItem();
+                if (this.metabolism.isHungry()) {
+                    List<EntityItem> entitiesWithinAABB = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
+                    for (EntityItem itemEntity : entitiesWithinAABB) {
+                        Item item = itemEntity.getEntityItem().getItem();
 
-                    if (FoodHelper.isEdible(this.dinosaur.getDiet(), item)) {
-                        this.setAnimation(DinosaurAnimation.EATING.get());
+                        if (FoodHelper.isEdible(this.dinosaur.getDiet(), item)) {
+                            this.setAnimation(DinosaurAnimation.EATING.get());
 
-                        if (itemEntity.getEntityItem().stackSize > 1) {
-                            itemEntity.getEntityItem().stackSize--;
-                        } else {
-                            itemEntity.setDead();
+                            if (itemEntity.getEntityItem().stackSize > 1) {
+                                itemEntity.getEntityItem().stackSize--;
+                            } else {
+                                itemEntity.setDead();
+                            }
+
+                            this.getMetabolism().eat(FoodHelper.getHealAmount(item));
+                            FoodHelper.applyEatEffects(this, item);
+                            this.heal(10.0F);
+
+                            break;
                         }
-
-                        this.getMetabolism().eat(FoodHelper.getHealAmount(item));
-                        FoodHelper.applyEatEffects(this, item);
-                        this.heal(10.0F);
-
-                        break;
                     }
                 }
 
