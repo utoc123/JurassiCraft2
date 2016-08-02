@@ -46,7 +46,7 @@ public enum WorldGenerator implements IWorldGenerator {
             for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++) {
                 int randPosX = chunkX + random.nextInt(16);
                 int randPosZ = chunkZ + random.nextInt(16);
-                int randPosY = random.nextInt(Math.max(0, world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10));
+                int randPosY = random.nextInt(Math.max(1, world.getTopSolidOrLiquidBlock(new BlockPos(randPosX, 0, randPosZ)).getY() - 10));
 
                 this.generatePetrifiedTree(world, TreeType.values()[random.nextInt(TreeType.values().length)], randPosX, randPosY, randPosZ, random);
             }
