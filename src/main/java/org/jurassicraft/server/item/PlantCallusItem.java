@@ -11,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jurassicraft.server.block.plant.DoublePlantBlock;
 import org.jurassicraft.server.block.plant.JCBlockCropsBase;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
@@ -38,10 +39,16 @@ public class PlantCallusItem extends Item {
 
                 if (plant != null) {
                     Block block = plant.getBlock();
-                    world.setBlockState(pos.up(), block.getDefaultState());
 
                     if (!(block instanceof BlockCrops || block instanceof JCBlockCropsBase)) {
                         world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+                    }
+
+                    if (block instanceof DoublePlantBlock) {
+                        world.setBlockState(pos.up(), block.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.LOWER));
+                        world.setBlockState(pos.up(2), block.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.UPPER));
+                    } else {
+                        world.setBlockState(pos.up(), block.getDefaultState());
                     }
 
                     --stack.stackSize;
