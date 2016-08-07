@@ -4,6 +4,8 @@ import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -43,6 +45,7 @@ public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<Incubato
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
+            GlStateManager.disableRescaleNormal();
 
             EnumFacing value = state.getValue(OrientedBlock.FACING);
 
