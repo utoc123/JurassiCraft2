@@ -22,6 +22,12 @@ public enum DinosaurStatus {
             return entity.getDinosaur().getDiet().isHerbivorous();
         }
     },
+    INSECTIVOROUS {
+        @Override
+        public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
+            return entity.getDinosaur().getDiet().isInsectivorous();
+        }
+    },
     DIURNAL {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {

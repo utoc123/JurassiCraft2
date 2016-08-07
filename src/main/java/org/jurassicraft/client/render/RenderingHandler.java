@@ -19,10 +19,12 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.animation.DinosaurAnimator;
 import org.jurassicraft.client.model.animation.entity.BrachiosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
 import org.jurassicraft.client.model.animation.entity.DilophosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.GallimimusAnimator;
+import org.jurassicraft.client.model.animation.entity.MicroraptorAnimator;
 import org.jurassicraft.client.model.animation.entity.ParasaurolophusAnimator;
 import org.jurassicraft.client.model.animation.entity.TriceratopsAnimator;
 import org.jurassicraft.client.model.animation.entity.TyrannosaurusAnimator;
@@ -87,7 +89,7 @@ public enum RenderingHandler {
     INSTANCE;
 
     private final Minecraft mc = Minecraft.getMinecraft();
-    private Map<Dinosaur, DinosaurRenderInfo> renderDefs = Maps.newHashMap();
+    private Map<Dinosaur, DinosaurRenderInfo> renderInfos = Maps.newHashMap();
 
     public void preInit() {
         for (Dinosaur dino : EntityHandler.getDinosaurs().values()) {
@@ -115,7 +117,9 @@ public enum RenderingHandler {
 
             if (!dino.isMammal()) {
                 ModelBakery.registerItemVariants(ItemHandler.EGG, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
-                ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
+                if (!dino.isMarineAnimal()) {
+                    ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
+                }
             }
 
             ModelBakery.registerItemVariants(ItemHandler.DINOSAUR_MEAT, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
@@ -152,14 +156,15 @@ public enum RenderingHandler {
 
         ModelBakery.registerItemVariants(ItemHandler.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
 
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F));
-        this.registerRenderDef(new DinosaurRenderInfo(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F));
+        this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);
+        this.registerRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F);
+        this.registerRenderInfo(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F);
+        this.registerRenderInfo(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F);
+        this.registerRenderInfo(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F);
+        this.registerRenderInfo(EntityHandler.MICRORAPTOR, new MicroraptorAnimator(), 0.45F);
+        this.registerRenderInfo(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F);
+        this.registerRenderInfo(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F);
+        this.registerRenderInfo(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F);
 
         RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());
@@ -386,15 +391,13 @@ public enum RenderingHandler {
 
             for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet()) {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
-
-                if (dinosaursForType.contains(dinosaur)) {
+                 if (dinosaursForType.contains(dinosaur)) {
                     this.registerItemRenderer(modelMesher, entry.getValue(), meta, "bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
             }
 
             for (Map.Entry<String, FossilItem> entry : ItemHandler.FRESH_FOSSILS.entrySet()) {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
-
                 if (dinosaursForType.contains(dinosaur)) {
                     this.registerItemRenderer(modelMesher, entry.getValue(), meta, "fresh_bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
@@ -402,12 +405,14 @@ public enum RenderingHandler {
 
             this.registerItemRenderer(modelMesher, ItemHandler.DNA, meta, "dna/dna_" + formattedName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.EGG, meta, "egg/egg_" + formattedName, "inventory");
-            this.registerItemRenderer(modelMesher, ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.DINOSAUR_MEAT, meta, "meat/meat_" + formattedName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.DINOSAUR_STEAK, meta, "meat/steak_" + formattedName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + formattedName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.SYRINGE, meta, "syringe/syringe_" + formattedName, "inventory");
             this.registerItemRenderer(modelMesher, ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName, "inventory");
+            if (!dinosaur.isMarineAnimal()) {
+                this.registerItemRenderer(modelMesher, ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName, "inventory");
+            }
         }
 
         for (Plant plant : PlantHandler.getPrehistoricPlants()) {
@@ -462,12 +467,16 @@ public enum RenderingHandler {
         itemModelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    private void registerRenderDef(DinosaurRenderInfo renderDef) {
-        this.renderDefs.put(renderDef.getDinosaur(), renderDef);
+    private void registerRenderInfo(Dinosaur dinosaur, DinosaurAnimator<?> animator, float shadowSize) {
+        this.registerRenderInfo(new DinosaurRenderInfo(dinosaur, animator, shadowSize));
+    }
+
+    private void registerRenderInfo(DinosaurRenderInfo renderDef) {
+        this.renderInfos.put(renderDef.getDinosaur(), renderDef);
         RenderingRegistry.registerEntityRenderingHandler(renderDef.getDinosaur().getDinosaurClass(), renderDef);
     }
 
-    public DinosaurRenderInfo getRenderDef(Dinosaur dino) {
-        return this.renderDefs.get(dino);
+    public DinosaurRenderInfo getRenderInfo(Dinosaur dino) {
+        return this.renderInfos.get(dino);
     }
 }

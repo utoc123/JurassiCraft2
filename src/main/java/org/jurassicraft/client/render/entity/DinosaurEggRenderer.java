@@ -44,7 +44,7 @@ public class DinosaurEggRenderer implements IRenderFactory<DinosaurEggEntity> {
         }
 
         private DinosaurRenderInfo getRenderDef(DinosaurEggEntity entity) {
-            return RenderingHandler.INSTANCE.getRenderDef(entity.getDinosaur());
+            return RenderingHandler.INSTANCE.getRenderInfo(entity.getDinosaur());
         }
     }
 }

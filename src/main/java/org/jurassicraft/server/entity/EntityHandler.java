@@ -11,6 +11,7 @@ import org.jurassicraft.server.dinosaur.CoelacanthDinosaur;
 import org.jurassicraft.server.dinosaur.DilophosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.dinosaur.GallimimusDinosaur;
+import org.jurassicraft.server.dinosaur.MicroraptorDinosaur;
 import org.jurassicraft.server.dinosaur.ParasaurolophusDinosaur;
 import org.jurassicraft.server.dinosaur.TriceratopsDinosaur;
 import org.jurassicraft.server.dinosaur.TyrannosaurusDinosaur;
@@ -35,6 +36,7 @@ public class EntityHandler {
     public static final Dinosaur DILOPHOSAURUS = new DilophosaurusDinosaur();
     public static final Dinosaur GALLIMIMUS = new GallimimusDinosaur();
     public static final Dinosaur PARASAUROLOPHUS = new ParasaurolophusDinosaur();
+    public static final Dinosaur MICRORAPTOR = new MicroraptorDinosaur();
     public static final Dinosaur TRICERATOPS = new TriceratopsDinosaur();
     public static final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
     public static final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
@@ -63,6 +65,7 @@ public class EntityHandler {
     public static void init() {
         registerDinosaur(0, VELOCIRAPTOR);
         registerDinosaur(1, COELACANTH);
+        registerDinosaur(2, MICRORAPTOR);
         registerDinosaur(3, BRACHIOSAURUS);
         registerDinosaur(7, DILOPHOSAURUS);
         registerDinosaur(9, GALLIMIMUS);

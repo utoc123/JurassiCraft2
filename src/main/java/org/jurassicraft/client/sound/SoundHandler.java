@@ -49,10 +49,13 @@ public class SoundHandler {
     public static final SoundEvent VELOCIRAPTOR_DEATH = create("velociraptor_death");
     public static final SoundEvent VELOCIRAPTOR_ATTACK = create("velociraptor_attack");
 
+    public static final SoundEvent MICRORAPTOR_LIVING = create("microraptor_living");
+    public static final SoundEvent MICRORAPTOR_HURT = create("microraptor_hurt");
+    public static final SoundEvent MICRORAPTOR_DEATH = create("microraptor_death");
+    public static final SoundEvent MICRORAPTOR_ATTACK = create("microraptor_attack");
+
     public static SoundEvent create(String name) {
         ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
-        SoundEvent event = new SoundEvent(resource);
-        GameRegistry.register(event, resource);
-        return event;
+        return GameRegistry.register(new SoundEvent(resource), resource);
     }
 }

@@ -87,7 +87,7 @@ public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<Incubato
             GlStateManager.translate(x, y + 0.05, z);
             GlStateManager.translate(xOffset, 1.2, zOffset);
             GlStateManager.scale(-0.5F, -0.5F, -0.5F);
-            DinosaurRenderInfo renderDef = RenderingHandler.INSTANCE.getRenderDef(EntityHandler.getDinosaurById(stack.getItemDamage()));
+            DinosaurRenderInfo renderDef = RenderingHandler.INSTANCE.getRenderInfo(EntityHandler.getDinosaurById(stack.getItemDamage()));
             this.mc.getTextureManager().bindTexture(renderDef.getEggTexture());
             renderDef.getEggModel().render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
             GlStateManager.popMatrix();

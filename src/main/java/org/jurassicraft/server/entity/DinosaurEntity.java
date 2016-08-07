@@ -368,16 +368,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
 
             if (damageSource != DamageSource.drown) {
-                this.carcassHealth--;
-
                 if (!this.dead && this.carcassHealth >= 0 && this.worldObj.getGameRules().getBoolean("doMobLoot")) {
                     this.dropMeat(damageSource.getEntity());
                 }
 
-                if (this.carcassHealth < 0) {
+                if (this.carcassHealth <= 0) {
                     this.onDeath(damageSource);
                     this.setDead();
                 }
+
+                this.carcassHealth--;
             }
         }
 
@@ -868,7 +868,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
         if (carcass) {
             this.setAnimation(DinosaurAnimation.DYING.get());
-            this.carcassHealth = (int) Math.sqrt(this.width * this.height) * 2;
+            this.carcassHealth = Math.max(1, (int) Math.sqrt(this.width * this.height) * 2);
             this.ticksExisted = 0;
             this.inventory.dropItems(this.worldObj, this.rand);
         }

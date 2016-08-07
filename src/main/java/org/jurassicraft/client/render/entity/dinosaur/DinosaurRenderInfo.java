@@ -2,7 +2,6 @@ package org.jurassicraft.client.render.entity.dinosaur;
 
 import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
-import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -36,23 +35,23 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
 
     private final Dinosaur dinosaur;
     private final ITabulaModelAnimator<? extends DinosaurEntity> animator;
-    private final TabulaModel modelAdult;
-    private final TabulaModel modelInfant;
-    private TabulaModel modelJuvenile;
-    private TabulaModel modelAdolescent;
+    private final DinosaurModel modelAdult;
+    private DinosaurModel modelInfant;
+    private DinosaurModel modelJuvenile;
+    private DinosaurModel modelAdolescent;
     private TabulaModel eggModel;
     private ResourceLocation eggTexture;
     private float shadowSize = 0.65F;
 
-    public DinosaurRenderInfo(Dinosaur dinosaur, ITabulaModelAnimator<? extends DinosaurEntity> animator, float parShadowSize) {
+    public DinosaurRenderInfo(Dinosaur dinosaur, ITabulaModelAnimator<? extends DinosaurEntity> animator, float shadowSize) {
         this.dinosaur = dinosaur;
         this.animator = animator;
-        this.shadowSize = parShadowSize;
+        this.shadowSize = shadowSize;
 
-        this.modelAdult = this.getTabulaModel(dinosaur.getModelContainer(GrowthStage.ADULT));
-        this.modelInfant = this.getTabulaModel(dinosaur.getModelContainer(GrowthStage.INFANT));
-        this.modelJuvenile = this.getTabulaModel(dinosaur.getModelContainer(GrowthStage.JUVENILE));
-        this.modelAdolescent = this.getTabulaModel(dinosaur.getModelContainer(GrowthStage.ADOLESCENT));
+        this.modelAdult = this.loadModel(GrowthStage.ADULT);
+        this.modelInfant = this.loadModel(GrowthStage.INFANT);
+        this.modelJuvenile = this.loadModel(GrowthStage.JUVENILE);
+        this.modelAdolescent = this.loadModel(GrowthStage.ADOLESCENT);
 
         try {
             String name = dinosaur.getName().toLowerCase(Locale.ENGLISH);
@@ -91,8 +90,11 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
         return this.shadowSize;
     }
 
-    public DinosaurModel getTabulaModel(TabulaModelContainer tabulaModel) {
-        return new DinosaurModel(tabulaModel, this.getModelAnimator());
+    public DinosaurModel loadModel(GrowthStage stage) {
+        if (!this.dinosaur.doesSupportGrowthStage(stage)) {
+            return this.modelAdult;
+        }
+        return new DinosaurModel(this.dinosaur.getModelContainer(stage), this.getModelAnimator());
     }
 
     public Dinosaur getDinosaur() {

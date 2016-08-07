@@ -251,5 +251,36 @@
     "sounds": [
       "jurassicraft:car_move"
     ]
+  },
+  "microraptor_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/microraptor/microraptor_hurt_1",
+      "jurassicraft:dinosaurs/microraptor/microraptor_hurt_2",
+      "jurassicraft:dinosaurs/microraptor/microraptor_hurt_3"
+    ]
+  },
+  "microraptor_living": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/microraptor/microraptor_living_1",
+      "jurassicraft:dinosaurs/microraptor/microraptor_living_2",
+      "jurassicraft:dinosaurs/microraptor/microraptor_living_3",
+      "jurassicraft:dinosaurs/microraptor/microraptor_living_4",
+      "jurassicraft:dinosaurs/microraptor/microraptor_living_5"
+    ]
+  },
+  "microraptor_attack": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/microraptor/microraptor_attack_1",
+      "jurassicraft:dinosaurs/microraptor/microraptor_attack_2"
+    ]
+  },
+  "microraptor_death": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/microraptor/microraptor_death"
+    ]
   }
 }
