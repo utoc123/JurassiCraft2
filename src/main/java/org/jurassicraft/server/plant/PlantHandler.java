@@ -26,6 +26,7 @@ public class PlantHandler {
     public static final Plant LIRIODENDRITES = new LiriodendritesPlant();
     public static final Plant RAPHAELIA = new RaphaeliaPlant();
     public static final Plant ENCEPHALARTOS = new EncephalartosPlant();
+    public static final Plant PSARONIUS = new PsaroniusPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -52,6 +53,7 @@ public class PlantHandler {
         registerPlant(LIRIODENDRITES);
         registerPlant(RAPHAELIA);
         registerPlant(ENCEPHALARTOS);
+        registerPlant(PSARONIUS);
     }
 
     public static Plant getPlantById(int id) {

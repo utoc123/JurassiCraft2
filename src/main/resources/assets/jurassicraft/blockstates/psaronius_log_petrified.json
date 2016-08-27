@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "jurassicraft:psaronius_log_petrified"
+    },
+    "axis=z": {
+      "model": "jurassicraft:psaronius_log_petrified_side"
+    },
+    "axis=x": {
+      "model": "jurassicraft:psaronius_log_petrified_side",
+      "y": 90
+    },
+    "axis=none": {
+      "model": "jurassicraft:psaronius_petrified_bark"
+    }
+  }
+}

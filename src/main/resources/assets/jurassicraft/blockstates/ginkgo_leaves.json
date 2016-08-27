@@ -1,8 +1,5 @@
 {
   "variants": {
-    "normal": {
-      "model": "highlands:aspen_leaves"
-    },
     "check_decay=false,decayable=false": {
       "model": "jurassicraft:ginkgo_leaves"
     },

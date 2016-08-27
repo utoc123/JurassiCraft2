@@ -229,6 +229,14 @@ tile.calamites_stairs.name=Calamites Stairs
 tile.calamites_slab.name=Calamites Slab
 tile.calamites_log_petrified.name=Petrified Calamites Log
 
+tile.psaronius_sapling.name=Psaronius Sapling
+tile.psaronius_planks.name=Psaronius Planks
+tile.psaronius_log.name=Psaronius Log
+tile.psaronius_leaves.name=Psaronius Leaves
+tile.psaronius_stairs.name=Psaronius Stairs
+tile.psaronius_slab.name=Psaronius Slab
+tile.psaronius_log_petrified.name=Petrified Psaronius Log
+
 tile.small_royal_fern.name=Royal Fern
 tile.small_chain_fern.name=Chain Fern
 tile.small_cycad.name=Cycad
@@ -278,6 +286,7 @@ plants.calamites.name=Calamites
 plants.small_chain_fern.name=Chain Fern
 plants.small_cycad.name=Cycad
 plants.ginkgo.name=Ginkgo
+plants.psaronius.name=Psaronius
 plants.bennettitalean_cycadeoidea.name=Cycadeoidea
 plants.cry_pansy.name=Cry Pansy
 plants.scaly_tree_fern.name=Scaly Tree Fern

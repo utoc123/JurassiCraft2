@@ -5,9 +5,12 @@ import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.world.tree.CalamitesTreeGenerator;
 import org.jurassicraft.server.world.tree.GinkgoTreeGenerator;
+import org.jurassicraft.server.world.tree.PsaroniusTreeGenerator;
 
 public enum TreeType {
-    GINKGO(PlantHandler.GINKGO, new GinkgoTreeGenerator()), CALAMITES(PlantHandler.CALAMITES, new CalamitesTreeGenerator());
+    GINKGO(PlantHandler.GINKGO, new GinkgoTreeGenerator()),
+    CALAMITES(PlantHandler.CALAMITES, new CalamitesTreeGenerator()),
+    PSARONIUS(PlantHandler.PSARONIUS, new PsaroniusTreeGenerator());
 
     private WorldGenAbstractTree generator;
     private Plant plant;

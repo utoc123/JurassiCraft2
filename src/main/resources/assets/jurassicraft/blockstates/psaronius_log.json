@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "jurassicraft:psaronius_log"
+    },
+    "axis=z": {
+      "model": "jurassicraft:psaronius_log_side"
+    },
+    "axis=x": {
+      "model": "jurassicraft:psaronius_log_side",
+      "y": 90
+    },
+    "axis=none": {
+      "model": "jurassicraft:psaronius_bark"
+    }
+  }
+}

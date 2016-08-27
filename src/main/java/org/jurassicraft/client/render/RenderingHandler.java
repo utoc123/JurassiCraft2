@@ -283,10 +283,7 @@ public enum RenderingHandler {
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.MOSS);
 
         for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.ANCIENT_LEAVES.entrySet()) {
-            blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> {
-                AncientLeavesBlock block = (AncientLeavesBlock) state.getBlock();
-                return pos == null || block.getTreeType() == TreeType.GINKGO ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos);
-            }, entry.getValue());
+            blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos == null ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos), entry.getValue());
         }
 
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos == null ? ColorizerFoliage.getFoliageColorBasic() : BiomeColorHelper.getFoliageColorAtPos(access, pos), BlockHandler.MOSS);
