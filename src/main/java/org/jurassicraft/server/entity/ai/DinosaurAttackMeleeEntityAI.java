@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.player.EntityPlayer;
 import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
@@ -28,6 +29,11 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
 
     @Override
     protected double getAttackReachSqr(EntityLivingBase attackTarget) {
-        return (double) (this.attacker.width * this.attacker.width + attackTarget.width) * 1.5;
+        double reach = (this.attacker.width * this.attacker.width + attackTarget.width);
+        if (attackTarget instanceof EntityPlayer) {
+            return reach;
+        } else {
+            return reach * 1.5;
+        }
     }
 }

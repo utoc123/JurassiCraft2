@@ -45,13 +45,11 @@ public class TyrannosaurusEntity extends DinosaurEntity {
     @Override
     public void onUpdate() {
         super.onUpdate();
-
-        if (this.onGround && !this.isSwimming()) {
-            if (this.moveForward > 0 && this.stepCount <= 0) {
+        if (this.onGround && !this.isInWater()) {
+            if (this.moveForward > 0 && (this.posX - this.prevPosX > 0 || this.posZ - this.prevPosZ > 0) && this.stepCount <= 0) {
                 this.playSound(SoundHandler.STOMP, (float) this.interpolate(0.1F, 1.0F), this.getSoundPitch());
                 this.stepCount = 65;
             }
-
             this.stepCount -= this.moveForward * 9.5;
         }
     }

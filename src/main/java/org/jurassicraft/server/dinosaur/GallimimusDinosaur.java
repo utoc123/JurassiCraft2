@@ -19,7 +19,7 @@ public class GallimimusDinosaur extends Dinosaur {
         this.setStrength(1, 5);
         this.setMaximumAge(this.fromDays(35));
         this.setEyeHeight(0.58F, 2.9F);
-        this.setSizeX(0.3F, 1.5F);
+        this.setSizeX(0.3F, 1.2F);
         this.setSizeY(0.55F, 2.25F);
         this.setStorage(27);
         this.setDiet(Diet.HERBIVORE);

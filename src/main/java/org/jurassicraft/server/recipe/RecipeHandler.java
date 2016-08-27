@@ -96,8 +96,8 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(ItemHandler.CAR_SEATS), "LWL", "LSL", "III", 'L', Items.LEATHER, 'W', Blocks.WOOL, 'S', Items.SADDLE, 'I', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.CAR_WINDSCREEN), " I ", "IPI", " I ", 'I', Items.IRON_INGOT, 'P', Blocks.GLASS_PANE);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.CAR_TIRE, 2), "ISI", "SPS", "ISI", 'I', new ItemStack(Items.DYE, 1, 0), 'S', Items.SLIME_BALL, 'P', Blocks.PISTON);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.UNFINISHED_CAR), "SCW", "TEI", "TTT", 'I', Items.IRON_INGOT, 'C', ItemHandler.CAR_CHASSIS, 'W', ItemHandler.CAR_WINDSCREEN, 'T', ItemHandler.CAR_TIRE, 'E', ItemHandler.CAR_ENGINE_SYSTEM);
-        GameRegistry.addRecipe(new ItemStack(ItemHandler.UNFINISHED_CAR), "WCS", "IET", "TTT", 'I', Items.IRON_INGOT, 'C', ItemHandler.CAR_CHASSIS, 'W', ItemHandler.CAR_WINDSCREEN, 'T', ItemHandler.CAR_TIRE, 'E', ItemHandler.CAR_ENGINE_SYSTEM);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.UNFINISHED_CAR), "SCW", "TEI", "TTT", 'I', Items.IRON_INGOT, 'C', ItemHandler.CAR_CHASSIS, 'W', ItemHandler.CAR_WINDSCREEN, 'T', ItemHandler.CAR_TIRE, 'E', ItemHandler.CAR_ENGINE_SYSTEM, 'S', ItemHandler.CAR_SEATS);
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.UNFINISHED_CAR), "WCS", "IET", "TTT", 'I', Items.IRON_INGOT, 'C', ItemHandler.CAR_CHASSIS, 'W', ItemHandler.CAR_WINDSCREEN, 'T', ItemHandler.CAR_TIRE, 'E', ItemHandler.CAR_ENGINE_SYSTEM, 'S', ItemHandler.CAR_SEATS);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.JEEP_WRANGLER), "LRL", "TCR", "LRL", 'L', new ItemStack(Items.DYE, 1, 7), 'R', new ItemStack(Items.DYE, 1, 1), 'C', ItemHandler.UNFINISHED_CAR, 'T', ItemHandler.CAR_TIRE);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.JEEP_WRANGLER), "LRL", "RCT", "LRL", 'L', new ItemStack(Items.DYE, 1, 7), 'R', new ItemStack(Items.DYE, 1, 1), 'C', ItemHandler.UNFINISHED_CAR, 'T', ItemHandler.CAR_TIRE);
 

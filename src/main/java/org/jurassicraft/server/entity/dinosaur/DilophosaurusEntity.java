@@ -29,7 +29,7 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
     public DilophosaurusEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityVillager.class, EntityAnimal.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, VelociraptorEntity.class, MicroraptorEntity.class);
+        this.target(EntityPlayer.class, EntityVillager.class, EntityAnimal.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, VelociraptorEntity.class);
         this.tasks.addTask(1, new DilophosaurusMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
     }
 
@@ -85,7 +85,14 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     }
 
     public boolean hasTarget() {
-        return (this.worldObj.isRemote ? this.dataManager.get(WATCHER_HAS_TARGET) : this.getAttackTarget() != null || this.targetCooldown > 0) && !this.isCarcass() && !this.isSleeping();
+        if (!this.isCarcass() && !this.isSleeping()) {
+            if (this.worldObj.isRemote) {
+                return this.dataManager.get(WATCHER_HAS_TARGET);
+            } else {
+                return this.getAttackTarget() != null || this.targetCooldown > 0;
+            }
+        }
+        return false;
     }
 
     @Override
