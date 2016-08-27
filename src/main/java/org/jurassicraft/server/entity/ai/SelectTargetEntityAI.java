@@ -67,15 +67,17 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
 
                 for (T entity : entities) {
                     if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode)) {
-                        double score = entity.getHealth() <= 0.0F ? (this.entity.getDistanceSqToEntity(entity) / entity.getHealth()) : 0;
+                        if (this.entity.getEntitySenses().canSee(entity)) {
+                            double score = entity.getHealth() <= 0.0F ? (this.entity.getDistanceSqToEntity(entity) / entity.getHealth()) : 0;
 
-                        if (score < bestScore) {
-                            bestScore = score;
+                            if (score < bestScore) {
+                                bestScore = score;
 
-                            if (entity.getRidingEntity() instanceof EntityLivingBase) {
-                                this.targetEntity = (EntityLivingBase) entity.getRidingEntity();
-                            } else {
-                                this.targetEntity = entity;
+                                if (entity.getRidingEntity() instanceof EntityLivingBase) {
+                                    this.targetEntity = (EntityLivingBase) entity.getRidingEntity();
+                                } else {
+                                    this.targetEntity = entity;
+                                }
                             }
                         }
                     }

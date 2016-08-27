@@ -85,7 +85,14 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     }
 
     public boolean hasTarget() {
-        return (this.worldObj.isRemote ? this.dataManager.get(WATCHER_HAS_TARGET) : this.getAttackTarget() != null || this.targetCooldown > 0) && !this.isCarcass() && !this.isSleeping();
+        if (!this.isCarcass() && !this.isSleeping()) {
+            if (this.worldObj.isRemote) {
+                return this.dataManager.get(WATCHER_HAS_TARGET);
+            } else {
+                return this.getAttackTarget() != null || this.targetCooldown > 0;
+            }
+        }
+        return false;
     }
 
     @Override
