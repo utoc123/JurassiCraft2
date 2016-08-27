@@ -590,7 +590,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                             if (nextPoint.yCoord >= this.posY - 1.0) {
                                 double deltaX = this.posX - nextPoint.xCoord;
                                 double deltaZ = this.posZ - nextPoint.zCoord;
-                                if (deltaX * deltaX + deltaZ * deltaZ < 1.5) {
+                                if (deltaX * deltaX + deltaZ * deltaZ < this.width * this.width + 1.5) {
                                     this.getJumpHelper().setJumping();
                                 }
                             }
