@@ -175,6 +175,8 @@ item.car_tire.name=Car Tire
 item.car_windscreen.name=Car Windscreen
 item.jeep_wrangler.name=Jeep Wrangler
 item.unfinished_car.name=Unfinished Car
+item.phoenix_fruit.name=Phoenix Fruit
+item.phoenix_seeds.name=Phoenix Seeds
 
 item.mural.name=Mural
 
@@ -237,6 +239,14 @@ tile.psaronius_stairs.name=Psaronius Stairs
 tile.psaronius_slab.name=Psaronius Slab
 tile.psaronius_log_petrified.name=Petrified Psaronius Log
 
+tile.phoenix_sapling.name=Phoenix Sapling
+tile.phoenix_planks.name=Phoenix Planks
+tile.phoenix_log.name=Phoenix Log
+tile.phoenix_leaves.name=Phoenix Leaves
+tile.phoenix_stairs.name=Phoenix Stairs
+tile.phoenix_slab.name=Phoenix Slab
+tile.phoenix_log_petrified.name=Petrified Phoenix Log
+
 tile.small_royal_fern.name=Royal Fern
 tile.small_chain_fern.name=Chain Fern
 tile.small_cycad.name=Cycad
@@ -287,6 +297,7 @@ plants.small_chain_fern.name=Chain Fern
 plants.small_cycad.name=Cycad
 plants.ginkgo.name=Ginkgo
 plants.psaronius.name=Psaronius
+plants.phoenix.name=Phoenix
 plants.bennettitalean_cycadeoidea.name=Cycadeoidea
 plants.cry_pansy.name=Cry Pansy
 plants.scaly_tree_fern.name=Scaly Tree Fern

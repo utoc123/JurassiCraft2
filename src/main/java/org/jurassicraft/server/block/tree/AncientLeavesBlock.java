@@ -35,7 +35,7 @@ public class AncientLeavesBlock extends BlockLeaves {
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setSoundType(SoundType.PLANT);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, false)); //TODO Until we fix the decay code, keep this false
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false)); //TODO Until we fix the decay code, keep this false
         this.setCreativeTab(TabHandler.PLANTS);
     }
 
@@ -73,17 +73,18 @@ public class AncientLeavesBlock extends BlockLeaves {
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> drops = new ArrayList<>();
         Random rand = world instanceof World ? ((World) world).rand : new Random();
-        int chance = this.getSaplingDropChance(state);
+        int chance = this.treeType.getDropChance();
 
         if (fortune > 0) {
             chance -= 2 << fortune;
-            if (chance < 10) {
-                chance = 10;
+            if (chance < 2) {
+                chance = 2;
             }
         }
 
         if (rand.nextInt(chance) == 0) {
-            drops.add(new ItemStack(this.getItemDropped(state, rand, fortune), 1, this.damageDropped(state)));
+            ItemStack drop = this.treeType.getDrop();
+            drops.add(new ItemStack(drop.getItem(), 1, drop.stackSize));
         }
 
         this.captureDrops(true);
@@ -93,7 +94,7 @@ public class AncientLeavesBlock extends BlockLeaves {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(BlockHandler.ANCIENT_SAPLINGS.get(this.treeType));
+        return this.treeType.getDrop().getItem();
     }
 
     @Override

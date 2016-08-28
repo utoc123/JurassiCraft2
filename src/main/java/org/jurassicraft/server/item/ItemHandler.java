@@ -11,6 +11,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
@@ -124,6 +125,9 @@ public class ItemHandler {
 
     public static final MuralItem MURAL = new MuralItem();
 
+    public static final SaplingSeedItem PHOENIX_SEEDS = (SaplingSeedItem) new SaplingSeedItem(BlockHandler.ANCIENT_SAPLINGS.get(TreeType.PHOENIX));
+    public static final SeededFruitItem PHOENIX_FRUIT = (SeededFruitItem) new SeededFruitItem(PHOENIX_SEEDS, 4, 0.4F).setCreativeTab(TabHandler.PLANTS);
+
     public static void init() {
         registerItem(FOSSILIZED_EGG, "Fossilized Egg");
 
@@ -215,6 +219,8 @@ public class ItemHandler {
         registerItem(LIQUID_AGAR, "Liquid Agar");
 
         registerItem(CHILEAN_SEA_BASS, "Chilean Sea Bass");
+        registerItem(PHOENIX_FRUIT, "Phoenix Fruit");
+        registerItem(PHOENIX_SEEDS, "Phoenix Seeds");
 
         registerItem(CAR_CHASSIS, "Car Chassis");
         registerItem(CAR_ENGINE_SYSTEM, "Car Engine System");

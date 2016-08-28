@@ -8,9 +8,11 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
@@ -283,10 +285,16 @@ public enum RenderingHandler {
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos != null ? BiomeColorHelper.getGrassColorAtPos(access, pos) : 0xFFFFFF, BlockHandler.MOSS);
 
         for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.ANCIENT_LEAVES.entrySet()) {
-            blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos == null ? 0xFFFFFF : BiomeColorHelper.getFoliageColorAtPos(access, pos), entry.getValue());
+            blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos == null ? ColorizerFoliage.getFoliageColorBasic() : BiomeColorHelper.getFoliageColorAtPos(access, pos), entry.getValue());
         }
 
         blockColors.registerBlockColorHandler((state, access, pos, tintIndex) -> pos == null ? ColorizerFoliage.getFoliageColorBasic() : BiomeColorHelper.getFoliageColorAtPos(access, pos), BlockHandler.MOSS);
+
+        ItemColors itemColors = this.mc.getItemColors();
+
+        for (Map.Entry<TreeType, AncientLeavesBlock> entry : BlockHandler.ANCIENT_LEAVES.entrySet()) {
+            itemColors.registerItemColorHandler((stack, tintIndex) -> ColorizerFoliage.getFoliageColorBasic(), entry.getValue());
+        }
 
         this.registerBlockRenderer(modelMesher, BlockHandler.AJUGINUCULA_SMITHII, "ajuginucula_smithii", "inventory");
     }
@@ -424,6 +432,9 @@ public enum RenderingHandler {
         for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {
             this.registerItemRenderer(modelMesher, ItemHandler.FOSSILIZED_EGG, variant.ordinal(), "fossilized_egg_" + (variant.ordinal() + 1), "inventory");
         }
+
+        this.registerItemRenderer(modelMesher, ItemHandler.PHOENIX_SEEDS, "phoenix_seeds", "inventory");
+        this.registerItemRenderer(modelMesher, ItemHandler.PHOENIX_FRUIT, "phoenix_fruit", "inventory");
 
         ItemColors itemColors = this.mc.getItemColors();
         itemColors.registerItemColorHandler((stack, tintIndex) -> {
