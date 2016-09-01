@@ -9,7 +9,7 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.bones.FossilItem;
+import org.jurassicraft.server.item.FossilItem;
 
 import java.util.ArrayList;
 import java.util.List;

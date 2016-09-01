@@ -11,10 +11,11 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.tree.AncientDoorBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.item.bones.FossilItem;
+import org.jurassicraft.server.item.block.AncientDoorItem;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
@@ -24,6 +25,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class ItemHandler {
+    public static final Map<TreeType, AncientDoorItem> ANCIENT_DOORS = new HashMap<>();
+
     public static final PlasterAndBandageItem PLASTER_AND_BANDAGE = new PlasterAndBandageItem();
     public static final DinosaurSpawnEggItem SPAWN_EGG = new DinosaurSpawnEggItem();
 
@@ -233,6 +236,20 @@ public class ItemHandler {
         registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
         registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");
         registerItem(DONT_MOVE_A_MUSCLE_DISC, "Disc Don't Move A Muscle");
+
+        for (TreeType type : TreeType.values()) {
+            registerTreeType(type);
+        }
+    }
+
+    public static void registerTreeType(TreeType type) {
+        String typeName = type.name();
+
+        AncientDoorItem door = new AncientDoorItem(BlockHandler.ANCIENT_DOORS.get(type));
+
+        ANCIENT_DOORS.put(type, door);
+
+        registerItem(door, typeName + " Door Item");
     }
 
     public static void registerItemOreDict(Item item, String name, String oreDict) {

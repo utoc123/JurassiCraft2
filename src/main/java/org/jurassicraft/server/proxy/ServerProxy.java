@@ -46,7 +46,7 @@ import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.StorageTypeRegistry;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.bones.FossilItem;
+import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.recipe.RecipeHandler;
 import org.jurassicraft.server.world.WorldGenerator;

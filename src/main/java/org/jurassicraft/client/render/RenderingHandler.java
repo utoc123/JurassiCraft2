@@ -2,6 +2,7 @@ package org.jurassicraft.client.render;
 
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
@@ -80,7 +81,7 @@ import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.item.DinosaurSpawnEggItem;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.bones.FossilItem;
+import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 
@@ -161,6 +162,7 @@ public enum RenderingHandler {
 
         for (TreeType type : TreeType.values()) {
             ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockFenceGate.POWERED }).build());
+            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_DOORS.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockDoor.POWERED }).build());
         }
 
         this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);
@@ -438,6 +440,11 @@ public enum RenderingHandler {
 
         for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {
             this.registerItemRenderer(modelMesher, ItemHandler.FOSSILIZED_EGG, variant.ordinal(), "fossilized_egg_" + (variant.ordinal() + 1), "inventory");
+        }
+
+        for (TreeType type : TreeType.values()) {
+            String name = type.name().toLowerCase(Locale.ENGLISH);
+            this.registerItemRenderer(modelMesher, ItemHandler.ANCIENT_DOORS.get(type), name + "_door_item", "inventory");
         }
 
         this.registerItemRenderer(modelMesher, ItemHandler.PHOENIX_SEEDS, "phoenix_seeds", "inventory");

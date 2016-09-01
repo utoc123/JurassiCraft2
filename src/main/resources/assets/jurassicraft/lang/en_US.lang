@@ -224,6 +224,8 @@ tile.ginkgo_slab.name=Ginkgo Slab
 tile.ginkgo_log_petrified.name=Petrified Ginkgo Log
 tile.ginkgo_fence.name=Ginkgo Fence
 tile.ginkgo_fence_gate.name=Ginkgo Fence Gate
+tile.ginkgo_door.name=Ginkgo Door
+item.ginkgo_door_item.name=Ginkgo Door
 
 tile.calamites_sapling.name=Calamites Sapling
 tile.calamites_leaves.name=Calamites Leaves
@@ -234,6 +236,8 @@ tile.calamites_slab.name=Calamites Slab
 tile.calamites_log_petrified.name=Petrified Calamites Log
 tile.calamites_fence.name=Calamites Fence
 tile.calamites_fence_gate.name=Calamites Fence Gate
+tile.calamites_door.name=Calamites Door
+item.calamites_door_item.name=Calamites Door
 
 tile.psaronius_sapling.name=Psaronius Sapling
 tile.psaronius_planks.name=Psaronius Planks
@@ -244,6 +248,8 @@ tile.psaronius_slab.name=Psaronius Slab
 tile.psaronius_log_petrified.name=Petrified Psaronius Log
 tile.psaronius_fence.name=Psaronius Fence
 tile.psaronius_fence_gate.name=Psaronius Fence Gate
+tile.psaronius_door.name=Psaronius Door
+item.psaronius_door_item.name=Psaronius Door
 
 tile.phoenix_sapling.name=Phoenix Sapling
 tile.phoenix_planks.name=Phoenix Planks
@@ -254,6 +260,8 @@ tile.phoenix_slab.name=Phoenix Slab
 tile.phoenix_log_petrified.name=Petrified Phoenix Log
 tile.phoenix_fence.name=Phoenix Fence
 tile.phoenix_fence_gate.name=Phoenix Fence Gate
+tile.phoenix_door.name=Phoenix Door
+item.phoenix_door_item.name=Phoenix Door
 
 tile.small_royal_fern.name=Royal Fern
 tile.small_chain_fern.name=Chain Fern

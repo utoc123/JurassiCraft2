@@ -55,6 +55,7 @@ import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
 import org.jurassicraft.server.block.plant.UmaltolepisBlock;
 import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
 import org.jurassicraft.server.block.plant.WildOnionBlock;
+import org.jurassicraft.server.block.tree.AncientDoorBlock;
 import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientFenceBlock;
 import org.jurassicraft.server.block.tree.AncientFenceGateBlock;
@@ -85,6 +86,7 @@ public class BlockHandler {
     public static final Map<TreeType, AncientStairsBlock> ANCIENT_STAIRS = new HashMap<>();
     public static final Map<TreeType, AncientFenceBlock> ANCIENT_FENCES = new HashMap<>();
     public static final Map<TreeType, AncientFenceGateBlock> ANCIENT_FENCE_GATES = new HashMap<>();
+    public static final Map<TreeType, AncientDoorBlock> ANCIENT_DOORS = new HashMap<>();
 
     public static final Map<TreeType, AncientLogBlock> PETRIFIED_LOGS = new HashMap<>();
 
@@ -255,6 +257,7 @@ public class BlockHandler {
         AncientDoubleSlabBlock doubleSlab = new AncientDoubleSlabBlock(type, slab, planks.getDefaultState());
         AncientFenceBlock fence = new AncientFenceBlock(type);
         AncientFenceGateBlock fenceGate = new AncientFenceGateBlock(type);
+        AncientDoorBlock door = new AncientDoorBlock(type);
 
         ANCIENT_PLANKS.put(type, planks);
         ANCIENT_LOGS.put(type, log);
@@ -265,6 +268,7 @@ public class BlockHandler {
         ANCIENT_DOUBLE_SLABS.put(type, doubleSlab);
         ANCIENT_FENCES.put(type, fence);
         ANCIENT_FENCE_GATES.put(type, fenceGate);
+        ANCIENT_DOORS.put(type, door);
         PETRIFIED_LOGS.put(type, petrifiedLog);
 
         String typeName = type.name();
@@ -279,6 +283,7 @@ public class BlockHandler {
         registerBlock(doubleSlab, typeName + " Double Slab");
         registerBlock(fence, typeName + " Fence");
         registerBlock(fenceGate, typeName + " Fence Gate");
+        registerBlock(door, typeName + " Door");
 
         OreDictionary.registerOre("logWood", log);
         OreDictionary.registerOre("logWood", petrifiedLog);
@@ -290,6 +295,7 @@ public class BlockHandler {
         OreDictionary.registerOre("fenceWood", fence);
         OreDictionary.registerOre("gateWood", fenceGate);
         OreDictionary.registerOre("fenceGateWood", fenceGate);
+        OreDictionary.registerOre("doorWood", door);
 
         Blocks.FIRE.setFireInfo(leaves, 30, 60);
         Blocks.FIRE.setFireInfo(planks, 5, 20);

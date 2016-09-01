@@ -28,15 +28,17 @@ public class RecipeHandler {
             GameRegistry.addSmelting(new ItemStack(ItemHandler.DINOSAUR_MEAT, 1, id), new ItemStack(ItemHandler.DINOSAUR_STEAK, 1, id), 5F);
         }
 
-        for (Map.Entry<TreeType, AncientPlanksBlock> entry : BlockHandler.ANCIENT_PLANKS.entrySet()) {
-            TreeType type = entry.getKey();
-            AncientPlanksBlock planks = entry.getValue();
+        for (TreeType type : TreeType.values()) {
+            AncientPlanksBlock planks = BlockHandler.ANCIENT_PLANKS.get(type);
 
             GameRegistry.addShapelessRecipe(new ItemStack(planks, 4), BlockHandler.ANCIENT_LOGS.get(type));
 
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_STAIRS.get(type), 4), "w  ", "ww ", "www", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_STAIRS.get(type), 4), "  w", " ww", "www", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_SLABS.get(type), 6), "www", 'w', planks);
+            GameRegistry.addRecipe(new ItemStack(ItemHandler.ANCIENT_DOORS.get(type), 3), "ww", "ww", "ww", 'w', planks);
+            GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCES.get(type), 3), "wsw", "wsw", 'w', planks, 's', Items.STICK);
+            GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCE_GATES.get(type), 3), "sws", "sws", 'w', planks, 's', Items.STICK);
         }
 
         GameRegistry.addSmelting(new ItemStack(BlockHandler.GYPSUM_COBBLESTONE), new ItemStack(BlockHandler.GYPSUM_STONE), 1.5F);

@@ -1,4 +1,4 @@
-package org.jurassicraft.server.item.bones;
+package org.jurassicraft.server.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
