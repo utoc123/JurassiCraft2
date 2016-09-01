@@ -64,7 +64,7 @@ public class ServerProxy implements IGuiHandler {
     public static final int GUI_CULTIVATOR_ID = 9;
     public static final int GUI_FEEDER_ID = 10;
 
-    public void preInit(FMLPreInitializationEvent event) {
+    public void onPreInit(FMLPreInitializationEvent event) {
         EntityHandler.init();
         DinosaurSerializers.register();
 
@@ -86,11 +86,11 @@ public class ServerProxy implements IGuiHandler {
         MinecraftForge.EVENT_BUS.register(eventHandler);
     }
 
-    public void postInit(FMLPostInitializationEvent event) {
+    public void onPostInit(FMLPostInitializationEvent event) {
         FoodHelper.init();
     }
 
-    public void init(FMLInitializationEvent event) {
+    public void onInit(FMLInitializationEvent event) {
 
     }
 

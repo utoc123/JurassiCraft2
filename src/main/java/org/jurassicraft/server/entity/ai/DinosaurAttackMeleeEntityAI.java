@@ -29,11 +29,6 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
 
     @Override
     protected double getAttackReachSqr(EntityLivingBase attackTarget) {
-        double reach = (this.attacker.width * this.attacker.width + attackTarget.width);
-        if (attackTarget instanceof EntityPlayer) {
-            return reach;
-        } else {
-            return reach * 1.5;
-        }
+        return this.attacker.width * this.attacker.width + 1.0;
     }
 }
