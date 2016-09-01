@@ -122,6 +122,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private boolean useInertialTweens;
     private List<Class<? extends EntityLivingBase>> attackTargets = new ArrayList<>();
 
+    private boolean deserializing;
+
     private int attackCooldown;
 
     @SideOnly(Side.CLIENT)
@@ -1053,6 +1055,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
+        this.deserializing = true;
+
         super.readFromNBT(nbt);
         this.setAge(nbt.getInteger("DinosaurAge"));
         this.setCarcass(nbt.getBoolean("IsCarcass"));
@@ -1077,6 +1081,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.updateAttributes();
         this.updateBounds();
+
+        this.deserializing = false;
     }
 
     @Override
@@ -1230,15 +1236,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     protected void setSize(float width, float height) {
         if (width != this.width || height != this.height) {
             float prevWidth = this.width;
-
             this.width = width;
             this.height = height;
-
-            AxisAlignedBB bounds = this.getEntityBoundingBox();
-            this.setEntityBoundingBox(new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + (double) this.width, bounds.minY + (double) this.height, bounds.minZ + (double) this.width));
-
-            if (this.width > prevWidth && !this.firstUpdate && !this.worldObj.isRemote) {
-                this.moveEntity(prevWidth - this.width, 0.0, prevWidth - this.width);
+            if (!this.deserializing) {
+                AxisAlignedBB bounds = this.getEntityBoundingBox();
+                this.setEntityBoundingBox(new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + this.width, bounds.minY + this.height, bounds.minZ + this.width));
+                if (this.width > prevWidth && !this.firstUpdate && !this.worldObj.isRemote) {
+                    this.moveEntity(prevWidth - this.width, 0.0F, prevWidth - this.width);
+                }
+            } else {
+                float halfWidth = this.width / 2.0F;
+                this.setEntityBoundingBox(new AxisAlignedBB(this.posX - halfWidth, this.posY, this.posZ - halfWidth, this.posX + halfWidth, this.posY + this.height, this.posZ + halfWidth));
             }
         }
     }
