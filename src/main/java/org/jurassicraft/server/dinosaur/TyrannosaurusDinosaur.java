@@ -20,7 +20,7 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setStrength(5, 20);
         this.setMaximumAge(this.fromDays(60));
         this.setEyeHeight(0.6F, 3.8F);
-        this.setSizeX(0.45F, 4.0F);
+        this.setSizeX(0.45F, 3.0F);
         this.setSizeY(0.8F, 4.0F);
         this.setStorage(54);
         this.setDiet(Diet.CARNIVORE);

@@ -49,26 +49,26 @@ public class JurassiCraft {
     private Logger LOGGER;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
+    public void onPreInit(FMLPreInitializationEvent event) {
         this.LOGGER = event.getModLog();
 
         UpdateHandler.INSTANCE.registerUpdateChecker(this, "http://pastebin.com/raw/Rb96SNWb");
 
-        PROXY.preInit(event);
+        PROXY.onPreInit(event);
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        PROXY.init(event);
+    public void onInit(FMLInitializationEvent event) {
+        PROXY.onInit(event);
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        PROXY.postInit(event);
+    public void onPostInit(FMLPostInitializationEvent event) {
+        PROXY.onPostInit(event);
     }
 
     @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void onServerStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new ForceAnimationCommand());
     }
 

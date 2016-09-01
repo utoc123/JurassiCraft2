@@ -64,8 +64,8 @@ public class ClientProxy extends ServerProxy {
     public static final List<UUID> PATRONS = new ArrayList<>();
 
     @Override
-    public void preInit(FMLPreInitializationEvent event) {
-        super.preInit(event);
+    public void onPreInit(FMLPreInitializationEvent event) {
+        super.onPreInit(event);
 
         try {
             LanguageHandler.INSTANCE.loadRemoteLocalization(JurassiCraft.MODID);
@@ -80,15 +80,15 @@ public class ClientProxy extends ServerProxy {
     }
 
     @Override
-    public void init(FMLInitializationEvent event) {
-        super.init(event);
+    public void onInit(FMLInitializationEvent event) {
+        super.onInit(event);
 
         RenderingHandler.INSTANCE.init();
     }
 
     @Override
-    public void postInit(FMLPostInitializationEvent event) {
-        super.postInit(event);
+    public void onPostInit(FMLPostInitializationEvent event) {
+        super.onPostInit(event);
 
         RenderingHandler.INSTANCE.postInit();
 
