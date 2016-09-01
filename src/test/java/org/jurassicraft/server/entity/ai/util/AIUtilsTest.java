@@ -5,13 +5,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AIUtilsTest
-{
+public class AIUtilsTest {
     @Test
-    public void testFindIntersect() throws Exception
-    {
+    public void testFindIntersect() throws Exception {
         BlockPos center = new BlockPos(100, 0, 100);
-        BlockPos start  = new BlockPos(75, 0, 100);
+        BlockPos start = new BlockPos(75, 0, 100);
         BlockPos pos = AIUtils.findIntersect(center, 4, start);
 
         assertEquals("X", 96, pos.getX());
@@ -19,7 +17,7 @@ public class AIUtilsTest
         assertEquals("Z", 100, pos.getZ());
 
         center = new BlockPos(100, 0, 100);
-        start  = new BlockPos(75, 0, 75);
+        start = new BlockPos(75, 0, 75);
         pos = AIUtils.findIntersect(center, 4, start);
 
         assertEquals("X", 97, pos.getX());
@@ -27,7 +25,7 @@ public class AIUtilsTest
         assertEquals("Z", 97, pos.getZ());
 
         center = new BlockPos(100, 0, 100);
-        start  = new BlockPos(200, 0, 200);
+        start = new BlockPos(200, 0, 200);
         pos = AIUtils.findIntersect(center, 4, start);
 
         assertEquals("X", 103, pos.getX());
@@ -36,9 +34,7 @@ public class AIUtilsTest
     }
 
     @Test
-    public void testPlotCircle() throws Exception
-    {
+    public void testPlotCircle() throws Exception {
         AIUtils.plotCircle(100, 100, 10);
-
     }
 }

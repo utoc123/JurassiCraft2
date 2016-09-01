@@ -13,7 +13,6 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.LeapingMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
-import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
 
 public class MicroraptorEntity extends DinosaurEntity {
     public MicroraptorEntity(World world) {

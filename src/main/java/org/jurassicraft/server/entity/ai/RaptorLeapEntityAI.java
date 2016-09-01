@@ -3,10 +3,7 @@ package org.jurassicraft.server.entity.ai;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.client.model.animation.PoseHandler;
-import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
-import org.jurassicraft.server.entity.GrowthStage;
 
 public class RaptorLeapEntityAI extends EntityAIBase {
     private DinosaurEntity entity;

@@ -59,7 +59,7 @@ public class GallimimusAnimator extends DinosaurAnimator<GallimimusEntity> {
         model.chainWave(tail, globalSpeed * 0.25F, globalDegree * 0.05F, 1, f, f1);
         model.chainSwing(tail, globalSpeed * 0.25F, globalDegree * 0.2F, 2, f, f1);
         model.chainWave(body, globalSpeed * 0.25F, globalDegree * 0.025F, 3, f, f1);
-        
+
         model.chainWave(tail, 0.1F, 0.05F, 1, ticks, 0.25F);
         model.chainWave(body, 0.1F, -0.05F, 4, ticks, 0.25F);
         model.chainWave(armRight, 0.1F, -0.15F, 4, ticks, 0.25F);

@@ -2,9 +2,7 @@ package org.jurassicraft.server.dinosaur;
 
 import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
-import org.jurassicraft.server.entity.SleepingSchedule;
 import org.jurassicraft.server.entity.dinosaur.MicroraptorEntity;
-import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
 public class MicroraptorDinosaur extends Dinosaur {

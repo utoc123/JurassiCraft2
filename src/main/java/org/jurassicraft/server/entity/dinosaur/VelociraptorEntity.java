@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
-import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.LeapingMeleeEntityAI;
+import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 
 public class VelociraptorEntity extends DinosaurEntity {
     public VelociraptorEntity(World world) {

@@ -23,8 +23,7 @@ public class SeededFruitItem extends ItemFood {
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack)
-    {
+    public int getMaxItemUseDuration(ItemStack stack) {
         return 14;
     }
 }

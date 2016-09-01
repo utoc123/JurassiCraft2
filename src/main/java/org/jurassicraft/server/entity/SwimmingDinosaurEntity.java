@@ -6,7 +6,6 @@ import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.ai.MoveUnderwaterEntityAI;
 
 public abstract class SwimmingDinosaurEntity extends DinosaurEntity {

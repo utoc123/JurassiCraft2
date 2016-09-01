@@ -2,20 +2,22 @@ package org.jurassicraft.client.render;
 
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -147,8 +149,7 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name));
         }
 
-//        for (EnumDyeColor color : EnumDyeColor.values())
-//        {
+//        for (EnumDyeColor color : EnumDyeColor.values()) {
 //            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
 //        }
 
@@ -157,6 +158,10 @@ public enum RenderingHandler {
         }
 
         ModelBakery.registerItemVariants(ItemHandler.AMBER, new ResourceLocation("jurassicraft:amber_aphid"), new ResourceLocation("jurassicraft:amber_mosquito"));
+
+        for (TreeType type : TreeType.values()) {
+            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockFenceGate.POWERED }).build());
+        }
 
         this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);
         this.registerRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F);
@@ -208,7 +213,9 @@ public enum RenderingHandler {
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_LOGS.get(type), name + "_log", "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_STAIRS.get(type), name + "_stairs", "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_SLABS.get(type), name + "_slab", "inventory");
-            this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_DOUBLE_SLABS.get(type), name + "_double_sab", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_DOUBLE_SLABS.get(type), name + "_double_slab", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_FENCES.get(type), name + "_fence", "inventory");
+            this.registerBlockRenderer(modelMesher, BlockHandler.ANCIENT_FENCE_GATES.get(type), name + "_fence_gate", "inventory");
             this.registerBlockRenderer(modelMesher, BlockHandler.PETRIFIED_LOGS.get(type), name + "_log_petrified", "inventory");
         }
 
@@ -396,7 +403,7 @@ public enum RenderingHandler {
 
             for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet()) {
                 List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
-                 if (dinosaursForType.contains(dinosaur)) {
+                if (dinosaursForType.contains(dinosaur)) {
                     this.registerItemRenderer(modelMesher, entry.getValue(), meta, "bones/" + formattedName + "_" + entry.getKey(), "inventory");
                 }
             }
