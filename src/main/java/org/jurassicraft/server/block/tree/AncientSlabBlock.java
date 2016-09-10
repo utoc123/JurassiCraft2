@@ -40,7 +40,6 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
     @Override
     public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         IBlockState state = super.onBlockPlaced(world, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
-
         if (!this.isDouble()) {
             if ((facing == EnumFacing.UP || (double) hitY <= 0.5D) && facing != EnumFacing.DOWN) {
                 return state;
@@ -48,7 +47,6 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
                 return state.withProperty(HALF, BlockSlab.EnumBlockHalf.TOP);
             }
         }
-
         return state;
     }
 
