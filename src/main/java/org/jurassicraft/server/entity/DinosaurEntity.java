@@ -77,6 +77,7 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
+import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
@@ -1345,44 +1346,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public BlockPos getClosestFeeder() {
-        int posX = (int) this.posX;
-        int posY = (int) this.posY;
-        int posZ = (int) this.posZ;
-
-        int closestDist = Integer.MAX_VALUE;
-        BlockPos closestPos = null;
-
-        int range = 16;
-
-        for (int x = posX - range; x < posX + range; x++) {
-            for (int y = posY - 8; y < posY + 8; y++) {
-                for (int z = posZ - range; z < posZ + range; z++) {
-                    if (y > 0 && y < this.worldObj.getHeight()) {
-                        BlockPos pos = new BlockPos(x, y, z);
-                        TileEntity tile = this.worldObj.getTileEntity(pos);
-
-                        if (tile instanceof FeederBlockEntity) {
-                            FeederBlockEntity feeder = (FeederBlockEntity) tile;
-
-                            if (feeder.canFeedDinosaur(this.dinosaur) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
-                                int deltaX = Math.abs(posX - x);
-                                int deltaY = Math.abs(posY - y);
-                                int deltaZ = Math.abs(posZ - z);
-
-                                int distance = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
-
-                                if (distance < closestDist) {
-                                    closestDist = distance;
-                                    closestPos = pos;
-                                }
-                            }
-                        }
-                    }
+        OnionTraverser traverser = new OnionTraverser(this.getPosition(), 32);
+        for (BlockPos pos : traverser) {
+            TileEntity tile = this.worldObj.getTileEntity(pos);
+            if (tile instanceof FeederBlockEntity) {
+                FeederBlockEntity feeder = (FeederBlockEntity) tile;
+                if (feeder.canFeedDinosaur(this.dinosaur) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
+                    return pos;
                 }
             }
         }
-
-        return closestPos;
+        return null;
     }
 
     public static class FieldGuideInfo {

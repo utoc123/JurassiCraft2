@@ -61,14 +61,15 @@ public class AIUtils {
         if (!entity.isInWater()) {
             return null;
         }
-
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getPosition();
+        return findSurface(world, pos);
+    }
 
+    public static BlockPos findSurface(World world, BlockPos pos) {
         while (!world.isAirBlock(pos)) {
             pos = pos.up();
         }
-
         return pos;
     }
 

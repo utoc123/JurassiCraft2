@@ -1,15 +1,17 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.MetabolismContainer;
+import org.jurassicraft.server.entity.ai.util.AIUtils;
+import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.util.GameRuleHandler;
 
 public class DrinkEntityAI extends EntityAIBase {
@@ -28,91 +30,57 @@ public class DrinkEntityAI extends EntityAIBase {
     public boolean shouldExecute() {
         if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.ticksExisted % 4 == 0 && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
             if (this.dinosaur.getMetabolism().isThirsty()) {
-                int posX = (int) this.dinosaur.posX;
-                int posY = (int) this.dinosaur.posY;
-                int posZ = (int) this.dinosaur.posZ;
-
-                int closestDistance = Integer.MAX_VALUE;
-                BlockPos closestPos = null;
-
                 World world = this.dinosaur.worldObj;
-
-                int range = 32;
-
-                for (int x = posX - range; x < posX + range; x++) {
-                    for (int y = posY - range; y < posY + range; y++) {
-                        for (int z = posZ - range; z < posZ + range; z++) {
-                            Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
-
-                            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER) {
-                                for (int landX = x - 1; landX < x + 1; landX++) {
-                                    for (int landZ = z - 1; landZ < z + 1; landZ++) {
-                                        IBlockState state = world.getBlockState(new BlockPos(landX, y, landZ));
-
-                                        if (state.isOpaqueCube()) {
-                                            int diffX = Math.abs(posX - landX);
-                                            int diffY = Math.abs(posY - y);
-                                            int diffZ = Math.abs(posZ - landZ);
-
-                                            int distance = (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ);
-
-                                            if (distance < closestDistance) {
-                                                closestDistance = distance;
-                                                closestPos = new BlockPos(landX, y, landZ);
-                                            }
-                                        }
-                                    }
-                                }
+                BlockPos water = null;
+                OnionTraverser traverser = new OnionTraverser(this.dinosaur.getPosition(), 32);
+                for (BlockPos pos : traverser) {
+                    if (world.getBlockState(pos).getMaterial() == Material.WATER) {
+                        BlockPos surface = AIUtils.findSurface(world, pos);
+                        BlockPos shore = AIUtils.findShore(world, surface);
+                        if (shore != null) {
+                            IBlockState state = world.getBlockState(shore);
+                            if (state.isFullBlock()) {
+                                water = shore;
+                                break;
                             }
                         }
                     }
                 }
-
-                if (closestPos != null) {
-                    this.pos = closestPos;
-                    this.path = this.dinosaur.getNavigator().getPathToXYZ(closestPos.getX(), closestPos.getY(), closestPos.getZ());
-                    this.giveUpTime = 500;
+                if (water != null) {
+                    this.pos = water;
+                    this.path = this.dinosaur.getNavigator().getPathToPos(water);
+                    this.giveUpTime = 1000;
                     return this.dinosaur.getNavigator().setPath(this.path, 1.0);
                 }
             }
         }
-
         return false;
     }
 
     @Override
     public void updateTask() {
-        this.giveUpTime--;
-
-        if (this.giveUpTime <= 0) {
-            this.resetTask();
-            return;
+        if (this.giveUpTime > 0) {
+            this.giveUpTime--;
         }
-
-        this.dinosaur.getNavigator().setPath(this.path, 1.0);
-
-        if (this.path.isFinished()) {
-            if (this.dinosaur.getAnimation() != DinosaurAnimation.DRINKING.get()) {
+        if (this.path != null) {
+            this.dinosaur.getNavigator().setPath(this.path, 1.0);
+            if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(4).isVecInside(new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5))) {
                 this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
+                MetabolismContainer metabolism = this.dinosaur.getMetabolism();
+                metabolism.setWater(metabolism.getMaxWater());
             }
-
-            MetabolismContainer metabolism = this.dinosaur.getMetabolism();
-            metabolism.setWater(metabolism.getMaxWater());
         }
     }
 
     @Override
     public void resetTask() {
         super.resetTask();
-
         this.path = null;
         this.dinosaur.getNavigator().clearPathEntity();
     }
 
     @Override
     public boolean continueExecuting() {
-        Block block = this.dinosaur.worldObj.getBlockState(this.pos).getBlock();
-
-        return this.dinosaur != null && this.path != null && !this.dinosaur.getNavigator().noPath() && (block == Blocks.WATER || block == Blocks.FLOWING_WATER);
+        return this.giveUpTime > 0 && this.dinosaur != null && !(this.dinosaur.isCarcass() || this.dinosaur.isDead) && this.path != null && this.dinosaur.worldObj.getBlockState(this.pos).getMaterial() == Material.WATER;
     }
 }
