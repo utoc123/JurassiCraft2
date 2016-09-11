@@ -1347,6 +1347,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return this.dataManager.get(WATCHER_IS_RUNNING);
     }
 
+    @Override
+    public boolean getCanSpawnHere() {
+        return this.dimension == 0;
+    }
+
     public BlockPos getClosestFeeder() {
         int posX = (int) this.posX;
         int posY = (int) this.posY;
