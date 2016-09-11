@@ -18,7 +18,7 @@ import org.jurassicraft.server.util.GameRuleHandler;
 public class GrazeEntityAI extends EntityAIBase {
     public static final int EAT_RADIUS = 6;// was 25
     public static final int LOOK_RADIUS = 16;
-    private static final int GIVE_UP_TIME = 200;// 7*20 counter = 7 seconds (ish?
+    private static final int GIVE_UP_TIME = 400;// 14*20 counter = 14 seconds (ish?)
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected DinosaurEntity dinosaur;

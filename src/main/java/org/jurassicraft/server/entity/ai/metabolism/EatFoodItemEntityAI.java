@@ -24,46 +24,28 @@ public class EatFoodItemEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
             if (this.dinosaur.getMetabolism().isHungry()) {
-                double posX = this.dinosaur.posX;
-                double posY = this.dinosaur.posY;
-                double posZ = this.dinosaur.posZ;
-
-                double closestDist = Integer.MAX_VALUE;
+                double closestDistance = Integer.MAX_VALUE;
                 EntityItem closest = null;
-
                 boolean found = false;
-
                 World world = this.dinosaur.worldObj;
-
-                List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 16, posY - 16, posZ - 16, posX + 16, posY + 16, posZ + 16));
-
+                List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, this.dinosaur.getEntityBoundingBox().expand(16, 16, 16));
                 for (EntityItem entity : items) {
                     ItemStack stack = entity.getEntityItem();
-
                     Item item = stack.getItem();
-
                     if (FoodHelper.isEdible(this.dinosaur.getDinosaur().getDiet(), item)) {
-                        double deltaX = Math.abs(posX - entity.posX);
-                        double deltaY = Math.abs(posY - entity.posY);
-                        double deltaZ = Math.abs(posZ - entity.posZ);
-
-                        double distance = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
-
-                        if (distance < closestDist) {
-                            closestDist = distance;
+                        double distance = this.dinosaur.getDistanceSqToEntity(entity);
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
                             closest = entity;
-
                             found = true;
                         }
                     }
                 }
-
                 if (found) {
                     this.dinosaur.getNavigator().tryMoveToEntityLiving(closest, 1.0);
                     this.item = closest;
-
                     return true;
                 }
             }
