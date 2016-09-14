@@ -1,7 +1,7 @@
 package org.jurassicraft.server.plant;
 
 import net.minecraft.block.Block;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.food.FoodHelper;
@@ -24,6 +24,6 @@ public class AjuginuculaSmithiiPlant extends Plant {
 
     @Override
     public FoodHelper.FoodEffect[] getEffects() {
-        return new FoodHelper.FoodEffect[] { new FoodHelper.FoodEffect(new PotionEffect(Potion.getPotionFromResourceLocation("speed"), 100), 100) };
+        return new FoodHelper.FoodEffect[] { new FoodHelper.FoodEffect(new PotionEffect(MobEffects.SPEED, 100), 100) };
     }
 }

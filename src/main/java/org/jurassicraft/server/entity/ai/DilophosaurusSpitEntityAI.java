@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
@@ -40,7 +40,7 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
     public boolean shouldExecute() {
         EntityLivingBase target = this.dilophosaurus.getAttackTarget();
 
-        if (target != null && !(target.isDead || (target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass())) && !(target.getHealth() < target.getMaxHealth() * 0.9F && target.isPotionActive(Potion.getPotionFromResourceLocation("blindness")))) {
+        if (target != null && !(target.isDead || (target instanceof DinosaurEntity && ((DinosaurEntity) target).isCarcass())) && !(target.getHealth() < target.getMaxHealth() * 0.9F && target.isPotionActive(MobEffects.BLINDNESS))) {
             this.target = target;
 
             return true;
