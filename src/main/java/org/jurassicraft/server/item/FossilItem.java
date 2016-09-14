@@ -13,7 +13,6 @@ import org.jurassicraft.server.api.GrindableItem;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.tab.TabHandler;
 import org.jurassicraft.server.util.LangHelper;
 

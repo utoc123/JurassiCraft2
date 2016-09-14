@@ -11,7 +11,6 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.block.tree.AncientDoorBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;

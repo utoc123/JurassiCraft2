@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
@@ -38,8 +38,8 @@ public class VenomEntity extends EntityThrowable {
                 EntityLivingBase entityHit = (EntityLivingBase) result.entityHit;
 
                 entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 4.0F);
-                entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("blindness"), 300, 1, false, false));
-                entityHit.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("nausea"), 300, 1, false, false));
+                entityHit.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 300, 1, false, false));
+                entityHit.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300, 1, false, false));
 
                 if (!this.worldObj.isRemote) {
                     this.setDead();

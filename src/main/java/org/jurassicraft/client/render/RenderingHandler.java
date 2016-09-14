@@ -80,8 +80,8 @@ import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.item.DinosaurSpawnEggItem;
-import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.FossilItem;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 

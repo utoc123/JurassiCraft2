@@ -18,8 +18,6 @@ import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.item.ItemHandler;
 
-import java.util.Map;
-
 public class RecipeHandler {
     public static void init() {
         for (Dinosaur dinosaur : EntityHandler.getRegisteredDinosaurs()) {

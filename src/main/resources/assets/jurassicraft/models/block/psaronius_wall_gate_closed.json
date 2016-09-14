@@ -1,6 +1,6 @@
 {
-    "parent": "block/wall_gate_closed",
-    "textures": {
-        "texture": "jurassicraft:blocks/planks_psaronius"
-    }
+  "parent": "block/wall_gate_closed",
+  "textures": {
+    "texture": "jurassicraft:blocks/planks_psaronius"
+  }
 }
