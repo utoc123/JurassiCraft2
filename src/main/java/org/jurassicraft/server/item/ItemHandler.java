@@ -1,6 +1,8 @@
 package org.jurassicraft.server.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeeds;
@@ -130,6 +132,71 @@ public class ItemHandler {
     public static final SaplingSeedItem PHOENIX_SEEDS = (SaplingSeedItem) new SaplingSeedItem(BlockHandler.ANCIENT_SAPLINGS.get(TreeType.PHOENIX));
     public static final SeededFruitItem PHOENIX_FRUIT = (SeededFruitItem) new SeededFruitItem(PHOENIX_SEEDS, 4, 0.4F).setCreativeTab(TabHandler.PLANTS);
 
+    public static final BugItem CRICKETS = new BugItem(stack -> {
+        Item item = stack.getItem();
+        Block block = Block.getBlockFromItem(item);
+        if (item == Items.WHEAT_SEEDS) {
+            return 1;
+        } else if (block == Blocks.TALLGRASS) {
+            return 2;
+        } else if (item == Items.WHEAT) {
+            return 3;
+        } else if (block == Blocks.LEAVES || block == Blocks.LEAVES2) {
+            return 7;
+        } else if (block == Blocks.HAY_BLOCK) {
+            return 27;
+        }
+        return 0;
+    });
+
+    public static final BugItem COCKROACHES = new BugItem(stack -> {
+        Item item = stack.getItem();
+        Block block = Block.getBlockFromItem(item);
+        if (item == Items.WHEAT_SEEDS || item == Items.MELON_SEEDS) {
+            return 1;
+        } else if (item == Items.WHEAT || item == Items.PUMPKIN_SEEDS) {
+            return 2;
+        } else if (item == Items.MELON || item == Items.POTATO) {
+            return 3;
+        } else if (item == Items.CARROT) {
+            return 4;
+        } else if (item == Items.BREAD || item == Items.FISH) {
+            return 6;
+        } else if (item == Items.CHICKEN || item == Items.COOKED_CHICKEN) {
+            return 7;
+        } else if (item == Items.PORKCHOP || item == Items.COOKED_PORKCHOP) {
+            return 8;
+        } else if (item == Items.BEEF || item == Items.COOKED_BEEF) {
+            return 10;
+        } else if (item == ItemHandler.DINOSAUR_MEAT || item == ItemHandler.DINOSAUR_STEAK) {
+            return 12;
+        } else if (block == Blocks.HAY_BLOCK || block == Blocks.PUMPKIN) {
+            return 16;
+        } else if (block == Blocks.MELON_BLOCK) {
+            return 27;
+        }
+        return 0;
+    });
+
+    public static final BugItem MEALWORM_BEETLES = new BugItem(stack -> {
+        Item item = stack.getItem();
+        Block block = Block.getBlockFromItem(item);
+        if (item == Items.WHEAT_SEEDS || item == Items.MELON_SEEDS) {
+            return 1;
+        } else if (item == Items.PUMPKIN_SEEDS || item == Items.WHEAT) {
+            return 2;
+        } else if (item == Items.POTATO) {
+            return 3;
+        } else if (block == Blocks.CARROTS) {
+            return 4;
+        } else if (item == Items.BREAD) {
+            return 6;
+        } else if (block == Blocks.HAY_BLOCK) {
+            return 16;
+        }
+        return 0;
+    });
+
     public static void init() {
         registerItem(FOSSILIZED_EGG, "Fossilized Egg");
 
@@ -223,6 +290,10 @@ public class ItemHandler {
         registerItem(CHILEAN_SEA_BASS, "Chilean Sea Bass");
         registerItem(PHOENIX_FRUIT, "Phoenix Fruit");
         registerItem(PHOENIX_SEEDS, "Phoenix Seeds");
+
+        registerItem(CRICKETS, "Crickets");
+        registerItem(COCKROACHES, "Cockroaches");
+        registerItem(MEALWORM_BEETLES, "Mealworm Beetles");
 
         registerItem(CAR_CHASSIS, "Car Chassis");
         registerItem(CAR_ENGINE_SYSTEM, "Car Engine System");

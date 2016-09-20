@@ -11,6 +11,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.block.entity.BugCrateBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
@@ -154,6 +155,8 @@ public class BlockHandler {
 
     public static final FeederBlock FEEDER = new FeederBlock();
 
+    public static final BugCrateBlock BUG_CRATE = new BugCrateBlock();
+
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
     public static PaleoBaleBlock PALEO_BALE_FERN;
@@ -219,19 +222,20 @@ public class BlockHandler {
 
         registerBlock(CLEAR_GLASS, "Clear Glass");
 
-//        registerBlockTileEntity(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
+//        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
 //        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
-        registerBlockTileEntity(CleaningStationBlockEntity.class, CLEANING_STATION, "Cleaning Station");
-        registerBlockTileEntity(FossilGrinderBlockEntity.class, FOSSIL_GRINDER, "Fossil Grinder");
-        registerBlockTileEntity(DNASequencerBlockEntity.class, DNA_SEQUENCER, "DNA Sequencer");
-        registerBlockTileEntity(DNASynthesizerBlockEntity.class, DNA_SYNTHESIZER, "DNA Synthesizer");
-        registerBlockTileEntity(EmbryonicMachineBlockEntity.class, EMBRYONIC_MACHINE, "Embryonic Machine");
-        registerBlockTileEntity(EmbryoCalcificationMachineBlockEntity.class, EMBRYO_CALCIFICATION_MACHINE, "Embryo Calcification Machine");
-        registerBlockTileEntity(DNAExtractorBlockEntity.class, DNA_EXTRACTOR, "DNA Extractor");
-        registerBlockTileEntity(DNACombinatorHybridizerBlockEntity.class, DNA_COMBINATOR_HYBRIDIZER, "DNA Combinator Hybridizer");
-        registerBlockTileEntity(IncubatorBlockEntity.class, INCUBATOR, "Incubator");
-        registerBlockTileEntity(ActionFigureBlockEntity.class, ACTION_FIGURE, "Action Figure Block");
-        registerBlockTileEntity(FeederBlockEntity.class, FEEDER, "Feeder");
+        registerBlock(CleaningStationBlockEntity.class, CLEANING_STATION, "Cleaning Station");
+        registerBlock(FossilGrinderBlockEntity.class, FOSSIL_GRINDER, "Fossil Grinder");
+        registerBlock(DNASequencerBlockEntity.class, DNA_SEQUENCER, "DNA Sequencer");
+        registerBlock(DNASynthesizerBlockEntity.class, DNA_SYNTHESIZER, "DNA Synthesizer");
+        registerBlock(EmbryonicMachineBlockEntity.class, EMBRYONIC_MACHINE, "Embryonic Machine");
+        registerBlock(EmbryoCalcificationMachineBlockEntity.class, EMBRYO_CALCIFICATION_MACHINE, "Embryo Calcification Machine");
+        registerBlock(DNAExtractorBlockEntity.class, DNA_EXTRACTOR, "DNA Extractor");
+        registerBlock(DNACombinatorHybridizerBlockEntity.class, DNA_COMBINATOR_HYBRIDIZER, "DNA Combinator Hybridizer");
+        registerBlock(IncubatorBlockEntity.class, INCUBATOR, "Incubator");
+        registerBlock(ActionFigureBlockEntity.class, ACTION_FIGURE, "Action Figure Block");
+        registerBlock(FeederBlockEntity.class, FEEDER, "Feeder");
+        registerBlock(BugCrateBlockEntity.class, BUG_CRATE, "Bug Crate");
 
         PALEO_BALE_CYCADEOIDEA = new PaleoBaleBlock(PaleoBaleBlock.Variant.CYCADEOIDEA);
         PALEO_BALE_CYCAD = new PaleoBaleBlock(PaleoBaleBlock.Variant.CYCAD);
@@ -344,7 +348,7 @@ public class BlockHandler {
         return getMetadata(EntityHandler.getDinosaurId(dinosaur));
     }
 
-    public static void registerBlockTileEntity(Class<? extends TileEntity> tileEntity, Block block, String name) {
+    public static void registerBlock(Class<? extends TileEntity> tileEntity, Block block, String name) {
         registerBlock(block, name);
 
         GameRegistry.registerTileEntity(tileEntity, "jurassicraft:" + name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_"));

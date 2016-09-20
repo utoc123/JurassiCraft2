@@ -166,6 +166,10 @@ public class FoodHelper {
         }
     }
 
+    public static boolean isFood(Item item) {
+        return FOODS.contains(item);
+    }
+
     public static class FoodEffect {
         public PotionEffect effect;
         public int chance;

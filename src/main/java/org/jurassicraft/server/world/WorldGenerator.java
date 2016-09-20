@@ -140,7 +140,11 @@ public enum WorldGenerator implements IWorldGenerator {
         if (JurassiCraft.CONFIG.amberGeneration) {
             this.generateOre(world, chunkX, chunkZ, 20, 8, 3, BlockHandler.AMBER_ORE.getDefaultState(), random, defaultPredicate);
         }
-//        generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
+
+        if (JurassiCraft.CONFIG.iceShardGeneration) {
+            this.generateOre(world, chunkX, chunkZ, 64, 8, 1, BlockHandler.ICE_SHARD.getDefaultState(), random, defaultPredicate);
+        }
+
         if (JurassiCraft.CONFIG.gypsumGeneration) {
             this.generateOre(world, chunkX, chunkZ, 128, 32, 10, BlockHandler.GYPSUM_STONE.getDefaultState(), random, defaultPredicate);
         }

@@ -3,6 +3,7 @@ package org.jurassicraft.server.event;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraft.world.storage.loot.functions.SetMetadata;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -39,6 +41,7 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.util.GameRuleHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -213,6 +216,36 @@ public class ServerEventHandler {
             LootEntry[] recordEntries = new LootEntry[] { new LootEntryItem(ItemHandler.JURASSICRAFT_THEME_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "jurassicraft_theme"), new LootEntryItem(ItemHandler.DONT_MOVE_A_MUSCLE_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "dont_move_a_muscle"), new LootEntryItem(ItemHandler.TROODONS_AND_RAPTORS_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "troodons_and_raptors") };
 
             table.addPool(new LootPool(recordEntries, new LootCondition[0], new RandomValueRange(0, 2), new RandomValueRange(0, 0), "records"));
+        }
+    }
+
+    @SubscribeEvent
+    public void onHarvest(BlockEvent.HarvestDropsEvent event) {
+        IBlockState state = event.getState();
+        Random rand = event.getWorld().rand;
+        if (rand.nextInt(2) == 0) {
+            List<Item> bugs = new ArrayList<>();
+            if (state.getBlock() == Blocks.HAY_BLOCK) {
+                bugs.add(ItemHandler.COCKROACHES);
+                bugs.add(ItemHandler.MEALWORM_BEETLES);
+            } else if (state.getBlock() == Blocks.GRASS) {
+                if (rand.nextInt(3) == 0) {
+                    bugs.add(ItemHandler.CRICKETS);
+                }
+            } else if (state.getBlock() == Blocks.TALLGRASS) {
+                if (rand.nextInt(4) == 0) {
+                    bugs.add(ItemHandler.CRICKETS);
+                }
+            } else if (state.getBlock() == Blocks.PUMPKIN || state.getBlock() == Blocks.MELON_BLOCK) {
+                bugs.add(ItemHandler.COCKROACHES);
+                bugs.add(ItemHandler.MEALWORM_BEETLES);
+            } else if (state.getBlock() == Blocks.COCOA) {
+                bugs.add(ItemHandler.COCKROACHES);
+                bugs.add(ItemHandler.MEALWORM_BEETLES);
+            }
+            if (bugs.size() > 0) {
+                event.getDrops().add(new ItemStack(bugs.get(rand.nextInt(bugs.size()))));
+            }
         }
     }
 }

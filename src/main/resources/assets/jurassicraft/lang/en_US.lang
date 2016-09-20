@@ -177,6 +177,9 @@ item.jeep_wrangler.name=Jeep Wrangler
 item.unfinished_car.name=Unfinished Car
 item.phoenix_fruit.name=Phoenix Fruit
 item.phoenix_seeds.name=Phoenix Seeds
+item.crickets.name=Crickets
+item.cockroaches.name=Cockroaches
+item.mealworm_beetles.name=Mealworm Beetles
 
 item.mural.name=Mural
 
@@ -290,6 +293,7 @@ tile.cultivate.name={color} Cultivator
 tile.clear_glass.name=Clear Glass
 
 tile.feeder.name=Feeder
+tile.bug_crate.name=Bug Farming Crate
 
 tile.paleo_bale_cycadeoidea.name=Bennettitalean Prehistoric Plant Bale
 tile.paleo_bale_cycad.name=Cycad Prehistoric Plant Bale
@@ -350,6 +354,7 @@ container.cultivator.progress=Progress
 container.cultivator.cultivating=Cultivating
 container.close.name=Close
 container.feeder=Feeder
+container.bug_crate=Bug Farming Crate
 cultivator.proximates.name=Proximates
 cultivator.minerals.name=Minerals
 cultivator.vitamins.name=Vitamins

@@ -3,6 +3,7 @@ package org.jurassicraft.server.block.entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -93,40 +94,12 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        ItemStack[] slots = this.getSlots();
-
-        if (slots[index] != null) {
-            ItemStack stack;
-
-            if (slots[index].stackSize <= count) {
-                stack = slots[index];
-                slots[index] = null;
-                return stack;
-            } else {
-                stack = slots[index].splitStack(count);
-
-                if (slots[index].stackSize == 0) {
-                    slots[index] = null;
-                }
-
-                return stack;
-            }
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndSplit(this.getSlots(), index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        ItemStack[] slots = this.getSlots();
-
-        if (slots[index] != null) {
-            ItemStack slot = slots[index];
-            slots[index] = null;
-            return slot;
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.getSlots(), index);
     }
 
     @Override
@@ -217,7 +190,15 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
                     if (this.processTime[process] >= this.totalProcessTime[process]) {
                         this.processTime[process] = 0;
-                        this.totalProcessTime[process] = this.getStackProcessTime(slots[this.getInputs()[0]]);
+                        int total = 0;
+                        for (int input : this.getInputs()) {
+                            ItemStack stack = slots[input];
+                            if (stack != null) {
+                                total = this.getStackProcessTime(stack);
+                                break;
+                            }
+                        }
+                        this.totalProcessTime[process] = total;
                         this.processItem(process);
                     }
 
@@ -299,17 +280,13 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     public int getOutputSlot(ItemStack output) {
         ItemStack[] slots = this.getSlots();
-
         int[] outputs = this.getOutputs();
-
         for (int slot : outputs) {
             ItemStack stack = slots[slot];
-
             if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.stackSize + output.stackSize <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage())) {
                 return slot;
             }
         }
-
         return -1;
     }
 

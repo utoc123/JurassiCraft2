@@ -25,7 +25,7 @@ public class CoelacanthDinosaur extends Dinosaur {
         this.setSizeY(0.1F, 1.0F);
         this.setStorage(9);
         this.setDiet(Diet.PISCIVORE);
-        this.setSleepingSchedule(SleepingSchedule.DIURNAL);
+        this.setSleepingSchedule(SleepingSchedule.NOCTURNAL);
         this.setBones("anal_fin", "caudal_fin", "first_dorsal_fin", "pectoral_fin_bones", "pelvic_fin_bones", "second_dorsal_fin", "skull", "spine", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(1.8F, 0.22F);
