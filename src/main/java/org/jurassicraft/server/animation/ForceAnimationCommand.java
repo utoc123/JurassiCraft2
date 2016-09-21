@@ -47,8 +47,8 @@ public class ForceAnimationCommand implements ICommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
-        return 0;
+    public int compareTo(ICommand command) {
+        return this.getCommandName().compareTo(command.getCommandName());
     }
 
     @Override
