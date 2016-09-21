@@ -3,6 +3,7 @@ package org.jurassicraft.server.dinosaur;
 import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.dinosaur.MicroraptorEntity;
+import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.period.TimePeriod;
 
 public class MicroraptorDinosaur extends Dinosaur {
@@ -10,6 +11,7 @@ public class MicroraptorDinosaur extends Dinosaur {
         super();
         this.setName("Microraptor");
         this.setDinosaurClass(MicroraptorEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x142146, 0x101625);
         this.setEggColorFemale(0x0E1423, 0x121827);
@@ -22,7 +24,7 @@ public class MicroraptorDinosaur extends Dinosaur {
         this.setSizeX(0.2F, 0.7F);
         this.setSizeY(0.25F, 0.6F);
         this.setStorage(9);
-        this.setDiet(Diet.INSECTIVORE_CARNIVORE);
+        this.setDiet(new Diet().withModule(new Diet.DietModule(FoodType.INSECT)).withModule(new Diet.DietModule(FoodType.MEAT)));
         this.setBones("tooth", "arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder", "skull", "tail_vertebrae");
         this.setHeadCubeName("Head");
         this.setScale(0.4F, 0.15F);

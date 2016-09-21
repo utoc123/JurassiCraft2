@@ -12,6 +12,7 @@ public class DilophosaurusDinosaur extends Dinosaur {
 
         this.setName("Dilophosaurus");
         this.setDinosaurClass(DilophosaurusEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x6B7834, 0x2A2E30);
         this.setEggColorFemale(0x62712E, 0x30241C);
@@ -23,7 +24,7 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setSizeX(0.3F, 1.25F);
         this.setSizeY(0.4F, 2.0F);
         this.setStorage(27);
-        this.setDiet(Diet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE.get());
         this.setSleepingSchedule(SleepingSchedule.CREPUSCULAR);
         this.setBones("skull", "tooth", "arm_bones", "leg_bones", "neck", "pelvis", "ribcage", "shoulder", "tail_vertebrae");
         this.setHeadCubeName("Head");

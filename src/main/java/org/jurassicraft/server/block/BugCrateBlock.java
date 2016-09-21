@@ -1,5 +1,6 @@
 package org.jurassicraft.server.block;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +20,7 @@ import org.jurassicraft.server.tab.TabHandler;
 public class BugCrateBlock extends OrientedBlock {
     public BugCrateBlock() {
         super(Material.WOOD);
+        this.setSoundType(SoundType.WOOD);
         this.setHardness(2.5F);
         this.setCreativeTab(TabHandler.BLOCKS);
     }

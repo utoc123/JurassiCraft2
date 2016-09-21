@@ -11,6 +11,7 @@ public class VelociraptorDinosaur extends Dinosaur {
 
         this.setName("Velociraptor");
         this.setDinosaurClass(VelociraptorEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xA06238, 0x632D11);
         this.setEggColorFemale(0x91765D, 0x5A4739);
@@ -23,7 +24,7 @@ public class VelociraptorDinosaur extends Dinosaur {
         this.setSizeX(0.5F, 1.0F);
         this.setSizeY(0.5F, 1.8F);
         this.setStorage(27);
-        this.setDiet(Diet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE.get());
         this.setBones("claw", "tooth", "skull");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.3F);

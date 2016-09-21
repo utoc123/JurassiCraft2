@@ -308,6 +308,9 @@ public enum RenderingHandler {
 
         this.registerBlockRenderer(BlockHandler.AJUGINUCULA_SMITHII);
         this.registerBlockRenderer(BlockHandler.BUG_CRATE);
+
+        this.registerBlockRenderer(BlockHandler.PLANKTON_SWARM);
+        this.registerBlockRenderer(BlockHandler.KRILL_SWARM);
     }
 
     public void postInit() {
@@ -451,6 +454,10 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.CRICKETS);
         this.registerItemRenderer(ItemHandler.COCKROACHES);
         this.registerItemRenderer(ItemHandler.MEALWORM_BEETLES);
+
+        this.registerItemRenderer(ItemHandler.FINE_NET);
+        this.registerItemRenderer(ItemHandler.PLANKTON);
+        this.registerItemRenderer(ItemHandler.KRILL);
 
         ItemColors itemColors = this.mc.getItemColors();
         itemColors.registerItemColorHandler((stack, tintIndex) -> {

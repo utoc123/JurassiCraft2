@@ -7,6 +7,7 @@ import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.container.slot.CustomSlot;
 import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.food.FoodType;
 
 public class FeederContainer extends MachineContainer {
     private FeederBlockEntity tile;
@@ -34,14 +35,14 @@ public class FeederContainer extends MachineContainer {
 
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                this.addSlotToContainer(new CustomSlot(tile, id, 26 + x * 18, 18 + y * 18, stack -> FoodHelper.isEdible(Diet.CARNIVORE, stack.getItem())));
+                this.addSlotToContainer(new CustomSlot(tile, id, 26 + x * 18, 18 + y * 18, stack -> FoodHelper.isFoodType(stack.getItem(), FoodType.MEAT)));
                 id++;
             }
         }
 
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                this.addSlotToContainer(new CustomSlot(tile, id, 98 + x * 18, 18 + y * 18, stack -> FoodHelper.isEdible(Diet.HERBIVORE, stack.getItem())));
+                this.addSlotToContainer(new CustomSlot(tile, id, 98 + x * 18, 18 + y * 18, stack -> FoodHelper.isFoodType(stack.getItem(), FoodType.PLANT)));
                 id++;
             }
         }

@@ -1,39 +1,69 @@
 package org.jurassicraft.server.entity;
 
-public enum Diet {
-    HERBIVORE(false, true, false, false),
-    CARNIVORE(true, false, false, false),
-    OMNIVORE(true, true, true, false),
-    PISCIVORE(false, false, true, false),
-    PISCIVORE_CARNIVORE(true, false, true, false),
-    INSECTIVORE(false, false, false, true),
-    INSECTIVORE_CARNIVORE(true, false, false, true);
+import net.minecraft.item.Item;
+import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.food.FoodType;
 
-    private boolean isCarnivorous;
-    private boolean isHerbivorous;
-    private boolean isPiscivorous;
-    private boolean isInsectivorous;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-    Diet(boolean isCarnivorous, boolean isHerbivorous, boolean isPiscivorous, boolean isInsectivorous) {
-        this.isCarnivorous = isCarnivorous;
-        this.isHerbivorous = isHerbivorous;
-        this.isPiscivorous = isPiscivorous;
-        this.isInsectivorous = isInsectivorous;
+public class Diet {
+    public static final Supplier<Diet> CARNIVORE = () -> new Diet()
+            .withModule(new DietModule(FoodType.MEAT))
+            .withModule(new DietModule(FoodType.INSECT)
+                    .withCondition(entity -> entity.getAgePercentage() < 25));
+    public static final Supplier<Diet> HERBIVORE = () -> new Diet()
+            .withModule(new DietModule(FoodType.PLANT));
+    public static final Supplier<Diet> INSECTIVORE = () -> new Diet()
+            .withModule(new DietModule(FoodType.INSECT));
+    public static final Supplier<Diet> PISCIVORE = () -> new Diet()
+            .withModule(new DietModule(FoodType.FISH));
+
+    private List<DietModule> modules = new ArrayList<>();
+
+    public Diet withModule(DietModule module) {
+        this.modules.add(module);
+        return this;
     }
 
-    public boolean isCarnivorous() {
-        return this.isCarnivorous;
+    public List<DietModule> getModules() {
+        return this.modules;
     }
 
-    public boolean isHerbivorous() {
-        return this.isHerbivorous;
+    public boolean canEat(DinosaurEntity entity, FoodType foodType) {
+        for (DietModule module : this.modules) {
+            if (module.applies(entity) && module.getFoodType() == foodType) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean isPiscivorous() {
-        return this.isPiscivorous;
-    }
+    public static class DietModule {
+        private Function<DinosaurEntity, Boolean> condition = dinosaur -> true;
+        private FoodType type;
 
-    public boolean isInsectivorous() {
-        return this.isInsectivorous;
+        public DietModule(FoodType type) {
+            this.type = type;
+        }
+
+        public DietModule withCondition(Function<DinosaurEntity, Boolean> condition) {
+            this.condition = condition;
+            return this;
+        }
+
+        public boolean canEat(DinosaurEntity entity, Item item) {
+            return this.condition.apply(entity) && FoodHelper.getFoodType(item) == type;
+        }
+
+        public FoodType getFoodType() {
+            return this.type;
+        }
+
+        public boolean applies(DinosaurEntity entity) {
+            return this.condition.apply(entity);
+        }
     }
 }

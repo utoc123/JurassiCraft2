@@ -197,6 +197,10 @@ public class ItemHandler {
         return 0;
     });
 
+    public static final FineNetItem FINE_NET = new FineNetItem();
+    public static final SwarmItem PLANKTON = new SwarmItem(() -> BlockHandler.PLANKTON_SWARM.getDefaultState());
+    public static final SwarmItem KRILL = new SwarmItem(() -> BlockHandler.KRILL_SWARM.getDefaultState());
+
     public static void init() {
         registerItem(FOSSILIZED_EGG, "Fossilized Egg");
 
@@ -290,6 +294,10 @@ public class ItemHandler {
         registerItem(CHILEAN_SEA_BASS, "Chilean Sea Bass");
         registerItem(PHOENIX_FRUIT, "Phoenix Fruit");
         registerItem(PHOENIX_SEEDS, "Phoenix Seeds");
+
+        registerItem(FINE_NET, "Fine Net");
+        registerItem(PLANKTON, "Plankton");
+        registerItem(KRILL, "Krill");
 
         registerItem(CRICKETS, "Crickets");
         registerItem(COCKROACHES, "Cockroaches");

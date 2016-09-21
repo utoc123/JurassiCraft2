@@ -215,7 +215,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                 Herd otherHerd = entity.herd;
                 if (otherHerd == null) {
                     if (this.size() >= this.herdType.getMaxHerdSize()) {
-                        if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDiet().isCarnivorous() && !this.enemies.contains(entity)) {
+                        if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE && !this.enemies.contains(entity)) {
                             this.enemies.add(entity);
                         }
                         return;
@@ -238,7 +238,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                 otherHerd.disband();
             } else if (originalSize + 1 >= this.herdType.getMaxHerdSize()) {
-                if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDiet().isCarnivorous()) {
+                if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
                     for (DinosaurEntity entity : otherHerd) {
                         if (!this.enemies.contains(entity)) {
                             this.enemies.add(entity);

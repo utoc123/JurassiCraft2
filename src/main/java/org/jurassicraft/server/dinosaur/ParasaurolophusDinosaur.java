@@ -11,6 +11,7 @@ public class ParasaurolophusDinosaur extends Dinosaur {
 
         this.setName("Parasaurolophus");
         this.setDinosaurClass(ParasaurolophusEntity.class);
+        this.setDinosaurType(DinosaurType.PASSIVE);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x9F8138, 0x422306);
         this.setEggColorFemale(0x5F653E, 0x3C3F44);
@@ -22,7 +23,7 @@ public class ParasaurolophusDinosaur extends Dinosaur {
         this.setSizeX(0.5F, 2.5F);
         this.setSizeY(0.8F, 3.5F);
         this.setStorage(36);
-        this.setDiet(Diet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE.get());
         this.setBones("ribcage", "front_leg_bones", "hind_leg_bones", "neck_vertebrae", "pelvis", "shoulder_bone", "skull", "tail_vertebrae", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(1.6F, 0.4F);

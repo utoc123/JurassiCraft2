@@ -11,6 +11,7 @@ public class TyrannosaurusDinosaur extends Dinosaur {
 
         this.setName("Tyrannosaurus");
         this.setDinosaurClass(TyrannosaurusEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x4E502C, 0x353731);
         this.setEggColorFemale(0xBA997E, 0x7D5D48);
@@ -23,7 +24,7 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setSizeX(0.45F, 3.0F);
         this.setSizeY(0.8F, 4.0F);
         this.setStorage(54);
-        this.setDiet(Diet.CARNIVORE);
+        this.setDiet(Diet.CARNIVORE.get());
         this.setBones("arm_bones", "foot_bones", "leg_bones", "neck_vertebrae", "pelvis", "ribcage", "shoulder_bone", "skull", "tail_vertebrae", "tooth");
         this.setHeadCubeName("Head");
         this.setScale(2.4F, 0.35F);

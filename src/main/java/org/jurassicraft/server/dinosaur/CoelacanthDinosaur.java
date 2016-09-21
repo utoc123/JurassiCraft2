@@ -4,6 +4,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.SleepingSchedule;
 import org.jurassicraft.server.entity.dinosaur.CoelacanthEntity;
+import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.period.TimePeriod;
 
 public class CoelacanthDinosaur extends Dinosaur {
@@ -12,6 +13,7 @@ public class CoelacanthDinosaur extends Dinosaur {
 
         this.setName("Coelacanth");
         this.setDinosaurClass(CoelacanthEntity.class);
+        this.setDinosaurType(DinosaurType.PASSIVE);
         this.setTimePeriod(TimePeriod.DEVONIAN);
         this.setEggColorMale(0x707B94, 0x3B4963);
         this.setEggColorFemale(0x7C775E, 0x4D4A3B);
@@ -24,7 +26,7 @@ public class CoelacanthDinosaur extends Dinosaur {
         this.setSizeX(0.1F, 1.0F);
         this.setSizeY(0.1F, 1.0F);
         this.setStorage(9);
-        this.setDiet(Diet.PISCIVORE);
+        this.setDiet(Diet.PISCIVORE.get().withModule(new Diet.DietModule(FoodType.FILTER)));
         this.setSleepingSchedule(SleepingSchedule.NOCTURNAL);
         this.setBones("anal_fin", "caudal_fin", "first_dorsal_fin", "pectoral_fin_bones", "pelvic_fin_bones", "second_dorsal_fin", "skull", "spine", "teeth");
         this.setHeadCubeName("Head");

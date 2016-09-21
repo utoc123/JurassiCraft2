@@ -79,6 +79,7 @@ import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.genetics.GeneticsHelper;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.message.SetOrderMessage;
@@ -171,11 +172,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             //this.setPathPriority(PathNodeType.WATER, 0.0F);
         }
 
-        if (this.dinosaur.getDiet().isHerbivorous()) {
+        if (this.dinosaur.getDiet().canEat(this, FoodType.PLANT)) {
             this.tasks.addTask(1, new GrazeEntityAI(this));
         }
 
-        if (this.dinosaur.getDiet().isCarnivorous()) {
+        if (this.dinosaur.getDiet().canEat(this, FoodType.MEAT)) {
             this.tasks.addTask(1, new TargetCarcassEntityAI(this));
         }
 
@@ -627,8 +628,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     List<EntityItem> entitiesWithinAABB = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
                     for (EntityItem itemEntity : entitiesWithinAABB) {
                         Item item = itemEntity.getEntityItem().getItem();
-
-                        if (FoodHelper.isEdible(this.dinosaur.getDiet(), item)) {
+                        if (FoodHelper.isEdible(this, this.dinosaur.getDiet(), item)) {
                             this.setAnimation(DinosaurAnimation.EATING.get());
 
                             if (itemEntity.getEntityItem().stackSize > 1) {
@@ -892,7 +892,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 } else {
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
-            } else if (stack != null && this.metabolism.isHungry() && FoodHelper.isEdible(this.dinosaur.getDiet(), stack.getItem())) {
+            } else if (stack != null && this.metabolism.isHungry() && FoodHelper.isEdible(this, this.dinosaur.getDiet(), stack.getItem())) {
                 if (this.isOwner(player) && !this.worldObj.isRemote) {
                     Item item = stack.getItem();
                     this.metabolism.eat(FoodHelper.getHealAmount(item));
@@ -1351,7 +1351,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if (tile instanceof FeederBlockEntity) {
                 FeederBlockEntity feeder = (FeederBlockEntity) tile;
-                if (feeder.canFeedDinosaur(this.dinosaur) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
+                if (feeder.canFeedDinosaur(this) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
                     return pos;
                 }
             }

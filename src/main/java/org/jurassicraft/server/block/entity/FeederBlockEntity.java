@@ -263,7 +263,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
                 this.stayOpen--;
 
                 if (this.stayOpen == 10 && this.feeding != null) {
-                    int feedSlot = this.getFoodForDinosaur(this.feeding.getDinosaur());
+                    int feedSlot = this.getFoodForDinosaur(this.feeding);
 
                     Random random = new Random();
 
@@ -341,21 +341,18 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         }
     }
 
-    public boolean canFeedDinosaur(Dinosaur dinosaur) {
+    public boolean canFeedDinosaur(DinosaurEntity dinosaur) {
         return this.getFoodForDinosaur(dinosaur) != -1;
     }
 
-    private int getFoodForDinosaur(Dinosaur dinosaur) {
+    private int getFoodForDinosaur(DinosaurEntity dinosaur) {
         int i = 0;
-
         for (ItemStack stack : this.slots) {
-            if (stack != null && stack.stackSize > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem())) {
+            if (stack != null && stack.stackSize > 0 && FoodHelper.isEdible(dinosaur, dinosaur.getDinosaur().getDiet(), stack.getItem())) {
                 return i;
             }
-
             i++;
         }
-
         return -1;
     }
 

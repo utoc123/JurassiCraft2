@@ -1,5 +1,7 @@
 package org.jurassicraft.server.entity;
 
+import org.jurassicraft.server.food.FoodType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,25 +9,25 @@ public enum DinosaurStatus {
     CARNIVOROUS {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getDiet().isCarnivorous();
+            return entity.getDinosaur().getDiet().canEat(entity, FoodType.MEAT);
         }
     },
     PISCIVOROUS {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getDiet().isPiscivorous();
+            return entity.getDinosaur().getDiet().canEat(entity, FoodType.FISH);
         }
     },
     HERBIVOROUS {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getDiet().isHerbivorous();
+            return entity.getDinosaur().getDiet().canEat(entity, FoodType.PLANT);
         }
     },
     INSECTIVOROUS {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getDiet().isInsectivorous();
+            return entity.getDinosaur().getDiet().canEat(entity, FoodType.INSECT);
         }
     },
     DIURNAL {

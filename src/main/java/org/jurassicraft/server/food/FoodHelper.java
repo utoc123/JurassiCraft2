@@ -46,6 +46,13 @@ public class FoodHelper {
         registerFood(Blocks.BROWN_MUSHROOM, FoodType.PLANT, 250);
         registerFood(Blocks.RED_MUSHROOM, FoodType.PLANT, 250);
 
+        registerFood(ItemHandler.COCKROACHES, FoodType.INSECT, 250);
+        registerFood(ItemHandler.CRICKETS, FoodType.INSECT, 250);
+        registerFood(ItemHandler.MEALWORM_BEETLES, FoodType.INSECT, 250);
+
+        registerFood(ItemHandler.KRILL, FoodType.FILTER, 250);
+        registerFood(ItemHandler.PLANKTON, FoodType.FILTER, 250);
+
         registerFood(BlockHandler.PALEO_BALE_CYCADEOIDEA, FoodType.PLANT, 5000);
         registerFood(BlockHandler.PALEO_BALE_CYCAD, FoodType.PLANT, 5000);
         registerFood(BlockHandler.PALEO_BALE_FERN, FoodType.PLANT, 5000);
@@ -124,29 +131,25 @@ public class FoodHelper {
         return getFoodType(Item.getItemFromBlock(block));
     }
 
-    public static boolean isEdible(Diet diet, Item item) {
-        return item != null && getEdibleFoods(diet).contains(item);
+    public static boolean isFoodType(Item item, FoodType foodType) {
+        return FoodHelper.getFoodType(foodType).contains(item);
     }
 
-    public static boolean isEdible(Diet diet, Block block) {
-        return isEdible(diet, Item.getItemFromBlock(block));
+    public static boolean isEdible(DinosaurEntity entity, Diet diet, Item item) {
+        return item != null && getEdibleFoods(entity, diet).contains(item);
     }
 
-    public static List<Item> getEdibleFoods(Diet diet) {
+    public static boolean isEdible(DinosaurEntity entity, Diet diet, Block block) {
+        return isEdible(entity, diet, Item.getItemFromBlock(block));
+    }
+
+    public static List<Item> getEdibleFoods(DinosaurEntity entity, Diet diet) {
         List<Item> possibleItems = new ArrayList<>();
-
-        if (diet.isHerbivorous()) {
-            possibleItems.addAll(getFoodType(FoodType.PLANT));
+        for (Diet.DietModule module : diet.getModules()) {
+            if (module.applies(entity)) {
+                possibleItems.addAll(FoodHelper.getFoodType(module.getFoodType()));
+            }
         }
-
-        if (diet.isPiscivorous()) {
-            possibleItems.addAll(getFoodType(FoodType.FISH));
-        }
-
-        if (diet.isCarnivorous()) {
-            possibleItems.addAll(getFoodType(FoodType.MEAT));
-        }
-
         return possibleItems;
     }
 

@@ -119,6 +119,11 @@ public class RecipeHandler {
 
         GameRegistry.addRecipe(new ItemStack(BlockHandler.CLEAR_GLASS, 8), "GGG", "GIG", "GGG", 'G', Blocks.GLASS, 'I', Items.IRON_INGOT);
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.BUG_CRATE), "III", "PCP", "SSS", 'I', "nuggetIron", 'P', Blocks.PLANKS, 'C', Blocks.CHEST, 'S', Blocks.STONE_SLAB));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.BUG_CRATE), "III", "PCP", "SSS", 'I', "nuggetIron", 'P', Blocks.PLANKS, 'C', Blocks.CHEST, 'S', Blocks.STONE_SLAB2));
+
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.FINE_NET), "SsW", " ss", "s S", 'S', Items.STRING, 's', Items.STICK, 'W', Blocks.WOOL);
+
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);
         addGrowthSerumRecipe(Items.COOKED_FISH);

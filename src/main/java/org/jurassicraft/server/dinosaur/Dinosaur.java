@@ -31,7 +31,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private final Map<GrowthStageGenderContainer, ResourceLocation> eyelidTextures = new HashMap<>();
 
     private String name;
-    private Class<? extends DinosaurEntity> dinoClazz;
+    private Class<? extends DinosaurEntity> entityClass;
+    private DinosaurType dinosaurType;
     private int primaryEggColorMale, primaryEggColorFemale;
     private int secondaryEggColorMale, secondaryEggColorFemale;
     private TimePeriod timePeriod;
@@ -201,6 +202,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         this.poseHandler = new PoseHandler(this);
     }
 
+    protected void setDinosaurType(DinosaurType type) {
+        this.dinosaurType = type;
+    }
+
     protected TabulaModelContainer parseModel(String growthStage) {
         String formattedName = this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         String modelPath = "/assets/jurassicraft/models/entities/" + formattedName + "/" + growthStage + "/" + formattedName + "_" + growthStage + "_idle";
@@ -283,11 +288,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     }
 
     public Class<? extends DinosaurEntity> getDinosaurClass() {
-        return this.dinoClazz;
+        return this.entityClass;
     }
 
     public void setDinosaurClass(Class<? extends DinosaurEntity> clazz) {
-        this.dinoClazz = clazz;
+        this.entityClass = clazz;
     }
 
     public int getEggPrimaryColorMale() {
@@ -658,5 +663,16 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public String getLocalizationName() {
         return "entity.jurassicraft." + this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name";
+    }
+
+    public DinosaurType getDinosaurType() {
+        return this.dinosaurType;
+    }
+
+    public enum DinosaurType {
+        AGGRESSIVE,
+        NEUTRAL,
+        PASSIVE,
+        SCARED
     }
 }

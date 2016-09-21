@@ -1,0 +1,43 @@
+package org.jurassicraft.server.item;
+
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.function.Supplier;
+
+public class SwarmItem extends Item {
+    private Supplier<IBlockState> block;
+
+    public SwarmItem(Supplier<IBlockState> block) {
+        super();
+        this.block = block;
+        this.setCreativeTab(TabHandler.ITEMS);
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+        RayTraceResult result = this.rayTrace(world, player, true);
+        if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
+            BlockPos pos = result.getBlockPos();
+            IBlockState state = world.getBlockState(pos);
+            if (state.getMaterial() == Material.WATER) {
+                if (player.canPlayerEdit(pos, EnumFacing.UP, stack)) {
+                    world.setBlockState(pos.up(), this.block.get());
+                    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+                }
+            }
+        }
+        return ActionResult.newResult(EnumActionResult.PASS, stack);
+    }
+}

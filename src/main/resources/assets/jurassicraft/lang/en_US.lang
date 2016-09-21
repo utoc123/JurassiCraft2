@@ -180,6 +180,9 @@ item.phoenix_seeds.name=Phoenix Seeds
 item.crickets.name=Crickets
 item.cockroaches.name=Cockroaches
 item.mealworm_beetles.name=Mealworm Beetles
+item.fine_net.name=Fine Net
+item.plankton.name=Plankton
+item.krill.name=Krill
 
 item.mural.name=Mural
 

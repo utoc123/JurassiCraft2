@@ -11,6 +11,7 @@ public class BrachiosaurusDinosaur extends Dinosaur {
 
         this.setName("Brachiosaurus");
         this.setDinosaurClass(BrachiosaurusEntity.class);
+        this.setDinosaurType(DinosaurType.NEUTRAL);
         this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x87987F, 0x607343);
         this.setEggColorFemale(0xAA987D, 0x4F4538);
@@ -22,7 +23,7 @@ public class BrachiosaurusDinosaur extends Dinosaur {
         this.setSizeX(0.9F, 6.5F);
         this.setSizeY(1.5F, 7.0F);
         this.setStorage(54);
-        this.setDiet(Diet.HERBIVORE);
+        this.setDiet(Diet.HERBIVORE.get());
         this.setBones("skull", "tooth", "tail_vertebrae", "shoulder", "ribcage", "pelvis", "neck_vertebrae", "hind_leg_bones", "front_leg_bones");
         this.setHeadCubeName("head");
         this.setScale(2.5F, 0.3F);

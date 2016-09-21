@@ -69,6 +69,7 @@ import org.jurassicraft.server.block.tree.AncientStairsBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,6 +158,9 @@ public class BlockHandler {
 
     public static final BugCrateBlock BUG_CRATE = new BugCrateBlock();
 
+    public static final SwarmBlock PLANKTON_SWARM = new SwarmBlock(() -> ItemHandler.PLANKTON);
+    public static final SwarmBlock KRILL_SWARM = new SwarmBlock(() -> ItemHandler.KRILL);
+
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
     public static PaleoBaleBlock PALEO_BALE_FERN;
@@ -221,6 +225,9 @@ public class BlockHandler {
         registerBlock(PEAT_MOSS, "Peat Moss");
 
         registerBlock(CLEAR_GLASS, "Clear Glass");
+
+        registerBlock(PLANKTON_SWARM, "Plankton Swarm");
+        registerBlock(KRILL_SWARM, "Krill Swarm");
 
 //        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
 //        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
