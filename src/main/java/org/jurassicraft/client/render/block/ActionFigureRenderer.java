@@ -14,7 +14,7 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.EntityHandler;
 
-public class ActionFigureSpecialRenderer extends TileEntitySpecialRenderer<ActionFigureBlockEntity> {
+public class ActionFigureRenderer extends TileEntitySpecialRenderer<ActionFigureBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     @Override

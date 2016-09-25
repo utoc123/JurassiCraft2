@@ -17,11 +17,17 @@ import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
 import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
 import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
+import org.jurassicraft.server.block.fence.ElectricFenceBaseBlock;
+import org.jurassicraft.server.block.fence.ElectricFencePoleBlock;
+import org.jurassicraft.server.block.fence.ElectricFenceWireBlock;
 import org.jurassicraft.server.block.machine.CleaningStationBlock;
 import org.jurassicraft.server.block.machine.CultivatorBottomBlock;
 import org.jurassicraft.server.block.machine.CultivatorTopBlock;
@@ -161,6 +167,10 @@ public class BlockHandler {
     public static final SwarmBlock PLANKTON_SWARM = new SwarmBlock(() -> ItemHandler.PLANKTON);
     public static final SwarmBlock KRILL_SWARM = new SwarmBlock(() -> ItemHandler.KRILL);
 
+    public static final ElectricFencePoleBlock LOW_SECURITY_FENCE_POLE = new ElectricFencePoleBlock();
+    public static final ElectricFenceBaseBlock LOW_SECURITY_FENCE_BASE = new ElectricFenceBaseBlock();
+    public static final ElectricFenceWireBlock LOW_SECURITY_FENCE_WIRE = new ElectricFenceWireBlock();
+
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
     public static PaleoBaleBlock PALEO_BALE_FERN;
@@ -243,6 +253,9 @@ public class BlockHandler {
         registerBlock(ActionFigureBlockEntity.class, ACTION_FIGURE, "Action Figure Block");
         registerBlock(FeederBlockEntity.class, FEEDER, "Feeder");
         registerBlock(BugCrateBlockEntity.class, BUG_CRATE, "Bug Crate");
+        registerBlock(ElectricFencePoleBlockEntity.class, LOW_SECURITY_FENCE_POLE, "Low Security Fence Pole");
+        registerBlock(ElectricFenceBaseBlockEntity.class, LOW_SECURITY_FENCE_BASE, "Low Security Fence Base");
+        registerBlock(ElectricFenceWireBlockEntity.class, LOW_SECURITY_FENCE_WIRE, "Low Security Fence Wire");
 
         PALEO_BALE_CYCADEOIDEA = new PaleoBaleBlock(PaleoBaleBlock.Variant.CYCADEOIDEA);
         PALEO_BALE_CYCAD = new PaleoBaleBlock(PaleoBaleBlock.Variant.CYCAD);

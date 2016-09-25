@@ -304,6 +304,10 @@ tile.paleo_bale_fern.name=Fern Prehistoric Plant Bale
 tile.paleo_bale_leaves.name=Leaves Prehistoric Plant Bale
 tile.paleo_bale_other.name=Prehistoric Plant Bale
 
+tile.low_security_fence_pole.name=Low Security Fence Pole
+tile.low_security_fence_base.name=Low Security Fence Base
+tile.low_security_fence_wire.name=Low Security Fence Wire
+
 trackway.biped_medium.name=Biped
 trackway.biped_small.name=Small Biped
 trackway.raptor.name=Raptor

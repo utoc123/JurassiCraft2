@@ -17,8 +17,8 @@ public class MicroraptorDinosaur extends Dinosaur {
         this.setEggColorFemale(0x0E1423, 0x121827);
         this.setSpeed(0.25, 0.30);
         this.setAttackSpeed(1.3);
-        this.setHealth(4, 20);
-        this.setStrength(1, 4);
+        this.setHealth(4, 10);
+        this.setStrength(0.5, 2);
         this.setMaximumAge(this.fromDays(30));
         this.setEyeHeight(0.2F, 0.5F);
         this.setSizeX(0.2F, 0.7F);
@@ -32,6 +32,7 @@ public class MicroraptorDinosaur extends Dinosaur {
         this.setDefendOwner(true);
         this.setMaxHerdSize(16);
         this.setAttackBias(400.0);
+        this.setCanClimb(true);
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DENSE));
     }
 }

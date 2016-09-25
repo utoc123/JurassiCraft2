@@ -19,12 +19,12 @@ import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
-public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<IncubatorBlockEntity> {
+public class IncubatorRenderer extends TileEntitySpecialRenderer<IncubatorBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
 
-    public IncubatorSpecialRenderer() {
+    public IncubatorRenderer() {
         try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/incubator"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/incubator.png");

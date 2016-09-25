@@ -17,13 +17,13 @@ import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
-public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAExtractorBlockEntity> {
+public class DNAExtractorRenderer extends TileEntitySpecialRenderer<DNAExtractorBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     private TabulaModel model;
     private ResourceLocation texture;
 
-    public DNAExtractorSpecialRenderer() {
+    public DNAExtractorRenderer() {
         try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/dna_extractor"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_extractor.png");

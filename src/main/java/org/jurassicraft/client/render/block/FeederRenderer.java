@@ -15,13 +15,13 @@ import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
-public class FeederSpecialRenderer extends TileEntitySpecialRenderer<FeederBlockEntity> {
+public class FeederRenderer extends TileEntitySpecialRenderer<FeederBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     private ResetControlTabulaModel model;
     private ResourceLocation texture;
 
-    public FeederSpecialRenderer() {
+    public FeederRenderer() {
         try {
             this.model = new ResetControlTabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/feeder.tbl"));
             this.model.setResetEachFrame(false);

@@ -18,12 +18,12 @@ import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
-public class DNASequencerSpecialRenderer extends TileEntitySpecialRenderer<DNASequencerBlockEntity> {
+public class DNASequencerRenderer extends TileEntitySpecialRenderer<DNASequencerBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
     private ResourceLocation texture;
 
-    public DNASequencerSpecialRenderer() {
+    public DNASequencerRenderer() {
         try {
             this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/dna_sequencer"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/dna_sequencer.png");

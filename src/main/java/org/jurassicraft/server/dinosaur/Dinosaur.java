@@ -79,6 +79,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     private int spawnChance;
     private Biome[] spawnBiomes;
+    private boolean canClimb;
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
@@ -667,6 +668,14 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public DinosaurType getDinosaurType() {
         return this.dinosaurType;
+    }
+
+    public boolean canClimb() {
+        return this.canClimb;
+    }
+
+    public void setCanClimb(boolean canClimb) {
+        this.canClimb = canClimb;
     }
 
     public enum DinosaurType {

@@ -11,33 +11,33 @@ import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
+import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 import org.lwjgl.opengl.GL11;
 
-public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecialRenderer<EmbryoCalcificationMachineBlockEntity> {
+public class EmbryonicMachineRenderer extends TileEntitySpecialRenderer<EmbryonicMachineBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
     private TabulaModel model;
-    private TabulaModel modelWithEgg;
     private ResourceLocation texture;
+    private ResourceLocation textureNoTestTubes;
 
-    public EmbryoCalcificationMachineSpecialRenderer() {
+    public EmbryonicMachineRenderer() {
         try {
-            this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine"));
-            this.modelWithEgg = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryo_calcification_machine_egg"));
-            this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryo_calcification_machine.png");
+            this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/embryonic_machine"));
+            this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryonic_machine.png");
+            this.textureNoTestTubes = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/embryonic_machine_no_test_tubes.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void renderTileEntityAt(EmbryoCalcificationMachineBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(EmbryonicMachineBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.EMBRYO_CALCIFICATION_MACHINE) {
+        if (state.getBlock() == BlockHandler.EMBRYONIC_MACHINE) {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
@@ -60,9 +60,15 @@ public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecial
             double scale = 1.0;
             GlStateManager.scale(scale, -scale, scale);
 
-            this.mc.getTextureManager().bindTexture(this.texture);
+            boolean hasDNA = tileEntity.getStackInSlot(0) != null;
+            boolean hasPetridish = tileEntity.getStackInSlot(1) != null;
 
-            ((tileEntity.getStackInSlot(1) != null || tileEntity.getStackInSlot(2) != null) ? this.modelWithEgg : this.model).render(null, 0, 0, 0, 0, 0, 0.0625F);
+            this.model.getCube("Petri dish 1").showModel = hasPetridish;
+            this.model.getCube("Petri dish 2").showModel = hasPetridish;
+
+            this.mc.getTextureManager().bindTexture(hasDNA ? this.texture : this.textureNoTestTubes);
+
+            this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
 
             GlStateManager.popMatrix();
 

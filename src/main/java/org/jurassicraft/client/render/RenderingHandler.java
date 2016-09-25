@@ -7,7 +7,6 @@ import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -18,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -34,15 +34,18 @@ import org.jurassicraft.client.model.animation.entity.ParasaurolophusAnimator;
 import org.jurassicraft.client.model.animation.entity.TriceratopsAnimator;
 import org.jurassicraft.client.model.animation.entity.TyrannosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.VelociraptorAnimator;
-import org.jurassicraft.client.render.block.ActionFigureSpecialRenderer;
-import org.jurassicraft.client.render.block.DNACombinatorHybridizerSpecialRenderer;
-import org.jurassicraft.client.render.block.DNAExtractorSpecialRenderer;
-import org.jurassicraft.client.render.block.DNASequencerSpecialRenderer;
-import org.jurassicraft.client.render.block.DNASynthesizerSpecialRenderer;
-import org.jurassicraft.client.render.block.EmbryoCalcificationMachineSpecialRenderer;
-import org.jurassicraft.client.render.block.EmbryonicMachineSpecialRenderer;
-import org.jurassicraft.client.render.block.FeederSpecialRenderer;
-import org.jurassicraft.client.render.block.IncubatorSpecialRenderer;
+import org.jurassicraft.client.render.block.ActionFigureRenderer;
+import org.jurassicraft.client.render.block.DNACombinatorHybridizerRenderer;
+import org.jurassicraft.client.render.block.DNAExtractorRenderer;
+import org.jurassicraft.client.render.block.DNASequencerRenderer;
+import org.jurassicraft.client.render.block.DNASynthesizerRenderer;
+import org.jurassicraft.client.render.block.ElectricFenceBaseRenderer;
+import org.jurassicraft.client.render.block.ElectricFencePoleRenderer;
+import org.jurassicraft.client.render.block.ElectricFenceWireRenderer;
+import org.jurassicraft.client.render.block.EmbryoCalcificationMachineRenderer;
+import org.jurassicraft.client.render.block.EmbryonicMachineRenderer;
+import org.jurassicraft.client.render.block.FeederRenderer;
+import org.jurassicraft.client.render.block.IncubatorRenderer;
 import org.jurassicraft.client.render.entity.AttractionSignRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
@@ -63,10 +66,16 @@ import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
 import org.jurassicraft.server.block.entity.EmbryoCalcificationMachineBlockEntity;
 import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
+import org.jurassicraft.server.block.fence.ElectricFenceBaseBlock;
+import org.jurassicraft.server.block.fence.ElectricFencePoleBlock;
+import org.jurassicraft.server.block.fence.ElectricFenceWireBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -165,6 +174,10 @@ public enum RenderingHandler {
             ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockFenceGate.POWERED }).build());
             ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_DOORS.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockDoor.POWERED }).build());
         }
+
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_BASE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceBaseBlock.NORTH, ElectricFenceBaseBlock.SOUTH, ElectricFenceBaseBlock.WEST, ElectricFenceBaseBlock.EAST, ElectricFenceBaseBlock.POLE })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_POLE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFencePoleBlock.NORTH, ElectricFencePoleBlock.SOUTH, ElectricFencePoleBlock.WEST, ElectricFencePoleBlock.EAST })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_WIRE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceWireBlock.NORTH, ElectricFenceWireBlock.SOUTH, ElectricFenceWireBlock.WEST, ElectricFenceWireBlock.EAST, ElectricFenceWireBlock.UP_DIRECTION })).build());
 
         this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);
         this.registerRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F);
@@ -311,18 +324,28 @@ public enum RenderingHandler {
 
         this.registerBlockRenderer(BlockHandler.PLANKTON_SWARM);
         this.registerBlockRenderer(BlockHandler.KRILL_SWARM);
+
+        this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_POLE);
+        this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_BASE);
+        this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_WIRE);
     }
 
     public void postInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorBlockEntity.class, new DNAExtractorSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureBlockEntity.class, new ActionFigureSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerBlockEntity.class, new DNASequencerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(EmbryoCalcificationMachineBlockEntity.class, new EmbryoCalcificationMachineSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(DNACombinatorHybridizerBlockEntity.class, new DNACombinatorHybridizerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(EmbryonicMachineBlockEntity.class, new EmbryonicMachineSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(DNASynthesizerBlockEntity.class, new DNASynthesizerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(IncubatorBlockEntity.class, new IncubatorSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(FeederBlockEntity.class, new FeederSpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorBlockEntity.class, new DNAExtractorRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureBlockEntity.class, new ActionFigureRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerBlockEntity.class, new DNASequencerRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(EmbryoCalcificationMachineBlockEntity.class, new EmbryoCalcificationMachineRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNACombinatorHybridizerBlockEntity.class, new DNACombinatorHybridizerRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(EmbryonicMachineBlockEntity.class, new EmbryonicMachineRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DNASynthesizerBlockEntity.class, new DNASynthesizerRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(IncubatorBlockEntity.class, new IncubatorRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(FeederBlockEntity.class, new FeederRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(ElectricFencePoleBlockEntity.class, new ElectricFencePoleRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(ElectricFenceBaseBlockEntity.class, new ElectricFenceBaseRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(ElectricFenceWireBlockEntity.class, new ElectricFenceWireRenderer());
+
+        ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlockHandler.LOW_SECURITY_FENCE_POLE), 0, ElectricFencePoleBlockEntity.class);
+        ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlockHandler.LOW_SECURITY_FENCE_BASE), 0, ElectricFenceBaseBlockEntity.class);
 
         this.registerItemRenderer(ItemHandler.TRACKER);
         this.registerItemRenderer(ItemHandler.PLANT_CELLS_PETRI_DISH);

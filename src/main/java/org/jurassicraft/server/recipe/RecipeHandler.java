@@ -59,8 +59,7 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.DNA_ANALYZER, 'S', ItemHandler.COMPUTER_SCREEN, 'H', ItemHandler.HARD_DRIVE, 'K', ItemHandler.KEYBOARD);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.ADVANCED_CIRCUIT, 'D', ItemHandler.HARD_DRIVE);
 
-//        for (int i = 0; i < 16; i++)
-//        {
+//        for (int i = 0; i < 16; i++) {
 //            GameRegistry.addRecipe(new ItemStack(BlockHandler.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT, 'C', ItemHandler.ADVANCED_CIRCUIT);
 //        }
 
@@ -123,6 +122,10 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.BUG_CRATE), "III", "PCP", "SSS", 'I', "nuggetIron", 'P', Blocks.PLANKS, 'C', Blocks.CHEST, 'S', Blocks.STONE_SLAB2));
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.FINE_NET), "SsW", " ss", "s S", 'S', Items.STRING, 's', Items.STICK, 'W', Blocks.WOOL);
+
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.LOW_SECURITY_FENCE_POLE, 2), "R", "I", "I", 'R', Items.REDSTONE, 'I', Items.IRON_INGOT);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.LOW_SECURITY_FENCE_WIRE, 16), "III", " R ", "III", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.LOW_SECURITY_FENCE_BASE, 6), "iIi", "SSS", " R ", 'i', "nuggetIron", 'I', Items.IRON_INGOT, 'S', Blocks.STONE, 'R', Items.REDSTONE));
 
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);
