@@ -504,19 +504,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(newHealth);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.interpolate(this.dinosaur.getBabySpeed(), this.dinosaur.getAdultSpeed()));
-//        getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(interpolate(dinosaur.getBabyKnockback(), dinosaur.getAdultKnockback())); TODO
-
-        // updateBounds();
 
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.interpolate(this.dinosaur.getBabyStrength(), this.dinosaur.getAdultStrength()));
 
-        // EntityLiving has a base of 16 the AI needs to have longer range for things like Herding
-        // DO NOT CHANGE FOR NOW - Eventually we'll make the AI work in smaller increments and probably
-        //                         have different ranges for different eyesights, but for now please keep it long.
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 
         if (prevHealth != newHealth) {
-            this.heal((float) (newHealth - this.lastDamage));
+            this.heal((float) (newHealth - prevHealth));
         }
     }
 
