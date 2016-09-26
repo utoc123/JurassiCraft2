@@ -1,5 +1,6 @@
 package org.jurassicraft.server.block.fence;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -77,5 +78,20 @@ public class ElectricFenceBaseBlock extends BlockContainer {
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, NORTH, SOUTH, EAST, WEST, POLE);
+    }
+
+    @Override
+    public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getActualState(world, pos).getValue(POLE) ? 3 : super.getLightOpacity(state, world, pos);
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+        if (!world.isRemote) {
+            IBlockState poleState = world.getBlockState(pos.up());
+            if (poleState.getBlock() instanceof ElectricFencePoleBlock) {
+                ((ElectricFencePoleBlock) poleState.getBlock()).updateConnectedWires(world, pos.up());
+            }
+        }
     }
 }

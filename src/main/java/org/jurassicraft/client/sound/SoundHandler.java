@@ -54,6 +54,8 @@ public class SoundHandler {
     public static final SoundEvent MICRORAPTOR_DEATH = create("microraptor_death");
     public static final SoundEvent MICRORAPTOR_ATTACK = create("microraptor_attack");
 
+    public static final SoundEvent FENCE_SHOCK = create("fence_shock");
+
     public static SoundEvent create(String name) {
         ResourceLocation resource = new ResourceLocation(JurassiCraft.MODID, name);
         return GameRegistry.register(new SoundEvent(resource), resource);

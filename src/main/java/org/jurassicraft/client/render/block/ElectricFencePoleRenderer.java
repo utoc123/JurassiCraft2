@@ -1,9 +1,11 @@
 package org.jurassicraft.client.render.block;
 
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +46,7 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
         double scale = 1.0;
         GlStateManager.scale(scale, -scale, scale);
 
-        boolean active = tile == null;
+        boolean powered = tile == null;
 
         boolean north = true;
         boolean south = true;
@@ -59,6 +61,7 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
                 south = state.getValue(ElectricFencePoleBlock.SOUTH);
                 west = state.getValue(ElectricFencePoleBlock.WEST);
                 east = state.getValue(ElectricFencePoleBlock.EAST);
+                powered = state.getValue(ElectricFencePoleBlock.POWERED);
             }
         }
 
@@ -74,9 +77,23 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
         this.model.getCube("Wire base 8").showModel = south;
         this.model.getCube("Wire base 7").showModel = south;
 
-        this.mc.getTextureManager().bindTexture(active ? this.textureActive : this.textureInactive);
+        this.mc.getTextureManager().bindTexture(powered ? this.textureActive : this.textureInactive);
 
-        this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+        if (powered) {
+            AdvancedModelRenderer blue = this.model.getCube("Blue light");
+            AdvancedModelRenderer orange = this.model.getCube("Orange light");
+
+            this.model.getCube("Main pole").render(0.0625F);
+
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+
+            blue.render(0.0625F);
+            orange.render(0.0625F);
+
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
+        } else {
+            this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+        }
 
         GlStateManager.cullFace(GlStateManager.CullFace.BACK);
         GlStateManager.disableBlend();

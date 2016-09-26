@@ -18,9 +18,6 @@ public class DinosaurDamageSource extends DamageSource {
         this.entity = entity;
     }
 
-    /**
-     * Sets this EntityDamageSource as originating from Thorns armor
-     */
     public DinosaurDamageSource setIsThornsDamage() {
         this.isThornsDamage = true;
         return this;

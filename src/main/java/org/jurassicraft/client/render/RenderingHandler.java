@@ -176,7 +176,7 @@ public enum RenderingHandler {
         }
 
         ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_BASE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceBaseBlock.NORTH, ElectricFenceBaseBlock.SOUTH, ElectricFenceBaseBlock.WEST, ElectricFenceBaseBlock.EAST, ElectricFenceBaseBlock.POLE })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_POLE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFencePoleBlock.NORTH, ElectricFencePoleBlock.SOUTH, ElectricFencePoleBlock.WEST, ElectricFencePoleBlock.EAST })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_POLE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFencePoleBlock.NORTH, ElectricFencePoleBlock.SOUTH, ElectricFencePoleBlock.WEST, ElectricFencePoleBlock.EAST, ElectricFencePoleBlock.POWERED })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_WIRE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceWireBlock.NORTH, ElectricFenceWireBlock.SOUTH, ElectricFenceWireBlock.WEST, ElectricFenceWireBlock.EAST, ElectricFenceWireBlock.UP_DIRECTION })).build());
 
         this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);

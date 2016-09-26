@@ -1,5 +1,6 @@
 package org.jurassicraft.server.block.fence;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -7,17 +8,21 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
+import org.jurassicraft.server.damage.DamageSources;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.tab.TabHandler;
 
@@ -37,13 +42,7 @@ public class ElectricFenceWireBlock extends BlockContainer {
 
     @Override
     public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
-        boolean powered = false;
-        if (!powered) {
-            if (entity instanceof EntityPlayer || (entity instanceof DinosaurEntity && ((DinosaurEntity) entity).getDinosaur().canClimb())) {
-                return true;
-            }
-        }
-        return false;
+        return entity instanceof EntityPlayer || (entity instanceof DinosaurEntity && ((DinosaurEntity) entity).getDinosaur().canClimb());
     }
 
     @Override
@@ -202,6 +201,30 @@ public class ElectricFenceWireBlock extends BlockContainer {
             }
         }
         return false;
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof ElectricFenceWireBlockEntity) {
+                ((ElectricFenceWireBlockEntity) tile).checkDisconnect();
+            }
+        }
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+        super.onEntityCollidedWithBlock(world, pos, state, entity);
+        if (!world.isRemote && !entity.isDead) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) tile).isPowered()) {
+                entity.attackEntityFrom(DamageSources.SHOCK, 1.0F);
+                if (entity.ticksExisted % 10 == 0) {
+                    world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundHandler.FENCE_SHOCK, SoundCategory.BLOCKS, 0.25F, 1.0F);
+                }
+            }
+        }
     }
 
     @Override

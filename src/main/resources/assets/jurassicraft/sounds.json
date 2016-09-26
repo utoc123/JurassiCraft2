@@ -26,6 +26,15 @@
       }
     ]
   },
+  "fence_shock": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:fence_shock_1",
+      "jurassicraft:fence_shock_2",
+      "jurassicraft:fence_shock_3",
+      "jurassicraft:fence_shock_4"
+    ]
+  },
   "triceratops_living": {
     "category": "hostile",
     "sounds": [
