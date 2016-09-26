@@ -509,7 +509,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 
         if (prevHealth != newHealth) {
-            this.heal((float) (newHealth - this.lastDamage));
+            this.heal((float) (newHealth - prevHealth));
         }
     }
 
