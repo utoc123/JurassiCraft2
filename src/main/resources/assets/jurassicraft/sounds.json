@@ -291,5 +291,39 @@
     "sounds": [
       "jurassicraft:dinosaurs/microraptor/microraptor_death"
     ]
+  },
+  "mussaurus_attack": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_attack_1",
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_attack_2"
+    ]
+  },
+  "mussaurus_death": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_death"
+    ]
+  },
+  "mussaurus_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_hurt_1",
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_hurt_2"
+    ]
+  },
+  "mussaurus_living": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_living_1",
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_living_2",
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_living_3"
+    ]
+  },
+  "mussaurus_mate_call": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:dinosaurs/mussaurus/mussaurus_mate_call"
+    ]
   }
 }

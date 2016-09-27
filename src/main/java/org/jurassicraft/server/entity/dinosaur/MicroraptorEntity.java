@@ -17,7 +17,7 @@ import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
 public class MicroraptorEntity extends DinosaurEntity {
     public MicroraptorEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, VelociraptorEntity.class);
+        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, GallimimusEntity.class, MussaurusEntity.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
     }

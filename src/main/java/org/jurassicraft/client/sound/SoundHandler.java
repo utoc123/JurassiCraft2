@@ -54,6 +54,12 @@ public class SoundHandler {
     public static final SoundEvent MICRORAPTOR_DEATH = create("microraptor_death");
     public static final SoundEvent MICRORAPTOR_ATTACK = create("microraptor_attack");
 
+    public static final SoundEvent MUSSAURUS_LIVING = create("mussaurus_living");
+    public static final SoundEvent MUSSAURUS_HURT = create("mussaurus_hurt");
+    public static final SoundEvent MUSSAURUS_DEATH = create("mussaurus_death");
+    public static final SoundEvent MUSSAURUS_ATTACK = create("mussaurus_attack");
+    public static final SoundEvent MUSSAURUS_MATE_CALL = create("mussaurus_mate_call");
+
     public static final SoundEvent FENCE_SHOCK = create("fence_shock");
 
     public static SoundEvent create(String name) {

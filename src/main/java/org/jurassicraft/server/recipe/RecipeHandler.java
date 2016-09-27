@@ -127,6 +127,8 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(BlockHandler.LOW_SECURITY_FENCE_WIRE, 16), "III", " R ", "III", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.LOW_SECURITY_FENCE_BASE, 6), "iIi", "SSS", " R ", 'i', "nuggetIron", 'I', Items.IRON_INGOT, 'S', Blocks.STONE, 'R', Items.REDSTONE));
 
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PHOENIX_SEEDS), ItemHandler.PHOENIX_FRUIT);
+
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);
         addGrowthSerumRecipe(Items.COOKED_FISH);

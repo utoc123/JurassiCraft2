@@ -81,7 +81,7 @@ public enum DinosaurStatus {
     DROWNING {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return !entity.getDinosaur().isMarineAnimal() && entity.getAir() < 200;
+            return !entity.getDinosaur().isMarineCreature() && entity.getAir() < 200;
         }
     },
     SLEEPY {

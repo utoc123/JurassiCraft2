@@ -187,9 +187,7 @@ public class ClientProxy extends ServerProxy {
 
     public static void spawnVenomParticles(VenomEntity entity) {
         ParticleManager particleManager = Minecraft.getMinecraft().effectRenderer;
-
         float size = 0.35F;
-
         for (int i = 0; i < 16; ++i) {
             particleManager.addEffect(new VenomParticle(entity.worldObj, size * Math.random() - size / 2, size * Math.random() - size / 2, size * Math.random() - size / 2, 0.0F, 0.0F, 0.0F, 1.0F, entity));
         }

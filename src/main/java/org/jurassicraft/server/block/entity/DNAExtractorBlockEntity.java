@@ -59,7 +59,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
 
             if (item == ItemHandler.AMBER || item == ItemHandler.SEA_LAMPREY) {
                 if (input.getItemDamage() == 0) {
-                    List<Dinosaur> possibleDinos = item == ItemHandler.AMBER ? EntityHandler.getDinosaursFromAmber() : EntityHandler.getDinosaursFromSeaLampreys();
+                    List<Dinosaur> possibleDinos = item == ItemHandler.AMBER ? EntityHandler.getDinosaursFromAmber() : EntityHandler.getMarineCreatures();
 
                     Dinosaur dino = possibleDinos.get(rand.nextInt(possibleDinos.size()));
 

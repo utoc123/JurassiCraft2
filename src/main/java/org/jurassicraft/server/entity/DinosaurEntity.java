@@ -166,7 +166,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         //tasks.addTask(0, new EscapeBlockEntityAI(this));
 
-        if (!this.dinosaur.isMarineAnimal()) {
+        if (!this.dinosaur.isMarineCreature()) {
 //            this.tasks.addTask(0, new EntityAISwimming(this));
             this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
             //this.setPathPriority(PathNodeType.WATER, 0.0F);
@@ -575,7 +575,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         super.onLivingUpdate();
 
         if (!this.worldObj.isRemote) {
-            if (!this.dinosaur.isMarineAnimal()) {
+            if (!this.dinosaur.isMarineCreature()) {
                 if (this.isInsideOfMaterial(Material.WATER)) {
                     this.getJumpHelper().setJumping();
                 } else {
@@ -1196,7 +1196,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public boolean areEyelidsClosed() {
-        return !this.dinosaur.isMarineAnimal() && ((this.isCarcass || this.isSleeping) || this.ticksExisted % 100 < 4);
+        return !this.dinosaur.isMarineCreature() && ((this.isCarcass || this.isSleeping) || this.ticksExisted % 100 < 4);
     }
 
     public boolean getUseInertialTweens() {

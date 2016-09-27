@@ -1,0 +1,51 @@
+{
+  "version": 0,
+  "poses": {
+    "IDLE": [
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 10
+      }
+    ],
+    "INJURED": [
+      {
+        "pose": "mussaurus_adult_injured",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_injured",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 5
+      }
+    ],
+    "SPEAK": [
+      {
+        "pose": "mussaurus_adult_talk",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_talk",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 5
+      }
+    ],
+    "RESTING": [
+      {
+        "pose": "mussaurus_adult_resting",
+        "time": 20
+      }
+    ],
+    "SLEEPING": [
+      {
+        "pose": "mussaurus_adult_sleeping",
+        "time": 20
+      }
+    ]
+  }
+}

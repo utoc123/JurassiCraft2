@@ -54,7 +54,7 @@ public class DinosaurEggItem extends DNAContainerItem {
         Collections.sort(dinosaurs);
 
         for (Dinosaur dinosaur : dinosaurs) {
-            if (dinosaur.shouldRegister()) {
+            if (dinosaur.shouldRegister() && !dinosaur.isMarineCreature()) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }

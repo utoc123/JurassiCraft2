@@ -30,6 +30,7 @@ import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
 import org.jurassicraft.client.model.animation.entity.DilophosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.GallimimusAnimator;
 import org.jurassicraft.client.model.animation.entity.MicroraptorAnimator;
+import org.jurassicraft.client.model.animation.entity.MussaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.ParasaurolophusAnimator;
 import org.jurassicraft.client.model.animation.entity.TriceratopsAnimator;
 import org.jurassicraft.client.model.animation.entity.TyrannosaurusAnimator;
@@ -130,11 +131,9 @@ public enum RenderingHandler {
 
             ModelBakery.registerItemVariants(ItemHandler.DNA, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
 
-            if (!dino.isMammal()) {
+            if (!dino.isMammal() && !dino.isMarineCreature()) {
                 ModelBakery.registerItemVariants(ItemHandler.EGG, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
-                if (!dino.isMarineAnimal()) {
-                    ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
-                }
+                ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
             }
 
             ModelBakery.registerItemVariants(ItemHandler.DINOSAUR_MEAT, new ResourceLocation("jurassicraft:meat/meat_" + dinoName));
@@ -185,6 +184,7 @@ public enum RenderingHandler {
         this.registerRenderInfo(EntityHandler.GALLIMIMUS, new GallimimusAnimator(), 0.65F);
         this.registerRenderInfo(EntityHandler.PARASAUROLOPHUS, new ParasaurolophusAnimator(), 0.65F);
         this.registerRenderInfo(EntityHandler.MICRORAPTOR, new MicroraptorAnimator(), 0.45F);
+        this.registerRenderInfo(EntityHandler.MUSSAURUS, new MussaurusAnimator(), 0.8F);
         this.registerRenderInfo(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F);
         this.registerRenderInfo(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F);
         this.registerRenderInfo(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F);
@@ -442,13 +442,14 @@ public enum RenderingHandler {
             }
 
             this.registerItemRenderer(ItemHandler.DNA, meta, "dna/dna_" + formattedName, "inventory");
-            this.registerItemRenderer(ItemHandler.EGG, meta, "egg/egg_" + formattedName, "inventory");
             this.registerItemRenderer(ItemHandler.DINOSAUR_MEAT, meta, "meat/meat_" + formattedName, "inventory");
             this.registerItemRenderer(ItemHandler.DINOSAUR_STEAK, meta, "meat/steak_" + formattedName, "inventory");
             this.registerItemRenderer(ItemHandler.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + formattedName, "inventory");
             this.registerItemRenderer(ItemHandler.SYRINGE, meta, "syringe/syringe_" + formattedName, "inventory");
             this.registerItemRenderer(ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName, "inventory");
-            if (!dinosaur.isMarineAnimal()) {
+
+            if (!dinosaur.isMarineCreature() && !dinosaur.isMammal()) {
+                this.registerItemRenderer(ItemHandler.EGG, meta, "egg/egg_" + formattedName, "inventory");
                 this.registerItemRenderer(ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName, "inventory");
             }
         }

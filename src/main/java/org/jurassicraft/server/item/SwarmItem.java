@@ -34,6 +34,7 @@ public class SwarmItem extends Item {
             if (state.getMaterial() == Material.WATER) {
                 if (player.canPlayerEdit(pos, EnumFacing.UP, stack)) {
                     world.setBlockState(pos.up(), this.block.get());
+                    stack.stackSize--;
                     return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
                 }
             }

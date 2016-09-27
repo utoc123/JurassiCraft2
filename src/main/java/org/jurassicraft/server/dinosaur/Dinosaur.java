@@ -418,7 +418,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         return this.getName().compareTo(dinosaur.getName());
     }
 
-    public boolean isMarineAnimal() {
+    public boolean isMarineCreature() {
         return this.isMarineAnimal;
     }
 

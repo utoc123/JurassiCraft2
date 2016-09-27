@@ -16,7 +16,7 @@ import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 public class VelociraptorEntity extends DinosaurEntity {
     public VelociraptorEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, MicroraptorEntity.class);
+        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, MicroraptorEntity.class, MussaurusEntity.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
     }
 

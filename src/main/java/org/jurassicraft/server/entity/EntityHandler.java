@@ -12,6 +12,7 @@ import org.jurassicraft.server.dinosaur.DilophosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.dinosaur.GallimimusDinosaur;
 import org.jurassicraft.server.dinosaur.MicroraptorDinosaur;
+import org.jurassicraft.server.dinosaur.MussaurusDinosaur;
 import org.jurassicraft.server.dinosaur.ParasaurolophusDinosaur;
 import org.jurassicraft.server.dinosaur.TriceratopsDinosaur;
 import org.jurassicraft.server.dinosaur.TyrannosaurusDinosaur;
@@ -37,6 +38,7 @@ public class EntityHandler {
     public static final Dinosaur GALLIMIMUS = new GallimimusDinosaur();
     public static final Dinosaur PARASAUROLOPHUS = new ParasaurolophusDinosaur();
     public static final Dinosaur MICRORAPTOR = new MicroraptorDinosaur();
+    public static final Dinosaur MUSSAURUS = new MussaurusDinosaur();
     public static final Dinosaur TRICERATOPS = new TriceratopsDinosaur();
     public static final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
     public static final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
@@ -50,16 +52,14 @@ public class EntityHandler {
     private static ProgressManager.ProgressBar dinosaurProgress;
     private static int highestID;
 
-    public static List<Dinosaur> getDinosaursFromSeaLampreys() {
-        List<Dinosaur> marineDinos = new ArrayList<>();
-
+    public static List<Dinosaur> getMarineCreatures() {
+        List<Dinosaur> marineDinosaurs = new ArrayList<>();
         for (Dinosaur dino : getRegisteredDinosaurs()) {
-            if (dino.isMarineAnimal() && !(dino instanceof Hybrid)) {
-                marineDinos.add(dino);
+            if (dino.isMarineCreature() && !(dino instanceof Hybrid)) {
+                marineDinosaurs.add(dino);
             }
         }
-
-        return marineDinos;
+        return marineDinosaurs;
     }
 
     public static void init() {
@@ -67,6 +67,7 @@ public class EntityHandler {
         registerDinosaur(1, COELACANTH);
         registerDinosaur(2, MICRORAPTOR);
         registerDinosaur(3, BRACHIOSAURUS);
+        registerDinosaur(4, MUSSAURUS);
         registerDinosaur(7, DILOPHOSAURUS);
         registerDinosaur(9, GALLIMIMUS);
         registerDinosaur(13, PARASAUROLOPHUS);
@@ -117,7 +118,7 @@ public class EntityHandler {
             registerEntity(clazz, dinosaur.getName());
 
             if (canSpawn && JurassiCraft.CONFIG.naturalSpawning) {
-                EntityRegistry.addSpawn(clazz, dinosaur.getSpawnChance(), 1, Math.min(6, dinosaur.getMaxHerdSize() / 2), dinosaur.isMarineAnimal() ? EnumCreatureType.WATER_CREATURE : EnumCreatureType.CREATURE, dinosaur.getSpawnBiomes());
+                EntityRegistry.addSpawn(clazz, dinosaur.getSpawnChance(), 1, Math.min(6, dinosaur.getMaxHerdSize() / 2), dinosaur.isMarineCreature() ? EnumCreatureType.WATER_CREATURE : EnumCreatureType.CREATURE, dinosaur.getSpawnBiomes());
             }
         }
     }
@@ -147,15 +148,13 @@ public class EntityHandler {
     }
 
     public static List<Dinosaur> getDinosaursFromAmber() {
-        List<Dinosaur> amberDinos = new LinkedList<>();
-
-        for (Dinosaur dino : getRegisteredDinosaurs()) {
-            if (!dino.isMarineAnimal() && !(dino instanceof Hybrid)) {
-                amberDinos.add(dino);
+        List<Dinosaur> dinosaurs = new LinkedList<>();
+        for (Dinosaur dinosaur : getRegisteredDinosaurs()) {
+            if (!dinosaur.isMarineCreature() && !(dinosaur instanceof Hybrid)) {
+                dinosaurs.add(dinosaur);
             }
         }
-
-        return amberDinos;
+        return dinosaurs;
     }
 
     public static Map<Integer, Dinosaur> getDinosaurs() {
@@ -178,15 +177,12 @@ public class EntityHandler {
 
     public static List<Dinosaur> getPrehistoricDinosaurs() {
         List<Dinosaur> dinosaurs = new LinkedList<>();
-
         for (Map.Entry<Integer, Dinosaur> entry : EntityHandler.DINOSAURS.entrySet()) {
             Dinosaur dinosaur = entry.getValue();
-
             if (dinosaur.shouldRegister() && !(dinosaur instanceof Hybrid)) {
                 dinosaurs.add(dinosaur);
             }
         }
-
         return dinosaurs;
     }
 

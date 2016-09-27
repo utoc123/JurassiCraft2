@@ -46,7 +46,7 @@ public class JabelarAnimationHandler {
 
         this.DEFAULT_PASS.init(parts, entity);
         this.MOVEMENT_PASS.init(parts, entity);
-        if (entity.getDinosaur().isMarineAnimal()) {
+        if (entity.getDinosaur().isMarineCreature()) {
             this.ON_LAND_PASS.init(parts, entity);
         }
     }
@@ -55,7 +55,7 @@ public class JabelarAnimationHandler {
         this.DEFAULT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
         if (!entity.isCarcass()) {
             this.MOVEMENT_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
-            if (entity.getDinosaur().isMarineAnimal()) {
+            if (entity.getDinosaur().isMarineCreature()) {
                 this.ON_LAND_PASS.performAnimations(entity, limbSwing, limbSwingAmount, ticks);
             }
         }

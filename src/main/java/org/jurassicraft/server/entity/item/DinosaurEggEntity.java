@@ -92,13 +92,13 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     }
 
     public void hatch() {
-        if (!this.dinosaur.isMarineAnimal() && this.isInWater()) {
+        if (!this.dinosaur.isMarineCreature() && this.isInWater()) {
             this.warnPlayersWithinRadius("An egg is in the water and that animal is not aquatic!");
             this.hatchTime += 1000;
             return;
         }
 
-        if (this.dinosaur.isMarineAnimal() && !this.isInWater()) {
+        if (this.dinosaur.isMarineCreature() && !this.isInWater()) {
             this.warnPlayersWithinRadius("An aquatic animals egg is on land!");
             this.hatchTime += 1000;
             return;
