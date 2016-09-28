@@ -152,7 +152,7 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.FOSSILIZED_EGG, new ResourceLocation("jurassicraft:fossilized_egg_" + (variant.ordinal() + 1)));
         }
 
-        for (Plant plant : PlantHandler.getPrehistoricPlants()) {
+        for (Plant plant : PlantHandler.getPrehistoricPlantsAndTrees()) {
             String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
             ModelBakery.registerItemVariants(ItemHandler.PLANT_DNA, new ResourceLocation("jurassicraft:dna/plants/dna_" + name));
@@ -454,7 +454,7 @@ public enum RenderingHandler {
             }
         }
 
-        for (Plant plant : PlantHandler.getPrehistoricPlants()) {
+        for (Plant plant : PlantHandler.getPrehistoricPlantsAndTrees()) {
             int meta = PlantHandler.getPlantId(plant);
 
             String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");

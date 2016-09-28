@@ -80,7 +80,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
 
                     disc.setTagCompound(nbt);
                 } else if (input.getItemDamage() == 1) {
-                    List<Plant> possiblePlants = PlantHandler.getPrehistoricPlants();
+                    List<Plant> possiblePlants = PlantHandler.getPrehistoricPlantsAndTrees();
                     Plant plant = possiblePlants.get(rand.nextInt(possiblePlants.size()));
 
                     int plantId = PlantHandler.getPlantId(plant);

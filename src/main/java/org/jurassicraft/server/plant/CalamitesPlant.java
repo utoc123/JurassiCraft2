@@ -26,4 +26,9 @@ public class CalamitesPlant extends Plant {
     public FoodHelper.FoodEffect[] getEffects() {
         return new FoodHelper.FoodEffect[] { new FoodHelper.FoodEffect(PotionTypes.POISON.getEffects().get(0), 5) };
     }
+
+    @Override
+    public boolean isTree() {
+        return true;
+    }
 }

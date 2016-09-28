@@ -80,15 +80,23 @@ public class PlantHandler {
         }
     }
 
-    public static List<Plant> getPrehistoricPlants() {
+    public static List<Plant> getPrehistoricPlantsAndTrees() {
         List<Plant> prehistoricPlants = new LinkedList<>();
-
         for (Plant plant : PLANTS) {
             if (plant.shouldRegister() && plant.isPrehistoric()) {
                 prehistoricPlants.add(plant);
             }
         }
+        return prehistoricPlants;
+    }
 
+    public static List<Plant> getPrehistoricPlants() {
+        List<Plant> prehistoricPlants = new LinkedList<>();
+        for (Plant plant : PLANTS) {
+            if (plant.shouldRegister() && plant.isPrehistoric() && !plant.isTree()) {
+                prehistoricPlants.add(plant);
+            }
+        }
         return prehistoricPlants;
     }
 }

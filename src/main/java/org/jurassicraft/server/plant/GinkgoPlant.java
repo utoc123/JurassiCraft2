@@ -19,4 +19,9 @@ public class GinkgoPlant extends Plant {
     public int getHealAmount() {
         return 1000;
     }
+
+    @Override
+    public boolean isTree() {
+        return true;
+    }
 }

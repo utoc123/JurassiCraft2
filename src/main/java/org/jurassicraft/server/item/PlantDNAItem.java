@@ -47,7 +47,7 @@ public class PlantDNAItem extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
-        List<Plant> plants = new LinkedList<>(PlantHandler.getPrehistoricPlants());
+        List<Plant> plants = new LinkedList<>(PlantHandler.getPrehistoricPlantsAndTrees());
 
         Map<Plant, Integer> ids = new HashMap<>();
 
