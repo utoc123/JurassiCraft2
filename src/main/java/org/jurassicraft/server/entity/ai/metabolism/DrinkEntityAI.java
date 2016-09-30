@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.MetabolismContainer;
+import org.jurassicraft.server.entity.ai.Mutex;
 import org.jurassicraft.server.entity.ai.util.AIUtils;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.util.GameRuleHandler;
@@ -24,11 +25,12 @@ public class DrinkEntityAI extends EntityAIBase {
 
     public DrinkEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.METABOLISM);
     }
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && this.dinosaur.ticksExisted % 4 == 0 && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
             if (this.dinosaur.getMetabolism().isThirsty()) {
                 World world = this.dinosaur.worldObj;
                 BlockPos water = null;
@@ -64,10 +66,10 @@ public class DrinkEntityAI extends EntityAIBase {
         }
         if (this.path != null) {
             this.dinosaur.getNavigator().setPath(this.path, 1.0);
-            if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(4).isVecInside(new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5))) {
+            if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(1).isVecInside(new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5))) {
                 this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
                 MetabolismContainer metabolism = this.dinosaur.getMetabolism();
-                metabolism.setWater(metabolism.getMaxWater());
+                metabolism.setWater(metabolism.getWater() + 5000);
             }
         }
     }
@@ -81,6 +83,6 @@ public class DrinkEntityAI extends EntityAIBase {
 
     @Override
     public boolean continueExecuting() {
-        return this.giveUpTime > 0 && this.dinosaur != null && !(this.dinosaur.isCarcass() || this.dinosaur.isDead) && this.path != null && this.dinosaur.worldObj.getBlockState(this.pos).getMaterial() == Material.WATER;
+        return this.giveUpTime > 0 && this.dinosaur != null && !(this.dinosaur.isCarcass() || this.dinosaur.isDead) && this.path != null && this.dinosaur.getMetabolism().getWater() < this.dinosaur.getMetabolism().getMaxWater() * 0.9;
     }
 }

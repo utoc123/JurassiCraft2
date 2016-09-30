@@ -13,7 +13,7 @@ public class MoveUnderwaterEntityAI extends EntityAIBase {
 
     public MoveUnderwaterEntityAI(DinosaurEntity entity) {
         this.swimmingEntity = entity;
-        this.setMutexBits(3);
+        this.setMutexBits(Mutex.MOVEMENT);
     }
 
     @Override

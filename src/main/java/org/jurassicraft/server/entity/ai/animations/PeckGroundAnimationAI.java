@@ -5,6 +5,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.Herd;
+import org.jurassicraft.server.entity.ai.Mutex;
 
 public class PeckGroundAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
@@ -12,6 +13,7 @@ public class PeckGroundAnimationAI extends EntityAIBase {
     public PeckGroundAnimationAI(IAnimatedEntity entity) {
         super();
         this.dinosaur = (DinosaurEntity) entity;
+        this.setMutexBits(Mutex.ANIMATION);
     }
 
     @Override

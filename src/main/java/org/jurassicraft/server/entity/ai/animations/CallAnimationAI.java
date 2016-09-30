@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.ai.Mutex;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class CallAnimationAI extends EntityAIBase {
     public CallAnimationAI(IAnimatedEntity entity) {
         super();
         this.dinosaur = (DinosaurEntity) entity;
+        this.setMutexBits(Mutex.ANIMATION);
     }
 
     public List<Entity> getEntitiesWithinDistance(Entity entity, double width, double height) {

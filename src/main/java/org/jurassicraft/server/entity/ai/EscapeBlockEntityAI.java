@@ -14,6 +14,7 @@ public class EscapeBlockEntityAI extends EntityAIBase {
 
     public EscapeBlockEntityAI(EntityLiving entitylivingIn) {
         this._entity = entitylivingIn;
+        this.setMutexBits(Mutex.MOVEMENT);
     }
 
     @Override

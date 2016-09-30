@@ -17,6 +17,7 @@ public class SleepEntityAI extends EntityAIBase {
 
     public SleepEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.METABOLISM | Mutex.MOVEMENT | Mutex.ANIMATION);
     }
 
     @Override

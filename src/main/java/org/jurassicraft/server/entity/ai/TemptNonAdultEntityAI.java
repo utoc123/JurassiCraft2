@@ -11,6 +11,7 @@ public class TemptNonAdultEntityAI extends EntityAITempt {
     public TemptNonAdultEntityAI(DinosaurEntity dinosaur, double speed) {
         super(dinosaur, speed, !dinosaur.getDinosaur().getDiet().isCarnivorous(), Sets.newHashSet(FoodHelper.getEdibleFoods(dinosaur.getDinosaur().getDiet())));
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.METABOLISM | Mutex.MOVEMENT);
     }
 
     @Override

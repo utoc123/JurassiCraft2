@@ -15,6 +15,7 @@ public class ProtectInfantEntityAI<T extends DinosaurEntity> extends EntityAIBas
     public ProtectInfantEntityAI(T dinosaur) {
         this.dinosaur = dinosaur;
         this.dinosaurClazz = (Class<T>) dinosaur.getClass();
+        this.setMutexBits(Mutex.ATTACK);
     }
 
     @Override

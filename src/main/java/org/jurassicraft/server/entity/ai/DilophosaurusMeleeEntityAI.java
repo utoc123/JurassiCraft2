@@ -7,6 +7,7 @@ import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 public class DilophosaurusMeleeEntityAI extends DinosaurAttackMeleeEntityAI {
     public DilophosaurusMeleeEntityAI(DilophosaurusEntity entity, double speed) {
         super(entity, speed, false);
+        this.setMutexBits(Mutex.ATTACK);
     }
 
     @Override

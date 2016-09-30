@@ -140,6 +140,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private DinosaurLookHelper lookHelper;
 
+    private BlockPos closestFeeder;
+    private int feederSearchTick;
+
     public DinosaurEntity(World world) {
         super(world);
 
@@ -1348,17 +1351,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public BlockPos getClosestFeeder() {
-        OnionTraverser traverser = new OnionTraverser(this.getPosition(), 32);
-        for (BlockPos pos : traverser) {
-            TileEntity tile = this.worldObj.getTileEntity(pos);
-            if (tile instanceof FeederBlockEntity) {
-                FeederBlockEntity feeder = (FeederBlockEntity) tile;
-                if (feeder.canFeedDinosaur(this.dinosaur) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
-                    return pos;
+        if (this.closestFeeder == null || this.ticksExisted - this.feederSearchTick > 40) {
+            this.feederSearchTick = this.ticksExisted;
+            OnionTraverser traverser = new OnionTraverser(this.getPosition(), 32);
+            for (BlockPos pos : traverser) {
+                TileEntity tile = this.worldObj.getTileEntity(pos);
+                if (tile instanceof FeederBlockEntity) {
+                    FeederBlockEntity feeder = (FeederBlockEntity) tile;
+                    if (feeder.canFeedDinosaur(this.getDinosaur()) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
+                        return this.closestFeeder = pos;
+                    }
                 }
             }
         }
-        return null;
+        return this.closestFeeder;
     }
 
     public static class FieldGuideInfo {

@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.ai.Mutex;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.util.GameRuleHandler;
 
@@ -18,6 +19,7 @@ public class EatFoodItemEntityAI extends EntityAIBase {
 
     public EatFoodItemEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.METABOLISM);
     }
 
     @Override

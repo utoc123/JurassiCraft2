@@ -8,8 +8,8 @@ import org.jurassicraft.server.util.GameRuleHandler;
 public class MetabolismContainer {
     public static final int MAX_DIGESTION_AMOUNT = 3000;
 
-    private final int MAX_ENERGY;
-    private final int MAX_WATER;
+    private final int maxEnergy;
+    private final int maxWater;
 
     private int energy;
     private int digestingFood;
@@ -22,11 +22,11 @@ public class MetabolismContainer {
 
         double health = dinosaur.getDinosaur().getAdultHealth();
 
-        this.MAX_ENERGY = (int) (health / 15.0 * 24000);
-        this.MAX_WATER = (int) (health / 15.0 * 24000);
+        this.maxEnergy = (int) (health / 15.0 * 24000);
+        this.maxWater = (int) (health / 15.0 * 24000);
 
-        this.energy = this.MAX_ENERGY;
-        this.water = this.MAX_WATER;
+        this.energy = this.maxEnergy;
+        this.water = this.maxWater;
     }
 
     public void update() {
@@ -38,7 +38,7 @@ public class MetabolismContainer {
                 if (this.isThirsty()) {
                     this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
                 }
-                this.water = this.MAX_WATER;
+                this.water = this.maxWater;
             }
 
             if (this.digestingFood > 0) {
@@ -53,7 +53,7 @@ public class MetabolismContainer {
     }
 
     public void setWater(int water) {
-        this.water = Math.min(water, this.MAX_WATER);
+        this.water = Math.min(water, this.maxWater);
     }
 
     public int getEnergy() {
@@ -61,7 +61,7 @@ public class MetabolismContainer {
     }
 
     public void setEnergy(int energy) {
-        this.energy = Math.min(energy, this.MAX_ENERGY);
+        this.energy = Math.min(energy, this.maxEnergy);
     }
 
     public int getDigestingFood() {
@@ -73,7 +73,7 @@ public class MetabolismContainer {
         this.energy = Math.max(0, this.energy);
 
         if (this.isStarving() && this.dinosaur.ticksExisted % 10 == 0) {
-            this.dinosaur.attackEntityFrom(DamageSource.starve, 5.0F);
+            this.dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
         }
     }
 
@@ -82,7 +82,7 @@ public class MetabolismContainer {
         this.water = Math.max(0, this.water);
 
         if (this.isDehydrated() && this.dinosaur.ticksExisted % 10 == 0) {
-            this.dinosaur.attackEntityFrom(DamageSource.starve, 5.0F);
+            this.dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
         }
     }
 
@@ -103,11 +103,11 @@ public class MetabolismContainer {
     }
 
     public int getMaxEnergy() {
-        return this.MAX_ENERGY;
+        return this.maxEnergy;
     }
 
     public int getMaxWater() {
-        return this.MAX_WATER;
+        return this.maxWater;
     }
 
     public void increaseEnergy(int amount) {
@@ -132,10 +132,10 @@ public class MetabolismContainer {
     }
 
     public boolean isHungry() {
-        return (this.energy + (this.digestingFood * 10) < this.MAX_ENERGY * 0.8 || this.energy < 50) && this.digestingFood + 500 < MAX_DIGESTION_AMOUNT;
+        return (this.energy + (this.digestingFood * (this.energy / this.maxEnergy) * 10) < this.maxEnergy * 0.8 || this.energy < 100) && this.digestingFood + 500 < MAX_DIGESTION_AMOUNT;
     }
 
     public boolean isThirsty() {
-        return this.water < this.MAX_WATER * 0.5;
+        return this.water < this.maxWater * 0.5;
     }
 }
