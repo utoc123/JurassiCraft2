@@ -92,18 +92,12 @@ public class FeederBlock extends BlockContainer {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        EnumFacing facing = EnumFacing.getFront(meta);
-
-        if (facing.getAxis() == EnumFacing.Axis.Y) {
-            facing = EnumFacing.NORTH;
-        }
-
-        return this.getDefaultState().withProperty(FACING, facing);
+        return this.getDefaultState().withProperty(FACING, EnumFacing.values()[meta]);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getIndex();
+        return state.getValue(FACING).ordinal();
     }
 
     @Override
