@@ -577,6 +577,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
+        if (this.isClimbing()) {
+            this.prevLimbSwingAmount = this.limbSwingAmount;
+            double deltaY = (this.posY - this.prevPosY) * 4.0F;
+            if (deltaY > 1.0F) {
+                deltaY = 1.0F;
+            }
+            this.limbSwingAmount += (deltaY - this.limbSwingAmount) * 0.4F;
+            this.limbSwing += this.limbSwingAmount;
+        }
+
         if (!this.worldObj.isRemote) {
             if (!this.dinosaur.isMarineCreature()) {
                 if (this.isInsideOfMaterial(Material.WATER)) {
@@ -1363,6 +1373,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
         }
         return this.closestFeeder;
+    }
+
+    public boolean isClimbing() {
+        return false;
     }
 
     public static class FieldGuideInfo {

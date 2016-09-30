@@ -21,8 +21,8 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setStrength(2, 6);
         this.setMaximumAge(this.fromDays(40));
         this.setEyeHeight(0.35F, 1.8F);
-        this.setSizeX(0.3F, 1.25F);
-        this.setSizeY(0.4F, 2.0F);
+        this.setSizeX(0.2F, 1.0F);
+        this.setSizeY(0.3F, 1.7F);
         this.setStorage(27);
         this.setDiet(Diet.CARNIVORE.get());
         this.setSleepingSchedule(SleepingSchedule.CREPUSCULAR);

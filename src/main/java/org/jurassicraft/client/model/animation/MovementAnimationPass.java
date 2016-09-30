@@ -24,7 +24,7 @@ public class MovementAnimationPass extends AnimationPass {
     protected float getAnimationDegree(DinosaurEntity entity) {
         float degree;
 
-        if (this.animation == DinosaurAnimation.WALKING.get() || this.animation == DinosaurAnimation.RUNNING.get() || this.animation == DinosaurAnimation.SWIMMING.get()) {
+        if (this.animation == DinosaurAnimation.WALKING.get() || this.animation == DinosaurAnimation.RUNNING.get() || this.animation == DinosaurAnimation.SWIMMING.get() || this.animation == DinosaurAnimation.CLIMBING.get()) {
             if (entity.isInWater() || entity.isInLava()) {
                 degree = this.limbSwingAmount * 4.0F;
             } else {
@@ -42,7 +42,9 @@ public class MovementAnimationPass extends AnimationPass {
         if (entity.isCarcass()) {
             return DinosaurAnimation.IDLE.get();
         } else {
-            if (this.isMoving(entity)) {
+            if (entity.isClimbing()) {
+                return DinosaurAnimation.CLIMBING.get();
+            } else if (this.isMoving(entity)) {
                 if (entity.isSwimming()) {
                     return DinosaurAnimation.SWIMMING.get();
                 } else {

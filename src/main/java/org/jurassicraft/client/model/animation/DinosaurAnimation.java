@@ -28,8 +28,9 @@ public enum DinosaurAnimation {
     PECKING,
     PREENING,
     ON_LAND(false, false, false),
-    WALKING(false, false, false), RUNNING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false),
+    WALKING(false, false, false), RUNNING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false), CLIMBING(false, false, false),
     RAPTOR_PREPARE_POUNCE(false, false), RAPTOR_LEAP(true, false), RAPTOR_LAND(true, false, false),
+    START_CLIMBING(false, false),
     DILOPHOSAURUS_SPIT(false, false);
 
     private Animation animation;

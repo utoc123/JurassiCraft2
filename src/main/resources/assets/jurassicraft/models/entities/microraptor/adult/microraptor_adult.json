@@ -114,19 +114,51 @@
     "WALKING": [
       {
         "pose": "microraptor_adult_walking_1",
-        "time": 2
+        "time": 1.25
       },
       {
         "pose": "microraptor_adult_walking_2",
-        "time": 2
+        "time": 1.25
       },
       {
         "pose": "microraptor_adult_walking_3",
-        "time": 2
+        "time": 1.25
       },
       {
         "pose": "microraptor_adult_walking_4",
-        "time": 2
+        "time": 1.25
+      }
+    ],
+    "CLIMBING": [
+      {
+        "pose": "microraptor_adult_climb_1",
+        "time": 10
+      },
+      {
+        "pose": "microraptor_adult_climb_2",
+        "time": 10
+      },
+      {
+        "pose": "microraptor_adult_climb_3",
+        "time": 10
+      },
+      {
+        "pose": "microraptor_adult_climb_4",
+        "time": 10
+      }
+    ],
+    "START_CLIMBING": [
+      {
+        "pose": "microraptor_adult_climb_start",
+        "time": 5
+      },
+      {
+        "pose": "microraptor_adult_climb_start",
+        "time": 5
+      },
+      {
+        "pose": "microraptor_adult_idle",
+        "time": 5
       }
     ],
     "RUNNING": [
