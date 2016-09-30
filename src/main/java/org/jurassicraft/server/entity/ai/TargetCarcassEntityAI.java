@@ -11,6 +11,7 @@ public class TargetCarcassEntityAI extends EntityAIBase {
 
     public TargetCarcassEntityAI(DinosaurEntity entity) {
         this.entity = entity;
+        this.setMutexBits(Mutex.MOVEMENT | Mutex.METABOLISM);
     }
 
     @Override

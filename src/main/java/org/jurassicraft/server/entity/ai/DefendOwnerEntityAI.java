@@ -14,6 +14,7 @@ public class DefendOwnerEntityAI extends EntityAIBase {
 
     public DefendOwnerEntityAI(DinosaurEntity entity) {
         this.entity = entity;
+        this.setMutexBits(Mutex.ATTACK | Mutex.MOVEMENT);
     }
 
     @Override

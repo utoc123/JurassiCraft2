@@ -6,6 +6,7 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 public class LeapingMeleeEntityAI extends DinosaurAttackMeleeEntityAI {
     public LeapingMeleeEntityAI(DinosaurEntity entity, double speed) {
         super(entity, speed, false);
+        this.setMutexBits(Mutex.ATTACK);
     }
 
     @Override

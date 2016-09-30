@@ -11,6 +11,7 @@ public class RespondToAttackEntityAI extends EntityAIBase {
 
     public RespondToAttackEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.ATTACK | Mutex.MOVEMENT);
     }
 
     @Override

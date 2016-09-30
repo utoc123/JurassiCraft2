@@ -3,6 +3,7 @@ package org.jurassicraft.server.entity.ai.animations;
 import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.ai.Mutex;
 
 public class LookAnimationAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
@@ -10,6 +11,7 @@ public class LookAnimationAI extends EntityAIBase {
     public LookAnimationAI(DinosaurEntity dinosaur) {
         super();
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.ANIMATION);
     }
 
     @Override

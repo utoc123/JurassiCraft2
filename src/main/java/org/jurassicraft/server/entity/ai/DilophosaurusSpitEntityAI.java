@@ -34,6 +34,7 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
         this.maxRangedAttackTime = maxAttackTime;
         this.attackRadius = maxAttackDistance;
         this.maxAttackDistance = maxAttackDistance * maxAttackDistance;
+        this.setMutexBits(Mutex.ATTACK);
     }
 
     @Override

@@ -19,6 +19,7 @@ public class RaptorLeapEntityAI extends EntityAIBase {
 
     public RaptorLeapEntityAI(DinosaurEntity entity) {
         this.entity = entity;
+        this.setMutexBits(Mutex.ATTACK | Mutex.ANIMATION);
     }
 
     @Override

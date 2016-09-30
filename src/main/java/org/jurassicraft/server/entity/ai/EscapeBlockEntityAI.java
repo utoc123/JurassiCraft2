@@ -12,8 +12,10 @@ import org.jurassicraft.server.entity.ai.util.AIUtils;
 public class EscapeBlockEntityAI extends EntityAIBase {
     private final EntityLiving _entity;
 
-    public EscapeBlockEntityAI(EntityLiving entitylivingIn) {
-        this._entity = entitylivingIn;
+    public EscapeBlockEntityAI(EntityLiving entity) {
+        super();
+        this._entity = entity;
+        this.setMutexBits(Mutex.MOVEMENT);
     }
 
     @Override

@@ -216,7 +216,7 @@ public class ElectricFenceWireBlock extends BlockContainer {
     @Override
     public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
         super.onEntityCollidedWithBlock(world, pos, state, entity);
-        if (!world.isRemote && !entity.isDead) {
+        if (!world.isRemote && !entity.isDead && entity instanceof EntityLivingBase) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) tile).isPowered()) {
                 entity.attackEntityFrom(DamageSources.SHOCK, 1.0F);

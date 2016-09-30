@@ -15,6 +15,7 @@ public class FollowOwnerEntityAI extends EntityAIBase {
 
     public FollowOwnerEntityAI(DinosaurEntity entity) {
         this.entity = entity;
+        this.setMutexBits(Mutex.MOVEMENT);
     }
 
     @Override

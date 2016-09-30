@@ -10,6 +10,7 @@ public class MateEntityAI extends EntityAIBase {
 
     public MateEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.ATTACK | Mutex.METABOLISM);
     }
 
     @Override

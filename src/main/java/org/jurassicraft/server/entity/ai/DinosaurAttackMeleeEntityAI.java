@@ -10,6 +10,7 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
     public DinosaurAttackMeleeEntityAI(DinosaurEntity dinosaur, double speed, boolean useLongMemory) {
         super(dinosaur, speed, useLongMemory);
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.ATTACK);
     }
 
     @Override

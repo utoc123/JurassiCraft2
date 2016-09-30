@@ -6,11 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.MetabolismContainer;
+import org.jurassicraft.server.entity.ai.Mutex;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.util.GameRuleHandler;
@@ -19,7 +18,6 @@ public class GrazeEntityAI extends EntityAIBase {
     public static final int EAT_RADIUS = 6;// was 25
     public static final int LOOK_RADIUS = 16;
     private static final int GIVE_UP_TIME = 400;// 14*20 counter = 14 seconds (ish?)
-    private static final Logger LOGGER = LogManager.getLogger();
 
     protected DinosaurEntity dinosaur;
     protected BlockPos target;
@@ -30,6 +28,7 @@ public class GrazeEntityAI extends EntityAIBase {
 
     public GrazeEntityAI(DinosaurEntity dinosaur) {
         this.dinosaur = dinosaur;
+        this.setMutexBits(Mutex.METABOLISM);
     }
 
     @Override

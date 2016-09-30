@@ -22,7 +22,7 @@ public class DinosaurWanderEntityAI extends EntityAIBase {
         this.entity = creatureIn;
         this.speed = speedIn;
         this.executionChance = chance;
-        this.setMutexBits(1);
+        this.setMutexBits(Mutex.MOVEMENT);
     }
 
     @Override
