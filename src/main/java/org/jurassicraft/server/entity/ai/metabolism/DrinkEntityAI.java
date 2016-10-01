@@ -69,7 +69,7 @@ public class DrinkEntityAI extends EntityAIBase {
             if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(1).isVecInside(new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5))) {
                 this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
                 MetabolismContainer metabolism = this.dinosaur.getMetabolism();
-                metabolism.setWater(metabolism.getWater() + 5000);
+                metabolism.setWater(metabolism.getWater() + (metabolism.getMaxWater() / 8));
             }
         }
     }
