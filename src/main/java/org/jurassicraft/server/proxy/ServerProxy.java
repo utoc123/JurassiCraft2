@@ -29,7 +29,6 @@ import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
-import org.jurassicraft.server.container.BugCrateContainer;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
@@ -44,6 +43,7 @@ import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.DinosaurSerializers;
 import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.entity.villager.VillagerHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.genetics.StorageTypeRegistry;
@@ -79,6 +79,8 @@ public class ServerProxy implements IGuiHandler {
         RecipeHandler.init();
         AchievementHandler.init();
         StorageTypeRegistry.init();
+
+        VillagerHandler.onPreInit();
 
         GameRegistry.registerWorldGenerator(WorldGenerator.INSTANCE, 0);
 

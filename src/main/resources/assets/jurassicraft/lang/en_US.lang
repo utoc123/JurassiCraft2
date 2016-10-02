@@ -19,6 +19,8 @@ entity.jurassicraft.coelacanth.name=Coelacanth
 entity.jurassicraft.microraptor.name=Microraptor
 entity.jurassicraft.mussaurus.name=Mussaurus
 
+entity.Villager.jurassicraft:geneticist=Geneticist
+
 //Items ==================================================
 item.plaster_and_bandage.name=Plaster and Bandage
 
