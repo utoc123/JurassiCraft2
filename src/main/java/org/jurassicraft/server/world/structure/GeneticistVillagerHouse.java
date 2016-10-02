@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -20,6 +21,7 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.world.LootTableHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -118,6 +120,7 @@ public class GeneticistVillagerHouse extends StructureVillagePieces.Village {
             switch (type) {
                 case "GeneticistChest":
                     world.setBlockState(pos, Blocks.CHEST.getDefaultState().withRotation(this.rotation.add(Rotation.CLOCKWISE_90)));
+                    ((TileEntityChest) world.getTileEntity(pos)).setLootTable(LootTableHandler.GENETICIST_HOUSE_CHEST, random.nextLong());
                     break;
                 case "GeneticistMachine":
                     if (random.nextInt(4) == 0) {
