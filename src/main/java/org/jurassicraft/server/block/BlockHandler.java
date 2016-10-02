@@ -62,6 +62,7 @@ import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
 import org.jurassicraft.server.block.plant.UmaltolepisBlock;
 import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
 import org.jurassicraft.server.block.plant.WildOnionBlock;
+import org.jurassicraft.server.block.plant.WildPotatoBlock;
 import org.jurassicraft.server.block.tree.AncientDoorBlock;
 import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientFenceBlock;
@@ -155,6 +156,7 @@ public class BlockHandler {
     public static final LiriodendritesBlock LIRIODENDRITES = new LiriodendritesBlock();
     public static final RaphaeliaBlock RAPHAELIA = new RaphaeliaBlock();
     public static final EncephalartosBlock ENCEPHALARTOS = new EncephalartosBlock();
+    public static final WildPotatoBlock WILD_POTATO_PLANT = new WildPotatoBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -229,6 +231,7 @@ public class BlockHandler {
         registerBlock(LIRIODENDRITES, "Liriodendrites");
         registerBlock(RAPHAELIA, "Raphaelia");
         registerBlock(ENCEPHALARTOS, "Encephalartos");
+        registerBlock(WILD_POTATO_PLANT, "Wild Potato Plant");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

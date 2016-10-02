@@ -93,6 +93,9 @@ public class ItemHandler {
     public static final BasicItem AJUGINUCULA_SMITHII_OIL = new BasicItem(TabHandler.PLANTS);
 
     public static final Item WILD_ONION = new ItemSeeds(BlockHandler.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.PLANTS);
+    public static final Item WILD_POTATO_SEEDS = new ItemSeeds(BlockHandler.WILD_POTATO_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
+    public static final Item WILD_POTATO = new ItemFood(2, 0.2F, false).setCreativeTab(TabHandler.FOODS);
+    public static final Item WILD_POTATO_COOKED = new ItemFood(6, 0.6F, false).setCreativeTab(TabHandler.FOODS);
 
     public static final GracilariaItem GRACILARIA = (GracilariaItem) new GracilariaItem(BlockHandler.GRACILARIA).setCreativeTab(TabHandler.PLANTS);
     public static final BasicItem LIQUID_AGAR = new BasicItem(TabHandler.PLANTS);
@@ -287,6 +290,9 @@ public class ItemHandler {
         registerItem(AJUGINUCULA_SMITHII_OIL, "Ajuginucula Smithii Oil");
 
         registerItem(WILD_ONION, "Wild Onion");
+        registerItem(WILD_POTATO_SEEDS, "Wild Potato Seeds");
+        registerItem(WILD_POTATO, "Wild Potato");
+        registerItem(WILD_POTATO_COOKED, "Wild Potato Cooked");
 
         registerItem(GRACILARIA, "Gracilaria");
         registerItem(LIQUID_AGAR, "Liquid Agar");

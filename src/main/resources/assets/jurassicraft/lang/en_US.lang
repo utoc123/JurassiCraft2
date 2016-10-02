@@ -196,6 +196,9 @@ item.ajuginucula_smithii_oil.name=Ajuginucula Smithii Oil
 item.wild_onion.name=Wild Onion
 item.gracilaria.name=Gracilaria
 item.liquid_agar.name=Liquid Agar
+item.wild_potato_seeds.name=Wild Potato Seeds
+item.wild_potato.name=Wild Potato
+item.wild_potato_cooked.name=Cooked Wild Potato
 
 //Blocks ==================================================
 tile.fossil_block.name={dinosaur} Fossil
@@ -319,6 +322,7 @@ trackway.raptor.name=Raptor
 tile.ajuginucula_smithii.name=Ajuginucula Smithii
 tile.wild_onion_plant.name=Wild Onion Plant
 tile.gracilaria_seaweed.name=Gracilaria Plant
+tile.wild_potato_plant.name=Wild Potato Plant
 
 //Plants =========================================
 plants.small_royal_fern.name=Royal Fern
@@ -345,6 +349,7 @@ plants.umaltolepis.name=Umaltolepis
 plants.liriodendrites.name=Liriodendrites
 plants.raphaelia.name=Raphaelia
 plants.encephalartos.name=Encephalartos
+plants.wild_potato.name=Wild Potato
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

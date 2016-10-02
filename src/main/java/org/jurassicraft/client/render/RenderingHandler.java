@@ -328,6 +328,8 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_POLE);
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_BASE);
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_WIRE);
+
+        this.registerBlockRenderer(BlockHandler.WILD_POTATO_PLANT);
     }
 
     public void postInit() {
@@ -365,13 +367,13 @@ public enum RenderingHandler {
             this.registerItemRenderer(ItemHandler.ATTRACTION_SIGN, type.ordinal(), "attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH), "inventory");
         }
 
-        this.registerItemRenderer(ItemHandler.EMPTY_TEST_TUBE, "empty_test_tube", "inventory");
-        this.registerItemRenderer(ItemHandler.EMPTY_SYRINGE, "empty_syringe", "inventory");
-        this.registerItemRenderer(ItemHandler.STORAGE_DISC, "storage_disc", "inventory");
+        this.registerItemRenderer(ItemHandler.EMPTY_TEST_TUBE);
+        this.registerItemRenderer(ItemHandler.EMPTY_SYRINGE);
+        this.registerItemRenderer(ItemHandler.STORAGE_DISC);
         this.registerItemRenderer(ItemHandler.HARD_DRIVE, "disc_reader", "inventory");
-        this.registerItemRenderer(ItemHandler.LASER, "laser", "inventory");
+        this.registerItemRenderer(ItemHandler.LASER);
         this.registerItemRenderer(ItemHandler.DNA_NUCLEOTIDES, "dna_base_material", "inventory");
-        this.registerItemRenderer(ItemHandler.SEA_LAMPREY, "sea_lamprey", "inventory");
+        this.registerItemRenderer(ItemHandler.SEA_LAMPREY);
 
         this.registerItemRenderer(ItemHandler.AMBER, 0, "amber_mosquito", "inventory");
         this.registerItemRenderer(ItemHandler.AMBER, 1, "amber_aphid", "inventory");
@@ -483,6 +485,10 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.PLANKTON);
         this.registerItemRenderer(ItemHandler.KRILL);
 
+        this.registerItemRenderer(ItemHandler.WILD_POTATO_SEEDS);
+        this.registerItemRenderer(ItemHandler.WILD_POTATO);
+        this.registerItemRenderer(ItemHandler.WILD_POTATO_COOKED);
+
         ItemColors itemColors = this.mc.getItemColors();
         itemColors.registerItemColorHandler((stack, tintIndex) -> {
             DinosaurSpawnEggItem item = (DinosaurSpawnEggItem) stack.getItem();
@@ -511,19 +517,19 @@ public enum RenderingHandler {
     }
 
     public void registerItemRenderer(Item item, final String path, final String type) {
-        modelMesher.register(item, stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
+        this.modelMesher.register(item, stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     public void registerItemRenderer(Item item, int meta, String path, String type) {
-        modelMesher.register(item, meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
+        this.modelMesher.register(item, meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     public void registerBlockRenderer(Block block, int meta, String path, String type) {
-        modelMesher.register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
+        this.modelMesher.register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     public void registerBlockRenderer(Block block, final String path, final String type) {
-        modelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
+        this.modelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
     private void registerRenderInfo(Dinosaur dinosaur, DinosaurAnimator<?> animator, float shadowSize) {
