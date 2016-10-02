@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -100,5 +102,15 @@ public abstract class OrientedBlock extends BlockContainer {
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
+    }
+
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
+        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
     }
 }
