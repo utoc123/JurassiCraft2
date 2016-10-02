@@ -11,6 +11,7 @@ public class GallimimusDinosaur extends Dinosaur {
 
         this.setName("Gallimimus");
         this.setDinosaurClass(GallimimusEntity.class);
+        this.setDinosaurType(DinosaurType.SCARED);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xD5BA86, 0xD16918);
         this.setEggColorFemale(0xCCBA94, 0xAB733D);

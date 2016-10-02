@@ -22,8 +22,8 @@ public class MetabolismContainer {
 
         double health = dinosaur.getDinosaur().getAdultHealth();
 
-        this.maxEnergy = (int) (health / 15.0 * 24000);
-        this.maxWater = (int) (health / 15.0 * 24000);
+        this.maxEnergy = (int) (health / 10.0 * 24000);
+        this.maxWater = (int) (health / 10.0 * 24000);
 
         this.energy = this.maxEnergy;
         this.water = this.maxWater;
@@ -72,7 +72,7 @@ public class MetabolismContainer {
         this.energy -= amount;
         this.energy = Math.max(0, this.energy);
 
-        if (this.isStarving() && this.dinosaur.ticksExisted % 10 == 0) {
+        if (this.isStarving() && this.dinosaur.ticksExisted % 40 == 0) {
             this.dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
         }
     }
@@ -81,7 +81,7 @@ public class MetabolismContainer {
         this.water -= amount;
         this.water = Math.max(0, this.water);
 
-        if (this.isDehydrated() && this.dinosaur.ticksExisted % 10 == 0) {
+        if (this.isDehydrated() && this.dinosaur.ticksExisted % 40 == 0) {
             this.dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
         }
     }

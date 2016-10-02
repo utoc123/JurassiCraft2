@@ -11,6 +11,7 @@ public class TriceratopsDinosaur extends Dinosaur {
 
         this.setName("Triceratops");
         this.setDinosaurClass(TriceratopsEntity.class);
+        this.setDinosaurType(DinosaurType.NEUTRAL);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x404138, 0x1C1C1C);
         this.setEggColorFemale(0x8F7B76, 0x73676A);

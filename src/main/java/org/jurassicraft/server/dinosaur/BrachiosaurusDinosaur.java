@@ -11,6 +11,7 @@ public class BrachiosaurusDinosaur extends Dinosaur {
 
         this.setName("Brachiosaurus");
         this.setDinosaurClass(BrachiosaurusEntity.class);
+        this.setDinosaurType(DinosaurType.NEUTRAL);
         this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x87987F, 0x607343);
         this.setEggColorFemale(0xAA987D, 0x4F4538);

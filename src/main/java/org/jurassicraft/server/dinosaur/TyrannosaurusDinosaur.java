@@ -11,6 +11,7 @@ public class TyrannosaurusDinosaur extends Dinosaur {
 
         this.setName("Tyrannosaurus");
         this.setDinosaurClass(TyrannosaurusEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x4E502C, 0x353731);
         this.setEggColorFemale(0xBA997E, 0x7D5D48);

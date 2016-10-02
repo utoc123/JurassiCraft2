@@ -12,6 +12,7 @@ public class DilophosaurusDinosaur extends Dinosaur {
 
         this.setName("Dilophosaurus");
         this.setDinosaurClass(DilophosaurusEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.JURASSIC);
         this.setEggColorMale(0x6B7834, 0x2A2E30);
         this.setEggColorFemale(0x62712E, 0x30241C);

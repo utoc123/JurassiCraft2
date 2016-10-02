@@ -12,6 +12,7 @@ public class ParasaurolophusDinosaur extends Dinosaur {
         this.setName("Parasaurolophus");
         this.setDinosaurClass(ParasaurolophusEntity.class);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
+        this.setDinosaurType(DinosaurType.PASSIVE);
         this.setEggColorMale(0x9F8138, 0x422306);
         this.setEggColorFemale(0x5F653E, 0x3C3F44);
         this.setHealth(10, 55);

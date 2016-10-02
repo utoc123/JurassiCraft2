@@ -11,6 +11,7 @@ public class VelociraptorDinosaur extends Dinosaur {
 
         this.setName("Velociraptor");
         this.setDinosaurClass(VelociraptorEntity.class);
+        this.setDinosaurType(DinosaurType.AGGRESSIVE);
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0xA06238, 0x632D11);
         this.setEggColorFemale(0x91765D, 0x5A4739);

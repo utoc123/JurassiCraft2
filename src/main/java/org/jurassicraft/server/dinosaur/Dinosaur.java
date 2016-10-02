@@ -78,6 +78,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     private int spawnChance;
     private Biome[] spawnBiomes;
+    private DinosaurType dinosaurType;
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
@@ -199,6 +200,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         }
 
         this.poseHandler = new PoseHandler(this);
+    }
+
+    protected void setDinosaurType(DinosaurType type) {
+        this.dinosaurType = type;
     }
 
     protected TabulaModelContainer parseModel(String growthStage) {
@@ -658,5 +663,16 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public String getLocalizationName() {
         return "entity.jurassicraft." + this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_") + ".name";
+    }
+
+    public DinosaurType getDinosaurType() {
+        return this.dinosaurType;
+    }
+
+    public enum DinosaurType {
+        AGGRESSIVE,
+        NEUTRAL,
+        PASSIVE,
+        SCARED
     }
 }
