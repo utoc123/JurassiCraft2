@@ -21,6 +21,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -905,14 +906,43 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 } else {
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
-            } else if (stack != null && this.metabolism.isHungry() && FoodHelper.isEdible(this, this.dinosaur.getDiet(), stack.getItem())) {
-                if (this.isOwner(player) && !this.worldObj.isRemote) {
+            } else if (stack != null && (this.metabolism.isThirsty() || this.metabolism.isHungry())) {
+                if (!this.worldObj.isRemote) {
                     Item item = stack.getItem();
-                    this.metabolism.eat(FoodHelper.getHealAmount(item));
-                    FoodHelper.applyEatEffects(this, item);
-                    stack.stackSize--;
-                } else if (this.worldObj.isRemote) {
-                    player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
+                    boolean fed = false;
+                    if (item == Items.POTIONITEM) {
+                        fed = true;
+                        this.metabolism.increaseWater(1000);
+                        this.setAnimation(DinosaurAnimation.DRINKING.get());
+                    } else if (FoodHelper.isEdible(this, this.dinosaur.getDiet(), item)) {
+                        fed = true;
+                        this.metabolism.eat(FoodHelper.getHealAmount(item));
+                        this.setAnimation(DinosaurAnimation.EATING.get());
+                        FoodHelper.applyEatEffects(this, item);
+                    }
+                    if (fed) {
+                        if (!player.capabilities.isCreativeMode) {
+                            stack.stackSize--;
+                            if (item == Items.POTIONITEM) {
+                                player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+                            }
+                        }
+                        if (!this.isOwner(player)) {
+                            if (this.rand.nextFloat() < 0.30) {
+                                if (this.dinosaur.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
+                                    if (this.rand.nextFloat() * 4.0F < (float) this.herd.members.size() / this.dinosaur.getMaxHerdSize()) {
+                                        this.herd.enemies.add(player);
+                                    } else {
+                                        this.attackEntityAsMob(player);
+                                    }
+                                } else if (this.dinosaur.getDinosaurType() == Dinosaur.DinosaurType.SCARED) {
+                                    this.herd.fleeing = true;
+                                    this.herd.enemies.add(player);
+                                }
+                            }
+                        }
+                        player.swingArm(hand);
+                    }
                 }
             }
         }
