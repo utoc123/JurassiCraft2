@@ -42,16 +42,19 @@ public class DrinkEntityAI extends EntityAIBase {
                         if (shore != null) {
                             IBlockState state = world.getBlockState(shore);
                             if (state.isFullBlock()) {
-                                water = shore;
-                                break;
+                                Path path = this.dinosaur.getNavigator().getPathToPos(shore);
+                                if (path != null && path.getCurrentPathLength() != 0) {
+                                    this.path = path;
+                                    water = shore;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
                 if (water != null) {
                     this.pos = water;
-                    this.path = this.dinosaur.getNavigator().getPathToPos(water);
-                    this.giveUpTime = 1000;
+                    this.giveUpTime = this.path.getCurrentPathLength() * 15;
                     return this.dinosaur.getNavigator().setPath(this.path, 1.0);
                 }
             }
