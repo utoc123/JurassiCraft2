@@ -1389,7 +1389,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 if (tile instanceof FeederBlockEntity) {
                     FeederBlockEntity feeder = (FeederBlockEntity) tile;
                     if (feeder.canFeedDinosaur(this.getDinosaur()) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
-                        return this.closestFeeder = pos;
+                        Path path = this.getNavigator().getPathToPos(pos);
+                        if (path != null && path.getCurrentPathLength() != 0) {
+                            return this.closestFeeder = pos;
+                        }
                     }
                 }
             }
