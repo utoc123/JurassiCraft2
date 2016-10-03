@@ -33,39 +33,48 @@ public class GrazeEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return !(this.dinosaur.isDead || this.dinosaur.isCarcass() || !GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) && this.dinosaur.getMetabolism().isHungry() && this.dinosaur.getClosestFeeder() == null;
+        if (!(this.dinosaur.isDead || this.dinosaur.isCarcass() || !GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) && this.dinosaur.getMetabolism().isHungry()) {
+            if (!this.dinosaur.getMetabolism().isStarving() && this.dinosaur.getClosestFeeder() == null) {
+                return false;
+            }
+
+            // This gets called once to initiate.  Here's where we find the plant and start movement
+            Vec3d headPos = this.dinosaur.getHeadPos();
+            BlockPos head = new BlockPos(headPos.xCoord, headPos.yCoord, headPos.zCoord);
+
+            //world the animal currently inhabits
+            this.world = this.dinosaur.worldObj;
+
+            MetabolismContainer metabolism = this.dinosaur.getMetabolism();
+
+            // Look in increasing layers (e.g. boxes) around the head. Traversers... are like ogres?
+            OnionTraverser traverser = new OnionTraverser(head, LOOK_RADIUS);
+            this.target = null;
+
+            //scans all blocks around the LOOK_RADIUS
+            for (BlockPos pos : traverser) {
+                Block block = this.world.getBlockState(pos).getBlock();
+                if (FoodHelper.isEdible(this.dinosaur, this.dinosaur.getDinosaur().getDiet(), block) && pos != this.previousTarget) {
+                    this.target = pos;
+                    this.targetVec = new Vec3d(this.target.getX(), this.target.getY(), this.target.getZ());
+                    break;
+                }
+            }
+
+            if (this.target != null) {
+                if (metabolism.isStarving()) {
+                    this.dinosaur.getNavigator().tryMoveToXYZ(this.target.getX(), this.target.getY(), this.target.getZ(), 1.2);
+                } else {
+                    this.dinosaur.getNavigator().tryMoveToXYZ(this.target.getX(), this.target.getY(), this.target.getZ(), 0.7);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public void startExecuting() {
-        // This gets called once to initiate.  Here's where we find the plant and start movement
-        Vec3d headPos = this.dinosaur.getHeadPos();
-        BlockPos head = new BlockPos(headPos.xCoord, headPos.yCoord, headPos.zCoord);
-
-        //world the animal currently inhabits
-        this.world = this.dinosaur.worldObj;
-
-        MetabolismContainer metabolism = this.dinosaur.getMetabolism();
-
-        // Look in increasing layers (e.g. boxes) around the head. Traversers... are like ogres?
-        OnionTraverser traverser = new OnionTraverser(head, LOOK_RADIUS);
-        this.target = null;
-
-        //scans all blocks around the LOOK_RADIUS
-        for (BlockPos pos : traverser) {
-            Block block = this.world.getBlockState(pos).getBlock();
-            if (FoodHelper.isEdible(this.dinosaur, this.dinosaur.getDinosaur().getDiet(), block) && pos != this.previousTarget) {
-                this.target = pos;
-                this.targetVec = new Vec3d(this.target.getX(), this.target.getY(), this.target.getZ());
-                break;
-            }
-        }
-
-        if (this.target != null && metabolism.isStarving()) {
-            this.dinosaur.getNavigator().tryMoveToXYZ(this.target.getX(), this.target.getY(), this.target.getZ(), 1.2);
-        } else if (this.target != null) {
-            this.dinosaur.getNavigator().tryMoveToXYZ(this.target.getX(), this.target.getY(), this.target.getZ(), 0.7);
-        }
     }
 
     @Override
