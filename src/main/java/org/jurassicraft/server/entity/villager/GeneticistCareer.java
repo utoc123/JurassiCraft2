@@ -22,7 +22,7 @@ public class GeneticistCareer extends VillagerRegistry.VillagerCareer {
             possible.add(new MerchantRecipe(new ItemStack(Items.EMERALD), new ItemStack(ItemHandler.LIQUID_AGAR, random.nextInt(5) + 10)));
             possible.add(new MerchantRecipe(new ItemStack(Items.EMERALD), new ItemStack(ItemHandler.EMPTY_TEST_TUBE, random.nextInt(4) + 14)));
             possible.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 3), new ItemStack(ItemHandler.STORAGE_DISC, random.nextInt(4) + 14)));
-            possible.add(new MerchantRecipe(new ItemStack(Items.EMERALD), new ItemStack(ItemHandler.SYRINGE, random.nextInt(5) + 10)));
+            possible.add(new MerchantRecipe(new ItemStack(Items.EMERALD), new ItemStack(ItemHandler.EMPTY_SYRINGE, random.nextInt(5) + 10)));
             possible.add(new MerchantRecipe(new ItemStack(Items.EMERALD, random.nextInt(2) + 1), new ItemStack(ItemHandler.DNA_NUCLEOTIDES, random.nextInt(4) + 14)));
             possible.add(new MerchantRecipe(new ItemStack(ItemHandler.DNA_NUCLEOTIDES, random.nextInt(4) + 14), new ItemStack(Items.EMERALD)));
             possible.add(new MerchantRecipe(new ItemStack(Blocks.GLASS, random.nextInt(10) + 10), new ItemStack(Items.EMERALD, random.nextInt(2) + 1)));

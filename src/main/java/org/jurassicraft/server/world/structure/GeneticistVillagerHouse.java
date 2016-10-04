@@ -1,7 +1,12 @@
 package org.jurassicraft.server.world.structure;
 
+import net.minecraft.block.BlockColored;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockNewLog;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
@@ -126,6 +131,68 @@ public class GeneticistVillagerHouse extends StructureVillagePieces.Village {
                     if (random.nextInt(4) == 0) {
                         world.setBlockState(pos, MACHINES[random.nextInt(MACHINES.length)].withRotation(this.rotation.add(Rotation.CLOCKWISE_90)));
                     }
+                    break;
+                case "Log":
+                    world.setBlockState(pos, this.getBiomeSpecificBlockState(Blocks.LOG.getDefaultState()));
+                    break;
+                case "Base":
+                    world.setBlockState(pos, this.getBiomeSpecificBlockState(Blocks.COBBLESTONE.getDefaultState()));
+                    break;
+                case "BaseStairs":
+                    world.setBlockState(pos, this.getBiomeSpecificBlockState(Blocks.STONE_STAIRS.getDefaultState().withRotation(this.rotation)));
+                    break;
+                case "Wall":
+                    world.setBlockState(pos, this.getBiomeSpecificBlockState(Blocks.PLANKS.getDefaultState()));
+                    break;
+                case "Fence":
+                    world.setBlockState(pos, this.getBiomeSpecificBlockState(Blocks.OAK_FENCE.getDefaultState()));
+                    break;
+                case "FenceGate":
+                    IBlockState gate;
+                    switch (this.field_189928_h) {
+                        case 2:
+                            gate = Blocks.ACACIA_FENCE_GATE.getDefaultState();
+                            break;
+                        case 3:
+                            gate = Blocks.SPRUCE_FENCE_GATE.getDefaultState();
+                            break;
+                        default:
+                            gate = Blocks.OAK_FENCE_GATE.getDefaultState();
+                            break;
+                    }
+                    world.setBlockState(pos, gate.withRotation(this.rotation));
+                    break;
+                case "StainedClay":
+                    IBlockState state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK);
+                    if (this.field_189928_h == 1) {
+                        state = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
+                    }
+                    world.setBlockState(pos, state);
+                    break;
+                case "Bricks":
+                    IBlockState brick = Blocks.STONEBRICK.getDefaultState();
+                    if (this.field_189928_h == 1) {
+                        brick = Blocks.SANDSTONE.getDefaultState();
+                    }
+                    world.setBlockState(pos, brick);
+                    break;
+            }
+        }
+        for (Map.Entry<BlockPos, String> block : dataBlocks.entrySet()) {
+            BlockPos pos = block.getKey();
+            String type = block.getValue();
+            switch (type) {
+                case "Door":
+                    world.setBlockState(pos, this.func_189925_i().getDefaultState().withRotation(this.rotation));
+                    break;
+                case "DoorTop":
+                    world.setBlockState(pos, this.func_189925_i().getDefaultState().withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER).withRotation(this.rotation));
+                    break;
+                case "Torch":
+                    world.setBlockState(pos, Blocks.TORCH.getDefaultState());
+                    break;
+                case "TorchDoor":
+                    world.setBlockState(pos, Blocks.TORCH.getDefaultState().withRotation(this.rotation));
                     break;
             }
         }
