@@ -6,6 +6,7 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.world.tree.AraucariaTreeGenerator;
 import org.jurassicraft.server.world.tree.CalamitesTreeGenerator;
 import org.jurassicraft.server.world.tree.GinkgoTreeGenerator;
 import org.jurassicraft.server.world.tree.PhoenixTreeGenerator;
@@ -17,7 +18,8 @@ public enum TreeType {
     GINKGO(PlantHandler.GINKGO, new GinkgoTreeGenerator()),
     CALAMITES(PlantHandler.CALAMITES, new CalamitesTreeGenerator()),
     PSARONIUS(PlantHandler.PSARONIUS, new PsaroniusTreeGenerator()),
-    PHOENIX(PlantHandler.PHOENIX, new PhoenixTreeGenerator(), 5, () -> new ItemStack(ItemHandler.PHOENIX_FRUIT));
+    PHOENIX(PlantHandler.PHOENIX, new PhoenixTreeGenerator(), 5, () -> new ItemStack(ItemHandler.PHOENIX_FRUIT)),
+    ARAUCARIA(PlantHandler.ARAUCARIA, new AraucariaTreeGenerator());
 
     private WorldGenAbstractTree generator;
     private Plant plant;

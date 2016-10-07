@@ -133,7 +133,7 @@ public class ItemHandler {
     public static final MuralItem MURAL = new MuralItem();
 
     public static final SaplingSeedItem PHOENIX_SEEDS = (SaplingSeedItem) new SaplingSeedItem(BlockHandler.ANCIENT_SAPLINGS.get(TreeType.PHOENIX));
-    public static final SeededFruitItem PHOENIX_FRUIT = (SeededFruitItem) new SeededFruitItem(PHOENIX_SEEDS, 4, 0.4F).setCreativeTab(TabHandler.PLANTS);
+    public static final SeededFruitItem PHOENIX_FRUIT = (SeededFruitItem) new SeededFruitItem(PHOENIX_SEEDS, 4, 0.4F).setCreativeTab(TabHandler.FOODS);
 
     public static final BugItem CRICKETS = new BugItem(stack -> {
         Item item = stack.getItem();

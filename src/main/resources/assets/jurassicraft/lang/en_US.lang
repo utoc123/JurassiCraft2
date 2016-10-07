@@ -239,6 +239,18 @@ tile.ginkgo_fence_gate.name=Ginkgo Fence Gate
 tile.ginkgo_door.name=Ginkgo Door
 item.ginkgo_door_item.name=Ginkgo Door
 
+tile.araucaria_sapling.name=Araucaria Sapling
+tile.araucaria_planks.name=Araucaria Planks
+tile.araucaria_log.name=Araucaria Log
+tile.araucaria_leaves.name=Araucaria Leaves
+tile.araucaria_stairs.name=Araucaria Stairs
+tile.araucaria_slab.name=Araucaria Slab
+tile.araucaria_log_petrified.name=Petrified Araucaria Log
+tile.araucaria_fence.name=Araucaria Fence
+tile.araucaria_fence_gate.name=Araucaria Fence Gate
+tile.araucaria_door.name=Araucaria Door
+item.araucaria_door_item.name=Araucaria Door
+
 tile.calamites_sapling.name=Calamites Sapling
 tile.calamites_leaves.name=Calamites Leaves
 tile.calamites_log.name=Calamites Log
@@ -350,6 +362,7 @@ plants.liriodendrites.name=Liriodendrites
 plants.raphaelia.name=Raphaelia
 plants.encephalartos.name=Encephalartos
 plants.wild_potato.name=Wild Potato
+plants.araucaria.name=Araucaria
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

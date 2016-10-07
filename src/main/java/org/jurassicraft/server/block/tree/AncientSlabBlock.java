@@ -2,6 +2,7 @@ package org.jurassicraft.server.block.tree;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +32,7 @@ public abstract class AncientSlabBlock extends BlockSlab implements SubBlocksBlo
 
         this.setHardness(block.getBlockHardness(state, null, null));
         this.setResistance((block.getExplosionResistance(null) * 5.0F) / 3.0F);
-        this.setSoundType(block.getSoundType());
+        this.setSoundType(SoundType.WOOD);
         this.setHarvestLevel(block.getHarvestTool(state), block.getHarvestLevel(state));
 
         this.setDefaultState(state);

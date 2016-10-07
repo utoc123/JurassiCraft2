@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "jurassicraft:araucaria_log"
+    },
+    "axis=z": {
+      "model": "jurassicraft:araucaria_log_side"
+    },
+    "axis=x": {
+      "model": "jurassicraft:araucaria_log_side",
+      "y": 90
+    },
+    "axis=none": {
+      "model": "jurassicraft:araucaria_bark"
+    }
+  }
+}
