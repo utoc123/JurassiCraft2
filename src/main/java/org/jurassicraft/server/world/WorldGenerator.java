@@ -105,7 +105,7 @@ public enum WorldGenerator implements IWorldGenerator {
                     for (int z = 0; z < size; z++) {
                         BlockPos generationPos = pos.add(x, 0, z);
 
-                        if (!world.isAirBlock(generationPos)) {
+                        if (!world.isAirBlock(generationPos) && !world.getBlockState(generationPos).getMaterial().isLiquid()) {
                             IBlockState state = null;
 
                             if (random.nextFloat() < 0.8F) {
@@ -128,7 +128,7 @@ public enum WorldGenerator implements IWorldGenerator {
                 for (int i = 0; i < random.nextInt(2) + 1; i++) {
                     BlockPos generationPos = pos.add(random.nextInt(size), 0, random.nextInt(size));
 
-                    if (!world.isAirBlock(generationPos)) {
+                    if (!world.isAirBlock(generationPos) && !world.getBlockState(generationPos).getMaterial().isLiquid()) {
                         world.setBlockState(generationPos, nest);
                     }
                 }

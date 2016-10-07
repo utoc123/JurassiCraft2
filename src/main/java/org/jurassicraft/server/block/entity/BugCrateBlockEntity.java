@@ -42,15 +42,15 @@ public class BugCrateBlockEntity extends MachineBaseBlockEntity {
                 ItemStack food = this.getBestFood(bug);
                 if (food != null) {
                     ItemStack output = new ItemStack((Item) bug, bug.getBreedings(food));
+                    for (int slot = 0; slot < this.slots.length; slot++) {
+                        if (this.slots[slot] == food) {
+                            this.decreaseStackSize(slot);
+                            break;
+                        }
+                    }
                     int outputSlot = this.getOutputSlot(output);
                     if (outputSlot != -1) {
                         this.mergeStack(outputSlot, output);
-                        for (int slot = 0; slot < this.slots.length; slot++) {
-                            if (this.slots[slot] == food) {
-                                this.decreaseStackSize(slot);
-                                break;
-                            }
-                        }
                     } else {
                         EntityItem item = new EntityItem(this.worldObj, this.pos.getX() + 0.5, this.pos.getY() + 1.0, this.pos.getZ(), output);
                         this.worldObj.spawnEntityInWorld(item);
