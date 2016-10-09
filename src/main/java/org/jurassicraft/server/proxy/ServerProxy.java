@@ -52,6 +52,7 @@ import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.recipe.RecipeHandler;
 import org.jurassicraft.server.world.WorldGenerator;
+import org.jurassicraft.server.world.structure.StructureGenerationHandler;
 
 public class ServerProxy implements IGuiHandler {
     public static final int GUI_CLEANING_STATION_ID = 0;
@@ -80,7 +81,9 @@ public class ServerProxy implements IGuiHandler {
         AchievementHandler.init();
         StorageTypeRegistry.init();
 
-        VillagerHandler.onPreInit();
+        VillagerHandler.init();
+
+        StructureGenerationHandler.register();
 
         GameRegistry.registerWorldGenerator(WorldGenerator.INSTANCE, 0);
 

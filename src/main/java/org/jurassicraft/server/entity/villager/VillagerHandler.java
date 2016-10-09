@@ -7,7 +7,7 @@ import org.jurassicraft.server.world.structure.GeneticistVillagerHouse;
 public class VillagerHandler {
     public static final GeneticistProfession GENETICIST = new GeneticistProfession();
 
-    public static void onPreInit() {
+    public static void init() {
         VillagerRegistry.instance().register(GENETICIST);
         VillagerRegistry.instance().registerVillageCreationHandler(new GeneticistVillagerHouse.CreationHandler());
         MapGenStructureIO.registerStructureComponent(GeneticistVillagerHouse.class, "GeneticistHouse");
