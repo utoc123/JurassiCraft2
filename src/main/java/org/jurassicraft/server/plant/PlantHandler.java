@@ -30,6 +30,9 @@ public class PlantHandler {
     public static final Plant PHOENIX = new PhoenixPlant();
     public static final Plant WILD_POTATO = new WildPotatoPlant();
     public static final Plant ARAUCARIA = new AraucariaPlant();
+    public static final Plant BRISTLE_FERN = new BristleFernPlant();
+    public static final Plant CINNAMON_FERN = new CinnamonFernPlant();
+    public static final Plant TEMPSKYA = new TempskyaPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -60,6 +63,9 @@ public class PlantHandler {
         registerPlant(PHOENIX);
         registerPlant(WILD_POTATO);
         registerPlant(ARAUCARIA);
+        registerPlant(CINNAMON_FERN);
+        registerPlant(BRISTLE_FERN);
+        registerPlant(TEMPSKYA);
     }
 
     public static Plant getPlantById(int id) {

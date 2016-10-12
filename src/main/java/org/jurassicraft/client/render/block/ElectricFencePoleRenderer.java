@@ -14,7 +14,6 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
 import org.jurassicraft.server.block.fence.ElectricFencePoleBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.lwjgl.opengl.GL11;
 
 public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<ElectricFencePoleBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
@@ -36,8 +35,6 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
     @Override
     public void renderTileEntityAt(ElectricFencePoleBlockEntity tile, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.enableBlend();
         GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -96,7 +93,6 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
         }
 
         GlStateManager.cullFace(GlStateManager.CullFace.BACK);
-        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

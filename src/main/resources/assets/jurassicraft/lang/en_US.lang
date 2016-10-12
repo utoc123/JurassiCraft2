@@ -305,6 +305,9 @@ tile.umaltolepis.name=Umaltolepis
 tile.liriodendrites.name=Liriodendrites
 tile.raphaelia.name=Raphaelia
 tile.encephalartos.name=Encephalartos
+tile.cinnamon_fern.name=Cinnamon Fern
+tile.bristle_fern.name=Bristle Fern
+tile.tempskya.name=Tempskya
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -363,6 +366,9 @@ plants.raphaelia.name=Raphaelia
 plants.encephalartos.name=Encephalartos
 plants.wild_potato.name=Wild Potato
 plants.araucaria.name=Araucaria
+plants.cinnamon_fern.name=Cinnamon Fern
+plants.bristle_fern.name=Bristle Fern
+plants.tempskya.name=Tempskya
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

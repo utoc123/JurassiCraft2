@@ -330,6 +330,9 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_WIRE);
 
         this.registerBlockRenderer(BlockHandler.WILD_POTATO_PLANT);
+        this.registerBlockRenderer(BlockHandler.TEMPSKYA);
+        this.registerBlockRenderer(BlockHandler.CINNAMON_FERN);
+        this.registerBlockRenderer(BlockHandler.BRISTLE_FERN);
     }
 
     public void postInit() {

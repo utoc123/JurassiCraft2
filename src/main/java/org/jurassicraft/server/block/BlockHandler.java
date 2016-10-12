@@ -47,9 +47,9 @@ import org.jurassicraft.server.block.plant.CycadZamitesBlock;
 import org.jurassicraft.server.block.plant.DicksoniaBlock;
 import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
 import org.jurassicraft.server.block.plant.DictyophyllumBlock;
+import org.jurassicraft.server.block.plant.DoublePlantBlock;
 import org.jurassicraft.server.block.plant.EncephalartosBlock;
 import org.jurassicraft.server.block.plant.GracilariaBlock;
-import org.jurassicraft.server.block.plant.LadiniaSimplexBlock;
 import org.jurassicraft.server.block.plant.LiriodendritesBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.OrontiumMackiiBlock;
@@ -58,6 +58,7 @@ import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
 import org.jurassicraft.server.block.plant.SmallChainFernBlock;
 import org.jurassicraft.server.block.plant.SmallCycadBlock;
+import org.jurassicraft.server.block.plant.SmallPlantBlock;
 import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
 import org.jurassicraft.server.block.plant.UmaltolepisBlock;
 import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
@@ -150,13 +151,16 @@ public class BlockHandler {
     public static final DictyophyllumBlock DICTYOPHYLLUM = new DictyophyllumBlock();
     public static final WestIndianLilacBlock WEST_INDIAN_LILAC = new WestIndianLilacBlock();
     public static final SerennaVeriformansBlock SERENNA_VERIFORMANS = new SerennaVeriformansBlock();
-    public static final LadiniaSimplexBlock LADINIA_SIMPLEX = new LadiniaSimplexBlock();
+    public static final SmallPlantBlock LADINIA_SIMPLEX = new SmallPlantBlock();
     public static final OrontiumMackiiBlock ORONTIUM_MACKII = new OrontiumMackiiBlock();
     public static final UmaltolepisBlock UMALTOLEPIS = new UmaltolepisBlock();
     public static final LiriodendritesBlock LIRIODENDRITES = new LiriodendritesBlock();
     public static final RaphaeliaBlock RAPHAELIA = new RaphaeliaBlock();
     public static final EncephalartosBlock ENCEPHALARTOS = new EncephalartosBlock();
     public static final WildPotatoBlock WILD_POTATO_PLANT = new WildPotatoBlock();
+    public static final SmallPlantBlock CINNAMON_FERN = new SmallPlantBlock();
+    public static final SmallPlantBlock BRISTLE_FERN = new SmallPlantBlock();
+    public static final DoublePlantBlock TEMPSKYA = new DoublePlantBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -232,6 +236,9 @@ public class BlockHandler {
         registerBlock(RAPHAELIA, "Raphaelia");
         registerBlock(ENCEPHALARTOS, "Encephalartos");
         registerBlock(WILD_POTATO_PLANT, "Wild Potato Plant");
+        registerBlock(BRISTLE_FERN, "Bristle Fern");
+        registerBlock(CINNAMON_FERN, "Cinnamon Fern");
+        registerBlock(TEMPSKYA, "Tempskya");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

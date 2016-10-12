@@ -38,9 +38,11 @@ public abstract class StructureGenerator extends WorldGenerator {
             int maxHeight = Integer.MIN_VALUE;
             BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos();
             BlockPos corner = this.transformPos(new BlockPos(this.sizeX, 0, this.sizeZ), this.mirror, this.rotation);
-            for (int z = 0; z <= corner.getZ(); ++z) {
-                for (int x = 0; x <= corner.getX(); ++x) {
-                    currentPos.setPos(x + pos.getX(), 64, z + pos.getZ());
+            boolean negativeX = corner.getX() < 0;
+            boolean negativeZ = corner.getZ() < 0;
+            for (int z = 0; z <= Math.abs(corner.getZ()); ++z) {
+                for (int x = 0; x <= Math.abs(corner.getX()); ++x) {
+                    currentPos.setPos(negativeX ? x - pos.getX() : x + pos.getX(), 64, negativeZ ? z - pos.getZ() : z + pos.getZ());
                     int level = Math.max(this.getGround(world, currentPos).getY(), world.provider.getAverageGroundLevel());
                     if (level < minHeight) {
                         minHeight = level;

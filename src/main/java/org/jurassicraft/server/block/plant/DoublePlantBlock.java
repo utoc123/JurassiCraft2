@@ -28,6 +28,10 @@ public class DoublePlantBlock extends AncientPlantBlock {
         this.setHardness(0.0F);
     }
 
+    public DoublePlantBlock() {
+        this(Material.VINE);
+    }
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BOUNDS;

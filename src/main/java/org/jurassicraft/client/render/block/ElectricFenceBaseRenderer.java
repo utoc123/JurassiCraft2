@@ -12,7 +12,6 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
 import org.jurassicraft.server.block.fence.ElectricFenceBaseBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.lwjgl.opengl.GL11;
 
 public class ElectricFenceBaseRenderer extends TileEntitySpecialRenderer<ElectricFenceBaseBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
@@ -40,8 +39,6 @@ public class ElectricFenceBaseRenderer extends TileEntitySpecialRenderer<Electri
     @Override
     public void renderTileEntityAt(ElectricFenceBaseBlockEntity tile, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.enableBlend();
         GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -137,7 +134,6 @@ public class ElectricFenceBaseRenderer extends TileEntitySpecialRenderer<Electri
         }
 
         GlStateManager.cullFace(GlStateManager.CullFace.BACK);
-        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

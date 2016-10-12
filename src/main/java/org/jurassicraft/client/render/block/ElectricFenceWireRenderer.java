@@ -13,7 +13,6 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
 import org.jurassicraft.server.block.fence.ElectricFenceWireBlock;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.lwjgl.opengl.GL11;
 
 public class ElectricFenceWireRenderer extends TileEntitySpecialRenderer<ElectricFenceWireBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
@@ -35,8 +34,6 @@ public class ElectricFenceWireRenderer extends TileEntitySpecialRenderer<Electri
     @Override
     public void renderTileEntityAt(ElectricFenceWireBlockEntity tile, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.enableBlend();
         GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -82,13 +79,10 @@ public class ElectricFenceWireRenderer extends TileEntitySpecialRenderer<Electri
         } else {
             this.model.getCube("Wire 3").showModel = north;
             this.model.getCube("Wire 3B").showModel = north;
-
             this.model.getCube("Wire 2").showModel = east;
             this.model.getCube("Wire 2B").showModel = east;
-
             this.model.getCube("Wire 1").showModel = west;
             this.model.getCube("Wire 1B").showModel = west;
-
             this.model.getCube("Wire 4").showModel = south;
             this.model.getCube("Wire 4B").showModel = south;
 
@@ -96,7 +90,6 @@ public class ElectricFenceWireRenderer extends TileEntitySpecialRenderer<Electri
         }
 
         GlStateManager.cullFace(GlStateManager.CullFace.BACK);
-        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

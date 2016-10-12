@@ -21,32 +21,22 @@ public class StructureGenerationHandler implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         if (world.provider.getDimension() == 0) {
-            if (random.nextInt(100) == 0) {
+            if (random.nextInt(5) == 0) {
                 int blockX = (chunkX << 4) + random.nextInt(16);
                 int blockZ = (chunkZ << 4) + random.nextInt(16);
                 BlockPos pos = new BlockPos(blockX, 0, blockZ);
                 Biome biome = world.getBiomeForCoordsBody(pos);
                 List<GeneratorEntry> entries = GENERATORS.get(biome);
-                if (entries != null) {
-                    int totalWeight = 0;
-                    for (GeneratorEntry entry : entries) {
-                        totalWeight += entry.weight;
-                    }
-                    int selection = random.nextInt(totalWeight);
-                    GeneratorEntry generatorEntry = null;
-                    for (GeneratorEntry entry : entries) {
-                        selection -= entry.weight;
-                        if (selection <= 0) {
-                            generatorEntry = entry;
-                            break;
-                        }
-                    }
+                if (entries != null && !entries.isEmpty()) {
+                    GeneratorEntry generatorEntry = entries.get(random.nextInt(entries.size()));
                     if (generatorEntry != null) {
-                        try {
-                            StructureGenerator generator = generatorEntry.generator.getConstructor(Random.class).newInstance(random);
-                            generator.generate(world, random, pos);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if (random.nextInt(generatorEntry.chance) == 0) {
+                            try {
+                                StructureGenerator generator = generatorEntry.generator.getConstructor(Random.class).newInstance(random);
+                                generator.generate(world, random, pos);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -56,7 +46,8 @@ public class StructureGenerationHandler implements IWorldGenerator {
 
     public static void register() {
         GameRegistry.registerWorldGenerator(new StructureGenerationHandler(), 0);
-        StructureGenerationHandler.registerGenerator(RaptorPaddockGenerator.class, 5, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE);
+        StructureGenerationHandler.registerGenerator(RaptorPaddockGenerator.class, 20, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA);
+        StructureGenerationHandler.registerGenerator(VistorCentreGenerator.class, 60, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA);
     }
 
     public static void registerGenerator(Class<? extends StructureGenerator> generator, int weight, Biome... validBiomes) {
@@ -77,13 +68,13 @@ public class StructureGenerationHandler implements IWorldGenerator {
 
     private static class GeneratorEntry {
         private Class<? extends StructureGenerator> generator;
-        private int weight;
+        private int chance;
         private Biome[] validBiomes;
 
-        public GeneratorEntry(Class<? extends StructureGenerator> generator, Biome[] biomes, int weight) {
+        public GeneratorEntry(Class<? extends StructureGenerator> generator, Biome[] biomes, int chance) {
             this.generator = generator;
             this.validBiomes = biomes;
-            this.weight = weight;
+            this.chance = chance;
         }
     }
 }
