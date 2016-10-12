@@ -186,7 +186,7 @@ public class MuralEntity extends EntityHanging implements IEntityAdditionalSpawn
 
     @Override
     public ItemStack getPickedResult(RayTraceResult target) {
-        return new ItemStack(ItemHandler.ATTRACTION_SIGN, 1, this.type.ordinal());
+        return new ItemStack(ItemHandler.MURAL, 1, this.type.ordinal());
     }
 
     public enum Type {
