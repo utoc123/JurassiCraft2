@@ -678,6 +678,16 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         this.canClimb = canClimb;
     }
 
+    public List<GrowthStage> getSupportedStages() {
+        List<GrowthStage> supportedStages = new ArrayList<>(4);
+        for (GrowthStage stage : GrowthStage.values) {
+            if (this.doesSupportGrowthStage(stage)) {
+                supportedStages.add(stage);
+            }
+        }
+        return supportedStages;
+    }
+
     public enum DinosaurType {
         AGGRESSIVE,
         NEUTRAL,

@@ -2,7 +2,7 @@ package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
 
-public enum DinosaurAnimation {
+public enum EntityAnimation {
     IDLE(false, false, false),
     ATTACKING(false, false),
     INJURED(false, false),
@@ -38,17 +38,17 @@ public enum DinosaurAnimation {
     private boolean doesBlockMovement;
     private boolean useInertia;
 
-    DinosaurAnimation(boolean hold, boolean blockMovement) {
+    EntityAnimation(boolean hold, boolean blockMovement) {
         this(hold, blockMovement, true);
     }
 
-    DinosaurAnimation(boolean hold, boolean blockMovement, boolean useInertia) {
+    EntityAnimation(boolean hold, boolean blockMovement, boolean useInertia) {
         this.hold = hold;
         this.doesBlockMovement = blockMovement;
         this.useInertia = useInertia;
     }
 
-    DinosaurAnimation() {
+    EntityAnimation() {
         this(false, true);
     }
 
@@ -62,14 +62,14 @@ public enum DinosaurAnimation {
         return animations;
     }
 
-    public static DinosaurAnimation getAnimation(Animation animation) {
-        for (DinosaurAnimation animations : values()) {
+    public static EntityAnimation getAnimation(Animation animation) {
+        for (EntityAnimation animations : values()) {
             if (animation.equals(animations.animation)) {
                 return animations;
             }
         }
 
-        return DinosaurAnimation.IDLE;
+        return EntityAnimation.IDLE;
     }
 
     public Animation get() {

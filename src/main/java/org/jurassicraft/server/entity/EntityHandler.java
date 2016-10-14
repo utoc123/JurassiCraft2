@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
@@ -88,6 +89,12 @@ public class EntityHandler {
         registerEntity(JeepWranglerEntity.class, "Jeep Wrangler");
         registerEntity(SeatEntity.class, "Vehicle Seat");
 
+        registerEntity(GoatEntity.class, "Goat", 0xEFEDE7, 0x7B3E20);
+
+        EntityRegistry.addSpawn(GoatEntity.class, 10, 1, 3, EnumCreatureType.CREATURE, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.HILLS));
+        EntityRegistry.addSpawn(GoatEntity.class, 15, 1, 3, EnumCreatureType.CREATURE, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS));
+        EntityRegistry.addSpawn(GoatEntity.class, 15, 1, 3, EnumCreatureType.CREATURE, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+
 //        registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
 //        registerEntity(HelicopterBaseEntity.class, "Helicopter base");
 //        registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
@@ -125,8 +132,12 @@ public class EntityHandler {
 
     private static void registerEntity(Class<? extends Entity> entity, String name) {
         String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-
         EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
+    }
+
+    private static void registerEntity(Class<? extends Entity> entity, String name, int primary, int secondary) {
+        String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+        EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true, primary, secondary);
     }
 
     public static void registerDinosaur(int id, Dinosaur dinosaur) {

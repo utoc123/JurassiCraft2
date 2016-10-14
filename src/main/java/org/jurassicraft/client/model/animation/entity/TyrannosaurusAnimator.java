@@ -3,14 +3,14 @@ package org.jurassicraft.client.model.animation.entity;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.client.model.animation.DinosaurAnimator;
+import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;
 
 @SideOnly(Side.CLIENT)
-public class TyrannosaurusAnimator extends DinosaurAnimator<TyrannosaurusEntity> {
+public class TyrannosaurusAnimator extends EntityAnimator<TyrannosaurusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, TyrannosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
+    protected void performAnimations(AnimatableModel model, TyrannosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer waist = model.getCube("Body 1");
         AdvancedModelRenderer stomach = model.getCube("Body 2");
         AdvancedModelRenderer chest = model.getCube("Body 3");

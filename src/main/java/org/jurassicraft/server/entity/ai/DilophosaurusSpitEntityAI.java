@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
@@ -87,7 +87,7 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
                 return;
             }
             this.dilophosaurus.playSound(SoundHandler.DILOPHOSAURUS_SPIT, this.dilophosaurus.getSoundVolume(), this.dilophosaurus.getSoundPitch());
-            this.dilophosaurus.setAnimation(DinosaurAnimation.DILOPHOSAURUS_SPIT.get());
+            this.dilophosaurus.setAnimation(EntityAnimation.DILOPHOSAURUS_SPIT.get());
             this.animationTimer = 20;
         } else if (this.rangedAttackTime < 0) {
             float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;

@@ -3,14 +3,14 @@ package org.jurassicraft.client.model.animation.entity;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.client.model.animation.DinosaurAnimator;
+import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.server.entity.dinosaur.CoelacanthEntity;
 
 @SideOnly(Side.CLIENT)
-public class CoelacanthAnimator extends DinosaurAnimator<CoelacanthEntity> {
+public class CoelacanthAnimator extends EntityAnimator<CoelacanthEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, CoelacanthEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
+    protected void performAnimations(AnimatableModel model, CoelacanthEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer neck = model.getCube("Neck ");
         AdvancedModelRenderer body1 = model.getCube("Body Section 1");
         AdvancedModelRenderer body2 = model.getCube("Body Section 2");

@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai.animations;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.Mutex;
 
@@ -21,7 +21,7 @@ public class LookAnimationAI extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        this.dinosaur.setAnimation(this.dinosaur.getRNG().nextBoolean() ? DinosaurAnimation.LOOKING_LEFT.get() : DinosaurAnimation.LOOKING_RIGHT.get());
+        this.dinosaur.setAnimation(this.dinosaur.getRNG().nextBoolean() ? EntityAnimation.LOOKING_LEFT.get() : EntityAnimation.LOOKING_RIGHT.get());
     }
 
     @Override

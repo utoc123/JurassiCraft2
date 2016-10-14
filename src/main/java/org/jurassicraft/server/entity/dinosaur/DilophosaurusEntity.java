@@ -16,9 +16,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GoatEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.ai.DilophosaurusMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.DilophosaurusSpitEntityAI;
@@ -29,7 +30,7 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
     public DilophosaurusEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityVillager.class, EntityAnimal.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, VelociraptorEntity.class, MussaurusEntity.class);
+        this.target(GoatEntity.class, EntityPlayer.class, EntityVillager.class, EntityAnimal.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, VelociraptorEntity.class, MussaurusEntity.class);
         this.tasks.addTask(1, new DilophosaurusMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
     }
 
@@ -97,7 +98,7 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
     @Override
     public SoundEvent getSoundForAnimation(Animation animation) {
-        switch (DinosaurAnimation.getAnimation(animation)) {
+        switch (EntityAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.DILOPHOSAURUS_LIVING;
             case CALLING:

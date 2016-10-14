@@ -1,7 +1,7 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
-import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.api.Animatable;
 
 import java.util.Map;
 
@@ -16,15 +16,15 @@ public class MovementAnimationPass extends AnimationPass {
     }
 
     @Override
-    protected float getAnimationSpeed(DinosaurEntity entity) {
+    protected float getAnimationSpeed(Animatable entity) {
         return this.isMoving(entity) ? this.getAnimationDegree(entity) : 3.0F;
     }
 
     @Override
-    protected float getAnimationDegree(DinosaurEntity entity) {
+    protected float getAnimationDegree(Animatable entity) {
         float degree;
 
-        if (this.animation == DinosaurAnimation.WALKING.get() || this.animation == DinosaurAnimation.RUNNING.get() || this.animation == DinosaurAnimation.SWIMMING.get() || this.animation == DinosaurAnimation.CLIMBING.get()) {
+        if (this.animation == EntityAnimation.WALKING.get() || this.animation == EntityAnimation.RUNNING.get() || this.animation == EntityAnimation.SWIMMING.get() || this.animation == EntityAnimation.CLIMBING.get()) {
             if (entity.isInWater() || entity.isInLava()) {
                 degree = this.limbSwingAmount * 4.0F;
             } else {
@@ -38,32 +38,30 @@ public class MovementAnimationPass extends AnimationPass {
     }
 
     @Override
-    protected Animation getRequestedAnimation(DinosaurEntity entity) {
+    protected Animation getRequestedAnimation(Animatable entity) {
         if (entity.isCarcass()) {
-            return DinosaurAnimation.IDLE.get();
+            return EntityAnimation.IDLE.get();
         } else {
             if (entity.isClimbing()) {
-                return DinosaurAnimation.CLIMBING.get();
+                return EntityAnimation.CLIMBING.get();
             } else if (this.isMoving(entity)) {
                 if (entity.isSwimming()) {
-                    return DinosaurAnimation.SWIMMING.get();
+                    return EntityAnimation.SWIMMING.get();
                 } else {
                     if (entity.isRunning()) {
-                        return DinosaurAnimation.RUNNING.get();
+                        return EntityAnimation.RUNNING.get();
                     } else {
-                        return DinosaurAnimation.WALKING.get();
+                        return EntityAnimation.WALKING.get();
                     }
                 }
             } else {
-                return DinosaurAnimation.IDLE.get();
+                return EntityAnimation.IDLE.get();
             }
         }
     }
 
-    private boolean isMoving(DinosaurEntity entity) {
-        float deltaX = (float) (entity.posX - entity.prevPosX);
-        float deltaZ = (float) (entity.posZ - entity.prevPosZ);
-        return deltaX * deltaX + deltaZ * deltaZ > 0.001F;
+    private boolean isMoving(Animatable entity) {
+        return entity.isMoving();
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class RaptorLeapEntityAI extends EntityAIBase {
@@ -10,7 +10,7 @@ public class RaptorLeapEntityAI extends EntityAIBase {
     private EntityLivingBase target;
 
     private int prevTick;
-    private DinosaurAnimation animation;
+    private EntityAnimation animation;
 
     private double targetPrevPosX;
     private double targetPrevPosZ;
@@ -45,7 +45,7 @@ public class RaptorLeapEntityAI extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        this.animation = DinosaurAnimation.RAPTOR_PREPARE_POUNCE;
+        this.animation = EntityAnimation.RAPTOR_PREPARE_POUNCE;
         this.entity.getLookHelper().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
         this.ticked = false;
     }
@@ -54,11 +54,11 @@ public class RaptorLeapEntityAI extends EntityAIBase {
     public void updateTask() {
         int tick = this.entity.getAnimationTick();
 
-        if (this.animation == DinosaurAnimation.RAPTOR_PREPARE_POUNCE && tick < this.prevTick) {
-            this.animation = DinosaurAnimation.RAPTOR_LEAP;
+        if (this.animation == EntityAnimation.RAPTOR_PREPARE_POUNCE && tick < this.prevTick) {
+            this.animation = EntityAnimation.RAPTOR_LEAP;
             this.entity.setAnimation(this.animation.get());
 
-            this.entity.playSound(this.entity.getSoundForAnimation(DinosaurAnimation.ATTACKING.get()), this.entity.getSoundVolume(), this.entity.getSoundPitch());
+            this.entity.playSound(this.entity.getSoundForAnimation(EntityAnimation.ATTACKING.get()), this.entity.getSoundVolume(), this.entity.getSoundPitch());
 
             double targetSpeedX = this.target.posX - (!this.ticked ? this.target.prevPosX : this.targetPrevPosX);
             double targetSpeedZ = this.target.posZ - (!this.ticked ? this.target.prevPosZ : this.targetPrevPosZ);
@@ -74,11 +74,11 @@ public class RaptorLeapEntityAI extends EntityAIBase {
             this.entity.motionX = delta / length * Math.cos(angle);
             this.entity.motionZ = (delta / length * Math.sin(angle));
             this.entity.motionY = Math.min(0.3, Math.max(0, (this.target.posY - this.entity.posY) * 0.1)) + 0.6;
-        } else if (this.animation == DinosaurAnimation.RAPTOR_LEAP && this.entity.motionY < 0) {
-            this.animation = DinosaurAnimation.RAPTOR_LAND;
+        } else if (this.animation == EntityAnimation.RAPTOR_LEAP && this.entity.motionY < 0) {
+            this.animation = EntityAnimation.RAPTOR_LAND;
             this.entity.setAnimation(this.animation.get());
-        } else if (this.animation == DinosaurAnimation.RAPTOR_LAND && (this.entity.onGround || this.entity.isSwimming())) {
-            this.animation = DinosaurAnimation.IDLE;
+        } else if (this.animation == EntityAnimation.RAPTOR_LAND && (this.entity.onGround || this.entity.isSwimming())) {
+            this.animation = EntityAnimation.IDLE;
             this.entity.setAnimation(this.animation.get());
 
             if (this.entity.getEntityBoundingBox() != null && this.target.getEntityBoundingBox() != null && this.entity.getEntityBoundingBox().intersectsWith(this.target.getEntityBoundingBox().expand(2.0, 2.0, 2.0))) {
@@ -100,11 +100,11 @@ public class RaptorLeapEntityAI extends EntityAIBase {
 
     @Override
     public void resetTask() {
-        this.entity.setAnimation(DinosaurAnimation.IDLE.get());
+        this.entity.setAnimation(EntityAnimation.IDLE.get());
     }
 
     @Override
     public boolean continueExecuting() {
-        return !this.target.isDead && !(this.target instanceof DinosaurEntity && ((DinosaurEntity) this.target).isCarcass()) && this.animation != DinosaurAnimation.IDLE;
+        return !this.target.isDead && !(this.target instanceof DinosaurEntity && ((DinosaurEntity) this.target).isCarcass()) && this.animation != EntityAnimation.IDLE;
     }
 }

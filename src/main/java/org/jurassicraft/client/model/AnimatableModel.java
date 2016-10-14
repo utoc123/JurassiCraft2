@@ -7,29 +7,29 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.api.Animatable;
 
 import java.util.Map;
 import java.util.Set;
 
 @SideOnly(Side.CLIENT)
-public class DinosaurModel extends TabulaModel {
-    public DinosaurModel(TabulaModelContainer model) {
+public class AnimatableModel extends TabulaModel {
+    public AnimatableModel(TabulaModelContainer model) {
         this(model, null);
     }
 
-    public DinosaurModel(TabulaModelContainer model, ITabulaModelAnimator animator) {
+    public AnimatableModel(TabulaModelContainer model, ITabulaModelAnimator animator) {
         super(model, animator);
     }
 
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity) {
-        DinosaurEntity dinosaur = (DinosaurEntity) entity;
+        Animatable animatable = (Animatable) entity;
 
-        if (dinosaur.isCarcass()) {
+        if (animatable.isCarcass()) {
             this.setMovementScale(0.0F);
         } else {
-            this.setMovementScale(dinosaur.isSleeping() ? 0.5F : 1.0F);
+            this.setMovementScale(animatable.isSleeping() ? 0.5F : 1.0F);
         }
 
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);

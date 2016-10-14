@@ -3,14 +3,14 @@ package org.jurassicraft.client.model.animation.entity;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.client.model.animation.DinosaurAnimator;
+import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.server.entity.dinosaur.BrachiosaurusEntity;
 
 @SideOnly(Side.CLIENT)
-public class BrachiosaurusAnimator extends DinosaurAnimator<BrachiosaurusEntity> {
+public class BrachiosaurusAnimator extends EntityAnimator<BrachiosaurusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, BrachiosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
+    protected void performAnimations(AnimatableModel model, BrachiosaurusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer head = model.getCube("head");
 
         AdvancedModelRenderer neck1 = model.getCube("Neck 1");

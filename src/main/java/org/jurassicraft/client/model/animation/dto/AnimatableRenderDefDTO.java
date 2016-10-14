@@ -14,19 +14,19 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Deserialize with the {@link DinosaurDeserializer} from {@link Gson}
+ * Deserialize with the {@link AnimatableDeserializer} from {@link Gson}
  *
  * @author WorldSEnder
  */
-public class DinosaurRenderDefDTO {
+public class AnimatableRenderDefDTO {
     public int version;
     public Map<GrowthStage, GrowthRenderDef> perStage;
 
-    public static class DinosaurDeserializer implements JsonDeserializer<DinosaurRenderDefDTO> {
+    public static class AnimatableDeserializer implements JsonDeserializer<AnimatableRenderDefDTO> {
         @Override
-        public DinosaurRenderDefDTO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public AnimatableRenderDefDTO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject def = json.getAsJsonObject();
-            DinosaurRenderDefDTO built = new DinosaurRenderDefDTO();
+            AnimatableRenderDefDTO built = new AnimatableRenderDefDTO();
             built.version = def.get("version") == null ? 0 : def.get("version").getAsInt();
             built.perStage = new EnumMap<>(GrowthStage.class);
             for (GrowthStage g : GrowthStage.values) {

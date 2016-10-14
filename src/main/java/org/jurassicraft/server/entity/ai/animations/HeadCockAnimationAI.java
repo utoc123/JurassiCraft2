@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai.animations;
 
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.Mutex;
 
@@ -22,7 +22,7 @@ public class HeadCockAnimationAI extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        this.dinosaur.setAnimation(DinosaurAnimation.HEAD_COCKING.get());
+        this.dinosaur.setAnimation(EntityAnimation.HEAD_COCKING.get());
     }
 
     @Override

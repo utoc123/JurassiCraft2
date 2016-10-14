@@ -1,6 +1,5 @@
 package org.jurassicraft.client.render.entity.dinosaur;
 
-import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
@@ -10,7 +9,8 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.DinosaurModel;
+import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.client.render.entity.DinosaurRenderer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
@@ -34,16 +34,16 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     }
 
     private final Dinosaur dinosaur;
-    private final ITabulaModelAnimator<? extends DinosaurEntity> animator;
-    private final DinosaurModel modelAdult;
-    private DinosaurModel modelInfant;
-    private DinosaurModel modelJuvenile;
-    private DinosaurModel modelAdolescent;
+    private final EntityAnimator<?> animator;
+    private final AnimatableModel modelAdult;
+    private AnimatableModel modelInfant;
+    private AnimatableModel modelJuvenile;
+    private AnimatableModel modelAdolescent;
     private TabulaModel eggModel;
     private ResourceLocation eggTexture;
     private float shadowSize = 0.65F;
 
-    public DinosaurRenderInfo(Dinosaur dinosaur, ITabulaModelAnimator<? extends DinosaurEntity> animator, float shadowSize) {
+    public DinosaurRenderInfo(Dinosaur dinosaur, EntityAnimator<?> animator, float shadowSize) {
         this.dinosaur = dinosaur;
         this.animator = animator;
         this.shadowSize = shadowSize;
@@ -82,7 +82,7 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
         return this.eggTexture == null ? DEFAULT_EGG_TEXTURE : this.eggTexture;
     }
 
-    public ITabulaModelAnimator<? extends DinosaurEntity> getModelAnimator() {
+    public EntityAnimator<?> getModelAnimator() {
         return this.animator;
     }
 
@@ -90,11 +90,11 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
         return this.shadowSize;
     }
 
-    public DinosaurModel loadModel(GrowthStage stage) {
+    public AnimatableModel loadModel(GrowthStage stage) {
         if (!this.dinosaur.doesSupportGrowthStage(stage)) {
             return this.modelAdult;
         }
-        return new DinosaurModel(this.dinosaur.getModelContainer(stage), this.getModelAnimator());
+        return new AnimatableModel(this.dinosaur.getModelContainer(stage), this.getModelAnimator());
     }
 
     public Dinosaur getDinosaur() {

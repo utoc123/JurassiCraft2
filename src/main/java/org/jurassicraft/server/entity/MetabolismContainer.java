@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.util.GameRuleHandler;
 
 public class MetabolismContainer {
@@ -36,7 +36,7 @@ public class MetabolismContainer {
 
             if (this.dinosaur.isWet()) {
                 if (this.isThirsty()) {
-                    this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
+                    this.dinosaur.setAnimation(EntityAnimation.DRINKING.get());
                 }
                 this.water = this.maxWater;
             }

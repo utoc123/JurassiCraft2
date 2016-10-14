@@ -204,6 +204,9 @@ public class ItemHandler {
     public static final SwarmItem PLANKTON = new SwarmItem(() -> BlockHandler.PLANKTON_SWARM.getDefaultState());
     public static final SwarmItem KRILL = new SwarmItem(() -> BlockHandler.KRILL_SWARM.getDefaultState());
 
+    public static final BasicFoodItem GOAT_RAW = new BasicFoodItem(3, 0.3F, true, TabHandler.FOODS);
+    public static final BasicFoodItem GOAT_COOKED = new BasicFoodItem(6, 1.0F, true, TabHandler.FOODS);
+
     public static void init() {
         registerItem(FOSSILIZED_EGG, "Fossilized Egg");
 
@@ -320,6 +323,9 @@ public class ItemHandler {
         registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
         registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");
         registerItem(DONT_MOVE_A_MUSCLE_DISC, "Disc Don't Move A Muscle");
+
+        registerItem(GOAT_RAW, "Goat Raw");
+        registerItem(GOAT_COOKED, "Goat Cooked");
 
         for (TreeType type : TreeType.values()) {
             registerTreeType(type);

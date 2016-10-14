@@ -7,16 +7,17 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GoatEntity;
 import org.jurassicraft.server.entity.ai.LeapingMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 
 public class VelociraptorEntity extends DinosaurEntity {
     public VelociraptorEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, MicroraptorEntity.class, MussaurusEntity.class);
+        this.target(GoatEntity.class, EntityPlayer.class, EntityAnimal.class, EntityVillager.class, DilophosaurusEntity.class, GallimimusEntity.class, ParasaurolophusEntity.class, TriceratopsEntity.class, MicroraptorEntity.class, MussaurusEntity.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
     }
 
@@ -27,14 +28,14 @@ public class VelociraptorEntity extends DinosaurEntity {
 
     @Override
     public void fall(float distance, float damageMultiplier) {
-        if (this.getAnimation() != DinosaurAnimation.RAPTOR_LAND.get()) {
+        if (this.getAnimation() != EntityAnimation.RAPTOR_LAND.get()) {
             super.fall(distance, damageMultiplier);
         }
     }
 
     @Override
     public SoundEvent getSoundForAnimation(Animation animation) {
-        switch (DinosaurAnimation.getAnimation(animation)) {
+        switch (EntityAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.VELOCIRAPTOR_LIVING;
             case DYING:

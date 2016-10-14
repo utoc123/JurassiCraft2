@@ -3,7 +3,7 @@ package org.jurassicraft.client.model.animation;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.api.Animatable;
 
 import java.util.Map;
 
@@ -39,7 +39,7 @@ public class AnimationPass {
         this.useInertia = useInertia;
     }
 
-    public void init(AdvancedModelRenderer[] parts, DinosaurEntity entity) {
+    public void init(AdvancedModelRenderer[] parts, Animatable entity) {
         this.parts = parts;
 
         this.prevRotationIncrements = new float[parts.length][3];
@@ -66,7 +66,7 @@ public class AnimationPass {
         }
     }
 
-    protected void initIncrements(DinosaurEntity entity) {
+    protected void initIncrements(Animatable entity) {
         float animationDegree = this.getAnimationDegree(entity);
 
         for (int partIndex = 0; partIndex < this.parts.length; partIndex++) {
@@ -86,25 +86,25 @@ public class AnimationPass {
         }
     }
 
-    public void initAnimation(DinosaurEntity entity, Animation animation) {
+    public void initAnimation(Animatable entity, Animation animation) {
         this.animation = animation;
 
         if (this.animations.get(animation) == null) {
-            this.animation = DinosaurAnimation.IDLE.get();
+            this.animation = EntityAnimation.IDLE.get();
         }
     }
 
     protected float calculateInertiaFactor() {
         float inertiaFactor = this.animationTick / this.poseLength;
 
-        if (this.useInertia && DinosaurAnimation.getAnimation(this.animation).useInertia()) {
+        if (this.useInertia && EntityAnimation.getAnimation(this.animation).useInertia()) {
             inertiaFactor = (float) (Math.sin(Math.PI * (inertiaFactor - 0.5D)) * 0.5D + 0.5D);
         }
 
         return Math.min(1.0F, Math.max(0.0F, inertiaFactor));
     }
 
-    public void performAnimations(DinosaurEntity entity, float limbSwing, float limbSwingAmount, float ticks) {
+    public void performAnimations(Animatable entity, float limbSwing, float limbSwingAmount, float ticks) {
         this.limbSwing = limbSwing;
         this.limbSwingAmount = limbSwingAmount;
 
@@ -140,12 +140,12 @@ public class AnimationPass {
         this.prevTicks = ticks;
     }
 
-    public boolean updateAnimationTick(DinosaurEntity entity, float ticks) {
+    public boolean updateAnimationTick(Animatable entity, float ticks) {
         float incrementAmount = (ticks - this.prevTicks) * this.getAnimationSpeed(entity);
         if (this.animationTick < 0.0F) {
             this.animationTick = 0.0F;
         }
-        if (!DinosaurAnimation.getAnimation(this.animation).shouldHold() || this.poseIndex < this.poseCount) {
+        if (!EntityAnimation.getAnimation(this.animation).shouldHold() || this.poseIndex < this.poseCount) {
             this.animationTick += incrementAmount;
 
             if (this.animationTick >= this.poseLength) {
@@ -196,9 +196,9 @@ public class AnimationPass {
         this.pose = this.poses[(int) this.animations.get(this.animation)[this.poseIndex][0]];
     }
 
-    protected void initAnimationTicks(DinosaurEntity entity) {
+    protected void initAnimationTicks(Animatable entity) {
         this.startAnimation(entity);
-        if (DinosaurAnimation.getAnimation(this.animation).shouldHold()) {
+        if (EntityAnimation.getAnimation(this.animation).shouldHold()) {
             this.poseIndex = this.poseCount - 1;
             this.animationTick = this.animations.get(this.animation)[this.poseIndex][1];
         } else {
@@ -206,7 +206,7 @@ public class AnimationPass {
         }
     }
 
-    protected void startAnimation(DinosaurEntity entity) {
+    protected void startAnimation(Animatable entity) {
         float[][] pose = this.animations.get(this.animation);
         if (pose != null) {
             this.pose = this.poses[(int) this.animations.get(this.animation)[this.poseIndex][0]];
@@ -217,7 +217,7 @@ public class AnimationPass {
         }
     }
 
-    protected void setPose(DinosaurEntity entity, float ticks) {
+    protected void setPose(Animatable entity, float ticks) {
         this.pose = this.poses[(int) this.animations.get(this.animation)[this.poseIndex][0]];
         this.poseLength = this.animations.get(this.animation)[this.poseIndex][1];
         this.animationTick = 0;
@@ -225,9 +225,9 @@ public class AnimationPass {
         this.initIncrements(entity);
     }
 
-    protected void onPoseFinish(DinosaurEntity entity, float ticks) {
+    protected void onPoseFinish(Animatable entity, float ticks) {
         if (this.incrementPose()) {
-            this.setAnimation(entity, this.isEntityAnimationDependent() ? DinosaurAnimation.IDLE.get() : this.getRequestedAnimation(entity));
+            this.setAnimation(entity, this.isEntityAnimationDependent() ? EntityAnimation.IDLE.get() : this.getRequestedAnimation(entity));
         } else {
             this.updatePreviousPose();
         }
@@ -237,7 +237,7 @@ public class AnimationPass {
     public boolean incrementPose() {
         this.poseIndex++;
         if (this.poseIndex >= this.poseCount) {
-            DinosaurAnimation animation = DinosaurAnimation.getAnimation(this.animation);
+            EntityAnimation animation = EntityAnimation.getAnimation(this.animation);
             if (animation != null && animation.shouldHold()) {
                 this.poseIndex = this.poseCount - 1;
             } else {
@@ -248,13 +248,13 @@ public class AnimationPass {
         return false;
     }
 
-    protected void setAnimation(DinosaurEntity entity, Animation requestedAnimation) {
+    protected void setAnimation(Animatable entity, Animation requestedAnimation) {
         this.updatePreviousPose();
 
-        if (this.animations.get(requestedAnimation) != null && !(this.animation != DinosaurAnimation.IDLE.get() && this.animation == requestedAnimation && !this.isLooping())) {
+        if (this.animations.get(requestedAnimation) != null && !(this.animation != EntityAnimation.IDLE.get() && this.animation == requestedAnimation && !this.isLooping())) {
             this.animation = requestedAnimation;
         } else {
-            this.animation = DinosaurAnimation.IDLE.get();
+            this.animation = EntityAnimation.IDLE.get();
         }
 
         this.setPose(0);
@@ -274,15 +274,15 @@ public class AnimationPass {
         }
     }
 
-    protected float getAnimationSpeed(DinosaurEntity entity) {
+    protected float getAnimationSpeed(Animatable entity) {
         return 1.0F;
     }
 
-    protected float getAnimationDegree(DinosaurEntity entity) {
+    protected float getAnimationDegree(Animatable entity) {
         return 1.0F;
     }
 
-    protected Animation getRequestedAnimation(DinosaurEntity entity) {
+    protected Animation getRequestedAnimation(Animatable entity) {
         return entity.getAnimation();
     }
 

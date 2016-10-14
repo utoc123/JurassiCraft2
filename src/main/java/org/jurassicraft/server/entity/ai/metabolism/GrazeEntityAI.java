@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.MetabolismContainer;
 import org.jurassicraft.server.entity.ai.Mutex;
@@ -99,7 +99,7 @@ public class GrazeEntityAI extends EntityAIBase {
                 // TODO inadequate method for looking at block
                 this.dinosaur.getLookHelper().setLookPosition(this.target.getX(), this.target.getY(), this.target.getZ(), 30.0F, this.dinosaur.getVerticalFaceSpeed());
 
-                this.dinosaur.setAnimation(DinosaurAnimation.EATING.get());
+                this.dinosaur.setAnimation(EntityAnimation.EATING.get());
 
                 Item item = Item.getItemFromBlock(this.world.getBlockState(this.target).getBlock());
 
@@ -126,6 +126,6 @@ public class GrazeEntityAI extends EntityAIBase {
     private void terminateTask() {
         this.dinosaur.getNavigator().clearPathEntity();
         this.target = null;
-        this.dinosaur.setAnimation(DinosaurAnimation.IDLE.get());
+        this.dinosaur.setAnimation(EntityAnimation.IDLE.get());
     }
 }

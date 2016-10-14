@@ -7,21 +7,22 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.GoatEntity;
 
 public class TyrannosaurusEntity extends DinosaurEntity {
     private int stepCount = 0;
 
     public TyrannosaurusEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, TriceratopsEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class, BrachiosaurusEntity.class, MicroraptorEntity.class, MussaurusEntity.class);
+        this.target(GoatEntity.class, EntityPlayer.class, EntityAnimal.class, EntityVillager.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, TriceratopsEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class, BrachiosaurusEntity.class, MicroraptorEntity.class, MussaurusEntity.class);
     }
 
     @Override
     public SoundEvent getSoundForAnimation(Animation animation) {
-        switch (DinosaurAnimation.getAnimation(animation)) {
+        switch (EntityAnimation.getAnimation(animation)) {
             case SPEAK:
                 return SoundHandler.TYRANNOSAURUS_LIVING;
             case CALLING:

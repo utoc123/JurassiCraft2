@@ -325,5 +325,27 @@
     "sounds": [
       "jurassicraft:dinosaurs/mussaurus/mussaurus_mate_call"
     ]
+  },
+  "goat_death": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:entity/goat/goat_death"
+    ]
+  },
+  "goat_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:entity/goat/goat_hurt_1",
+      "jurassicraft:entity/goat/goat_hurt_2"
+    ]
+  },
+  "goat_living": {
+    "category": "hostile",
+    "sounds": [
+      "jurassicraft:entity/goat/goat_living_1",
+      "jurassicraft:entity/goat/goat_living_2",
+      "jurassicraft:entity/goat/goat_living_3",
+      "jurassicraft:entity/goat/goat_living_4"
+    ]
   }
 }

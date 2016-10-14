@@ -60,6 +60,10 @@ public class SoundHandler {
     public static final SoundEvent MUSSAURUS_ATTACK = create("mussaurus_attack");
     public static final SoundEvent MUSSAURUS_MATE_CALL = create("mussaurus_mate_call");
 
+    public static final SoundEvent GOAT_LIVING = create("goat_living");
+    public static final SoundEvent GOAT_HURT = create("goat_hurt");
+    public static final SoundEvent GOAT_DEATH = create("goat_death");
+
     public static final SoundEvent FENCE_SHOCK = create("fence_shock");
 
     public static SoundEvent create(String name) {

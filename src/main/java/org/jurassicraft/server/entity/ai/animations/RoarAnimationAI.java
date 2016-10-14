@@ -2,7 +2,7 @@ package org.jurassicraft.server.entity.ai.animations;
 
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.Mutex;
 
@@ -22,8 +22,8 @@ public class RoarAnimationAI extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        this.dinosaur.setAnimation(DinosaurAnimation.ROARING.get());
-        this.dinosaur.playSound(this.dinosaur.getSoundForAnimation(DinosaurAnimation.ROARING.get()), this.dinosaur.getSoundVolume() > 0.0F ? this.dinosaur.getSoundVolume() + 1.25F : 0.0F, this.dinosaur.getSoundPitch());
+        this.dinosaur.setAnimation(EntityAnimation.ROARING.get());
+        this.dinosaur.playSound(this.dinosaur.getSoundForAnimation(EntityAnimation.ROARING.get()), this.dinosaur.getSoundVolume() > 0.0F ? this.dinosaur.getSoundVolume() + 1.25F : 0.0F, this.dinosaur.getSoundPitch());
     }
 
     @Override

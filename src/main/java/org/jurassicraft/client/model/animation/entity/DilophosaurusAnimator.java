@@ -3,14 +3,14 @@ package org.jurassicraft.client.model.animation.entity;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.client.model.animation.DinosaurAnimator;
+import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 
 @SideOnly(Side.CLIENT)
-public class DilophosaurusAnimator extends DinosaurAnimator<DilophosaurusEntity> {
+public class DilophosaurusAnimator extends EntityAnimator<DilophosaurusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, DilophosaurusEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
+    protected void performAnimations(AnimatableModel model, DilophosaurusEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer frillLeftBottom = model.getCube("Frill Lower Left");
         AdvancedModelRenderer frillLeftTop = model.getCube("Frill Upper Left");
 

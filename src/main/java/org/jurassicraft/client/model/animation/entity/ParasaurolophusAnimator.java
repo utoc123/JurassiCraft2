@@ -3,14 +3,14 @@ package org.jurassicraft.client.model.animation.entity;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.client.model.DinosaurModel;
-import org.jurassicraft.client.model.animation.DinosaurAnimator;
+import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.server.entity.dinosaur.ParasaurolophusEntity;
 
 @SideOnly(Side.CLIENT)
-public class ParasaurolophusAnimator extends DinosaurAnimator<ParasaurolophusEntity> {
+public class ParasaurolophusAnimator extends EntityAnimator<ParasaurolophusEntity> {
     @Override
-    protected void performAnimations(DinosaurModel model, ParasaurolophusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
+    protected void performAnimations(AnimatableModel model, ParasaurolophusEntity entity, float f, float f1, float ticks, float rotationYaw, float rotationPitch, float scale) {
         AdvancedModelRenderer head = model.getCube("Head");
 
         AdvancedModelRenderer neck1 = model.getCube("Neck1");

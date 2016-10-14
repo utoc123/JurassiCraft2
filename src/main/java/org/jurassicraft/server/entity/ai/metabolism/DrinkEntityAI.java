@@ -7,7 +7,7 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.MetabolismContainer;
 import org.jurassicraft.server.entity.ai.Mutex;
@@ -70,7 +70,7 @@ public class DrinkEntityAI extends EntityAIBase {
         if (this.path != null) {
             this.dinosaur.getNavigator().setPath(this.path, 1.0);
             if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(1).isVecInside(new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5))) {
-                this.dinosaur.setAnimation(DinosaurAnimation.DRINKING.get());
+                this.dinosaur.setAnimation(EntityAnimation.DRINKING.get());
                 MetabolismContainer metabolism = this.dinosaur.getMetabolism();
                 metabolism.setWater(metabolism.getWater() + (metabolism.getMaxWater() / 8));
             }

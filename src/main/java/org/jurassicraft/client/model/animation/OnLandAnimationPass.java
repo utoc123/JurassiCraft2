@@ -1,7 +1,7 @@
 package org.jurassicraft.client.model.animation;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
-import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.api.Animatable;
 
 import java.util.Map;
 
@@ -16,11 +16,11 @@ public class OnLandAnimationPass extends AnimationPass {
     }
 
     @Override
-    protected Animation getRequestedAnimation(DinosaurEntity entity) {
+    protected Animation getRequestedAnimation(Animatable entity) {
         if (!entity.isCarcass() && !entity.isInWater()) {
-            return DinosaurAnimation.ON_LAND.get();
+            return EntityAnimation.ON_LAND.get();
         }
-        return DinosaurAnimation.IDLE.get();
+        return EntityAnimation.IDLE.get();
     }
 
     @Override

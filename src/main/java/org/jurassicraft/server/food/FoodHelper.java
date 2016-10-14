@@ -79,10 +79,12 @@ public class FoodHelper {
         registerFoodAuto(ItemHandler.DINOSAUR_MEAT, FoodType.MEAT);
         registerFoodAuto(ItemHandler.DINOSAUR_STEAK, FoodType.MEAT);
 
+        registerFoodAuto(ItemHandler.GOAT_RAW, FoodType.MEAT);
+        registerFoodAuto(ItemHandler.GOAT_COOKED, FoodType.MEAT);
+
         for (Item item : Item.REGISTRY) {
             if (item instanceof ItemFood) {
                 ItemFood food = (ItemFood) item;
-
                 registerFoodAuto(food, food.isWolfsFavoriteMeat() ? FoodType.MEAT : FoodType.PLANT);
             }
         }

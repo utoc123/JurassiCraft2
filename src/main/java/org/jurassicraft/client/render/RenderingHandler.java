@@ -24,7 +24,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.animation.DinosaurAnimator;
+import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.client.model.animation.entity.BrachiosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
 import org.jurassicraft.client.model.animation.entity.DilophosaurusAnimator;
@@ -49,6 +49,7 @@ import org.jurassicraft.client.render.block.FeederRenderer;
 import org.jurassicraft.client.render.block.IncubatorRenderer;
 import org.jurassicraft.client.render.entity.AttractionSignRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
+import org.jurassicraft.client.render.entity.GoatRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.JeepWranglerRenderer;
 import org.jurassicraft.client.render.entity.MuralRenderer;
@@ -81,6 +82,7 @@ import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.entity.GoatEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
@@ -196,7 +198,8 @@ public enum RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
         RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, new JeepWranglerRenderer());
         RenderingRegistry.registerEntityRenderingHandler(SeatEntity.class, new SeatRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, new MuralRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, MuralRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(GoatEntity.class, GoatRenderer::new);
     }
 
     public void init() {
@@ -492,6 +495,9 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.WILD_POTATO);
         this.registerItemRenderer(ItemHandler.WILD_POTATO_COOKED);
 
+        this.registerItemRenderer(ItemHandler.GOAT_RAW);
+        this.registerItemRenderer(ItemHandler.GOAT_COOKED);
+
         ItemColors itemColors = this.mc.getItemColors();
         itemColors.registerItemColorHandler((stack, tintIndex) -> {
             DinosaurSpawnEggItem item = (DinosaurSpawnEggItem) stack.getItem();
@@ -535,7 +541,7 @@ public enum RenderingHandler {
         this.modelMesher.register(Item.getItemFromBlock(block), stack -> new ModelResourceLocation(JurassiCraft.MODID + ":" + path, type));
     }
 
-    private void registerRenderInfo(Dinosaur dinosaur, DinosaurAnimator<?> animator, float shadowSize) {
+    private void registerRenderInfo(Dinosaur dinosaur, EntityAnimator<?> animator, float shadowSize) {
         this.registerRenderInfo(new DinosaurRenderInfo(dinosaur, animator, shadowSize));
     }
 

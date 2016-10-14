@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class MateEntityAI extends EntityAIBase {
@@ -45,7 +45,7 @@ public class MateEntityAI extends EntityAIBase {
     @Override
     public void updateTask() {
         if (this.dinosaur.getEntityBoundingBox().intersectsWith(this.mate.getEntityBoundingBox().expand(0.5D, 0.5D, 0.5D))) {
-            this.dinosaur.setAnimation(DinosaurAnimation.MATING.get());
+            this.dinosaur.setAnimation(EntityAnimation.MATING.get());
 
             this.dinosaur.getMetabolism().decreaseEnergy(1000);
         }
