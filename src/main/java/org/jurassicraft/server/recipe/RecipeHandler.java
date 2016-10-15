@@ -130,6 +130,7 @@ public class RecipeHandler {
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PHOENIX_SEEDS), ItemHandler.PHOENIX_FRUIT);
 
         GameRegistry.addSmelting(ItemHandler.WILD_POTATO, new ItemStack(ItemHandler.WILD_POTATO_COOKED), 0.5F);
+        GameRegistry.addSmelting(ItemHandler.GOAT_RAW, new ItemStack(ItemHandler.GOAT_COOKED), 0.5F);
 
         addGrowthSerumRecipe(Items.COOKED_BEEF);
         addGrowthSerumRecipe(Items.COOKED_CHICKEN);

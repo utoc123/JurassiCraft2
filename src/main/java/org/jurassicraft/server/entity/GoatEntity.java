@@ -26,6 +26,9 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -44,6 +47,8 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
     public static final PoseHandler<GoatEntity> BILLY_POSE_HANDLER = new PoseHandler<>("goat_billy", Lists.newArrayList(GrowthStage.ADULT));
     public static final PoseHandler<GoatEntity> KID_POSE_HANDLER = new PoseHandler<>("goat_kid", Lists.newArrayList(GrowthStage.ADULT));
     public static final PoseHandler<GoatEntity> NANNY_POSE_HANDLER = new PoseHandler<>("goat_nanny", Lists.newArrayList(GrowthStage.ADULT));
+
+    private static final DataParameter<Boolean> WATCHER_IS_RUNNING = EntityDataManager.createKey(GoatEntity.class, DataSerializers.BOOLEAN);
 
     private Animation animation;
     private int animationTick;
@@ -82,6 +87,12 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
     }
 
     @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(WATCHER_IS_RUNNING, false);
+    }
+
+    @Override
     public EntityAgeable createChild(EntityAgeable mate) {
         GoatEntity entity = new GoatEntity(this.worldObj);
         entity.onInitialSpawn(this.worldObj.getDifficultyForLocation(this.getPosition()), null);
@@ -112,7 +123,7 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
 
     @Override
     public boolean isRunning() {
-        return false;
+        return this.dataManager.get(WATCHER_IS_RUNNING);
     }
 
     @Override
@@ -148,6 +159,9 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
             } else {
                 this.animationTick = this.animationLength - 1;
             }
+        }
+        if (!this.worldObj.isRemote) {
+            this.dataManager.set(WATCHER_IS_RUNNING, this.getAIMoveSpeed() > this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
         }
     }
 

@@ -25,6 +25,20 @@
         "time": 3
       }
     ],
+    "RUNNING": [
+      {
+        "pose": "goat_kid_running_1",
+        "time": 3
+      },
+      {
+        "pose": "goat_kid_running_2",
+        "time": 3
+      },
+      {
+        "pose": "goat_kid_running_3",
+        "time": 3
+      }
+    ],
     "SPEAK": [
       {
         "pose": "goat_kid_speak",

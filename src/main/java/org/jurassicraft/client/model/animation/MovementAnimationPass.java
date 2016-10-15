@@ -46,7 +46,7 @@ public class MovementAnimationPass extends AnimationPass {
                 return EntityAnimation.CLIMBING.get();
             } else if (this.isMoving(entity)) {
                 if (entity.isSwimming()) {
-                    return EntityAnimation.SWIMMING.get();
+                    return this.animations.containsKey(EntityAnimation.SWIMMING.get()) ? EntityAnimation.SWIMMING.get() : EntityAnimation.WALKING.get();
                 } else {
                     if (entity.isRunning()) {
                         return EntityAnimation.RUNNING.get();

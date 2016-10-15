@@ -26,8 +26,6 @@ public class GoatRenderer extends RenderLiving<GoatEntity> {
     private static final AnimatableModel BILLY_MODEL;
     private static final AnimatableModel NANNY_MODEL;
 
-    private static final float SHADOW_SIZE = 1.0F;
-
     static {
         TabulaModelContainer kid = null;
         TabulaModelContainer billy = null;
@@ -51,14 +49,13 @@ public class GoatRenderer extends RenderLiving<GoatEntity> {
     }
 
     public GoatRenderer(RenderManager renderManager) {
-        super(renderManager, BILLY_MODEL, SHADOW_SIZE);
+        super(renderManager, BILLY_MODEL, 0.6F);
     }
 
     @Override
     public void preRenderCallback(GoatEntity entity, float partialTick) {
         float scale = entity.isChild() ? 0.3F : 0.6F;
         GlStateManager.scale(scale, scale, scale);
-        this.shadowSize = scale * SHADOW_SIZE;
     }
 
     @Override
