@@ -39,6 +39,7 @@ public class FieldGuideGui extends GuiScreen {
     private static final int TOTAL_PAGES = 2;
 
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/background.png");
+    private static final ResourceLocation WIDGETS_TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/field_guide/widgets.png");
     private static final Map<DinosaurStatus, ResourceLocation> STATUS_TEXTURES = new HashMap<>();
 
     static {
@@ -90,7 +91,7 @@ public class FieldGuideGui extends GuiScreen {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-        this.drawTexturedModalRect(x, y, 0, 0, 256, 179);
+        this.drawTexturedModalRect(x, y, 0, 0, 256, 256);
 
         Dinosaur dinosaur = this.entity.getDinosaur();
 
@@ -111,7 +112,7 @@ public class FieldGuideGui extends GuiScreen {
             this.drawCenteredScaledString(new LangHelper("gui.thirst.name").build(), statisticTextX, y + 95, 1.0F, 0);
             this.drawCenteredScaledString(new LangHelper("gui.age.name").build(), statisticTextX, y + 125, 1.0F, 0);
 
-            this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+            this.mc.getTextureManager().bindTexture(WIDGETS_TEXTURE);
 
             this.drawBar(statisticsX, y + 45, this.entity.isCarcass() ? 0 : this.entity.getHealth(), this.entity.getMaxHealth(), 0xFF0000);
             this.drawBar(statisticsX, y + 75, this.fieldGuideInfo.hunger, this.entity.getMetabolism().getMaxEnergy(), 0x94745A);
@@ -301,7 +302,7 @@ public class FieldGuideGui extends GuiScreen {
             if (this.visible) {
                 boolean selected = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+                mc.getTextureManager().bindTexture(WIDGETS_TEXTURE);
 
                 int u = 0;
                 int v = 194;
