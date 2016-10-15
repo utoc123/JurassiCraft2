@@ -519,8 +519,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     private void updateBounds() {
-        float width = Math.min(5.0F, (float) this.interpolate(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()));
-        float height = (float) this.interpolate(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY());
+        float width = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()));
+        float height = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY()));
 
         this.stepHeight = Math.max(1.0F, (float) (Math.ceil(height / 2.0F) / 2.0F));
 
