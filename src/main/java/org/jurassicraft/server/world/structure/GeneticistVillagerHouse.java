@@ -149,7 +149,7 @@ public class GeneticistVillagerHouse extends StructureVillagePieces.Village {
                     break;
                 case "FenceGate":
                     IBlockState gate;
-                    switch (this.field_189928_h) {
+                    switch (this.structureType) {
                         case 2:
                             gate = Blocks.ACACIA_FENCE_GATE.getDefaultState();
                             break;
@@ -164,14 +164,14 @@ public class GeneticistVillagerHouse extends StructureVillagePieces.Village {
                     break;
                 case "StainedClay":
                     IBlockState state = Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK);
-                    if (this.field_189928_h == 1) {
+                    if (this.structureType == 1) {
                         state = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
                     }
                     world.setBlockState(pos, state);
                     break;
                 case "Bricks":
                     IBlockState brick = Blocks.STONEBRICK.getDefaultState();
-                    if (this.field_189928_h == 1) {
+                    if (this.structureType == 1) {
                         brick = Blocks.SANDSTONE.getDefaultState();
                     }
                     world.setBlockState(pos, brick);

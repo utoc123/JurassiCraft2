@@ -1441,6 +1441,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return this.dinosaur.getPoseHandler();
     }
 
+    @Override
+    public boolean inWater() {
+        return this.isInWater();
+    }
+
+    @Override
+    public boolean inLava() {
+        return this.isInLava();
+    }
+
     public static class FieldGuideInfo {
         public int hunger;
         public int thirst;

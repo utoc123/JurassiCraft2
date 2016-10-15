@@ -17,7 +17,7 @@ public class OnLandAnimationPass extends AnimationPass {
 
     @Override
     protected Animation getRequestedAnimation(Animatable entity) {
-        if (!entity.isCarcass() && !entity.isInWater()) {
+        if (!entity.isCarcass() && !entity.inWater()) {
             return EntityAnimation.ON_LAND.get();
         }
         return EntityAnimation.IDLE.get();

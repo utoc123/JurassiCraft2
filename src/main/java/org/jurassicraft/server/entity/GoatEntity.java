@@ -147,6 +147,16 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
     }
 
     @Override
+    public boolean inWater() {
+        return this.isInWater();
+    }
+
+    @Override
+    public boolean inLava() {
+        return this.isInLava();
+    }
+
+    @Override
     public void onUpdate() {
         super.onUpdate();
         if (this.animation != null && this.animation != EntityAnimation.IDLE.get()) {

@@ -9,10 +9,10 @@ public interface Animatable extends IAnimatedEntity {
     boolean isCarcass();
     boolean isMoving();
     boolean isClimbing();
-    boolean isInWater();
+    boolean inWater();
     boolean isSwimming();
     boolean isRunning();
-    boolean isInLava();
+    boolean inLava();
     boolean canUseGrowthStage(GrowthStage growthStage);
     boolean isMarineCreature();
     boolean shouldUseInertia();

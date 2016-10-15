@@ -90,7 +90,6 @@ public class ServerProxy implements IGuiHandler {
         NetworkRegistry.INSTANCE.registerGuiHandler(JurassiCraft.INSTANCE, this);
 
         ServerEventHandler eventHandler = new ServerEventHandler();
-
         MinecraftForge.EVENT_BUS.register(eventHandler);
     }
 

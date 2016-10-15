@@ -21,6 +21,66 @@
         "time": 5
       }
     ],
+    "EATING": [
+      {
+        "pose": "mussaurus_adult_eating_1",
+        "time": 20
+      },
+      {
+        "pose": "mussaurus_adult_eating_2",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_eating_1",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_eating_2",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_eating_3",
+        "time": 20
+      },
+      {
+        "pose": "mussaurus_adult_eating_3",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_eating_4",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_eating_4",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_eating_3",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 10
+      }
+    ],
+    "WALKING": [
+      {
+        "pose": "mussaurus_adult_walking_1",
+        "time": 3
+      },
+      {
+        "pose": "mussaurus_adult_walking_2",
+        "time": 3
+      },
+      {
+        "pose": "mussaurus_adult_walking_3",
+        "time": 3
+      },
+      {
+        "pose": "mussaurus_adult_walking_4",
+        "time": 3
+      }
+    ],
     "SPEAK": [
       {
         "pose": "mussaurus_adult_talk",
