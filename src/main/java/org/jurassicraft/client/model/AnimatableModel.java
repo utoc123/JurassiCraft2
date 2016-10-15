@@ -1,7 +1,6 @@
 package org.jurassicraft.client.model;
 
 import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
-import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
@@ -13,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 @SideOnly(Side.CLIENT)
-public class AnimatableModel extends TabulaModel {
+public class AnimatableModel extends FixedTabulaModel {
     public AnimatableModel(TabulaModelContainer model) {
         this(model, null);
     }
