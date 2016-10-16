@@ -29,7 +29,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -591,20 +590,22 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!this.worldObj.isRemote) {
             if (!this.dinosaur.isMarineCreature()) {
-                if (this.isInsideOfMaterial(Material.WATER)) {
+                if (this.isInsideOfMaterial(Material.WATER) || (this.getNavigator().noPath() && this.inWater() || this.inLava())) {
                     this.getJumpHelper().setJumping();
                 } else {
                     if (this.isSwimming()) {
                         Path path = this.getNavigator().getPath();
                         if (path != null) {
-                            PathPoint nextPoint = path.getPathPointFromIndex(Math.min(path.getCurrentPathLength() - 1, path.getCurrentPathIndex() + 1));
-                            if (nextPoint.yCoord >= this.posY - 1.0) {
-                                double deltaX = this.posX - nextPoint.xCoord;
-                                double deltaZ = this.posZ - nextPoint.zCoord;
-                                double actualWidth = this.width + 1.5;
-                                if (deltaX * deltaX + deltaZ * deltaZ < actualWidth * actualWidth) {
-                                    this.getJumpHelper().setJumping();
+                            List<AxisAlignedBB> colliding = this.worldObj.getCollisionBoxes(this.getEntityBoundingBox().expandXyz(0.5));
+                            boolean swimUp = false;
+                            for (AxisAlignedBB bound : colliding) {
+                                if (bound.maxY > this.getEntityBoundingBox().minY) {
+                                    swimUp = true;
+                                    break;
                                 }
+                            }
+                            if (swimUp) {
+                                this.getJumpHelper().setJumping();
                             }
                         }
                     }
@@ -1052,6 +1053,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return age != 0 ? age * 100 / this.getDinosaur().getMaximumAge() : 0;
     }
 
+    @Override
     public GrowthStage getGrowthStage() {
         int percent = this.getAgePercentage();
 
@@ -1158,6 +1160,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return !moveTo || this.getNavigator().tryMoveToXYZ(sleepLocation.getX(), sleepLocation.getY(), sleepLocation.getZ(), 1.0);
     }
 
+    @Override
     public boolean isSleeping() {
         return this.isSleeping;
     }

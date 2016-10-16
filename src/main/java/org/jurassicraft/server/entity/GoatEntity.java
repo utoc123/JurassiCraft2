@@ -59,7 +59,7 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
 
     public GoatEntity(World world) {
         super(world);
-        this.setSize(1.0F, 1.6F);
+        this.setSize(0.6F, 1.2F);
         this.stepHeight = 1.0F;
         this.animationTick = 0;
         this.setAnimation(EntityAnimation.IDLE.get());
@@ -76,7 +76,7 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
         this.tasks.addTask(8, new EntityAIAvoidEntity<>(this, EntityWolf.class, 6.0F, 1.0F, 1.6F));
-        this.tasks.addTask(9, new PeckGroundAnimationAI(this));
+        this.tasks.addTask(9, new PeckGroundAnimationAI<>(this));
     }
 
     @Override

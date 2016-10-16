@@ -153,7 +153,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                             }
                         }
 
-                        if (entity.getAttackTarget() == null) {
+                        if (entity.getAttackTarget() == null && this.members.size() > 1) {
                             entity.getNavigator().tryMoveToXYZ(navigateX, entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).getY() + 1, navigateZ, speed);
                         }
                     }

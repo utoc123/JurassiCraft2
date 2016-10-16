@@ -67,8 +67,12 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
 
                 for (T entity : entities) {
                     if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode)) {
-                        if (this.entity.getEntitySenses().canSee(entity)) {
+                        if (this.entity.getEntitySenses().canSee(entity) && !entity.isInLava()) {
                             double score = entity.getHealth() <= 0.0F ? (this.entity.getDistanceSqToEntity(entity) / entity.getHealth()) : 0;
+
+                            if (entity.isInWater()) {
+                                score *= 3;
+                            }
 
                             if (score < bestScore) {
                                 bestScore = score;
