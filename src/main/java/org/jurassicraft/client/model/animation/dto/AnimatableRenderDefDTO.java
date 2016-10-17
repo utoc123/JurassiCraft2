@@ -31,7 +31,7 @@ public class AnimatableRenderDefDTO {
             built.perStage = new EnumMap<>(GrowthStage.class);
             for (GrowthStage g : GrowthStage.values) {
                 JsonElement perhaps = def.get(g.name());
-                GrowthRenderDef renderDef = perhaps == null ? new GrowthRenderDef() : context.<GrowthRenderDef>deserialize(perhaps, GrowthRenderDef.class);
+                GrowthRenderDef renderDef = perhaps == null ? new GrowthRenderDef() : context.deserialize(perhaps, GrowthRenderDef.class);
                 if (renderDef.directory == null || renderDef.directory.isEmpty()) {
                     renderDef.directory = g.name().toLowerCase(Locale.ROOT);
                 }

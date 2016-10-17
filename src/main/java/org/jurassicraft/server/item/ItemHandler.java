@@ -201,8 +201,8 @@ public class ItemHandler {
     });
 
     public static final FineNetItem FINE_NET = new FineNetItem();
-    public static final SwarmItem PLANKTON = new SwarmItem(() -> BlockHandler.PLANKTON_SWARM.getDefaultState());
-    public static final SwarmItem KRILL = new SwarmItem(() -> BlockHandler.KRILL_SWARM.getDefaultState());
+    public static final SwarmItem PLANKTON = new SwarmItem(BlockHandler.PLANKTON_SWARM::getDefaultState);
+    public static final SwarmItem KRILL = new SwarmItem(BlockHandler.KRILL_SWARM::getDefaultState);
 
     public static final BasicFoodItem GOAT_RAW = new BasicFoodItem(3, 0.3F, true, TabHandler.FOODS);
     public static final BasicFoodItem GOAT_COOKED = new BasicFoodItem(6, 1.0F, true, TabHandler.FOODS);
