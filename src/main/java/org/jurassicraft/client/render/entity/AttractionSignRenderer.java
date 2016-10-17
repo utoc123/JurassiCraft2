@@ -39,6 +39,7 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
             GlStateManager.enableRescaleNormal();
+            GlStateManager.cullFace(GlStateManager.CullFace.FRONT_AND_BACK);
 
             AttractionSignEntity.AttractionSignType type = entity.type;
 
@@ -62,6 +63,7 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
 
             GlStateManager.callList(DISPLAY_LIST);
 
+            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, yaw, partialTicks);
@@ -78,8 +80,6 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
             float pixelSize = 0.0625F;
             float depth = 1.5F;
             GlStateManager.translate(0.0F, 0.0F, -depth + 0.5F);
-
-            GlStateManager.disableCull();
 
             for (int x = 0; x < textureWidth * pixelSize; x++) {
                 for (int y = 0; y < textureHeight * pixelSize; y++) {
@@ -143,8 +143,6 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
                     }
                 }
             }
-
-            GlStateManager.enableCull();
         }
 
         private void setLightmap(AttractionSignEntity sign, float xzOffset, float yOffset) {

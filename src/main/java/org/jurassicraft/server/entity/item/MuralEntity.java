@@ -36,7 +36,7 @@ public class MuralEntity extends EntityHanging implements IEntityAdditionalSpawn
     public MuralEntity(World world, BlockPos pos, EnumFacing side) {
         super(world, pos);
 
-        List<Type> possibleTypes = Lists.<Type>newArrayList();
+        List<Type> possibleTypes = Lists.newArrayList();
 
         for (Type type : Type.values()) {
             this.type = type;

@@ -22,14 +22,14 @@ public class MoveUnderwaterEntityAI extends EntityAIBase {
             return false;
         }
 
-        Vec3d vec3 = RandomPositionGenerator.findRandomTarget(this.swimmingEntity, 6, 2);
+        Vec3d randomTarget = RandomPositionGenerator.findRandomTarget(this.swimmingEntity, 6, 2);
 
-        if (vec3 == null) {
+        if (randomTarget == null) {
             return false;
         } else {
-            this.xPosition = vec3.xCoord;
-            this.yPosition = vec3.yCoord;
-            this.zPosition = vec3.zCoord;
+            this.xPosition = randomTarget.xCoord;
+            this.yPosition = randomTarget.yCoord;
+            this.zPosition = randomTarget.zCoord;
             return true;
         }
     }

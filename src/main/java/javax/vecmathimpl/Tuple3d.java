@@ -88,9 +88,9 @@ public abstract class Tuple3d implements java.io.Serializable, Cloneable {
      * Constructs and initializes a Tuple3d to (0,0,0).
      */
     public Tuple3d() {
-        this.x = (double) 0.0;
-        this.y = (double) 0.0;
-        this.z = (double) 0.0;
+        this.x = 0.0;
+        this.y = 0.0;
+        this.z = 0.0;
     }
 
     /**

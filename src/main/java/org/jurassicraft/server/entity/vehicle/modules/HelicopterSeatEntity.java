@@ -1,6 +1,5 @@
 package org.jurassicraft.server.entity.vehicle.modules;
 
-import com.google.common.base.Predicate;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,16 +42,7 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
     }
 
     public static HelicopterBaseEntity getParentFromID(World worldObj, final UUID id) {
-        List<HelicopterBaseEntity> list = worldObj.getEntities(HelicopterBaseEntity.class, new Predicate<Entity>() {
-            @Override
-            public boolean apply(Entity input) {
-                if (input instanceof HelicopterBaseEntity) {
-                    HelicopterBaseEntity helicopterBase = (HelicopterBaseEntity) input;
-                    return helicopterBase.getHeliID().equals(id);
-                }
-                return false;
-            }
-        });
+        List<HelicopterBaseEntity> list = worldObj.getEntities(HelicopterBaseEntity.class, input -> input != null && input.getHeliID().equals(id));
         if (list.isEmpty()) {
             return null;
         }
@@ -83,8 +73,6 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
             this.parent = getParentFromID(this.worldObj, this.parentID);
         }
         if (this.parent != null) {
-            float angle = this.parent.rotationYaw;
-
             this.resetPos();
             if (this.parent.getSeat(this.index) == null) {
                 this.parent.setSeat(this.index, this);
