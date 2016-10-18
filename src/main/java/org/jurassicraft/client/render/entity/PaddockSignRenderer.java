@@ -46,6 +46,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
             GlStateManager.enableRescaleNormal();
+            GlStateManager.cullFace(GlStateManager.CullFace.FRONT_AND_BACK);
             this.bindEntityTexture(entity);
 
             int id = entity.getDinosaur();
@@ -73,6 +74,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
                 HAS_COMPILED = true;
             }
 
+            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, yaw, partialTicks);
@@ -89,8 +91,6 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
             float pixelSize = 0.0625F;
             float depth = 0.5F;
             GlStateManager.translate(0.0F, 0.0F, -depth + 0.5F);
-
-            GlStateManager.disableCull();
 
             for (int x = 0; x < textureWidth * pixelSize; x++) {
                 for (int y = 0; y < textureHeight * pixelSize; y++) {
@@ -155,8 +155,6 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
                     }
                 }
             }
-
-            GlStateManager.enableCull();
         }
 
         private void setLightmap(PaddockSignEntity sign, float xzOffset, float yOffset) {

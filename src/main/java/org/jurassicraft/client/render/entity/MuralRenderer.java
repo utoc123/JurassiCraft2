@@ -40,6 +40,7 @@ public class MuralRenderer implements IRenderFactory<MuralEntity> {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
+            GlStateManager.cullFace(GlStateManager.CullFace.FRONT_AND_BACK);
             GlStateManager.enableRescaleNormal();
 
             MuralEntity.Type type = entity.type;
@@ -62,6 +63,7 @@ public class MuralRenderer implements IRenderFactory<MuralEntity> {
                 DISPLAY_LIST.put(type, displayList);
             }
 
+            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, yaw, partialTicks);
@@ -78,8 +80,6 @@ public class MuralRenderer implements IRenderFactory<MuralEntity> {
             float pixelSize = 0.0625F;
             float depth = 1.0F;
             GlStateManager.translate(0.0F, 0.0F, -depth + 0.5F);
-
-            GlStateManager.disableCull();
 
             for (int x = 0; x < textureWidth * pixelSize; x++) {
                 for (int y = 0; y < textureHeight * pixelSize; y++) {
@@ -144,8 +144,6 @@ public class MuralRenderer implements IRenderFactory<MuralEntity> {
                     }
                 }
             }
-
-            GlStateManager.enableCull();
         }
 
         private void setLightmap(MuralEntity sign, float xzOffset, float yOffset) {
