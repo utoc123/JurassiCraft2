@@ -13,7 +13,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.config.JurassiCraftConfig;
+import org.jurassicraft.server.conf.JurassiCraftConfig;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

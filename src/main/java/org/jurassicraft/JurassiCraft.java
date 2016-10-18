@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 import org.jurassicraft.server.animation.ForceAnimationCommand;
-import org.jurassicraft.server.config.JurassiCraftConfig;
+import org.jurassicraft.server.conf.JurassiCraftConfig;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
 import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;
