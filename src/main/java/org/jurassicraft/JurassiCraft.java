@@ -46,11 +46,11 @@ public class JurassiCraft {
     @NetworkWrapper({ PlacePaddockSignMessage.class, ChangeTemperatureMessage.class, HelicopterEngineMessage.class, HelicopterDirectionMessage.class, HelicopterModulesMessage.class, SwitchHybridizerCombinatorMode.class, SetOrderMessage.class, OpenFieldGuideGuiMessage.class, UpdateCarControlMessage.class })
     public static SimpleNetworkWrapper NETWORK_WRAPPER;
 
-    private Logger LOGGER;
+    private Logger logger;
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        this.LOGGER = event.getModLog();
+        this.logger = event.getModLog();
 
         UpdateHandler.INSTANCE.registerUpdateChecker(this, "http://pastebin.com/raw/Rb96SNWb");
 
@@ -73,6 +73,6 @@ public class JurassiCraft {
     }
 
     public Logger getLogger() {
-        return this.LOGGER;
+        return this.logger;
     }
 }
