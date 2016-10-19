@@ -46,7 +46,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
             GlStateManager.enableRescaleNormal();
-            GlStateManager.cullFace(GlStateManager.CullFace.FRONT_AND_BACK);
+            GlStateManager.disableCull();
             this.bindEntityTexture(entity);
 
             int id = entity.getDinosaur();
@@ -74,7 +74,7 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
                 HAS_COMPILED = true;
             }
 
-            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+            GlStateManager.enableCull();
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, yaw, partialTicks);

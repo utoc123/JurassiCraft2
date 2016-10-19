@@ -34,10 +34,9 @@ public class MuralRenderer extends Render<MuralEntity> {
         GlStateManager.translate(x, y, z);
         GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.enableRescaleNormal();
+        GlStateManager.disableCull();
 
         MuralEntity.Type type = entity.type;
-
-        GlStateManager.cullFace(GlStateManager.CullFace.FRONT_AND_BACK);
 
         this.bindTexture(type.texture);
 
@@ -57,6 +56,7 @@ public class MuralRenderer extends Render<MuralEntity> {
             DISPLAY_LIST.put(type, displayList);
         }
 
+        GlStateManager.enableCull();
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, yaw, partialTicks);
