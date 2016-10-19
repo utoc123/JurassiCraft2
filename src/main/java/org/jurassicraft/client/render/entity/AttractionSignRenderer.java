@@ -39,7 +39,7 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
             GlStateManager.translate(x, y, z);
             GlStateManager.rotate(180.0F - yaw, 0.0F, 1.0F, 0.0F);
             GlStateManager.enableRescaleNormal();
-            GlStateManager.cullFace(GlStateManager.CullFace.FRONT_AND_BACK);
+            GlStateManager.disableCull();
 
             AttractionSignEntity.AttractionSignType type = entity.type;
 
@@ -63,7 +63,7 @@ public class AttractionSignRenderer implements IRenderFactory<AttractionSignEnti
 
             GlStateManager.callList(DISPLAY_LIST);
 
-            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+            GlStateManager.enableCull();
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, yaw, partialTicks);

@@ -166,7 +166,7 @@ public enum RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
         RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, new JeepWranglerRenderer());
         RenderingRegistry.registerEntityRenderingHandler(SeatEntity.class, new SeatRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, new MuralRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, MuralRenderer::new);
     }
 
     public void init() {
