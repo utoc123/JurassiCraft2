@@ -376,8 +376,8 @@ plants.bristle_fern.name=Bristle Fern
 plants.tempskya.name=Tempskya
 plants.woolly_stalked_begonia.name=Woolly-stalked Begonia
 tile.woolly_stalked_begonia.name=Woolly-stalked Begonia
-plants.largestipule_leather_root=Largestipule Leather-root
-tile.largestipule_leather_root=Largestipule Leather-root
+plants.largestipule_leather_root.name=Largestipule Leather-root
+tile.largestipule_leather_root.name=Largestipule Leather-root
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station
