@@ -15,7 +15,6 @@ import net.minecraft.util.SoundCategory;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.block.machine.FeederBlock;
-import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.food.FoodHelper;
 
@@ -265,60 +264,62 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
                 if (this.stayOpen == 10 && this.feeding != null) {
                     int feedSlot = this.getFoodForDinosaur(this.feeding);
 
-                    Random random = new Random();
+                    if (feedSlot >= 0) {
+                        Random random = new Random();
 
-                    float offsetX = 0.5F;
-                    float offsetY = 0.5F;
-                    float offsetZ = 0.5F;
+                        float offsetX = 0.5F;
+                        float offsetY = 0.5F;
+                        float offsetZ = 0.5F;
 
-                    float motionX = 0.0F;
-                    float motionY = 0.0F;
-                    float motionZ = 0.0F;
+                        float motionX = 0.0F;
+                        float motionY = 0.0F;
+                        float motionZ = 0.0F;
 
-                    switch (this.worldObj.getBlockState(this.pos).getValue(FeederBlock.FACING)) {
-                        case UP:
-                            offsetY = 1.0F;
-                            motionY = 1.0F;
-                            motionX = random.nextFloat() - 0.5F;
-                            motionZ = random.nextFloat() - 0.5F;
-                            break;
-                        case DOWN:
-                            offsetY = -1.0F;
-                            break;
-                        case NORTH:
-                            offsetZ = -1.0F;
-                            motionY = 0.5F;
-                            motionZ = -0.5F;
-                            break;
-                        case SOUTH:
-                            offsetZ = 1.0F;
-                            motionY = 0.5F;
-                            motionZ = 0.5F;
-                            break;
-                        case WEST:
-                            offsetX = -1.0F;
-                            motionY = 0.5F;
-                            motionX = -0.5F;
-                            break;
-                        case EAST:
-                            offsetX = 1.0F;
-                            motionY = 0.5F;
-                            motionX = 0.5F;
-                            break;
-                    }
+                        switch (this.worldObj.getBlockState(this.pos).getValue(FeederBlock.FACING)) {
+                            case UP:
+                                offsetY = 1.0F;
+                                motionY = 1.0F;
+                                motionX = random.nextFloat() - 0.5F;
+                                motionZ = random.nextFloat() - 0.5F;
+                                break;
+                            case DOWN:
+                                offsetY = -1.0F;
+                                break;
+                            case NORTH:
+                                offsetZ = -1.0F;
+                                motionY = 0.5F;
+                                motionZ = -0.5F;
+                                break;
+                            case SOUTH:
+                                offsetZ = 1.0F;
+                                motionY = 0.5F;
+                                motionZ = 0.5F;
+                                break;
+                            case WEST:
+                                offsetX = -1.0F;
+                                motionY = 0.5F;
+                                motionX = -0.5F;
+                                break;
+                            case EAST:
+                                offsetX = 1.0F;
+                                motionY = 0.5F;
+                                motionX = 0.5F;
+                                break;
+                        }
 
-                    ItemStack stack = this.slots[feedSlot];
+                        ItemStack stack = this.slots[feedSlot];
 
-                    if (stack != null) {
-                        EntityItem itemEntity = new EntityItem(this.worldObj, this.pos.getX() + offsetX, this.pos.getY() + offsetY, this.pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
-                        itemEntity.setDefaultPickupDelay();
-                        itemEntity.motionX = motionX * 0.3F;
-                        itemEntity.motionY = motionY * 0.3F;
-                        itemEntity.motionZ = motionZ * 0.3F;
-                        this.worldObj.spawnEntityInWorld(itemEntity);
+                        if (stack != null) {
+                            EntityItem itemEntity = new EntityItem(this.worldObj, this.pos.getX() + offsetX, this.pos.getY() + offsetY, this.pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
+                            itemEntity.setDefaultPickupDelay();
+                            itemEntity.motionX = motionX * 0.3F;
+                            itemEntity.motionY = motionY * 0.3F;
+                            itemEntity.motionZ = motionZ * 0.3F;
+                            this.worldObj.spawnEntityInWorld(itemEntity);
 
-                        this.decrStackSize(feedSlot, 1);
-                        this.feeding.getNavigator().tryMoveToXYZ(itemEntity.posX + motionX, itemEntity.posY + motionY, itemEntity.posZ + motionZ, 0.8);
+                            this.decrStackSize(feedSlot, 1);
+                            this.feeding.getNavigator().tryMoveToXYZ(itemEntity.posX + motionX, itemEntity.posY + motionY, itemEntity.posZ + motionZ, 0.8);
+                        }
                     }
 
                     this.feeding = null;

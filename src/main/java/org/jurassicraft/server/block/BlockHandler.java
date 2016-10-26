@@ -240,7 +240,7 @@ public class BlockHandler {
         registerBlock(BRISTLE_FERN, "Bristle Fern");
         registerBlock(CINNAMON_FERN, "Cinnamon Fern");
         registerBlock(TEMPSKYA, "Tempskya");
-        registerBlock(WOOLLY_STALKED_BEGONIA, "Woolly-stalked Begonia");
+        registerBlock(WOOLLY_STALKED_BEGONIA, "Woolly Stalked Begonia");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");
