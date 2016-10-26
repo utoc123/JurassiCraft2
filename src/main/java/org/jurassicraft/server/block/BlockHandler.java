@@ -161,6 +161,7 @@ public class BlockHandler {
     public static final SmallPlantBlock CINNAMON_FERN = new SmallPlantBlock();
     public static final SmallPlantBlock BRISTLE_FERN = new SmallPlantBlock();
     public static final DoublePlantBlock TEMPSKYA = new DoublePlantBlock();
+    public static final SmallPlantBlock WOOLLY_STALKED_BEGONIA = new SmallPlantBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -239,6 +240,7 @@ public class BlockHandler {
         registerBlock(BRISTLE_FERN, "Bristle Fern");
         registerBlock(CINNAMON_FERN, "Cinnamon Fern");
         registerBlock(TEMPSKYA, "Tempskya");
+        registerBlock(WOOLLY_STALKED_BEGONIA, "Woolly-stalked Begonia");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");
