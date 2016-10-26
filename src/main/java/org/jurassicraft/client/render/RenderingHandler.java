@@ -251,7 +251,8 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.ZAMITES, "cycad_zamites", "inventory");
         this.registerBlockRenderer(BlockHandler.DICKSONIA, "dicksonia", "inventory");
         this.registerBlockRenderer(BlockHandler.WOOLLY_STALKED_BEGONIA, "woolly_stalked_begonia", "inventory");
-        
+        this.registerBlockRenderer(BlockHandler.LARGESTIPULE_LEATHER_ROOT, "largestipule_leather_root", "inventory");
+
 
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone", "inventory");
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks", "inventory");

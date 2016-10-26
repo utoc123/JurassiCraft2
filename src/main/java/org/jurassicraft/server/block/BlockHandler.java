@@ -162,6 +162,7 @@ public class BlockHandler {
     public static final SmallPlantBlock BRISTLE_FERN = new SmallPlantBlock();
     public static final DoublePlantBlock TEMPSKYA = new DoublePlantBlock();
     public static final SmallPlantBlock WOOLLY_STALKED_BEGONIA = new SmallPlantBlock();
+    public static final SmallPlantBlock LARGESTIPULE_LEATHER_ROOT = new SmallPlantBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -177,6 +178,7 @@ public class BlockHandler {
     public static final ElectricFencePoleBlock LOW_SECURITY_FENCE_POLE = new ElectricFencePoleBlock();
     public static final ElectricFenceBaseBlock LOW_SECURITY_FENCE_BASE = new ElectricFenceBaseBlock();
     public static final ElectricFenceWireBlock LOW_SECURITY_FENCE_WIRE = new ElectricFenceWireBlock();
+
 
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
@@ -241,6 +243,7 @@ public class BlockHandler {
         registerBlock(CINNAMON_FERN, "Cinnamon Fern");
         registerBlock(TEMPSKYA, "Tempskya");
         registerBlock(WOOLLY_STALKED_BEGONIA, "Woolly Stalked Begonia");
+        registerBlock(LARGESTIPULE_LEATHER_ROOT, "Largestipule Leather Root");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");
