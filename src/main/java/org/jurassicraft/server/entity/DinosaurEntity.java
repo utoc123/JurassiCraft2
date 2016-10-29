@@ -29,7 +29,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -171,7 +170,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (!this.dinosaur.isMarineCreature()) {
             this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
-            this.setPathPriority(PathNodeType.WATER, 0.0F);
+//            this.setPathPriority(PathNodeType.WATER, 0.0F);
         }
 
         if (this.dinosaur.getDiet().canEat(this, FoodType.PLANT)) {
