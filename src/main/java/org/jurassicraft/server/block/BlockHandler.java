@@ -164,6 +164,7 @@ public class BlockHandler {
     public static final SmallPlantBlock WOOLLY_STALKED_BEGONIA = new SmallPlantBlock();
     public static final SmallPlantBlock LARGESTIPULE_LEATHER_ROOT = new SmallPlantBlock();
     public static final DoublePlantBlock RHACOPHYTON = new DoublePlantBlock();
+    public static final DoublePlantBlock GRAMINIDITES_BAMBUSOIDES = new DoublePlantBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -245,6 +246,8 @@ public class BlockHandler {
         registerBlock(TEMPSKYA, "Tempskya");
         registerBlock(WOOLLY_STALKED_BEGONIA, "Woolly Stalked Begonia");
         registerBlock(LARGESTIPULE_LEATHER_ROOT, "Largestipule Leather Root");
+        registerBlock(RHACOPHYTON, "Rhacophyton");
+        registerBlock(GRAMINIDITES_BAMBUSOIDES, "Graminidites Bambusoides");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

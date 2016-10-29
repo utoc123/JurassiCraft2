@@ -36,6 +36,7 @@ public class PlantHandler {
     public static final Plant WOOLLY_STALKED_BEGONIA = new WoollyStalkedBegoniaPlant();
     public static final Plant LARGESTIPULE_LEATHER_ROOT = new LargestipuleLeatherRootPlant();
     public static final Plant RHACOPHYTON = new RhacophytonPlant();
+    public static final Plant GRAMINIDITES_BAMBUSOIDES = new GraminiditesBambusoidesPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -72,6 +73,7 @@ public class PlantHandler {
         registerPlant(WOOLLY_STALKED_BEGONIA);
         registerPlant(LARGESTIPULE_LEATHER_ROOT);
         registerPlant(RHACOPHYTON);
+        registerPlant(GRAMINIDITES_BAMBUSOIDES);
     }
 
     public static Plant getPlantById(int id) {
