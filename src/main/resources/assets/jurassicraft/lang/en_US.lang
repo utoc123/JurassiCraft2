@@ -313,6 +313,9 @@ tile.encephalartos.name=Encephalartos
 tile.cinnamon_fern.name=Cinnamon Fern
 tile.bristle_fern.name=Bristle Fern
 tile.tempskya.name=Tempskya
+tile.woolly_stalked_begonia.name=Woolly-stalked Begonia
+tile.largestipule_leather_root.name=Largestipule Leather-root
+tile.rhacophyton.name=Rhacophyton
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -375,9 +378,9 @@ plants.cinnamon_fern.name=Cinnamon Fern
 plants.bristle_fern.name=Bristle Fern
 plants.tempskya.name=Tempskya
 plants.woolly_stalked_begonia.name=Woolly-stalked Begonia
-tile.woolly_stalked_begonia.name=Woolly-stalked Begonia
 plants.largestipule_leather_root.name=Largestipule Leather-root
-tile.largestipule_leather_root.name=Largestipule Leather-root
+plants.rhacophyton.name=Rhacophyton
+
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

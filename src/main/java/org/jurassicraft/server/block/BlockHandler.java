@@ -163,6 +163,7 @@ public class BlockHandler {
     public static final DoublePlantBlock TEMPSKYA = new DoublePlantBlock();
     public static final SmallPlantBlock WOOLLY_STALKED_BEGONIA = new SmallPlantBlock();
     public static final SmallPlantBlock LARGESTIPULE_LEATHER_ROOT = new SmallPlantBlock();
+    public static final DoublePlantBlock RHACOPHYTON = new DoublePlantBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
