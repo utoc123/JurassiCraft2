@@ -79,7 +79,7 @@ public class ServerEventHandler {
         BlockPos pos = event.getPos();
         Random rand = event.getRand();
 
-        Biome biome = world.getBiomeGenForCoords(pos);
+        Biome biome = world.getBiome(pos);
 
         BiomeDecorator decorator = biome.theBiomeDecorator;
 

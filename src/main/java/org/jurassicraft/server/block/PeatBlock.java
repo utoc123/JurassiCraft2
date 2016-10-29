@@ -30,7 +30,7 @@ public class PeatBlock extends Block {
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         int moisture = state.getValue(MOISTURE);
 
-        if (!this.hasWater(world, pos) && !world.isRainingAt(pos.up()) && !(world.getBiomeGenForCoords(pos) instanceof BiomeSwamp)) {
+        if (!this.hasWater(world, pos) && !world.isRainingAt(pos.up()) && !(world.getBiome(pos) instanceof BiomeSwamp)) {
             if (moisture > 0) {
                 world.setBlockState(pos, state.withProperty(MOISTURE, moisture - 1), 2);
             } else {

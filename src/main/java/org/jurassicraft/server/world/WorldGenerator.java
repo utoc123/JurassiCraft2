@@ -40,7 +40,7 @@ public enum WorldGenerator implements IWorldGenerator {
     }
 
     public void generateOverworld(World world, Random random, int chunkX, int chunkZ) {
-        Biome biome = world.getBiomeGenForCoords(new BlockPos(chunkX, 0, chunkZ));
+        Biome biome = world.getBiome(new BlockPos(chunkX, 0, chunkZ));
 
         if (JurassiCraft.CONFIG.petrifiedTreeGeneration) {
             for (int i = 0; i < world.provider.getHorizon() * 0.0125; i++) {
