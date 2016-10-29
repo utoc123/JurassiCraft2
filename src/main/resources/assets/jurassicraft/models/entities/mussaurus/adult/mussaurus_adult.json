@@ -106,6 +106,54 @@
         "pose": "mussaurus_adult_sleeping",
         "time": 20
       }
+    ],
+    "DRINKING": [
+      {
+        "pose": "mussaurus_adult_drinking_1",
+        "time": 20
+      },
+      {
+        "pose": "mussaurus_adult_drinking_2",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_drinking_1",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_drinking_2",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_drinking_1",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 20
+      }
+    ],
+    "CALLING": [
+      {
+        "pose": "mussaurus_adult_calling_1",
+        "time": 20
+      },
+      {
+        "pose": "mussaurus_adult_calling_2",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_calling_2",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_calling_3",
+        "time": 10
+      },
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 20
+      }
     ]
   }
 }
