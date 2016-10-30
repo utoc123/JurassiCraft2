@@ -40,30 +40,7 @@ import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
 import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
-import org.jurassicraft.server.block.plant.AjuginuculaSmithiiBlock;
-import org.jurassicraft.server.block.plant.AncientPlantBlock;
-import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
-import org.jurassicraft.server.block.plant.CycadZamitesBlock;
-import org.jurassicraft.server.block.plant.DicksoniaBlock;
-import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
-import org.jurassicraft.server.block.plant.DictyophyllumBlock;
-import org.jurassicraft.server.block.plant.DoublePlantBlock;
-import org.jurassicraft.server.block.plant.EncephalartosBlock;
-import org.jurassicraft.server.block.plant.GracilariaBlock;
-import org.jurassicraft.server.block.plant.LiriodendritesBlock;
-import org.jurassicraft.server.block.plant.MossBlock;
-import org.jurassicraft.server.block.plant.OrontiumMackiiBlock;
-import org.jurassicraft.server.block.plant.RaphaeliaBlock;
-import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
-import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
-import org.jurassicraft.server.block.plant.SmallChainFernBlock;
-import org.jurassicraft.server.block.plant.SmallCycadBlock;
-import org.jurassicraft.server.block.plant.SmallPlantBlock;
-import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
-import org.jurassicraft.server.block.plant.UmaltolepisBlock;
-import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
-import org.jurassicraft.server.block.plant.WildOnionBlock;
-import org.jurassicraft.server.block.plant.WildPotatoBlock;
+import org.jurassicraft.server.block.plant.*;
 import org.jurassicraft.server.block.tree.AncientDoorBlock;
 import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientFenceBlock;
@@ -165,6 +142,7 @@ public class BlockHandler {
     public static final SmallPlantBlock LARGESTIPULE_LEATHER_ROOT = new SmallPlantBlock();
     public static final DoublePlantBlock RHACOPHYTON = new DoublePlantBlock();
     public static final DoublePlantBlock GRAMINIDITES_BAMBUSOIDES = new DoublePlantBlock();
+    public static final AncientCoralBlock ENALLHELIA = new AncientCoralBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -248,6 +226,7 @@ public class BlockHandler {
         registerBlock(LARGESTIPULE_LEATHER_ROOT, "Largestipule Leather Root");
         registerBlock(RHACOPHYTON, "Rhacophyton");
         registerBlock(GRAMINIDITES_BAMBUSOIDES, "Graminidites Bambusoides");
+        registerBlock(ENALLHELIA, "Enallhelia");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");

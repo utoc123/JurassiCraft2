@@ -254,6 +254,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LARGESTIPULE_LEATHER_ROOT, "largestipule_leather_root", "inventory");
         this.registerBlockRenderer(BlockHandler.RHACOPHYTON, "rhacophyton", "inventory");
         this.registerBlockRenderer(BlockHandler.GRAMINIDITES_BAMBUSOIDES, "graminidites_bambusoides", "inventory");
+        this.registerBlockRenderer(BlockHandler.ENALLHELIA, "enallhelia", "inventory");
 
 
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone", "inventory");

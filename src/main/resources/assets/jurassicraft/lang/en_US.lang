@@ -317,6 +317,7 @@ tile.woolly_stalked_begonia.name=Woolly-stalked Begonia
 tile.largestipule_leather_root.name=Largestipule Leather-root
 tile.rhacophyton.name=Rhacophyton
 tile.graminidites_bambusoides.name=Graminidites Bambusoides
+tile.enallhelia.name=Enallhelia
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -382,6 +383,7 @@ plants.woolly_stalked_begonia.name=Woolly-stalked Begonia
 plants.largestipule_leather_root.name=Largestipule Leather-root
 plants.rhacophyton.name=Rhacophyton
 plants.graminidites_bambusoides.name=Graminidites Bambusoides
+plants.enallhelia.name=Enallhelia
 
 
 //Containers ==================================================
