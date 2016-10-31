@@ -159,7 +159,6 @@ public class BlockHandler {
     public static final ElectricFenceBaseBlock LOW_SECURITY_FENCE_BASE = new ElectricFenceBaseBlock();
     public static final ElectricFenceWireBlock LOW_SECURITY_FENCE_WIRE = new ElectricFenceWireBlock();
 
-
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
     public static PaleoBaleBlock PALEO_BALE_FERN;

@@ -78,6 +78,7 @@ import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.block.fence.ElectricFenceBaseBlock;
 import org.jurassicraft.server.block.fence.ElectricFencePoleBlock;
 import org.jurassicraft.server.block.fence.ElectricFenceWireBlock;
+import org.jurassicraft.server.block.plant.AncientCoralBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -180,6 +181,8 @@ public enum RenderingHandler {
         ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_POLE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFencePoleBlock.NORTH, ElectricFencePoleBlock.SOUTH, ElectricFencePoleBlock.WEST, ElectricFencePoleBlock.EAST, ElectricFencePoleBlock.POWERED })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_WIRE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceWireBlock.NORTH, ElectricFenceWireBlock.SOUTH, ElectricFenceWireBlock.WEST, ElectricFenceWireBlock.EAST, ElectricFenceWireBlock.UP_DIRECTION })).build());
 
+        ModelLoader.setCustomStateMapper(BlockHandler.ENALLHELIA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
+
         this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);
         this.registerRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F);
         this.registerRenderInfo(EntityHandler.DILOPHOSAURUS, new DilophosaurusAnimator(), 0.65F);
@@ -255,7 +258,6 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.RHACOPHYTON, "rhacophyton", "inventory");
         this.registerBlockRenderer(BlockHandler.GRAMINIDITES_BAMBUSOIDES, "graminidites_bambusoides", "inventory");
         this.registerBlockRenderer(BlockHandler.ENALLHELIA, "enallhelia", "inventory");
-
 
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone", "inventory");
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks", "inventory");
