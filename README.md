@@ -7,7 +7,7 @@ TheToteMaster
 
 ### Developers
 Gegy   
-iLexiconn   
+Cody Rex
 Alexthe666   
 
 ### Modelers / Texturers
@@ -29,6 +29,8 @@ Raptorek20
 jglrxavpok   
 CarrotJet   
 amellinger
+iLexiconn
+JTGhawk137
 
 # Contributing
 Feel free to speed up development and create pull requests. Here's a guide on how to setup your workspace.
