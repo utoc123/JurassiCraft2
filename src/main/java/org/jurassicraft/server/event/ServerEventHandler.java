@@ -19,6 +19,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.conditions.RandomChance;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraft.world.storage.loot.functions.SetMetadata;
@@ -182,7 +183,7 @@ public class ServerEventHandler {
 
         if (name == LootTableList.GAMEPLAY_FISHING) {
             LootEntry[] entries = new LootEntry[] { new LootEntryItem(ItemHandler.GRACILARIA, 25, 0, new LootFunction[0], new LootCondition[0], "gracilaria") };
-            LootPool pool = new LootPool(entries, new LootCondition[0], new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft");
+            LootPool pool = new LootPool(entries, new LootCondition[] { new RandomChance(0.1F) }, new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft");
             table.addPool(pool);
         } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID || name == LootTableList.CHESTS_ABANDONED_MINESHAFT) {
             List<Dinosaur> dinosaurs = EntityHandler.getRegisteredDinosaurs();

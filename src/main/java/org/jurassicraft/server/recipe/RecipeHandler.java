@@ -104,7 +104,7 @@ public class RecipeHandler {
 
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.CHILEAN_SEA_BASS), Items.COOKED_FISH, ItemHandler.WILD_ONION, Items.CARROT, ItemHandler.AJUGINUCULA_SMITHII_LEAVES);
 
-        GameRegistry.addSmelting(ItemHandler.GRACILARIA, new ItemStack(ItemHandler.LIQUID_AGAR), 0);
+        GameRegistry.addSmelting(ItemHandler.GRACILARIA, new ItemStack(ItemHandler.LIQUID_AGAR), 0.5F);
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.MURAL), "IWI", "WPW", "IWI", 'I', Items.IRON_INGOT, 'W', Blocks.WOOL, 'P', Items.PAINTING);
 

@@ -49,12 +49,12 @@ public class GoatRenderer extends RenderLiving<GoatEntity> {
     }
 
     public GoatRenderer(RenderManager renderManager) {
-        super(renderManager, BILLY_MODEL, 0.45F);
+        super(renderManager, BILLY_MODEL, 0.4F);
     }
 
     @Override
     public void preRenderCallback(GoatEntity entity, float partialTick) {
-        float scale = entity.isChild() ? 0.2F : 0.48F;
+        float scale = entity.isChild() ? 0.18F : 0.47F;
         GlStateManager.scale(scale, scale, scale);
     }
 
