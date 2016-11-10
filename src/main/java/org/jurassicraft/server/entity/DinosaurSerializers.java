@@ -5,8 +5,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.network.datasync.DataSerializers;
 
-import java.io.IOException;
-
 public class DinosaurSerializers {
     public static final DataSerializer<DinosaurEntity.Order> ORDER = new DataSerializer<DinosaurEntity.Order>() {
         @Override
@@ -15,7 +13,7 @@ public class DinosaurSerializers {
         }
 
         @Override
-        public DinosaurEntity.Order read(PacketBuffer buf) throws IOException {
+        public DinosaurEntity.Order read(PacketBuffer buf) {
             return DinosaurEntity.Order.values()[buf.readByte()];
         }
 
