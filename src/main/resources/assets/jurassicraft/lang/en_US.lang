@@ -318,6 +318,7 @@ tile.largestipule_leather_root.name=Largestipule Leather-root
 tile.rhacophyton.name=Rhacophyton
 tile.graminidites_bambusoides.name=Graminidites Bambusoides
 tile.enallhelia.name=Enallhelia
+tile.aulopora.name=Aulopora
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -384,6 +385,7 @@ plants.largestipule_leather_root.name=Largestipule Leather-root
 plants.rhacophyton.name=Rhacophyton
 plants.graminidites_bambusoides.name=Graminidites Bambusoides
 plants.enallhelia.name=Enallhelia
+plants.aulopora.name=Aulopora
 
 
 //Containers ==================================================
