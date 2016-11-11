@@ -339,6 +339,15 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
         return 300;
     }
 
+    @Override
+    public boolean canMateWith(EntityAnimal other) {
+        if (other instanceof GoatEntity) {
+            GoatEntity goat = (GoatEntity) other;
+            return goat.getType() == Type.NANNY && this.getType() == Type.BILLY || goat.getType() == Type.BILLY && this.getType() == Type.NANNY;
+        }
+        return super.canMateWith(other);
+    }
+
     public enum Type {
         BILLY,
         NANNY,

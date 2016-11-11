@@ -8,7 +8,7 @@ import org.jurassicraft.server.block.BlockHandler;
  */
 public class EnallheliaPlant extends Plant {
     @Override
-    public String getName() { return "Henallelia"; }
+    public String getName() { return "Enallhelia"; }
 
     @Override
     public Block getBlock() {
