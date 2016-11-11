@@ -183,6 +183,7 @@ public enum RenderingHandler {
 
         ModelLoader.setCustomStateMapper(BlockHandler.ENALLHELIA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.AULOPORA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.CLADOCHONUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL})).build());
 
         this.registerRenderInfo(EntityHandler.BRACHIOSAURUS, new BrachiosaurusAnimator(), 1.5F);
         this.registerRenderInfo(EntityHandler.COELACANTH, new CoelacanthAnimator(), 0.0F);
@@ -260,6 +261,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.GRAMINIDITES_BAMBUSOIDES, "graminidites_bambusoides", "inventory");
         this.registerBlockRenderer(BlockHandler.ENALLHELIA, "enallhelia", "inventory");
         this.registerBlockRenderer(BlockHandler.AULOPORA, "aulopora", "inventory");
+        this.registerBlockRenderer(BlockHandler.CLADOCHONUS, "cladochonus", "inventory");
 
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone", "inventory");
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks", "inventory");

@@ -39,6 +39,7 @@ public class PlantHandler {
     public static final Plant GRAMINIDITES_BAMBUSOIDES = new GraminiditesBambusoidesPlant();
     public static final Plant ENALLHELIA = new EnallheliaPlant();
     public static final Plant AULOPORA = new AuloporaPlant();
+    public static final Plant CLADOCHONUS = new CladochonusPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -78,6 +79,7 @@ public class PlantHandler {
         registerPlant(GRAMINIDITES_BAMBUSOIDES);
         registerPlant(ENALLHELIA);
         registerPlant(AULOPORA);
+        registerPlant(CLADOCHONUS);
     }
 
     public static Plant getPlantById(int id) {
