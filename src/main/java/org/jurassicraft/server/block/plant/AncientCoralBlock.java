@@ -27,7 +27,7 @@ public class AncientCoralBlock extends AncientPlantBlock {
     @Override
     protected boolean canSustainBush(IBlockState ground) {
         Block block = ground.getBlock();
-        return block == Blocks.SAND || block == Blocks.CLAY || block == Blocks.GRAVEL || block == Blocks.DIRT;
+        return block == Blocks.SAND || block == Blocks.CLAY || block == Blocks.GRAVEL || ground.getMaterial() == Material.GROUND;
     }
 
     @Override
