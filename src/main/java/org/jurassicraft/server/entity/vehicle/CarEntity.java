@@ -56,6 +56,8 @@ public abstract class CarEntity extends Entity {
     private float healAmount;
     private int healCooldown = 40;
 
+    private boolean droppedItems;
+
     public CarEntity(World world) {
         super(world);
         this.setSize(3.0F, 2.5F);
@@ -369,7 +371,10 @@ public abstract class CarEntity extends Entity {
         super.setDead();
 
         if (!this.worldObj.isRemote) {
-            this.dropItems();
+            if (!this.droppedItems) {
+                this.dropItems();
+                this.droppedItems = true;
+            }
         } else {
             this.updateSound();
         }
