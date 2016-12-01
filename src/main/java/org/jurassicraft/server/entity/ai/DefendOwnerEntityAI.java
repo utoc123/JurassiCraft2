@@ -47,7 +47,9 @@ public class DefendOwnerEntityAI extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        this.entity.setAttackTarget(this.attacker);
+        if (this.entity.getAttackTarget() != this.attacker) {
+            this.entity.setAttackTarget(this.attacker);
+        }
     }
 
     @Override

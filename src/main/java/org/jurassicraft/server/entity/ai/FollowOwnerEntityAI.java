@@ -24,7 +24,7 @@ public class FollowOwnerEntityAI extends EntityAIBase {
             UUID ownerId = this.entity.getOwner();
             if (ownerId != null) {
                 EntityPlayer owner = this.entity.worldObj.getPlayerEntityByUUID(ownerId);
-                return owner != null && this.isOwnerFar(owner);
+                return owner != null && this.isOwnerFar(owner) && this.entity.getAttackTarget() == null;
             }
         }
 
@@ -33,7 +33,7 @@ public class FollowOwnerEntityAI extends EntityAIBase {
 
     @Override
     public boolean continueExecuting() {
-        return !(this.entity.getCollisionBoundingBox() != null && this.owner.getCollisionBoundingBox() != null && this.entity.getCollisionBoundingBox().expand(2, 2, 2).intersectsWith(this.owner.getCollisionBoundingBox())) && !this.entity.getNavigator().noPath() && this.owner.isEntityAlive() && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+        return !(this.entity.getEntityBoundingBox() != null && this.owner.getEntityBoundingBox() != null && this.entity.getEntityBoundingBox().expand(2, 2, 2).intersectsWith(this.owner.getEntityBoundingBox())) && !this.entity.getNavigator().noPath() && this.owner.isEntityAlive() && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW;
     }
 
     @Override

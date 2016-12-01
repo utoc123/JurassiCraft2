@@ -69,7 +69,7 @@ public class AncientPlantBlock extends BlockBush {
         }
     }
 
-    private boolean isNearWater(World world, BlockPos nextPos) {
+    protected boolean isNearWater(World world, BlockPos nextPos) {
         for (BlockPos neighbourPos : BlockPos.getAllInBoxMutable(nextPos.add(-8, -3, -8), nextPos.add(8, 3, 8))) {
             Block neighbourState = world.getBlockState(neighbourPos).getBlock();
 
@@ -87,7 +87,7 @@ public class AncientPlantBlock extends BlockBush {
         world.setBlockState(position, this.getDefaultState());
     }
 
-    private BlockPos findGround(World world, BlockPos start) {
+    protected BlockPos findGround(World world, BlockPos start) {
         BlockPos pos = start;
 
         IBlockState down = world.getBlockState(pos.down());
@@ -96,13 +96,13 @@ public class AncientPlantBlock extends BlockBush {
 
         for (int i = 0; i < 8; ++i) {
             if (this.canPlace(down, here, up)) {
-                return pos;
+                return pos.down();
             }
 
             down = here;
             here = up;
             pos = pos.up();
-            up = world.getBlockState(pos.up());
+            up = world.getBlockState(pos);
         }
 
         return null;
