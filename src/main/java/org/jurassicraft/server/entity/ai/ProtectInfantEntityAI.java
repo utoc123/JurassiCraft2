@@ -20,7 +20,7 @@ public class ProtectInfantEntityAI<T extends DinosaurEntity> extends EntityAIBas
 
     @Override
     public boolean shouldExecute() {
-        if (this.dinosaur.getAgePercentage() > 75) {
+        if (this.dinosaur.getAgePercentage() > 75 && this.dinosaur.ticksExisted % 10 == 0) {
             this.infant = null;
 
             List<T> dinosaurs = this.dinosaur.worldObj.getEntitiesWithinAABB(this.dinosaurClazz, this.dinosaur.getEntityBoundingBox().expand(8, 3, 8));

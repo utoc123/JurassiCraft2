@@ -63,6 +63,7 @@ import org.jurassicraft.server.entity.ai.FleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
+import org.jurassicraft.server.entity.ai.PathNavigateDinosaur;
 import org.jurassicraft.server.entity.ai.ProtectInfantEntityAI;
 import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
@@ -143,8 +144,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private BlockPos closestFeeder;
     private int feederSearchTick;
 
+    private boolean inLava;
+
     public DinosaurEntity(World world) {
         super(world);
+
+        this.navigator = new PathNavigateDinosaur(this, this.worldObj);
 
         this.setFullyGrown();
         this.updateAttributes();
@@ -578,52 +583,56 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!this.worldObj.isRemote) {
-            if (!this.dinosaur.isMarineAnimal()) {
-                if (this.isInsideOfMaterial(Material.WATER) || (this.getNavigator().noPath() && this.isInWater() || this.isInLava())) {
-                    this.getJumpHelper().setJumping();
-                } else {
-                    if (this.isSwimming()) {
-                        Path path = this.getNavigator().getPath();
-                        if (path != null) {
-                            List<AxisAlignedBB> colliding = this.worldObj.getCollisionBoxes(this.getEntityBoundingBox().expandXyz(0.5));
-                            boolean swimUp = false;
-                            for (AxisAlignedBB bound : colliding) {
-                                if (bound.maxY > this.getEntityBoundingBox().minY) {
-                                    swimUp = true;
-                                    break;
+        if (this.ticksExisted % 10 == 0) {
+            this.inLava = super.isInLava();
+        }
+
+        if (!this.isCarcass) {
+            if (!this.worldObj.isRemote) {
+                if (!this.dinosaur.isMarineAnimal()) {
+                    if (this.isInsideOfMaterial(Material.WATER) || (this.getNavigator().noPath() && this.isInWater() || this.isInLava())) {
+                        this.getJumpHelper().setJumping();
+                    } else {
+                        if (this.isSwimming()) {
+                            Path path = this.getNavigator().getPath();
+                            if (path != null) {
+                                List<AxisAlignedBB> colliding = this.worldObj.getCollisionBoxes(this.getEntityBoundingBox().expandXyz(0.5));
+                                boolean swimUp = false;
+                                for (AxisAlignedBB bound : colliding) {
+                                    if (bound.maxY > this.getEntityBoundingBox().minY) {
+                                        swimUp = true;
+                                        break;
+                                    }
                                 }
-                            }
-                            if (swimUp) {
-                                this.getJumpHelper().setJumping();
+                                if (swimUp) {
+                                    this.getJumpHelper().setJumping();
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (this.herd == null) {
-                this.herd = new Herd(this);
-            }
+                if (this.herd == null) {
+                    this.herd = new Herd(this);
+                }
 
-            if (this.order == Order.WANDER) {
-                if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry()) {
-                    if (!this.isSleeping && !this.isInWater() && this.getAnimation() == DinosaurAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
-                        this.setAnimation(DinosaurAnimation.RESTING.get());
-                        this.isSittingNaturally = true;
+                if (this.order == Order.WANDER) {
+                    if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry()) {
+                        if (!this.isSleeping && !this.isInWater() && this.getAnimation() == DinosaurAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
+                            this.setAnimation(DinosaurAnimation.RESTING.get());
+                            this.isSittingNaturally = true;
+                        }
+                    } else if (this.getAnimation() == DinosaurAnimation.RESTING.get()) {
+                        this.setAnimation(DinosaurAnimation.IDLE.get());
+                        this.isSittingNaturally = false;
                     }
-                } else if (this.getAnimation() == DinosaurAnimation.RESTING.get()) {
-                    this.setAnimation(DinosaurAnimation.IDLE.get());
-                    this.isSittingNaturally = false;
+                }
+
+                if (this == this.herd.leader) {
+                    this.herd.onUpdate();
                 }
             }
 
-            if (this == this.herd.leader) {
-                this.herd.onUpdate();
-            }
-        }
-
-        if (!this.isCarcass) {
             if (this.firstUpdate) {
                 this.updateAttributes();
             }
@@ -731,7 +740,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
         }
 
-        if (this.ticksExisted % 16 == 0) {
+        if (this.ticksExisted % 20 == 0) {
             this.updateAttributes();
             this.updateBounds();
         }
@@ -1054,7 +1063,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public boolean isSwimming() {
-        return (this.isInWater() || this.isInLava()) && !this.onGround;
+        return (this.isInWater() || this.inLava) && !this.onGround;
     }
 
     @Override
@@ -1329,6 +1338,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return data;
     }
 
+    @Override
+    public boolean isServerWorld() {
+        return !this.worldObj.isRemote;
+    }
+
     public int getAttackCooldown() {
         return this.attackCooldown;
     }
@@ -1400,6 +1414,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
         }
         return this.closestFeeder;
+    }
+
+    @Override
+    public boolean isInLava() {
+        return this.inLava;
     }
 
     public static class FieldGuideInfo {

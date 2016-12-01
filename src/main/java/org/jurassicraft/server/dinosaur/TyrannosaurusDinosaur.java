@@ -17,7 +17,7 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setEggColorFemale(0xBA997E, 0x7D5D48);
         this.setHealth(10, 80);
         this.setSpeed(0.35, 0.42);
-        this.setAttackSpeed(1.2);
+        this.setAttackSpeed(1.1);
         this.setStrength(5, 20);
         this.setMaximumAge(this.fromDays(60));
         this.setEyeHeight(0.6F, 3.8F);

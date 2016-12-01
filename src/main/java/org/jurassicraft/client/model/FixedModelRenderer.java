@@ -14,11 +14,20 @@ import java.util.Random;
 public class FixedModelRenderer extends AdvancedModelRenderer {
     private static final Random RANDOM = new Random();
 
+    private float fixX;
+    private float fixY;
+    private float fixZ;
+
     private int displayList;
     private boolean compiled;
 
     public FixedModelRenderer(AdvancedModelBase model, String name) {
         super(model, name);
+        RANDOM.setSeed(name.hashCode() << 16);
+        float offsetScale = 0.005F;
+        this.fixX = (RANDOM.nextFloat() - 0.5F) * offsetScale;
+        this.fixY = (RANDOM.nextFloat() - 0.5F) * offsetScale;
+        this.fixZ = (RANDOM.nextFloat() - 0.5F) * offsetScale;
     }
 
     @Override
@@ -29,10 +38,7 @@ public class FixedModelRenderer extends AdvancedModelRenderer {
                 if (!this.compiled) {
                     this.compileDisplayList(scale);
                 }
-                RANDOM.setSeed(this.displayList * 15415);
-                float offsetScale = 0.005F;
-                GlStateManager.translate((RANDOM.nextFloat() - 0.5F) * offsetScale, (RANDOM.nextFloat() - 0.5F) * offsetScale, (RANDOM.nextFloat() - 0.5F) * offsetScale);
-                GlStateManager.translate(this.offsetX, this.offsetY, this.offsetZ);
+                GlStateManager.translate(this.offsetX + this.fixX, this.offsetY + this.fixY, this.offsetZ + this.fixZ);
                 GlStateManager.translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
                 if (this.rotateAngleZ != 0.0F) {
                     GlStateManager.rotate((float) Math.toDegrees(this.rotateAngleZ), 0.0F, 0.0F, 1.0F);
@@ -47,21 +53,6 @@ public class FixedModelRenderer extends AdvancedModelRenderer {
                     GlStateManager.scale(this.scaleX, this.scaleY, this.scaleZ);
                 }
                 GlStateManager.callList(this.displayList);
-                if (!this.scaleChildren && (this.scaleX != 1.0F || this.scaleY != 1.0F || this.scaleZ != 1.0F)) {
-                    GlStateManager.popMatrix();
-                    GlStateManager.pushMatrix();
-                    GlStateManager.translate(this.offsetX, this.offsetY, this.offsetZ);
-                    GlStateManager.translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
-                    if (this.rotateAngleZ != 0.0F) {
-                        GlStateManager.rotate((float) Math.toDegrees(this.rotateAngleZ), 0.0F, 0.0F, 1.0F);
-                    }
-                    if (this.rotateAngleY != 0.0F) {
-                        GlStateManager.rotate((float) Math.toDegrees(this.rotateAngleY), 0.0F, 1.0F, 0.0F);
-                    }
-                    if (this.rotateAngleX != 0.0F) {
-                        GlStateManager.rotate((float) Math.toDegrees(this.rotateAngleX), 1.0F, 0.0F, 0.0F);
-                    }
-                }
                 if (this.childModels != null) {
                     for (ModelRenderer childModel : this.childModels) {
                         childModel.render(scale);

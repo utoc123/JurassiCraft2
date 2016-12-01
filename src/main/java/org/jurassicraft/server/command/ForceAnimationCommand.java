@@ -8,7 +8,7 @@
  * For a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
  */
 
-package org.jurassicraft.server.animation;
+package org.jurassicraft.server.command;
 
 import com.google.common.collect.Lists;
 import net.minecraft.command.CommandException;
