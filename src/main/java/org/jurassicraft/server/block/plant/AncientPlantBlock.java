@@ -96,7 +96,7 @@ public class AncientPlantBlock extends BlockBush {
 
         for (int i = 0; i < 8; ++i) {
             if (this.canPlace(down, here, up)) {
-                return pos;
+                return pos.down();
             }
 
             down = here;

@@ -680,13 +680,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (this.isServerWorld()) {
             this.lookHelper.onUpdateLook();
         }
-
-        if (this.isWet()) {
-            if (this.getAnimation() == EntityAnimation.RESTING.get()) {
-                this.setAnimation(EntityAnimation.IDLE.get());
-                this.isSittingNaturally = false;
-            }
-        }
     }
 
     private void updateGrowth() {

@@ -27,8 +27,7 @@ public class AssistOwnerEntityAI extends EntityAIBase {
 
                 if (this.owner != null) {
                     this.target = this.owner.getLastAttacker();
-
-                    return this.target != null && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW;
+                    return this.target != null && this.target != this.entity && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW;
                 }
             }
         }
@@ -47,7 +46,9 @@ public class AssistOwnerEntityAI extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        this.entity.setAttackTarget(this.target);
+        if (this.entity.getAttackTarget() != this.target) {
+            this.entity.setAttackTarget(this.target);
+        }
     }
 
     @Override
