@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -92,7 +93,7 @@ public class ItemHandler {
     public static final Item AJUGINUCULA_SMITHII_LEAVES = new ItemFood(1, 0.5F, false).setUnlocalizedName("ajuginucula_smithii_leaves").setCreativeTab(TabHandler.PLANTS);
     public static final BasicItem AJUGINUCULA_SMITHII_OIL = new BasicItem(TabHandler.PLANTS);
 
-    public static final Item WILD_ONION = new ItemSeeds(BlockHandler.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.PLANTS);
+    public static final Item WILD_ONION = new ItemSeedFood(3, 0.3F, BlockHandler.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.PLANTS);
     public static final Item WILD_POTATO_SEEDS = new ItemSeeds(BlockHandler.WILD_POTATO_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
     public static final Item WILD_POTATO = new ItemFood(2, 0.2F, false).setCreativeTab(TabHandler.FOODS);
     public static final Item WILD_POTATO_COOKED = new ItemFood(6, 0.6F, false).setCreativeTab(TabHandler.FOODS);

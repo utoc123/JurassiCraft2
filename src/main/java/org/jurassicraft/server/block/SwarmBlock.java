@@ -59,7 +59,7 @@ public class SwarmBlock extends Block {
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
-        return true;
+        return false;
     }
 
     @Override
@@ -89,6 +89,11 @@ public class SwarmBlock extends Block {
 
     @Override
     public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity) {
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return this.getItem();
     }
 
     @Override

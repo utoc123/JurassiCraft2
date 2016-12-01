@@ -46,8 +46,8 @@ public class StructureGenerationHandler implements IWorldGenerator {
 
     public static void register() {
         GameRegistry.registerWorldGenerator(new StructureGenerationHandler(), 0);
-        StructureGenerationHandler.registerGenerator(RaptorPaddockGenerator.class, 20, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA);
-        StructureGenerationHandler.registerGenerator(VistorCentreGenerator.class, 60, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA);
+        StructureGenerationHandler.registerGenerator(RaptorPaddockGenerator.class, 15, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA);
+        StructureGenerationHandler.registerGenerator(VisitorCentreGenerator.class, 15, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MUTATED_JUNGLE_EDGE, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA);
     }
 
     public static void registerGenerator(Class<? extends StructureGenerator> generator, int weight, Biome... validBiomes) {

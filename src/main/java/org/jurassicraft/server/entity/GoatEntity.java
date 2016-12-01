@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIEatGrass;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
@@ -56,6 +57,7 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
     private boolean billy;
     private Variant variant = Variant.JURASSIC_PARK;
     private boolean milked;
+    private boolean inLava;
 
     public GoatEntity(World world) {
         super(world);
@@ -68,6 +70,7 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIEatGrass(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 2.0));
         this.tasks.addTask(2, new EntityAIMate(this, 1.0));
         this.tasks.addTask(3, new EntityAITempt(this, 1.25, false, Sets.newHashSet(FoodHelper.getFoodType(FoodType.PLANT))));
@@ -153,12 +156,15 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
 
     @Override
     public boolean inLava() {
-        return this.isInLava();
+        return this.inLava;
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
+        if (this.ticksExisted % 10 == 0) {
+            this.inLava = this.isInLava();
+        }
         if (this.animation != null && this.animation != EntityAnimation.IDLE.get()) {
             boolean shouldHold = EntityAnimation.getAnimation(this.animation).shouldHold();
             if (this.animationTick < this.animationLength) {

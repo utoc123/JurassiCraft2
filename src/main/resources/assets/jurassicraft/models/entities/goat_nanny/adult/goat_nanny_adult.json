@@ -10,19 +10,19 @@
     "WALKING": [
       {
         "pose": "goat_nanny_walking_1",
-        "time": 3
+        "time": 2
       },
       {
         "pose": "goat_nanny_walking_2",
-        "time": 3
+        "time": 2
       },
       {
         "pose": "goat_nanny_walking_3",
-        "time": 3
+        "time": 2
       },
       {
         "pose": "goat_nanny_walking_4",
-        "time": 3
+        "time": 2
       }
     ],
     "RUNNING": [

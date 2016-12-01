@@ -1,6 +1,6 @@
 package org.jurassicraft.server.world.structure;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -18,6 +18,7 @@ public abstract class StructureGenerator extends WorldGenerator {
     protected int sizeX;
     protected int sizeY;
     protected int sizeZ;
+    private int offsetY;
 
     protected StructureGenerator(Random rand, int sizeX, int sizeY, int sizeZ) {
         this.horizontalPos = -1;
@@ -37,22 +38,39 @@ public abstract class StructureGenerator extends WorldGenerator {
             int minHeight = Integer.MAX_VALUE;
             int maxHeight = Integer.MIN_VALUE;
             BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos();
-            BlockPos corner = this.transformPos(new BlockPos(this.sizeX, 0, this.sizeZ), this.mirror, this.rotation);
-            boolean negativeX = corner.getX() < 0;
-            boolean negativeZ = corner.getZ() < 0;
-            for (int z = 0; z <= Math.abs(corner.getZ()); ++z) {
-                for (int x = 0; x <= Math.abs(corner.getX()); ++x) {
-                    currentPos.setPos(negativeX ? x - pos.getX() : x + pos.getX(), 64, negativeZ ? z - pos.getZ() : z + pos.getZ());
-                    int level = Math.max(this.getGround(world, currentPos).getY(), world.provider.getAverageGroundLevel());
-                    if (level < minHeight) {
-                        minHeight = level;
-                    }
-                    if (level > maxHeight) {
-                        maxHeight = level;
+            BlockPos min = this.transformPos(new BlockPos(0, 0, 0), this.mirror, this.rotation).add(pos);
+            BlockPos max = this.transformPos(new BlockPos(this.sizeX - 1, 0, this.sizeZ - 1), this.mirror, this.rotation).add(pos);
+            int minX = min.getX();
+            int minZ = min.getZ();
+            int maxX = max.getX();
+            int maxZ = max.getZ();
+            if (maxZ < minZ) {
+                int oldMax = maxZ;
+                maxZ = minZ;
+                minZ = oldMax;
+            }
+            if (maxX < minX) {
+                int oldMax = maxX;
+                maxX = minX;
+                minX = oldMax;
+            }
+            for (int z = minZ; z <= maxZ; ++z) {
+                for (int x = minX; x <= maxX; ++x) {
+                    if (x == minX || x == maxX || z == minZ || z == maxZ) {
+                        currentPos.setPos(x, 64, z);
+                        BlockPos ground = this.getGround(world, currentPos);
+                        int level = ground.getY();
+                        if (level < minHeight) {
+                            minHeight = level;
+                        }
+                        if (level > maxHeight) {
+                            maxHeight = level;
+                        }
                     }
                 }
             }
-            if (maxHeight - minHeight > 5) {
+            int average = (maxHeight + minHeight) / 2;
+            if (average - minHeight > 8) {
                 return null;
             }
             this.horizontalPos = minHeight + yOffset;
@@ -64,11 +82,11 @@ public abstract class StructureGenerator extends WorldGenerator {
         Chunk chunk = world.getChunkFromBlockCoords(pos);
         BlockPos currentPos;
         BlockPos ground;
-        for (currentPos = new BlockPos(pos.getX(), chunk.getTopFilledSegment() + 16, pos.getZ()); currentPos.getY() >= 0; currentPos = ground) {
+        for (currentPos = new BlockPos(pos.getX(), chunk.getHeight(pos), pos.getZ()); currentPos.getY() >= world.provider.getAverageGroundLevel() - 16; currentPos = ground) {
             ground = currentPos.down();
             IBlockState state = chunk.getBlockState(ground);
-            Block block = state.getBlock();
-            if (state.getMaterial().blocksMovement() && state.isFullBlock() && !block.isLeaves(state, world, ground) && !block.isFoliage(world, ground) && !block.isWood(world, ground)) {
+            Material material = state.getMaterial();
+            if (material == Material.GROUND || material == Material.GRASS || material == Material.ROCK) {
                 break;
             }
         }
@@ -77,7 +95,7 @@ public abstract class StructureGenerator extends WorldGenerator {
 
     @Override
     public boolean generate(World world, Random random, BlockPos position) {
-        position = this.placeOnGround(world, position, -4);
+        position = this.placeOnGround(world, position, this.getOffsetY());
         if (position != null) {
             this.generateStructure(world, random, position);
             return true;
@@ -113,4 +131,6 @@ public abstract class StructureGenerator extends WorldGenerator {
     }
 
     protected abstract void generateStructure(World world, Random random, BlockPos position);
+
+    public abstract int getOffsetY();
 }

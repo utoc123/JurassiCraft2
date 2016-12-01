@@ -24,13 +24,13 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
 
     @Override
     public void moveEntityWithHeading(float strafe, float forward) {
-        if (this.isInWater()) {
+        if (this.inWater()) {
             this.moveRelative(strafe, forward, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.800000011920929D;
             this.motionZ *= 0.800000011920929D;
-        } else if (this.isInLava()) {
+        } else if (this.inLava()) {
             this.moveRelative(strafe, forward, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.5D;

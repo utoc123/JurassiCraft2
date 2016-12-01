@@ -145,16 +145,20 @@ public class Herd implements Iterable<DinosaurEntity> {
                         double navigateX = entity.posX + entityMoveX;
                         double navigateZ = entity.posZ + entityMoveZ;
 
-                        double speed = this.state == State.STATIC ? 0.8 : entity.getDinosaur().getFlockSpeed();
+                        Dinosaur dinosaur = entity.getDinosaur();
+                        double speed = this.state == State.STATIC ? 0.8 : dinosaur.getFlockSpeed();
 
                         if (this.fleeing) {
-                            if (entity.getDinosaur().getAttackSpeed() > speed) {
-                                speed = entity.getDinosaur().getAttackSpeed();
+                            if (dinosaur.getAttackSpeed() > speed) {
+                                speed = dinosaur.getAttackSpeed();
                             }
                         }
 
                         if (entity.getAttackTarget() == null && this.members.size() > 1) {
-                            entity.getNavigator().tryMoveToXYZ(navigateX, entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).getY() + 1, navigateZ, speed);
+                            BlockPos navigatePos = entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).up();
+                            if (entity.getDistanceSqToCenter(navigatePos) > 25) {
+                                entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
+                            }
                         }
                     }
                 } else if (!this.fleeing && (entity.getAttackTarget() == null || this.random.nextInt(20) == 0) && this.enemies.size() > 0) {
@@ -208,42 +212,44 @@ public class Herd implements Iterable<DinosaurEntity> {
 
         this.members.removeAll(remove);
 
-        AxisAlignedBB searchBounds = new AxisAlignedBB(this.center.xCoord - 16, this.center.yCoord - 5, this.center.zCoord - 16, this.center.xCoord + 16, this.center.yCoord + 5, this.center.zCoord + 16);
+        if (this.leader.ticksExisted % 20 == 0) {
+            AxisAlignedBB searchBounds = new AxisAlignedBB(this.center.xCoord - 16, this.center.yCoord - 5, this.center.zCoord - 16, this.center.xCoord + 16, this.center.yCoord + 5, this.center.zCoord + 16);
 
-        List<Herd> otherHerds = new LinkedList<>();
+            List<Herd> otherHerds = new LinkedList<>();
 
-        for (DinosaurEntity entity : this.leader.worldObj.getEntitiesWithinAABB(this.leader.getClass(), searchBounds)) {
-            if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
-                Herd otherHerd = entity.herd;
-                if (otherHerd == null) {
-                    if (this.size() >= this.herdType.getMaxHerdSize()) {
-                        if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE && !this.enemies.contains(entity)) {
-                            this.enemies.add(entity);
+            for (DinosaurEntity entity : this.leader.worldObj.getEntitiesWithinAABB(this.leader.getClass(), searchBounds)) {
+                if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
+                    Herd otherHerd = entity.herd;
+                    if (otherHerd == null) {
+                        if (this.size() >= this.herdType.getMaxHerdSize()) {
+                            if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE && !this.enemies.contains(entity)) {
+                                this.enemies.add(entity);
+                            }
+                            return;
                         }
-                        return;
+                        this.addMember(entity);
+                    } else if (otherHerd != this && !otherHerds.contains(otherHerd)) {
+                        otherHerds.add(otherHerd);
                     }
-                    this.addMember(entity);
-                } else if (otherHerd != this && !otherHerds.contains(otherHerd)) {
-                    otherHerds.add(otherHerd);
                 }
             }
-        }
 
-        for (Herd otherHerd : otherHerds) {
-            int originalSize = this.size();
+            for (Herd otherHerd : otherHerds) {
+                int originalSize = this.size();
 
-            if (otherHerd.size() <= originalSize && otherHerd.size() + originalSize < this.herdType.getMaxHerdSize()) {
-                for (DinosaurEntity member : otherHerd) {
-                    this.members.add(member);
-                    member.herd = this;
-                }
+                if (otherHerd.size() <= originalSize && otherHerd.size() + originalSize < this.herdType.getMaxHerdSize()) {
+                    for (DinosaurEntity member : otherHerd) {
+                        this.members.add(member);
+                        member.herd = this;
+                    }
 
-                otherHerd.disband();
-            } else if (originalSize + 1 >= this.herdType.getMaxHerdSize()) {
-                if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
-                    for (DinosaurEntity entity : otherHerd) {
-                        if (!this.enemies.contains(entity)) {
-                            this.enemies.add(entity);
+                    otherHerd.disband();
+                } else if (originalSize + 1 >= this.herdType.getMaxHerdSize()) {
+                    if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
+                        for (DinosaurEntity entity : otherHerd) {
+                            if (!this.enemies.contains(entity)) {
+                                this.enemies.add(entity);
+                            }
                         }
                     }
                 }

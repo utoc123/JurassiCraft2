@@ -54,7 +54,7 @@ public class GoatRenderer extends RenderLiving<GoatEntity> {
 
     @Override
     public void preRenderCallback(GoatEntity entity, float partialTick) {
-        float scale = entity.isChild() ? 0.18F : 0.47F;
+        float scale = entity.isChild() ? 0.2F : 0.47F;
         GlStateManager.scale(scale, scale, scale);
     }
 

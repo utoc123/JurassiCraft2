@@ -102,7 +102,7 @@ public class AncientPlantBlock extends BlockBush {
             down = here;
             here = up;
             pos = pos.up();
-            up = world.getBlockState(pos.up());
+            up = world.getBlockState(pos);
         }
 
         return null;

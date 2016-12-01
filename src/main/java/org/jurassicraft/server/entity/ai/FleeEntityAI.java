@@ -17,22 +17,26 @@ public class FleeEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        List<DinosaurEntity> entities = this.dinosaur.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, this.dinosaur.getEntityBoundingBox().expand(10, 5, 10));
+        if (this.dinosaur.ticksExisted % 10 == 0) {
+            List<DinosaurEntity> entities = this.dinosaur.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, this.dinosaur.getEntityBoundingBox().expand(10, 5, 10));
 
-        this.attackers = new LinkedList<>();
+            this.attackers = new LinkedList<>();
 
-        for (DinosaurEntity entity : entities) {
-            if (entity != this.dinosaur && !entity.isCarcass()) {
-                for (Class<? extends EntityLivingBase> target : entity.getAttackTargets()) {
-                    if (target.isAssignableFrom(this.dinosaur.getClass())) {
-                        this.attackers.add(entity);
-                        break;
+            for (DinosaurEntity entity : entities) {
+                if (entity != this.dinosaur && !entity.isCarcass()) {
+                    for (Class<? extends EntityLivingBase> target : entity.getAttackTargets()) {
+                        if (target.isAssignableFrom(this.dinosaur.getClass())) {
+                            this.attackers.add(entity);
+                            break;
+                        }
                     }
                 }
             }
+
+            return this.attackers.size() > 0;
         }
 
-        return this.attackers.size() > 0;
+        return false;
     }
 
     @Override
