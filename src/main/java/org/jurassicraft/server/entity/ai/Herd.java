@@ -3,6 +3,7 @@ package org.jurassicraft.server.entity.ai;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -142,8 +143,8 @@ public class Herd implements Iterable<DinosaurEntity> {
                             }
                         }
 
-                        double navigateX = entity.posX + entityMoveX;
-                        double navigateZ = entity.posZ + entityMoveZ;
+                        double navigateX = entity.posX + (entityMoveX * 5.0F);
+                        double navigateZ = entity.posZ + (entityMoveZ * 5.0F);
 
                         Dinosaur dinosaur = entity.getDinosaur();
                         double speed = this.state == State.STATIC ? 0.8 : dinosaur.getFlockSpeed();
@@ -156,7 +157,13 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                         if (entity.getAttackTarget() == null && this.members.size() > 1) {
                             BlockPos navigatePos = entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).up();
-                            if (entity.getDistanceSqToCenter(navigatePos) > 25) {
+                            if (entity.getNavigator().getPath() != null && !entity.getNavigator().getPath().isFinished()) {
+                                PathPoint finalPoint = entity.getNavigator().getPath().getFinalPathPoint();
+                                if (navigatePos.getDistance(finalPoint.xCoord, finalPoint.yCoord, finalPoint.zCoord) < 25) {
+                                    continue;
+                                }
+                            }
+                            if (entity.getDistanceSqToCenter(navigatePos) > 10) {
                                 entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
                             }
                         }
@@ -178,7 +185,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
             this.enemies.removeAll(invalidEnemies);
 
-            if (this.enemies.size() == 0) {
+            if (this.fleeing && this.enemies.size() == 0) {
                 this.fleeing = false;
                 this.state = State.STATIC;
             }
@@ -244,7 +251,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                     }
 
                     otherHerd.disband();
-                } else if (originalSize + 1 >= this.herdType.getMaxHerdSize()) {
+                } else if (originalSize + 1 > this.herdType.getMaxHerdSize()) {
                     if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
                         for (DinosaurEntity entity : otherHerd) {
                             if (!this.enemies.contains(entity)) {

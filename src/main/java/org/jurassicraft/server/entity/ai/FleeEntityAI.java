@@ -27,6 +27,16 @@ public class FleeEntityAI extends EntityAIBase {
                     for (Class<? extends EntityLivingBase> target : entity.getAttackTargets()) {
                         if (target.isAssignableFrom(this.dinosaur.getClass())) {
                             this.attackers.add(entity);
+                            if (entity.getAttackTarget() == null) {
+                                entity.setAttackTarget(this.dinosaur);
+                            }
+                            if (entity.herd != null) {
+                                if (this.dinosaur.herd != null) {
+                                    entity.herd.enemies.addAll(this.dinosaur.herd.members);
+                                } else {
+                                    entity.herd.enemies.add(this.dinosaur);
+                                }
+                            }
                             break;
                         }
                     }

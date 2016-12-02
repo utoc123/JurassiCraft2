@@ -58,7 +58,7 @@ public class SelectTargetEntityAI<T extends EntityLivingBase> extends EntityAIBa
             return false;
         }
 
-        if (!(this.entity.herd != null && this.entity.herd.fleeing) && this.entity.getAgePercentage() > 50 && this.entity.getOwner() == null && !this.entity.isSleeping() && this.entity.getAttackCooldown() <= 0) {
+        if (!(this.entity.herd != null && this.entity.herd.fleeing) && this.entity.getAgePercentage() > 50 && (this.entity.getOwner() == null || this.entity.getMetabolism().isStarving()) && !this.entity.isSleeping() && this.entity.getAttackCooldown() <= 0) {
             List<T> entities = this.entity.worldObj.getEntitiesWithinAABB(this.targetClass, this.entity.getEntityBoundingBox().expand(16, 16, 16));
 
             if (entities.size() > 0) {
