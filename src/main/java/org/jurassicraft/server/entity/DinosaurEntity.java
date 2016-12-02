@@ -661,7 +661,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
 
             if (this.order == Order.WANDER) {
-                if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry()) {
+                if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry() && this.getNavigator().noPath()) {
                     if (!this.isSleeping && !this.isInWater() && this.getAnimation() == EntityAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
                         this.setAnimation(EntityAnimation.RESTING.get());
                         this.isSittingNaturally = true;
@@ -674,6 +674,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (this == this.herd.leader) {
                 this.herd.onUpdate();
+            }
+
+            if (!this.getNavigator().noPath()) {
+                if (this.isSittingNaturally && this.getAnimation() == EntityAnimation.RESTING.get()) {
+                    this.setAnimation(EntityAnimation.IDLE.get());
+                    this.isSittingNaturally = false;
+                }
             }
         }
 
@@ -1347,11 +1354,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.setMale(this.rand.nextBoolean());
         this.setDNAQuality(100);
         return data;
-    }
-
-    @Override
-    public boolean isServerWorld() {
-        return !this.worldObj.isRemote;
     }
 
     public int getAttackCooldown() {
