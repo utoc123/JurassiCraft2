@@ -345,6 +345,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (!this.isCarcass()) {
             if (this.getHealth() - amount <= 0.0F) {
                 if (!canHarmInCreative) {
+                    this.playSound(this.getSoundForAnimation(EntityAnimation.DYING.get()), this.getSoundVolume(), this.getSoundPitch());
                     this.setHealth(this.getMaxHealth());
                     this.setCarcass(true);
                     return true;
@@ -352,7 +353,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 return super.attackEntityFrom(damageSource, amount);
             } else {
-                if (this.getAnimation() == EntityAnimation.RESTING.get()) {
+                if (this.getAnimation() == EntityAnimation.RESTING.get() && !this.worldObj.isRemote) {
                     this.setAnimation(EntityAnimation.IDLE.get());
                     this.isSittingNaturally = false;
                 }
@@ -660,15 +661,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 this.herd = new Herd(this);
             }
 
-            if (this.order == Order.WANDER) {
-                if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry() && this.getNavigator().noPath()) {
-                    if (!this.isSleeping && !this.isInWater() && this.getAnimation() == EntityAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
-                        this.setAnimation(EntityAnimation.RESTING.get());
-                        this.isSittingNaturally = true;
+            if (!this.worldObj.isRemote) {
+                if (this.order == Order.WANDER) {
+                    if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry() && this.getNavigator().noPath()) {
+                        if (!this.isSleeping && !this.isInWater() && this.getAnimation() == EntityAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
+                            this.setAnimation(EntityAnimation.RESTING.get());
+                            this.isSittingNaturally = true;
+                        }
+                    } else if (this.getAnimation() == EntityAnimation.RESTING.get()) {
+                        this.setAnimation(EntityAnimation.IDLE.get());
+                        this.isSittingNaturally = false;
                     }
-                } else if (this.getAnimation() == EntityAnimation.RESTING.get()) {
-                    this.setAnimation(EntityAnimation.IDLE.get());
-                    this.isSittingNaturally = false;
                 }
             }
 
@@ -800,7 +803,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         if (this.getAnimation() != EntityAnimation.RESTING.get()) {
                             this.setAnimation(EntityAnimation.RESTING.get());
                         }
-                    } else if (!this.isSittingNaturally && this.getAnimation() == EntityAnimation.RESTING.get()) {
+                    } else if (!this.isSittingNaturally && this.getAnimation() == EntityAnimation.RESTING.get() && !this.worldObj.isRemote) {
                         this.setAnimation(EntityAnimation.IDLE.get());
                     }
                 }
@@ -823,7 +826,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     private void updateTailBuffer() {
-        this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
+        this.tailBuffer.calculateChainSwingBuffer(68.0F, 3, 7.0F, this);
     }
 
     @Override
