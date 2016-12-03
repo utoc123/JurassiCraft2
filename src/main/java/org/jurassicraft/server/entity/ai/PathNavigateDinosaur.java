@@ -1,14 +1,17 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class PathNavigateDinosaur extends PathNavigateGround {
-    public PathNavigateDinosaur(EntityLiving entity, World world) {
+    private DinosaurEntity dinosaur;
+
+    public PathNavigateDinosaur(DinosaurEntity entity, World world) {
         super(entity, world);
+        this.dinosaur = entity;
     }
 
     @Override
@@ -45,5 +48,10 @@ public class PathNavigateDinosaur extends PathNavigateGround {
         }
 
         this.checkForStuck(position);
+    }
+
+    @Override
+    protected boolean canNavigate() {
+        return !this.dinosaur.isMovementBlocked() && super.canNavigate();
     }
 }

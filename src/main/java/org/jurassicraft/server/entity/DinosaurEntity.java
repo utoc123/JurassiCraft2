@@ -347,6 +347,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (!this.isCarcass()) {
             if (this.getHealth() - amount <= 0.0F) {
                 if (!canHarmInCreative) {
+                    this.playSound(this.getSoundForAnimation(DinosaurAnimation.DYING.get()), this.getSoundVolume(), this.getSoundPitch());
                     this.setHealth(this.getMaxHealth());
                     this.setCarcass(true);
                     return true;
@@ -354,7 +355,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 return super.attackEntityFrom(damageSource, amount);
             } else {
-                if (this.getAnimation() == DinosaurAnimation.RESTING.get()) {
+                if (this.getAnimation() == DinosaurAnimation.RESTING.get() && !this.worldObj.isRemote) {
                     this.setAnimation(DinosaurAnimation.IDLE.get());
                     this.isSittingNaturally = false;
                 }
@@ -794,7 +795,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         if (this.getAnimation() != DinosaurAnimation.RESTING.get()) {
                             this.setAnimation(DinosaurAnimation.RESTING.get());
                         }
-                    } else if (!this.isSittingNaturally && this.getAnimation() == DinosaurAnimation.RESTING.get()) {
+                    } else if (!this.isSittingNaturally && this.getAnimation() == DinosaurAnimation.RESTING.get() && !this.worldObj.isRemote) {
                         this.setAnimation(DinosaurAnimation.IDLE.get());
                     }
                 }
@@ -817,7 +818,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     private void updateTailBuffer() {
-        this.tailBuffer.calculateChainSwingBuffer(68.0F, 5, 4.0F, this);
+        this.tailBuffer.calculateChainSwingBuffer(68.0F, 3, 7.0F, this);
     }
 
     @Override
