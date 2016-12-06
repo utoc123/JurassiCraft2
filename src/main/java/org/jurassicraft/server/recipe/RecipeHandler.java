@@ -55,9 +55,9 @@ public class RecipeHandler {
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PETRI_DISH_AGAR, 4), ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.PETRI_DISH, ItemHandler.LIQUID_AGAR);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.EMPTY_SYRINGE), " I ", " T ", "III", 'I', "nuggetIron", 'T', ItemHandler.EMPTY_TEST_TUBE));
         GameRegistry.addSmelting(new ItemStack(Items.POTIONITEM, 1, 0), new ItemStack(ItemHandler.DNA_NUCLEOTIDES), 1.0F);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_EXTRACTOR), "III", "SAP", "HII", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'A', ItemHandler.DNA_ANALYZER, 'P', Blocks.GLASS_PANE, 'H', ItemHandler.HARD_DRIVE);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.DNA_ANALYZER, 'S', ItemHandler.COMPUTER_SCREEN, 'H', ItemHandler.HARD_DRIVE, 'K', ItemHandler.KEYBOARD);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.ADVANCED_CIRCUIT, 'D', ItemHandler.HARD_DRIVE);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_EXTRACTOR), "III", "SAP", "HII", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'A', ItemHandler.DNA_ANALYZER, 'P', Blocks.GLASS_PANE, 'H', ItemHandler.DISC_DRIVE);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.DNA_ANALYZER, 'S', ItemHandler.COMPUTER_SCREEN, 'H', ItemHandler.DISC_DRIVE, 'K', ItemHandler.KEYBOARD);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.ADVANCED_CIRCUIT, 'D', ItemHandler.DISC_DRIVE);
 
 //        for (int i = 0; i < 16; i++) {
 //            GameRegistry.addRecipe(new ItemStack(BlockHandler.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT, 'C', ItemHandler.ADVANCED_CIRCUIT);
@@ -67,7 +67,7 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.EMBRYONIC_MACHINE), "npb", "ngb", "iib", 'n', "nuggetIron", 'p', Blocks.PISTON, 'g', Items.GLOWSTONE_DUST, 'b', Blocks.WOODEN_BUTTON, 'i', Items.IRON_INGOT));
         GameRegistry.addRecipe(new ItemStack(BlockHandler.EMBRYO_CALCIFICATION_MACHINE), "iBK", "RCR", "RIR", 'i', Items.IRON_INGOT, 'I', Blocks.IRON_BLOCK, 'B', Items.BOWL, 'K', ItemHandler.KEYBOARD, 'R', ItemHandler.IRON_ROD, 'C', ItemHandler.BASIC_CIRCUIT);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INCUBATOR), "GIG", "RRR", "IKI", 'I', Items.IRON_INGOT, 'R', Items.COMPARATOR, 'G', Blocks.GLASS, 'K', ItemHandler.KEYBOARD);
-        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.HARD_DRIVE, 'L', ItemHandler.KEYBOARD);
+        GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.DISC_DRIVE, 'L', ItemHandler.KEYBOARD);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PLANT_CELLS_PETRI_DISH), ItemHandler.PLANT_CELLS, ItemHandler.PETRI_DISH_AGAR);
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.IRON_NUGGET, 9), "i", 'i', Items.IRON_INGOT);
@@ -75,7 +75,7 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemHandler.ADVANCED_CIRCUIT, 1), ItemHandler.BASIC_CIRCUIT, ItemHandler.BASIC_CIRCUIT, "nuggetIron", Items.GOLD_NUGGET, Items.REDSTONE));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.STORAGE_DISC), " I ", "ICI", " I ", 'I', "nuggetIron", 'C', ItemHandler.BASIC_CIRCUIT));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.LASER), "IDI", "ICI", "IRI", 'I', "nuggetIron", 'C', ItemHandler.BASIC_CIRCUIT, 'D', Items.DIAMOND, 'R', Items.REDSTONE));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.HARD_DRIVE), "CLI", "i  ", "iib", 'i', "nuggetIron", 'C', ItemHandler.ADVANCED_CIRCUIT, 'L', ItemHandler.LASER, 'I', Items.IRON_INGOT, 'b', Blocks.STONE_BUTTON));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.DISC_DRIVE), "CLI", "i  ", "iib", 'i', "nuggetIron", 'C', ItemHandler.ADVANCED_CIRCUIT, 'L', ItemHandler.LASER, 'I', Items.IRON_INGOT, 'b', Blocks.STONE_BUTTON));
 
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.AJUGINUCULA_SMITHII_OIL), ItemHandler.AJUGINUCULA_SMITHII_LEAVES, ItemHandler.AJUGINUCULA_SMITHII_LEAVES, ItemHandler.AJUGINUCULA_SMITHII_LEAVES, ItemHandler.AJUGINUCULA_SMITHII_LEAVES, Items.GLASS_BOTTLE);
 

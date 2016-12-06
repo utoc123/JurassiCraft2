@@ -12,17 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraft.world.storage.loot.LootEntry;
-import net.minecraft.world.storage.loot.LootEntryItem;
-import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.conditions.RandomChance;
-import net.minecraft.world.storage.loot.functions.LootFunction;
-import net.minecraft.world.storage.loot.functions.SetCount;
-import net.minecraft.world.storage.loot.functions.SetMetadata;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -36,15 +26,13 @@ import org.jurassicraft.server.achievements.AchievementHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.plant.DoublePlantBlock;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.util.GameRuleHandler;
 import org.jurassicraft.server.world.WorldGenCoal;
+import org.jurassicraft.server.world.loot.Loot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 public class ServerEventHandler {
@@ -181,43 +169,7 @@ public class ServerEventHandler {
 
         LootTable table = event.getTable();
 
-        if (name == LootTableList.GAMEPLAY_FISHING) {
-            LootEntry[] entries = new LootEntry[] { new LootEntryItem(ItemHandler.GRACILARIA, 25, 0, new LootFunction[0], new LootCondition[0], "gracilaria") };
-            LootPool pool = new LootPool(entries, new LootCondition[] { new RandomChance(0.1F) }, new RandomValueRange(1, 1), new RandomValueRange(0, 0), "jurassicraft");
-            table.addPool(pool);
-        } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID || name == LootTableList.CHESTS_ABANDONED_MINESHAFT) {
-            List<Dinosaur> dinosaurs = EntityHandler.getRegisteredDinosaurs();
-
-            LootEntry[] actionFigureEntries = new LootEntry[dinosaurs.size()];
-
-            int i = 0;
-
-            for (Dinosaur dinosaur : dinosaurs) {
-                int meta = EntityHandler.getDinosaurId(dinosaur);
-                actionFigureEntries[i++] = new LootEntryItem(ItemHandler.ACTION_FIGURE, 25, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase(Locale.ENGLISH));
-            }
-
-            table.addPool(new LootPool(actionFigureEntries, new LootCondition[0], new RandomValueRange(1, 2), new RandomValueRange(0, 0), "action_figures"));
-
-            LootEntry[] fossilEntries = new LootEntry[dinosaurs.size() + 3];
-
-            fossilEntries[0] = new LootEntryItem(ItemHandler.PLANT_FOSSIL, 20, 0, new LootFunction[] { new SetCount(new LootCondition[0], new RandomValueRange(1, 3)) }, new LootCondition[0], "plant_fossil");
-            fossilEntries[1] = new LootEntryItem(ItemHandler.TWIG_FOSSIL, 20, 0, new LootFunction[] { new SetCount(new LootCondition[0], new RandomValueRange(1, 3)) }, new LootCondition[0], "twig_fossil");
-            fossilEntries[2] = new LootEntryItem(ItemHandler.AMBER, 15, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(0, 1)) }, new LootCondition[0], "amber");
-
-            i = 3;
-
-            for (Dinosaur dinosaur : dinosaurs) {
-                int meta = EntityHandler.getDinosaurId(dinosaur);
-                fossilEntries[i++] = new LootEntryItem(ItemHandler.FOSSILS.get("skull"), 10, 0, new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) }, new LootCondition[0], dinosaur.getName().toLowerCase(Locale.ENGLISH));
-            }
-
-            table.addPool(new LootPool(fossilEntries, new LootCondition[0], new RandomValueRange(1, 2), new RandomValueRange(0, 0), "fossils"));
-
-            LootEntry[] recordEntries = new LootEntry[] { new LootEntryItem(ItemHandler.JURASSICRAFT_THEME_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "jurassicraft_theme"), new LootEntryItem(ItemHandler.DONT_MOVE_A_MUSCLE_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "dont_move_a_muscle"), new LootEntryItem(ItemHandler.TROODONS_AND_RAPTORS_DISC, 25, 0, new LootFunction[0], new LootCondition[0], "troodons_and_raptors") };
-
-            table.addPool(new LootPool(recordEntries, new LootCondition[0], new RandomValueRange(0, 2), new RandomValueRange(0, 0), "records"));
-        }
+        Loot.handleTable(table, name);
     }
 
     @SubscribeEvent

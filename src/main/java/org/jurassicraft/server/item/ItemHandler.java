@@ -61,7 +61,7 @@ public class ItemHandler {
 
     public static final BasicItem IRON_BLADES = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem IRON_ROD = new BasicItem(TabHandler.ITEMS);
-    public static final BasicItem HARD_DRIVE = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem DISC_DRIVE = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem LASER = new BasicItem(TabHandler.ITEMS);
 
     public static final GrowthSerumItem GROWTH_SERUM = new GrowthSerumItem();
@@ -242,7 +242,7 @@ public class ItemHandler {
         registerItem(EMPTY_SYRINGE, "Empty Syringe");
         registerItem(GROWTH_SERUM, "Growth Serum");
         registerItem(STORAGE_DISC, "Storage Disc");
-        registerItem(HARD_DRIVE, "Disc Reader");
+        registerItem(DISC_DRIVE, "Disc Reader");
         registerItem(LASER, "Laser");
         registerItem(DNA_NUCLEOTIDES, "DNA Base Material");
         registerItem(PETRI_DISH, "Petri Dish");

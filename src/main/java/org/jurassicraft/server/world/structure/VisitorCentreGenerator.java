@@ -10,7 +10,7 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.world.LootTableHandler;
+import org.jurassicraft.server.world.loot.Loot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,15 +21,16 @@ public class VisitorCentreGenerator extends StructureGenerator {
     private static final Map<String, ResourceLocation> LOOT_TABLES = new HashMap<>();
 
     static {
-        LOOT_TABLES.put("GroundStorage", LootTableHandler.VISITOR_GROUND_STORAGE);
-        LOOT_TABLES.put("ControlRoom", LootTableHandler.VISITOR_CONTROL_ROOM);
-        LOOT_TABLES.put("Laboratory", LootTableHandler.VISITOR_LABORATORY);
-        LOOT_TABLES.put("Cryonics", LootTableHandler.VISITOR_CRYONICS);
-        LOOT_TABLES.put("Infirmary", LootTableHandler.VISITOR_INFIRMARY);
-        LOOT_TABLES.put("Garage", LootTableHandler.VISITOR_GARAGE);
-        LOOT_TABLES.put("StaffDorms", LootTableHandler.VISITOR_STAFF_DORMS);
-        LOOT_TABLES.put("Kitchen", LootTableHandler.VISITOR_KITCHEN);
-        LOOT_TABLES.put("DormTower", LootTableHandler.VISITOR_DORM_TOWER);
+        LOOT_TABLES.put("GroundStorage", Loot.VISITOR_GROUND_STORAGE);
+        LOOT_TABLES.put("ControlRoom", Loot.VISITOR_CONTROL_ROOM);
+        LOOT_TABLES.put("Laboratory", Loot.VISITOR_LABORATORY);
+        LOOT_TABLES.put("Cryonics", Loot.VISITOR_CRYONICS);
+        LOOT_TABLES.put("Infirmary", Loot.VISITOR_INFIRMARY);
+        LOOT_TABLES.put("Garage", Loot.VISITOR_GARAGE);
+        LOOT_TABLES.put("StaffDorms", Loot.VISITOR_STAFF_DORMS);
+        LOOT_TABLES.put("Kitchen", Loot.VISITOR_KITCHEN);
+        LOOT_TABLES.put("DormTower", Loot.VISITOR_DORM_TOWER);
+        LOOT_TABLES.put("DiningHall", Loot.VISITOR_DINING_HALL);
     }
 
     public VisitorCentreGenerator(Random rand) {

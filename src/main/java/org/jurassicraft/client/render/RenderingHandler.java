@@ -388,7 +388,7 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.EMPTY_TEST_TUBE);
         this.registerItemRenderer(ItemHandler.EMPTY_SYRINGE);
         this.registerItemRenderer(ItemHandler.STORAGE_DISC);
-        this.registerItemRenderer(ItemHandler.HARD_DRIVE, "disc_reader", "inventory");
+        this.registerItemRenderer(ItemHandler.DISC_DRIVE, "disc_reader", "inventory");
         this.registerItemRenderer(ItemHandler.LASER);
         this.registerItemRenderer(ItemHandler.DNA_NUCLEOTIDES, "dna_base_material", "inventory");
         this.registerItemRenderer(ItemHandler.SEA_LAMPREY);

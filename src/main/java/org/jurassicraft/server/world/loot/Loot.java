@@ -1,0 +1,330 @@
+package org.jurassicraft.server.world.loot;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootEntryItem;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.conditions.RandomChance;
+import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.SetCount;
+import net.minecraft.world.storage.loot.functions.SetMetadata;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.genetics.DinoDNA;
+import org.jurassicraft.server.genetics.GeneticsHelper;
+import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Loot {
+    public static final ResourceLocation GENETICIST_HOUSE_CHEST = new ResourceLocation(JurassiCraft.MODID, "structure/geneticist_house");
+
+    public static final ResourceLocation VISITOR_GROUND_STORAGE = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/ground_storage");
+    public static final ResourceLocation VISITOR_CONTROL_ROOM = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/control_room");
+    public static final ResourceLocation VISITOR_LABORATORY = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/laboratory");
+    public static final ResourceLocation VISITOR_CRYONICS = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/cryonics");
+    public static final ResourceLocation VISITOR_INFIRMARY = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/infirmary");
+    public static final ResourceLocation VISITOR_GARAGE = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/garage");
+    public static final ResourceLocation VISITOR_STAFF_DORMS = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/staff_dorms");
+    public static final ResourceLocation VISITOR_KITCHEN = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/kitchen");
+    public static final ResourceLocation VISITOR_DORM_TOWER = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/dorm_tower");
+    public static final ResourceLocation VISITOR_DINING_HALL = new ResourceLocation(JurassiCraft.MODID, "structure/visitor_centre/dining_hall");
+
+    public static final DinosaurData DINOSAUR_DATA = new DinosaurData();
+    public static final PlantData PLANT_DATA = new PlantData();
+    public static final RandomDNA RANDOM_DNA = new RandomDNA();
+    public static final RandomDNA FULL_DNA = new RandomDNA(true);
+
+    private static long tableID = 0;
+
+    public static PoolBuilder pool(String name) {
+        return new PoolBuilder(name);
+    }
+
+    public static EntryBuilder entry(Item item) {
+        return new EntryBuilder(item);
+    }
+
+    public static EntryBuilder entry(Block block) {
+        return new EntryBuilder(Item.getItemFromBlock(block));
+    }
+
+    public static MultiEntryBuilder entries(Item... items) {
+        return new MultiEntryBuilder(items);
+    }
+
+    public static LootEntry[] entries(Object... entryData) {
+        LootEntry[] builders = new LootEntry[entryData.length / 3];
+        for (int i = 0; i < entryData.length; i += 3) {
+            Object itemData = entryData[i];
+            Item item = itemData instanceof Block ? Item.getItemFromBlock((Block) itemData) : (Item) itemData;
+            EntryBuilder entry = Loot.entry(item).count((int) entryData[i + 1], (int) entryData[i + 2]);
+            builders[i / 3] = entry.build();
+        }
+        return builders;
+    }
+
+    public static void handleTable(LootTable table, ResourceLocation name) {
+        if (name == LootTableList.GAMEPLAY_FISHING) {
+            LootEntry gracilaria = Loot.entry(ItemHandler.GRACILARIA).weight(25).build();
+            table.addPool(Loot.pool("gracilaria").rolls(1, 1).chance(0.1F).entry(gracilaria).build());
+        } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID || name == LootTableList.CHESTS_ABANDONED_MINESHAFT) {
+            LootEntry actionFigure = Loot.entry(ItemHandler.ACTION_FIGURE).function(DINOSAUR_DATA).weight(5).build();
+
+            table.addPool(Loot.pool("action_figures").rolls(0, 1).entry(actionFigure).build());
+
+            LootEntry plantFossil = Loot.entry(ItemHandler.PLANT_FOSSIL).weight(5).count(1, 3).build();
+            LootEntry twig = Loot.entry(ItemHandler.TWIG_FOSSIL).weight(5).count(1, 3).build();
+            LootEntry amber = Loot.entry(ItemHandler.AMBER).weight(2).count(0, 1).data(0, 1).build();
+            LootEntry skull = Loot.entry(ItemHandler.FOSSILS.get("skull")).weight(2).function(DINOSAUR_DATA).count(1, 2).build();
+
+            table.addPool(Loot.pool("fossils").rolls(1, 2).entries(plantFossil, twig, amber, skull).build());
+
+            LootEntry[] records = Loot.entries(ItemHandler.JURASSICRAFT_THEME_DISC, ItemHandler.DONT_MOVE_A_MUSCLE_DISC, ItemHandler.TROODONS_AND_RAPTORS_DISC).buildEntries();
+            table.addPool(Loot.pool("records").rolls(0, 2).entries(records).build());
+        } else if (name == Loot.VISITOR_GROUND_STORAGE) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_STORAGE);
+            LootEntry amber = Loot.entry(ItemHandler.AMBER).data(0, 1).count(0, 3).build();
+            LootEntry wool = Loot.entry(Blocks.WOOL).data(0, 15).count(0, 64).build();
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).entries(amber, wool).build());
+        } else if (name == Loot.VISITOR_CONTROL_ROOM) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_CONTROL);
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
+        } else if (name == Loot.VISITOR_LABORATORY) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_LABORATORY);
+            LootEntry softTissue = Loot.entry(ItemHandler.SOFT_TISSUE).count(0, 3).function(DINOSAUR_DATA).build();
+            LootEntry plantSoftTissue = Loot.entry(ItemHandler.PLANT_SOFT_TISSUE).count(0, 3).function(PLANT_DATA).build();
+            LootEntry amber = Loot.entry(ItemHandler.AMBER).data(0, 1).count(0, 5).build();
+            LootEntry dna = Loot.entry(ItemHandler.DNA).function(DINOSAUR_DATA).function(RANDOM_DNA).build();
+            table.addPool(Loot.pool("items").rolls(3, 4).entries(basicItems).entries(dna, softTissue, plantSoftTissue, amber).build());
+        } else if (name == Loot.VISITOR_KITCHEN) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_KITCHEN);
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
+        } else if (name == Loot.VISITOR_DORM_TOWER) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_DORM_TOWER);
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
+        } else if (name == Loot.VISITOR_INFIRMARY) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_INFIRMARY);
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
+        } else if (name == Loot.VISITOR_GARAGE) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_GARAGE);
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
+        } else if (name == Loot.VISITOR_STAFF_DORMS) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_STAFF_DORMS);
+            table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
+        } else if (name == Loot.VISITOR_CRYONICS) {
+            LootEntry dna = Loot.entry(ItemHandler.DNA).function(DINOSAUR_DATA).function(FULL_DNA).build();
+            table.addPool(Loot.pool("items").rolls(1, 2).entries(dna).build());
+        } else if (name == Loot.VISITOR_DINING_HALL) {
+            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_DINING_HALL);
+            LootEntry amber = Loot.entry(ItemHandler.AMBER).weight(2).count(0, 1).data(0, 1).build();
+            LootEntry teeth = Loot.entry(ItemHandler.FOSSILS.get("teeth")).weight(2).function(DINOSAUR_DATA).count(1, 2).build();
+            LootEntry actionFigure = Loot.entry(ItemHandler.ACTION_FIGURE).function(DINOSAUR_DATA).weight(1).build();
+            table.addPool(Loot.pool("items").rolls(8, 11).entries(basicItems).entries(amber, teeth, actionFigure).build());
+        }
+    }
+
+    public static class PoolBuilder {
+        private String name;
+        private int minRolls;
+        private int maxRolls = 1;
+        private int minBonusRolls;
+        private int maxBonusRolls;
+        private List<LootCondition> conditions = new ArrayList<>();
+        private List<LootEntry> entries = new ArrayList<>();
+
+        private PoolBuilder(String name) {
+            this.name = name;
+        }
+
+        public PoolBuilder rolls(int min, int max) {
+            this.minRolls = min;
+            this.maxRolls = max;
+            return this;
+        }
+
+        public PoolBuilder bonusRolls(int min, int max) {
+            this.minBonusRolls = min;
+            this.maxBonusRolls = max;
+            return this;
+        }
+
+        public PoolBuilder condition(LootCondition condition) {
+            this.conditions.add(condition);
+            return this;
+        }
+
+        public PoolBuilder chance(float chance) {
+            return this.condition(new RandomChance(chance));
+        }
+
+        public PoolBuilder entry(LootEntry entry) {
+            this.entries.add(entry);
+            return this;
+        }
+
+        public PoolBuilder entries(LootEntry... entries) {
+            for (LootEntry entry : entries) {
+                this.entry(entry);
+            }
+            return this;
+        }
+
+        public LootPool build() {
+            LootEntry[] entries = this.entries.toArray(new LootEntry[this.entries.size()]);
+            LootCondition[] conditions = this.conditions.toArray(new LootCondition[this.conditions.size()]);
+            return new LootPool(entries, conditions, new RandomValueRange(this.minRolls, this.maxRolls), new RandomValueRange(this.minBonusRolls, this.maxBonusRolls), this.name);
+        }
+    }
+
+    public static class EntryBuilder {
+        protected Item item;
+        protected int weight = 1;
+        protected int quality = 0;
+        protected List<LootCondition> conditions = new ArrayList<>();
+        protected List<LootFunction> functions = new ArrayList<>();
+
+        private EntryBuilder(Item item) {
+            this.item = item;
+        }
+
+        public EntryBuilder weight(int weight) {
+            this.weight = weight;
+            return this;
+        }
+
+        public EntryBuilder quality(int quality) {
+            this.quality = quality;
+            return this;
+        }
+
+        public EntryBuilder condition(LootCondition condition) {
+            this.conditions.add(condition);
+            return this;
+        }
+
+        public EntryBuilder function(LootFunction function) {
+            this.functions.add(function);
+            return this;
+        }
+
+        public EntryBuilder count(int min, int max) {
+            return this.function(new SetCount(new LootCondition[0], new RandomValueRange(min, max)));
+        }
+
+        public EntryBuilder data(int min, int max) {
+            return this.function(new SetMetadata(new LootCondition[0], new RandomValueRange(min, max)));
+        }
+
+        public EntryBuilder data(int data) {
+            return this.data(data, data);
+        }
+
+        public LootEntry build() {
+            LootCondition[] conditions = this.conditions.toArray(new LootCondition[this.conditions.size()]);
+            LootFunction[] functions = this.functions.toArray(new LootFunction[this.functions.size()]);
+            return new LootEntryItem(this.item, this.weight, this.quality, functions, conditions, this.item.getUnlocalizedName() + "_" + tableID++);
+        }
+    }
+
+    public static class MultiEntryBuilder extends EntryBuilder {
+        protected Item[] items;
+
+        private MultiEntryBuilder(Item... items) {
+            super(null);
+            this.items = items;
+        }
+
+        public LootEntry[] buildEntries() {
+            LootCondition[] conditions = this.conditions.toArray(new LootCondition[this.conditions.size()]);
+            LootFunction[] functions = this.functions.toArray(new LootFunction[this.functions.size()]);
+            LootEntry[] entries = new LootEntry[this.items.length];
+            for (int i = 0; i < this.items.length; i++) {
+                Item item = this.items[i];
+                entries[i] = new LootEntryItem(item, this.weight, this.quality, functions, conditions, item.getUnlocalizedName() + "_" + tableID++);
+            }
+            return entries;
+        }
+    }
+
+    public static class DinosaurData extends LootFunction {
+        public DinosaurData() {
+            super(new LootCondition[0]);
+        }
+
+        public DinosaurData(LootCondition[] conditions) {
+            super(conditions);
+        }
+
+        @Override
+        public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+            List<Dinosaur> dinosaurs = EntityHandler.getRegisteredDinosaurs();
+            Dinosaur dinosaur = dinosaurs.get(rand.nextInt(dinosaurs.size()));
+            stack.setItemDamage(EntityHandler.getDinosaurId(dinosaur));
+            return stack;
+        }
+    }
+
+    public static class PlantData extends LootFunction {
+        public PlantData() {
+            super(new LootCondition[0]);
+        }
+
+        public PlantData(LootCondition[] conditions) {
+            super(conditions);
+        }
+
+        @Override
+        public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+            List<Plant> plants = PlantHandler.getPrehistoricPlants();
+            Plant plant = plants.get(rand.nextInt(plants.size()));
+            stack.setItemDamage(PlantHandler.getPlantId(plant));
+            return stack;
+        }
+    }
+
+    public static class RandomDNA extends LootFunction {
+        private boolean full;
+
+        public RandomDNA() {
+            super(new LootCondition[0]);
+        }
+
+        public RandomDNA(LootCondition[] conditions) {
+            super(conditions);
+        }
+
+        public RandomDNA(boolean full) {
+            this();
+            this.full = full;
+        }
+
+        @Override
+        public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+            int quality = (rand.nextInt(10) + 1) * 5;
+            if (this.full) {
+                quality = 100;
+            }
+            DinoDNA dna = new DinoDNA(EntityHandler.getDinosaurById(stack.getItemDamage()), quality, GeneticsHelper.randomGenetics(rand));
+            NBTTagCompound compound = new NBTTagCompound();
+            dna.writeToNBT(compound);
+            stack.setTagCompound(compound);
+            return stack;
+        }
+    }
+}
