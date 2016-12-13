@@ -15,21 +15,21 @@ import java.util.WeakHashMap;
 
 @SideOnly(Side.CLIENT)
 public abstract class EntityAnimator<ENTITY extends EntityLivingBase & Animatable> implements ITabulaModelAnimator<ENTITY> {
-    protected EnumMap<GrowthStage, Map<ENTITY, JabelarAnimationHandler>> animationHandlers = new EnumMap<>(GrowthStage.class);
+    protected EnumMap<GrowthStage, Map<ENTITY, JabelarAnimationHandler<ENTITY>>> animationHandlers = new EnumMap<>(GrowthStage.class);
 
-    private JabelarAnimationHandler getAnimationHelper(ENTITY entity, AnimatableModel model, boolean useInertialTweens) {
+    private JabelarAnimationHandler<ENTITY> getAnimationHelper(ENTITY entity, AnimatableModel model, boolean useInertialTweens) {
         GrowthStage growth = entity.getGrowthStage();
-        Map<ENTITY, JabelarAnimationHandler> growthToRender = this.animationHandlers.get(growth);
+        Map<ENTITY, JabelarAnimationHandler<ENTITY>> growthToRender = this.animationHandlers.get(growth);
 
         if (growthToRender == null) {
             growthToRender = new WeakHashMap<>();
             this.animationHandlers.put(growth, growthToRender);
         }
 
-        JabelarAnimationHandler render = growthToRender.get(entity);
+        JabelarAnimationHandler<ENTITY> render = growthToRender.get(entity);
 
         if (render == null) {
-            render = entity.getPoseHandler().createAnimationHandler(entity, model, growth, useInertialTweens);
+            render = entity.<ENTITY>getPoseHandler().<ENTITY>createAnimationHandler(entity, model, growth, useInertialTweens);
             growthToRender.put(entity, render);
         }
 
