@@ -1,13 +1,11 @@
 package org.jurassicraft.server.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
@@ -40,7 +38,31 @@ import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
 import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
-import org.jurassicraft.server.block.plant.*;
+import org.jurassicraft.server.block.plant.AjuginuculaSmithiiBlock;
+import org.jurassicraft.server.block.plant.AncientCoralBlock;
+import org.jurassicraft.server.block.plant.AncientPlantBlock;
+import org.jurassicraft.server.block.plant.BennettitaleanCycadeoideaBlock;
+import org.jurassicraft.server.block.plant.CycadZamitesBlock;
+import org.jurassicraft.server.block.plant.DicksoniaBlock;
+import org.jurassicraft.server.block.plant.DicroidiumZuberiBlock;
+import org.jurassicraft.server.block.plant.DictyophyllumBlock;
+import org.jurassicraft.server.block.plant.DoublePlantBlock;
+import org.jurassicraft.server.block.plant.EncephalartosBlock;
+import org.jurassicraft.server.block.plant.GracilariaBlock;
+import org.jurassicraft.server.block.plant.LiriodendritesBlock;
+import org.jurassicraft.server.block.plant.MossBlock;
+import org.jurassicraft.server.block.plant.OrontiumMackiiBlock;
+import org.jurassicraft.server.block.plant.RaphaeliaBlock;
+import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
+import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
+import org.jurassicraft.server.block.plant.SmallChainFernBlock;
+import org.jurassicraft.server.block.plant.SmallCycadBlock;
+import org.jurassicraft.server.block.plant.SmallPlantBlock;
+import org.jurassicraft.server.block.plant.SmallRoyalFernBlock;
+import org.jurassicraft.server.block.plant.UmaltolepisBlock;
+import org.jurassicraft.server.block.plant.WestIndianLilacBlock;
+import org.jurassicraft.server.block.plant.WildOnionBlock;
+import org.jurassicraft.server.block.plant.WildPotatoBlock;
 import org.jurassicraft.server.block.tree.AncientDoorBlock;
 import org.jurassicraft.server.block.tree.AncientDoubleSlabBlock;
 import org.jurassicraft.server.block.tree.AncientFenceBlock;
@@ -56,11 +78,14 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockHandler {
     public static final Map<TreeType, AncientPlanksBlock> ANCIENT_PLANKS = new HashMap<>();
@@ -160,12 +185,15 @@ public class BlockHandler {
     public static final ElectricFencePoleBlock LOW_SECURITY_FENCE_POLE = new ElectricFencePoleBlock();
     public static final ElectricFenceBaseBlock LOW_SECURITY_FENCE_BASE = new ElectricFenceBaseBlock();
     public static final ElectricFenceWireBlock LOW_SECURITY_FENCE_WIRE = new ElectricFenceWireBlock();
+    
+    public static final JPMainGateBlock JP_MAIN_GATE_BLOCK = new JPMainGateBlock();
 
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
     public static PaleoBaleBlock PALEO_BALE_FERN;
     public static PaleoBaleBlock PALEO_BALE_LEAVES;
     public static PaleoBaleBlock PALEO_BALE_OTHER;
+    
 
     public static void init() {
         registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
@@ -239,6 +267,8 @@ public class BlockHandler {
 
         registerBlock(PLANKTON_SWARM, "Plankton Swarm");
         registerBlock(KRILL_SWARM, "Krill Swarm");
+        
+        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
 
 //        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
 //        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
