@@ -22,7 +22,7 @@ public class SleepEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        World world = this.dinosaur.worldObj;
+        World world = this.dinosaur.world;
 
         boolean marineAnimal = this.dinosaur.getDinosaur().isMarineCreature();
 
@@ -62,7 +62,7 @@ public class SleepEntityAI extends EntityAIBase {
 
         AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + this.dinosaur.width, y + this.dinosaur.height, z + this.dinosaur.width);
 
-        return this.dinosaur.worldObj.getCollisionBoxes(this.dinosaur, boundingBox).isEmpty() && this.dinosaur.worldObj.getEntitiesWithinAABBExcludingEntity(this.dinosaur, boundingBox).isEmpty();
+        return this.dinosaur.world.getCollisionBoxes(this.dinosaur, boundingBox).isEmpty() && this.dinosaur.world.getEntitiesWithinAABBExcludingEntity(this.dinosaur, boundingBox).isEmpty();
     }
 
     @Override

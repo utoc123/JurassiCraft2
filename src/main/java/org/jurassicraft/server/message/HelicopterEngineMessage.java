@@ -22,7 +22,7 @@ public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMes
 
     @Override
     public void onClientReceived(Minecraft minecraft, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext) {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.world, message.heliID);
         if (helicopter != null) {
             helicopter.setEngineRunning(message.engineState);
         }
@@ -30,7 +30,7 @@ public class HelicopterEngineMessage extends AbstractMessage<HelicopterEngineMes
 
     @Override
     public void onServerReceived(MinecraftServer minecraftServer, HelicopterEngineMessage message, EntityPlayer player, MessageContext messageContext) {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.worldObj, message.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(player.world, message.heliID);
         if (helicopter != null) {
             helicopter.setEngineRunning(message.engineState);
         }

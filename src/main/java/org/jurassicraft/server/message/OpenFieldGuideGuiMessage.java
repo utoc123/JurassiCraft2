@@ -27,7 +27,7 @@ public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiM
 
     @Override
     public void onClientReceived(Minecraft minecraft, OpenFieldGuideGuiMessage message, EntityPlayer player, MessageContext context) {
-        Entity entity = player.worldObj.getEntityByID(message.entityId);
+        Entity entity = player.world.getEntityByID(message.entityId);
 
         if (entity instanceof DinosaurEntity) {
             DinosaurEntity dinosaur = (DinosaurEntity) entity;

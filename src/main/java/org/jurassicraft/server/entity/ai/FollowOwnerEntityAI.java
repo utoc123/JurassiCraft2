@@ -23,7 +23,7 @@ public class FollowOwnerEntityAI extends EntityAIBase {
         if (this.entity.getNavigator().noPath() && this.entity.getOrder() == DinosaurEntity.Order.FOLLOW) {
             UUID ownerId = this.entity.getOwner();
             if (ownerId != null) {
-                EntityPlayer owner = this.entity.worldObj.getPlayerEntityByUUID(ownerId);
+                EntityPlayer owner = this.entity.world.getPlayerEntityByUUID(ownerId);
                 return owner != null && this.isOwnerFar(owner) && this.entity.getAttackTarget() == null;
             }
         }
@@ -41,7 +41,7 @@ public class FollowOwnerEntityAI extends EntityAIBase {
         this.recalculateTime = 0;
         this.oldWaterCost = this.entity.getPathPriority(PathNodeType.WATER);
         this.entity.setPathPriority(PathNodeType.WATER, 0.0F);
-        this.owner = this.entity.worldObj.getPlayerEntityByUUID(this.entity.getOwner());
+        this.owner = this.entity.world.getPlayerEntityByUUID(this.entity.getOwner());
     }
 
     @Override

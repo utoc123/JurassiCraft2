@@ -65,7 +65,7 @@ public class EmbryoCalcificationMachineBlock extends OrientedBlock {
             if (tile instanceof EmbryoCalcificationMachineBlockEntity) {
                 EmbryoCalcificationMachineBlockEntity machineTile = (EmbryoCalcificationMachineBlockEntity) tile;
 
-                if (machineTile.isUseableByPlayer(player)) {
+                if (machineTile.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_EMBRYO_CALCIFICATION_MACHINE_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

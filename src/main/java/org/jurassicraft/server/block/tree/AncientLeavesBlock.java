@@ -58,11 +58,6 @@ public class AncientLeavesBlock extends BlockLeaves {
     }
 
     @Override
-    public boolean isVisuallyOpaque() {
-        return Blocks.LEAVES.isVisuallyOpaque();
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);

@@ -49,21 +49,21 @@ public class ForceAnimationCommand implements ICommand {
 
     @Override
     public int compareTo(ICommand command) {
-        return this.getCommandName().compareTo(command.getCommandName());
+        return this.getName().compareTo(command.getName());
     }
 
     @Override
-    public String getCommandName() {
+    public String getName() {
         return "animate";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender parSender) {
+    public String getUsage(ICommandSender parSender) {
         return "animate <AnimID> [<entitySelector>]";
     }
 
     @Override
-    public List<String> getCommandAliases() {
+    public List<String> getAliases() {
         return this.aliases;
     }
 
@@ -93,7 +93,7 @@ public class ForceAnimationCommand implements ICommand {
                     } catch (IllegalArgumentException iae) {
                         throw new CommandException(args[0] + " is not a valid animation.");
                     }
-                    sender.addChatMessage(new TextComponentString("Animating entity " + entity.getEntityId() + " with animation type " + args[0]));
+                    sender.sendMessage(new TextComponentString("Animating entity " + entity.getEntityId() + " with animation type " + args[0]));
                 }
             }
         }
@@ -105,7 +105,7 @@ public class ForceAnimationCommand implements ICommand {
     }
 
     @Override
-    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
         if (args.length == 1) {
             List<String> animations = Lists.newArrayList();
             String current = args[0].toLowerCase(Locale.ENGLISH);
@@ -141,13 +141,13 @@ public class ForceAnimationCommand implements ICommand {
         }
 
         @Override
-        public void addChatMessage(ITextComponent component) {
-            this.original.addChatMessage(component);
+        public void sendMessage(ITextComponent component) {
+            this.original.sendMessage(component);
         }
 
         @Override
-        public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
-            return commandName.equals("@") || this.original.canCommandSenderUseCommand(permLevel, commandName);
+        public boolean canUseCommand(int permLevel, String commandName) {
+            return commandName.equals("@") || this.original.canUseCommand(permLevel, commandName);
         }
 
         @Override

@@ -56,13 +56,13 @@ public class DNACombinatorHybridizerContainer extends MachineContainer {
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
 
-        if (!player.worldObj.isRemote) {
+        if (!player.world.isRemote) {
             this.dnaHybridizer.closeInventory(player);
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.dnaHybridizer.isUseableByPlayer(player);
+        return this.dnaHybridizer.isUsableByPlayer(player);
     }
 }

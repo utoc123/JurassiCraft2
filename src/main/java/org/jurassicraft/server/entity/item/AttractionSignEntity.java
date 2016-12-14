@@ -62,7 +62,7 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
 
     @Override
     public void onBroken(Entity entity) {
-        if (this.worldObj.getGameRules().getBoolean("doTileDrops")) {
+        if (this.world.getGameRules().getBoolean("doTileDrops")) {
             if (entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
 
@@ -107,7 +107,7 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
 
     @Override
     public boolean onValidSurface() {
-        if (!this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty()) {
+        if (!this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty()) {
             return false;
         }
 
@@ -121,15 +121,15 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 BlockPos partPos = pos.offset(facing, x).down(y);
-                IBlockState state = this.worldObj.getBlockState(partPos);
+                IBlockState state = this.world.getBlockState(partPos);
 
-                if (!(state.isSideSolid(this.worldObj, partPos, this.facingDirection) && state.getMaterial().isSolid())) {
+                if (!(state.isSideSolid(this.world, partPos, this.facingDirection) && state.getMaterial().isSolid())) {
                     return false;
                 }
             }
         }
 
-        return this.worldObj.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox(), IS_ATTRACTION_SIGN).isEmpty();
+        return this.world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox(), IS_ATTRACTION_SIGN).isEmpty();
     }
 
     @Override

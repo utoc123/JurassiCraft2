@@ -50,7 +50,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
     @Override
     protected void processItem(int process) {
         if (this.canProcess(process)) {
-            Random rand = this.worldObj.rand;
+            Random rand = this.world.rand;
             ItemStack input = this.slots[0];
 
             ItemStack disc = null;

@@ -84,7 +84,7 @@ public class DNAExtractorRenderer extends TileEntitySpecialRenderer<DNAExtractor
 //
 //                if (tileEntity.isProcessing(0))
 //                {
-//                    GlStateManager.rotate(mc.thePlayer.ticksExisted * 2 % 360, 0, 0, 1);
+//                    GlStateManager.rotate(mc.player.ticksExisted * 2 % 360, 0, 0, 1);
 //                }
 //
 //                renderItem.renderItem(disc, renderItem.getItemModelMesher().getItemModel(disc));

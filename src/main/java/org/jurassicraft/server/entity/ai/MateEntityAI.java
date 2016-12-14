@@ -19,7 +19,7 @@ public class MateEntityAI extends EntityAIBase {
         //
         // if (dinosaur.getEnergy() > minEnergy)
         // {
-        // World world = dinosaur.worldObj;
+        // World world = dinosaur.world;
         //
         // double posX = dinosaur.posX;
         // double posY = dinosaur.posY;

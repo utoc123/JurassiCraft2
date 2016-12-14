@@ -53,7 +53,7 @@ public class DinosaurSpawnEggItem extends Item {
         if (dinosaur != null) {
             Class<? extends DinosaurEntity> entityClass = dinosaur.getDinosaurClass();
             try {
-                DinosaurEntity entity = entityClass.getConstructor(World.class).newInstance(player.worldObj);
+                DinosaurEntity entity = entityClass.getConstructor(World.class).newInstance(player.world);
                 entity.setDNAQuality(100);
 
                 int mode = this.getMode(stack);
@@ -90,7 +90,7 @@ public class DinosaurSpawnEggItem extends Item {
             } else if (mode == 2) {
                 modeString = "female";
             }
-            player.addChatMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+            player.sendMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
@@ -169,7 +169,7 @@ public class DinosaurSpawnEggItem extends Item {
                     --stack.stackSize;
                 }
 
-                world.spawnEntityInWorld(dinosaur);
+                world.spawnEntity(dinosaur);
                 dinosaur.playLivingSound();
             }
 

@@ -59,7 +59,7 @@ public class DNASequencerBlock extends OrientedBlock {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof DNASequencerBlockEntity) {
                 DNASequencerBlockEntity entity = (DNASequencerBlockEntity) tile;
-                if (entity.isUseableByPlayer(player)) {
+                if (entity.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_SEQUENCER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

@@ -48,7 +48,7 @@ public class SwarmBlock extends Block {
             item.motionX = (rand.nextFloat() - 0.5F) * 0.5F;
             item.motionY = 0.2F;
             item.motionZ = (rand.nextFloat() - 0.5F) * 0.5F;
-            world.spawnEntityInWorld(item);
+            world.spawnEntity(item);
         }
     }
 

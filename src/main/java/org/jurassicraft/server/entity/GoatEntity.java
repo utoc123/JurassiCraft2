@@ -97,8 +97,8 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
 
     @Override
     public EntityAgeable createChild(EntityAgeable mate) {
-        GoatEntity entity = new GoatEntity(this.worldObj);
-        entity.onInitialSpawn(this.worldObj.getDifficultyForLocation(this.getPosition()), null);
+        GoatEntity entity = new GoatEntity(this.world);
+        entity.onInitialSpawn(this.world.getDifficultyForLocation(this.getPosition()), null);
         return entity;
     }
 
@@ -176,7 +176,7 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
                 this.animationTick = this.animationLength - 1;
             }
         }
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.dataManager.set(WATCHER_IS_RUNNING, this.getAIMoveSpeed() > this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
         }
     }

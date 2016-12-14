@@ -27,7 +27,7 @@ public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureM
 
     @Override
     public void onClientReceived(Minecraft minecraft, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext) {
-        TileEntity tile = player.worldObj.getTileEntity(message.pos);
+        TileEntity tile = player.world.getTileEntity(message.pos);
         if (tile instanceof IInventory) {
             IInventory incubator = (IInventory) tile;
             incubator.setField(message.slot + 10, message.temp);
@@ -36,7 +36,7 @@ public class ChangeTemperatureMessage extends AbstractMessage<ChangeTemperatureM
 
     @Override
     public void onServerReceived(MinecraftServer server, ChangeTemperatureMessage message, EntityPlayer player, MessageContext messageContext) {
-        TileEntity tile = player.worldObj.getTileEntity(message.pos);
+        TileEntity tile = player.world.getTileEntity(message.pos);
         if (tile instanceof IInventory) {
             IInventory incubator = (IInventory) tile;
             incubator.setField(message.slot + 10, message.temp);

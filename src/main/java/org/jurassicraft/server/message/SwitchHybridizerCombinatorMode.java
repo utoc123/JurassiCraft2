@@ -28,7 +28,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
 
     @Override
     public void onClientReceived(Minecraft minecraft, SwitchHybridizerCombinatorMode message, EntityPlayer player, MessageContext messageContext) {
-        DNACombinatorHybridizerBlockEntity tile = (DNACombinatorHybridizerBlockEntity) player.worldObj.getTileEntity(message.pos);
+        DNACombinatorHybridizerBlockEntity tile = (DNACombinatorHybridizerBlockEntity) player.world.getTileEntity(message.pos);
         tile.setMode(message.hybridizer);
 
         GuiScreen screen = Minecraft.getMinecraft().currentScreen;
@@ -43,7 +43,7 @@ public class SwitchHybridizerCombinatorMode extends AbstractMessage<SwitchHybrid
         boolean mode = message.hybridizer;
         BlockPos pos = message.pos;
 
-        DNACombinatorHybridizerBlockEntity tile = (DNACombinatorHybridizerBlockEntity) player.worldObj.getTileEntity(pos);
+        DNACombinatorHybridizerBlockEntity tile = (DNACombinatorHybridizerBlockEntity) player.world.getTileEntity(pos);
 
         tile.setMode(mode);
         JurassiCraft.NETWORK_WRAPPER.sendToAll(new SwitchHybridizerCombinatorMode(pos, mode));

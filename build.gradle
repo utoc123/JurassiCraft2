@@ -22,7 +22,7 @@ sourceCompatibility = targetCompatibility = "1.8"
 minecraft {
     version = "1.10.2-12.18.2.2099"
     runDir = "minecraft"
-    mappings = "snapshot_20161015"
+    mappings = "stable_29"
 }
 
 repositories {
@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compile "net.ilexiconn:llibrary:$llibrary_version-1.10.2:dev"
+    //compile "net.ilexiconn:llibrary:$llibrary_version-1.10.2:dev"
     testCompile "junit:junit:4.12"
 }
 

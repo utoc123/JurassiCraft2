@@ -23,7 +23,7 @@ public class JeepWranglerItem extends Item {
 
             JeepWranglerEntity entity = new JeepWranglerEntity(world);
             entity.setPositionAndRotation(pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, player.rotationYaw, 0.0F);
-            world.spawnEntityInWorld(entity);
+            world.spawnEntity(entity);
 
             stack.stackSize--;
         }

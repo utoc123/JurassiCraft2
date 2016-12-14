@@ -58,7 +58,7 @@ public class FossilBlock extends Block implements SubBlocksBlock {
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state) {
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
         return new ItemStack(this, 1, this.getMetaFromState(state));
     }
 

@@ -64,7 +64,7 @@ public class DNASequencerRenderer extends TileEntitySpecialRenderer<DNASequencer
 
                 RenderItem renderItem = this.mc.getRenderItem();
 
-                GlStateManager.translate(0.0, 0.0, Math.sin((this.mc.thePlayer.ticksExisted + this.mc.getRenderPartialTicks()) * 0.05F) * 0.025F);
+                GlStateManager.translate(0.0, 0.0, Math.sin((this.mc.player.ticksExisted + this.mc.getRenderPartialTicks()) * 0.05F) * 0.025F);
 
                 for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP)) {
                     GlStateManager.translate(0.0, 0.0, 0.4);

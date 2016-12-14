@@ -23,7 +23,7 @@ public class ProtectInfantEntityAI<T extends DinosaurEntity> extends EntityAIBas
         if (this.dinosaur.getAgePercentage() > 75 && this.dinosaur.ticksExisted % 10 == 0) {
             this.infant = null;
 
-            List<T> dinosaurs = this.dinosaur.worldObj.getEntitiesWithinAABB(this.dinosaurClazz, this.dinosaur.getEntityBoundingBox().expand(8, 3, 8));
+            List<T> dinosaurs = this.dinosaur.world.getEntitiesWithinAABB(this.dinosaurClazz, this.dinosaur.getEntityBoundingBox().expand(8, 3, 8));
 
             for (T entity : dinosaurs) {
                 if (entity.getAITarget() != null && entity.getAgePercentage() <= 50) {

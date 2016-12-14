@@ -44,7 +44,7 @@ public class HelicopterModuleSpot {
             if (player != null) {
                 m.onAdded(this, player, v);
             }
-            if (this.getHelicopter().shouldSyncModules() && !this.getHelicopter().worldObj.isRemote) {
+            if (this.getHelicopter().shouldSyncModules() && !this.getHelicopter().world.isRemote) {
                 JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterModulesMessage(this.helicopter.getEntityId(), this.position, this));
             }
             return true;

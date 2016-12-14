@@ -70,7 +70,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock {
             if (tileEntity instanceof DNACombinatorHybridizerBlockEntity) {
                 DNACombinatorHybridizerBlockEntity embryonicMachine = (DNACombinatorHybridizerBlockEntity) tileEntity;
 
-                if (embryonicMachine.isUseableByPlayer(player)) {
+                if (embryonicMachine.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_COMBINATOR_HYBRIDIZER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

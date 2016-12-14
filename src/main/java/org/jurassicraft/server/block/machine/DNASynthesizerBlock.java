@@ -65,7 +65,7 @@ public class DNASynthesizerBlock extends OrientedBlock {
             if (tileEntity instanceof DNASynthesizerBlockEntity) {
                 DNASynthesizerBlockEntity dnaSynthesizer = (DNASynthesizerBlockEntity) tileEntity;
 
-                if (dnaSynthesizer.isUseableByPlayer(player)) {
+                if (dnaSynthesizer.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_SYNTHESIZER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

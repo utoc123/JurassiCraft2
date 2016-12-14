@@ -26,7 +26,7 @@ public class MuralItem extends Item {
 
                 if (mural.onValidSurface()) {
                     if (!world.isRemote) {
-                        world.spawnEntityInWorld(mural);
+                        world.spawnEntity(mural);
                     }
 
                     stack.stackSize--;

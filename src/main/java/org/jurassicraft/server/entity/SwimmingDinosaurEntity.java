@@ -48,7 +48,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
     public void moveEntityWithHeading(float strafe, float forward) {
         if (this.isServerWorld() && this.isInWater() && !this.isCarcass()) {
             this.moveRelative(strafe, forward, 0.1F);
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.7D;
             this.motionY *= 0.7D;
             this.motionZ *= 0.7D;
@@ -71,7 +71,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
                 double distanceY = this.posY - this.swimmingEntity.posY;
                 double distanceZ = this.posZ - this.swimmingEntity.posZ;
                 double distance = Math.abs(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
-                distance = (double) MathHelper.sqrt_double(distance);
+                distance = (double) MathHelper.sqrt(distance);
                 distanceY /= distance;
                 float f = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
                 this.swimmingEntity.rotationYaw = this.limitAngle(this.swimmingEntity.rotationYaw, f, 30.0F);

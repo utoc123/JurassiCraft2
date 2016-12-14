@@ -52,8 +52,8 @@ public class BugCrateBlockEntity extends MachineBaseBlockEntity {
                     if (outputSlot != -1) {
                         this.mergeStack(outputSlot, output);
                     } else {
-                        EntityItem item = new EntityItem(this.worldObj, this.pos.getX() + 0.5, this.pos.getY() + 1.0, this.pos.getZ(), output);
-                        this.worldObj.spawnEntityInWorld(item);
+                        EntityItem item = new EntityItem(this.world, this.pos.getX() + 0.5, this.pos.getY() + 1.0, this.pos.getZ(), output);
+                        this.world.spawnEntity(item);
                     }
                     return;
                 }

@@ -65,7 +65,7 @@ public class FossilGrinderBlock extends OrientedBlock {
             if (tileEntity instanceof FossilGrinderBlockEntity) {
                 FossilGrinderBlockEntity fossilGrinder = (FossilGrinderBlockEntity) tileEntity;
 
-                if (fossilGrinder.isUseableByPlayer(player)) {
+                if (fossilGrinder.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

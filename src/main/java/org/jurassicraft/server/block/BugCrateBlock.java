@@ -53,7 +53,7 @@ public class BugCrateBlock extends OrientedBlock {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof BugCrateBlockEntity) {
                 BugCrateBlockEntity entity = (BugCrateBlockEntity) tile;
-                if (entity.isUseableByPlayer(player)) {
+                if (entity.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_BUG_CRATE, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

@@ -36,7 +36,7 @@ public class HatchedEggItem extends DNAContainerItem {
     public boolean getGender(EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        boolean gender = player.worldObj.rand.nextBoolean();
+        boolean gender = player.world.rand.nextBoolean();
 
         if (nbt == null) {
             nbt = new NBTTagCompound();
@@ -85,7 +85,7 @@ public class HatchedEggItem extends DNAContainerItem {
                         entity.setOwner(player);
                     }
 
-                    world.spawnEntityInWorld(entity);
+                    world.spawnEntity(entity);
 
                     if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;

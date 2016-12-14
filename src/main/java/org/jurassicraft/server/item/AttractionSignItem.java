@@ -39,7 +39,7 @@ public class AttractionSignItem extends Item {
 
                 if (sign.onValidSurface()) {
                     if (!world.isRemote) {
-                        world.spawnEntityInWorld(sign);
+                        world.spawnEntity(sign);
                     }
 
                     stack.stackSize--;

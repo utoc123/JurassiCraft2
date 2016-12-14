@@ -51,7 +51,7 @@ public class CultivatorBottomBlock extends CultivatorBlock {
             if (tile instanceof CultivatorBlockEntity) {
                 CultivatorBlockEntity cultivator = (CultivatorBlockEntity) tile;
 
-                if (cultivator.isUseableByPlayer(player)) {
+                if (cultivator.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_CULTIVATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

@@ -78,7 +78,7 @@ public class DinosaurEggItem extends DNAContainerItem {
 //            DinosaurEggEntity egg = new DinosaurEggEntity(world, getDinosaur(stack), getDNAQuality(player, stack), getGeneticCode(player, stack).toString());
 //            egg.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
 //            egg.rotationYaw = player.rotationYaw;
-//            world.spawnEntityInWorld(egg);
+//            world.spawnEntity(egg);
 //
 //            if (!player.capabilities.isCreativeMode)
 //            {

@@ -70,7 +70,7 @@ public class DNAExtractorBlock extends OrientedBlock {
             if (tileEntity instanceof DNAExtractorBlockEntity) {
                 DNAExtractorBlockEntity dnaExtractor = (DNAExtractorBlockEntity) tileEntity;
 
-                if (dnaExtractor.isUseableByPlayer(player)) {
+                if (dnaExtractor.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_EXTRACTOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

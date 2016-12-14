@@ -31,7 +31,7 @@ public class HelicopterItem extends Item {
         if (!world.isRemote) {
             HelicopterBaseEntity helicopter = new HelicopterBaseEntity(world, UUID.randomUUID());
             helicopter.setPosition(pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ);
-            world.spawnEntityInWorld(helicopter);
+            world.spawnEntity(helicopter);
         }
 
         return EnumActionResult.SUCCESS;

@@ -38,7 +38,7 @@ public class FeederBlock extends BlockContainer {
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         return this.getDefaultState().withProperty(FACING, facing);
     }
 
@@ -76,7 +76,7 @@ public class FeederBlock extends BlockContainer {
             if (tileEntity instanceof FeederBlockEntity) {
                 FeederBlockEntity feeder = (FeederBlockEntity) tileEntity;
 
-                if (feeder.isUseableByPlayer(player)) {
+                if (feeder.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FEEDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

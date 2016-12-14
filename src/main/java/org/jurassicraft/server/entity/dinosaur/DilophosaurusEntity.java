@@ -36,13 +36,13 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distance) {
-        VenomEntity venom = new VenomEntity(this.worldObj, this);
+        VenomEntity venom = new VenomEntity(this.world, this);
         double deltaX = target.posX - venom.posX;
         double deltaY = target.posY + (double) target.getEyeHeight() - 1.100000023841858D - venom.posY;
         double deltaZ = target.posZ - venom.posZ;
-        float yOffset = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ) * 0.2F;
+        float yOffset = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 0.2F;
         venom.setThrowableHeading(deltaX, deltaY + (double) yOffset, deltaZ, 1.5F, 0F);
-        this.worldObj.spawnEntityInWorld(venom);
+        this.world.spawnEntity(venom);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
     public void onUpdate() {
         super.onUpdate();
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             EntityLivingBase target = this.getAttackTarget();
             if (target != null && !target.isDead && this.targetCooldown < 50) {
                 this.targetCooldown = 50 + this.getRNG().nextInt(30);
@@ -88,7 +88,7 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
 
     public boolean hasTarget() {
         if (!this.isCarcass() && !this.isSleeping()) {
-            if (this.worldObj.isRemote) {
+            if (this.world.isRemote) {
                 return this.dataManager.get(WATCHER_HAS_TARGET);
             } else {
                 EntityLivingBase target = this.getAttackTarget();

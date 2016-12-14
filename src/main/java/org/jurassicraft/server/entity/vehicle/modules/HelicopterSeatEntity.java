@@ -42,8 +42,8 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         this.noClip = true;
     }
 
-    public static HelicopterBaseEntity getParentFromID(World worldObj, final UUID id) {
-        List<HelicopterBaseEntity> list = worldObj.getEntities(HelicopterBaseEntity.class, new Predicate<Entity>() {
+    public static HelicopterBaseEntity getParentFromID(World world, final UUID id) {
+        List<HelicopterBaseEntity> list = world.getEntities(HelicopterBaseEntity.class, new Predicate<Entity>() {
             @Override
             public boolean apply(Entity input) {
                 if (input instanceof HelicopterBaseEntity) {
@@ -80,7 +80,7 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         this.motionZ = 0f;
         if (this.parent == null) // we are in this state right after reloading a map
         {
-            this.parent = getParentFromID(this.worldObj, this.parentID);
+            this.parent = getParentFromID(this.world, this.parentID);
         }
         if (this.parent != null) {
             float angle = this.parent.rotationYaw;
@@ -89,9 +89,8 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
             if (this.parent.getSeat(this.index) == null) {
                 this.parent.setSeat(this.index, this);
             }
-            if (this.parent.isDead && !this.worldObj.isRemote) {
-                System.out.println("KILLED");
-                this.worldObj.removeEntity(this);
+            if (this.parent.isDead && !this.world.isRemote) {
+                this.world.removeEntity(this);
             }
         } else {
             System.out.println("no parent :c " + this.parentID);

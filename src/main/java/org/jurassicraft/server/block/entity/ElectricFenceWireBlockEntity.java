@@ -38,9 +38,9 @@ public class ElectricFenceWireBlockEntity extends TileEntity implements ITickabl
     private List<BlockPos> getInvalidPoles() {
         List<BlockPos> invalid = new ArrayList<>(this.poweringPoles.size());
         for (BlockPos pole : this.poweringPoles) {
-            IBlockState state = this.worldObj.getBlockState(pole);
+            IBlockState state = this.world.getBlockState(pole);
             boolean isInvalid = true;
-            if (state.getBlock() instanceof ElectricFencePoleBlock && this.worldObj.isBlockPowered(pole.down())) {
+            if (state.getBlock() instanceof ElectricFencePoleBlock && this.world.isBlockPowered(pole.down())) {
                 isInvalid = false;
             }
             if (isInvalid) {
@@ -53,10 +53,10 @@ public class ElectricFenceWireBlockEntity extends TileEntity implements ITickabl
     public void checkDisconnect() {
         this.removeInvalidPoles();
         for (BlockPos pole : this.poweringPoles) {
-            IBlockState state = this.worldObj.getBlockState(pole);
+            IBlockState state = this.world.getBlockState(pole);
             Block block = state.getBlock();
             if (block instanceof ElectricFencePoleBlock) {
-                ((ElectricFencePoleBlock) block).updateConnectedWires(this.worldObj, pole);
+                ((ElectricFencePoleBlock) block).updateConnectedWires(this.world, pole);
             }
         }
     }

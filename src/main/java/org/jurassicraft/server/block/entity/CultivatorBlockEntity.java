@@ -65,7 +65,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             Class<? extends DinosaurEntity> dinoClass = dinoInEgg.getDinosaurClass();
 
             try {
-                DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(this.worldObj);
+                DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(this.world);
 
                 dino.setDNAQuality(this.slots[0].getTagCompound().getInteger("DNAQuality"));
                 dino.setGenetics((this.slots[0].getTagCompound().getString("Genetics")));
@@ -76,11 +76,11 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
                 dino.setAge(0);
 
-                dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(this.worldObj.rand.nextFloat() * 360.0F), 0.0F);
+                dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(this.world.rand.nextFloat() * 360.0F), 0.0F);
                 dino.rotationYawHead = dino.rotationYaw;
                 dino.renderYawOffset = dino.rotationYaw;
 
-                this.worldObj.spawnEntityInWorld(dino);
+                this.world.spawnEntity(dino);
 
                 this.slots[0].stackSize--;
 
@@ -99,7 +99,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
         boolean sync = false;
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (this.waterLevel < 3 && this.slots[2] != null && this.slots[2].getItem() == Items.WATER_BUCKET) {
                 if (this.slots[3] == null || this.slots[3].stackSize < 16) {
                     this.slots[2].stackSize--;

@@ -113,7 +113,7 @@ public class InventoryDinosaur implements IInventory {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return !this.entity.isDead && player.getDistanceSqToEntity(this.entity) <= 64.0D;
     }
 
@@ -167,7 +167,7 @@ public class InventoryDinosaur implements IInventory {
         return this.entity.getDisplayName();
     }
 
-    public void dropItems(World worldObj, Random rand) {
+    public void dropItems(World world, Random rand) {
         for (int i = 0; i < this.getSizeInventory(); ++i) {
             ItemStack itemstack = this.getStackInSlot(i);
 
@@ -184,12 +184,12 @@ public class InventoryDinosaur implements IInventory {
                     }
 
                     itemstack.stackSize -= j;
-                    EntityItem itemEntity = new EntityItem(worldObj, this.entity.posX + offsetX, this.entity.posY + offsetY, this.entity.posZ + offsetZ, new ItemStack(itemstack.getItem(), j, itemstack.getItemDamage()));
+                    EntityItem itemEntity = new EntityItem(world, this.entity.posX + offsetX, this.entity.posY + offsetY, this.entity.posZ + offsetZ, new ItemStack(itemstack.getItem(), j, itemstack.getItemDamage()));
                     float multiplier = 0.05F;
                     itemEntity.motionX = (float) rand.nextGaussian() * multiplier;
                     itemEntity.motionY = (float) rand.nextGaussian() * multiplier + 0.2F;
                     itemEntity.motionZ = (float) rand.nextGaussian() * multiplier;
-                    worldObj.spawnEntityInWorld(itemEntity);
+                    world.spawnEntity(itemEntity);
                 }
             }
         }

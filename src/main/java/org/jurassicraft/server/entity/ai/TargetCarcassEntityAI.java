@@ -36,7 +36,7 @@ public class TargetCarcassEntityAI extends EntityAIBase {
         }
 
         if (!(this.entity.herd != null && this.entity.herd.fleeing) && !this.entity.isSleeping()) {
-            List<DinosaurEntity> entities = this.entity.worldObj.getEntitiesWithinAABB(DinosaurEntity.class, this.entity.getEntityBoundingBox().expand(16, 16, 16));
+            List<DinosaurEntity> entities = this.entity.world.getEntitiesWithinAABB(DinosaurEntity.class, this.entity.getEntityBoundingBox().expand(16, 16, 16));
 
             if (entities.size() > 0) {
                 this.targetEntity = null;

@@ -46,7 +46,7 @@ public class ActionFigureItem extends Item {
 
             if (block.canPlaceBlockAt(world, pos)) {
                 IBlockState state = block.getDefaultState();
-                world.setBlockState(pos, block.onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player));
+                world.setBlockState(pos, block.getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player));
                 block.onBlockPlacedBy(world, pos, state, player, stack);
 
                 int mode = this.getMode(stack);
@@ -135,7 +135,7 @@ public class ActionFigureItem extends Item {
             } else if (mode == 2) {
                 modeString = "female";
             }
-            player.addChatMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+            player.sendMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }

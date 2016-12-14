@@ -24,7 +24,7 @@ public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirect
 
     @Override
     public void onClientReceived(Minecraft minecraft, HelicopterDirectionMessage message, EntityPlayer entityPlayer, MessageContext messageContext) {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, message.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.world, message.heliID);
         if (helicopter != null) {
             helicopter.setDirection(message.direction);
         }
@@ -32,7 +32,7 @@ public class HelicopterDirectionMessage extends AbstractMessage<HelicopterDirect
 
     @Override
     public void onServerReceived(MinecraftServer minecraftServer, HelicopterDirectionMessage message, EntityPlayer entityPlayer, MessageContext messageContext) {
-        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.worldObj, message.heliID);
+        HelicopterBaseEntity helicopter = HelicopterMessages.getHeli(entityPlayer.world, message.heliID);
         if (helicopter != null) {
             helicopter.setDirection(message.direction);
         }

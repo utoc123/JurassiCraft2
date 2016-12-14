@@ -68,7 +68,7 @@ public class IncubatorBlockEntity extends MachineBaseBlockEntity {
 
     @Override
     protected void processItem(int process) {
-        if (this.canProcess(process) && !this.worldObj.isRemote) {
+        if (this.canProcess(process) && !this.world.isRemote) {
             ItemStack egg = this.slots[process];
 
             ItemStack incubatedEgg = new ItemStack(ItemHandler.HATCHED_EGG, 1, egg.getItemDamage());

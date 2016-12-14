@@ -37,7 +37,7 @@ public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock {
     }
 
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(VARIANT, TrackwayType.values()[meta]);
     }
 
@@ -68,7 +68,7 @@ public class FossilizedTrackwayBlock extends Block implements SubBlocksBlock {
     }
 
     @Override
-    protected ItemStack createStackedBlock(IBlockState state) {
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
         return new ItemStack(Item.getItemFromBlock(this), 1, this.damageDropped(state));
     }
 

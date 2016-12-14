@@ -32,8 +32,8 @@ public class PathNavigateDinosaur extends PathNavigateGround {
         float deltaZ = MathHelper.abs((float) (this.theEntity.posZ - (target.zCoord + 0.5)));
         double deltaY = Math.abs(this.theEntity.posY - target.yCoord);
 
-        int sizeX = MathHelper.ceiling_float_int(this.theEntity.width);
-        int sizeY = MathHelper.ceiling_float_int(this.theEntity.height);
+        int sizeX = MathHelper.ceil(this.theEntity.width);
+        int sizeY = MathHelper.ceil(this.theEntity.height);
         int sizeZ = sizeX;
 
         if (deltaX < sizeX && deltaZ < sizeZ && deltaY < 1.0) {

@@ -20,7 +20,7 @@ public class CallAnimationAI extends EntityAIBase {
     }
 
     public List<Entity> getEntitiesWithinDistance(Entity entity, double width, double height) {
-        return entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, new AxisAlignedBB(entity.posX - width, entity.posY - height, entity.posZ - width, entity.posX + width, entity.posY + height, entity.posZ + width));
+        return entity.world.getEntitiesWithinAABBExcludingEntity(entity, new AxisAlignedBB(entity.posX - width, entity.posY - height, entity.posZ - width, entity.posX + width, entity.posY + height, entity.posZ + width));
     }
 
     @Override

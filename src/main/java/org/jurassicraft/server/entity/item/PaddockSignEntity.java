@@ -57,7 +57,7 @@ public class PaddockSignEntity extends EntityHanging implements IEntityAdditiona
 
     @Override
     public void onBroken(Entity entity) {
-        if (this.worldObj.getGameRules().getBoolean("doTileDrops")) {
+        if (this.world.getGameRules().getBoolean("doTileDrops")) {
             if (entity instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer) entity;
 

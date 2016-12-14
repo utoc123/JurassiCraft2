@@ -101,7 +101,7 @@ public abstract class CarEntity extends Entity {
     public void onUpdate() {
         super.onUpdate();
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (this.healCooldown > 0) {
                 this.healCooldown--;
             } else if (this.healAmount > 0) {
@@ -116,14 +116,14 @@ public abstract class CarEntity extends Entity {
         }
 
         if (this.seats.size() == 0) {
-            if (!this.worldObj.isRemote) {
-                this.addSeat(new SeatEntity(this.worldObj, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
-                this.addSeat(new SeatEntity(this.worldObj, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
-                this.addSeat(new SeatEntity(this.worldObj, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
-                this.addSeat(new SeatEntity(this.worldObj, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+            if (!this.world.isRemote) {
+                this.addSeat(new SeatEntity(this.world, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+                this.addSeat(new SeatEntity(this.world, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+                this.addSeat(new SeatEntity(this.world, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+                this.addSeat(new SeatEntity(this.world, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
 
                 for (Map.Entry<Integer, SeatEntity> entry : this.seats.entrySet()) {
-                    this.worldObj.spawnEntityInWorld(entry.getValue());
+                    this.world.spawnEntity(entry.getValue());
                 }
             }
         }
@@ -144,7 +144,7 @@ public abstract class CarEntity extends Entity {
             entry.getValue().updateParent(this);
         }
 
-        if (this.worldObj.isRemote) {
+        if (this.world.isRemote) {
             this.updateKeyStates();
         } else if (this.getSeat(0) != null && this.getSeat(0).getControllingPassenger() == null) {
             this.setState((byte) 0);
@@ -179,12 +179,12 @@ public abstract class CarEntity extends Entity {
         this.motionY *= 0.85F;
         this.motionZ *= 0.85F;
 
-        this.moveEntity(this.motionX, this.motionY, this.motionZ);
+        this.move(this.motionX, this.motionY, this.motionZ);
 
         this.prevWheelRotateAmount = this.wheelRotateAmount;
         double deltaX = this.posX - this.prevPosX;
         double deltaZ = this.posZ - this.prevPosZ;
-        float delta = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ) * 4.0F;
+        float delta = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 4.0F;
 
         if (delta > 1.0F) {
             delta = 1.0F;
@@ -193,7 +193,7 @@ public abstract class CarEntity extends Entity {
         this.wheelRotateAmount += (delta - this.wheelRotateAmount) * 0.4F;
         this.wheelRotation += this.wheelRotateAmount;
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.dataManager.set(WATCHER_HEALTH, this.health);
         } else {
             this.health = this.dataManager.get(WATCHER_HEALTH);
@@ -201,7 +201,7 @@ public abstract class CarEntity extends Entity {
     }
 
     private void updateKeyStates() {
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (this.getSeat(0) != null && player == this.getSeat(0).getControllingPassenger()) {
             MovementInput movementInput = player.movementInput;
@@ -323,7 +323,7 @@ public abstract class CarEntity extends Entity {
         Vec3d eyePosition = new Vec3d(player.posX, player.posY + player.eyeHeight, player.posZ);
         Vec3d vec3d2 = eyePosition.addVector(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach);
 
-        List<Entity> entities = this.worldObj.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach).expand(1.0F, 1.0F, 1.0F), Predicates.and(EntitySelectors.NOT_SPECTATING, entity -> entity != null && entity.canBeCollidedWith() && entity instanceof SeatEntity));
+        List<Entity> entities = this.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach).expand(1.0F, 1.0F, 1.0F), Predicates.and(EntitySelectors.NOT_SPECTATING, entity -> entity != null && entity.canBeCollidedWith() && entity instanceof SeatEntity));
         double distance = reach;
 
         for (Entity entity : entities) {
@@ -370,7 +370,7 @@ public abstract class CarEntity extends Entity {
     public void setDead() {
         super.setDead();
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (!this.droppedItems) {
                 this.dropItems();
                 this.droppedItems = true;

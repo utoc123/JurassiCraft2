@@ -155,7 +155,7 @@ public class ElectricFencePoleBlock extends BlockContainer {
                             if (block instanceof ElectricFenceBaseBlock) {
                                 int deltaX = offset.getX() - origin.getX();
                                 int deltaZ = offset.getZ() - origin.getZ();
-                                double delta = MathHelper.sqrt_double((deltaX * deltaX) + (deltaZ * deltaZ));
+                                double delta = MathHelper.sqrt((deltaX * deltaX) + (deltaZ * deltaZ));
                                 if (delta <= 8) {
                                     BlockPos wirePos = new BlockPos(offset);
                                     while (world.getBlockState(wirePos = wirePos.up()).getBlock() instanceof ElectricFenceWireBlock) {

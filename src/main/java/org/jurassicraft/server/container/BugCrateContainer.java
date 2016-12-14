@@ -46,6 +46,6 @@ public class BugCrateContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.crate.isUseableByPlayer(player);
+        return this.crate.isUsableByPlayer(player);
     }
 }

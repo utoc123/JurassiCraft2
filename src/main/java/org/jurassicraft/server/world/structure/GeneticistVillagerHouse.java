@@ -214,7 +214,7 @@ public class GeneticistVillagerHouse extends StructureVillagePieces.Village {
     public static class CreationHandler implements VillagerRegistry.IVillageCreationHandler {
         @Override
         public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int size) {
-            return new StructureVillagePieces.PieceWeight(GeneticistVillagerHouse.class, 1, MathHelper.getRandomIntegerInRange(random, 0, 1));
+            return new StructureVillagePieces.PieceWeight(GeneticistVillagerHouse.class, 1, MathHelper.getInt(random, 0, 1));
         }
 
         @Override

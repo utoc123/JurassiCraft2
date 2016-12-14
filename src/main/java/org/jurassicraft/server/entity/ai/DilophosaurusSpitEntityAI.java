@@ -90,17 +90,17 @@ public class DilophosaurusSpitEntityAI extends EntityAIBase {
             this.dilophosaurus.setAnimation(EntityAnimation.DILOPHOSAURUS_SPIT.get());
             this.animationTimer = 20;
         } else if (this.rangedAttackTime < 0) {
-            float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;
-            this.rangedAttackTime = MathHelper.floor_float(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
+            float scaledDistance = MathHelper.sqrt(distance) / this.attackRadius;
+            this.rangedAttackTime = MathHelper.floor(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
         }
 
         if (this.animationTimer >= 0) {
             this.animationTimer--;
         }
         if (this.animationTimer == 0) {
-            float scaledDistance = MathHelper.sqrt_double(distance) / this.attackRadius;
-            this.dilophosaurus.attackEntityWithRangedAttack(this.target, MathHelper.clamp_float(scaledDistance, 0.1F, 1.0F));
-            this.rangedAttackTime = MathHelper.floor_float(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
+            float scaledDistance = MathHelper.sqrt(distance) / this.attackRadius;
+            this.dilophosaurus.attackEntityWithRangedAttack(this.target, MathHelper.clamp(scaledDistance, 0.1F, 1.0F));
+            this.rangedAttackTime = MathHelper.floor(scaledDistance * (float) (this.maxRangedAttackTime - this.attackInterval) + (float) this.attackInterval);
         }
     }
 }

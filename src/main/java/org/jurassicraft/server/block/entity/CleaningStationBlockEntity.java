@@ -195,10 +195,10 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
             --this.cleaningStationWaterTime;
         }
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (!this.isCleaning() && (this.slots[1] == null || this.slots[0] == null)) {
                 if (!this.isCleaning() && this.cleanTime > 0) {
-                    this.cleanTime = MathHelper.clamp_int(this.cleanTime - 2, 0, this.totalCleanTime);
+                    this.cleanTime = MathHelper.clamp(this.cleanTime - 2, 0, this.totalCleanTime);
                 }
             } else {
                 if (!this.isCleaning() && this.canClean() && isItemFuel(this.slots[1])) {
@@ -304,8 +304,8 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override

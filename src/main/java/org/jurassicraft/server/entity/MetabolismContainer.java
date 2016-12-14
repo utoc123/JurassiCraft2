@@ -30,7 +30,7 @@ public class MetabolismContainer {
     }
 
     public void update() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
             this.decreaseEnergy(1);
             this.decreaseWater(1);
 

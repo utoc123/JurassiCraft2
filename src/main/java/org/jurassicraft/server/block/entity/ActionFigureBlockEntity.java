@@ -41,9 +41,9 @@ public class ActionFigureBlockEntity extends TileEntity {
     }
 
     public void updateEntity() {
-        if (this.worldObj != null) {
+        if (this.world != null) {
             try {
-                this.entity = EntityHandler.getDinosaurById(this.dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(this.worldObj);
+                this.entity = EntityHandler.getDinosaurById(this.dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(this.world);
                 this.entity.setupActionFigure(this.isMale);
             } catch (Exception e) {
                 e.printStackTrace();

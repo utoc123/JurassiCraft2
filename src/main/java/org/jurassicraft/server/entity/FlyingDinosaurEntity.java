@@ -26,13 +26,13 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
     public void moveEntityWithHeading(float strafe, float forward) {
         if (this.inWater()) {
             this.moveRelative(strafe, forward, 0.02F);
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.800000011920929D;
             this.motionZ *= 0.800000011920929D;
         } else if (this.inLava()) {
             this.moveRelative(strafe, forward, 0.02F);
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.5D;
             this.motionY *= 0.5D;
             this.motionZ *= 0.5D;
@@ -40,7 +40,7 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
             float friction = 0.91F;
 
             if (this.onGround) {
-                friction = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                friction = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;
             }
 
             float f3 = 0.16277136F / (friction * friction * friction);
@@ -48,10 +48,10 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
             friction = 0.91F;
 
             if (this.onGround) {
-                friction = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                friction = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;
             }
 
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
             this.motionX *= (double) friction;
             this.motionY *= (double) friction;
             this.motionZ *= (double) friction;
@@ -60,7 +60,7 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
         this.prevLimbSwingAmount = this.limbSwingAmount;
         double moveX = this.posX - this.prevPosX;
         double moveZ = this.posZ - this.prevPosZ;
-        float dist = MathHelper.sqrt_double(moveX * moveX + moveZ * moveZ) * 4.0F;
+        float dist = MathHelper.sqrt(moveX * moveX + moveZ * moveZ) * 4.0F;
 
         if (dist > 1.0F) {
             dist = 1.0F;
@@ -130,7 +130,7 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
 
                 if (this.timer-- <= 0) {
                     this.timer += this.parentEntity.getRNG().nextInt(5) + 2;
-                    distance = (double) MathHelper.sqrt_double(distance);
+                    distance = (double) MathHelper.sqrt(distance);
 
                     if (this.isNotColliding(this.posX, this.posY, this.posZ, distance)) {
                         this.parentEntity.motionX += distanceX / distance * 0.1D;
@@ -152,7 +152,7 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
             for (int i = 1; (double) i < distance; ++i) {
                 bounds = bounds.offset(d0, d1, d2);
 
-                if (!this.parentEntity.worldObj.getCollisionBoxes(this.parentEntity, bounds).isEmpty()) {
+                if (!this.parentEntity.world.getCollisionBoxes(this.parentEntity, bounds).isEmpty()) {
                     return false;
                 }
             }

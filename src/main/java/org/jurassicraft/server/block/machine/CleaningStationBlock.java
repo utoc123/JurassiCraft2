@@ -66,7 +66,7 @@ public class CleaningStationBlock extends OrientedBlock {
             if (tileEntity instanceof CleaningStationBlockEntity) {
                 CleaningStationBlockEntity cleaningStation = (CleaningStationBlockEntity) tileEntity;
 
-                if (cleaningStation.isUseableByPlayer(player)) {
+                if (cleaningStation.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_CLEANING_STATION_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

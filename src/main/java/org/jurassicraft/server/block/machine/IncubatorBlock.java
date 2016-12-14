@@ -70,7 +70,7 @@ public class IncubatorBlock extends OrientedBlock {
             if (tile instanceof IncubatorBlockEntity) {
                 IncubatorBlockEntity incubator = (IncubatorBlockEntity) tile;
 
-                if (incubator.isUseableByPlayer(player)) {
+                if (incubator.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_INCUBATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }
