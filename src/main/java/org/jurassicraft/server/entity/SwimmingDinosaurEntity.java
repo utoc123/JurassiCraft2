@@ -27,7 +27,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
 
             if (this.getAir() == -20) {
                 this.setAir(0);
-                this.attackEntityFrom(DamageSource.drown, 2.0F);
+                this.attackEntityFrom(DamageSource.DROWN, 2.0F);
             }
         } else {
             this.setAir(300);
@@ -85,7 +85,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
                 double distanceY = this.posY - this.swimmingEntity.posY;
                 double distanceZ = this.posZ - this.swimmingEntity.posZ;
                 double distance = distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ;
-                distance = (double) MathHelper.sqrt_double(distance);
+                distance = (double) MathHelper.sqrt(distance);
                 distanceY /= distance;
                 float f = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
                 this.swimmingEntity.rotationYaw = this.limitAngle(this.swimmingEntity.rotationYaw, f, 30.0F);

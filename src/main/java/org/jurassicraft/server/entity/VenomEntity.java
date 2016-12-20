@@ -41,7 +41,7 @@ public class VenomEntity extends EntityThrowable {
                 entityHit.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 300, 1, false, false));
                 entityHit.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300, 1, false, false));
 
-                if (!this.worldObj.isRemote) {
+                if (!this.world.isRemote) {
                     this.setDead();
                 }
             }

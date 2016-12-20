@@ -30,7 +30,7 @@ public class MetabolismContainer {
     }
 
     public void update() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
             this.decreaseEnergy(1);
             this.decreaseWater(1);
 
@@ -73,7 +73,7 @@ public class MetabolismContainer {
         this.energy = Math.max(0, this.energy);
 
         if (this.isStarving() && this.dinosaur.ticksExisted % 40 == 0) {
-            this.dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
+            this.dinosaur.attackEntityFrom(DamageSource.STARVE, 1.0F);
         }
     }
 
@@ -82,7 +82,7 @@ public class MetabolismContainer {
         this.water = Math.max(0, this.water);
 
         if (this.isDehydrated() && this.dinosaur.ticksExisted % 40 == 0) {
-            this.dinosaur.attackEntityFrom(DamageSource.starve, 1.0F);
+            this.dinosaur.attackEntityFrom(DamageSource.STARVE, 1.0F);
         }
     }
 

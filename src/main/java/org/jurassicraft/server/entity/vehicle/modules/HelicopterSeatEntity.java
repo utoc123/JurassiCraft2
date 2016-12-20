@@ -70,16 +70,16 @@ public class HelicopterSeatEntity extends Entity implements IEntityAdditionalSpa
         this.motionZ = 0f;
         if (this.parent == null) // we are in this state right after reloading a map
         {
-            this.parent = getParentFromID(this.worldObj, this.parentID);
+            this.parent = getParentFromID(this.world, this.parentID);
         }
         if (this.parent != null) {
             this.resetPos();
             if (this.parent.getSeat(this.index) == null) {
                 this.parent.setSeat(this.index, this);
             }
-            if (this.parent.isDead && !this.worldObj.isRemote) {
+            if (this.parent.isDead && !this.world.isRemote) {
                 System.out.println("KILLED");
-                this.worldObj.removeEntity(this);
+                this.world.removeEntity(this);
             }
         } else {
             System.out.println("no parent :c " + this.parentID);

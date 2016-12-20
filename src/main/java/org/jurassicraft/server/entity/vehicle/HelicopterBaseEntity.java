@@ -78,7 +78,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         for (int i = 0; i < this.seats.length; i++) {
             float distance = i == 0 ? 1.5f : 0; // TODO: Better way to define position
             this.seats[i] = new HelicopterSeatEntity(distance, i, this);
-            this.worldObj.spawnEntityInWorld(this.seats[i]);
+            this.world.spawnEntityInWorld(this.seats[i]);
         }
         this.setID(UUID.randomUUID());
         this.moduleSpots = new HelicopterModuleSpot[ModulePosition.values().length];
@@ -220,7 +220,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
             if (controller != null) // There is a pilot!
             {
                 EntityPlayer rider = (EntityPlayer) controller;
-                if (this.worldObj.isRemote) // We are on client
+                if (this.world.isRemote) // We are on client
                 {
                     runEngine = this.handleClientRunning(rider);
                     if (this.isPilotThisClient(rider)) {
@@ -276,7 +276,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     }
 
     private void updateDirection(MutableVec3 direction) {
-        if (this.worldObj.isRemote) {
+        if (this.world.isRemote) {
             JurassiCraft.NETWORK_WRAPPER.sendToServer(new HelicopterDirectionMessage(this.getEntityId(), direction));
         } else {
             JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterDirectionMessage(this.getEntityId(), direction));
@@ -313,7 +313,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     }
 
     public void updateEngine(boolean engineState) {
-        if (this.worldObj.isRemote) {
+        if (this.world.isRemote) {
             JurassiCraft.NETWORK_WRAPPER.sendToServer(new HelicopterEngineMessage(this.getEntityId(), engineState));
         } else {
             JurassiCraft.NETWORK_WRAPPER.sendToAll(new HelicopterEngineMessage(this.getEntityId(), engineState));
@@ -328,7 +328,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
      */
     @SideOnly(Side.CLIENT)
     private boolean isPilotThisClient(EntityPlayer pilot) {
-        return pilot.getUniqueID().equals(Minecraft.getMinecraft().thePlayer.getUniqueID());
+        return pilot.getUniqueID().equals(Minecraft.getMinecraft().player.getUniqueID());
     }
 
     @SideOnly(Side.CLIENT)
@@ -371,7 +371,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     }
 
     private boolean attachModule(EntityPlayer player, Vec3d localVec, ItemStack stack) {
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (stack != null) {
                 Item item = stack.getItem();
                 if (item instanceof HelicopterModuleItem) {

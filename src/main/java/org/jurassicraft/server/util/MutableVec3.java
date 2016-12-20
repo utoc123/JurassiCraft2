@@ -49,7 +49,7 @@ public class MutableVec3 {
      * Normalizes the vector to a length of 1 (except if it is the zero vector)
      */
     public MutableVec3 normalize() {
-        double d0 = (double) MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+        double d0 = (double) MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
         if (d0 < 1.0E-4D) {
             this.set(0, 0, 0);
         } else {
@@ -106,7 +106,7 @@ public class MutableVec3 {
         double d0 = vec.xCoord - this.xCoord;
         double d1 = vec.yCoord - this.yCoord;
         double d2 = vec.zCoord - this.zCoord;
-        return (double) MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+        return (double) MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
     }
 
     /**
@@ -123,7 +123,7 @@ public class MutableVec3 {
      * Returns the length of the vector.
      */
     public double lengthVector() {
-        return (double) MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+        return (double) MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
     }
 
     /**

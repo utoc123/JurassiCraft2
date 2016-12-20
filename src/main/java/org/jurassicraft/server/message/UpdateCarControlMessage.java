@@ -27,7 +27,7 @@ public class UpdateCarControlMessage extends AbstractMessage<UpdateCarControlMes
 
     @Override
     public void onServerReceived(MinecraftServer server, UpdateCarControlMessage message, EntityPlayer player, MessageContext context) {
-        Entity entity = player.worldObj.getEntityByID(message.entityId);
+        Entity entity = player.world.getEntityByID(message.entityId);
 
         if (entity instanceof CarEntity) {
             CarEntity car = (CarEntity) entity;

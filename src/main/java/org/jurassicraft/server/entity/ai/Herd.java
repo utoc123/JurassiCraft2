@@ -156,7 +156,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                         }
 
                         if (entity.getAttackTarget() == null && this.members.size() > 1) {
-                            BlockPos navigatePos = entity.worldObj.getHeight(new BlockPos(navigateX, 0, navigateZ)).up();
+                            BlockPos navigatePos = entity.world.getHeight(new BlockPos(navigateX, 0, navigateZ)).up();
                             if (entity.getNavigator().getPath() != null && !entity.getNavigator().getPath().isFinished()) {
                                 PathPoint finalPoint = entity.getNavigator().getPath().getFinalPathPoint();
                                 if (navigatePos.getDistance(finalPoint.xCoord, finalPoint.yCoord, finalPoint.zCoord) < 25) {
@@ -224,12 +224,12 @@ public class Herd implements Iterable<DinosaurEntity> {
 
             List<Herd> otherHerds = new LinkedList<>();
 
-            for (DinosaurEntity entity : this.leader.worldObj.getEntitiesWithinAABB(this.leader.getClass(), searchBounds)) {
+            for (DinosaurEntity entity : this.leader.world.getEntitiesWithinAABB(this.leader.getClass(), searchBounds)) {
                 if (!entity.isCarcass() && !entity.isDead && !(entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated())) {
                     Herd otherHerd = entity.herd;
                     if (otherHerd == null) {
                         if (this.size() >= this.herdType.getMaxHerdSize()) {
-                            if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE && !this.enemies.contains(entity)) {
+                            if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.world) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE && !this.enemies.contains(entity)) {
                                 this.enemies.add(entity);
                             }
                             return;
@@ -252,7 +252,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                     otherHerd.disband();
                 } else if (originalSize + 1 > this.herdType.getMaxHerdSize()) {
-                    if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.worldObj) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
+                    if (GameRuleHandler.KILL_HERD_OUTCAST.getBoolean(this.leader.world) && this.herdType.getDinosaurType() == Dinosaur.DinosaurType.AGGRESSIVE) {
                         for (DinosaurEntity entity : otherHerd) {
                             if (!this.enemies.contains(entity)) {
                                 this.enemies.add(entity);
@@ -294,7 +294,7 @@ public class Herd implements Iterable<DinosaurEntity> {
         x /= count;
         z /= count;
 
-        return new Vec3d(x, this.leader.worldObj.getHeight(new BlockPos(x, 0, z)).getY(), z);
+        return new Vec3d(x, this.leader.world.getHeight(new BlockPos(x, 0, z)).getY(), z);
     }
 
     public void addMember(DinosaurEntity entity) {

@@ -48,7 +48,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     public void onUpdate() {
         super.onUpdate();
 
-        if (this.parent == null && !this.worldObj.isRemote) {
+        if (this.parent == null && !this.world.isRemote) {
             this.setDead();
             return;
         } else if (this.parent != null) {
@@ -136,7 +136,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
         }
 
         float deltaYaw = MathHelper.wrapDegrees(passenger.rotationYaw - this.rotationYaw);
-        float clampedDeltaYaw = MathHelper.clamp_float(deltaYaw, -105.0F, 105.0F);
+        float clampedDeltaYaw = MathHelper.clamp(deltaYaw, -105.0F, 105.0F);
         passenger.prevRotationYaw += clampedDeltaYaw - deltaYaw;
         passenger.rotationYaw += clampedDeltaYaw - deltaYaw;
         passenger.setRotationYawHead(passenger.rotationYaw);
@@ -167,7 +167,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
         this.offsetZ = buffer.readFloat();
         this.setSize(buffer.readFloat(), buffer.readFloat());
 
-        Entity parent = this.worldObj.getEntityByID(buffer.readInt());
+        Entity parent = this.world.getEntityByID(buffer.readInt());
 
         if (parent instanceof CarEntity) {
             this.parent = (CarEntity) parent;
@@ -203,7 +203,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     public boolean attackEntityFrom(DamageSource source, float amount) {
         CarEntity parent = this.parent;
         if (parent == null) {
-            List<CarEntity> cars = this.worldObj.getEntitiesWithinAABB(CarEntity.class, this.getEntityBoundingBox());
+            List<CarEntity> cars = this.world.getEntitiesWithinAABB(CarEntity.class, this.getEntityBoundingBox());
             for (CarEntity car : cars) {
                 if (car.getSeat(this.getId()) == this) {
                     parent = car;

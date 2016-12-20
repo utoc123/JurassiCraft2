@@ -28,7 +28,7 @@ public class CultivateGui extends GuiContainer {
     @Override
     public void updateScreen() {
         if (this.cultivator.isProcessing(0)) {
-            this.mc.thePlayer.closeScreen();
+            this.mc.player.closeScreen();
             this.mc.displayGuiScreen(new CultivateProcessGui(this.cultivator));
         }
     }

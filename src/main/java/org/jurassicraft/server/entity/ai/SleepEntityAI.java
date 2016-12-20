@@ -22,7 +22,7 @@ public class SleepEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        World world = this.dinosaur.worldObj;
+        World world = this.dinosaur.world;
 
         if ((this.dinosaur.onGround || this.dinosaur.isRiding()) && !this.dinosaur.isDead && !world.isRemote && this.dinosaur.shouldSleep() && !this.dinosaur.isSleeping() && this.dinosaur.getStayAwakeTime() <= 0) {
             int range = 8;
@@ -56,7 +56,7 @@ public class SleepEntityAI extends EntityAIBase {
 
         AxisAlignedBB boundingBox = new AxisAlignedBB(x, y, z, x + this.dinosaur.width, y + this.dinosaur.height, z + this.dinosaur.width);
 
-        return this.dinosaur.worldObj.getCollisionBoxes(this.dinosaur, boundingBox).isEmpty() && this.dinosaur.worldObj.getEntitiesWithinAABBExcludingEntity(this.dinosaur, boundingBox).isEmpty();
+        return this.dinosaur.world.getCollisionBoxes(this.dinosaur, boundingBox).isEmpty() && this.dinosaur.world.getEntitiesWithinAABBExcludingEntity(this.dinosaur, boundingBox).isEmpty();
     }
 
     @Override

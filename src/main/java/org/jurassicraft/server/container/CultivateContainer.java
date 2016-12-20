@@ -37,7 +37,7 @@ public class CultivateContainer extends MachineContainer {
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
 
-        if (!player.worldObj.isRemote) {
+        if (!player.world.isRemote) {
             this.cultivator.closeInventory(player);
         }
     }

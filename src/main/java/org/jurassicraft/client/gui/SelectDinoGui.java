@@ -129,8 +129,8 @@ public class SelectDinoGui extends GuiScreen {
     public void selectDinosaur(Dinosaur dinosaur) {
         this.mc.displayGuiScreen(null);
 
-        if (!this.mc.thePlayer.capabilities.isCreativeMode) {
-            InventoryPlayer inventory = this.mc.thePlayer.inventory;
+        if (!this.mc.player.capabilities.isCreativeMode) {
+            InventoryPlayer inventory = this.mc.player.inventory;
             inventory.decrStackSize(inventory.currentItem, 1);
         }
 

@@ -22,7 +22,7 @@ public class FeederEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isCarcass() && !this.dinosaur.isMovementBlocked() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isCarcass() && !this.dinosaur.isMovementBlocked() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
             if (this.dinosaur.getMetabolism().isHungry()) {
                 BlockPos feeder = this.dinosaur.getClosestFeeder();
                 if (feeder != null) {
@@ -41,8 +41,8 @@ public class FeederEntityAI extends EntityAIBase {
         if (this.path != null) {
             this.dinosaur.getNavigator().setPath(this.path, 1.0);
         }
-        if (!this.dinosaur.worldObj.isRemote && (this.dinosaur.getDistance(this.feederPosition.getX(), this.feederPosition.getY(), this.feederPosition.getZ()) <= this.dinosaur.width * this.dinosaur.width || this.path.isFinished())) {
-            TileEntity tile = this.dinosaur.worldObj.getTileEntity(this.feederPosition);
+        if (!this.dinosaur.world.isRemote && (this.dinosaur.getDistance(this.feederPosition.getX(), this.feederPosition.getY(), this.feederPosition.getZ()) <= this.dinosaur.width * this.dinosaur.width || this.path.isFinished())) {
+            TileEntity tile = this.dinosaur.world.getTileEntity(this.feederPosition);
             if (tile instanceof FeederBlockEntity) {
                 FeederBlockEntity feeder = (FeederBlockEntity) tile;
                 feeder.setOpen(true);

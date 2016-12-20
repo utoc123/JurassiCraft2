@@ -65,14 +65,14 @@ public class InventoryDinosaur implements IInventory {
         if (this.inventory[index] != null) {
             ItemStack itemstack;
 
-            if (this.inventory[index].stackSize <= count) {
+            if (this.inventory[index].getMaxStackSize() <= count) {
                 itemstack = this.inventory[index];
                 this.setInventorySlotContents(index, null);
                 return itemstack;
             } else {
                 itemstack = this.inventory[index].splitStack(count);
 
-                if (this.inventory[index].stackSize == 0) {
+                if (this.inventory[index].getMaxStackSize() == 0) {
                     this.setInventorySlotContents(index, null);
                 }
 
@@ -98,7 +98,7 @@ public class InventoryDinosaur implements IInventory {
     public void setInventorySlotContents(int index, ItemStack stack) {
         this.inventory[index] = stack;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();
         }
     }
@@ -113,7 +113,7 @@ public class InventoryDinosaur implements IInventory {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return !this.entity.isDead && player.getDistanceSqToEntity(this.entity) <= 64.0D;
     }
 
@@ -176,11 +176,11 @@ public class InventoryDinosaur implements IInventory {
                 float offsetY = rand.nextFloat() * 0.8F + 0.1F;
                 float offsetZ = rand.nextFloat() * 0.8F + 0.1F;
 
-                while (itemstack.stackSize > 0) {
+                while (itemstack.getMaxStackSize() > 0) {
                     int j = rand.nextInt(21) + 10;
 
-                    if (j > itemstack.stackSize) {
-                        j = itemstack.stackSize;
+                    if (j > itemstack.getMaxStackSize()) {
+                        j = itemstack.getMaxStackSize();
                     }
 
                     itemstack.stackSize -= j;
@@ -189,9 +189,15 @@ public class InventoryDinosaur implements IInventory {
                     itemEntity.motionX = (float) rand.nextGaussian() * multiplier;
                     itemEntity.motionY = (float) rand.nextGaussian() * multiplier + 0.2F;
                     itemEntity.motionZ = (float) rand.nextGaussian() * multiplier;
-                    worldObj.spawnEntityInWorld(itemEntity);
+                    worldObj.spawnEntity(itemEntity);
                 }
             }
         }
     }
+
+	@Override
+	public boolean isEmpty() {
+		
+		return false;
+	}
 }

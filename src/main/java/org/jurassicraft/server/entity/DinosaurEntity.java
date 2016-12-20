@@ -149,7 +149,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public DinosaurEntity(World world) {
         super(world);
 
-        this.navigator = new PathNavigateDinosaur(this, this.worldObj);
+        this.navigator = new PathNavigateDinosaur(this, this.world);
 
         this.setFullyGrown();
         this.updateAttributes();
@@ -268,7 +268,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     private <T extends Entity> List<T> getEntitiesWithinDistance(Class<T> entity, double width, double height) {
-        List<T> entities = this.worldObj.getEntitiesWithinAABB(entity, new AxisAlignedBB(this.posX - width, this.posY - height, this.posZ - width, this.posX + width, this.posY + height, this.posZ + width));
+        List<T> entities = this.world.getEntitiesWithinAABB(entity, new AxisAlignedBB(this.posX - width, this.posY - height, this.posZ - width, this.posX + width, this.posY + height, this.posZ + width));
         entities.remove(this);
         return entities;
     }
@@ -276,7 +276,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public int getDinosaurTime() {
         SleepingSchedule sleepingSchedule = this.getDinosaur().getSleepingSchedule();
 
-        long time = (this.worldObj.getWorldTime() % 24000) - sleepingSchedule.getWakeUpTime();
+        long time = (this.world.getWorldTime() % 24000) - sleepingSchedule.getWakeUpTime();
 
         if (time < 0) {
             time += 24000;
@@ -355,12 +355,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 return super.attackEntityFrom(damageSource, amount);
             } else {
-                if (this.getAnimation() == DinosaurAnimation.RESTING.get() && !this.worldObj.isRemote) {
+                if (this.getAnimation() == DinosaurAnimation.RESTING.get() && !this.world.isRemote) {
                     this.setAnimation(DinosaurAnimation.IDLE.get());
                     this.isSittingNaturally = false;
                 }
 
-                if (!this.worldObj.isRemote && this.getAnimation() == DinosaurAnimation.IDLE.get()) {
+                if (!this.world.isRemote && this.getAnimation() == DinosaurAnimation.IDLE.get()) {
                     this.setAnimation(DinosaurAnimation.INJURED.get());
                 }
 
@@ -370,7 +370,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
                 return super.attackEntityFrom(damageSource, amount);
             }
-        } else if (!this.worldObj.isRemote) {
+        } else if (!this.world.isRemote) {
             if (canHarmInCreative) {
                 return super.attackEntityFrom(damageSource, amount);
             }
@@ -382,7 +382,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             if (damageSource != DamageSource.drown) {
                 this.carcassHealth--;
 
-                if (!this.dead && this.carcassHealth >= 0 && this.worldObj.getGameRules().getBoolean("doMobLoot")) {
+                if (!this.dead && this.carcassHealth >= 0 && this.world.getGameRules().getBoolean("doMobLoot")) {
                     this.dropMeat(damageSource.getEntity());
                 }
 
@@ -425,16 +425,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY) {
-        if (stack.stackSize != 0 && stack.getItem() != null) {
+        if (stack.getMaxStackSize() != 0 && stack.getItem() != null) {
             Random rand = new Random();
 
-            EntityItem item = new EntityItem(this.worldObj, this.posX + ((rand.nextFloat() * this.width) - this.width / 2), this.posY + (double) offsetY, this.posZ + ((rand.nextFloat() * this.width) - this.width / 2), stack);
+            EntityItem item = new EntityItem(this.world, this.posX + ((rand.nextFloat() * this.width) - this.width / 2), this.posY + (double) offsetY, this.posZ + ((rand.nextFloat() * this.width) - this.width / 2), stack);
             item.setDefaultPickupDelay();
 
             if (this.captureDrops) {
                 this.capturedDrops.add(item);
             } else {
-                this.worldObj.spawnEntityInWorld(item);
+                this.world.spawnEntity(item);
             }
 
             return item;
@@ -447,7 +447,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void knockBack(Entity entity, float p_70653_2_, double motionX, double motionZ) {
         if (this.rand.nextDouble() >= this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()) {
             this.isAirBorne = true;
-            float distance = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+            float distance = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
             float multiplier = 0.4F;
             this.motionX /= 2.0D;
             this.motionZ /= 2.0D;
@@ -589,7 +589,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         if (!this.isCarcass) {
-            if (!this.worldObj.isRemote) {
+            if (!this.world.isRemote) {
                 if (!this.dinosaur.isMarineAnimal()) {
                     if (this.isInsideOfMaterial(Material.WATER) || (this.getNavigator().noPath() && this.isInWater() || this.isInLava())) {
                         this.getJumpHelper().setJumping();
@@ -597,7 +597,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         if (this.isSwimming()) {
                             Path path = this.getNavigator().getPath();
                             if (path != null) {
-                                List<AxisAlignedBB> colliding = this.worldObj.getCollisionBoxes(this.getEntityBoundingBox().expandXyz(0.5));
+                                List<AxisAlignedBB> colliding = this.world.getCollisionBoxes(getLeashedToEntity(), this.getEntityBoundingBox().expandXyz(0.5));
                                 boolean swimUp = false;
                                 for (AxisAlignedBB bound : colliding) {
                                     if (bound.maxY > this.getEntityBoundingBox().minY) {
@@ -647,16 +647,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             this.updateGrowth();
 
-            if (!this.worldObj.isRemote) {
+            if (!this.world.isRemote) {
                 if (this.metabolism.isHungry()) {
-                    List<EntityItem> entitiesWithinAABB = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
+                    List<EntityItem> entitiesWithinAABB = this.world.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
                     for (EntityItem itemEntity : entitiesWithinAABB) {
                         Item item = itemEntity.getEntityItem().getItem();
 
                         if (FoodHelper.isEdible(this.dinosaur.getDiet(), item)) {
                             this.setAnimation(DinosaurAnimation.EATING.get());
 
-                            if (itemEntity.getEntityItem().stackSize > 1) {
+                            if (itemEntity.getEntityItem().getMaxStackSize() > 1) {
                                 itemEntity.getEntityItem().stackSize--;
                             } else {
                                 itemEntity.setDead();
@@ -685,8 +685,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     private void updateGrowth() {
-        if (!this.isDead && this.ticksExisted % 8 == 0 && !this.worldObj.isRemote) {
-            if (GameRuleHandler.DINO_GROWTH.getBoolean(this.worldObj)) {
+        if (!this.isDead && this.ticksExisted % 8 == 0 && !this.world.isRemote) {
+            if (GameRuleHandler.DINO_GROWTH.getBoolean(this.world)) {
                 this.dinosaurAge += Math.min(this.growthSpeedOffset, 960) + 1;
                 this.metabolism.decreaseEnergy((int) ((Math.min(this.growthSpeedOffset, 960) + 1) * 0.1));
             }
@@ -722,7 +722,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             }
         }
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.dataManager.set(WATCHER_AGE, this.dinosaurAge);
             this.dataManager.set(WATCHER_IS_SLEEPING, this.isSleeping);
             this.dataManager.set(WATCHER_IS_CARCASS, this.isCarcass);
@@ -766,14 +766,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.setAnimation(DinosaurAnimation.IDLE.get());
         }
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (this.isCarcass) {
                 if (this.getAnimation() != DinosaurAnimation.DYING.get()) {
                     this.setAnimation(DinosaurAnimation.DYING.get());
                 }
 
                 if (this.ticksExisted % 1000 == 0) {
-                    this.attackEntityFrom(DamageSource.generic, 1.0F);
+                    this.attackEntityFrom(DamageSource.GENERIC, 1.0F);
                 }
             } else {
                 if (this.isSleeping) {
@@ -783,7 +783,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         }
                     }
 
-                    if (!this.shouldSleep() && !this.worldObj.isRemote) {
+                    if (!this.shouldSleep() && !this.world.isRemote) {
                         this.isSleeping = false;
                     }
                 } else if (this.getAnimation() == DinosaurAnimation.SLEEPING.get()) {
@@ -795,7 +795,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         if (this.getAnimation() != DinosaurAnimation.RESTING.get()) {
                             this.setAnimation(DinosaurAnimation.RESTING.get());
                         }
-                    } else if (!this.isSittingNaturally && this.getAnimation() == DinosaurAnimation.RESTING.get() && !this.worldObj.isRemote) {
+                    } else if (!this.isSittingNaturally && this.getAnimation() == DinosaurAnimation.RESTING.get() && !this.world.isRemote) {
                         this.setAnimation(DinosaurAnimation.IDLE.get());
                     }
                 }
@@ -849,7 +849,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setAge(int age) {
         this.dinosaurAge = age;
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.dataManager.set(WATCHER_AGE, this.dinosaurAge);
         }
     }
@@ -883,14 +883,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setCarcass(boolean carcass) {
         this.isCarcass = carcass;
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.dataManager.set(WATCHER_IS_CARCASS, this.isCarcass);
         }
         if (carcass) {
             this.setAnimation(DinosaurAnimation.DYING.get());
             this.carcassHealth = (int) Math.sqrt(this.width * this.height) * 2;
             this.ticksExisted = 0;
-            this.inventory.dropItems(this.worldObj, this.rand);
+            this.inventory.dropItems(this.world, this.rand);
         }
     }
 
@@ -901,12 +901,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 if (this.getAgePercentage() > 75) {
                     player.displayGUIChest(this.inventory);
                 } else {
-                    if (this.worldObj.isRemote) {
+                    if (this.world.isRemote) {
                         player.addChatComponentMessage(new TextComponentTranslation("message.too_young.name"));
                     }
                 }
             } else {
-                if (this.worldObj.isRemote) {
+                if (this.world.isRemote) {
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
@@ -918,7 +918,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             } else if (stack != null && (this.metabolism.isThirsty() || this.metabolism.isHungry())) {
-                if (!this.worldObj.isRemote) {
+                if (!this.world.isRemote) {
                     Item item = stack.getItem();
                     boolean fed = false;
                     if (item == Items.POTIONITEM) {
@@ -1171,7 +1171,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setSleeping(boolean sleeping) {
         this.isSleeping = sleeping;
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.dataManager.set(WATCHER_IS_SLEEPING, this.isSleeping);
         }
     }
@@ -1305,9 +1305,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void setOrder(Order order) {
         this.order = order;
 
-        if (this.worldObj.isRemote) {
+        if (this.world.isRemote) {
             if (this.owner != null) {
-                EntityPlayer player = this.worldObj.getPlayerEntityByUUID(this.owner);
+                EntityPlayer player = this.world.getPlayerEntityByUUID(this.owner);
 
                 if (player != null) {
                     player.addChatComponentMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase(Locale.ENGLISH) + ".name").build()));
@@ -1404,7 +1404,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.feederSearchTick = this.ticksExisted;
             OnionTraverser traverser = new OnionTraverser(this.getPosition(), 32);
             for (BlockPos pos : traverser) {
-                TileEntity tile = this.worldObj.getTileEntity(pos);
+                TileEntity tile = this.world.getTileEntity(pos);
                 if (tile instanceof FeederBlockEntity) {
                     FeederBlockEntity feeder = (FeederBlockEntity) tile;
                     if (feeder.canFeedDinosaur(this.getDinosaur()) && feeder.getFeeding() == null && feeder.openAnimation == 0) {

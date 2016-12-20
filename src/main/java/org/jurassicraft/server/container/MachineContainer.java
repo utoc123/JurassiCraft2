@@ -62,7 +62,7 @@ public abstract class MachineContainer extends Container {
                 return null;
             }
 
-            if (current.stackSize == 0) {
+            if (current.getMaxStackSize() == 0) {
                 slot.putStack(null);
             } else {
                 slot.onSlotChanged();

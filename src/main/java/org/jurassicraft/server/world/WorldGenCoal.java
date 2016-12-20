@@ -46,12 +46,12 @@ public class WorldGenCoal extends WorldGenMinable {
             double d9 = rand.nextDouble() * (double) this.veinSize / 16.0D;
             double d10 = (double) (MathHelper.sin((float) Math.PI * f1) + 1.0F) * d9 + 1.0D;
             double d11 = (double) (MathHelper.sin((float) Math.PI * f1) + 1.0F) * d9 + 1.0D;
-            int j = MathHelper.floor_double(d6 - d10 / 2.0D);
-            int k = MathHelper.floor_double(d7 - d11 / 2.0D);
-            int l = MathHelper.floor_double(d8 - d10 / 2.0D);
-            int i1 = MathHelper.floor_double(d6 + d10 / 2.0D);
-            int j1 = MathHelper.floor_double(d7 + d11 / 2.0D);
-            int k1 = MathHelper.floor_double(d8 + d10 / 2.0D);
+            int j = MathHelper.floor(d6 - d10 / 2.0D);
+            int k = MathHelper.floor(d7 - d11 / 2.0D);
+            int l = MathHelper.floor(d8 - d10 / 2.0D);
+            int i1 = MathHelper.floor(d6 + d10 / 2.0D);
+            int j1 = MathHelper.floor(d7 + d11 / 2.0D);
+            int k1 = MathHelper.floor(d8 + d10 / 2.0D);
 
             for (int l1 = j; l1 <= i1; ++l1) {
                 double d12 = ((double) l1 + 0.5D - d6) / (d10 / 2.0D);

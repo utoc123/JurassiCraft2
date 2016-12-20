@@ -158,23 +158,23 @@ public class PaddockSignRenderer implements IRenderFactory<PaddockSignEntity> {
         }
 
         private void setLightmap(PaddockSignEntity sign, float xzOffset, float yOffset) {
-            int posX = MathHelper.floor_double(sign.posX);
-            int posY = MathHelper.floor_double(sign.posY + (yOffset / 16.0F));
-            int posZ = MathHelper.floor_double(sign.posZ);
+            int posX = MathHelper.floor(sign.posX);
+            int posY = MathHelper.floor(sign.posY + (yOffset / 16.0F));
+            int posZ = MathHelper.floor(sign.posZ);
 
             EnumFacing direction = sign.facingDirection;
 
             if (direction == EnumFacing.NORTH) {
-                posX = MathHelper.floor_double(sign.posX + (xzOffset / 16.0F));
+                posX = MathHelper.floor(sign.posX + (xzOffset / 16.0F));
             } else if (direction == EnumFacing.WEST) {
-                posZ = MathHelper.floor_double(sign.posZ - (xzOffset / 16.0F));
+                posZ = MathHelper.floor(sign.posZ - (xzOffset / 16.0F));
             } else if (direction == EnumFacing.SOUTH) {
-                posX = MathHelper.floor_double(sign.posX - (xzOffset / 16.0F));
+                posX = MathHelper.floor(sign.posX - (xzOffset / 16.0F));
             } else if (direction == EnumFacing.EAST) {
-                posZ = MathHelper.floor_double(sign.posZ + (xzOffset / 16.0F));
+                posZ = MathHelper.floor(sign.posZ + (xzOffset / 16.0F));
             }
 
-            int combinedLight = this.renderManager.worldObj.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
+            int combinedLight = this.renderManager.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, combinedLight % 65536, combinedLight / 65536.0F);
             GlStateManager.color(1.0F, 1.0F, 1.0F);
         }

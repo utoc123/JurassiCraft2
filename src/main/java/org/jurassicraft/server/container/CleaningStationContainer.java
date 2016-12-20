@@ -45,6 +45,6 @@ public class CleaningStationContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.tileCleaningStation.isUseableByPlayer(player);
+        return this.tileCleaningStation.isUsableByPlayer(player);
     }
 }

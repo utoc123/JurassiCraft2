@@ -24,12 +24,12 @@ public class EatFoodItemEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
             if (this.dinosaur.getMetabolism().isHungry()) {
                 double closestDistance = Integer.MAX_VALUE;
                 EntityItem closest = null;
                 boolean found = false;
-                World world = this.dinosaur.worldObj;
+                World world = this.dinosaur.world;
                 List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, this.dinosaur.getEntityBoundingBox().expand(16, 16, 16));
                 for (EntityItem entity : items) {
                     ItemStack stack = entity.getEntityItem();

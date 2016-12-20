@@ -30,9 +30,9 @@ public class DrinkEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) {
+        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
             if (this.dinosaur.getMetabolism().isThirsty()) {
-                World world = this.dinosaur.worldObj;
+                World world = this.dinosaur.world;
                 BlockPos water = null;
                 OnionTraverser traverser = new OnionTraverser(this.dinosaur.getPosition(), 32);
                 for (BlockPos pos : traverser) {

@@ -23,7 +23,7 @@ public class AssistOwnerEntityAI extends EntityAIBase {
             UUID ownerId = this.entity.getOwner();
 
             if (ownerId != null) {
-                this.owner = this.entity.worldObj.getPlayerEntityByUUID(ownerId);
+                this.owner = this.entity.world.getPlayerEntityByUUID(ownerId);
 
                 if (this.owner != null) {
                     this.target = this.owner.getLastAttacker();

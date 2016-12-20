@@ -52,7 +52,7 @@ public class DinosaurLookHelper extends EntityLookHelper {
             double deltaX = this.posX - this.dinosaur.posX;
             double deltaY = this.posY - (this.dinosaur.posY + (double) this.dinosaur.getEyeHeight());
             double deltaZ = this.posZ - this.dinosaur.posZ;
-            double delta = (double) MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+            double delta = (double) MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
             float desiredYaw = (float) (MathHelper.atan2(deltaZ, deltaX) * (180.0D / Math.PI)) - 90.0F;
             float desiredPitch = (float) (-(MathHelper.atan2(deltaY, delta) * (180.0D / Math.PI)));
             this.dinosaur.rotationPitch = this.updateRotation(this.dinosaur.rotationPitch, desiredPitch, this.deltaLookPitch);

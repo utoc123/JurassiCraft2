@@ -45,7 +45,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
     @Override
     public void onServerReceived(MinecraftServer server, PlacePaddockSignMessage message, EntityPlayer player, MessageContext messageContext) {
-        World world = player.worldObj;
+        World world = player.world;
 
         EnumFacing side = message.facing;
         BlockPos pos = message.pos;

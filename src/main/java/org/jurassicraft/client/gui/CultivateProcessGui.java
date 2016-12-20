@@ -30,7 +30,7 @@ public class CultivateProcessGui extends GuiScreen {
     @Override
     public void updateScreen() {
         if (!this.cultivator.isProcessing(0)) {
-            this.mc.thePlayer.closeScreen();
+            this.mc.player.closeScreen();
         }
     }
 
@@ -42,7 +42,7 @@ public class CultivateProcessGui extends GuiScreen {
     @Override
     protected void keyTyped(char c, int key) {
         if (key == 1 || key == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
-            this.mc.thePlayer.closeScreen();
+            this.mc.player.closeScreen();
         }
     }
 
@@ -61,7 +61,7 @@ public class CultivateProcessGui extends GuiScreen {
     @Override
     public void actionPerformed(GuiButton button) {
         if (button.id == 0) {
-            this.mc.thePlayer.closeScreen();
+            this.mc.player.closeScreen();
         }
     }
 

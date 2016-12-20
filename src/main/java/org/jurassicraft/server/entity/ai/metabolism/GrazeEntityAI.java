@@ -33,7 +33,7 @@ public class GrazeEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!(this.dinosaur.isDead || this.dinosaur.isCarcass() || !GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.worldObj)) && this.dinosaur.getMetabolism().isHungry()) {
+        if (!(this.dinosaur.isDead || this.dinosaur.isCarcass() || !GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) && this.dinosaur.getMetabolism().isHungry()) {
             if (!this.dinosaur.getMetabolism().isStarving() && this.dinosaur.getClosestFeeder() == null) {
                 return false;
             }
@@ -43,7 +43,7 @@ public class GrazeEntityAI extends EntityAIBase {
             BlockPos head = new BlockPos(headPos.xCoord, headPos.yCoord, headPos.zCoord);
 
             //world the animal currently inhabits
-            this.world = this.dinosaur.worldObj;
+            this.world = this.dinosaur.world;
 
             MetabolismContainer metabolism = this.dinosaur.getMetabolism();
 

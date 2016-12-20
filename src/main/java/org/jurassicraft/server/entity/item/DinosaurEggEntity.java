@@ -43,7 +43,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     public void onUpdate() {
         super.onUpdate();
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.hatchTime--;
 
             if (this.hatchTime <= 0) {
@@ -78,7 +78,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
 
     @Override
     public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand) {
-        if (this.dinosaur != null && !this.worldObj.isRemote) {
+        if (this.dinosaur != null && !this.world.isRemote) {
             ItemStack eggStack = new ItemStack(ItemHandler.EGG, 1, EntityHandler.getDinosaurId(this.dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setInteger("DNAQuality", this.dnaQuality);
@@ -111,12 +111,12 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         }
 
         try {
-            DinosaurEntity entity = this.dinosaur.getDinosaurClass().getConstructor(World.class).newInstance(this.worldObj);
+            DinosaurEntity entity = this.dinosaur.getDinosaurClass().getConstructor(World.class).newInstance(this.world);
             entity.setAge(0);
             entity.setDNAQuality(this.dnaQuality);
             entity.setGenetics(this.genetics);
             entity.setPosition(this.posX, this.posY, this.posZ);
-            this.worldObj.spawnEntityInWorld(entity);
+            this.world.spawnEntity(entity);
             entity.playLivingSound();
             this.setDead();
         } catch (Exception e) {
@@ -125,9 +125,9 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     }
 
     public void warnPlayersWithinRadius(String message) {
-        List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.posX - 30, this.posY - 10, this.posZ - 30, this.posX + 30, this.posY + 10, this.posZ + 30));
+        List<EntityPlayer> players = this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.posX - 30, this.posY - 10, this.posZ - 30, this.posX + 30, this.posY + 10, this.posZ + 30));
         for (EntityPlayer player : players) {
-            player.addChatMessage(new TextComponentString(message));
+            player.sendMessage(new TextComponentString(message));
         }
     }
 
@@ -137,10 +137,10 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     }
 
     public Boolean isNextBlockAir(int xChange, int yChange, int zChange) {
-        int blockX = MathHelper.floor_double(this.posX) + xChange;
-        int blockY = MathHelper.floor_double(this.getEntityBoundingBox().minY) + yChange;
-        int blockZ = MathHelper.floor_double(this.posZ) + zChange;
-        return this.worldObj.isAirBlock(new BlockPos(blockX, blockY, blockZ));
+        int blockX = MathHelper.floor(this.posX) + xChange;
+        int blockY = MathHelper.floor(this.getEntityBoundingBox().minY) + yChange;
+        int blockZ = MathHelper.floor(this.posZ) + zChange;
+        return this.worldworld.isAirBlock(new BlockPos(blockX, blockY, blockZ));
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.item.ActionFigureItem;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class JurassiCraftDecorationsTab extends CreativeTabs {
     }
 
     @Override
-    public Item getTabIconItem() {
+    public ActionFigureItem getTabIconItem() {
         return ItemHandler.ACTION_FIGURE;
     }
 }
