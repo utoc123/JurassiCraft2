@@ -123,7 +123,7 @@ public abstract class CarEntity extends Entity {
                 this.addSeat(new SeatEntity(this.world, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
 
                 for (Map.Entry<Integer, SeatEntity> entry : this.seats.entrySet()) {
-                    this.worldObj.spawnEntityInWorld(entry.getValue());
+                    this.world.spawnEntity(entry.getValue());
                 }
             }
         }
@@ -314,7 +314,7 @@ public abstract class CarEntity extends Entity {
     }
 
     @Override
-    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
+    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
         Entity pointedEntity = null;
 
         double reach = 5.0;
@@ -352,7 +352,7 @@ public abstract class CarEntity extends Entity {
         }
 
         if (pointedEntity != null) {
-            return pointedEntity.applyPlayerInteraction(player, vec, stack, hand);
+            return pointedEntity.applyPlayerInteraction(player, vec, hand);
         }
 
         return EnumActionResult.PASS;

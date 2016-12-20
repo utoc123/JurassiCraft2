@@ -38,7 +38,7 @@ public class DNAContainerItem extends Item {
     public String getGeneticCode(EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        String genetics = GeneticsHelper.randomGenetics(player.worldObj.rand);
+        String genetics = GeneticsHelper.randomGenetics(player.world.rand);
 
         if (nbt == null) {
             nbt = new NBTTagCompound();

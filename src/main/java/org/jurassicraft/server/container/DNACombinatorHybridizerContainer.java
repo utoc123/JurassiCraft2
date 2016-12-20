@@ -63,6 +63,6 @@ public class DNACombinatorHybridizerContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.dnaHybridizer.isUseableByPlayer(player);
+        return this.dnaHybridizer.isUsableByPlayer(player);
     }
 }

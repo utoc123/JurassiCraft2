@@ -65,7 +65,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             Class<? extends DinosaurEntity> dinoClass = dinoInEgg.getDinosaurClass();
 
             try {
-                DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(this.worldObj);
+                DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(this.world);
 
                 dino.setDNAQuality(this.slots[0].getTagCompound().getInteger("DNAQuality"));
                 dino.setGenetics((this.slots[0].getTagCompound().getString("Genetics")));
@@ -76,15 +76,15 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
                 dino.setAge(0);
 
-                dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(this.worldObj.rand.nextFloat() * 360.0F), 0.0F);
+                dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(this.world.rand.nextFloat() * 360.0F), 0.0F);
                 dino.rotationYawHead = dino.rotationYaw;
                 dino.renderYawOffset = dino.rotationYaw;
 
-                this.worldObj.spawnEntityInWorld(dino);
+                this.world.spawnEntity(dino);
 
                 this.slots[0].stackSize--;
 
-                if (this.slots[0].stackSize <= 0) {
+                if (this.slots[0].getMaxStackSize() <= 0) {
                     this.slots[0] = null;
                 }
             } catch (Exception e) {
@@ -99,12 +99,12 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
         boolean sync = false;
 
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             if (this.waterLevel < 3 && this.slots[2] != null && this.slots[2].getItem() == Items.WATER_BUCKET) {
-                if (this.slots[3] == null || this.slots[3].stackSize < 16) {
+                if (this.slots[3] == null || this.slots[3].getMaxStackSize() < 16) {
                     this.slots[2].stackSize--;
 
-                    if (this.slots[2].stackSize <= 0) {
+                    if (this.slots[2].getMaxStackSize() <= 0) {
                         this.slots[2] = null;
                     }
 
@@ -142,7 +142,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
         } else {
             this.slots[1].stackSize--;
 
-            if (this.slots[1].stackSize <= 0) {
+            if (this.slots[1].getMaxStackSize() <= 0) {
                 this.slots[1] = null;
             }
         }
@@ -356,4 +356,14 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
         return null;
     }
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) { 
+		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
 }

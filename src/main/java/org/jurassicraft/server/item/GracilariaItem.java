@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -24,35 +23,22 @@ public class GracilariaItem extends Item implements IPlantable {
         this.seaweedBlock = crops;
         this.setUnlocalizedName("gracilaria");
     }
-
-    //  ___ _
-    // |_ _| |_ ___ _ __ ___
-    //  | || __/ _ \ '_ ` _ \
-    //  | || ||  __/ | | | | |
-    // |___|\__\___|_| |_| |_|
-
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         // NOTE:  Pos is the block we are placing ON
 
         // Based on ItemSeeds.
-        if (side != EnumFacing.UP || !player.canPlayerEdit(pos.offset(side), side, stack)) {
+        if (side != EnumFacing.UP || !player.canPlayerEdit(pos.offset(side), side, player.getHeldItemMainhand())) {
             return EnumActionResult.PASS;
         } else if (this.seaweedBlock.canPlaceBlockAt(world, pos.up())) {
             world.setBlockState(pos.up(), this.seaweedBlock.getDefaultState());
-            --stack.stackSize;
+            player.getHeldItemMainhand().shrink(1);
             return EnumActionResult.SUCCESS;
         }
 
         return EnumActionResult.PASS;
     }
-
-    //  ___ ____  _             _        _     _
-    // |_ _|  _ \| | __ _ _ __ | |_ __ _| |__ | | ___
-    //  | || |_) | |/ _` | '_ \| __/ _` | '_ \| |/ _ \
-    //  | ||  __/| | (_| | | | | || (_| | |_) | |  __/
-    // |___|_|   |_|\__,_|_| |_|\__\__,_|_.__/|_|\___|
-
+    
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Crop;

@@ -27,7 +27,7 @@ import org.jurassicraft.server.item.block.CultivateItemBlock;
 import java.util.List;
 
 public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
-    public static final PropertyEnum COLOR = PropertyEnum.create("color", EnumDyeColor.class);
+    public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.create("color", EnumDyeColor.class);
 
     public CultivatorBlock(String position) {
         super(Material.IRON);

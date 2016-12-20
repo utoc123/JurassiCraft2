@@ -56,7 +56,7 @@ public class DNASequencerBlock extends OrientedBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -65,7 +65,7 @@ public class DNASequencerBlock extends OrientedBlock {
             if (tileEntity instanceof DNASequencerBlockEntity) {
                 DNASequencerBlockEntity dnaSequencer = (DNASequencerBlockEntity) tileEntity;
 
-                if (dnaSequencer.isUseableByPlayer(player)) {
+                if (dnaSequencer.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_SEQUENCER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

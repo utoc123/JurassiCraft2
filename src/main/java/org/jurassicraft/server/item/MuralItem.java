@@ -17,19 +17,19 @@ public class MuralItem extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (side != EnumFacing.DOWN && side != EnumFacing.UP) {
             BlockPos offset = pos.offset(side);
 
-            if (player.canPlayerEdit(offset, side, stack)) {
+            if (player.canPlayerEdit(offset, side, ItemStack.EMPTY)) {
                 MuralEntity mural = new MuralEntity(world, offset, side);
 
                 if (mural.onValidSurface()) {
                     if (!world.isRemote) {
-                        world.spawnEntityInWorld(mural);
+                        world.spawnEntity(mural);
                     }
 
-                    stack.stackSize--;
+                    player.getHeldItemMainhand().shrink(1);
 
                     return EnumActionResult.SUCCESS;
                 }

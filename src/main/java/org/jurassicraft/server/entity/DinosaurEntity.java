@@ -303,7 +303,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.owner = player.getUniqueID();
 
             if (!this.owner.equals(prevOwner)) {
-                player.addChatComponentMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + this.dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build()));
+                player.sendMessage(new TextComponentString(new LangHelper("message.tame.name").withProperty("dinosaur", "entity.jurassicraft." + this.dinosaur.getName().toLowerCase(Locale.ENGLISH) + ".name").build()));
             }
         }
     }
@@ -379,7 +379,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 this.hurtTime = this.maxHurtTime = 10;
             }
 
-            if (damageSource != DamageSource.drown) {
+            if (damageSource != DamageSource.DROWN) {
                 this.carcassHealth--;
 
                 if (!this.dead && this.carcassHealth >= 0 && this.world.getGameRules().getBoolean("doMobLoot")) {
@@ -652,7 +652,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     List<EntityItem> entitiesWithinAABB = this.world.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
                     for (EntityItem itemEntity : entitiesWithinAABB) {
                         Item item = itemEntity.getEntityItem().getItem();
-
+                        
                         if (FoodHelper.isEdible(this.dinosaur.getDiet(), item)) {
                             this.setAnimation(DinosaurAnimation.EATING.get());
 
@@ -895,31 +895,31 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
         if (player.isSneaking() && hand == EnumHand.MAIN_HAND) {
             if (this.isOwner(player)) {
                 if (this.getAgePercentage() > 75) {
                     player.displayGUIChest(this.inventory);
                 } else {
                     if (this.world.isRemote) {
-                        player.addChatComponentMessage(new TextComponentTranslation("message.too_young.name"));
+                        player.sendMessage(new TextComponentTranslation("message.too_young.name"));
                     }
                 }
             } else {
                 if (this.world.isRemote) {
-                    player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
+                    player.sendMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
             }
         } else {
-            if (stack == null && hand == EnumHand.MAIN_HAND && this.worldObj.isRemote) {
+            if (player.getHeldItemMainhand() == null && hand == EnumHand.MAIN_HAND && this.world.isRemote) {
                 if (this.isOwner(player)) {
                     JurassiCraft.PROXY.openOrderGui(this);
                 } else {
-                    player.addChatComponentMessage(new TextComponentTranslation("message.not_owned.name"));
+                    player.sendMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
-            } else if (stack != null && (this.metabolism.isThirsty() || this.metabolism.isHungry())) {
+            } else if (player.getHeldItemMainhand() != null && (this.metabolism.isThirsty() || this.metabolism.isHungry())) {
                 if (!this.world.isRemote) {
-                    Item item = stack.getItem();
+                    Item item = ItemStack.EMPTY.getItem();
                     boolean fed = false;
                     if (item == Items.POTIONITEM) {
                         fed = true;
@@ -933,7 +933,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     }
                     if (fed) {
                         if (!player.capabilities.isCreativeMode) {
-                            stack.stackSize--;
+                        	player.getHeldItemMainhand().shrink(1);
                             if (item == Items.POTIONITEM) {
                                 player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
                             }
@@ -1310,7 +1310,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 EntityPlayer player = this.world.getPlayerEntityByUUID(this.owner);
 
                 if (player != null) {
-                    player.addChatComponentMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase(Locale.ENGLISH) + ".name").build()));
+                    player.sendMessage(new TextComponentString(new LangHelper("message.set_order.name").withProperty("order", "order." + order.name().toLowerCase(Locale.ENGLISH) + ".name").build()));
                 }
             }
 

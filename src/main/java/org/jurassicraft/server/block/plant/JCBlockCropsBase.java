@@ -132,7 +132,7 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable {
 
     public void grow(World world, BlockPos pos, IBlockState state) {
         // TODO:  Pull out these two numbers.
-        int i = state.getValue(this.getAgeProperty()) + MathHelper.getRandomIntegerInRange(world.rand, 2, 5);
+        int i = state.getValue(this.getAgeProperty()) + MathHelper.getInt(world.rand, 2, 5);
 
         if (i > this.getMaxAge()) {
             i = this.getMaxAge();
@@ -198,10 +198,10 @@ public abstract class JCBlockCropsBase extends BlockBush implements IGrowable {
         } else {
             // Drop range of leaves and range of seeds
             if (this.seedDropMin > 0 && this.seedDropMax > 0) {
-                drops.add(new ItemStack(this.getSeed(), MathHelper.getRandomIntegerInRange(rand, this.seedDropMin, this.seedDropMax)));
+                drops.add(new ItemStack(this.getSeed(), MathHelper.getInt(rand, this.seedDropMin, this.seedDropMax)));
             }
             if (this.cropDropMin > 0 && this.cropDropMax > 0) {
-                drops.add(new ItemStack(this.getCrop(), MathHelper.getRandomIntegerInRange(rand, this.cropDropMin, this.cropDropMax)));
+                drops.add(new ItemStack(this.getCrop(), MathHelper.getInt(rand, this.cropDropMin, this.cropDropMax)));
             }
         }
 

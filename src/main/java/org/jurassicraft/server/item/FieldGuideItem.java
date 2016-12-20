@@ -20,7 +20,7 @@ public class FieldGuideItem extends Item {
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
         if (target instanceof DinosaurEntity) {
-            if (!player.worldObj.isRemote) {
+            if (!player.NonnullList.create<T>().isRemote) {
                 JurassiCraft.NETWORK_WRAPPER.sendTo(new OpenFieldGuideGuiMessage((DinosaurEntity) target), (EntityPlayerMP) player);
             }
 

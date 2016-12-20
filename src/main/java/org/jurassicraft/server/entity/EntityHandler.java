@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.EnumCreatureType;import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
@@ -119,7 +119,7 @@ public class EntityHandler {
     private static void registerEntity(Class<? extends Entity> entity, String name) {
         String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-        EntityRegistry.registerModEntity(entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
+        EntityRegistry.registerModEntity(null, entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }
 
     public static void registerDinosaur(int id, Dinosaur dinosaur) {

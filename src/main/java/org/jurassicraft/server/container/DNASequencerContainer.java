@@ -50,6 +50,6 @@ public class DNASequencerContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.dnaSequencer.isUseableByPlayer(player);
+        return this.dnaSequencer.isUsableByPlayer(player);
     }
 }

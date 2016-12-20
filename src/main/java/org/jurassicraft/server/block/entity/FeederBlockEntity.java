@@ -73,14 +73,14 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         if (this.slots[index] != null) {
             ItemStack stack;
 
-            if (this.slots[index].stackSize <= count) {
+            if (this.slots[index].getMaxStackSize() <= count) {
                 stack = this.slots[index];
                 this.slots[index] = null;
                 return stack;
             } else {
                 stack = this.slots[index].splitStack(count);
 
-                if (this.slots[index].stackSize == 0) {
+                if (this.slots[index].getMaxStackSize() == 0) {
                     this.slots[index] = null;
                 }
 
@@ -106,7 +106,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
     public void setInventorySlotContents(int index, ItemStack stack) {
         this.slots[index] = stack;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();
         }
     }
@@ -116,10 +116,10 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         return 64;
     }
 
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-    }
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) { 
+		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
 
     @Override
     public void openInventory(EntityPlayer player) {
@@ -153,7 +153,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         if (id == 0) {
             boolean newOpen = type == 1;
             if (newOpen != this.open) {
-                this.worldObj.playSound(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, newOpen ? 1.0F : 0.9F, false);
+                this.world.playSound(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, SoundHandler.FEEDER, SoundCategory.BLOCKS, 1.0F, newOpen ? 1.0F : 0.9F, false);
             }
             this.open = newOpen;
             return true;
@@ -275,7 +275,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
                     float motionY = 0.0F;
                     float motionZ = 0.0F;
 
-                    switch (this.worldObj.getBlockState(this.pos).getValue(FeederBlock.FACING)) {
+                    switch (this.world.getBlockState(this.pos).getValue(FeederBlock.FACING)) {
                         case UP:
                             offsetY = 1.0F;
                             motionY = 1.0F;
@@ -310,12 +310,12 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
                     ItemStack stack = this.slots[feedSlot];
 
                     if (stack != null) {
-                        EntityItem itemEntity = new EntityItem(this.worldObj, this.pos.getX() + offsetX, this.pos.getY() + offsetY, this.pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
+                        EntityItem itemEntity = new EntityItem(this.world, this.pos.getX() + offsetX, this.pos.getY() + offsetY, this.pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
                         itemEntity.setDefaultPickupDelay();
                         itemEntity.motionX = motionX * 0.3F;
                         itemEntity.motionY = motionY * 0.3F;
                         itemEntity.motionZ = motionZ * 0.3F;
-                        this.worldObj.spawnEntityInWorld(itemEntity);
+                        this.world.spawnEntity(itemEntity);
 
                         this.decrStackSize(feedSlot, 1);
                         this.feeding.getNavigator().tryMoveToXYZ(itemEntity.posX + motionX, itemEntity.posY + motionY, itemEntity.posZ + motionZ, 0.8);
@@ -323,15 +323,15 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
 
                     this.feeding = null;
                 }
-            } else if (!this.worldObj.isRemote) {
+            } else if (!this.world.isRemote) {
                 this.setOpen(false);
             }
         }
     }
 
     public void setOpen(boolean open) {
-        if (!this.worldObj.isRemote && this.open != open) {
-            this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 0, open ? 1 : 0);
+        if (!this.world.isRemote && this.open != open) {
+            this.world.addBlockEvent(this.pos, this.getBlockType(), 0, open ? 1 : 0);
         }
 
         this.open = open;
@@ -349,7 +349,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         int i = 0;
 
         for (ItemStack stack : this.slots) {
-            if (stack != null && stack.stackSize > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem())) {
+            if (stack != null && stack.getMaxStackSize() > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem())) {
                 return i;
             }
 
@@ -371,4 +371,9 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
             this.feedingExpire = 0;
         }
     }
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
 }

@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.OrientedBlock;
 import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
@@ -38,25 +39,25 @@ public class ActionFigureItem extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         pos = pos.offset(side);
 
-        if (player.canPlayerEdit(pos, side, stack)) {
+        if (player.canPlayerEdit(pos, side, ItemStack.EMPTY)) {
             Block block = BlockHandler.ACTION_FIGURE;
 
             if (block.canPlaceBlockAt(world, pos)) {
                 IBlockState state = block.getDefaultState();
-                world.setBlockState(pos, block.onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player));
-                block.onBlockPlacedBy(world, pos, state, player, stack);
+                world.setBlockState(pos, ((OrientedBlock) block).onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player));
+                block.onBlockPlacedBy(world, pos, state, player, ItemStack.EMPTY);
 
-                int mode = this.getMode(stack);
+                int mode = this.getMode(player.getHeldItemMainhand());
 
                 ActionFigureBlockEntity tile = (ActionFigureBlockEntity) world.getTileEntity(pos);
 
                 if (tile != null) {
-                    tile.setDinosaur(stack.getItemDamage(), mode > 0 ? mode == 1 : world.rand.nextBoolean());
+                    tile.setDinosaur( player.getHeldItemMainhand().getItemDamage(), mode > 0 ? mode == 1 : world.rand.nextBoolean());
                     if (!player.capabilities.isCreativeMode) {
-                        stack.stackSize--;
+                    	 player.getHeldItemMainhand().shrink(1);;
                     }
                 }
 
@@ -124,8 +125,8 @@ public class ActionFigureItem extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        int mode = this.changeMode(stack);
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        int mode = this.changeMode(ItemStack.EMPTY);
         if (world.isRemote) {
             String modeString = "";
             if (mode == 0) {
@@ -135,9 +136,9 @@ public class ActionFigureItem extends Item {
             } else if (mode == 2) {
                 modeString = "female";
             }
-            player.addChatMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+            player.sendMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, ItemStack.EMPTY);
     }
 }
 

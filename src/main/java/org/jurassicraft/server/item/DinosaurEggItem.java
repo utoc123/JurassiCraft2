@@ -61,7 +61,7 @@ public class DinosaurEggItem extends DNAContainerItem {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 //        pos = pos.offset(side);
 //
 //        if (side == EnumFacing.EAST || side == EnumFacing.WEST)

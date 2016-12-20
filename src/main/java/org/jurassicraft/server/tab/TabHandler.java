@@ -2,6 +2,8 @@ package org.jurassicraft.server.tab;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
@@ -22,7 +24,7 @@ public class TabHandler {
 
     public static final CreativeTabs PLANTS = new CreativeTabs("jurassicraft.plants") {
         @Override
-        public Item getTabIconItem() {
+        public ItemStack getTabIconItem() {
             return Item.getItemFromBlock(BlockHandler.SMALL_ROYAL_FERN);
         }
     };

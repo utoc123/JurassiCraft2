@@ -43,7 +43,7 @@ public class HatchedEggItem extends DNAContainerItem {
     public boolean getGender(EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        boolean gender = player.worldObj.rand.nextBoolean();
+        boolean gender = player.world.rand.nextBoolean();
 
         if (nbt == null) {
             nbt = new NBTTagCompound();
@@ -80,7 +80,7 @@ public class HatchedEggItem extends DNAContainerItem {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         pos = pos.offset(side);
 
         if (side == EnumFacing.EAST || side == EnumFacing.WEST) {
@@ -89,27 +89,27 @@ public class HatchedEggItem extends DNAContainerItem {
             hitZ = 1.0F - hitZ;
         }
 
-        if (player.canPlayerEdit(pos, side, stack)) {
+        if (player.canPlayerEdit(pos, side, ItemStack.EMPTY)) {
             if (!world.isRemote) {
-                Dinosaur dinosaur = this.getDinosaur(stack);
+                Dinosaur dinosaur = this.getDinosaur(ItemStack.EMPTY);
 
                 try {
                     DinosaurEntity entity = dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(world);
 
                     entity.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
                     entity.setAge(0);
-                    entity.setGenetics(this.getGeneticCode(player, stack));
-                    entity.setDNAQuality(this.getDNAQuality(player, stack));
-                    entity.setMale(this.getGender(player, stack));
+                    entity.setGenetics(this.getGeneticCode(player, ItemStack.EMPTY));
+                    entity.setDNAQuality(this.getDNAQuality(player, ItemStack.EMPTY));
+                    entity.setMale(this.getGender(player, ItemStack.EMPTY));
 
                     if (!player.isSneaking()) {
                         entity.setOwner(player);
                     }
 
-                    world.spawnEntityInWorld(entity);
+                    world.spawnEntity(entity);
 
                     if (!player.capabilities.isCreativeMode) {
-                        stack.stackSize--;
+                    	player.getHeldItemMainhand().shrink(1);
                     }
                 } catch (ReflectiveOperationException e) {
                     e.printStackTrace();

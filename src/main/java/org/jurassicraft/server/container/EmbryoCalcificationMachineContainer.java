@@ -45,6 +45,6 @@ public class EmbryoCalcificationMachineContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.calcificationMachine.isUseableByPlayer(player);
+        return this.calcificationMachine.isUsableByPlayer(player);
     }
 }

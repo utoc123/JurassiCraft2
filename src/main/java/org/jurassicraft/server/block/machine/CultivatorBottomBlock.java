@@ -42,7 +42,7 @@ public class CultivatorBottomBlock extends CultivatorBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -51,7 +51,7 @@ public class CultivatorBottomBlock extends CultivatorBlock {
             if (tile instanceof CultivatorBlockEntity) {
                 CultivatorBlockEntity cultivator = (CultivatorBlockEntity) tile;
 
-                if (cultivator.isUseableByPlayer(player)) {
+                if (cultivator.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_CULTIVATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

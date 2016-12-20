@@ -30,20 +30,19 @@ public class AttractionSignItem extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (side != EnumFacing.DOWN && side != EnumFacing.UP) {
             BlockPos offset = pos.offset(side);
 
-            if (player.canPlayerEdit(offset, side, stack)) {
-                AttractionSignEntity sign = new AttractionSignEntity(world, offset, side, AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()]);
+            if (player.canPlayerEdit(offset, side, ItemStack.EMPTY)) {
+                AttractionSignEntity sign = new AttractionSignEntity(world, offset, side, AttractionSignEntity.AttractionSignType.values()[player.getHeldItemMainhand().getItemDamage()]);
 
                 if (sign.onValidSurface()) {
                     if (!world.isRemote) {
-                        world.spawnEntityInWorld(sign);
+                        world.spawnEntity(sign);
                     }
 
-                    stack.stackSize--;
-
+                    player.getHeldItemMainhand().shrink(1);
                     return EnumActionResult.SUCCESS;
                 }
             }

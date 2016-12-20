@@ -77,7 +77,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     }
 
     @Override
-    public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand) {
+    public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
         if (this.dinosaur != null && !this.world.isRemote) {
             ItemStack eggStack = new ItemStack(ItemHandler.EGG, 1, EntityHandler.getDinosaurId(this.dinosaur));
             NBTTagCompound nbt = new NBTTagCompound();
@@ -140,7 +140,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         int blockX = MathHelper.floor(this.posX) + xChange;
         int blockY = MathHelper.floor(this.getEntityBoundingBox().minY) + yChange;
         int blockZ = MathHelper.floor(this.posZ) + zChange;
-        return this.worldworld.isAirBlock(new BlockPos(blockX, blockY, blockZ));
+        return this.world.isAirBlock(new BlockPos(blockX, blockY, blockZ));
     }
 
     @Override

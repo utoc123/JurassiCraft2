@@ -63,12 +63,12 @@ public class IncubatorBlockEntity extends MachineBaseBlockEntity {
             }
         }
 
-        return hasEnvironment && this.slots[process] != null && this.slots[process].stackSize > 0 && this.slots[process].getItem() instanceof DinosaurEggItem;
+        return hasEnvironment && this.slots[process] != null && this.slots[process].getMaxStackSize() > 0 && this.slots[process].getItem() instanceof DinosaurEggItem;
     }
 
     @Override
     protected void processItem(int process) {
-        if (this.canProcess(process) && !this.worldObj.isRemote) {
+        if (this.canProcess(process) && !this.world.isRemote) {
             ItemStack egg = this.slots[process];
 
             ItemStack incubatedEgg = new ItemStack(ItemHandler.HATCHED_EGG, 1, egg.getItemDamage());
@@ -171,4 +171,14 @@ public class IncubatorBlockEntity extends MachineBaseBlockEntity {
     protected boolean shouldResetProgress() {
         return false;
     }
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) { 
+		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
 }

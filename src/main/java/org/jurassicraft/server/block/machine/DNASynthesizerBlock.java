@@ -1,5 +1,11 @@
 package org.jurassicraft.server.block.machine;
 
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
+import org.jurassicraft.server.proxy.ServerProxy;
+import org.jurassicraft.server.tab.TabHandler;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,11 +22,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.block.entity.DNASynthesizerBlockEntity;
-import org.jurassicraft.server.proxy.ServerProxy;
-import org.jurassicraft.server.tab.TabHandler;
 
 public class DNASynthesizerBlock extends OrientedBlock {
     public DNASynthesizerBlock() {
@@ -56,7 +57,7 @@ public class DNASynthesizerBlock extends OrientedBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -65,7 +66,7 @@ public class DNASynthesizerBlock extends OrientedBlock {
             if (tileEntity instanceof DNASynthesizerBlockEntity) {
                 DNASynthesizerBlockEntity dnaSynthesizer = (DNASynthesizerBlockEntity) tileEntity;
 
-                if (dnaSynthesizer.isUseableByPlayer(player)) {
+                if (dnaSynthesizer.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_SYNTHESIZER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

@@ -50,7 +50,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
     @Override
     protected void processItem(int process) {
         if (this.canProcess(process)) {
-            Random rand = this.worldObj.rand;
+            Random rand = this.world.rand;
             ItemStack input = this.slots[0];
 
             ItemStack disc = null;
@@ -169,4 +169,14 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
     public String getName() {
         return this.hasCustomName() ? this.customName : "container.dna_extractor";
     }
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) { 
+		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
 }

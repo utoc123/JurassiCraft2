@@ -51,6 +51,6 @@ public class FossilGrinderContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.fossilGrinder.isUseableByPlayer(player);
+        return this.fossilGrinder.isUsableByPlayer(player);
     }
 }

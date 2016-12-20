@@ -52,6 +52,6 @@ public class EmbryonicMachineContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.embryonicMachine.isUseableByPlayer(player);
+        return this.embryonicMachine.isUsableByPlayer(player);
     }
 }

@@ -99,7 +99,7 @@ public class InventoryDinosaur implements IInventory {
         this.inventory[index] = stack;
 
         if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+            stack.stack = this.getInventoryStackLimit();
         }
     }
 
@@ -183,7 +183,7 @@ public class InventoryDinosaur implements IInventory {
                         j = itemstack.getMaxStackSize();
                     }
 
-                    itemstack.stackSize -= j;
+                    itemstack.shrink(1);
                     EntityItem itemEntity = new EntityItem(worldObj, this.entity.posX + offsetX, this.entity.posY + offsetY, this.entity.posZ + offsetZ, new ItemStack(itemstack.getItem(), j, itemstack.getItemDamage()));
                     float multiplier = 0.05F;
                     itemEntity.motionX = (float) rand.nextGaussian() * multiplier;

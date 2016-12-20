@@ -61,7 +61,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -70,7 +70,7 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock {
             if (tileEntity instanceof DNACombinatorHybridizerBlockEntity) {
                 DNACombinatorHybridizerBlockEntity embryonicMachine = (DNACombinatorHybridizerBlockEntity) tileEntity;
 
-                if (embryonicMachine.isUseableByPlayer(player)) {
+                if (embryonicMachine.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_COMBINATOR_HYBRIDIZER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

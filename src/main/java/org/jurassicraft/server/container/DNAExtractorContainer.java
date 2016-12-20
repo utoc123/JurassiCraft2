@@ -46,6 +46,6 @@ public class DNAExtractorContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.extractor.isUseableByPlayer(player);
+        return this.extractor.isUsableByPlayer(player);
     }
 }

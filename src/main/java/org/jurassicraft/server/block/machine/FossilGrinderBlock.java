@@ -56,7 +56,7 @@ public class FossilGrinderBlock extends OrientedBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -65,7 +65,7 @@ public class FossilGrinderBlock extends OrientedBlock {
             if (tileEntity instanceof FossilGrinderBlockEntity) {
                 FossilGrinderBlockEntity fossilGrinder = (FossilGrinderBlockEntity) tileEntity;
 
-                if (fossilGrinder.isUseableByPlayer(player)) {
+                if (fossilGrinder.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_FOSSIL_GRINDER_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

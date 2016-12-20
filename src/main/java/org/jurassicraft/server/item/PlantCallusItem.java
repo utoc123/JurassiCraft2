@@ -1,5 +1,13 @@
 package org.jurassicraft.server.item;
 
+import java.util.Locale;
+
+import org.jurassicraft.server.block.plant.DoublePlantBlock;
+import org.jurassicraft.server.block.plant.JCBlockCropsBase;
+import org.jurassicraft.server.plant.Plant;
+import org.jurassicraft.server.plant.PlantHandler;
+import org.jurassicraft.server.util.LangHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,13 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jurassicraft.server.block.plant.DoublePlantBlock;
-import org.jurassicraft.server.block.plant.JCBlockCropsBase;
-import org.jurassicraft.server.plant.Plant;
-import org.jurassicraft.server.plant.PlantHandler;
-import org.jurassicraft.server.util.LangHelper;
-
-import java.util.Locale;
 
 public class PlantCallusItem extends Item {
     public PlantCallusItem() {
@@ -32,10 +33,10 @@ public class PlantCallusItem extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (side == EnumFacing.UP && player.canPlayerEdit(pos.offset(side), side, stack)) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (side == EnumFacing.UP && player.canPlayerEdit(pos.offset(side), side, ItemStack.EMPTY)) {
             if (world.isAirBlock(pos.offset(side)) && world.getBlockState(pos).getBlock() == Blocks.FARMLAND) {
-                Plant plant = PlantHandler.getPlantById(stack.getItemDamage());
+                Plant plant = PlantHandler.getPlantById(player.getHeldItemMainhand().getItemDamage());
 
                 if (plant != null) {
                     Block block = plant.getBlock();
@@ -51,7 +52,7 @@ public class PlantCallusItem extends Item {
                         world.setBlockState(pos.up(), block.getDefaultState());
                     }
 
-                    --stack.stackSize;
+                    player.getHeldItemMainhand().shrink(1);
                     return EnumActionResult.SUCCESS;
                 }
             }

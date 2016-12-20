@@ -58,9 +58,9 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
                 List<Class<? extends Dinosaur>> usedGenes = new ArrayList<>();
 
                 for (Dinosaur discDinosaur : dinosaurs) {
-                    Class match = null;
+                    Class<? extends Dinosaur> match = null;
 
-                    for (Class clazz : dinoHybrid.getDinosaurs()) {
+                    for (Class<? extends Dinosaur> clazz : dinoHybrid.getDinosaurs()) {
                         if (clazz.isInstance(discDinosaur) && !usedGenes.contains(clazz)) {
                             match = clazz;
                         }
@@ -259,4 +259,14 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     public ITextComponent getDisplayName() {
         return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.hybridizerMode ? "container.dna_hybridizer" : "container.dna_combinator");
     }
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	public boolean isUsableByPlayer(EntityPlayer player) { 
+		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
 }

@@ -61,7 +61,7 @@ public class IncubatorBlock extends OrientedBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -70,7 +70,7 @@ public class IncubatorBlock extends OrientedBlock {
             if (tile instanceof IncubatorBlockEntity) {
                 IncubatorBlockEntity incubator = (IncubatorBlockEntity) tile;
 
-                if (incubator.isUseableByPlayer(player)) {
+                if (incubator.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_INCUBATOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

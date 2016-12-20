@@ -44,6 +44,6 @@ public class CultivateContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.cultivator.isUseableByPlayer(player);
+        return this.cultivator.isUsableByPlayer(player);
     }
 }

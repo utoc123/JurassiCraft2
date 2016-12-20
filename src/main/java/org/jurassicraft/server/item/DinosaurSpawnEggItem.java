@@ -53,7 +53,7 @@ public class DinosaurSpawnEggItem extends Item {
         if (dinosaur != null) {
             Class<? extends DinosaurEntity> entityClass = dinosaur.getDinosaurClass();
             try {
-                DinosaurEntity entity = entityClass.getConstructor(World.class).newInstance(player.worldObj);
+                DinosaurEntity entity = entityClass.getConstructor(World.class).newInstance(player.world);
                 entity.setDNAQuality(100);
 
                 int mode = this.getMode(stack);
@@ -79,8 +79,8 @@ public class DinosaurSpawnEggItem extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        int mode = this.changeMode(stack);
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        int mode = this.changeMode(player.getHeldItemMainhand());
         if (world.isRemote) {
             String modeString = "";
             if (mode == 0) {
@@ -90,9 +90,9 @@ public class DinosaurSpawnEggItem extends Item {
             } else if (mode == 2) {
                 modeString = "female";
             }
-            player.addChatMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+            player.sendMessage(new TextComponentString(new LangHelper("spawnegg.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
     }
 
     @Override
@@ -127,10 +127,10 @@ public class DinosaurSpawnEggItem extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return EnumActionResult.SUCCESS;
-        } else if (!player.canPlayerEdit(pos.offset(side), side, stack)) {
+        } else if (!player.canPlayerEdit(pos.offset(side), side, ItemStack.EMPTY)) {
             return EnumActionResult.PASS;
         } else {
             IBlockState state = world.getBlockState(pos);
@@ -140,11 +140,11 @@ public class DinosaurSpawnEggItem extends Item {
 
                 if (tile instanceof TileEntityMobSpawner) {
                     MobSpawnerBaseLogic spawnerLogic = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic();
-                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(this.getDinosaur(stack).getDinosaurClass()));
+                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(this.getDinosaur(ItemStack.EMPTY).getDinosaurClass()));
                     tile.markDirty();
 
                     if (!player.capabilities.isCreativeMode) {
-                        --stack.stackSize;
+                    	player.getHeldItemMainhand().shrink(1);
                     }
 
                     return EnumActionResult.SUCCESS;
@@ -169,7 +169,7 @@ public class DinosaurSpawnEggItem extends Item {
                     --stack.stackSize;
                 }
 
-                world.spawnEntityInWorld(dinosaur);
+                world.spawnEntity(dinosaur);
                 dinosaur.playLivingSound();
             }
 

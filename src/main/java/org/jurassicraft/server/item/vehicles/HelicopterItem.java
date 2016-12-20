@@ -27,11 +27,11 @@ public class HelicopterItem extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             HelicopterBaseEntity helicopter = new HelicopterBaseEntity(world, UUID.randomUUID());
             helicopter.setPosition(pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ);
-            world.spawnEntityInWorld(helicopter);
+            world.spawnEntity(helicopter);
         }
 
         return EnumActionResult.SUCCESS;

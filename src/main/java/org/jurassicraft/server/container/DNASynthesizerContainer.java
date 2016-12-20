@@ -51,6 +51,6 @@ public class DNASynthesizerContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.dnaSynthesizer.isUseableByPlayer(player);
+        return this.dnaSynthesizer.isUsableByPlayer(player);
     }
 }

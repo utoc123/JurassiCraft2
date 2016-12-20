@@ -40,7 +40,7 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
             float friction = 0.91F;
 
             if (this.onGround) {
-                friction = this.world.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                friction = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;
             }
 
             float f3 = 0.16277136F / (friction * friction * friction);
@@ -48,7 +48,7 @@ public abstract class FlyingDinosaurEntity extends DinosaurEntity {
             friction = 0.91F;
 
             if (this.onGround) {
-                friction = this.world.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                friction = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;
             }
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);

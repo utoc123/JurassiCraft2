@@ -54,6 +54,6 @@ public class IncubatorContainer extends MachineContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.incubator.isUseableByPlayer(player);
+        return this.incubator.isUsableByPlayer(player);
     }
 }

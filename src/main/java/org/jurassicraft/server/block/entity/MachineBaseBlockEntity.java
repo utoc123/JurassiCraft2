@@ -38,7 +38,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
             byte slot = item.getByte("Slot");
 
             if (slot >= 0 && slot < slots.length) {
-                slots[slot] = ItemStack.loadItemStackFromNBT(item);
+                slots[slot] = new ItemStack(NBTTagCompound);
             }
         }
 
@@ -98,14 +98,14 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         if (slots[index] != null) {
             ItemStack stack;
 
-            if (slots[index].stackSize <= count) {
+            if (slots[index].getMaxStackSize() <= count) {
                 stack = slots[index];
                 slots[index] = null;
                 return stack;
             } else {
                 stack = slots[index].splitStack(count);
 
-                if (slots[index].stackSize == 0) {
+                if (slots[index].getMaxStackSize() == 0) {
                     slots[index] = null;
                 }
 
@@ -136,7 +136,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         boolean stacksEqual = stack != null && stack.isItemEqual(slots[index]) && ItemStack.areItemStackTagsEqual(stack, slots[index]);
         slots[index] = stack;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();
         }
 
@@ -150,18 +150,6 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
                 this.markDirty();
             }
         }
-    }
-
-    private boolean isInput(int slot) {
-        int[] inputs = this.getInputs();
-
-        for (int input : inputs) {
-            if (input == slot) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private boolean isOutput(int slot) {
@@ -202,7 +190,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
             boolean flag = this.isProcessing(process);
             boolean sync = false;
 
-            if (!this.worldObj.isRemote) {
+            if (!this.world.isRemote) {
                 boolean hasInput = false;
 
                 for (int input : this.getInputs(process)) {
@@ -244,9 +232,9 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.worldObj.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-    }
+	public boolean isUsableByPlayer(EntityPlayer player) { 
+		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
 
     @Override
     public void openInventory(EntityPlayer player) {
@@ -305,7 +293,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         for (int slot : outputs) {
             ItemStack stack = slots[slot];
 
-            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.stackSize + output.stackSize <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage())) {
+            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.getMaxStackSize() + output.getMaxStackSize() <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage())) {
                 return slot;
             }
         }
@@ -362,7 +350,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         if (slots[slot] == null) {
             slots[slot] = stack;
         } else if (slots[slot].getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
-            slots[slot].stackSize += stack.stackSize;
+            slots[slot].stackSize += stack.getMaxStackSize();
         }
     }
 
@@ -371,7 +359,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
         slots[slot].stackSize--;
 
-        if (slots[slot].stackSize <= 0) {
+        if (slots[slot].getMaxStackSize() <= 0) {
             slots[slot] = null;
         }
     }

@@ -56,7 +56,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
         if (heldItem != null && heldItem.getItem() == ItemHandler.PADDOCK_SIGN) {
             if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface()) {
-                world.spawnEntityInWorld(paddockSign);
+                world.spawnEntity(paddockSign);
 
                 if (!player.capabilities.isCreativeMode) {
                     InventoryPlayer inventory = player.inventory;

@@ -61,7 +61,7 @@ public class DNAExtractorBlock extends OrientedBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else if (!player.isSneaking()) {
@@ -70,7 +70,7 @@ public class DNAExtractorBlock extends OrientedBlock {
             if (tileEntity instanceof DNAExtractorBlockEntity) {
                 DNAExtractorBlockEntity dnaExtractor = (DNAExtractorBlockEntity) tileEntity;
 
-                if (dnaExtractor.isUseableByPlayer(player)) {
+                if (dnaExtractor.isUsableByPlayer(player)) {
                     player.openGui(JurassiCraft.INSTANCE, ServerProxy.GUI_DNA_EXTRACTOR_ID, world, pos.getX(), pos.getY(), pos.getZ());
                     return true;
                 }

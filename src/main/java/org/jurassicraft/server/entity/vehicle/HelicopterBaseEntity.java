@@ -78,7 +78,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
         for (int i = 0; i < this.seats.length; i++) {
             float distance = i == 0 ? 1.5f : 0; // TODO: Better way to define position
             this.seats[i] = new HelicopterSeatEntity(distance, i, this);
-            this.world.spawnEntityInWorld(this.seats[i]);
+            this.world.spawnEntity(this.seats[i]);
         }
         this.setID(UUID.randomUUID());
         this.moduleSpots = new HelicopterModuleSpot[ModulePosition.values().length];
@@ -342,11 +342,11 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
     }
 
     @Override
-    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
+    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
         // Transforms the vector in local coordinates (cancels possible rotations to simplify 'seat detection')
         Vec3d localVec = vec.rotateYaw((float) Math.toRadians(this.rotationYaw));
 
-        if (!this.attachModule(player, localVec, stack)) {
+        if (!this.attachModule(player, localVec, ItemStack.EMPTY)) {
             System.out.println(localVec);
 
             if (localVec.zCoord > 0.6) {
@@ -381,7 +381,7 @@ public class HelicopterBaseEntity extends EntityLivingBase implements IEntityAdd
                         if (spot != null && spot.isClicked(localVec)) {
                             if (spot.addModule(module)) {
                                 if (!player.capabilities.isCreativeMode) {
-                                    stack.stackSize--;
+                                	player.getHeldItemMainhand().shrink(1);
                                 }
                                 return true;
                             }
