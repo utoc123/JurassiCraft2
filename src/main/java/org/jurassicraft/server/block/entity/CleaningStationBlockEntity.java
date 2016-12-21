@@ -99,7 +99,7 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
         this.slots[index] = stack;
 
         if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        	stack.setCount(this.getInventoryStackLimit());
         }
 
         if (index == 0 && !flag) {
@@ -208,7 +208,7 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
                         sync = true;
 
                         if (this.slots[1] != null) {
-                            --this.slots[1].stackSize;
+                            this.slots[1].shrink(1);
 
                             if (this.slots[1].getMaxStackSize() == 0) {
                                 this.slots[1] = this.slots[1].getItem().getContainerItem(this.slots[1]);
@@ -291,10 +291,10 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
                 if (this.slots[emptySlot] == null) {
                     this.slots[emptySlot] = output;
                 } else if (this.slots[emptySlot].getItem() == output.getItem() && ItemStack.areItemStackTagsEqual(this.slots[emptySlot], output)) {
-                    this.slots[emptySlot].stackSize += output.getMaxStackSize();
+                    this.slots[emptySlot].grow(output.getMaxStackSize());
                 }
 
-                this.slots[0].stackSize--;
+                this.slots[0].shrink(1);
 
                 if (this.slots[0].getMaxStackSize() <= 0) {
                     this.slots[0] = null;

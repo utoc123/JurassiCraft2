@@ -108,6 +108,8 @@ public class DilophosaurusEntity extends DinosaurEntity implements IRangedAttack
                 return SoundHandler.DILOPHOSAURUS_DEATH;
             case INJURED:
                 return SoundHandler.DILOPHOSAURUS_HURT;
+		default:
+			break;
         }
 
         return null;

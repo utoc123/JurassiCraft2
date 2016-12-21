@@ -158,15 +158,15 @@ public class DinosaurSpawnEggItem extends Item {
                 yOffset = 0.5D;
             }
 
-            DinosaurEntity dinosaur = this.spawnDinosaur(world, player, stack, pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
+            DinosaurEntity dinosaur = this.spawnDinosaur(world, player, ItemStack.EMPTY, pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 
             if (dinosaur != null) {
-                if (stack.hasDisplayName()) {
-                    dinosaur.setCustomNameTag(stack.getDisplayName());
+                if (ItemStack.EMPTY.hasDisplayName()) {
+                    dinosaur.setCustomNameTag(ItemStack.EMPTY.getDisplayName());
                 }
 
                 if (!player.capabilities.isCreativeMode) {
-                    --stack.stackSize;
+                	player.getHeldItemMainhand().shrink(1);
                 }
 
                 world.spawnEntity(dinosaur);

@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.item;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,7 +59,7 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
             this.motionY *= 0.85;
             this.motionZ *= 0.85;
 
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
         }
     }
 

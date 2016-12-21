@@ -39,7 +39,7 @@ public class JeepWranglerRenderer implements IRenderFactory<JeepWranglerEntity> 
 
                 TabulaModelContainer container = TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/jeep_wrangler/jeep_wrangler.tbl");
 
-                this.baseModel = new ResetControlTabulaModel(container, animator);
+                this.baseModel = new ResetControlTabulaModel(container);
                 this.destroyModel = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/jeep_wrangler/jeep_wrangler_break.tbl"), animator);
             } catch (Exception e) {
                 JurassiCraft.INSTANCE.getLogger().fatal("Failed to load the models for the Jeep Wrangler", e);

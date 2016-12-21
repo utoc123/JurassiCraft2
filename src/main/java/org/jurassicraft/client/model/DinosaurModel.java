@@ -17,7 +17,7 @@ public class DinosaurModel extends FixedTabulaModel {
         this(model, null);
     }
 
-    public DinosaurModel(TabulaModelContainer model, ITabulaModelAnimator animator) {
+    public DinosaurModel(TabulaModelContainer model, ITabulaModelAnimator<?> animator) {
         super(model, animator);
     }
 
