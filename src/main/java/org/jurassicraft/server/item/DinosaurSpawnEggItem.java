@@ -1,5 +1,16 @@
 package org.jurassicraft.server.item;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
+
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -18,6 +29,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
@@ -25,16 +37,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.DinosaurEntity;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.util.LangHelper;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
 
 public class DinosaurSpawnEggItem extends Item {
     public DinosaurSpawnEggItem() {
@@ -114,7 +116,7 @@ public class DinosaurSpawnEggItem extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);
@@ -140,7 +142,7 @@ public class DinosaurSpawnEggItem extends Item {
 
                 if (tile instanceof TileEntityMobSpawner) {
                     MobSpawnerBaseLogic spawnerLogic = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic();
-                    spawnerLogic.setEntityName(EntityList.CLASS_TO_NAME.get(this.getDinosaur(ItemStack.EMPTY).getDinosaurClass()));
+                    spawnerLogic.setEntityId(EntityList.getKey(this.getDinosaur(ItemStack.EMPTY).getDinosaurClass()));
                     tile.markDirty();
 
                     if (!player.capabilities.isCreativeMode) {
@@ -152,7 +154,7 @@ public class DinosaurSpawnEggItem extends Item {
             }
 
             pos = pos.offset(side);
-            double yOffset = 0.0D;
+            double yOffset = 0.0D;	
 
             if (side == EnumFacing.UP && state.getBlock() instanceof BlockFence) {
                 yOffset = 0.5D;

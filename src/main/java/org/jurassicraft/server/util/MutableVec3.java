@@ -6,7 +6,6 @@ import net.minecraft.util.math.MathHelper;
  * Mutable version of Minecraft's Vec3
  */
 public class MutableVec3 {
-    private static final String __OBFID = "CL_00000612";
     /**
      * X coordinate of Vec3D
      */

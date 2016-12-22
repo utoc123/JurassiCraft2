@@ -1,5 +1,8 @@
 package org.jurassicraft.server.message;
 
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.entity.DinosaurEntity;
+
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.server.network.AbstractMessage;
 import net.minecraft.client.Minecraft;
@@ -7,14 +10,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class OpenFieldGuideGuiMessage extends AbstractMessage<OpenFieldGuideGuiMessage> {
     private DinosaurEntity entity;
     private int entityId;
-    private boolean flocking;
-    private boolean fleeing;
     private DinosaurEntity.FieldGuideInfo fieldGuideInfo;
 
     public OpenFieldGuideGuiMessage() {

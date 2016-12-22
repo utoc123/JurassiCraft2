@@ -1,16 +1,16 @@
 package org.jurassicraft.client.model.animation;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.ilexiconn.llibrary.server.animation.Animation;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import java.util.Map;
+
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
-import java.util.Map;
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * @author jabelar
@@ -18,8 +18,6 @@ import java.util.Map;
  */
 @SideOnly(Side.CLIENT)
 public class JabelarAnimationHandler {
-    private static final Minecraft MC = Minecraft.getMinecraft();
-
     private final AnimationPass DEFAULT_PASS;
     private final AnimationPass MOVEMENT_PASS;
 

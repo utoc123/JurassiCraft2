@@ -38,7 +38,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
             byte slot = item.getByte("Slot");
 
             if (slot >= 0 && slot < slots.length) {
-                slots[slot] = new ItemStack(NBTTagCompound);
+                slots[slot] = new ItemStack(blockType);
             }
         }
 
@@ -137,7 +137,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         slots[index] = stack;
 
         if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+            stack.equals(this.getInventoryStackLimit());
         }
 
         if (!stacksEqual) {
@@ -350,14 +350,14 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         if (slots[slot] == null) {
             slots[slot] = stack;
         } else if (slots[slot].getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
-            slots[slot].stackSize += stack.getMaxStackSize();
+            slots[slot].grow(1);
         }
     }
 
     protected void decreaseStackSize(int slot) {
         ItemStack[] slots = this.getSlots();
 
-        slots[slot].stackSize--;
+        slots[slot].shrink(1);
 
         if (slots[slot].getMaxStackSize() <= 0) {
             slots[slot] = null;

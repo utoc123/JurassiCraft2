@@ -82,7 +82,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
                 this.world.spawnEntity(dino);
 
-                this.slots[0].stackSize--;
+                this.slots[0].shrink(1);
 
                 if (this.slots[0].getMaxStackSize() <= 0) {
                     this.slots[0] = null;
@@ -102,7 +102,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
         if (!this.world.isRemote) {
             if (this.waterLevel < 3 && this.slots[2] != null && this.slots[2].getItem() == Items.WATER_BUCKET) {
                 if (this.slots[3] == null || this.slots[3].getMaxStackSize() < 16) {
-                    this.slots[2].stackSize--;
+                    this.slots[2].shrink(1);
 
                     if (this.slots[2].getMaxStackSize() <= 0) {
                         this.slots[2] = null;
@@ -113,7 +113,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
                     if (this.slots[3] == null) {
                         this.slots[3] = new ItemStack(Items.BUCKET);
                     } else if (this.slots[3].getItem() == Items.BUCKET) {
-                        this.slots[3].stackSize++;
+                        this.slots[3].grow(1);
                     }
 
                     sync = true;
@@ -140,7 +140,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             this.slots[1] = null;
             this.slots[1] = new ItemStack(Items.BUCKET);
         } else {
-            this.slots[1].stackSize--;
+            this.slots[1].shrink(1);
 
             if (this.slots[1].getMaxStackSize() <= 0) {
                 this.slots[1] = null;

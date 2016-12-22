@@ -1,5 +1,18 @@
 package org.jurassicraft.server.item;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.OrientedBlock;
+import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -12,24 +25,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.util.LangHelper;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
 
 public class ActionFigureItem extends Item {
     public ActionFigureItem() {
@@ -47,7 +49,7 @@ public class ActionFigureItem extends Item {
 
             if (block.canPlaceBlockAt(world, pos)) {
                 IBlockState state = block.getDefaultState();
-                world.setBlockState(pos, ((OrientedBlock) block).onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player));
+                world.setBlockState(pos, ((OrientedBlock) block).getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player));
                 block.onBlockPlacedBy(world, pos, state, player, ItemStack.EMPTY);
 
                 int mode = this.getMode(player.getHeldItemMainhand());
@@ -81,7 +83,7 @@ public class ActionFigureItem extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subtypes) {
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> subtypes) {
         List<Dinosaur> dinosaurs = new LinkedList<>(EntityHandler.getDinosaurs().values());
 
         Collections.sort(dinosaurs);

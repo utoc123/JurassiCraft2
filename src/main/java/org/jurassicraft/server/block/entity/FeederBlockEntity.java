@@ -107,7 +107,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         this.slots[index] = stack;
 
         if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+            stack.equals(this.getInventoryStackLimit());
         }
     }
 
@@ -196,7 +196,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
             byte slot = item.getByte("Slot");
 
             if (slot >= 0 && slot < slots.length) {
-                slots[slot] = ItemStack.loadItemStackFromNBT(item);
+                slots[slot] = new ItemStack(item);
             }
         }
 

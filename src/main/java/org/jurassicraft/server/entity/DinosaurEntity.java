@@ -660,7 +660,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                             this.setAnimation(DinosaurAnimation.EATING.get());
 
                             if (itemEntity.getEntityItem().getMaxStackSize() > 1) {
-                                itemEntity.getEntityItem().stackSize--;
+                                itemEntity.getEntityItem().shrink(1);
                             } else {
                                 itemEntity.setDead();
                             }

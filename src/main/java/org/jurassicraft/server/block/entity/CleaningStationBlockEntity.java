@@ -136,7 +136,7 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
             byte slot = item.getByte("Slot");
 
             if (slot >= 0 && slot < this.slots.length) {
-                this.slots[slot] = ItemStack.loadItemStackFromNBT(item);
+                this.slots[slot] = new ItemStack(item);
             }
         }
 

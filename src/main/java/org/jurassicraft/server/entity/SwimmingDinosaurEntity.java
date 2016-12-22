@@ -1,5 +1,6 @@
 package org.jurassicraft.server.entity;
 
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
@@ -62,7 +63,7 @@ public abstract class SwimmingDinosaurEntity extends DinosaurEntity {
     public void moveEntityWithHeading(float strafe, float forward) {
         if (this.isServerWorld() && this.isInWater()) {
             this.moveRelative(strafe, forward, 0.1F);
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.7D;
             this.motionY *= 0.7D;
             this.motionZ *= 0.7D;

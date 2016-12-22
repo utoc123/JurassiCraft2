@@ -15,7 +15,6 @@ import org.jurassicraft.server.entity.vehicle.modules.ModulePosition;
 public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesMessage> {
     private NBTTagCompound compound;
     private ModulePosition pos;
-    private HelicopterModuleSpot spot;
     private int heliID;
 
     public HelicopterModulesMessage() {
@@ -24,7 +23,6 @@ public class HelicopterModulesMessage extends AbstractMessage<HelicopterModulesM
     public HelicopterModulesMessage(int heliID, ModulePosition pos, HelicopterModuleSpot spot) {
         this.heliID = heliID;
         this.pos = pos;
-        this.spot = spot;
         this.compound = new NBTTagCompound();
         spot.writeToNBT(this.compound);
     }

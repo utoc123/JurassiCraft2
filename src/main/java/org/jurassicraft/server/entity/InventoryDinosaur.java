@@ -45,7 +45,7 @@ public class InventoryDinosaur implements IInventory {
             int j = slotTag.getByte("Slot") & 255;
 
             if (j >= 0 && j < this.inventory.length) {
-                this.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(slotTag));
+                this.setInventorySlotContents(j, new ItemStack(slotTag));
             }
         }
     }
@@ -99,7 +99,7 @@ public class InventoryDinosaur implements IInventory {
         this.inventory[index] = stack;
 
         if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.stack = this.getInventoryStackLimit();
+            stack.equals(this.getInventoryStackLimit());
         }
     }
 

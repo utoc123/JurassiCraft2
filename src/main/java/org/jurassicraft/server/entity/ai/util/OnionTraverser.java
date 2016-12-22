@@ -1,11 +1,9 @@
 package org.jurassicraft.server.entity.ai.util;
 
+import java.util.Iterator;
+
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Iterator;
 
 /**
  * Copyright 2016 Timeless Mod Team.
@@ -14,7 +12,6 @@ import java.util.Iterator;
  * the layers are boxes around the center point.
  */
 public class OnionTraverser implements Iterable<BlockPos> {
-    private static final Logger LOGGER = LogManager.getLogger();
     private final BlockPos _center;
     private final int _maxRadius;
 
@@ -114,6 +111,8 @@ public class OnionTraverser implements Iterable<BlockPos> {
                         this.nextLayer();
                     }
                     break;
+			default:
+				break;
             }
         }
 
@@ -140,6 +139,8 @@ public class OnionTraverser implements Iterable<BlockPos> {
                         --this._x;
                     }
                     break;
+			default:
+				break;
             }
 
             if (this._z > this._maxZ) {

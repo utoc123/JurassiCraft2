@@ -1,7 +1,5 @@
 package org.jurassicraft.server.entity.ai;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.client.sound.SoundHandler;
@@ -9,11 +7,12 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.GrowthStage;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAIBase;
+
 public class VelociraptorLeapEntityAI extends EntityAIBase {
     private VelociraptorEntity entity;
     private EntityLivingBase target;
-
-    private float leapLength;
 
     private int prevTick;
     private DinosaurAnimation animation;
@@ -54,7 +53,7 @@ public class VelociraptorLeapEntityAI extends EntityAIBase {
         this.animation = DinosaurAnimation.VELOCIRAPTOR_PREPARE_POUNCE;
         PoseHandler poseHandler = this.entity.getDinosaur().getPoseHandler();
         GrowthStage growthStage = this.entity.getGrowthStage();
-        this.leapLength = poseHandler.getAnimationLength(DinosaurAnimation.VELOCIRAPTOR_LEAP.get(), growthStage);
+        poseHandler.getAnimationLength(DinosaurAnimation.VELOCIRAPTOR_LEAP.get(), growthStage);
         this.entity.getLookHelper().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
         this.ticked = false;
     }

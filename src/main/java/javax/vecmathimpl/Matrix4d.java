@@ -114,13 +114,6 @@ public class Matrix4d implements java.io.Serializable, Cloneable {
      * The fourth element of the fourth row.
      */
     public double m33;
-    /*
-    double[] tmp = new double[16];
-    double[] tmp_rot = new double[9];  // scratch matrix
-    double[] tmp_scale = new double[3];  // scratch matrix
-    */
-    private static final double EPS = 1.0E-10;
-
     /**
      * Constructs and initializes a Matrix4d from the specified 16 values.
      *

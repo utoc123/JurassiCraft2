@@ -43,6 +43,8 @@ public class VelociraptorEntity extends DinosaurEntity {
                 return SoundHandler.VELOCIRAPTOR_HURT;
             case CALLING:
                 return SoundHandler.VELOCIRAPTOR_CALL;
+		default:
+			break;
         }
 
         return null;
