@@ -69,7 +69,7 @@ public class AnimationPass {
     protected void initIncrements(Animatable entity) {
         float animationDegree = this.getAnimationDegree(entity);
 
-        for (int partIndex = 0; partIndex < this.parts.length; partIndex++) {
+        for (int partIndex = 0; partIndex < Math.min(this.pose.length, this.parts.length); partIndex++) {
             AdvancedModelRenderer part = this.parts[partIndex];
             PosedCuboid nextPose = this.pose[partIndex];
 
@@ -123,7 +123,7 @@ public class AnimationPass {
         if (this.pose == null) {
             JurassiCraft.INSTANCE.getLogger().error("Trying to animate to a null pose array");
         } else {
-            for (int partIndex = 0; partIndex < this.parts.length; partIndex++) {
+            for (int partIndex = 0; partIndex < Math.min(this.parts.length, this.pose.length); partIndex++) {
                 if (this.pose[partIndex] == null) {
                     JurassiCraft.INSTANCE.getLogger().error("Part " + partIndex + " in pose is null");
                 } else {

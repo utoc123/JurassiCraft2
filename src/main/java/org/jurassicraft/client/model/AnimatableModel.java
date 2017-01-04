@@ -48,6 +48,20 @@ public class AnimatableModel extends FixedTabulaModel {
         return cubeIdentifiers;
     }
 
+    public String[] getCubeNames() {
+        String[] cubeNames = new String[this.cubes.size()];
+        int index = 0;
+
+        Set<String> names = this.cubes.keySet();
+
+        for (String identifier : names) {
+            cubeNames[index] = identifier;
+            index++;
+        }
+
+        return cubeNames;
+    }
+
     public Map<String, AdvancedModelRenderer> getIdentifierCubes() {
         return this.identifierMap;
     }

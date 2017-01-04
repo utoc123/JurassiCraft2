@@ -140,8 +140,8 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
             if (mainModel == null) {
                 throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
             }
-            String[] cubeIdentifierArray = mainModel.getCubeIdentifierArray();
-            int partCount = cubeIdentifierArray.length;
+            String[] identifiers = mainModel.getCubeIdentifierArray();
+            int partCount = identifiers.length;
             for (int i = 0; i < posedModelResources.size(); i++) {
                 String resource = posedModelResources.get(i);
                 AnimatableModel model = JabelarAnimationHandler.loadModel(resource);
@@ -150,12 +150,15 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
                 }
                 PosedCuboid[] pose = new PosedCuboid[partCount];
                 for (int partIndex = 0; partIndex < partCount; partIndex++) {
-                    String identifier = cubeIdentifierArray[partIndex];
+                    String identifier = identifiers[partIndex];
                     AdvancedModelRenderer cube = model.getCubeByIdentifier(identifier);
                     if (cube == null) {
-                        JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " (" + partIndex + ") from the model " + resource);
+                        AdvancedModelRenderer mainCube = mainModel.getCubeByIdentifier(identifier);
+                        JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " (" + mainCube.boxName + ", " + partIndex + ") from the model " + resource);
+                        pose[partIndex] = new PosedCuboid(mainCube);
+                    } else {
+                        pose[partIndex] = new PosedCuboid(cube);
                     }
-                    pose[partIndex] = new PosedCuboid(cube);
                 }
                 posedCuboids[i] = pose;
             }

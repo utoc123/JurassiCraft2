@@ -15,11 +15,11 @@ public class TyrannosaurusAnimator extends EntityAnimator<TyrannosaurusEntity> {
         AdvancedModelRenderer stomach = model.getCube("Body 2");
         AdvancedModelRenderer chest = model.getCube("Body 3");
 
-        AdvancedModelRenderer neck1 = model.getCube("Neck part 1");
-        AdvancedModelRenderer neck2 = model.getCube("Neck part 2");
-        AdvancedModelRenderer neck3 = model.getCube("Neck part 3");
-        AdvancedModelRenderer neck4 = model.getCube("Neck part 4");
-        AdvancedModelRenderer neck5 = model.getCube("Neck part 5");
+        AdvancedModelRenderer neck1 = model.getCube("Neck1");
+        AdvancedModelRenderer neck2 = model.getCube("Neck2");
+        AdvancedModelRenderer neck3 = model.getCube("Neck3");
+        AdvancedModelRenderer neck4 = model.getCube("Neck4");
+        AdvancedModelRenderer neck5 = model.getCube("Neck5");
 
         AdvancedModelRenderer head = model.getCube("Head");
 
