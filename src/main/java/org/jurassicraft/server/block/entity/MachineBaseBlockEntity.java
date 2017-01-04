@@ -1,8 +1,8 @@
 package org.jurassicraft.server.block.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -11,8 +11,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.NonNullList;
 
 public abstract class MachineBaseBlockEntity extends TileEntityLockable implements ITickable, ISidedInventory {
     protected String customName;
@@ -20,25 +19,19 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
     protected int[] processTime = new int[this.getProcessCount()];
     protected int[] totalProcessTime = new int[this.getProcessCount()];
 
-    @SideOnly(Side.CLIENT)
-    public static boolean isProcessing(IInventory inventory, int index) {
-        return inventory.getField(index) > 0;
-    }
-
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         NBTTagList itemList = compound.getTagList("Items", 10);
-        ItemStack[] slots = new ItemStack[this.getSlots().length];
 
         for (int i = 0; i < itemList.tagCount(); ++i) {
             NBTTagCompound item = itemList.getCompoundTagAt(i);
 
             byte slot = item.getByte("Slot");
 
-            if (slot >= 0 && slot < slots.length) {
-                slots[slot] = new ItemStack(blockType);
+            if (slot >= 0 && slot < this.getSizeInventory()) {
+                this.getSlots().set(slot, new ItemStack(item));
             }
         }
 
@@ -50,8 +43,6 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
         if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
         }
-
-        this.setSlots(slots);
     }
 
     @Override
@@ -63,16 +54,17 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
             compound.setShort("ProcessTimeTotal" + i, (short) this.totalProcessTime[i]);
         }
 
-        ItemStack[] slots = this.getSlots();
+        NonNullList<ItemStack> slots = this.getSlots();
 
         NBTTagList itemList = new NBTTagList();
 
         for (int slot = 0; slot < this.getSizeInventory(); ++slot) {
-            if (slots[slot] != null) {
+            ItemStack stack = slots.get(slot);
+            if (!stack.isEmpty()) {
                 NBTTagCompound itemTag = new NBTTagCompound();
                 itemTag.setByte("Slot", (byte) slot);
 
-                slots[slot].writeToNBT(itemTag);
+                stack.writeToNBT(itemTag);
                 itemList.appendTag(itemTag);
             }
         }
@@ -88,56 +80,28 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.getSlots()[index];
+        return this.getSlots().get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        ItemStack[] slots = this.getSlots();
-
-        if (slots[index] != null) {
-            ItemStack stack;
-
-            if (slots[index].getMaxStackSize() <= count) {
-                stack = slots[index];
-                slots[index] = null;
-                return stack;
-            } else {
-                stack = slots[index].splitStack(count);
-
-                if (slots[index].getMaxStackSize() == 0) {
-                    slots[index] = null;
-                }
-
-                return stack;
-            }
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndSplit(this.getSlots(), index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        ItemStack[] slots = this.getSlots();
-
-        if (slots[index] != null) {
-            ItemStack slot = slots[index];
-            slots[index] = null;
-            return slot;
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.getSlots(), index);
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        ItemStack[] slots = this.getSlots();
+        NonNullList<ItemStack> slots = this.getSlots();
 
-        boolean stacksEqual = stack != null && stack.isItemEqual(slots[index]) && ItemStack.areItemStackTagsEqual(stack, slots[index]);
-        slots[index] = stack;
+        boolean stacksEqual = !stack.isEmpty() && stack.isItemEqual(slots.get(index)) && ItemStack.areItemStackTagsEqual(stack, slots.get(index));
+        slots.set(index, stack);
 
-        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.equals(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         if (!stacksEqual) {
@@ -175,7 +139,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     @Override
     public int getSizeInventory() {
-        return this.getSlots().length;
+        return this.getSlots().size();
     }
 
     public boolean isProcessing(int index) {
@@ -184,7 +148,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     @Override
     public void update() {
-        ItemStack[] slots = this.getSlots();
+        NonNullList<ItemStack> slots = this.getSlots();
 
         for (int process = 0; process < this.getProcessCount(); process++) {
             boolean flag = this.isProcessing(process);
@@ -194,7 +158,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
                 boolean hasInput = false;
 
                 for (int input : this.getInputs(process)) {
-                    if (slots[input] != null) {
+                    if (!slots.get(input).isEmpty()) {
                         hasInput = true;
                         break;
                     }
@@ -205,7 +169,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
                     if (this.processTime[process] >= this.totalProcessTime[process]) {
                         this.processTime[process] = 0;
-                        this.totalProcessTime[process] = this.getStackProcessTime(slots[this.getInputs()[0]]);
+                        this.totalProcessTime[process] = this.getStackProcessTime(slots.get(this.getInputs()[0]));
                         this.processItem(process);
                     }
 
@@ -232,9 +196,9 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
     }
 
     @Override
-	public boolean isUsableByPlayer(EntityPlayer player) { 
-		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-	}
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+    }
 
     @Override
     public void openInventory(EntityPlayer player) {
@@ -277,23 +241,23 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     protected abstract int[] getOutputs();
 
-    protected abstract ItemStack[] getSlots();
+    protected abstract NonNullList<ItemStack> getSlots();
 
-    protected abstract void setSlots(ItemStack[] slots);
+    protected abstract void setSlots(NonNullList<ItemStack> slots);
 
     public boolean hasOutputSlot(ItemStack output) {
         return this.getOutputSlot(output) != -1;
     }
 
     public int getOutputSlot(ItemStack output) {
-        ItemStack[] slots = this.getSlots();
+        NonNullList<ItemStack> slots = this.getSlots();
 
         int[] outputs = this.getOutputs();
 
         for (int slot : outputs) {
-            ItemStack stack = slots[slot];
+            ItemStack stack = slots.get(slot);
 
-            if (stack == null || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.getMaxStackSize() + output.getMaxStackSize() <= stack.getMaxStackSize()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage())) {
+            if (stack.isEmpty() || ((ItemStack.areItemStackTagsEqual(stack, output) && stack.getCount() + output.getCount() <= stack.getCount()) && stack.getItem() == output.getItem() && stack.getItemDamage() == output.getItemDamage())) {
                 return slot;
             }
         }
@@ -332,11 +296,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     @Override
     public void clear() {
-        ItemStack[] slots = this.getSlots();
-
-        for (int i = 0; i < slots.length; ++i) {
-            slots[i] = null;
-        }
+        this.getSlots().clear();
     }
 
     @Override
@@ -345,22 +305,24 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
     }
 
     protected void mergeStack(int slot, ItemStack stack) {
-        ItemStack[] slots = this.getSlots();
+        NonNullList<ItemStack> slots = this.getSlots();
+        ItemStack current = slots.get(slot);
 
-        if (slots[slot] == null) {
-            slots[slot] = stack;
-        } else if (slots[slot].getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
-            slots[slot].grow(1);
+        if (current.isEmpty()) {
+            slots.set(slot, stack);
+        } else if (current.getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(current, stack)) {
+            current.grow(stack.getCount());
         }
     }
 
     protected void decreaseStackSize(int slot) {
-        ItemStack[] slots = this.getSlots();
+        NonNullList<ItemStack> slots = this.getSlots();
+        ItemStack stack = slots.get(slot);
 
-        slots[slot].shrink(1);
+        stack.shrink(1);
 
-        if (slots[slot].getMaxStackSize() <= 0) {
-            slots[slot] = null;
+        if (stack.getCount() <= 0) {
+            slots.set(slot, ItemStack.EMPTY);
         }
     }
 
@@ -385,6 +347,16 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
     }
 
     protected boolean shouldResetProgress() {
+        return true;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : this.getSlots()) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
         return true;
     }
 }

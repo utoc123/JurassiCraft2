@@ -1,13 +1,5 @@
 package org.jurassicraft.server.block;
 
-import java.util.Map;
-
-import org.jurassicraft.server.api.SubBlocksBlock;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.item.block.FossilItemBlock;
-import org.jurassicraft.server.tab.TabHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -25,6 +17,13 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.SubBlocksBlock;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.item.block.FossilItemBlock;
+import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.Map;
 
 public class FossilBlock extends Block implements SubBlocksBlock {
     public static final PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);

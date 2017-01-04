@@ -60,8 +60,8 @@ public class EmbryonicMachineSpecialRenderer extends TileEntitySpecialRenderer<E
             double scale = 1.0;
             GlStateManager.scale(scale, -scale, scale);
 
-            boolean hasDNA = tileEntity.getStackInSlot(0) != null;
-            boolean hasPetridish = tileEntity.getStackInSlot(1) != null;
+            boolean hasDNA = !tileEntity.getStackInSlot(0).isEmpty();
+            boolean hasPetridish = !tileEntity.getStackInSlot(1).isEmpty();
 
             this.model.getCube("Petri dish 1").showModel = hasPetridish;
             this.model.getCube("Petri dish 2").showModel = hasPetridish;

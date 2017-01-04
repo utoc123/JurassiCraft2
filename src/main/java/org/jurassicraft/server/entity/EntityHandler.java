@@ -1,12 +1,10 @@
 package org.jurassicraft.server.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.ProgressManager;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.dinosaur.BrachiosaurusDinosaur;
@@ -24,11 +22,12 @@ import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.ProgressManager;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class EntityHandler {
     public static final Dinosaur BRACHIOSAURUS = new BrachiosaurusDinosaur();
@@ -120,7 +119,7 @@ public class EntityHandler {
 
     private static void registerEntity(Class<? extends Entity> entity, String name) {
         String formattedName = name.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-        ResourceLocation registryName = new ResourceLocation(JurassiCraft.MODID + ":"+formattedName);
+        ResourceLocation registryName = new ResourceLocation(JurassiCraft.MODID, formattedName);
 
         EntityRegistry.registerModEntity(registryName, entity, formattedName, entityId++, JurassiCraft.INSTANCE, 1024, 1, true);
     }

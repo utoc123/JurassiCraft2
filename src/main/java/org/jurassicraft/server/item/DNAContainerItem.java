@@ -1,15 +1,14 @@
 package org.jurassicraft.server.item;
 
-import java.util.List;
-
-import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.util.LangHelper;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
+import org.jurassicraft.server.genetics.GeneticsHelper;
+import org.jurassicraft.server.util.LangHelper;
+
+import java.util.List;
 
 public class DNAContainerItem extends Item {
     public int getContainerId(ItemStack stack) {

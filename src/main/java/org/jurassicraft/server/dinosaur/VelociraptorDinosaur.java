@@ -32,6 +32,6 @@ public class VelociraptorDinosaur extends Dinosaur {
         this.setDefendOwner(true);
         this.setMaxHerdSize(8);
         this.setAttackBias(800.0);
-        this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DENSE));
+        this.setSpawn(10, BiomeDictionary.getBiomes(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.DENSE));
     }
 }

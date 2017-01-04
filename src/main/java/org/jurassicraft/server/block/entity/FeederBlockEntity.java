@@ -5,16 +5,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.block.machine.FeederBlock;
+import org.jurassicraft.server.container.FeederContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.food.FoodHelper;
@@ -27,7 +30,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
     public int prevOpenAnimation;
     public int openAnimation;
     protected String customName;
-    private ItemStack[] slots = new ItemStack[18];
+    private NonNullList<ItemStack> slots = NonNullList.withSize(18, ItemStack.EMPTY);
     private int stayOpen;
     private boolean open;
     private DinosaurEntity feeding;
@@ -35,7 +38,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
 
     @Override
     public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-        return null;
+        return new FeederContainer(inventory, this);
     }
 
     @Override
@@ -60,54 +63,30 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
 
     @Override
     public int getSizeInventory() {
-        return this.slots.length;
+        return this.slots.size();
     }
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.slots[index];
+        return this.slots.get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        if (this.slots[index] != null) {
-            ItemStack stack;
-
-            if (this.slots[index].getMaxStackSize() <= count) {
-                stack = this.slots[index];
-                this.slots[index] = null;
-                return stack;
-            } else {
-                stack = this.slots[index].splitStack(count);
-
-                if (this.slots[index].getMaxStackSize() == 0) {
-                    this.slots[index] = null;
-                }
-
-                return stack;
-            }
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndSplit(this.slots, index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        if (this.slots[index] != null) {
-            ItemStack itemstack = this.slots[index];
-            this.slots[index] = null;
-            return itemstack;
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.slots, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.slots[index] = stack;
+        this.slots.set(index, stack);
 
-        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.equals(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -116,10 +95,10 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         return 64;
     }
 
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer player) { 
-		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-	}
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+    }
 
     @Override
     public void openInventory(EntityPlayer player) {
@@ -164,9 +143,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.slots.length; ++i) {
-            this.slots[i] = null;
-        }
+        this.slots.clear();
     }
 
     @Override
@@ -188,23 +165,20 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         super.readFromNBT(compound);
 
         NBTTagList itemList = compound.getTagList("Items", 10);
-        ItemStack[] slots = new ItemStack[this.slots.length];
 
         for (int i = 0; i < itemList.tagCount(); ++i) {
             NBTTagCompound item = itemList.getCompoundTagAt(i);
 
             byte slot = item.getByte("Slot");
 
-            if (slot >= 0 && slot < slots.length) {
-                slots[slot] = new ItemStack(item);
+            if (slot >= 0 && slot < this.getSizeInventory()) {
+                this.slots.set(slot, new ItemStack(item));
             }
         }
 
         if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
         }
-
-        this.slots = slots;
     }
 
     @Override
@@ -214,11 +188,11 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         NBTTagList itemList = new NBTTagList();
 
         for (int slot = 0; slot < this.getSizeInventory(); ++slot) {
-            if (this.slots[slot] != null) {
+            if (!this.slots.get(slot).isEmpty()) {
                 NBTTagCompound itemTag = new NBTTagCompound();
                 itemTag.setByte("Slot", (byte) slot);
 
-                this.slots[slot].writeToNBT(itemTag);
+                this.slots.get(slot).writeToNBT(itemTag);
                 itemList.appendTag(itemTag);
             }
         }
@@ -307,9 +281,9 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
                             break;
                     }
 
-                    ItemStack stack = this.slots[feedSlot];
+                    ItemStack stack = this.slots.get(feedSlot);
 
-                    if (stack != null) {
+                    if (!stack.isEmpty()) {
                         EntityItem itemEntity = new EntityItem(this.world, this.pos.getX() + offsetX, this.pos.getY() + offsetY, this.pos.getZ() + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
                         itemEntity.setDefaultPickupDelay();
                         itemEntity.motionX = motionX * 0.3F;
@@ -349,7 +323,7 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         int i = 0;
 
         for (ItemStack stack : this.slots) {
-            if (stack != null && stack.getMaxStackSize() > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem())) {
+            if (!stack.isEmpty() && stack.getCount() > 0 && FoodHelper.isEdible(dinosaur.getDiet(), stack.getItem())) {
                 return i;
             }
 
@@ -372,8 +346,13 @@ public class FeederBlockEntity extends TileEntityLockable implements ITickable, 
         }
     }
 
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : this.slots) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

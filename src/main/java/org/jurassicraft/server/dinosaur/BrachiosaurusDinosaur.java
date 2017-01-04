@@ -30,6 +30,6 @@ public class BrachiosaurusDinosaur extends Dinosaur {
         this.setOffset(0.0F, 0.0F, 1.0F);
         this.setAttackBias(1200.0);
         this.setMaxHerdSize(4);
-        this.setSpawn(5, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+        this.setSpawn(5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST));
     }
 }

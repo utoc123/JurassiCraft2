@@ -3,9 +3,11 @@ package org.jurassicraft.server.entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
@@ -14,21 +16,21 @@ import java.util.Random;
 public class InventoryDinosaur implements IInventory {
     private DinosaurEntity entity;
 
-    private ItemStack[] inventory;
+    private NonNullList<ItemStack> inventory;
 
     public InventoryDinosaur(DinosaurEntity entity) {
         this.entity = entity;
-        this.inventory = new ItemStack[entity.getDinosaur().getStorage()];
+        this.inventory = NonNullList.withSize(entity.getDinosaur().getStorage(), ItemStack.EMPTY);
     }
 
     public void writeToNBT(NBTTagCompound nbt) {
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < this.inventory.length; ++i) {
-            if (this.inventory[i] != null) {
+        for (int i = 0; i < this.inventory.size(); ++i) {
+            if (!this.inventory.get(i).isEmpty()) {
                 NBTTagCompound slotTag = new NBTTagCompound();
                 slotTag.setByte("Slot", (byte) i);
-                this.inventory[i].writeToNBT(slotTag);
+                this.inventory.get(i).writeToNBT(slotTag);
                 nbttaglist.appendTag(slotTag);
             }
         }
@@ -37,69 +39,44 @@ public class InventoryDinosaur implements IInventory {
     }
 
     public void readFromNBT(NBTTagCompound nbt) {
-        NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-        this.inventory = new ItemStack[this.getSizeInventory()];
+        NBTTagList items = nbt.getTagList("Items", 10);
 
-        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-            NBTTagCompound slotTag = nbttaglist.getCompoundTagAt(i);
-            int j = slotTag.getByte("Slot") & 255;
+        for (int i = 0; i < items.tagCount(); ++i) {
+            NBTTagCompound slotTag = items.getCompoundTagAt(i);
+            int slot = slotTag.getByte("Slot") & 255;
 
-            if (j >= 0 && j < this.inventory.length) {
-                this.setInventorySlotContents(j, new ItemStack(slotTag));
+            if (slot >= 0 && slot < this.inventory.size()) {
+                this.setInventorySlotContents(slot, new ItemStack(slotTag));
             }
         }
     }
 
     @Override
     public int getSizeInventory() {
-        return this.inventory.length;
+        return this.inventory.size();
     }
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.inventory[index];
+        return this.inventory.get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        if (this.inventory[index] != null) {
-            ItemStack itemstack;
-
-            if (this.inventory[index].getMaxStackSize() <= count) {
-                itemstack = this.inventory[index];
-                this.setInventorySlotContents(index, null);
-                return itemstack;
-            } else {
-                itemstack = this.inventory[index].splitStack(count);
-
-                if (this.inventory[index].getMaxStackSize() == 0) {
-                    this.setInventorySlotContents(index, null);
-                }
-
-                return itemstack;
-            }
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndSplit(this.inventory, index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        if (this.inventory[index] != null) {
-            ItemStack itemstack = this.inventory[index];
-            this.setInventorySlotContents(index, null);
-            return itemstack;
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.inventory, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.inventory[index] = stack;
+        this.inventory.set(index, stack);
 
-        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-            stack.equals(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -147,9 +124,7 @@ public class InventoryDinosaur implements IInventory {
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.getSizeInventory(); i++) {
-            this.setInventorySlotContents(i, null);
-        }
+        this.inventory.clear();
     }
 
     @Override
@@ -167,37 +142,34 @@ public class InventoryDinosaur implements IInventory {
         return this.entity.getDisplayName();
     }
 
-    public void dropItems(World worldObj, Random rand) {
+    public void dropItems(World world, Random rand) {
         for (int i = 0; i < this.getSizeInventory(); ++i) {
-            ItemStack itemstack = this.getStackInSlot(i);
+            ItemStack stack = this.getStackInSlot(i);
 
-            if (itemstack != null) {
+            if (!stack.isEmpty()) {
                 float offsetX = rand.nextFloat() * 0.8F + 0.1F;
                 float offsetY = rand.nextFloat() * 0.8F + 0.1F;
                 float offsetZ = rand.nextFloat() * 0.8F + 0.1F;
 
-                while (itemstack.getMaxStackSize() > 0) {
-                    int j = rand.nextInt(21) + 10;
-
-                    if (j > itemstack.getMaxStackSize()) {
-                        j = itemstack.getMaxStackSize();
-                    }
-
-                    itemstack.shrink(1);
-                    EntityItem itemEntity = new EntityItem(worldObj, this.entity.posX + offsetX, this.entity.posY + offsetY, this.entity.posZ + offsetZ, new ItemStack(itemstack.getItem(), j, itemstack.getItemDamage()));
+                while (stack.getCount() > 0) {
+                    EntityItem itemEntity = new EntityItem(world, this.entity.posX + offsetX, this.entity.posY + offsetY, this.entity.posZ + offsetZ, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
                     float multiplier = 0.05F;
                     itemEntity.motionX = (float) rand.nextGaussian() * multiplier;
                     itemEntity.motionY = (float) rand.nextGaussian() * multiplier + 0.2F;
                     itemEntity.motionZ = (float) rand.nextGaussian() * multiplier;
-                    worldObj.spawnEntity(itemEntity);
+                    world.spawnEntity(itemEntity);
                 }
             }
         }
     }
 
-	@Override
-	public boolean isEmpty() {
-		
-		return false;
-	}
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : this.inventory) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

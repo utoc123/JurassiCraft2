@@ -9,7 +9,7 @@ import java.util.Random;
 
 public interface CleanableItem {
     static CleanableItem getCleanableItem(ItemStack stack) {
-        if (stack != null) {
+        if (!stack.isEmpty()) {
             Item item = stack.getItem();
 
             if (item instanceof ItemBlock) {

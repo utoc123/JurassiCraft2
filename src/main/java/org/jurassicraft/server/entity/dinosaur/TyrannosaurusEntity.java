@@ -1,9 +1,5 @@
 package org.jurassicraft.server.entity.dinosaur;
 
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.client.sound.SoundHandler;
-import org.jurassicraft.server.entity.DinosaurEntity;
-
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -11,6 +7,9 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.client.sound.SoundHandler;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class TyrannosaurusEntity extends DinosaurEntity {
     private int stepCount = 0;
@@ -33,8 +32,8 @@ public class TyrannosaurusEntity extends DinosaurEntity {
                 return SoundHandler.TYRANNOSAURUS_DEATH;
             case INJURED:
                 return SoundHandler.TYRANNOSAURUS_HURT;
-		default:
-			break;
+            default:
+                break;
         }
 
         return null;

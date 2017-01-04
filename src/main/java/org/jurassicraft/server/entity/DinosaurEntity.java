@@ -1,54 +1,6 @@
 package org.jurassicraft.server.entity;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.UUID;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.model.animation.DinosaurAnimation;
-import org.jurassicraft.server.block.entity.FeederBlockEntity;
-import org.jurassicraft.server.damage.DinosaurDamageSource;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
-import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
-import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
-import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
-import org.jurassicraft.server.entity.ai.DinosaurLookHelper;
-import org.jurassicraft.server.entity.ai.DinosaurWanderEntityAI;
-import org.jurassicraft.server.entity.ai.FleeEntityAI;
-import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
-import org.jurassicraft.server.entity.ai.Herd;
-import org.jurassicraft.server.entity.ai.MateEntityAI;
-import org.jurassicraft.server.entity.ai.PathNavigateDinosaur;
-import org.jurassicraft.server.entity.ai.ProtectInfantEntityAI;
-import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
-import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
-import org.jurassicraft.server.entity.ai.SleepEntityAI;
-import org.jurassicraft.server.entity.ai.TargetCarcassEntityAI;
-import org.jurassicraft.server.entity.ai.TemptNonAdultEntityAI;
-import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
-import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
-import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
-import org.jurassicraft.server.entity.ai.animations.RoarAnimationAI;
-import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
-import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
-import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
-import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
-import org.jurassicraft.server.entity.ai.util.OnionTraverser;
-import org.jurassicraft.server.food.FoodHelper;
-import org.jurassicraft.server.genetics.GeneticsHelper;
-import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.message.SetOrderMessage;
-import org.jurassicraft.server.util.GameRuleHandler;
-import org.jurassicraft.server.util.LangHelper;
-
 import com.google.common.collect.Lists;
-
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
@@ -95,6 +47,52 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.animation.DinosaurAnimation;
+import org.jurassicraft.server.block.entity.FeederBlockEntity;
+import org.jurassicraft.server.damage.DinosaurDamageSource;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
+import org.jurassicraft.server.entity.ai.AssistOwnerEntityAI;
+import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
+import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
+import org.jurassicraft.server.entity.ai.DinosaurLookHelper;
+import org.jurassicraft.server.entity.ai.DinosaurWanderEntityAI;
+import org.jurassicraft.server.entity.ai.FleeEntityAI;
+import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
+import org.jurassicraft.server.entity.ai.Herd;
+import org.jurassicraft.server.entity.ai.MateEntityAI;
+import org.jurassicraft.server.entity.ai.PathNavigateDinosaur;
+import org.jurassicraft.server.entity.ai.ProtectInfantEntityAI;
+import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
+import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
+import org.jurassicraft.server.entity.ai.SleepEntityAI;
+import org.jurassicraft.server.entity.ai.TargetCarcassEntityAI;
+import org.jurassicraft.server.entity.ai.TemptNonAdultEntityAI;
+import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.HeadCockAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.LookAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.RoarAnimationAI;
+import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
+import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
+import org.jurassicraft.server.entity.ai.util.OnionTraverser;
+import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.genetics.GeneticsHelper;
+import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.message.SetOrderMessage;
+import org.jurassicraft.server.util.GameRuleHandler;
+import org.jurassicraft.server.util.LangHelper;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.UUID;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, IAnimatedEntity {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -428,7 +426,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY) {
-        if (stack.getMaxStackSize() != 0 && stack.getItem() != null) {
+        if (stack.getCount() != 0 && stack.getItem() != null) {
             Random rand = new Random();
 
             EntityItem item = new EntityItem(this.world, this.posX + ((rand.nextFloat() * this.width) - this.width / 2), this.posY + (double) offsetY, this.posZ + ((rand.nextFloat() * this.width) - this.width / 2), stack);
@@ -655,11 +653,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     List<EntityItem> entitiesWithinAABB = this.world.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0, 1.0, 1.0));
                     for (EntityItem itemEntity : entitiesWithinAABB) {
                         Item item = itemEntity.getEntityItem().getItem();
-                        
+
                         if (FoodHelper.isEdible(this.dinosaur.getDiet(), item)) {
                             this.setAnimation(DinosaurAnimation.EATING.get());
 
-                            if (itemEntity.getEntityItem().getMaxStackSize() > 1) {
+                            if (itemEntity.getEntityItem().getCount() > 1) {
                                 itemEntity.getEntityItem().shrink(1);
                             } else {
                                 itemEntity.setDead();
@@ -899,6 +897,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking() && hand == EnumHand.MAIN_HAND) {
             if (this.isOwner(player)) {
                 if (this.getAgePercentage() > 75) {
@@ -914,15 +913,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 }
             }
         } else {
-            if (player.getHeldItemMainhand() == null && hand == EnumHand.MAIN_HAND && this.world.isRemote) {
+            if (stack.isEmpty() && hand == EnumHand.MAIN_HAND && this.world.isRemote) {
                 if (this.isOwner(player)) {
                     JurassiCraft.PROXY.openOrderGui(this);
                 } else {
                     player.sendMessage(new TextComponentTranslation("message.not_owned.name"));
                 }
-            } else if (player.getHeldItemMainhand() != null && (this.metabolism.isThirsty() || this.metabolism.isHungry())) {
+            } else if (!stack.isEmpty() && (this.metabolism.isThirsty() || this.metabolism.isHungry())) {
                 if (!this.world.isRemote) {
-                    Item item = ItemStack.EMPTY.getItem();
+                    Item item = stack.getItem();
                     boolean fed = false;
                     if (item == Items.POTIONITEM) {
                         fed = true;
@@ -936,7 +935,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     }
                     if (fed) {
                         if (!player.capabilities.isCreativeMode) {
-                        	player.getHeldItemMainhand().shrink(1);
+                            stack.shrink(1);
                             if (item == Items.POTIONITEM) {
                                 player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
                             }

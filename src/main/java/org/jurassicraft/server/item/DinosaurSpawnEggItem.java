@@ -1,16 +1,5 @@
 package org.jurassicraft.server.item;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.DinosaurEntity;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.util.LangHelper;
-
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -37,6 +26,16 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 public class DinosaurSpawnEggItem extends Item {
     public DinosaurSpawnEggItem() {
@@ -130,9 +129,11 @@ public class DinosaurSpawnEggItem extends Item {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         if (world.isRemote) {
             return EnumActionResult.SUCCESS;
-        } else if (!player.canPlayerEdit(pos.offset(side), side, ItemStack.EMPTY)) {
+        } else if (!player.canPlayerEdit(pos.offset(side), side, stack)) {
             return EnumActionResult.PASS;
         } else {
             IBlockState state = world.getBlockState(pos);
@@ -142,11 +143,11 @@ public class DinosaurSpawnEggItem extends Item {
 
                 if (tile instanceof TileEntityMobSpawner) {
                     MobSpawnerBaseLogic spawnerLogic = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic();
-                    spawnerLogic.setEntityId(EntityList.getKey(this.getDinosaur(ItemStack.EMPTY).getDinosaurClass()));
+                    spawnerLogic.setEntityId(EntityList.getKey(this.getDinosaur(stack).getDinosaurClass()));
                     tile.markDirty();
 
                     if (!player.capabilities.isCreativeMode) {
-                    	player.getHeldItemMainhand().shrink(1);
+                        stack.shrink(1);
                     }
 
                     return EnumActionResult.SUCCESS;
@@ -154,21 +155,21 @@ public class DinosaurSpawnEggItem extends Item {
             }
 
             pos = pos.offset(side);
-            double yOffset = 0.0D;	
+            double yOffset = 0.0D;
 
             if (side == EnumFacing.UP && state.getBlock() instanceof BlockFence) {
                 yOffset = 0.5D;
             }
 
-            DinosaurEntity dinosaur = this.spawnDinosaur(world, player, ItemStack.EMPTY, pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
+            DinosaurEntity dinosaur = this.spawnDinosaur(world, player, stack, pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 
             if (dinosaur != null) {
-                if (ItemStack.EMPTY.hasDisplayName()) {
-                    dinosaur.setCustomNameTag(ItemStack.EMPTY.getDisplayName());
+                if (stack.hasDisplayName()) {
+                    dinosaur.setCustomNameTag(stack.getDisplayName());
                 }
 
                 if (!player.capabilities.isCreativeMode) {
-                	player.getHeldItemMainhand().shrink(1);
+                    stack.shrink(1);
                 }
 
                 world.spawnEntity(dinosaur);

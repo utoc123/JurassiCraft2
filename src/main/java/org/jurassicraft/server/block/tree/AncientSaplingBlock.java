@@ -1,10 +1,5 @@
 package org.jurassicraft.server.block.tree;
 
-import java.util.Locale;
-import java.util.Random;
-
-import org.jurassicraft.server.tab.TabHandler;
-
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -21,6 +16,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.Locale;
+import java.util.Random;
 
 public class AncientSaplingBlock extends BlockBush implements IGrowable {
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);

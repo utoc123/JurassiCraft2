@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,11 +27,11 @@ import org.jurassicraft.server.container.CleaningStationContainer;
 import java.util.Random;
 
 public class CleaningStationBlockEntity extends TileEntityLockable implements ITickable, ISidedInventory {
-    private static final int[] slotsTop = new int[] { 0 };
-    private static final int[] slotsBottom = new int[] { 7, 6, 5, 4, 3, 2, 1 };
-    private static final int[] slotsSides = new int[] { 1 }; // 0 = cleaning 1 = fuel 2 = output
+    private static final int[] SLOTS_TOP = new int[] { 0 };
+    private static final int[] SLOTS_BOTTOM = new int[] { 7, 6, 5, 4, 3, 2, 1 };
+    private static final int[] SLOTS_SIDES = new int[] { 1 }; // 0 = cleaning 1 = fuel 2 = output
 
-    private ItemStack[] slots = new ItemStack[8];
+    private NonNullList<ItemStack> slots = NonNullList.withSize(8, ItemStack.EMPTY);
 
     private int cleaningStationWaterTime;
 
@@ -46,63 +48,39 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
     }
 
     public static boolean isItemFuel(ItemStack stack) {
-        return stack != null && stack.getItem() == Items.WATER_BUCKET;
+        return !stack.isEmpty() && stack.getItem() == Items.WATER_BUCKET;
     }
 
     @Override
     public int getSizeInventory() {
-        return this.slots.length;
+        return this.slots.size();
     }
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.slots[index];
+        return this.slots.get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        if (this.slots[index] != null) {
-            ItemStack stack;
-
-            if (this.slots[index].getMaxStackSize() <= count) {
-                stack = this.slots[index];
-                this.slots[index] = null;
-                return stack;
-            } else {
-                stack = this.slots[index].splitStack(count);
-
-                if (this.slots[index].getMaxStackSize() == 0) {
-                    this.slots[index] = null;
-                }
-
-                return stack;
-            }
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndSplit(this.slots, index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        if (this.slots[index] != null) {
-            ItemStack stack = this.slots[index];
-            this.slots[index] = null;
-            return stack;
-        } else {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.slots, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        boolean flag = stack != null && stack.isItemEqual(this.slots[index]) && ItemStack.areItemStackTagsEqual(stack, this.slots[index]);
-        this.slots[index] = stack;
+        boolean has = !stack.isEmpty() && stack.isItemEqual(this.slots.get(index)) && ItemStack.areItemStackTagsEqual(stack, this.slots.get(index));
+        this.slots.set(index, stack);
 
-        if (stack != null && stack.getMaxStackSize() > this.getInventoryStackLimit()) {
-        	stack.setCount(this.getInventoryStackLimit());
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
 
-        if (index == 0 && !flag) {
+        if (index == 0 && !has) {
             this.totalCleanTime = this.getStackWashTime(stack);
             this.cleanTime = 0;
             this.markDirty();
@@ -128,22 +106,21 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
         super.readFromNBT(compound);
 
         NBTTagList itemList = compound.getTagList("Items", 10);
-        this.slots = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < itemList.tagCount(); ++i) {
             NBTTagCompound item = itemList.getCompoundTagAt(i);
 
             byte slot = item.getByte("Slot");
 
-            if (slot >= 0 && slot < this.slots.length) {
-                this.slots[slot] = new ItemStack(item);
+            if (slot >= 0 && slot < this.slots.size()) {
+                this.slots.set(slot, new ItemStack(item));
             }
         }
 
         this.cleaningStationWaterTime = compound.getShort("WaterTime");
         this.cleanTime = compound.getShort("CleanTime");
         this.totalCleanTime = compound.getShort("CleanTimeTotal");
-        this.currentItemWaterTime = this.getItemCleanTime(this.slots[1]);
+        this.currentItemWaterTime = this.getItemCleanTime(this.slots.get(1));
 
         if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
@@ -158,12 +135,13 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
         compound.setShort("CleanTimeTotal", (short) this.totalCleanTime);
         NBTTagList itemList = new NBTTagList();
 
-        for (int slot = 0; slot < this.slots.length; ++slot) {
-            if (this.slots[slot] != null) {
+        for (int slot = 0; slot < this.slots.size(); ++slot) {
+            ItemStack stack = this.slots.get(slot);
+            if (!stack.isEmpty()) {
                 NBTTagCompound itemTag = new NBTTagCompound();
                 itemTag.setByte("Slot", (byte) slot);
 
-                this.slots[slot].writeToNBT(itemTag);
+                stack.writeToNBT(itemTag);
                 itemList.appendTag(itemTag);
             }
         }
@@ -196,22 +174,22 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
         }
 
         if (!this.world.isRemote) {
-            if (!this.isCleaning() && (this.slots[1] == null || this.slots[0] == null)) {
+            if (!this.isCleaning() && (this.slots.get(1).isEmpty() || this.slots.get(0).isEmpty())) {
                 if (!this.isCleaning() && this.cleanTime > 0) {
                     this.cleanTime = MathHelper.clamp(this.cleanTime - 2, 0, this.totalCleanTime);
                 }
             } else {
-                if (!this.isCleaning() && this.canClean() && isItemFuel(this.slots[1])) {
-                    this.currentItemWaterTime = this.cleaningStationWaterTime = this.getItemCleanTime(this.slots[1]);
+                if (!this.isCleaning() && this.canClean() && isItemFuel(this.slots.get(1))) {
+                    this.currentItemWaterTime = this.cleaningStationWaterTime = this.getItemCleanTime(this.slots.get(1));
 
                     if (this.isCleaning()) {
                         sync = true;
 
-                        if (this.slots[1] != null) {
-                            this.slots[1].shrink(1);
+                        if (!this.slots.get(1).isEmpty()) {
+                            this.slots.get(1).shrink(1);
 
-                            if (this.slots[1].getMaxStackSize() == 0) {
-                                this.slots[1] = this.slots[1].getItem().getContainerItem(this.slots[1]);
+                            if (this.slots.get(1).getCount() == 0) {
+                                this.slots.set(1, this.slots.get(1).getItem().getContainerItem(this.slots.get(1)));
                             }
                         }
                     }
@@ -222,7 +200,7 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
 
                     if (this.cleanTime == this.totalCleanTime) {
                         this.cleanTime = 0;
-                        this.totalCleanTime = this.getStackWashTime(this.slots[0]);
+                        this.totalCleanTime = this.getStackWashTime(this.slots.get(0));
                         this.cleanItem();
                         sync = true;
                     }
@@ -255,11 +233,11 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
     }
 
     private boolean canClean() {
-        CleanableItem cleanableItem = CleanableItem.getCleanableItem(this.slots[0]);
+        CleanableItem cleanableItem = CleanableItem.getCleanableItem(this.slots.get(0));
 
-        if (cleanableItem != null && cleanableItem.isCleanable(this.slots[0])) {
+        if (cleanableItem != null && cleanableItem.isCleanable(this.slots.get(0))) {
             for (int i = 2; i < 8; i++) {
-                if (this.slots[i] == null) {
+                if (this.slots.get(i).isEmpty()) {
                     return true;
                 }
             }
@@ -270,41 +248,41 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
 
     public void cleanItem() {
         if (this.canClean()) {
-            CleanableItem cleanableItem = CleanableItem.getCleanableItem(this.slots[0]);
+            CleanableItem cleanableItem = CleanableItem.getCleanableItem(this.slots.get(0));
 
             Random rand = new Random();
 
-            ItemStack output = cleanableItem.getCleanedItem(this.slots[0], rand);
+            ItemStack output = cleanableItem.getCleanedItem(this.slots.get(0), rand);
 
             int emptySlot = -1;
 
             for (int i = 2; i < 8; i++) {
-                ItemStack slot = this.slots[i];
+                ItemStack slot = this.slots.get(i);
 
-                if (slot == null || (ItemStack.areItemsEqual(slot, output) && ItemStack.areItemStackTagsEqual(slot, output) && slot.getItemDamage() == output.getItemDamage())) {
+                if (slot.isEmpty() || (ItemStack.areItemsEqual(slot, output) && ItemStack.areItemStackTagsEqual(slot, output) && slot.getItemDamage() == output.getItemDamage())) {
                     emptySlot = i;
                     break;
                 }
             }
 
             if (emptySlot != -1) {
-                if (this.slots[emptySlot] == null) {
-                    this.slots[emptySlot] = output;
-                } else if (this.slots[emptySlot].getItem() == output.getItem() && ItemStack.areItemStackTagsEqual(this.slots[emptySlot], output)) {
-                    this.slots[emptySlot].grow(output.getMaxStackSize());
+                if (this.slots.get(emptySlot).isEmpty()) {
+                    this.slots.set(emptySlot, output);
+                } else if (this.slots.get(emptySlot).getItem() == output.getItem() && ItemStack.areItemStackTagsEqual(this.slots.get(emptySlot), output)) {
+                    this.slots.get(emptySlot).grow(output.getCount());
                 }
 
-                this.slots[0].shrink(1);
+                this.slots.get(0).shrink(1);
 
-                if (this.slots[0].getMaxStackSize() <= 0) {
-                    this.slots[0] = null;
+                if (this.slots.get(0).getCount() <= 0) {
+                    this.slots.set(0, ItemStack.EMPTY);
                 }
             }
         }
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) { 
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
@@ -323,7 +301,7 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
 
     @Override
     public int[] getSlotsForFace(EnumFacing side) {
-        return side == EnumFacing.DOWN ? slotsBottom : (side == EnumFacing.UP ? slotsTop : slotsSides);
+        return side == EnumFacing.DOWN ? SLOTS_BOTTOM : (side == EnumFacing.UP ? SLOTS_TOP : SLOTS_SIDES);
     }
 
     @Override
@@ -394,9 +372,7 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.slots.length; ++i) {
-            this.slots[i] = null;
-        }
+        this.slots.clear();
     }
 
     @Override
@@ -411,8 +387,13 @@ public class CleaningStationBlockEntity extends TileEntityLockable implements IT
         this.readFromNBT(packet.getNbtCompound());
     }
 
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : this.slots) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

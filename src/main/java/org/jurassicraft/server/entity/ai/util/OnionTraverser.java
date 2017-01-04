@@ -1,9 +1,9 @@
 package org.jurassicraft.server.entity.ai.util;
 
-import java.util.Iterator;
-
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.Iterator;
 
 /**
  * Copyright 2016 Timeless Mod Team.
@@ -111,8 +111,8 @@ public class OnionTraverser implements Iterable<BlockPos> {
                         this.nextLayer();
                     }
                     break;
-			default:
-				break;
+                default:
+                    break;
             }
         }
 
@@ -139,8 +139,8 @@ public class OnionTraverser implements Iterable<BlockPos> {
                         --this._x;
                     }
                     break;
-			default:
-				break;
+                default:
+                    break;
             }
 
             if (this._z > this._maxZ) {

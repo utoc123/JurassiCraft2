@@ -62,7 +62,11 @@ public class EmbryoCalcificationMachineSpecialRenderer extends TileEntitySpecial
 
             this.mc.getTextureManager().bindTexture(this.texture);
 
-            ((tileEntity.getStackInSlot(1) != null || tileEntity.getStackInSlot(2) != null) ? this.modelWithEgg : this.model).render(null, 0, 0, 0, 0, 0, 0.0625F);
+            if (!tileEntity.getStackInSlot(1).isEmpty() || !tileEntity.getStackInSlot(2).isEmpty()) {
+                this.modelWithEgg.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            } else {
+                this.model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+            }
 
             GlStateManager.popMatrix();
 

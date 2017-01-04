@@ -33,6 +33,6 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setDefendOwner(true);
         this.setMaxHerdSize(10);
         this.setAttackBias(1200.0);
-        this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+        this.setSpawn(10, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST));
     }
 }

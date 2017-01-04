@@ -1,17 +1,8 @@
 {
   "variants": {
-    "axis=y": {
-      "model": "jurassicraft:ginkgo_log_petrified"
-    },
-    "axis=z": {
-      "model": "jurassicraft:ginkgo_log_petrified_side"
-    },
-    "axis=x": {
-      "model": "jurassicraft:ginkgo_log_petrified_side",
-      "y": 90
-    },
-    "axis=none": {
-      "model": "jurassicraft:ginkgo_petrified_bark"
-    }
+    "axis=y": {"model": "jurassicraft:ginkgo_log_petrified"},
+    "axis=z": {"model": "jurassicraft:ginkgo_log_petrified", "x": 90},
+    "axis=x": {"model": "jurassicraft:ginkgo_log_petrified", "x": 90, "y": 90},
+    "axis=none": {"model": "jurassicraft:ginkgo_petrified_bark"}
   }
 }

@@ -116,9 +116,9 @@ public class MossBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos blockIn, Block block, BlockPos pos) {
-        super.neighborChanged(state, world, pos, block, pos);
-        this.checkForDrop(world, pos, state);
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
+        super.neighborChanged(state, world, fromPos, block, fromPos);
+        this.checkForDrop(world, fromPos, state);
     }
 
     private boolean checkForDrop(World world, BlockPos pos, IBlockState state) {

@@ -9,7 +9,7 @@ import java.util.Random;
 
 public interface GrindableItem {
     static GrindableItem getGrindableItem(ItemStack stack) {
-        if (stack != null) {
+        if (!stack.isEmpty()) {
             Item item = stack.getItem();
 
             if (item instanceof ItemBlock) {

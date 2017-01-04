@@ -68,7 +68,7 @@ public class DNAExtractorSpecialRenderer extends TileEntitySpecialRenderer<DNAEx
 
             RenderItem renderItem = this.mc.getRenderItem();
 
-            if (extraction != null) {
+            if (!extraction.isEmpty()) {
                 GlStateManager.translate(0.225, 1.25, -0.125);
                 GlStateManager.rotate(-90, 1, 0, 0);
                 GlStateManager.scale(-0.75 * 0.5, -0.75 * 0.5, 0.75 * 0.5);

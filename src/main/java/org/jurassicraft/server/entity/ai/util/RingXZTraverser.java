@@ -90,8 +90,8 @@ public class RingXZTraverser implements Iterable<BlockPos> {
                         this._done = true;
                     }
                     break;
-			default:
-				break;
+                default:
+                    break;
             }
         }
     }

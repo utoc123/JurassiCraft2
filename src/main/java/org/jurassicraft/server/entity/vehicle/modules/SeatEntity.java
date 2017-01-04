@@ -1,12 +1,5 @@
 package org.jurassicraft.server.entity.vehicle.modules;
 
-import java.util.List;
-
-import javax.vecmathimpl.Matrix4d;
-import javax.vecmathimpl.Vector3d;
-
-import org.jurassicraft.server.entity.vehicle.CarEntity;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,6 +15,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.entity.vehicle.CarEntity;
+
+import javax.vecmathimpl.Matrix4d;
+import javax.vecmathimpl.Vector3d;
+import java.util.List;
 
 public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     private int id;
@@ -97,7 +95,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     @Override
- 
+
     public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d hitPosition, EnumHand hand) {
         if (this.getControllingPassenger() == null) {
             player.startRiding(this);

@@ -183,13 +183,13 @@ public class ForceAnimationCommand implements ICommand {
         }
     }
 
-	@Override
-	public List<String> getAliases() {
-		return this.aliases;
-	}
+    @Override
+    public List<String> getAliases() {
+        return this.aliases;
+    }
 
-	@Override
-	public String getName() {
-		 return "animate";
-	}
+    @Override
+    public String getName() {
+        return "animate";
+    }
 }

@@ -1,16 +1,5 @@
 package org.jurassicraft.server.block;
 
-import java.util.Map;
-import java.util.Random;
-
-import org.jurassicraft.server.api.CleanableItem;
-import org.jurassicraft.server.api.SubBlocksBlock;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.block.EncasedFossilItemBlock;
-import org.jurassicraft.server.tab.TabHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,6 +16,16 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.CleanableItem;
+import org.jurassicraft.server.api.SubBlocksBlock;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.item.block.EncasedFossilItemBlock;
+import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.Map;
+import java.util.Random;
 
 public class EncasedFossilBlock extends Block implements SubBlocksBlock, CleanableItem {
     public static final PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);

@@ -3,7 +3,6 @@ package org.jurassicraft.server.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -38,11 +37,7 @@ public class AmberBlock extends Block {
         }
 
         for (int i = 0; i < count + 1; i++) {
-            Item item = ItemHandler.AMBER;
-
-            if (item != null) {
-                ret.add(new ItemStack(item, 1, rand.nextBoolean() ? 1 : 0));
-            }
+            ret.add(new ItemStack(ItemHandler.AMBER, 1, rand.nextBoolean() ? 1 : 0));
         }
 
         return ret;

@@ -37,10 +37,10 @@ public class DinosaurDamageSource extends DamageSource {
 
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity) {
-        ItemStack stack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : null;
+        ItemStack stack = this.entity instanceof EntityLivingBase ? ((EntityLivingBase) this.entity).getHeldItemMainhand() : ItemStack.EMPTY;
         String deathMessage = "death.attack." + this.damageType;
         String itemDeathMessage = deathMessage + ".item";
-        return stack != null && stack.hasDisplayName() && I18n.hasKey(itemDeathMessage) ? new TextComponentTranslation(itemDeathMessage, entity.getDisplayName(), this.entity.getDisplayName(), stack.getTextComponent()) : new TextComponentTranslation(deathMessage, entity.getDisplayName(), this.entity.getDisplayName());
+        return !stack.isEmpty() && stack.hasDisplayName() && I18n.hasKey(itemDeathMessage) ? new TextComponentTranslation(itemDeathMessage, entity.getDisplayName(), this.entity.getDisplayName(), stack.getTextComponent()) : new TextComponentTranslation(deathMessage, entity.getDisplayName(), this.entity.getDisplayName());
     }
 
     @Override

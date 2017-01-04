@@ -37,8 +37,8 @@ public class BrachiosaurusEntity extends DinosaurEntity {
                 return SoundHandler.BRACHIOSAURUS_DEATH;
             case INJURED:
                 return SoundHandler.BRACHIOSAURUS_HURT;
-		default:
-			break;
+            default:
+                break;
         }
 
         return null;

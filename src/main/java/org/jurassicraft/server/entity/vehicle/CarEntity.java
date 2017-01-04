@@ -1,17 +1,6 @@
 package org.jurassicraft.server.entity.vehicle;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.jurassicraft.JurassiCraft;
-import org.jurassicraft.client.proxy.ClientProxy;
-import org.jurassicraft.client.sound.CarSound;
-import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
-import org.jurassicraft.server.message.UpdateCarControlMessage;
-
 import com.google.common.base.Predicates;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -33,6 +22,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.proxy.ClientProxy;
+import org.jurassicraft.client.sound.CarSound;
+import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
+import org.jurassicraft.server.message.UpdateCarControlMessage;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class CarEntity extends Entity {
     public static final DataParameter<Byte> WATCHER_STATE = EntityDataManager.createKey(CarEntity.class, DataSerializers.BYTE);

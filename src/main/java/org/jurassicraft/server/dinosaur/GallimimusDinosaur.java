@@ -30,6 +30,6 @@ public class GallimimusDinosaur extends Dinosaur {
         this.setImprintable(true);
         this.setFlee(true);
         this.setFlockSpeed(1.5F);
-        this.setSpawn(25, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DRY));
+        this.setSpawn(25, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.DRY));
     }
 }

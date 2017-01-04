@@ -25,8 +25,8 @@ public class GallimimusEntity extends DinosaurEntity {
                 return SoundHandler.GALLIMIMUS_DEATH;
             case INJURED:
                 return SoundHandler.GALLIMIMUS_HURT;
-		default:
-			break;
+            default:
+                break;
         }
 
         return null;

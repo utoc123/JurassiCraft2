@@ -1,17 +1,17 @@
 package org.jurassicraft.server.tab;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.item.bones.FossilItem;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JurassiCraftFossilTab extends CreativeTabs {
     private int[] metas;
@@ -46,11 +46,11 @@ public class JurassiCraftFossilTab extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack() {
-        return new ItemStack(ItemHandler.FOSSILS.get("skull"));
+        return this.getTabIconItem();
     }
 
     @Override
     public ItemStack getTabIconItem() {
-        return new ItemStack(ItemHandler.FOSSILS.get("skull"));
+        return new ItemStack(ItemHandler.FOSSILS.get("skull"), 1, this.metas[((int) ((JurassiCraft.timerTicks / 20) % this.metas.length))]);
     }
 }

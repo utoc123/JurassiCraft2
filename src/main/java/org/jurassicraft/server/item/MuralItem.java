@@ -18,10 +18,12 @@ public class MuralItem extends Item {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         if (side != EnumFacing.DOWN && side != EnumFacing.UP) {
             BlockPos offset = pos.offset(side);
 
-            if (player.canPlayerEdit(offset, side, ItemStack.EMPTY)) {
+            if (player.canPlayerEdit(offset, side, stack)) {
                 MuralEntity mural = new MuralEntity(world, offset, side);
 
                 if (mural.onValidSurface()) {
@@ -29,7 +31,7 @@ public class MuralItem extends Item {
                         world.spawnEntity(mural);
                     }
 
-                    player.getHeldItemMainhand().shrink(1);
+                    stack.shrink(1);
 
                     return EnumActionResult.SUCCESS;
                 }

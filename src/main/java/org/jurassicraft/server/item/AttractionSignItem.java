@@ -1,11 +1,5 @@
 package org.jurassicraft.server.item;
 
-import java.util.Locale;
-
-import org.jurassicraft.server.entity.item.AttractionSignEntity;
-import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.util.LangHelper;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,6 +12,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.entity.item.AttractionSignEntity;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
+
+import java.util.Locale;
 
 public class AttractionSignItem extends Item {
     public AttractionSignItem() {
@@ -32,18 +31,20 @@ public class AttractionSignItem extends Item {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         if (side != EnumFacing.DOWN && side != EnumFacing.UP) {
             BlockPos offset = pos.offset(side);
 
-            if (player.canPlayerEdit(offset, side, ItemStack.EMPTY)) {
-                AttractionSignEntity sign = new AttractionSignEntity(world, offset, side, AttractionSignEntity.AttractionSignType.values()[player.getHeldItemMainhand().getItemDamage()]);
+            if (player.canPlayerEdit(offset, side, stack)) {
+                AttractionSignEntity sign = new AttractionSignEntity(world, offset, side, AttractionSignEntity.AttractionSignType.values()[stack.getItemDamage()]);
 
                 if (sign.onValidSurface()) {
                     if (!world.isRemote) {
                         world.spawnEntity(sign);
                     }
 
-                    player.getHeldItemMainhand().shrink(1);
+                    stack.shrink(1);
                     return EnumActionResult.SUCCESS;
                 }
             }

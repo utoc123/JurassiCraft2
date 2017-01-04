@@ -5,6 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -26,7 +27,7 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     private static final int[] HYBRIDIZER_OUTPUTS = new int[] { 10 };
     private static final int[] COMBINATOR_OUTPUTS = new int[] { 11 };
 
-    private ItemStack[] slots = new ItemStack[12];
+    private NonNullList<ItemStack> slots = NonNullList.withSize(12, ItemStack.EMPTY);
 
     private boolean hybridizerMode;
 
@@ -36,7 +37,7 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     }
 
     private Dinosaur getHybrid() {
-        return this.getHybrid(this.slots[0], this.slots[1], this.slots[2], this.slots[3], this.slots[4], this.slots[5], this.slots[6], this.slots[7]);
+        return this.getHybrid(this.slots.get(0), this.slots.get(1), this.slots.get(2), this.slots.get(3), this.slots.get(4), this.slots.get(5), this.slots.get(6), this.slots.get(7));
     }
 
     private Dinosaur getHybrid(ItemStack... discs) {
@@ -98,10 +99,10 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     @Override
     protected boolean canProcess(int process) {
         if (this.hybridizerMode) {
-            return this.slots[10] == null && this.getHybrid() != null;
+            return this.slots.get(10).isEmpty() && this.getHybrid() != null;
         } else {
-            if (this.slots[8] != null && this.slots[8].getItem() == ItemHandler.STORAGE_DISC && this.slots[9] != null && this.slots[9].getItem() == ItemHandler.STORAGE_DISC) {
-                if (this.slots[8].getTagCompound() != null && this.slots[9].getTagCompound() != null && this.slots[11] == null && this.slots[8].getItemDamage() == this.slots[9].getItemDamage() && this.slots[8].getTagCompound().getString("StorageId").equals(this.slots[9].getTagCompound().getString("StorageId"))) {
+            if (!this.slots.get(8).isEmpty() && this.slots.get(8).getItem() == ItemHandler.STORAGE_DISC && !this.slots.get(9).isEmpty() && this.slots.get(9).getItem() == ItemHandler.STORAGE_DISC) {
+                if (this.slots.get(8).getTagCompound() != null && this.slots.get(9).getTagCompound() != null && this.slots.get(11).isEmpty() && this.slots.get(8).getItemDamage() == this.slots.get(9).getItemDamage() && this.slots.get(8).getTagCompound().getString("StorageId").equals(this.slots.get(9).getTagCompound().getString("StorageId"))) {
                     return true;
                 }
             }
@@ -118,7 +119,7 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
 
                 NBTTagCompound nbt = new NBTTagCompound();
 
-                DinoDNA dna = new DinoDNA(hybrid, 100, this.slots[0].getTagCompound().getString("Genetics"));
+                DinoDNA dna = new DinoDNA(hybrid, 100, this.slots.get(0).getTagCompound().getString("Genetics"));
                 dna.writeToNBT(nbt);
 
                 ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, EntityHandler.getDinosaurId(hybrid));
@@ -131,13 +132,13 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
                     this.decreaseStackSize(i);
                 }
             } else {
-                ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, this.slots[8].getItemDamage());
+                ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, this.slots.get(8).getItemDamage());
 
-                String storageId = this.slots[8].getTagCompound().getString("StorageId");
+                String storageId = this.slots.get(8).getTagCompound().getString("StorageId");
 
                 if (storageId.equals("DinoDNA")) {
-                    DinoDNA dna1 = DinoDNA.readFromNBT(this.slots[8].getTagCompound());
-                    DinoDNA dna2 = DinoDNA.readFromNBT(this.slots[9].getTagCompound());
+                    DinoDNA dna1 = DinoDNA.readFromNBT(this.slots.get(8).getTagCompound());
+                    DinoDNA dna2 = DinoDNA.readFromNBT(this.slots.get(9).getTagCompound());
 
                     int newQuality = dna1.getDNAQuality() + dna2.getDNAQuality();
 
@@ -151,8 +152,8 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
                     newDNA.writeToNBT(outputTag);
                     output.setTagCompound(outputTag);
                 } else if (storageId.equals("PlantDNA")) {
-                    PlantDNA dna1 = PlantDNA.readFromNBT(this.slots[8].getTagCompound());
-                    PlantDNA dna2 = PlantDNA.readFromNBT(this.slots[9].getTagCompound());
+                    PlantDNA dna1 = PlantDNA.readFromNBT(this.slots.get(8).getTagCompound());
+                    PlantDNA dna2 = PlantDNA.readFromNBT(this.slots.get(9).getTagCompound());
 
                     int newQuality = dna1.getDNAQuality() + dna2.getDNAQuality();
 
@@ -206,12 +207,12 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     }
 
     @Override
-    protected ItemStack[] getSlots() {
+    protected NonNullList<ItemStack> getSlots() {
         return this.slots;
     }
 
     @Override
-    protected void setSlots(ItemStack[] slots) {
+    protected void setSlots(NonNullList<ItemStack> slots) {
         this.slots = slots;
     }
 
@@ -259,14 +260,4 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     public ITextComponent getDisplayName() {
         return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.hybridizerMode ? "container.dna_hybridizer" : "container.dna_combinator");
     }
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer player) { 
-		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-	}
 }

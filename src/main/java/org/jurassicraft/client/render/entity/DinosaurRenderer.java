@@ -79,10 +79,11 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> {
         }
         return entity.isMale() ? this.dinosaur.getMaleTexture(growthStage) : this.dinosaur.getFemaleTexture(growthStage);
     }
+
     protected void rotateCorpse(DinosaurEntity entity, float p_77043_2, float p_77043_3, float partialTicks) {
-    	GlStateManager.rotate(180.0F - p_77043_3, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(180.0F - p_77043_3, 0.0F, 1.0F, 0.0F);
     }
-   
+
     @SideOnly(Side.CLIENT)
     public class LayerEyelid implements LayerRenderer<DinosaurEntity> {
         private final DinosaurRenderer renderer;

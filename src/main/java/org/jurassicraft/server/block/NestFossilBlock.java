@@ -1,14 +1,5 @@
 package org.jurassicraft.server.block;
 
-import java.util.Locale;
-import java.util.Random;
-
-import org.jurassicraft.server.api.CleanableItem;
-import org.jurassicraft.server.api.SubBlocksBlock;
-import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.item.block.NestFossilItemBlock;
-import org.jurassicraft.server.tab.TabHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -28,6 +19,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.CleanableItem;
+import org.jurassicraft.server.api.SubBlocksBlock;
+import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.item.block.NestFossilItemBlock;
+import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.Locale;
+import java.util.Random;
 
 public class NestFossilBlock extends Block implements SubBlocksBlock, CleanableItem {
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);

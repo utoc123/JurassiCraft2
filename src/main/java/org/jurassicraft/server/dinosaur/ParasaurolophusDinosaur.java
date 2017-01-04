@@ -30,6 +30,6 @@ public class ParasaurolophusDinosaur extends Dinosaur {
         this.setImprintable(true);
         this.setFlockSpeed(1.5F);
         this.setAttackBias(-100.0);
-        this.setSpawn(15, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+        this.setSpawn(15, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST));
     }
 }

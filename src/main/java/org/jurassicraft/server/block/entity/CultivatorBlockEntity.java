@@ -7,6 +7,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
@@ -23,7 +24,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3 };
     private static final int[] OUTPUTS = new int[] { 4 };
     private static final int MAX_NUTRIENTS = 3000;
-    private ItemStack[] slots = new ItemStack[5];
+    private NonNullList<ItemStack> slots = NonNullList.withSize(5, ItemStack.EMPTY);
     private int waterLevel;
     private int lipids;
     private int proximates;
@@ -37,8 +38,8 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
     @Override
     protected boolean canProcess(int process) {
-        if (this.slots[0] != null && this.slots[0].getItem() == ItemHandler.SYRINGE && this.waterLevel == 3) {
-            Dinosaur dino = EntityHandler.getDinosaurById(this.slots[0].getItemDamage());
+        if (!this.slots.get(0).isEmpty() && this.slots.get(0).getItem() == ItemHandler.SYRINGE && this.waterLevel == 3) {
+            Dinosaur dino = EntityHandler.getDinosaurById(this.slots.get(0).getItemDamage());
 
             if (dino != null) {
                 if (dino.isMammal() && this.lipids >= dino.getLipids() && this.minerals >= dino.getMinerals() && this.proximates >= dino.getProximates() && this.vitamins >= dino.getVitamins()) {
@@ -52,7 +53,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
     @Override
     protected void processItem(int process) {
-        Dinosaur dinoInEgg = EntityHandler.getDinosaurById(this.slots[0].getItemDamage());
+        Dinosaur dinoInEgg = EntityHandler.getDinosaurById(this.slots.get(0).getItemDamage());
 
         this.waterLevel = 0;
 
@@ -67,8 +68,8 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             try {
                 DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(this.world);
 
-                dino.setDNAQuality(this.slots[0].getTagCompound().getInteger("DNAQuality"));
-                dino.setGenetics((this.slots[0].getTagCompound().getString("Genetics")));
+                dino.setDNAQuality(this.slots.get(0).getTagCompound().getInteger("DNAQuality"));
+                dino.setGenetics((this.slots.get(0).getTagCompound().getString("Genetics")));
 
                 int blockX = this.pos.getX();
                 int blockY = this.pos.getY();
@@ -82,10 +83,10 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
                 this.world.spawnEntity(dino);
 
-                this.slots[0].shrink(1);
+                this.slots.get(0).shrink(1);
 
-                if (this.slots[0].getMaxStackSize() <= 0) {
-                    this.slots[0] = null;
+                if (this.slots.get(0).getCount() <= 0) {
+                    this.slots.set(0, ItemStack.EMPTY);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,27 +101,27 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
         boolean sync = false;
 
         if (!this.world.isRemote) {
-            if (this.waterLevel < 3 && this.slots[2] != null && this.slots[2].getItem() == Items.WATER_BUCKET) {
-                if (this.slots[3] == null || this.slots[3].getMaxStackSize() < 16) {
-                    this.slots[2].shrink(1);
+            if (this.waterLevel < 3 && !this.slots.get(2).isEmpty() && this.slots.get(2).getItem() == Items.WATER_BUCKET) {
+                if (this.slots.get(3).isEmpty() || this.slots.get(3).getCount() < 16) {
+                    this.slots.get(2).shrink(1);
 
-                    if (this.slots[2].getMaxStackSize() <= 0) {
-                        this.slots[2] = null;
+                    if (this.slots.get(2).getCount() <= 0) {
+                        this.slots.set(2, ItemStack.EMPTY);
                     }
 
                     this.waterLevel++;
 
-                    if (this.slots[3] == null) {
-                        this.slots[3] = new ItemStack(Items.BUCKET);
-                    } else if (this.slots[3].getItem() == Items.BUCKET) {
-                        this.slots[3].grow(1);
+                    if (this.slots.get(3).isEmpty()) {
+                        this.slots.set(3, new ItemStack(Items.BUCKET));
+                    } else if (this.slots.get(3).getItem() == Items.BUCKET) {
+                        this.slots.get(3).grow(1);
                     }
 
                     sync = true;
                 }
             }
 
-            if (this.slots[1] != null && FoodNutrients.FOOD_LIST.containsKey(this.slots[1].getItem())) {
+            if (!this.slots.get(1).isEmpty() && FoodNutrients.FOOD_LIST.containsKey(this.slots.get(1).getItem())) {
                 if ((this.proximates < MAX_NUTRIENTS) || (this.minerals < MAX_NUTRIENTS) || (this.vitamins < MAX_NUTRIENTS) || (this.lipids < MAX_NUTRIENTS)) {
                     this.consumeNutrients();
                     sync = true;
@@ -134,16 +135,15 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     }
 
     private void consumeNutrients() {
-        FoodNutrients nutrients = FoodNutrients.values()[FoodNutrients.FOOD_LIST.get(this.slots[1].getItem())];
+        FoodNutrients nutrients = FoodNutrients.values()[FoodNutrients.FOOD_LIST.get(this.slots.get(1).getItem())];
 
-        if (this.slots[1].getItem() instanceof ItemBucketMilk) {
-            this.slots[1] = null;
-            this.slots[1] = new ItemStack(Items.BUCKET);
+        if (this.slots.get(1).getItem() instanceof ItemBucketMilk) {
+            this.slots.set(1, new ItemStack(Items.BUCKET));
         } else {
-            this.slots[1].shrink(1);
+            this.slots.get(1).shrink(1);
 
-            if (this.slots[1].getMaxStackSize() <= 0) {
-                this.slots[1] = null;
+            if (this.slots.get(1).getCount() <= 0) {
+                this.slots.set(1, ItemStack.EMPTY);
             }
         }
 
@@ -237,12 +237,12 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     }
 
     @Override
-    protected ItemStack[] getSlots() {
+    protected NonNullList<ItemStack> getSlots() {
         return this.slots;
     }
 
     @Override
-    protected void setSlots(ItemStack[] slots) {
+    protected void setSlots(NonNullList<ItemStack> slots) {
         this.slots = slots;
     }
 
@@ -350,20 +350,10 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     }
 
     public Dinosaur getDinosaur() {
-        if (this.slots[0] != null) {
-            return EntityHandler.getDinosaurById(this.slots[0].getItemDamage());
+        if (!this.slots.get(0).isEmpty()) {
+            return EntityHandler.getDinosaurById(this.slots.get(0).getItemDamage());
         }
 
         return null;
     }
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer player) { 
-		return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-	}
 }

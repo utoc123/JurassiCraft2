@@ -54,7 +54,7 @@ public class PlacePaddockSignMessage extends AbstractMessage<PlacePaddockSignMes
 
         ItemStack heldItem = player.getHeldItem(message.hand);
 
-        if (heldItem != null && heldItem.getItem() == ItemHandler.PADDOCK_SIGN) {
+        if (!heldItem.isEmpty() && heldItem.getItem() == ItemHandler.PADDOCK_SIGN) {
             if (player.canPlayerEdit(pos, side, heldItem) && paddockSign.onValidSurface()) {
                 world.spawnEntity(paddockSign);
 

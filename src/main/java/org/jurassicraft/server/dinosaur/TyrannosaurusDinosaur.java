@@ -30,6 +30,6 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setScale(2.4F, 0.35F);
         this.setMaxHerdSize(2);
         this.setAttackBias(1000.0);
-        this.setSpawn(5, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+        this.setSpawn(5, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST));
     }
 }

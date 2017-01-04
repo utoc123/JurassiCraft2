@@ -1,16 +1,15 @@
 package org.jurassicraft.client.model.animation;
 
-import java.util.Map;
-
+import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.Animation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.DinosaurModel;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.ilexiconn.llibrary.server.animation.Animation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import java.util.Map;
 
 /**
  * @author jabelar

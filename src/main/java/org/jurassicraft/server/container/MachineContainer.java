@@ -45,7 +45,7 @@ public abstract class MachineContainer extends Container {
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-        ItemStack transferred = null;
+        ItemStack transferred = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(slotIndex);
 
         int otherSlots = this.inventorySlots.size() - 36;
@@ -56,14 +56,14 @@ public abstract class MachineContainer extends Container {
 
             if (slotIndex < otherSlots) {
                 if (!this.mergeItemStack(current, otherSlots, this.inventorySlots.size(), true)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(current, 0, otherSlots, false)) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            if (current.getMaxStackSize() == 0) {
-                slot.putStack(null);
+            if (current.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }

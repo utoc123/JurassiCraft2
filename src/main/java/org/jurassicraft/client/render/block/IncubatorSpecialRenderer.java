@@ -83,7 +83,7 @@ public class IncubatorSpecialRenderer extends TileEntitySpecialRenderer<Incubato
     }
 
     public void renderEgg(ItemStack stack, float rotation, double x, double y, double z, double xOffset, double zOffset) {
-        if (stack != null) {
+        if (ItemStack.EMPTY != null) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y + 0.05, z);
             GlStateManager.translate(xOffset, 1.2, zOffset);

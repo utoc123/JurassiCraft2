@@ -1,11 +1,11 @@
 package org.jurassicraft.server.util;
 
+import net.minecraft.util.text.translation.I18n;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import net.minecraft.util.text.translation.I18n;
 
 public class LangHelper {
     private String langPath;

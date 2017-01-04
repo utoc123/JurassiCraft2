@@ -1,15 +1,5 @@
 package org.jurassicraft.server.item;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.DinosaurEntity;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.util.LangHelper;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,6 +13,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.util.LangHelper;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 public class HatchedEggItem extends DNAContainerItem {
     public HatchedEggItem() {
@@ -83,6 +82,8 @@ public class HatchedEggItem extends DNAContainerItem {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         pos = pos.offset(side);
 
         if (side == EnumFacing.EAST || side == EnumFacing.WEST) {
@@ -91,18 +92,18 @@ public class HatchedEggItem extends DNAContainerItem {
             hitZ = 1.0F - hitZ;
         }
 
-        if (player.canPlayerEdit(pos, side, ItemStack.EMPTY)) {
+        if (player.canPlayerEdit(pos, side, stack)) {
             if (!world.isRemote) {
-                Dinosaur dinosaur = this.getDinosaur(ItemStack.EMPTY);
+                Dinosaur dinosaur = this.getDinosaur(stack);
 
                 try {
                     DinosaurEntity entity = dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(world);
 
                     entity.setPosition(pos.getX() + hitX, pos.getY(), pos.getZ() + hitZ);
                     entity.setAge(0);
-                    entity.setGenetics(this.getGeneticCode(player, ItemStack.EMPTY));
-                    entity.setDNAQuality(this.getDNAQuality(player, ItemStack.EMPTY));
-                    entity.setMale(this.getGender(player, ItemStack.EMPTY));
+                    entity.setGenetics(this.getGeneticCode(player, stack));
+                    entity.setDNAQuality(this.getDNAQuality(player, stack));
+                    entity.setMale(this.getGender(player, stack));
 
                     if (!player.isSneaking()) {
                         entity.setOwner(player);
@@ -111,7 +112,7 @@ public class HatchedEggItem extends DNAContainerItem {
                     world.spawnEntity(entity);
 
                     if (!player.capabilities.isCreativeMode) {
-                    	player.getHeldItemMainhand().shrink(1);
+                        stack.shrink(1);
                     }
                 } catch (ReflectiveOperationException e) {
                     e.printStackTrace();

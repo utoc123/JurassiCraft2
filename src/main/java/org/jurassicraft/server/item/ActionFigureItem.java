@@ -1,18 +1,5 @@
 package org.jurassicraft.server.item;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-
-import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.tab.TabHandler;
-import org.jurassicraft.server.util.LangHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -32,6 +19,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.tab.TabHandler;
+import org.jurassicraft.server.util.LangHelper;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 public class ActionFigureItem extends Item {
     public ActionFigureItem() {
@@ -42,24 +40,26 @@ public class ActionFigureItem extends Item {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         pos = pos.offset(side);
 
-        if (player.canPlayerEdit(pos, side, ItemStack.EMPTY)) {
+        if (player.canPlayerEdit(pos, side, stack)) {
             Block block = BlockHandler.ACTION_FIGURE;
 
             if (block.canPlaceBlockAt(world, pos)) {
                 IBlockState state = block.getDefaultState();
-                world.setBlockState(pos, ((OrientedBlock) block).getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player));
-                block.onBlockPlacedBy(world, pos, state, player, ItemStack.EMPTY);
+                world.setBlockState(pos, block.getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player));
+                block.onBlockPlacedBy(world, pos, state, player, stack);
 
-                int mode = this.getMode(player.getHeldItemMainhand());
+                int mode = this.getMode(stack);
 
                 ActionFigureBlockEntity tile = (ActionFigureBlockEntity) world.getTileEntity(pos);
 
                 if (tile != null) {
-                    tile.setDinosaur( player.getHeldItemMainhand().getItemDamage(), mode > 0 ? mode == 1 : world.rand.nextBoolean());
+                    tile.setDinosaur(stack.getItemDamage(), mode > 0 ? mode == 1 : world.rand.nextBoolean());
                     if (!player.capabilities.isCreativeMode) {
-                    	 player.getHeldItemMainhand().shrink(1);;
+                        stack.shrink(1);
                     }
                 }
 
@@ -128,7 +128,8 @@ public class ActionFigureItem extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        int mode = this.changeMode(ItemStack.EMPTY);
+        ItemStack stack = player.getHeldItem(hand);
+        int mode = this.changeMode(stack);
         if (world.isRemote) {
             String modeString = "";
             if (mode == 0) {
@@ -140,7 +141,7 @@ public class ActionFigureItem extends Item {
             }
             player.sendMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, ItemStack.EMPTY);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 }
 

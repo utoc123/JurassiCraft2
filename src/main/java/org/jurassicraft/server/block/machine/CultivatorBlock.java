@@ -1,10 +1,5 @@
 package org.jurassicraft.server.block.machine;
 
-import org.jurassicraft.server.api.SubBlocksBlock;
-import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
-import org.jurassicraft.server.item.block.CultivateItemBlock;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -25,6 +20,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.api.SubBlocksBlock;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
+import org.jurassicraft.server.item.block.CultivateItemBlock;
 
 public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
     public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.create("color", EnumDyeColor.class);

@@ -90,7 +90,7 @@ public class ServerEventHandler {
         }
 
         if (JurassiCraft.CONFIG.mossGeneration) {
-            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.FOREST) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.CONIFEROUS) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.CONIFEROUS) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
                 if (rand.nextInt(8) == 0) {
                     BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
@@ -102,7 +102,7 @@ public class ServerEventHandler {
         }
 
         if (JurassiCraft.CONFIG.flowerGeneration) {
-            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
                 if (rand.nextInt(8) == 0) {
                     BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
                     if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
@@ -114,7 +114,7 @@ public class ServerEventHandler {
         }
 
         if (JurassiCraft.CONFIG.gracilariaGeneration) {
-            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.OCEAN)) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN)) {
                 if (rand.nextInt(8) == 0) {
                     BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
 
@@ -130,7 +130,7 @@ public class ServerEventHandler {
         }
 
         if (JurassiCraft.CONFIG.peatGeneration) {
-            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP)) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP)) {
                 if (rand.nextInt(2) == 0) {
                     new WorldGenMinable(BlockHandler.PEAT.getDefaultState(), 5, input -> input == Blocks.DIRT.getDefaultState() || input == Blocks.GRASS.getDefaultState()).generate(world, rand, world.getTopSolidOrLiquidBlock(pos));
                 }
@@ -140,7 +140,7 @@ public class ServerEventHandler {
         if (JurassiCraft.CONFIG.trackwayGeneration) {
             int footprintChance = 20;
 
-            if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.RIVER)) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER)) {
                 footprintChance = 10;
             }
 

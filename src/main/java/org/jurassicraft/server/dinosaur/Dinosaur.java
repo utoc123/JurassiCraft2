@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class Dinosaur implements Comparable<Dinosaur> {
     private final Map<GrowthStage, List<ResourceLocation>> overlays = new HashMap<>();
@@ -640,10 +641,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         return this.maxHerdSize;
     }
 
-    public void setSpawn(int chance, Biome[]... allBiomes) {
+    public void setSpawn(int chance, Set<Biome>... allBiomes) {
         this.spawnChance = chance;
         List<Biome> spawnBiomes = new LinkedList<>();
-        for (Biome[] biomes : allBiomes) {
+        for (Set<Biome> biomes : allBiomes) {
             for (Biome biome : biomes) {
                 if (!spawnBiomes.contains(biome)) {
                     spawnBiomes.add(biome);

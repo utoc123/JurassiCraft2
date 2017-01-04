@@ -1,14 +1,13 @@
 package org.jurassicraft.server.entity.ai;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAIBase;
 import org.jurassicraft.client.model.animation.DinosaurAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.GrowthStage;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
-
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
 
 public class VelociraptorLeapEntityAI extends EntityAIBase {
     private VelociraptorEntity entity;

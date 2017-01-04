@@ -33,6 +33,6 @@ public class TriceratopsDinosaur extends Dinosaur {
         this.setDefendOwner(true);
         this.setMaxHerdSize(15);
         this.setAttackBias(400.0);
-        this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.SPARSE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+        this.setSpawn(10, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.SPARSE), BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST));
     }
 }
