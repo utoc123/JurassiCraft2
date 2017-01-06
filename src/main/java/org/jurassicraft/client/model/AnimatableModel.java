@@ -4,6 +4,7 @@ import net.ilexiconn.llibrary.client.model.tabula.ITabulaModelAnimator;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.api.Animatable;
@@ -69,8 +70,8 @@ public class AnimatableModel extends FixedTabulaModel {
     @Override
     public void faceTarget(float yaw, float pitch, float rotationDivisor, AdvancedModelRenderer... boxes) {
         float actualRotationDivisor = rotationDivisor * boxes.length;
-        float yawAmount = yaw / (180.0F / (float) Math.PI) / actualRotationDivisor;
-        float pitchAmount = pitch / (180.0F / (float) Math.PI) / actualRotationDivisor;
+        float yawAmount = MathHelper.clamp(MathHelper.wrapDegrees(yaw), -45.0F, 45.0F) / (180.0F / (float) Math.PI) / actualRotationDivisor;
+        float pitchAmount = MathHelper.wrapDegrees(pitch) / (180.0F / (float) Math.PI) / actualRotationDivisor;
 
         for (AdvancedModelRenderer box : boxes) {
             box.rotateAngleY += yawAmount;

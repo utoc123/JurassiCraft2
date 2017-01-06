@@ -36,7 +36,8 @@ public class DinosaurRenderer extends RenderLiving<DinosaurEntity> {
 
     @Override
     public void preRenderCallback(DinosaurEntity entity, float partialTick) {
-        float scale = (float) entity.interpolate(this.dinosaur.getScaleInfant(), this.dinosaur.getScaleAdult());
+        float scaleModifier = entity.getAttributes().getScaleModifier();
+        float scale = (float) entity.interpolate(this.dinosaur.getScaleInfant(), this.dinosaur.getScaleAdult()) * scaleModifier;
 
         this.shadowSize = scale * this.renderInfo.getShadowSize();
 

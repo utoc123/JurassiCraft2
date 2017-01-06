@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityBodyHelper;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -39,6 +40,7 @@ import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Animatable;
+import org.jurassicraft.server.entity.ai.SmartBodyHelper;
 import org.jurassicraft.server.entity.ai.animations.PeckGroundAnimationAI;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.food.FoodType;
@@ -65,6 +67,11 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
         this.stepHeight = 1.0F;
         this.animationTick = 0;
         this.setAnimation(EntityAnimation.IDLE.get());
+    }
+
+    @Override
+    protected EntityBodyHelper createBodyHelper() {
+        return new SmartBodyHelper(this);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class Herd implements Iterable<DinosaurEntity> {
         this.resetStateTicks();
     }
 
-    public void onUpdate() {
+    public void update() {
         if (this.leader == null || this.leader.isCarcass() || this.leader.isDead) {
             this.updateLeader();
         }

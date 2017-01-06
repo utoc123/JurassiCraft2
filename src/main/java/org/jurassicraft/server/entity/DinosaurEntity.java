@@ -8,6 +8,7 @@ import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityBodyHelper;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,6 +26,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -42,6 +44,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -60,15 +63,18 @@ import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurLookHelper;
 import org.jurassicraft.server.entity.ai.DinosaurWanderEntityAI;
+import org.jurassicraft.server.entity.ai.Family;
 import org.jurassicraft.server.entity.ai.FleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
 import org.jurassicraft.server.entity.ai.PathNavigateDinosaur;
 import org.jurassicraft.server.entity.ai.ProtectInfantEntityAI;
+import org.jurassicraft.server.entity.ai.Relationship;
 import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
 import org.jurassicraft.server.entity.ai.SelectTargetEntityAI;
 import org.jurassicraft.server.entity.ai.SleepEntityAI;
+import org.jurassicraft.server.entity.ai.SmartBodyHelper;
 import org.jurassicraft.server.entity.ai.TargetCarcassEntityAI;
 import org.jurassicraft.server.entity.ai.TemptNonAdultEntityAI;
 import org.jurassicraft.server.entity.ai.animations.CallAnimationAI;
@@ -89,10 +95,12 @@ import org.jurassicraft.server.util.GameRuleHandler;
 import org.jurassicraft.server.util.LangHelper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 public abstract class DinosaurEntity extends EntityCreature implements IEntityAdditionalSpawnData, Animatable {
@@ -134,6 +142,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public ChainBuffer tailBuffer;
 
     public Herd herd;
+    public Family family;
+    public Set<Relationship> relationships = new HashSet<>();
 
     private boolean isSittingNaturally;
 
@@ -147,6 +157,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int feederSearchTick;
 
     private boolean inLava;
+
+    private DinosaurAttributes attributes;
 
     public DinosaurEntity(World world) {
         super(world);
@@ -225,6 +237,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.ignoreFrustumCheck = true;
+    }
+
+    @Override
+    protected EntityBodyHelper createBodyHelper() {
+        return new SmartBodyHelper(this);
     }
 
     @Override
@@ -342,6 +359,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean attackEntityFrom(DamageSource damageSource, float amount) {
         boolean canHarmInCreative = damageSource.canHarmInCreative();
 
+        Entity attacker = damageSource.getEntity();
+
         if (!this.isCarcass()) {
             if (this.getHealth() - amount <= 0.0F) {
                 if (!canHarmInCreative) {
@@ -351,6 +370,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     return true;
                 }
 
+                if (attacker instanceof DinosaurEntity) {
+                    this.getRelationship(attacker, true).onAttacked(amount);
+                }
+
                 return super.attackEntityFrom(damageSource, amount);
             } else {
                 if (this.getAnimation() == EntityAnimation.RESTING.get() && !this.world.isRemote) {
@@ -358,7 +381,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                     this.isSittingNaturally = false;
                 }
 
-                if (!this.world.isRemote && this.getAnimation() == EntityAnimation.IDLE.get()) {
+                if (!this.world.isRemote) {
                     this.setAnimation(EntityAnimation.INJURED.get());
                 }
 
@@ -379,7 +402,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (damageSource != DamageSource.drown) {
                 if (!this.dead && this.carcassHealth >= 0 && this.world.getGameRules().getBoolean("doMobLoot")) {
-                    this.dropMeat(damageSource.getEntity());
+                    this.dropMeat(attacker);
                 }
 
                 if (this.carcassHealth <= 0) {
@@ -392,6 +415,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         return false;
+    }
+
+    private Relationship getRelationship(Entity entity, boolean create) {
+        for (Relationship relationship : this.relationships) {
+            if (relationship.getUUID().equals(entity.getUniqueID())) {
+                return relationship;
+            }
+        }
+        if (create) {
+            Relationship relationship = new Relationship(entity.getUniqueID(), (short) 0);
+            this.relationships.add(relationship);
+            return relationship;
+        }
+        return null;
     }
 
     private void dropMeat(Entity attacker) {
@@ -468,6 +505,13 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.herd.members.remove(this);
         }
 
+        if (this.family != null) {
+            UUID head = this.family.getHead();
+            if (head == null || head.equals(this.getUniqueID())) {
+                this.family.update(this);
+            }
+        }
+
         if (cause.getSourceOfDamage() instanceof EntityLivingBase) {
             this.respondToAttack((EntityLivingBase) cause.getSourceOfDamage());
         }
@@ -499,18 +543,21 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         super.applyEntityAttributes();
 
         this.dinosaur = EntityHandler.getDinosaurByClass(this.getClass());
+        this.attributes = DinosaurAttributes.create(this);
 
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
     }
 
     public void updateAttributes() {
         double prevHealth = this.getMaxHealth();
-        double newHealth = this.interpolate(this.dinosaur.getBabyHealth(), this.dinosaur.getAdultHealth());
+        double newHealth = this.interpolate(this.dinosaur.getBabyHealth(), this.dinosaur.getAdultHealth()) * this.attributes.getHealthModifier();
+        double speed = this.interpolate(this.dinosaur.getBabySpeed(), this.dinosaur.getAdultSpeed()) * this.attributes.getSpeedModifier();
+        double strength = this.interpolate(this.dinosaur.getBabyStrength(), this.dinosaur.getAdultStrength()) * this.attributes.getDamageModifier();
 
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(newHealth);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.interpolate(this.dinosaur.getBabySpeed(), this.dinosaur.getAdultSpeed()));
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(speed);
 
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.interpolate(this.dinosaur.getBabyStrength(), this.dinosaur.getAdultStrength()));
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(strength);
 
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 
@@ -520,8 +567,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     private void updateBounds() {
-        float width = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()));
-        float height = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY()));
+        float scale = this.attributes.getScaleModifier();
+        float width = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()) * scale);
+        float height = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY()) * scale);
 
         this.stepHeight = Math.max(1.0F, (float) (Math.ceil(height / 2.0F) / 2.0F));
 
@@ -673,16 +721,70 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                         this.isSittingNaturally = false;
                     }
                 }
-            }
 
-            if (this == this.herd.leader) {
-                this.herd.onUpdate();
-            }
+                if (this == this.herd.leader) {
+                    this.herd.update();
+                }
 
-            if (!this.getNavigator().noPath()) {
-                if (this.isSittingNaturally && this.getAnimation() == EntityAnimation.RESTING.get()) {
-                    this.setAnimation(EntityAnimation.IDLE.get());
-                    this.isSittingNaturally = false;
+                if (this.ticksExisted % 10 == 0) {
+                    if (this.family != null && (this.family.getHead() == null || this.family.getHead().equals(this.getUniqueID()))) {
+                        if (this.family.update(this)) {
+                            this.family = null;
+                        }
+                    } else if (this.family == null && this.getAttackTarget() == null) {
+                        if (this.relationships.size() > 0 && this.rand.nextDouble() > 0.9) {
+                            DinosaurEntity chosen = null;
+                            Relationship chosenRelationship = null;
+                            for (Relationship relationship : this.relationships) {
+                                if (relationship.getScore() > Relationship.MAX_SCORE * 0.9) {
+                                    DinosaurEntity entity = relationship.get(this);
+                                    if (entity != null && this.isMale != entity.isMale) {
+                                        chosen = entity;
+                                        chosenRelationship = relationship;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (chosen != null) {
+                                this.family = new Family(this.getUniqueID(), chosen.getUniqueID());
+                                chosenRelationship.setFamily();
+                                chosen.getNavigator().tryMoveToEntityLiving(this, 0.8);
+                                this.getNavigator().tryMoveToEntityLiving(chosen, 0.8);
+                            }
+                        }
+                    }
+                    if (this.herd != null) {
+                        for (DinosaurEntity herdMember : this.herd.members) {
+                            if (herdMember != this) {
+                                Relationship relationship = this.getRelationship(herdMember, true);
+                                relationship.updateHerd(this);
+                            }
+                        }
+                        for (EntityLivingBase enemy : this.herd.enemies) {
+                            if (enemy instanceof DinosaurEntity) {
+                                Relationship relationship = new Relationship(enemy.getUniqueID(), (short) -30);
+                                if (!this.relationships.contains(relationship)) {
+                                    this.relationships.add(relationship);
+                                }
+                            }
+                        }
+                    }
+                    if (this.relationships.size() > 0) {
+                        Set<Relationship> removal = new HashSet<>();
+                        for (Relationship relationship : this.relationships) {
+                            if (relationship.update(this)) {
+                                removal.add(relationship);
+                            }
+                        }
+                        this.relationships.removeAll(removal);
+                    }
+                }
+
+                if (!this.getNavigator().noPath()) {
+                    if (this.isSittingNaturally && this.getAnimation() == EntityAnimation.RESTING.get()) {
+                        this.setAnimation(EntityAnimation.IDLE.get());
+                        this.isSittingNaturally = false;
+                    }
                 }
             }
         }
@@ -834,6 +936,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return this.isCarcass() || this.isSleeping() || (this.animation != null && EntityAnimation.getAnimation(this.animation).doesBlockMovement());
     }
 
+    @Override
+    protected float updateDistance(float angle, float distance) {
+        if (!this.isMovementBlocked()) {
+            return super.updateDistance(angle, distance);
+        }
+        return distance;
+    }
+
     public int getDaysExisted() {
         return (int) Math.floor((this.dinosaurAge * 8.0F) / 24000.0F);
     }
@@ -864,7 +974,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     public float getEyeHeight() {
-        return (float) this.interpolate(this.dinosaur.getBabyEyeHeight(), this.dinosaur.getAdultEyeHeight());
+        return (float) this.interpolate(this.dinosaur.getBabyEyeHeight(), this.dinosaur.getAdultEyeHeight()) * this.attributes.getScaleModifier();
     }
 
     @Override
@@ -1108,6 +1218,26 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.inventory.writeToNBT(nbt);
 
+        if (this.family != null) {
+            NBTTagCompound familyTag = new NBTTagCompound();
+            this.family.writeToNBT(familyTag);
+            nbt.setTag("Family", familyTag);
+        }
+
+        NBTTagList relationshipList = new NBTTagList();
+
+        for (Relationship relationship : this.relationships) {
+            NBTTagCompound compound = new NBTTagCompound();
+            relationship.writeToNBT(compound);
+            relationshipList.appendTag(compound);
+        }
+
+        nbt.setTag("Relationships", relationshipList);
+
+        NBTTagCompound attributes = new NBTTagCompound();
+        this.attributes.writeToNBT(attributes);
+        nbt.setTag("GeneticAttributes", attributes);
+
         return nbt;
     }
 
@@ -1135,7 +1265,24 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.owner = UUID.fromString(ownerUUID);
         }
 
+        if (nbt.hasKey("Family")) {
+            NBTTagCompound familyTag = nbt.getCompoundTag("Family");
+            this.family = Family.readFromNBT(familyTag);
+        }
+
         this.inventory.readFromNBT(nbt);
+
+        NBTTagList relationships = nbt.getTagList("Relationships", Constants.NBT.TAG_COMPOUND);
+
+        for (int i = 0; i < relationships.tagCount(); i++) {
+            NBTTagCompound compound = relationships.getCompoundTagAt(i);
+            this.relationships.add(Relationship.readFromNBT(compound));
+        }
+
+        if (nbt.hasKey("GeneticAttributes")) {
+            NBTTagCompound attributes = nbt.getCompoundTag("GeneticAttributes");
+            this.attributes = DinosaurAttributes.from(attributes);
+        }
 
         this.updateAttributes();
         this.updateBounds();
@@ -1150,6 +1297,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         buffer.writeInt(this.geneticsQuality);
         buffer.writeBoolean(this.isMale);
         buffer.writeInt(this.growthSpeedOffset);
+        this.attributes.write(buffer);
     }
 
     @Override
@@ -1159,6 +1307,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.geneticsQuality = additionalData.readInt();
         this.isMale = additionalData.readBoolean();
         this.growthSpeedOffset = additionalData.readInt();
+        this.attributes = DinosaurAttributes.from(additionalData);
 
         if (this.isCarcass) {
             this.setAnimation(EntityAnimation.DYING.get());
@@ -1468,6 +1617,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     @Override
     public boolean inLava() {
         return this.inLava;
+    }
+
+    public DinosaurAttributes getAttributes() {
+        return this.attributes;
     }
 
     public static class FieldGuideInfo {

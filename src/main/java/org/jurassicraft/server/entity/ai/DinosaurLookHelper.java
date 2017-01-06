@@ -70,7 +70,7 @@ public class DinosaurLookHelper extends EntityLookHelper {
         if (offset < -range) {
             offset = -range;
         }
-        return current + offset;
+        return MathHelper.wrapDegrees(current + offset);
     }
 
     @Override
