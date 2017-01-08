@@ -67,7 +67,7 @@ public class Relationship {
             DinosaurEntity entity = this.get(owner);
             if (entity != null) {
                 double distance = entity.getDistanceSqToEntity(owner);
-                if (distance < 24) {
+                if (distance < 32) {
                     this.score += 2;
                 } else if (this.score > 0 && owner.getRNG().nextDouble() > 0.8) {
                     this.score--;

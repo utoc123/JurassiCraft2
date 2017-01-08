@@ -134,7 +134,7 @@ public enum RenderingHandler {
 
             ModelBakery.registerItemVariants(ItemHandler.DNA, new ResourceLocation("jurassicraft:dna/dna_" + dinoName));
 
-            if (!dino.isMammal() && !dino.isMarineCreature()) {
+            if (!dino.givesDirectBirth()) {
                 ModelBakery.registerItemVariants(ItemHandler.EGG, new ResourceLocation("jurassicraft:egg/egg_" + dinoName));
                 ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName));
             }
@@ -468,7 +468,7 @@ public enum RenderingHandler {
             this.registerItemRenderer(ItemHandler.SYRINGE, meta, "syringe/syringe_" + formattedName, "inventory");
             this.registerItemRenderer(ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName, "inventory");
 
-            if (!dinosaur.isMarineCreature() && !dinosaur.isMammal()) {
+            if (!dinosaur.givesDirectBirth()) {
                 this.registerItemRenderer(ItemHandler.EGG, meta, "egg/egg_" + formattedName, "inventory");
                 this.registerItemRenderer(ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName, "inventory");
             }

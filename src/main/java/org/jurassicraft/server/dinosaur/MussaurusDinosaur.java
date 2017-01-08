@@ -32,5 +32,6 @@ public class MussaurusDinosaur extends Dinosaur {
         this.setAttackBias(-500.0);
         this.setOffset(0.0F, 0.0F, 0.5F);
         this.setSpawn(15, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+        this.setBreeding(false, 2, 8, 15, false, true);
     }
 }
