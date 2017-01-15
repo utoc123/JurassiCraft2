@@ -10,6 +10,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityBodyHelper;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -86,6 +87,7 @@ import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
+import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.genetics.GeneticsHelper;
@@ -159,6 +161,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private boolean inLava;
 
     private DinosaurAttributes attributes;
+
+    private int breedCooldown;
+
+    private DinosaurEntity breeding;
+    private Set<DinosaurEntity> children = new HashSet<>();
+    private int pregnantTime;
 
     public DinosaurEntity(World world) {
         super(world);
@@ -628,6 +636,72 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
+        if (this.breedCooldown > 0) {
+            this.breedCooldown--;
+        }
+
+        if (!this.isMale() && !this.world.isRemote) {
+            if (this.pregnantTime > 0) {
+                if (--this.pregnantTime <= 0) {
+                    this.getNavigator().clearPathEntity();
+                    for (DinosaurEntity child : this.children) {
+                        Entity entity;
+                        if (this.dinosaur.givesDirectBirth()) {
+                            entity = child;
+                            child.setAge(0);
+                            this.family.addChild(entity.getUniqueID());
+                        } else {
+                            entity = new DinosaurEggEntity(this.world, child, this);
+                        }
+                        entity.setPosition(this.posX + (this.rand.nextFloat() - 0.5F), this.posY + 0.5F, this.posZ + (this.rand.nextFloat() - 0.5F));
+                        this.world.spawnEntity(entity);
+                    }
+                    this.family.setHome(this.getPosition(), 6000);
+                    this.children.clear();
+                }
+            }
+        }
+
+        if (this.breeding != null) {
+            if (this.ticksExisted % 10 == 0) {
+                this.getNavigator().tryMoveToEntityLiving(this.breeding, 1.0);
+            }
+            boolean dead = this.breeding.isDead || this.breeding.isCarcass();
+            if (dead || this.getEntityBoundingBox().intersectsWith(this.breeding.getEntityBoundingBox().expandXyz(3))) {
+                if (!dead) {
+                    this.breedCooldown = this.dinosaur.getBreedCooldown();
+                    if (!this.isMale()) {
+                        int minClutch = this.dinosaur.getMinClutch();
+                        int maxClutch = this.dinosaur.getMaxClutch();
+                        for (int i = 0; i < this.rand.nextInt(maxClutch - minClutch) + minClutch; i++) {
+                            try {
+                                DinosaurEntity child = this.getClass().getConstructor(World.class).newInstance(this.world);
+                                child.setAge(0);
+                                child.setMale(this.rand.nextDouble() > 0.5);
+                                child.setDNAQuality(Math.min(100, this.getDNAQuality() + this.breeding.getDNAQuality()));
+                                DinosaurAttributes attributes = DinosaurAttributes.combine(this, this.getAttributes(), this.breeding.getAttributes());
+                                String genetics = "";
+                                for (int c = 0; c < this.genetics.length(); c++) {
+                                    if (this.rand.nextBoolean()) {
+                                        genetics += this.genetics.charAt(i);
+                                    } else {
+                                        genetics += this.breeding.genetics.charAt(i);
+                                    }
+                                }
+                                child.setGenetics(genetics);
+                                child.setAttributes(attributes);
+                                this.children.add(child);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        this.pregnantTime = 9600;
+                    }
+                }
+                this.breeding = null;
+            }
+        }
+
         if (this.ticksExisted % 10 == 0) {
             this.inLava = this.isInLava();
         }
@@ -748,8 +822,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                             if (chosen != null) {
                                 this.family = new Family(this.getUniqueID(), chosen.getUniqueID());
                                 chosenRelationship.setFamily();
-                                chosen.getNavigator().tryMoveToEntityLiving(this, 0.8);
-                                this.getNavigator().tryMoveToEntityLiving(chosen, 0.8);
+                                this.breedCooldown = this.rand.nextInt(1000) + 1000;
+                                chosen.breedCooldown = this.breedCooldown;
                             }
                         }
                     }
@@ -1190,6 +1264,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.growthSpeedOffset += 240;
     }
 
+    public int getBreedCooldown() {
+        return this.breedCooldown;
+    }
+
+    public void breed(DinosaurEntity partner) {
+        this.breeding = partner;
+    }
+
     @Override
     public boolean isSwimming() {
         return (this.isInWater() || this.inLava()) && !this.onGround;
@@ -1209,6 +1291,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         nbt.setBoolean("IsSleeping", this.isSleeping);
         nbt.setByte("Order", (byte) this.order.ordinal());
         nbt.setInteger("CarcassHealth", this.carcassHealth);
+        nbt.setInteger("BreedCooldown", this.breedCooldown);
+        nbt.setInteger("PregnantTime", this.pregnantTime);
 
         this.metabolism.writeToNBT(nbt);
 
@@ -1218,7 +1302,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.inventory.writeToNBT(nbt);
 
-        if (this.family != null) {
+        if (this.family != null && (this.family.getHead() == null || this.family.getHead().equals(this.getUniqueID()))) {
             NBTTagCompound familyTag = new NBTTagCompound();
             this.family.writeToNBT(familyTag);
             nbt.setTag("Family", familyTag);
@@ -1238,6 +1322,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.attributes.writeToNBT(attributes);
         nbt.setTag("GeneticAttributes", attributes);
 
+        if (this.children.size() > 0) {
+            NBTTagList children = new NBTTagList();
+            for (DinosaurEntity child : this.children) {
+                if (child != null) {
+                    children.appendTag(child.writeToNBT(new NBTTagCompound()));
+                }
+            }
+            nbt.setTag("Children", children);
+        }
+
         return nbt;
     }
 
@@ -1256,6 +1350,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         this.setSleeping(nbt.getBoolean("IsSleeping"));
         this.carcassHealth = nbt.getInteger("CarcassHealth");
         this.order = Order.values()[nbt.getByte("Order")];
+        this.breedCooldown = nbt.getInteger("BreedCooldown");
+        this.pregnantTime = nbt.getInteger("PregnantTime");
 
         this.metabolism.readFromNBT(nbt);
 
@@ -1282,6 +1378,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (nbt.hasKey("GeneticAttributes")) {
             NBTTagCompound attributes = nbt.getCompoundTag("GeneticAttributes");
             this.attributes = DinosaurAttributes.from(attributes);
+        }
+
+        if (nbt.hasKey("Children")) {
+            NBTTagList children = nbt.getTagList("Children", Constants.NBT.TAG_COMPOUND);
+            for (int i = 0; i < children.tagCount(); i++) {
+                NBTTagCompound childTag = children.getCompoundTagAt(i);
+                Entity entity = EntityList.createEntityFromNBT(childTag, this.world);
+                if (entity instanceof DinosaurEntity) {
+                    this.children.add((DinosaurEntity) entity);
+                }
+            }
         }
 
         this.updateAttributes();
@@ -1621,6 +1728,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public DinosaurAttributes getAttributes() {
         return this.attributes;
+    }
+
+    public boolean isBreeding() {
+        return this.breeding != null;
+    }
+
+    public void setAttributes(DinosaurAttributes attributes) {
+        this.attributes = attributes;
     }
 
     public static class FieldGuideInfo {

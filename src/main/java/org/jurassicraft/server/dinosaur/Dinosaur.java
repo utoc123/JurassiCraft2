@@ -81,6 +81,13 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private Biome[] spawnBiomes;
     private boolean canClimb;
 
+    private int breedCooldown;
+    private boolean breedAroundOffspring;
+    private int minClutch = 2;
+    private int maxClutch = 6;
+    private boolean defendOffspring;
+    private boolean directBirth;
+
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
 
@@ -286,6 +293,15 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setBreeding(boolean directBirth, int minClutch, int maxClutch, int breedCooldown, boolean breedAroundOffspring, boolean defendOffspring) {
+        this.directBirth = directBirth;
+        this.minClutch = minClutch;
+        this.maxClutch = maxClutch;
+        this.breedCooldown = breedCooldown * 20 * 60;
+        this.breedAroundOffspring = breedAroundOffspring;
+        this.defendOffspring = defendOffspring;
     }
 
     public Class<? extends DinosaurEntity> getDinosaurClass() {
@@ -676,6 +692,30 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public void setCanClimb(boolean canClimb) {
         this.canClimb = canClimb;
+    }
+
+    public int getMinClutch() {
+        return this.minClutch;
+    }
+
+    public int getMaxClutch() {
+        return this.maxClutch;
+    }
+
+    public int getBreedCooldown() {
+        return this.breedCooldown;
+    }
+
+    public boolean shouldBreedAroundOffspring() {
+        return this.breedAroundOffspring;
+    }
+
+    public boolean shouldDefendOffspring() {
+        return this.defendOffspring;
+    }
+
+    public boolean givesDirectBirth() {
+        return this.directBirth;
     }
 
     public List<GrowthStage> getSupportedStages() {

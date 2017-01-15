@@ -19,6 +19,7 @@ import org.jurassicraft.server.dinosaur.TriceratopsDinosaur;
 import org.jurassicraft.server.dinosaur.TyrannosaurusDinosaur;
 import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
+import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.MuralEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
@@ -95,7 +96,7 @@ public class EntityHandler {
         EntityRegistry.addSpawn(GoatEntity.class, 15, 1, 3, EnumCreatureType.CREATURE, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS));
         EntityRegistry.addSpawn(GoatEntity.class, 15, 1, 3, EnumCreatureType.CREATURE, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
 
-//        registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
+        registerEntity(DinosaurEggEntity.class, "Dinosaur Egg");
 //        registerEntity(HelicopterBaseEntity.class, "Helicopter base");
 //        registerEntity(HelicopterSeatEntity.class, "Helicopter seat Do not spawn please, like really don't");
     }

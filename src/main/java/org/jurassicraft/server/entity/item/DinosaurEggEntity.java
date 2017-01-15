@@ -2,41 +2,37 @@ package org.jurassicraft.server.entity.item;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
-import java.util.List;
+import java.util.UUID;
 
 public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnData {
+    private DinosaurEntity entity;
+    private UUID parent;
     private Dinosaur dinosaur;
-    private int dnaQuality;
-    private String genetics;
     private int hatchTime;
 
-    public DinosaurEggEntity(World world, Dinosaur dinosaur, int dnaQuality, String genetics) {
+    public DinosaurEggEntity(World world, DinosaurEntity entity, DinosaurEntity parent) {
         this(world);
-        this.dinosaur = dinosaur;
-        this.dnaQuality = dnaQuality;
-        this.genetics = genetics;
+        this.entity = entity;
+        this.dinosaur = entity.getDinosaur();
+        this.parent = parent.getUniqueID();
     }
 
     public DinosaurEggEntity(World world) {
         super(world);
         this.setSize(0.3F, 0.5F);
-        this.hatchTime = this.randomWithRange(200, 300);
+        this.hatchTime = this.random(5000, 6000);
     }
 
     @Override
@@ -44,6 +40,10 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
         super.onUpdate();
 
         if (!this.world.isRemote) {
+            if (this.entity == null) {
+                this.setDead();
+            }
+
             this.hatchTime--;
 
             if (this.hatchTime <= 0) {
@@ -78,11 +78,11 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
 
     @Override
     public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand) {
-        if (this.dinosaur != null && !this.world.isRemote) {
-            ItemStack eggStack = new ItemStack(ItemHandler.EGG, 1, EntityHandler.getDinosaurId(this.dinosaur));
+        if (this.entity != null && !this.world.isRemote) {
+            ItemStack eggStack = new ItemStack(ItemHandler.EGG, 1, EntityHandler.getDinosaurId(this.entity.getDinosaur()));
             NBTTagCompound nbt = new NBTTagCompound();
-            nbt.setInteger("DNAQuality", this.dnaQuality);
-            nbt.setString("Genetics", this.genetics);
+            nbt.setInteger("DNAQuality", this.entity.getDNAQuality());
+            nbt.setString("Genetics", this.entity.getGenetics());
             eggStack.setTagCompound(nbt);
             this.entityDropItem(eggStack, 0.1F);
             this.setDead();
@@ -92,85 +92,57 @@ public class DinosaurEggEntity extends Entity implements IEntityAdditionalSpawnD
     }
 
     public void hatch() {
-        if (!this.dinosaur.isMarineCreature() && this.isInWater()) {
-            this.warnPlayersWithinRadius("An egg is in the water and that animal is not aquatic!");
-            this.hatchTime += 1000;
-            return;
-        }
-
-        if (this.dinosaur.isMarineCreature() && !this.isInWater()) {
-            this.warnPlayersWithinRadius("An aquatic animals egg is on land!");
-            this.hatchTime += 1000;
-            return;
-        }
-
-        if (!this.isNextBlockAir(1, 0, 0) || !this.isNextBlockAir(0, 1, 0) || !this.isNextBlockAir(0, 0, 1)) {
-            this.warnPlayersWithinRadius("There is not enough space for the egg to hatch!");
-            this.hatchTime += 1000;
-            return;
-        }
-
         try {
             DinosaurEntity entity = this.dinosaur.getDinosaurClass().getConstructor(World.class).newInstance(this.world);
-            entity.setAge(0);
-            entity.setDNAQuality(this.dnaQuality);
-            entity.setGenetics(this.genetics);
             entity.setPosition(this.posX, this.posY, this.posZ);
+            entity.setAge(0);
             this.world.spawnEntity(entity);
             entity.playLivingSound();
             this.setDead();
+            for (Entity loadedEntity : this.world.loadedEntityList) {
+                if (loadedEntity instanceof DinosaurEntity && loadedEntity.getUniqueID().equals(this.parent)) {
+                    DinosaurEntity parent = (DinosaurEntity) loadedEntity;
+                    if (parent.family != null && this.dinosaur.shouldDefendOffspring()) {
+                        parent.family.addChild(entity.getUniqueID());
+                    }
+                    break;
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void warnPlayersWithinRadius(String message) {
-        List<EntityPlayer> players = this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.posX - 30, this.posY - 10, this.posZ - 30, this.posX + 30, this.posY + 10, this.posZ + 30));
-        for (EntityPlayer player : players) {
-            player.sendMessage(new TextComponentString(message));
-        }
-    }
-
-    public int randomWithRange(int min, int max) {
+    public int random(int min, int max) {
         int range = (max - min) + 1;
         return (int) (Math.random() * range) + min;
-    }
-
-    public Boolean isNextBlockAir(int xChange, int yChange, int zChange) {
-        int blockX = MathHelper.floor(this.posX) + xChange;
-        int blockY = MathHelper.floor(this.getEntityBoundingBox().minY) + yChange;
-        int blockZ = MathHelper.floor(this.posZ) + zChange;
-        return this.world.isAirBlock(new BlockPos(blockX, blockY, blockZ));
     }
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound) {
         this.hatchTime = compound.getInteger("HatchTime");
-        this.dinosaur = EntityHandler.getDinosaurById(compound.getInteger("Dinosaur"));
-        this.dnaQuality = compound.getByte("DNAQuality");
-        this.genetics = compound.getString("Genetics");
+        NBTTagCompound entityTag = compound.getCompoundTag("Hatchling");
+        this.entity = (DinosaurEntity) EntityList.createEntityFromNBT(entityTag, this.world);
+        this.parent = compound.getUniqueId("Parent");
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound) {
-        compound.setInteger("Dinosaur", EntityHandler.getDinosaurId(this.dinosaur));
         compound.setInteger("HatchTime", this.hatchTime);
-        compound.setByte("DNAQuality", (byte) this.dnaQuality);
-        compound.setString("Genetics", this.genetics);
+        if (this.entity != null) {
+            compound.setTag("Hatchling", this.entity.serializeNBT());
+        }
+        compound.setUniqueId("Parent", this.parent);
     }
 
     @Override
     public void writeSpawnData(ByteBuf buffer) {
-        buffer.writeInt(EntityHandler.getDinosaurId(this.dinosaur));
-        buffer.writeByte(this.dnaQuality);
-        ByteBufUtils.writeUTF8String(buffer, this.genetics);
+        buffer.writeInt(EntityHandler.getDinosaurId(this.entity != null ? this.entity.getDinosaur() : EntityHandler.getDinosaurById(0)));
     }
 
     @Override
     public void readSpawnData(ByteBuf additionalData) {
         this.dinosaur = EntityHandler.getDinosaurById(additionalData.readInt());
-        this.dnaQuality = additionalData.readByte();
-        this.genetics = ByteBufUtils.readUTF8String(additionalData);
     }
 
     public Dinosaur getDinosaur() {
