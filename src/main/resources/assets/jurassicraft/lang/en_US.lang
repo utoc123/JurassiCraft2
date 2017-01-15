@@ -320,6 +320,9 @@ tile.graminidites_bambusoides.name=Graminidites Bambusoides
 tile.enallhelia.name=Enallhelia
 tile.aulopora.name=Aulopora
 tile.cladochonus.name=Cladochonus
+tile.lithostrotion.name=Lithostrotion
+tile.stylophyllopsis.name=Stylophyllopsis
+tile.hippurites_radiosus.name=Hippurites Radiosus
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -388,6 +391,9 @@ plants.graminidites_bambusoides.name=Graminidites Bambusoides
 plants.enallhelia.name=Enallhelia
 plants.aulopora.name=Aulopora
 plants.cladochonus.name=Cladochonus
+plants.lithostrotion.name=Lithostrotion
+plants.stylophyllopsis.name=Stylophyllopsis
+plants.hippurites_radiosus.name=Hippurites Radiosus
 
 
 //Containers ==================================================

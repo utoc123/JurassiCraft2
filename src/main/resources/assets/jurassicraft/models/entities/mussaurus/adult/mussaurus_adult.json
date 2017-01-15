@@ -154,6 +154,26 @@
         "pose": "mussaurus_adult_idle",
         "time": 20
       }
+    ],
+    "ATTACKING": [
+      {
+        "pose": "mussaurus_adult_attack_1",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_attack_2",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_attack_3",
+        "time": 5
+      },
+
+      {
+        "pose": "mussaurus_adult_idle",
+        "time": 20
+      }
     ]
+
   }
 }

@@ -168,8 +168,12 @@ public class BlockHandler {
     public static final DoublePlantBlock RHACOPHYTON = new DoublePlantBlock();
     public static final DoublePlantBlock GRAMINIDITES_BAMBUSOIDES = new DoublePlantBlock();
     public static final AncientCoralBlock ENALLHELIA = new AncientCoralBlock();
+
     public static final AncientCoralBlock AULOPORA = new AncientCoralBlock();
     public static final AncientCoralBlock CLADOCHONUS = new AncientCoralBlock();
+    public static final AncientCoralBlock LITHOSTROTION = new AncientCoralBlock();
+    public static final AncientCoralBlock STYLOPHYLLOPSIS = new AncientCoralBlock();
+    public static final AncientCoralBlock HIPPURITES_RADIOSUS = new AncientCoralBlock();
 
     public static final PeatBlock PEAT = new PeatBlock();
     public static final Block PEAT_MOSS = new PeatMossBlock();
@@ -258,6 +262,9 @@ public class BlockHandler {
         registerBlock(ENALLHELIA, "Enallhelia");
         registerBlock(AULOPORA, "Aulopora");
         registerBlock(CLADOCHONUS, "Cladochonus");
+        registerBlock(LITHOSTROTION, "Lithostrotion");
+        registerBlock(STYLOPHYLLOPSIS, "Stylophyllopsis");
+        registerBlock(HIPPURITES_RADIOSUS, "Hippurites Radiosus");
 
         registerBlock(MOSS, "Moss");
         registerBlock(PEAT, "Peat");
