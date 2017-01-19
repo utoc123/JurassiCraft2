@@ -1,10 +1,12 @@
 package org.jurassicraft.client.model.animation.entity;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.AnimatableModel;
 import org.jurassicraft.client.model.animation.EntityAnimator;
+import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.dinosaur.TyrannosaurusEntity;
 
 @SideOnly(Side.CLIENT)
@@ -47,6 +49,27 @@ public class TyrannosaurusAnimator extends EntityAnimator<TyrannosaurusEntity> {
 
         float globalSpeed = 0.5F;
         float globalDegree = 0.5F;
+
+        float delta = Minecraft.getMinecraft().getRenderPartialTicks();
+        float lheight = entity.getHeightLeft(delta);
+        float rheight = entity.getHeightRight(delta);
+        if (lheight > 0 || rheight > 0) {
+            AdvancedModelRenderer leftCalf = model.getCube("Left Calf 1");
+            AdvancedModelRenderer rightCalf = model.getCube("Right Calf 1");
+            float scaleModifier = entity.getAttributes().getScaleModifier();
+            Dinosaur dino = entity.getDinosaur();
+            float sc = (float) entity.interpolate(dino.getScaleInfant(), dino.getScaleAdult()) * scaleModifier;
+            float avg = (lheight + rheight) / 2;
+            float ldif = Math.max(0, (avg - lheight) * 2);
+            float rdif = Math.max(0, (avg - rheight) * 2);
+            waist.rotationPointY += 16 / sc * avg;
+            leftThigh.rotationPointY += 16 / sc * Math.max(lheight, avg);
+            rightThigh.rotationPointY += 16 / sc * Math.max(rheight, avg);
+            leftThigh.rotateAngleX -= 0.4F * ldif;
+            leftCalf.rotateAngleX += 0.4F * ldif;
+            rightThigh.rotateAngleX -= 0.4F * rdif;
+            rightCalf.rotateAngleX += 0.4F * rdif;
+        }
 
         model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
         model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
