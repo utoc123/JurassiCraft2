@@ -60,8 +60,8 @@ public class TyrannosaurusAnimator extends EntityAnimator<TyrannosaurusEntity> {
             Dinosaur dino = entity.getDinosaur();
             float sc = (float) entity.interpolate(dino.getScaleInfant(), dino.getScaleAdult()) * scaleModifier;
             float avg = (lheight + rheight) / 2;
-            float ldif = Math.max(0, (avg - lheight) * 2);
-            float rdif = Math.max(0, (avg - rheight) * 2);
+            float ldif = Math.max(0, rheight - lheight);
+            float rdif = Math.max(0, lheight - rheight);
             waist.rotationPointY += 16 / sc * avg;
             leftThigh.rotationPointY += 16 / sc * Math.max(lheight, avg);
             rightThigh.rotationPointY += 16 / sc * Math.max(rheight, avg);
