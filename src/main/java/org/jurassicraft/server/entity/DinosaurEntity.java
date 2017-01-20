@@ -171,6 +171,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int pregnantTime;
     private int jumpHeight;
 
+    private final LegSolver legSolver;
+
     public DinosaurEntity(World world) {
         super(world);
         this.moveHelper = new DinosaurMoveHelper(this);
@@ -181,6 +183,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.navigator = new DinosaurPathNavigate(this, this.world);
         this.lookHelper = new DinosaurLookHelper(this);
+        this.legSolver = this.world == null || !this.world.isRemote ? null : createLegSolver();
 
         this.metabolism = new MetabolismContainer(this);
         this.inventory = new InventoryDinosaur(this);
@@ -250,6 +253,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.ignoreFrustumCheck = true;
+    }
+
+    protected LegSolver createLegSolver() {
+        return null;
     }
 
     @Override
@@ -1015,6 +1022,10 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         if (this.stayAwakeTime > 0) {
             this.stayAwakeTime--;
+        }
+
+        if (this.legSolver != null) {
+            this.legSolver.update(this);
         }
 
         this.prevAge = this.dinosaurAge;

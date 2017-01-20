@@ -14,15 +14,21 @@ import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.GoatEntity;
+import org.jurassicraft.server.entity.LegSolverBiped;
 
 public class TyrannosaurusEntity extends DinosaurEntity {
     private int stepCount = 0;
 
-    private float heightLeft, heightRight, prevHeightLeft, prevHeightRight;
+    public LegSolverBiped legSolver;
 
     public TyrannosaurusEntity(World world) {
         super(world);
         this.target(GoatEntity.class, EntityPlayer.class, EntityAnimal.class, EntityVillager.class, EntityMob.class, DilophosaurusEntity.class, GallimimusEntity.class, TriceratopsEntity.class, ParasaurolophusEntity.class, VelociraptorEntity.class, BrachiosaurusEntity.class, MicroraptorEntity.class, MussaurusEntity.class);
+    }
+
+    @Override
+    protected LegSolverBiped createLegSolver() {
+        return legSolver = new LegSolverBiped(-0.5F, 1);
     }
 
     @Override
@@ -38,36 +44,19 @@ public class TyrannosaurusEntity extends DinosaurEntity {
                 return SoundHandler.TYRANNOSAURUS_DEATH;
             case INJURED:
                 return SoundHandler.TYRANNOSAURUS_HURT;
+            default:
+                return null;
         }
-
-        return null;
     }
 
     @Override
     public SoundEvent getBreathingSound() {
         return SoundHandler.TYRANNOSAURUS_BREATHING;
     }
-
-    public float getHeightLeft(float delta) {
-        return this.prevHeightLeft + (this.heightLeft - this.prevHeightLeft) * delta;
-    }
-
-    public float getHeightRight(float delta) {
-        return this.prevHeightRight + (this.heightRight - this.prevHeightRight) * delta;
-    }
    
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (this.world.isRemote) {
-            double theta = this.renderYawOffset / (180 / Math.PI);
-            double dx = Math.cos(theta) * 1.2;
-            double dz = Math.sin(theta) * 1.2;
-            this.prevHeightLeft = this.heightLeft;
-            this.prevHeightRight = this.heightRight;
-            this.heightLeft = this.settleLeg(this.posX + dx, this.posY, this.posZ + dz, this.heightLeft);
-            this.heightRight = this.settleLeg(this.posX - dx, this.posY, this.posZ - dz, this.heightRight);
-        }
         if (this.onGround && !this.isInWater()) {
             if (this.moveForward > 0 && (this.posX - this.prevPosX > 0 || this.posZ - this.prevPosZ > 0) && this.stepCount <= 0) {
                 this.playSound(SoundHandler.STOMP, (float) this.interpolate(0.1F, 1.0F), this.getSoundPitch());

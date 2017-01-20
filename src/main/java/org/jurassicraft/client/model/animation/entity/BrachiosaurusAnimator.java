@@ -1,6 +1,7 @@
 package org.jurassicraft.client.model.animation.entity;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.AnimatableModel;
@@ -30,6 +31,22 @@ public class BrachiosaurusAnimator extends EntityAnimator<BrachiosaurusEntity> {
         AdvancedModelRenderer[] neckParts = new AdvancedModelRenderer[] { head, neck7, neck6, neck5, neck4, neck3, neck2, neck1 };
         AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail5, tail4, tail3 };
         AdvancedModelRenderer[] tailParts2 = new AdvancedModelRenderer[] { tail5, tail4, tail3, tail2, tail1 };
+
+        float delta = Minecraft.getMinecraft().getRenderPartialTicks();
+        AdvancedModelRenderer root = model.getCube("hips");
+        AdvancedModelRenderer backLeftThigh = model.getCube("top leg left");
+        AdvancedModelRenderer backLeftCalf = model.getCube("bottom leg left");
+        AdvancedModelRenderer backRightThigh = model.getCube("top leg right");
+        AdvancedModelRenderer backRightCalf = model.getCube("bottom leg right");
+        AdvancedModelRenderer frontLeftThigh = model.getCube("front left top leg");
+        AdvancedModelRenderer frontLeftCalf = model.getCube("bottom front left leg");
+        AdvancedModelRenderer frontRightThigh = model.getCube("front right top leg");
+        AdvancedModelRenderer frontRightCalf = model.getCube("bottom front right leg");
+        LegArticulator.articulateQuadruped(entity, entity.legSolver, root, neck1,
+            backLeftThigh, backLeftCalf, backRightThigh, backRightCalf, frontLeftThigh, frontLeftCalf, frontRightThigh, frontRightCalf, 
+            0.25F, 0.4F, -0.2F, -0.3F,
+            delta
+        );
 
         float globalSpeed = 0.4F;
         float globalHeight = 0.5F;

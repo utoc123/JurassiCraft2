@@ -6,12 +6,21 @@ import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.LegSolver;
+import org.jurassicraft.server.entity.LegSolverQuadruped;
 
 public class BrachiosaurusEntity extends DinosaurEntity {
     private int stepCount = 0;
 
+    public LegSolverQuadruped legSolver;
+
     public BrachiosaurusEntity(World world) {
         super(world);
+    }
+
+    @Override
+    protected LegSolver createLegSolver() {
+        return legSolver = new LegSolverQuadruped(2.5F, 2);
     }
 
     @Override
@@ -37,8 +46,8 @@ public class BrachiosaurusEntity extends DinosaurEntity {
                 return SoundHandler.BRACHIOSAURUS_DEATH;
             case INJURED:
                 return SoundHandler.BRACHIOSAURUS_HURT;
+            default:
+                return null;
         }
-
-        return null;
     }
 }

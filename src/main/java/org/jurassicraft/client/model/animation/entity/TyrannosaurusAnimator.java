@@ -47,29 +47,13 @@ public class TyrannosaurusAnimator extends EntityAnimator<TyrannosaurusEntity> {
         AdvancedModelRenderer[] leftArmParts = new AdvancedModelRenderer[] { handLeft, lowerArmLeft };
         AdvancedModelRenderer[] rightArmParts = new AdvancedModelRenderer[] { handRight, lowerArmRight };
 
+        float delta = Minecraft.getMinecraft().getRenderPartialTicks();
+        AdvancedModelRenderer leftCalf = model.getCube("Left Calf 1");
+        AdvancedModelRenderer rightCalf = model.getCube("Right Calf 1");
+        LegArticulator.articulateBiped(entity, entity.legSolver, waist, leftThigh, leftCalf, rightThigh, rightCalf, 0.4F, 0.4F, delta);
+
         float globalSpeed = 0.5F;
         float globalDegree = 0.5F;
-
-        float delta = Minecraft.getMinecraft().getRenderPartialTicks();
-        float lheight = entity.getHeightLeft(delta);
-        float rheight = entity.getHeightRight(delta);
-        if (lheight > 0 || rheight > 0) {
-            AdvancedModelRenderer leftCalf = model.getCube("Left Calf 1");
-            AdvancedModelRenderer rightCalf = model.getCube("Right Calf 1");
-            float scaleModifier = entity.getAttributes().getScaleModifier();
-            Dinosaur dino = entity.getDinosaur();
-            float sc = (float) entity.interpolate(dino.getScaleInfant(), dino.getScaleAdult()) * scaleModifier;
-            float avg = (lheight + rheight) / 2;
-            float ldif = Math.max(0, rheight - lheight);
-            float rdif = Math.max(0, lheight - rheight);
-            waist.rotationPointY += 16 / sc * avg;
-            leftThigh.rotationPointY += 16 / sc * Math.max(lheight, avg);
-            rightThigh.rotationPointY += 16 / sc * Math.max(rheight, avg);
-            leftThigh.rotateAngleX -= 0.4F * ldif;
-            leftCalf.rotateAngleX += 0.4F * ldif;
-            rightThigh.rotateAngleX -= 0.4F * rdif;
-            rightCalf.rotateAngleX += 0.4F * rdif;
-        }
 
         model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
         model.bob(rightThigh, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);
