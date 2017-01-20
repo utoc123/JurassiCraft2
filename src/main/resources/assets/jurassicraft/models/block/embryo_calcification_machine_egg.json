@@ -4,5 +4,5 @@
     "layer0": "jurassicraft:blocks/embryo_calcification_machine",
     "particle": "blocks/iron_block"
   },
-  "tabula": "jurassicraft:models/block/embryo_calcification_machine"
+  "tabula": "jurassicraft:models/block/embryo_calcification_machine_egg"
 }

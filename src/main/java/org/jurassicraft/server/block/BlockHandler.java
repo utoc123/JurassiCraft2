@@ -1,11 +1,13 @@
 package org.jurassicraft.server.block;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
@@ -78,14 +80,11 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.ItemHandler;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class BlockHandler {
     public static final Map<TreeType, AncientPlanksBlock> ANCIENT_PLANKS = new HashMap<>();
@@ -197,7 +196,6 @@ public class BlockHandler {
     public static PaleoBaleBlock PALEO_BALE_FERN;
     public static PaleoBaleBlock PALEO_BALE_LEAVES;
     public static PaleoBaleBlock PALEO_BALE_OTHER;
-    
 
     public static void init() {
         registerBlock(PLANT_FOSSIL, "Plant Fossil Block");
@@ -275,7 +273,7 @@ public class BlockHandler {
         registerBlock(PLANKTON_SWARM, "Plankton Swarm");
         registerBlock(KRILL_SWARM, "Krill Swarm");
         
-        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
+//        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
 
 //        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
 //        registerBlock(CULTIVATOR_TOP, "Cultivate Top");

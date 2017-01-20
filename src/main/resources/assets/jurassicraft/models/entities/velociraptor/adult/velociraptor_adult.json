@@ -87,7 +87,7 @@
         "time": 20
       }
     ],
-    "RAPTOR_PREPARE_POUNCE": [
+    "PREPARE_LEAP": [
       {
         "pose": "velociraptor_adult_prepare_pounce_1",
         "time": 10
@@ -97,7 +97,7 @@
         "time": 5
       }
     ],
-    "RAPTOR_LEAP": [
+    "LEAP": [
       {
         "pose": "velociraptor_adult_leap_1",
         "time": 5
@@ -111,7 +111,7 @@
         "time": 5
       }
     ],
-    "RAPTOR_LAND": [
+    "LEAP_LAND": [
       {
         "pose": "velociraptor_adult_landing_1",
         "time": 4

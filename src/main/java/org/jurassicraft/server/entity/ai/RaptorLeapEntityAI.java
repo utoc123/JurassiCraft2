@@ -45,7 +45,7 @@ public class RaptorLeapEntityAI extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        this.animation = EntityAnimation.RAPTOR_PREPARE_POUNCE;
+        this.animation = EntityAnimation.PREPARE_LEAP;
         this.entity.getLookHelper().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
         this.ticked = false;
     }
@@ -54,9 +54,8 @@ public class RaptorLeapEntityAI extends EntityAIBase {
     public void updateTask() {
         int tick = this.entity.getAnimationTick();
 
-        if (this.animation == EntityAnimation.RAPTOR_PREPARE_POUNCE && tick < this.prevTick) {
-            this.animation = EntityAnimation.RAPTOR_LEAP;
-            this.entity.setAnimation(this.animation.get());
+        if (this.animation == EntityAnimation.PREPARE_LEAP && tick < this.prevTick) {
+            this.animation = EntityAnimation.LEAP;
 
             this.entity.playSound(this.entity.getSoundForAnimation(EntityAnimation.ATTACKING.get()), this.entity.getSoundVolume(), this.entity.getSoundPitch());
 
@@ -74,12 +73,10 @@ public class RaptorLeapEntityAI extends EntityAIBase {
             this.entity.motionX = delta / length * Math.cos(angle);
             this.entity.motionZ = (delta / length * Math.sin(angle));
             this.entity.motionY = Math.min(0.3, Math.max(0, (this.target.posY - this.entity.posY) * 0.1)) + 0.6;
-        } else if (this.animation == EntityAnimation.RAPTOR_LEAP && this.entity.motionY < 0) {
-            this.animation = EntityAnimation.RAPTOR_LAND;
-            this.entity.setAnimation(this.animation.get());
-        } else if (this.animation == EntityAnimation.RAPTOR_LAND && (this.entity.onGround || this.entity.isSwimming())) {
+        } else if (this.animation == EntityAnimation.LEAP && this.entity.motionY < 0) {
+            this.animation = EntityAnimation.LEAP_LAND;
+        } else if (this.animation == EntityAnimation.LEAP_LAND && (this.entity.onGround || this.entity.isSwimming())) {
             this.animation = EntityAnimation.IDLE;
-            this.entity.setAnimation(this.animation.get());
 
             if (this.entity.getEntityBoundingBox() != null && this.target.getEntityBoundingBox() != null && this.entity.getEntityBoundingBox().intersectsWith(this.target.getEntityBoundingBox().expand(2.0, 2.0, 2.0))) {
                 this.entity.attackEntityAsMob(this.target);

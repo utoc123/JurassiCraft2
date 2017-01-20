@@ -2,8 +2,8 @@ package org.jurassicraft.server.entity.dinosaur;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -17,7 +17,7 @@ import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
 public class MicroraptorEntity extends DinosaurEntity {
     public MicroraptorEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityAnimal.class, EntityVillager.class, GallimimusEntity.class, MussaurusEntity.class);
+        this.target(EntityPlayer.class, EntityChicken.class, EntityRabbit.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
     }
@@ -29,7 +29,7 @@ public class MicroraptorEntity extends DinosaurEntity {
 
     @Override
     public void fall(float distance, float damageMultiplier) {
-        if (this.getAnimation() != EntityAnimation.RAPTOR_LAND.get()) {
+        if (this.getAnimation() != EntityAnimation.LEAP_LAND.get()) {
             super.fall(distance / 2.0F, damageMultiplier);
         }
     }

@@ -35,5 +35,6 @@ public class MicroraptorDinosaur extends Dinosaur {
         this.setCanClimb(true);
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DENSE));
         this.setBreeding(false, 1, 5, 15, false, true);
+        this.setJumpHeight(2);
     }
 }

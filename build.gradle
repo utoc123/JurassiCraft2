@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    //compile "net.ilexiconn:llibrary:$llibrary_version-1.10.2:dev"
+    compile "net.ilexiconn:llibrary:$llibrary_version-1.10.2:dev"
     testCompile "junit:junit:4.12"
 }
 

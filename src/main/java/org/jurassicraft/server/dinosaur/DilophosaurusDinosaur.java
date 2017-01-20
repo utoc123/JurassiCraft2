@@ -2,7 +2,7 @@ package org.jurassicraft.server.dinosaur;
 
 import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
-import org.jurassicraft.server.entity.SleepingSchedule;
+import org.jurassicraft.server.entity.SleepTime;
 import org.jurassicraft.server.entity.dinosaur.DilophosaurusEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
@@ -25,7 +25,7 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setSizeY(0.3F, 1.7F);
         this.setStorage(27);
         this.setDiet(Diet.CARNIVORE.get());
-        this.setSleepingSchedule(SleepingSchedule.CREPUSCULAR);
+        this.setSleepTime(SleepTime.CREPUSCULAR);
         this.setBones("skull", "tooth", "arm_bones", "leg_bones", "neck", "pelvis", "ribcage", "shoulder", "tail_vertebrae");
         this.setHeadCubeName("Head");
         this.setScale(0.95F, 0.22F);

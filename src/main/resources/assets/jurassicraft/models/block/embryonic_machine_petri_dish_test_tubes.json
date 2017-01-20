@@ -4,5 +4,5 @@
     "layer0": "jurassicraft:blocks/embryonic_machine",
     "particle": "blocks/iron_block"
   },
-  "tabula": "jurassicraft:models/block/embryonic_machine"
+  "tabula": "jurassicraft:models/block/embryonic_machine_petri_dish_test_tubes"
 }

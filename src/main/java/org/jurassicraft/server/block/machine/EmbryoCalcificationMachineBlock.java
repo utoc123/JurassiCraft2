@@ -2,6 +2,8 @@ package org.jurassicraft.server.block.machine;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +25,8 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class EmbryoCalcificationMachineBlock extends OrientedBlock {
+    public static final PropertyBool EGG = PropertyBool.create("egg");
+
     public EmbryoCalcificationMachineBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("embryo_calcification_machine");
@@ -45,14 +49,14 @@ public class EmbryoCalcificationMachineBlock extends OrientedBlock {
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        TileEntity tileentity = world.getTileEntity(pos);
 
         if (tileentity instanceof EmbryoCalcificationMachineBlockEntity) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (EmbryoCalcificationMachineBlockEntity) tileentity);
+            InventoryHelper.dropInventoryItems(world, pos, (EmbryoCalcificationMachineBlockEntity) tileentity);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
@@ -75,7 +79,7 @@ public class EmbryoCalcificationMachineBlock extends OrientedBlock {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new EmbryoCalcificationMachineBlockEntity();
     }
 
@@ -99,5 +103,21 @@ public class EmbryoCalcificationMachineBlock extends OrientedBlock {
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, EGG);
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess access, BlockPos pos) {
+        boolean egg = false;
+        TileEntity tile = access.getTileEntity(pos);
+        if (tile instanceof EmbryoCalcificationMachineBlockEntity) {
+            EmbryoCalcificationMachineBlockEntity machine = (EmbryoCalcificationMachineBlockEntity) tile;
+            egg = machine.getStackInSlot(1) != null || machine.getStackInSlot(2) != null;
+        }
+        return state.withProperty(EGG, egg);
     }
 }

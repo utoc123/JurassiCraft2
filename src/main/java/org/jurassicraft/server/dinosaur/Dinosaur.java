@@ -11,7 +11,7 @@ import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.GrowthStage;
-import org.jurassicraft.server.entity.SleepingSchedule;
+import org.jurassicraft.server.entity.SleepTime;
 import org.jurassicraft.server.period.TimePeriod;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
 
@@ -49,7 +49,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private int storage;
     private int overlayCount;
     private Diet diet;
-    private SleepingSchedule sleepingSchedule = SleepingSchedule.DIURNAL;
+    private SleepTime sleepTime = SleepTime.DIURNAL;
     private String[] bones;
     private int maximumAge;
     private String headCubeName;
@@ -87,6 +87,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private int maxClutch = 6;
     private boolean defendOffspring;
     private boolean directBirth;
+    private int jumpHeight;
 
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
@@ -499,12 +500,12 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         this.diet = diet;
     }
 
-    public SleepingSchedule getSleepingSchedule() {
-        return this.sleepingSchedule;
+    public SleepTime getSleepTime() {
+        return this.sleepTime;
     }
 
-    public void setSleepingSchedule(SleepingSchedule sleepingSchedule) {
-        this.sleepingSchedule = sleepingSchedule;
+    public void setSleepTime(SleepTime sleepTime) {
+        this.sleepTime = sleepTime;
     }
 
     public String[] getBones() {
@@ -726,6 +727,14 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
             }
         }
         return supportedStages;
+    }
+
+    public void setJumpHeight(int jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
+
+    public int getJumpHeight() {
+        return this.jumpHeight;
     }
 
     public enum DinosaurType {

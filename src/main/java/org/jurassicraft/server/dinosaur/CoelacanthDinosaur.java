@@ -2,7 +2,7 @@ package org.jurassicraft.server.dinosaur;
 
 import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
-import org.jurassicraft.server.entity.SleepingSchedule;
+import org.jurassicraft.server.entity.SleepTime;
 import org.jurassicraft.server.entity.dinosaur.CoelacanthEntity;
 import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.period.TimePeriod;
@@ -27,7 +27,7 @@ public class CoelacanthDinosaur extends Dinosaur {
         this.setSizeY(0.1F, 1.0F);
         this.setStorage(9);
         this.setDiet(Diet.PISCIVORE.get().withModule(new Diet.DietModule(FoodType.FILTER)));
-        this.setSleepingSchedule(SleepingSchedule.NOCTURNAL);
+        this.setSleepTime(SleepTime.NOCTURNAL);
         this.setBones("anal_fin", "caudal_fin", "first_dorsal_fin", "pectoral_fin_bones", "pelvic_fin_bones", "second_dorsal_fin", "skull", "spine", "teeth");
         this.setHeadCubeName("Head");
         this.setScale(1.8F, 0.22F);

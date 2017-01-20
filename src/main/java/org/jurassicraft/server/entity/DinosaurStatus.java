@@ -33,19 +33,19 @@ public enum DinosaurStatus {
     DIURNAL {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getSleepingSchedule() == SleepingSchedule.DIURNAL;
+            return entity.getDinosaur().getSleepTime() == SleepTime.DIURNAL;
         }
     },
     NOCTURNAL {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getSleepingSchedule() == SleepingSchedule.NOCTURNAL;
+            return entity.getDinosaur().getSleepTime() == SleepTime.NOCTURNAL;
         }
     },
     CREPUSCULAR {
         @Override
         public boolean apply(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo info) {
-            return entity.getDinosaur().getSleepingSchedule() == SleepingSchedule.CREPUSCULAR;
+            return entity.getDinosaur().getSleepTime() == SleepTime.CREPUSCULAR;
         }
     },
     TAMED {

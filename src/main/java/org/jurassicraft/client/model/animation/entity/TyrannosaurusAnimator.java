@@ -51,24 +51,24 @@ public class TyrannosaurusAnimator extends EntityAnimator<TyrannosaurusEntity> {
         float globalDegree = 0.5F;
 
         float delta = Minecraft.getMinecraft().getRenderPartialTicks();
-        float lheight = entity.getHeightLeft(delta);
-        float rheight = entity.getHeightRight(delta);
-        if (lheight > 0 || rheight > 0) {
+        float heightLeft = entity.getHeightLeft(delta);
+        float heightRight = entity.getHeightRight(delta);
+        if (heightLeft > 0 || heightRight > 0) {
             AdvancedModelRenderer leftCalf = model.getCube("Left Calf 1");
             AdvancedModelRenderer rightCalf = model.getCube("Right Calf 1");
             float scaleModifier = entity.getAttributes().getScaleModifier();
             Dinosaur dino = entity.getDinosaur();
-            float sc = (float) entity.interpolate(dino.getScaleInfant(), dino.getScaleAdult()) * scaleModifier;
-            float avg = (lheight + rheight) / 2;
-            float ldif = Math.max(0, (avg - lheight) * 2);
-            float rdif = Math.max(0, (avg - rheight) * 2);
-            waist.rotationPointY += 16 / sc * avg;
-            leftThigh.rotationPointY += 16 / sc * Math.max(lheight, avg);
-            rightThigh.rotationPointY += 16 / sc * Math.max(rheight, avg);
-            leftThigh.rotateAngleX -= 0.4F * ldif;
-            leftCalf.rotateAngleX += 0.4F * ldif;
-            rightThigh.rotateAngleX -= 0.4F * rdif;
-            rightCalf.rotateAngleX += 0.4F * rdif;
+            float renderScale = (float) entity.interpolate(dino.getScaleInfant(), dino.getScaleAdult()) * scaleModifier;
+            float average = (heightLeft + heightRight) / 2;
+            float leftDelta = Math.max(0, (average - heightLeft) * 2);
+            float rightDelta = Math.max(0, (average - heightRight) * 2);
+            waist.rotationPointY += 16 / renderScale * average;
+            leftThigh.rotationPointY += 16 / renderScale * Math.max(heightLeft, average);
+            rightThigh.rotationPointY += 16 / renderScale * Math.max(heightRight, average);
+            leftThigh.rotateAngleX -= 0.4F * leftDelta;
+            leftCalf.rotateAngleX += 0.4F * leftDelta;
+            rightThigh.rotateAngleX -= 0.4F * rightDelta;
+            rightCalf.rotateAngleX += 0.4F * rightDelta;
         }
 
         model.bob(waist, globalSpeed * 0.5F, globalDegree * 1.5F, false, f, f1);

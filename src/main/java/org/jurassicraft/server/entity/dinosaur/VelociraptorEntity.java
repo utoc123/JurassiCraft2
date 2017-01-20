@@ -28,7 +28,7 @@ public class VelociraptorEntity extends DinosaurEntity {
 
     @Override
     public void fall(float distance, float damageMultiplier) {
-        if (this.getAnimation() != EntityAnimation.RAPTOR_LAND.get()) {
+        if (this.getAnimation() != EntityAnimation.LEAP_LAND.get()) {
             super.fall(distance, damageMultiplier);
         }
     }

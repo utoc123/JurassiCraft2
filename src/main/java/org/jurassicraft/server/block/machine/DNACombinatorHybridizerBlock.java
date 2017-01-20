@@ -2,6 +2,8 @@ package org.jurassicraft.server.block.machine;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +25,8 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class DNACombinatorHybridizerBlock extends OrientedBlock {
+    public static final PropertyBool HYBRIDIZER = PropertyBool.create("hybridizer");
+
     public DNACombinatorHybridizerBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("dna_combinator_hybridizer");
@@ -45,14 +49,14 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock {
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        TileEntity tileentity = world.getTileEntity(pos);
 
         if (tileentity instanceof DNACombinatorHybridizerBlockEntity) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (DNACombinatorHybridizerBlockEntity) tileentity);
+            InventoryHelper.dropInventoryItems(world, pos, (DNACombinatorHybridizerBlockEntity) tileentity);
         }
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
@@ -99,5 +103,21 @@ public class DNACombinatorHybridizerBlock extends OrientedBlock {
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, HYBRIDIZER);
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess access, BlockPos pos) {
+        boolean hybridizer = false;
+        TileEntity tile = access.getTileEntity(pos);
+        if (tile instanceof DNACombinatorHybridizerBlockEntity) {
+            DNACombinatorHybridizerBlockEntity machine = (DNACombinatorHybridizerBlockEntity) tile;
+            hybridizer = machine.getMode();
+        }
+        return state.withProperty(HYBRIDIZER, hybridizer);
     }
 }

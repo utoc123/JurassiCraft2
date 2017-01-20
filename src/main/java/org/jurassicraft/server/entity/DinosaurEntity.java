@@ -69,7 +69,6 @@ import org.jurassicraft.server.entity.ai.FleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.Herd;
 import org.jurassicraft.server.entity.ai.MateEntityAI;
-import org.jurassicraft.server.entity.ai.PathNavigateDinosaur;
 import org.jurassicraft.server.entity.ai.ProtectInfantEntityAI;
 import org.jurassicraft.server.entity.ai.Relationship;
 import org.jurassicraft.server.entity.ai.RespondToAttackEntityAI;
@@ -86,6 +85,9 @@ import org.jurassicraft.server.entity.ai.metabolism.DrinkEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.EatFoodItemEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.FeederEntityAI;
 import org.jurassicraft.server.entity.ai.metabolism.GrazeEntityAI;
+import org.jurassicraft.server.entity.ai.navigation.DinosaurJumpHelper;
+import org.jurassicraft.server.entity.ai.navigation.DinosaurMoveHelper;
+import org.jurassicraft.server.entity.ai.navigation.DinosaurPathNavigate;
 import org.jurassicraft.server.entity.ai.util.OnionTraverser;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.food.FoodHelper;
@@ -167,14 +169,17 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private DinosaurEntity breeding;
     private Set<DinosaurEntity> children = new HashSet<>();
     private int pregnantTime;
+    private int jumpHeight;
 
     public DinosaurEntity(World world) {
         super(world);
+        this.moveHelper = new DinosaurMoveHelper(this);
+        this.jumpHelper = new DinosaurJumpHelper(this);
 
         this.setFullyGrown();
         this.updateAttributes();
 
-        this.navigator = new PathNavigateDinosaur(this, this.world);
+        this.navigator = new DinosaurPathNavigate(this, this.world);
         this.lookHelper = new DinosaurLookHelper(this);
 
         this.metabolism = new MetabolismContainer(this);
@@ -262,7 +267,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public boolean shouldSleep() {
-        return this.getDinosaurTime() > this.getDinosaur().getSleepingSchedule().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving() && !(this.herd != null && this.herd.enemies.size() > 0);
+        return this.getDinosaurTime() > this.getDinosaur().getSleepTime().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving() && !(this.herd != null && this.herd.enemies.size() > 0);
     }
 
     private boolean hasPredators() {
@@ -297,9 +302,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public int getDinosaurTime() {
-        SleepingSchedule sleepingSchedule = this.getDinosaur().getSleepingSchedule();
+        SleepTime sleepTime = this.getDinosaur().getSleepTime();
 
-        long time = (this.world.getWorldTime() % 24000) - sleepingSchedule.getWakeUpTime();
+        long time = (this.world.getWorldTime() % 24000) - sleepTime.getWakeUpTime();
 
         if (time < 0) {
             time += 24000;
@@ -786,7 +791,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             if (!this.world.isRemote) {
                 if (this.order == Order.WANDER) {
                     if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry() && this.getNavigator().noPath()) {
-                        if (!this.isSleeping && !this.isInWater() && this.getAnimation() == EntityAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
+                        if (!this.isSleeping && this.onGround && !this.isInWater() && this.getAnimation() == EntityAnimation.IDLE.get() && this.rand.nextInt(400) == 0) {
                             this.setAnimation(EntityAnimation.RESTING.get());
                             this.isSittingNaturally = true;
                         }
@@ -893,6 +898,16 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.attackCooldown--;
         }
 
+        if (!this.world.isRemote) {
+            if (this.animation == EntityAnimation.LEAP.get()) {
+                if (this.motionY < 0) {
+                    this.setAnimation(EntityAnimation.LEAP_LAND.get());
+                }
+            } else if (this.animation == EntityAnimation.LEAP_LAND.get() && (this.onGround || this.isSwimming())) {
+                this.setAnimation(EntityAnimation.IDLE.get());
+            }
+        }
+
         if (this.animation != null && this.animation != EntityAnimation.IDLE.get()) {
             boolean shouldHold = EntityAnimation.getAnimation(this.animation).shouldHold();
 
@@ -900,7 +915,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                 this.animationTick++;
             } else if (!shouldHold) {
                 this.animationTick = 0;
-                this.setAnimation(EntityAnimation.IDLE.get());
+                if (this.animation == EntityAnimation.PREPARE_LEAP.get()) {
+                    this.setAnimation(EntityAnimation.LEAP.get());
+                } else {
+                    this.setAnimation(EntityAnimation.IDLE.get());
+                }
             } else {
                 this.animationTick = this.animationLength - 1;
             }
@@ -1736,6 +1755,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void setAttributes(DinosaurAttributes attributes) {
         this.attributes = attributes;
+    }
+
+    public void setJumpHeight(int jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
+
+    @Override
+    protected float getJumpUpwardsMotion() {
+        return (float) Math.sqrt((this.jumpHeight + 0.2) * 0.27);
     }
 
     public static class FieldGuideInfo {

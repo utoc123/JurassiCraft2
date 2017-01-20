@@ -1,17 +1,25 @@
-package org.jurassicraft.server.entity.ai;
+package org.jurassicraft.server.entity.ai.navigation;
 
+import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.DinosaurEntity;
 
-public class PathNavigateDinosaur extends PathNavigateGround {
+public class DinosaurPathNavigate extends PathNavigateGround {
     private DinosaurEntity dinosaur;
 
-    public PathNavigateDinosaur(DinosaurEntity entity, World world) {
+    public DinosaurPathNavigate(DinosaurEntity entity, World world) {
         super(entity, world);
         this.dinosaur = entity;
+    }
+
+    @Override
+    protected PathFinder getPathFinder() {
+        this.nodeProcessor = new DinosaurWalkNodeProcessor(((DinosaurEntity) this.theEntity).getDinosaur());
+        this.nodeProcessor.setCanEnterDoors(true);
+        return new PathFinder(this.nodeProcessor);
     }
 
     @Override

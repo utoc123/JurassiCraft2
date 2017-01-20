@@ -2,6 +2,8 @@ package org.jurassicraft.server.block.machine;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +25,9 @@ import org.jurassicraft.server.proxy.ServerProxy;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class EmbryonicMachineBlock extends OrientedBlock {
+    public static final PropertyBool PETRI_DISH = PropertyBool.create("dish");
+    public static final PropertyBool TEST_TUBES = PropertyBool.create("tubes");
+
     public EmbryonicMachineBlock() {
         super(Material.IRON);
         this.setUnlocalizedName("embryonic_machine");
@@ -36,10 +41,10 @@ public class EmbryonicMachineBlock extends OrientedBlock {
         super.onBlockPlacedBy(world, pos, state, placer, stack);
 
         if (stack.hasDisplayName()) {
-            TileEntity tileentity = world.getTileEntity(pos);
+            TileEntity tile = world.getTileEntity(pos);
 
-            if (tileentity instanceof EmbryonicMachineBlockEntity) {
-                ((EmbryonicMachineBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tile instanceof EmbryonicMachineBlockEntity) {
+                ((EmbryonicMachineBlockEntity) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -75,7 +80,7 @@ public class EmbryonicMachineBlock extends OrientedBlock {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new EmbryonicMachineBlockEntity();
     }
 
@@ -99,5 +104,23 @@ public class EmbryonicMachineBlock extends OrientedBlock {
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, PETRI_DISH, TEST_TUBES);
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess access, BlockPos pos) {
+        boolean dish = false;
+        boolean tubes = false;
+        TileEntity tile = access.getTileEntity(pos);
+        if (tile instanceof EmbryonicMachineBlockEntity) {
+            EmbryonicMachineBlockEntity machine = (EmbryonicMachineBlockEntity) tile;
+            tubes = machine.getStackInSlot(1) != null;
+            dish = machine.getStackInSlot(0) != null;
+        }
+        return state.withProperty(PETRI_DISH, dish).withProperty(TEST_TUBES, tubes);
     }
 }

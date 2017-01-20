@@ -287,7 +287,7 @@
         "time": 10
       }
     ],
-    "RAPTOR_PREPARE_POUNCE": [
+    "PREPARE_LEAP": [
       {
         "pose": "microraptor_adult_climb_start",
         "time": 10
@@ -297,7 +297,7 @@
         "time": 5
       }
     ],
-    "RAPTOR_LEAP": [
+    "LEAP": [
       {
         "pose": "microraptor_adult_leap_1",
         "time": 5
@@ -315,7 +315,7 @@
         "time": 5
       }
     ],
-    "RAPTOR_LAND": [
+    "LEAP_LAND": [
       {
         "pose": "microraptor_adult_landing_1",
         "time": 4

@@ -1,6 +1,6 @@
 package org.jurassicraft.server.entity;
 
-public enum SleepingSchedule {
+public enum SleepTime {
     DIURNAL(fromTimeToTicks(6, 0), fromTimeToTicks(22, 0)),
     NOCTURNAL(fromTimeToTicks(18, 0), fromTimeToTicks(6, 0)),
     CREPUSCULAR(fromTimeToTicks(12, 30), fromTimeToTicks(4, 30));
@@ -8,7 +8,7 @@ public enum SleepingSchedule {
     private int wakeUpTime;
     private int sleepTime;
 
-    SleepingSchedule(int wakeUpTime, int sleepTime) {
+    SleepTime(int wakeUpTime, int sleepTime) {
         this.wakeUpTime = wakeUpTime;
         this.sleepTime = sleepTime;
     }

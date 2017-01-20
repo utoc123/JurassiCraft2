@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
@@ -50,24 +49,24 @@ public class TyrannosaurusEntity extends DinosaurEntity {
     }
 
     public float getHeightLeft(float delta) {
-        return prevHeightLeft + (heightLeft - prevHeightLeft) * delta;
+        return this.prevHeightLeft + (this.heightLeft - this.prevHeightLeft) * delta;
     }
 
     public float getHeightRight(float delta) {
-        return prevHeightRight + (heightRight - prevHeightRight) * delta;
+        return this.prevHeightRight + (this.heightRight - this.prevHeightRight) * delta;
     }
    
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (world.isRemote) {
-            double theta = renderYawOffset / (180 / Math.PI);
+        if (this.world.isRemote) {
+            double theta = this.renderYawOffset / (180 / Math.PI);
             double dx = Math.cos(theta) * 1.2;
             double dz = Math.sin(theta) * 1.2;
-            prevHeightLeft = heightLeft;
-            prevHeightRight = heightRight;
-            heightLeft = settleLeg(posX + dx, posY, posZ + dz, heightLeft);
-            heightRight = settleLeg(posX - dx, posY, posZ - dz, heightRight);
+            this.prevHeightLeft = this.heightLeft;
+            this.prevHeightRight = this.heightRight;
+            this.heightLeft = this.settleLeg(this.posX + dx, this.posY, this.posZ + dz, this.heightLeft);
+            this.heightRight = this.settleLeg(this.posX - dx, this.posY, this.posZ - dz, this.heightRight);
         }
         if (this.onGround && !this.isInWater()) {
             if (this.moveForward > 0 && (this.posX - this.prevPosX > 0 || this.posZ - this.prevPosZ > 0) && this.stepCount <= 0) {
@@ -80,10 +79,10 @@ public class TyrannosaurusEntity extends DinosaurEntity {
 
     private float settleLeg(double x, double y, double z, float height) {
         BlockPos pos = new BlockPos(x, y + 0.001, z).down();
-        IBlockState state = world.getBlockState(pos);
-        AxisAlignedBB aabb = state.getCollisionBoundingBox(world, pos);
+        IBlockState state = this.world.getBlockState(pos);
+        AxisAlignedBB aabb = state.getCollisionBoundingBox(this.world, pos);
         float dist = aabb == null ? 1 : 1 - Math.min((float) aabb.maxY, 1);
-        if (onGround && height <= dist) {
+        if (this.onGround && height <= dist) {
             return Math.min(height + 0.3F, dist);
         } else if (height > 0) {
             return Math.max(height - 0.2F, 0);

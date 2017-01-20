@@ -35,5 +35,6 @@ public class VelociraptorDinosaur extends Dinosaur {
         this.setCanClimb(true);
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DENSE));
         this.setBreeding(false,1, 7, 28, false, true);
+        this.setJumpHeight(3);
     }
 }
