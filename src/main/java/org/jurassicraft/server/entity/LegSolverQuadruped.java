@@ -14,9 +14,9 @@ public final class LegSolverQuadruped extends LegSolver {
             new Leg(forwardCenter + forward, side),
             new Leg(forwardCenter + forward, -side)
         );
-        this.backLeft = legs[0];
-        this.backRight = legs[1];
-        this.frontLeft = legs[2];
-        this.frontRight = legs[3];
+        this.backLeft = this.legs[0];
+        this.backRight = this.legs[1];
+        this.frontLeft = this.legs[2];
+        this.frontRight = this.legs[3];
     }
 }

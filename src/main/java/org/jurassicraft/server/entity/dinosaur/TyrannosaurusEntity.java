@@ -1,14 +1,11 @@
 package org.jurassicraft.server.entity.dinosaur;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
@@ -28,7 +25,7 @@ public class TyrannosaurusEntity extends DinosaurEntity {
 
     @Override
     protected LegSolverBiped createLegSolver() {
-        return legSolver = new LegSolverBiped(-0.5F, 1);
+        return this.legSolver = new LegSolverBiped(-0.5F, 1);
     }
 
     @Override
@@ -64,18 +61,5 @@ public class TyrannosaurusEntity extends DinosaurEntity {
             }
             this.stepCount -= this.moveForward * 9.5;
         }
-    }
-
-    private float settleLeg(double x, double y, double z, float height) {
-        BlockPos pos = new BlockPos(x, y + 0.001, z).down();
-        IBlockState state = this.world.getBlockState(pos);
-        AxisAlignedBB aabb = state.getCollisionBoundingBox(this.world, pos);
-        float dist = aabb == null ? 1 : 1 - Math.min((float) aabb.maxY, 1);
-        if (this.onGround && height <= dist) {
-            return Math.min(height + 0.3F, dist);
-        } else if (height > 0) {
-            return Math.max(height - 0.2F, 0);
-        }
-        return height;
     }
 }
