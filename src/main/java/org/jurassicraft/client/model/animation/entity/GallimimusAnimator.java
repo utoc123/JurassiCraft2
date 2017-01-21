@@ -1,6 +1,7 @@
 package org.jurassicraft.client.model.animation.entity;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.AnimatableModel;
@@ -42,12 +43,18 @@ public class GallimimusAnimator extends EntityAnimator<GallimimusEntity> {
         AdvancedModelRenderer leftThigh = model.getCube("Left thigh");
         AdvancedModelRenderer rightThigh = model.getCube("Right thigh");
 
+        AdvancedModelRenderer leftCalf = model.getCube("Left shin");
+        AdvancedModelRenderer rightCalf = model.getCube("Right shin");
+
         AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck5, neck4, neck3, neck2, neck1, body1, body2, body3 };
 
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
 
         AdvancedModelRenderer[] armLeft = new AdvancedModelRenderer[] { handLeft, lowerArmLeft, upperArmLeft };
         AdvancedModelRenderer[] armRight = new AdvancedModelRenderer[] { handRight, lowerArmRight, upperArmRight };
+
+        float delta = Minecraft.getMinecraft().getRenderPartialTicks();
+        LegArticulator.articulateBiped(entity, entity.legSolver, body1, leftThigh, leftCalf, rightThigh, rightCalf, 1.0F, 1.4F, delta);
 
         float globalSpeed = 1.5F;
         float globalDegree = 1.0F;

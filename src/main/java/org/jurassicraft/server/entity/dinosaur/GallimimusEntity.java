@@ -6,12 +6,20 @@ import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.LegSolverBiped;
 import org.jurassicraft.server.entity.ai.animations.PeckGroundAnimationAI;
 
 public class GallimimusEntity extends DinosaurEntity {
+    public LegSolverBiped legSolver;
+
     public GallimimusEntity(World world) {
         super(world);
-        this.animationTasks.addTask(3, new PeckGroundAnimationAI(this));
+        this.animationTasks.addTask(3, new PeckGroundAnimationAI<>(this));
+    }
+
+    @Override
+    protected LegSolverBiped createLegSolver() {
+        return this.legSolver = new LegSolverBiped(-0.05F, 0.25F);
     }
 
     @Override
