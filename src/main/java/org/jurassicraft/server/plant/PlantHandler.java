@@ -43,6 +43,7 @@ public class PlantHandler {
     public static final Plant LITHOSTROTION = new LithostrotionPlant();
     public static final Plant STYLOPHYLLOPSIS = new StylophyllopsisPlant();
     public static final Plant HIPPURITES_RADIOSUS = new HippuritesRadiosusPlant();
+    public static final Plant HELICONIA = new HeliconiaPlant();
 
     private static final List<Plant> PLANTS = new LinkedList<>();
 
@@ -86,6 +87,7 @@ public class PlantHandler {
         registerPlant(LITHOSTROTION);
         registerPlant(STYLOPHYLLOPSIS);
         registerPlant(HIPPURITES_RADIOSUS);
+        registerPlant(HELICONIA);
     }
 
     public static Plant getPlantById(int id) {

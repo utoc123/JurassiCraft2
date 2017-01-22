@@ -323,6 +323,7 @@ tile.cladochonus.name=Cladochonus
 tile.lithostrotion.name=Lithostrotion
 tile.stylophyllopsis.name=Stylophyllopsis
 tile.hippurites_radiosus.name=Hippurites Radiosus
+tile.heliconia.name=Heliconia
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -394,6 +395,7 @@ plants.cladochonus.name=Cladochonus
 plants.lithostrotion.name=Lithostrotion
 plants.stylophyllopsis.name=Stylophyllopsis
 plants.hippurites_radiosus.name=Hippurites Radiosus
+plants.heliconia.name=Heliconia
 
 
 //Containers ==================================================

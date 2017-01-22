@@ -238,6 +238,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LITHOSTROTION, "lithostrotion");
         this.registerBlockRenderer(BlockHandler.STYLOPHYLLOPSIS, "stylophyllopsis");
         this.registerBlockRenderer(BlockHandler.HIPPURITES_RADIOSUS, "hippurites_radiosus");
+        this.registerBlockRenderer(BlockHandler.HELICONIA, "heliconia");
 
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone");
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks");

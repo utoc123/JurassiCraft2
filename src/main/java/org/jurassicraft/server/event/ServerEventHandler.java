@@ -105,6 +105,17 @@ public class ServerEventHandler {
             }
         }
 
+        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.JUNGLE)) {
+            if (rand.nextInt(8) == 0) {
+                BlockPos topBlock = world.getTopSolidOrLiquidBlock(pos);
+                if (world.getBlockState(topBlock.down()).isOpaqueCube() && !world.getBlockState(topBlock).getMaterial().isLiquid()) {
+                    //If double plant
+                    world.setBlockState(topBlock.up(), BlockHandler.HELICONIA.getDefaultState(), 2);
+                    world.setBlockState(topBlock, BlockHandler.HELICONIA.getDefaultState().withProperty(DoublePlantBlock.HALF, DoublePlantBlock.BlockHalf.LOWER), 2);
+                }
+            }
+        }
+
         if (JurassiCraft.CONFIG.gracilariaGeneration) {
             if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.OCEAN)) {
                 if (rand.nextInt(8) == 0) {
