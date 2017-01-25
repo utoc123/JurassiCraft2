@@ -75,7 +75,6 @@ item.claw_fresh.name=Fresh {dino} Claw
 item.tail_club_fresh.name=Fresh {dino} Tail Club
 item.leg_bones_fresh.name=Fresh {dino} Leg Bones
 item.horn_fresh.name=Fresh {dino} Horn
-item.pelvic_fin_bones_fresh.name=Fresh {dino} Pelvic Fin Bones
 item.thagomizer_fresh.name=Fresh {dino} Thagomizer
 item.caudal_fin_fresh.name=Fresh {dino} Caudal Fin
 item.wing_bones_fresh.name=Fresh {dino} Wing Bones
@@ -84,6 +83,10 @@ item.first_dorsal_fin_fresh.name=Fresh {dino} First Dorsal Fin
 
 item.fossilized_egg.name=Fossilized Egg
 
+item.lunch_box.name=Plastic Lunch Box
+item.stamp_set.name=Stamp Set
+item.fun_fries.name=Fun Fries
+item.oiled_potato_strips.name=Oiled Potato Strips
 item.skull.name={dino} Skull
 item.tooth.name={dino} Tooth
 item.anal_fin.name={dino} Anal Fin
