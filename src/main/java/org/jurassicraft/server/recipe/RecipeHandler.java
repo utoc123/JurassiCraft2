@@ -35,7 +35,7 @@ public class RecipeHandler {
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_STAIRS.get(type), 4), "  w", " ww", "www", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_SLABS.get(type), 6), "www", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(ItemHandler.ANCIENT_DOORS.get(type), 3), "ww", "ww", "ww", 'w', planks);
-            GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCES.get(type), 3), "wsw", "wsw", 'w', planks, 's', Items.STICK);
+            GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCES.get(type), 3), "wsw", "wsw", 'w', planks, 's', Items.STICK);	
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCE_GATES.get(type), 3), "sws", "sws", 'w', planks, 's', Items.STICK);
         }
 
@@ -111,7 +111,11 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_CANE), "A", "|", "|", 'A', ItemHandler.AMBER, '|', Items.STICK);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.AMBER, '#', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.MR_DNA_KEYCHAIN), "A", "#", 'A', ItemHandler.DNA_NUCLEOTIDES, '#', Items.IRON_INGOT);
-
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.OILED_POTATO_STRIPS), ItemHandler.WILD_POTATO, ItemHandler.WILD_POTATO, ItemHandler.WILD_POTATO, ItemHandler.WILD_POTATO, ItemHandler.AJUGINUCULA_SMITHII_OIL);
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.OILED_POTATO_STRIPS, 4), Items.POTATO, Items.POTATO, ItemHandler.AJUGINUCULA_SMITHII_OIL);
+        GameRegistry.addSmelting(ItemHandler.OILED_POTATO_STRIPS, new ItemStack(ItemHandler.FUN_FRIES), 0.5F);
+        
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.PADDOCK_SIGN), "III", "SSS", "III", 'I', "nuggetIron", 'S', Items.SIGN));
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.FIELD_GUIDE), "WBW", "PPP", "WBW", 'W', new ItemStack(Blocks.WOOL, 1, 3), 'B', Items.BONE, 'P', Items.PAPER);

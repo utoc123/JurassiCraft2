@@ -1,15 +1,9 @@
 package org.jurassicraft.server.item;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
@@ -22,9 +16,16 @@ import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeedFood;
+import net.minecraft.item.ItemSeeds;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemHandler {
     public static final Map<TreeType, AncientDoorItem> ANCIENT_DOORS = new HashMap<>();
@@ -119,8 +120,13 @@ public class ItemHandler {
     public static final BasicItem DNA_ANALYZER = new BasicItem(TabHandler.ITEMS);
 
     public static final BasicFoodItem CHILEAN_SEA_BASS = new BasicFoodItem(10, 1.0F, false, TabHandler.FOODS);
+    public static final BasicFoodItem FUN_FRIES = new BasicFoodItem(4, 2.0F, false, TabHandler.FOODS);
+    public static final BasicFoodItem OILED_POTATO_STRIPS = new BasicFoodItem(1, 0.0F, false, TabHandler.FOODS);
 
     public static final FieldGuideItem FIELD_GUIDE = new FieldGuideItem();
+    
+    public static final BasicItem LUNCH_BOX = new BasicItem(TabHandler.ITEMS);
+    public static final BasicItem STAMP_SET = new BasicItem(TabHandler.ITEMS);
 
     public static final BasicItem CAR_CHASSIS = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem CAR_ENGINE_SYSTEM = new BasicItem(TabHandler.ITEMS);
@@ -135,7 +141,7 @@ public class ItemHandler {
 
     public static final SaplingSeedItem PHOENIX_SEEDS = (SaplingSeedItem) new SaplingSeedItem(BlockHandler.ANCIENT_SAPLINGS.get(TreeType.PHOENIX));
     public static final SeededFruitItem PHOENIX_FRUIT = (SeededFruitItem) new SeededFruitItem(PHOENIX_SEEDS, 4, 0.4F).setCreativeTab(TabHandler.FOODS);
-
+    
     public static final BugItem CRICKETS = new BugItem(stack -> {
         Item item = stack.getItem();
         Block block = Block.getBlockFromItem(item);
@@ -327,13 +333,20 @@ public class ItemHandler {
 
         registerItem(GOAT_RAW, "Goat Raw");
         registerItem(GOAT_COOKED, "Goat Cooked");
+        
+        registerItem(FUN_FRIES, "Fun Fries");
+        registerItem(OILED_POTATO_STRIPS, "Oiled Potato Strips");
+        
+        registerItem(LUNCH_BOX, "Lunch Box");
+        registerItem(STAMP_SET, "Stamp Set");
+
 
         for (TreeType type : TreeType.values()) {
             registerTreeType(type);
         }
-    }
+	}
 
-    public static void registerTreeType(TreeType type) {
+	public static void registerTreeType(TreeType type) {
         String typeName = type.name();
 
         AncientDoorItem door = new AncientDoorItem(BlockHandler.ANCIENT_DOORS.get(type));

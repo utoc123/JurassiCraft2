@@ -9,6 +9,7 @@ TheToteMaster
 Gegy   
 Cody Rex
 Alexthe666   
+MrTrollNugNug(Cazsius)
 
 ### Modelers / Texturers
 Cody Rex   

@@ -148,6 +148,7 @@ public enum RenderingHandler {
 
             ModelBakery.registerItemVariants(ItemHandler.PLANT_DNA, new ModelResourceLocation("jurassicraft:dna/plants/dna_" + name, "inventory"));
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name, "inventory"));
+           
         }
 
 //        for (EnumDyeColor color : EnumDyeColor.values()) {
@@ -313,7 +314,12 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.PETRI_DISH);
         this.registerItemRenderer(ItemHandler.PETRI_DISH_AGAR);
         this.registerItemRenderer(ItemHandler.PLASTER_AND_BANDAGE);
-
+        	
+        this.registerItemRenderer(ItemHandler.FUN_FRIES);
+        this.registerItemRenderer(ItemHandler.OILED_POTATO_STRIPS);
+        this.registerItemRenderer(ItemHandler.LUNCH_BOX);
+        this.registerItemRenderer(ItemHandler.STAMP_SET);
+        
         for (Entry<Integer, Dinosaur> entry : EntityHandler.getDinosaurs().entrySet()) {
             this.registerItemRenderer(ItemHandler.SPAWN_EGG, entry.getKey(), "dino_spawn_egg");
         }
