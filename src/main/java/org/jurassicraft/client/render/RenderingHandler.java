@@ -34,11 +34,10 @@ import org.jurassicraft.client.model.animation.entity.TriceratopsAnimator;
 import org.jurassicraft.client.model.animation.entity.TyrannosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.VelociraptorAnimator;
 import org.jurassicraft.client.render.block.ActionFigureRenderer;
+import org.jurassicraft.client.render.block.CleaningStationRenderer;
 import org.jurassicraft.client.render.block.DNAExtractorRenderer;
 import org.jurassicraft.client.render.block.DNASequencerRenderer;
-import org.jurassicraft.client.render.block.ElectricFenceBaseRenderer;
 import org.jurassicraft.client.render.block.ElectricFencePoleRenderer;
-import org.jurassicraft.client.render.block.ElectricFenceWireRenderer;
 import org.jurassicraft.client.render.block.FeederRenderer;
 import org.jurassicraft.client.render.block.IncubatorRenderer;
 import org.jurassicraft.client.render.entity.AttractionSignRenderer;
@@ -58,16 +57,13 @@ import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.NestFossilBlock;
 import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
-import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
-import org.jurassicraft.server.block.fence.ElectricFenceBaseBlock;
-import org.jurassicraft.server.block.fence.ElectricFencePoleBlock;
-import org.jurassicraft.server.block.fence.ElectricFenceWireBlock;
 import org.jurassicraft.server.block.plant.AncientCoralBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
@@ -168,10 +164,6 @@ public enum RenderingHandler {
             ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockFenceGate.POWERED }).build());
             ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_DOORS.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockDoor.POWERED }).build());
         }
-
-        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_BASE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceBaseBlock.NORTH, ElectricFenceBaseBlock.SOUTH, ElectricFenceBaseBlock.WEST, ElectricFenceBaseBlock.EAST, ElectricFenceBaseBlock.POLE })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_POLE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFencePoleBlock.NORTH, ElectricFencePoleBlock.SOUTH, ElectricFencePoleBlock.WEST, ElectricFencePoleBlock.EAST, ElectricFencePoleBlock.POWERED })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_WIRE, (new StateMap.Builder().ignore(new IProperty[] { ElectricFenceWireBlock.NORTH, ElectricFenceWireBlock.SOUTH, ElectricFenceWireBlock.WEST, ElectricFenceWireBlock.EAST, ElectricFenceWireBlock.UP_DIRECTION })).build());
 
         ModelLoader.setCustomStateMapper(BlockHandler.ENALLHELIA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.AULOPORA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
@@ -520,8 +512,7 @@ public enum RenderingHandler {
         ClientRegistry.bindTileEntitySpecialRenderer(IncubatorBlockEntity.class, new IncubatorRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(FeederBlockEntity.class, new FeederRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ElectricFencePoleBlockEntity.class, new ElectricFencePoleRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(ElectricFenceBaseBlockEntity.class, new ElectricFenceBaseRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(ElectricFenceWireBlockEntity.class, new ElectricFenceWireRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(CleaningStationBlockEntity.class, new CleaningStationRenderer());
 
         ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlockHandler.LOW_SECURITY_FENCE_POLE), 0, ElectricFencePoleBlockEntity.class);
         ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlockHandler.LOW_SECURITY_FENCE_BASE), 0, ElectricFenceBaseBlockEntity.class);

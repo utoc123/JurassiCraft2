@@ -11,14 +11,15 @@ import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.util.GameRuleHandler;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Herd implements Iterable<DinosaurEntity> {
-    public List<DinosaurEntity> members = new LinkedList<>();
+    public Set<DinosaurEntity> members = new HashSet<>();
     public DinosaurEntity leader;
 
     private Vec3d center;
@@ -31,7 +32,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
     private Random random = new Random();
 
-    public List<EntityLivingBase> enemies = new ArrayList<>();
+    public Set<EntityLivingBase> enemies = new HashSet<>();
 
     public boolean fleeing;
 
@@ -143,8 +144,8 @@ public class Herd implements Iterable<DinosaurEntity> {
                             }
                         }
 
-                        double navigateX = entity.posX + (entityMoveX * 5.0F);
-                        double navigateZ = entity.posZ + (entityMoveZ * 5.0F);
+                        double navigateX = entity.posX + entityMoveX;
+                        double navigateZ = entity.posZ + entityMoveZ;
 
                         Dinosaur dinosaur = entity.getDinosaur();
                         double speed = this.state == State.STATIC ? 0.8 : dinosaur.getFlockSpeed();
@@ -163,14 +164,19 @@ public class Herd implements Iterable<DinosaurEntity> {
                                     continue;
                                 }
                             }
-                            if (entity.getDistanceSqToCenter(navigatePos) > 10 && !entity.isMovementBlocked()) {
+                            if (entity.getDistanceSqToCenter(navigatePos) > 16 && !entity.isMovementBlocked()) {
                                 entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
                             }
                         }
                     }
                 } else if (!this.fleeing && (entity.getAttackTarget() == null || this.random.nextInt(20) == 0) && this.enemies.size() > 0) {
                     if (entity.getAgePercentage() > 50) {
-                        entity.setAttackTarget(this.enemies.get(this.random.nextInt(this.enemies.size())));
+                        int index = this.random.nextInt(this.enemies.size());
+                        Iterator<EntityLivingBase> enemyIterator = this.enemies.iterator();
+                        for (int i = 0; i < index; i++) {
+                            enemyIterator.next();
+                        }
+                        entity.setAttackTarget(enemyIterator.next());
                     }
                 }
             }
@@ -266,7 +272,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
     public void updateLeader() {
         if (this.members.size() > 0) {
-            this.leader = this.members.get(new Random().nextInt(this.members.size()));
+            this.leader = this.members.iterator().next();
         } else {
             this.leader = null;
         }

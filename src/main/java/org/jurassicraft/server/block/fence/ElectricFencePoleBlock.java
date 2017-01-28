@@ -13,9 +13,9 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
 import org.jurassicraft.server.tab.TabHandler;
@@ -55,7 +55,7 @@ public class ElectricFencePoleBlock extends BlockContainer {
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.INVISIBLE;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
@@ -153,12 +153,16 @@ public class ElectricFencePoleBlock extends BlockContainer {
                             IBlockState state = world.getBlockState(offset);
                             Block block = state.getBlock();
                             if (block instanceof ElectricFenceBaseBlock) {
-                                int deltaX = offset.getX() - origin.getX();
-                                int deltaZ = offset.getZ() - origin.getZ();
-                                double delta = MathHelper.sqrt((deltaX * deltaX) + (deltaZ * deltaZ));
-                                if (delta <= 8) {
-                                    BlockPos wirePos = new BlockPos(offset);
-                                    while (world.getBlockState(wirePos = wirePos.up()).getBlock() instanceof ElectricFenceWireBlock) {
+                                int wireX = offset.getX();
+                                int wireZ = offset.getZ();
+                                int deltaX = wireX - origin.getX();
+                                int deltaZ = wireZ - origin.getZ();
+                                Chunk chunk = world.getChunkFromBlockCoords(offset);
+                                double delta = (deltaX * deltaX) + (deltaZ * deltaZ);
+                                if (delta <= 64) {
+                                    int currentY = offset.getY();
+                                    while (chunk.getBlockState(wireX, ++currentY, wireZ).getBlock() instanceof ElectricFenceWireBlock) {
+                                        BlockPos wirePos = new BlockPos(wireX, currentY, wireZ);
                                         if (!wires.contains(wirePos)) {
                                             wires.add(wirePos);
                                         }

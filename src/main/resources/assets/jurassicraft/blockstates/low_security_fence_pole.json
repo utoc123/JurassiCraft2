@@ -1,7 +1,28 @@
 {
-  "variants": {
-    "normal": {
-      "model": "jurassicraft:low_security_fence_pole"
+  "multipart": [
+    {
+      "when": {"north": "true"},
+      "apply": {"model": "jurassicraft:low_security_fence_pole_wires.tbl", "y": 270}
+    },
+    {
+      "when": {"west": "true"},
+      "apply": {"model": "jurassicraft:low_security_fence_pole_wires.tbl", "y": 180}
+    },
+    {
+      "when": {"south": "true"},
+      "apply": {"model": "jurassicraft:low_security_fence_pole_wires.tbl", "y": 90}
+    },
+    {
+      "when": {"east": "true"},
+      "apply": {"model": "jurassicraft:low_security_fence_pole_wires.tbl", "y": 0}
+    },
+    {
+      "when": {"powered": "true"},
+      "apply": {"model": "jurassicraft:low_security_fence_pole_active.tbl"}
+    },
+    {
+      "when": {"powered": "false"},
+      "apply": {"model": "jurassicraft:low_security_fence_pole_inactive.tbl"}
     }
-  }
+  ]
 }

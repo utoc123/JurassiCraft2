@@ -82,7 +82,7 @@ public class ElectricFenceWireBlock extends BlockContainer {
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.INVISIBLE;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
@@ -150,6 +150,9 @@ public class ElectricFenceWireBlock extends BlockContainer {
                     }
                 }
             }
+        }
+        if (!west && !north && !south && !east) {
+            west = north = south = east = true;
         }
         return state.withProperty(NORTH, north).withProperty(SOUTH, south).withProperty(WEST, west).withProperty(EAST, east).withProperty(UP_DIRECTION, up);
     }

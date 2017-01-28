@@ -6,6 +6,7 @@ import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityBodyHelper;
@@ -56,6 +57,7 @@ import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.server.api.Animatable;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
+import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.damage.DinosaurDamageSource;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.ai.AdvancedSwimEntityAI;
@@ -1700,17 +1702,20 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public BlockPos getClosestFeeder() {
-        if (this.closestFeeder == null || this.ticksExisted - this.feederSearchTick > 40) {
+        if (this.ticksExisted - this.feederSearchTick > 200) {
             this.feederSearchTick = this.ticksExisted;
             OnionTraverser traverser = new OnionTraverser(this.getPosition(), 32);
             for (BlockPos pos : traverser) {
-                TileEntity tile = this.world.getTileEntity(pos);
-                if (tile instanceof FeederBlockEntity) {
-                    FeederBlockEntity feeder = (FeederBlockEntity) tile;
-                    if (feeder.canFeedDinosaur(this) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
-                        Path path = this.getNavigator().getPathToPos(pos);
-                        if (path != null && path.getCurrentPathLength() != 0) {
-                            return this.closestFeeder = pos;
+                IBlockState state = this.world.getBlockState(pos);
+                if (state.getBlock() instanceof FeederBlock) {
+                    TileEntity tile = this.world.getTileEntity(pos);
+                    if (tile instanceof FeederBlockEntity) {
+                        FeederBlockEntity feeder = (FeederBlockEntity) tile;
+                        if (feeder.canFeedDinosaur(this) && feeder.getFeeding() == null && feeder.openAnimation == 0) {
+                            Path path = this.getNavigator().getPathToPos(pos);
+                            if (path != null && path.getCurrentPathLength() != 0) {
+                                return this.closestFeeder = pos;
+                            }
                         }
                     }
                 }

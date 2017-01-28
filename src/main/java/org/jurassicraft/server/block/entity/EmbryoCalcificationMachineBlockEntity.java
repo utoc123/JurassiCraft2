@@ -109,8 +109,9 @@ public class EmbryoCalcificationMachineBlockEntity extends MachineBaseBlockEntit
         return this.hasCustomName() ? this.customName : "container.embryo_calcification_machine";
     }
 
-    public String getCommandSenderName() // Forge Version compatibility, keep both getName and getCommandSenderName
-    {
-        return this.getName();
+    @Override
+    protected void onSlotUpdate() {
+        super.onSlotUpdate();
+        this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
     }
 }

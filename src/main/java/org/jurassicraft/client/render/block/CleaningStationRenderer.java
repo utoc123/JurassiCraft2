@@ -8,22 +8,21 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.OrientedBlock;
-import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
+import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 
-public class DNASequencerRenderer extends TileEntitySpecialRenderer<DNASequencerBlockEntity> {
+public class CleaningStationRenderer extends TileEntitySpecialRenderer<CleaningStationBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void renderTileEntityAt(DNASequencerBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
+    public void renderTileEntityAt(CleaningStationBlockEntity tileEntity, double x, double y, double z, float p_180535_8_, int p_180535_9_) {
         World world = tileEntity.getWorld();
 
         IBlockState state = world.getBlockState(tileEntity.getPos());
 
-        if (state.getBlock() == BlockHandler.DNA_SEQUENCER) {
+        if (state.getBlock() == BlockHandler.CLEANING_STATION) {
             EnumFacing value = state.getValue(OrientedBlock.FACING);
 
             if (value == EnumFacing.NORTH || value == EnumFacing.SOUTH) {
@@ -31,31 +30,24 @@ public class DNASequencerRenderer extends TileEntitySpecialRenderer<DNASequencer
             }
 
             int rotation = value.getHorizontalIndex() * 90;
+            float scale = 0.25F;
 
             GlStateManager.pushMatrix();
             GlStateManager.translate(x + 0.5, y + 1.5F, z + 0.5);
 
             GlStateManager.rotate(rotation, 0, 1, 0);
-            GlStateManager.translate(-0.2, -0.6, 0.15);
-            GlStateManager.scale(-0.375F, -0.375F, 0.375F);
+            GlStateManager.translate(0.0, -1.1, -0.05);
+            GlStateManager.scale(-scale, -scale, scale);
             GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
 
             this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
             RenderItem renderItem = this.mc.getRenderItem();
 
-            GlStateManager.translate(0.0, 0.0, MathHelper.sin((this.mc.player.ticksExisted + this.mc.getRenderPartialTicks()) * 0.05F) * 0.025F);
+            ItemStack cleanable = tileEntity.getStackInSlot(0);
 
-            for (int inputSlot : tileEntity.getSlotsForFace(EnumFacing.UP)) {
-                GlStateManager.translate(0.0, 0.0, -0.4);
-
-                if (inputSlot % 2 == 0) {
-                    ItemStack sequence = tileEntity.getStackInSlot(inputSlot);
-
-                    if (sequence != null) {
-                        renderItem.renderItem(sequence, renderItem.getItemModelMesher().getItemModel(sequence));
-                    }
-                }
+            if (cleanable != null) {
+                renderItem.renderItem(cleanable, renderItem.getItemModelMesher().getItemModel(cleanable));
             }
 
             GlStateManager.popMatrix();

@@ -35,8 +35,8 @@ public class GracilariaBlock extends BlockBush {
      * It will spread quickly if within 5-11 range, slowly otherwise.
      */
 
-    private static final int DENSITY_PER_AREA = 8;
-    private static final int GOOD_LIGHT_SPREAD_CHANCE = 25;
+    private static final int DENSITY_PER_AREA = 5;
+    private static final int GOOD_LIGHT_SPREAD_CHANCE = 10;
     private static final int BAD_LIGHT_SPREAD_CHANCE = 1;
     private static final int SPREAD_RADIUS = 4;
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.8F, 0.4F, 0.8F);

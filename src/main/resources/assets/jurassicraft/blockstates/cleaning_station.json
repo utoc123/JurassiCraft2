@@ -1,19 +1,24 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "jurassicraft:cleaning_station.tbl",
+    "variants": {
+      "normal": [{}],
+      "inventory": [{}]
+    }
+  },
   "variants": {
     "facing=north": {
-      "model": "jurassicraft:cleaning_station",
-      "y": 180
+      "y": 0
     },
     "facing=south": {
-      "model": "jurassicraft:cleaning_station"
+      "y": 180
     },
     "facing=west": {
-      "model": "jurassicraft:cleaning_station",
-      "y": 90
+      "y": 270
     },
     "facing=east": {
-      "model": "jurassicraft:cleaning_station",
-      "y": 270
+      "y": 90
     }
   }
 }

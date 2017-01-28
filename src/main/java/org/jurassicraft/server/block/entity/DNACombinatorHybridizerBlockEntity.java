@@ -253,6 +253,7 @@ public class DNACombinatorHybridizerBlockEntity extends MachineBaseBlockEntity {
     public void setMode(boolean mode) {
         this.hybridizerMode = mode;
         this.processTime[0] = 0;
+        this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
     }
 
     @Override

@@ -1,18 +1,19 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "jurassicraft:incubator.tbl"
+  },
   "variants": {
     "facing=north": {
-      "model": "jurassicraft:incubator"
+      "y": 0
     },
     "facing=south": {
-      "model": "jurassicraft:incubator",
       "y": 180
     },
     "facing=west": {
-      "model": "jurassicraft:incubator",
       "y": 270
     },
     "facing=east": {
-      "model": "jurassicraft:incubator",
       "y": 90
     }
   }

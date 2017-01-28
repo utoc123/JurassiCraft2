@@ -124,8 +124,9 @@ public class EmbryonicMachineBlockEntity extends MachineBaseBlockEntity {
         return this.hasCustomName() ? this.customName : "container.embryonic_machine";
     }
 
-    public String getCommandSenderName() // Forge Version compatibility, keep both getName and getCommandSenderName
-    {
-        return this.getName();
+    @Override
+    protected void onSlotUpdate() {
+        super.onSlotUpdate();
+        this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
     }
 }

@@ -1,3 +1,6 @@
 {
-  "parent": "jurassicraft:block/cleaning_station"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/cleaning_station"
+  }
 }

@@ -94,12 +94,16 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.getSlots(), index, count);
+        ItemStack split = ItemStackHelper.getAndSplit(this.getSlots(), index, count);
+        this.onSlotUpdate();
+        return split;
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.getSlots(), index);
+        ItemStack removed = ItemStackHelper.getAndRemove(this.getSlots(), index);
+        this.onSlotUpdate();
+        return removed;
     }
 
     @Override
@@ -122,6 +126,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
                 }
                 this.markDirty();
             }
+            this.onSlotUpdate();
         }
     }
 
@@ -173,7 +178,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
         for (int process = 0; process < this.getProcessCount(); process++) {
             boolean flag = this.isProcessing(process);
-            boolean sync = false;
+            boolean dirty = false;
 
             if (!this.world.isRemote) {
                 boolean hasInput = false;
@@ -200,9 +205,10 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
                         }
                         this.totalProcessTime[process] = total;
                         this.processItem(process);
+                        this.onSlotUpdate();
                     }
 
-                    sync = true;
+                    dirty = true;
                 } else if (this.isProcessing(process)) {
                     if (this.shouldResetProgress()) {
                         this.processTime[process] = 0;
@@ -210,14 +216,14 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
                         this.processTime[process]--;
                     }
 
-                    sync = true;
+                    dirty = true;
                 }
 
                 if (flag != this.isProcessing(process)) {
-                    sync = true;
+                    dirty = true;
                 }
 
-                if (sync) {
+                if (dirty) {
                     this.markDirty();
                 }
             }
@@ -375,5 +381,8 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
     protected boolean shouldResetProgress() {
         return true;
+    }
+
+    protected void onSlotUpdate() {
     }
 }
