@@ -165,7 +165,13 @@ public class Herd implements Iterable<DinosaurEntity> {
                                 }
                             }
                             if (entity.getDistanceSqToCenter(navigatePos) > 16 && !entity.isMovementBlocked()) {
-                                entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
+                                boolean canMove = entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
+                                if (!canMove) {
+                                    this.moveX = (this.random.nextFloat() - 0.5F) * 5.0F;
+                                    this.moveZ = (this.random.nextFloat() - 0.5F) * 5.0F;
+
+                                    this.normalizeMovement();
+                                }
                             }
                         }
                     }

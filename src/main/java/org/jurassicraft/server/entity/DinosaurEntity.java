@@ -1095,6 +1095,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private void dropStackWithGenetics(ItemStack stack) {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("DNAQuality", this.geneticsQuality);
+        nbt.setInteger("Dinosaur", EntityHandler.getDinosaurId(this.dinosaur));
         nbt.setString("Genetics", this.genetics);
         stack.setTagCompound(nbt);
 

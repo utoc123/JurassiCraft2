@@ -344,7 +344,7 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
 
         if (slots[slot] == null) {
             slots[slot] = stack;
-        } else if (slots[slot].getItem() == stack.getItem() && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
+        } else if (ItemStack.areItemStacksEqual(slots[slot], stack) && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
             slots[slot].stackSize += stack.stackSize;
         }
     }

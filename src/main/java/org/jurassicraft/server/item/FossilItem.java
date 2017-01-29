@@ -27,11 +27,11 @@ import java.util.Random;
 public class FossilItem extends Item implements GrindableItem {
     public static Map<String, List<Dinosaur>> fossilDinosaurs = new HashMap<>();
     private String type;
-    private boolean includeHybrids;
+    private boolean fresh;
 
-    public FossilItem(String type, boolean includeHybrids) {
+    public FossilItem(String type, boolean fresh) {
         this.type = type.toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-        this.includeHybrids = includeHybrids;
+        this.fresh = fresh;
 
         this.setHasSubtypes(true);
 
@@ -81,7 +81,7 @@ public class FossilItem extends Item implements GrindableItem {
         List<Dinosaur> dinosaursForType = fossilDinosaurs.get(this.type);
 
         for (Dinosaur dinosaur : dinosaurs) {
-            if (dinosaur.shouldRegister() && dinosaursForType.contains(dinosaur) && !(!this.includeHybrids && dinosaur instanceof Hybrid)) {
+            if (dinosaursForType.contains(dinosaur) && !(!this.fresh && dinosaur instanceof Hybrid)) {
                 subtypes.add(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)));
             }
         }
@@ -122,7 +122,7 @@ public class FossilItem extends Item implements GrindableItem {
 
         int outputType = random.nextInt(6);
 
-        if (outputType == 5 || stack.getUnlocalizedName().contains("fresh")) {
+        if (outputType == 5 || this.fresh) {
             ItemStack output = new ItemStack(ItemHandler.SOFT_TISSUE, 1, stack.getItemDamage());
             output.setTagCompound(tag);
             return output;
