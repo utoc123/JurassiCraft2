@@ -231,6 +231,8 @@ tile.incubator.name=Incubator
 tile.dna_extractor.name=DNA Extractor
 tile.dna_combinator_hybridizer.name=DNA Combinator-Hybridizer
 
+tile.tour_rail.name=Tour Vehicle Track
+
 tile.gypsum_stone.name=Gypsum Stone
 tile.gypsum_cobblestone.name=Gypsum Cobblestone
 tile.gypsum_bricks.name=Gypsum Bricks

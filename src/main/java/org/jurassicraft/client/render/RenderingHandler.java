@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -60,7 +59,6 @@ import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
-import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
@@ -148,7 +146,6 @@ public enum RenderingHandler {
 
             ModelBakery.registerItemVariants(ItemHandler.PLANT_DNA, new ModelResourceLocation("jurassicraft:dna/plants/dna_" + name, "inventory"));
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name, "inventory"));
-           
         }
 
 //        for (EnumDyeColor color : EnumDyeColor.values()) {
@@ -169,9 +166,9 @@ public enum RenderingHandler {
         ModelLoader.setCustomStateMapper(BlockHandler.ENALLHELIA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.AULOPORA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.CLADOCHONUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.LITHOSTROTION, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL})).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.STYLOPHYLLOPSIS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL})).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.HIPPURITES_RADIOSUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL})).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.LITHOSTROTION, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.STYLOPHYLLOPSIS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.HIPPURITES_RADIOSUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
 
         int i = 0;
 
@@ -304,6 +301,9 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.CINNAMON_FERN);
         this.registerBlockRenderer(BlockHandler.BRISTLE_FERN);
 
+        this.registerBlockRenderer(BlockHandler.TOUR_RAIL);
+        this.registerBlockRenderer(BlockHandler.TOUR_RAIL_POWERED);
+
         this.registerItemRenderer(ItemHandler.TRACKER);
         this.registerItemRenderer(ItemHandler.PLANT_CELLS_PETRI_DISH);
         this.registerItemRenderer(ItemHandler.PLANT_CELLS);
@@ -314,12 +314,12 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.PETRI_DISH);
         this.registerItemRenderer(ItemHandler.PETRI_DISH_AGAR);
         this.registerItemRenderer(ItemHandler.PLASTER_AND_BANDAGE);
-        	
+
         this.registerItemRenderer(ItemHandler.FUN_FRIES);
         this.registerItemRenderer(ItemHandler.OILED_POTATO_STRIPS);
         this.registerItemRenderer(ItemHandler.LUNCH_BOX);
         this.registerItemRenderer(ItemHandler.STAMP_SET);
-        
+
         for (Entry<Integer, Dinosaur> entry : EntityHandler.getDinosaurs().entrySet()) {
             this.registerItemRenderer(ItemHandler.SPAWN_EGG, entry.getKey(), "dino_spawn_egg");
         }
@@ -519,9 +519,6 @@ public enum RenderingHandler {
         ClientRegistry.bindTileEntitySpecialRenderer(FeederBlockEntity.class, new FeederRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(ElectricFencePoleBlockEntity.class, new ElectricFencePoleRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(CleaningStationBlockEntity.class, new CleaningStationRenderer());
-
-        ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlockHandler.LOW_SECURITY_FENCE_POLE), 0, ElectricFencePoleBlockEntity.class);
-        ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlockHandler.LOW_SECURITY_FENCE_BASE), 0, ElectricFenceBaseBlockEntity.class);
     }
 
     public void registerItemRenderer(Item item) {

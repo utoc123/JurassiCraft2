@@ -1,7 +1,6 @@
 package org.jurassicraft.client.render.block;
 
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,7 +22,7 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
 
     public ElectricFencePoleRenderer() {
         try {
-            this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/low_security_fence_pole_active.tbl"));
+            this.model = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/block/low_security_fence_pole_lights.tbl"));
             this.texture = new ResourceLocation(JurassiCraft.MODID, "textures/blocks/low_security_fence_pole.png");
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,39 +31,34 @@ public class ElectricFencePoleRenderer extends TileEntitySpecialRenderer<Electri
 
     @Override
     public void renderTileEntityAt(ElectricFencePoleBlockEntity tile, double x, double y, double z, float partialTicks, int destroyStage) {
-        boolean powered = tile == null;
-
         if (tile != null) {
+            boolean active = false;
+
             BlockPos position = tile.getPos();
-            IBlockState state = tile.getWorld().getBlockState(position).getActualState(tile.getWorld(), position);
+            IBlockState state = tile.getWorld().getBlockState(position);
             if (state.getBlock() == BlockHandler.LOW_SECURITY_FENCE_POLE) {
-                powered = state.getValue(ElectricFencePoleBlock.POWERED);
+                active = state.getActualState(tile.getWorld(), position).getValue(ElectricFencePoleBlock.ACTIVE);
             }
-        }
 
-        if (powered) {
-            GlStateManager.pushMatrix();
+            if (active) {
+                GlStateManager.pushMatrix();
 
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
 
-            double scale = 1.01;
-            float modelScale = (float) (0.0625F / scale);
-            GlStateManager.scale(-scale, -scale, scale);
+                double scale = 1.0;
+                GlStateManager.scale(-scale, -scale, scale);
 
-            this.mc.getTextureManager().bindTexture(this.texture);
+                this.mc.getTextureManager().bindTexture(this.texture);
 
-            AdvancedModelRenderer blue = this.model.getCube("Blue light active");
-            AdvancedModelRenderer orange = this.model.getCube("Orange light active");
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+                this.model.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
-            blue.render(modelScale);
-            orange.render(modelScale);
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
 
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
-
-            GlStateManager.popMatrix();
+                GlStateManager.popMatrix();
+            }
         }
     }
 }

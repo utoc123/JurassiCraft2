@@ -27,7 +27,7 @@ public class ElectricFencePoleBlock extends BlockContainer {
     public static final PropertyBool SOUTH = PropertyBool.create("south");
     public static final PropertyBool WEST = PropertyBool.create("west");
     public static final PropertyBool EAST = PropertyBool.create("east");
-    public static final PropertyBool POWERED = PropertyBool.create("powered");
+    public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.3425, 0.0, 0.3425, 0.6575, 1.0, 0.6575);
 
@@ -75,33 +75,59 @@ public class ElectricFencePoleBlock extends BlockContainer {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, NORTH, SOUTH, WEST, EAST, POWERED);
+        return new BlockStateContainer(this, ACTIVE, NORTH, SOUTH, WEST, EAST);
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
+    public IBlockState getActualState(IBlockState state, IBlockAccess access, BlockPos pos) {
         BlockPos northPos = pos.offset(EnumFacing.NORTH);
         BlockPos southPos = pos.offset(EnumFacing.SOUTH);
         BlockPos eastPos = pos.offset(EnumFacing.EAST);
         BlockPos westPos = pos.offset(EnumFacing.WEST);
-        IBlockState northBlock = blockAccess.getBlockState(northPos);
-        IBlockState southBlock = blockAccess.getBlockState(southPos);
-        IBlockState westBlock = blockAccess.getBlockState(westPos);
-        IBlockState eastBlock = blockAccess.getBlockState(eastPos);
-        boolean north = this.canConnect(blockAccess, northPos, EnumFacing.NORTH, northBlock);
-        boolean south = this.canConnect(blockAccess, southPos, EnumFacing.SOUTH, southBlock);
-        boolean west = this.canConnect(blockAccess, westPos, EnumFacing.WEST, westBlock);
-        boolean east = this.canConnect(blockAccess, eastPos, EnumFacing.EAST, eastBlock);
+        IBlockState northBlock = access.getBlockState(northPos);
+        IBlockState southBlock = access.getBlockState(southPos);
+        IBlockState westBlock = access.getBlockState(westPos);
+        IBlockState eastBlock = access.getBlockState(eastPos);
+        boolean north = this.canConnect(access, northPos, EnumFacing.NORTH, northBlock);
+        boolean south = this.canConnect(access, southPos, EnumFacing.SOUTH, southBlock);
+        boolean west = this.canConnect(access, westPos, EnumFacing.WEST, westBlock);
+        boolean east = this.canConnect(access, eastPos, EnumFacing.EAST, eastBlock);
         boolean powered = false;
-        if (blockAccess instanceof World) {
-            World world = (World) blockAccess;
-            BlockPos downPos = pos.down();
-            IBlockState down = blockAccess.getBlockState(downPos);
-            if ((world.isBlockPowered(downPos) && down.getBlock() instanceof ElectricFenceBaseBlock) || (down.getBlock() instanceof ElectricFencePoleBlock && down.getActualState(blockAccess, downPos).getValue(POWERED))) {
-                powered = true;
+        BlockPos downPos = pos.down();
+        IBlockState down = access.getBlockState(downPos);
+        if ((this.isBlockPowered(access, downPos) && down.getBlock() instanceof ElectricFenceBaseBlock) || (down.getBlock() instanceof ElectricFencePoleBlock && down.getActualState(access, downPos).getValue(ACTIVE))) {
+            powered = true;
+        }
+        return state.withProperty(NORTH, north).withProperty(SOUTH, south).withProperty(WEST, west).withProperty(EAST, east).withProperty(ACTIVE, powered);
+    }
+
+    private int getRedstonePower(IBlockAccess access, BlockPos pos, EnumFacing facing) {
+        IBlockState state = access.getBlockState(pos);
+        if (state.getBlock().shouldCheckWeakPower(state, access, pos, facing)) {
+            return this.getStrongPower(access, pos);
+        } else {
+            return state.getWeakPower(access, pos, facing);
+        }
+    }
+
+    private int getStrongPower(IBlockAccess access, BlockPos pos) {
+        int highest = 0;
+        for (EnumFacing facing : EnumFacing.VALUES) {
+            highest = Math.max(highest, access.getStrongPower(pos.offset(facing), facing));
+            if (highest >= 15) {
+                return highest;
             }
         }
-        return state.withProperty(NORTH, north).withProperty(SOUTH, south).withProperty(WEST, west).withProperty(EAST, east).withProperty(POWERED, powered);
+        return highest;
+    }
+
+    private boolean isBlockPowered(IBlockAccess access, BlockPos pos) {
+        for (EnumFacing facing : EnumFacing.VALUES) {
+            if (this.getRedstonePower(access, pos.offset(facing), facing) > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected boolean canConnect(IBlockAccess world, BlockPos pos, EnumFacing direction, IBlockState state) {

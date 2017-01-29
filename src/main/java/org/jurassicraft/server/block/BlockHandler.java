@@ -189,13 +189,16 @@ public class BlockHandler {
     public static final ElectricFencePoleBlock LOW_SECURITY_FENCE_POLE = new ElectricFencePoleBlock();
     public static final ElectricFenceBaseBlock LOW_SECURITY_FENCE_BASE = new ElectricFenceBaseBlock();
     public static final ElectricFenceWireBlock LOW_SECURITY_FENCE_WIRE = new ElectricFenceWireBlock();
-    
+
     public static final JPMainGateBlock JP_MAIN_GATE_BLOCK = new JPMainGateBlock();
+    public static final TourRailBlock TOUR_RAIL = new TourRailBlock(false);
+    public static final TourRailBlock TOUR_RAIL_POWERED = new TourRailBlock(true);
 
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
     public static PaleoBaleBlock PALEO_BALE_FERN;
     public static PaleoBaleBlock PALEO_BALE_LEAVES;
+
     public static PaleoBaleBlock PALEO_BALE_OTHER;
 
     public static void init() {
@@ -274,7 +277,9 @@ public class BlockHandler {
 
         registerBlock(PLANKTON_SWARM, "Plankton Swarm");
         registerBlock(KRILL_SWARM, "Krill Swarm");
-        
+        registerBlock(TOUR_RAIL, "Tour Rail");
+        registerBlock(TOUR_RAIL_POWERED, "Powered Tour Rail");
+
 //        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
 
 //        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");

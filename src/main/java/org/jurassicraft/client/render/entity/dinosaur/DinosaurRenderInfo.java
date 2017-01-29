@@ -58,6 +58,8 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
             this.eggModel = new TabulaModel(TabulaModelHelper.loadTabulaModel("/assets/jurassicraft/models/entities/egg/" + name));
             this.eggTexture = new ResourceLocation(JurassiCraft.MODID, "textures/entities/egg/" + name + ".png");
         } catch (Exception e) {
+            this.eggModel = DEFAULT_EGG_MODEL;
+            this.eggTexture = DEFAULT_EGG_TEXTURE;
         }
     }
 
@@ -75,11 +77,11 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     }
 
     public ModelBase getEggModel() {
-        return this.eggModel == null ? DEFAULT_EGG_MODEL : this.eggModel;
+        return this.eggModel;
     }
 
     public ResourceLocation getEggTexture() {
-        return this.eggTexture == null ? DEFAULT_EGG_TEXTURE : this.eggTexture;
+        return this.eggTexture;
     }
 
     public EntityAnimator<?> getModelAnimator() {

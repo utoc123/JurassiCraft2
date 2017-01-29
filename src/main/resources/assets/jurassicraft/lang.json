@@ -11,6 +11,18 @@
     {
       "locale": "nl_NL",
       "downloadURL": "https://raw.githubusercontent.com/gegy1000/JurassiCraftLocalizations/master/nl_NL.lang"
+    },
+    {
+      "locale": "de_DE",
+      "downloadURL": "https://raw.githubusercontent.com/gegy1000/JurassiCraftLocalizations/master/de_DE.lang"
+    },
+    {
+      "locale": "is_IS",
+      "downloadURL": "https://raw.githubusercontent.com/gegy1000/JurassiCraftLocalizations/master/is_IS.lang"
+    },
+    {
+      "locale": "pt_BR",
+      "downloadURL": "https://raw.githubusercontent.com/gegy1000/JurassiCraftLocalizations/master/pt_BR.lang"
     }
   ]
 }
