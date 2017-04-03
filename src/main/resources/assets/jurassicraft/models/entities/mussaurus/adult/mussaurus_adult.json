@@ -168,10 +168,27 @@
         "pose": "mussaurus_adult_attack_3",
         "time": 5
       },
-
       {
         "pose": "mussaurus_adult_idle",
         "time": 20
+      }
+      ],
+    "SWIMMING": [
+      {
+        "pose": "mussaurus_adult_swimming_1",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_swimming_2",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_swimming_3",
+        "time": 5
+      },
+      {
+        "pose": "mussaurus_adult_swimming_4",
+        "time": 5
       }
     ]
 

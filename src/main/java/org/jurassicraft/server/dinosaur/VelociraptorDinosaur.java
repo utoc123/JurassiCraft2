@@ -2,6 +2,7 @@ package org.jurassicraft.server.dinosaur;
 
 import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
+import org.jurassicraft.server.entity.SleepTime;
 import org.jurassicraft.server.entity.dinosaur.VelociraptorEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
@@ -25,6 +26,7 @@ public class VelociraptorDinosaur extends Dinosaur {
         this.setSizeY(0.5F, 1.8F);
         this.setStorage(27);
         this.setDiet(Diet.CARNIVORE.get());
+        this.setSleepTime(SleepTime.CREPUSCULAR);
         this.setBones("claw", "tooth", "skull");
         this.setHeadCubeName("Head");
         this.setScale(1.3F, 0.3F);
