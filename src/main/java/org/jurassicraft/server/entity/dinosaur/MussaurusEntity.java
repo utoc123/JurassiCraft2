@@ -6,10 +6,14 @@ import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.ai.animations.PeckGroundAnimationAI;
+import org.jurassicraft.server.entity.ai.animations.RearingUpAnimationAI;
 
 public class MussaurusEntity extends DinosaurEntity {
-    public MussaurusEntity(World world) {
+    public MussaurusEntity(World world){
         super(world);
+        this.animationTasks.addTask(3, new PeckGroundAnimationAI<>(this));
+        this.animationTasks.addTask(3, new RearingUpAnimationAI<>(this));
     }
 
     @Override
