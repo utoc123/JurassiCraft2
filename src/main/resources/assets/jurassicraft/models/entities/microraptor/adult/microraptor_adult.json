@@ -379,32 +379,10 @@
         "time": 10
       }
     ],
-    "CLIMBING": [
-      {
-        "pose": "microraptor_adult_climbing_1",
-        "time": 5
-      },
-      {
-        "pose": "microraptor_adult_climbing_2",
-        "time": 5
-      },
-      {
-        "pose": "microraptor_adult_climbing_3",
-        "time": 5
-      },
-      {
-        "pose": "microraptor_adult_climbing_4",
-        "time": 5
-      },
-      {
-        "pose": "microraptor_adult_climbing_5",
-        "time": 5
-      }
-    ],
     "GLIDING": [
       {
         "pose": "microraptor_adult_gliding_1",
-        "time": 10
+        "time": 20
       }
     ]
   }
