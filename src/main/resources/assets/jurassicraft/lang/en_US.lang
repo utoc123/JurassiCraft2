@@ -21,6 +21,12 @@ entity.jurassicraft.mussaurus.name=Mussaurus
 
 entity.jurassicraft.goat.name=Goat
 
+entity.jeep_wrangler.name=Jeep Wrangler
+entity.ford_explorer.name=Ford Explorer
+entity.mural.name=Mural
+entity.attraction_sign.name=Attraction Sign
+entity.paddock_sign.name=Paddock Sign
+
 entity.Villager.jurassicraft:geneticist=Geneticist
 
 //Items ==================================================
@@ -185,6 +191,7 @@ item.car_seats.name=Car Seats
 item.car_tire.name=Car Tire
 item.car_windscreen.name=Car Windscreen
 item.jeep_wrangler.name=Jeep Wrangler
+item.ford_explorer.name=Ford Explorer
 item.unfinished_car.name=Unfinished Car
 item.phoenix_fruit.name=Phoenix Fruit
 item.phoenix_seeds.name=Phoenix Seeds

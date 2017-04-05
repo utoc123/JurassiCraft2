@@ -1,9 +1,15 @@
 package org.jurassicraft.server.item;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeedFood;
+import net.minecraft.item.ItemSeeds;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Hybrid;
@@ -16,16 +22,9 @@ import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class ItemHandler {
     public static final Map<TreeType, AncientDoorItem> ANCIENT_DOORS = new HashMap<>();
@@ -136,6 +135,7 @@ public class ItemHandler {
     public static final BasicItem UNFINISHED_CAR = new BasicItem(TabHandler.ITEMS);
 
     public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
+    public static final FordExplorerItem FORD_EXPLORER = new FordExplorerItem();
 
     public static final MuralItem MURAL = new MuralItem();
 
@@ -326,6 +326,7 @@ public class ItemHandler {
         registerItem(CAR_WINDSCREEN, "Car Windscreen");
         registerItem(UNFINISHED_CAR, "Unfinished Car");
         registerItem(JEEP_WRANGLER, "Jeep Wrangler");
+        registerItem(FORD_EXPLORER, "Ford Explorer");
 
         registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
         registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");

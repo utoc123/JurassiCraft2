@@ -95,7 +95,7 @@ public class GeneticistVillagerHouse extends StructureVillagePieces.Village {
                 .setRotation(this.rotation)
                 .setMirror(this.mirror)
                 .setIgnoreEntities(true);
-        Template template = templateManager.getTemplate(server, STRUCTURE);//east.
+        Template template = templateManager.getTemplate(server, STRUCTURE);
         if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(world, bounds);
             if (this.averageGroundLvl < 0) {

@@ -172,7 +172,7 @@
         "pose": "mussaurus_adult_idle",
         "time": 20
       }
-      ],
+    ],
     "SWIMMING": [
       {
         "pose": "mussaurus_adult_swimming_1",
@@ -191,6 +191,5 @@
         "time": 5
       }
     ]
-
   }
 }

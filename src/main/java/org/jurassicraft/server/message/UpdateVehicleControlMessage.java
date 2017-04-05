@@ -7,33 +7,33 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.jurassicraft.server.entity.vehicle.CarEntity;
+import org.jurassicraft.server.entity.vehicle.VehicleEntity;
 
-public class UpdateCarControlMessage extends AbstractMessage<UpdateCarControlMessage> {
+public class UpdateVehicleControlMessage extends AbstractMessage<UpdateVehicleControlMessage> {
     private int entityId;
     private byte state;
 
-    public UpdateCarControlMessage() {
+    public UpdateVehicleControlMessage() {
     }
 
-    public UpdateCarControlMessage(CarEntity entity) {
-        this.entityId = entity.getEntityId();
+    public UpdateVehicleControlMessage(VehicleEntity entity) {
+        this.entityId = entity.getVehicleID();
         this.state = entity.getState();
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, UpdateCarControlMessage message, EntityPlayer player, MessageContext context) {
+    public void onClientReceived(Minecraft minecraft, UpdateVehicleControlMessage message, EntityPlayer player, MessageContext context) {
     }
 
     @Override
-    public void onServerReceived(MinecraftServer server, UpdateCarControlMessage message, EntityPlayer player, MessageContext context) {
+    public void onServerReceived(MinecraftServer server, UpdateVehicleControlMessage message, EntityPlayer player, MessageContext context) {
         Entity entity = player.world.getEntityByID(message.entityId);
 
-        if (entity instanceof CarEntity) {
-            CarEntity car = (CarEntity) entity;
+        if (entity instanceof VehicleEntity) {
+            VehicleEntity vehicle = (VehicleEntity) entity;
 
-            if (car.getSeat(0) != null && car.getSeat(0).getControllingPassenger() == player) {
-                car.setState(message.state);
+            if (vehicle.getSeat(0) != null && vehicle.getSeat(0).getControllingPassenger() == player) {
+                vehicle.setState(message.state);
             }
         }
     }

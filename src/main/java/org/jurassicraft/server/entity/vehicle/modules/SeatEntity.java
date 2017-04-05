@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jurassicraft.server.entity.vehicle.CarEntity;
+import org.jurassicraft.server.entity.vehicle.VehicleEntity;
 
 import javax.vecmathimpl.Matrix4d;
 import javax.vecmathimpl.Vector3d;
@@ -27,13 +27,13 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
     private float offsetX, offsetY, offsetZ;
 
     private int parentId;
-    private CarEntity parent;
+    private VehicleEntity parent;
 
     public SeatEntity(World world) {
         super(world);
     }
 
-    public SeatEntity(World world, CarEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height) {
+    public SeatEntity(World world, VehicleEntity parent, int id, float offsetX, float offsetY, float offsetZ, float width, float height) {
         super(world);
         this.setSize(width, height + offsetY);
         this.id = id;
@@ -63,10 +63,10 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
         matrix.setIdentity();
         Matrix4d transform = new Matrix4d();
         transform.setIdentity();
-        transform.setTranslation(new Vector3d(this.parent.posX, this.parent.posY, this.parent.posZ));
+        transform.setTranslation(new Vector3d(this.parent.getX(), this.parent.getY(), this.parent.getZ()));
         matrix.mul(transform);
         transform.setIdentity();
-        transform.rotY(Math.toRadians(180.0F - this.parent.rotationYaw));
+        transform.rotY(Math.toRadians(180.0F - this.parent.getRotationYaw()));
         matrix.mul(transform);
         transform.setIdentity();
         transform.setTranslation(new Vector3d(this.offsetX, 0.0, this.offsetZ));
@@ -74,8 +74,8 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 
         this.setPosition(matrix.m03, matrix.m13, matrix.m23);
 
-        this.prevRotationYaw = this.parent.prevRotationYaw;
-        this.rotationYaw = this.parent.rotationYaw;
+        this.prevRotationYaw = this.parent.getPrevRotationYaw();
+        this.rotationYaw = this.parent.getRotationYaw();
     }
 
     @Override
@@ -90,9 +90,9 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
         return true;
     }
 
-    public void updateParent(CarEntity parent) {
+    public void updateParent(VehicleEntity parent) {
         this.parent = parent;
-        this.parentId = parent.getEntityId();
+        this.parentId = parent.getVehicleID();
     }
 
     @Override
@@ -169,8 +169,8 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 
         Entity parent = this.world.getEntityByID(buffer.readInt());
 
-        if (parent instanceof CarEntity) {
-            this.parent = (CarEntity) parent;
+        if (parent instanceof VehicleEntity) {
+            this.parent = (VehicleEntity) parent;
             this.parent.addSeat(this);
         }
     }
@@ -201,16 +201,19 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        CarEntity parent = this.parent;
+        VehicleEntity parent = this.parent;
         if (parent == null) {
-            List<CarEntity> cars = this.world.getEntitiesWithinAABB(CarEntity.class, this.getEntityBoundingBox());
-            for (CarEntity car : cars) {
-                if (car.getSeat(this.getId()) == this) {
-                    parent = car;
-                    break;
+            List<Entity> entities = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox());
+            for (Entity entity : entities) {
+                if (entity instanceof VehicleEntity) {
+                    VehicleEntity vehicle = (VehicleEntity) entity;
+                    if (vehicle.getSeat(this.getId()) == this) {
+                        parent = vehicle;
+                        break;
+                    }
                 }
             }
         }
-        return parent != null && parent.attackEntityFrom(source, amount);
+        return parent != null && parent.attackVehicle(source, amount);
     }
 }
