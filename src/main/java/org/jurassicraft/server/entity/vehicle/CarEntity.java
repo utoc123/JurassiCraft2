@@ -26,13 +26,13 @@ import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.proxy.ClientProxy;
 import org.jurassicraft.client.sound.CarSound;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
-import org.jurassicraft.server.message.UpdateCarControlMessage;
+import org.jurassicraft.server.message.UpdateVehicleControlMessage;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CarEntity extends Entity {
+public abstract class CarEntity extends Entity implements VehicleEntity {
     public static final DataParameter<Byte> WATCHER_STATE = EntityDataManager.createKey(CarEntity.class, DataSerializers.BYTE);
     public static final DataParameter<Float> WATCHER_HEALTH = EntityDataManager.createKey(CarEntity.class, DataSerializers.FLOAT);
     public static final float MAX_HEALTH = 40.0F;
@@ -93,6 +93,11 @@ public abstract class CarEntity extends Entity {
     }
 
     @Override
+    public boolean attackVehicle(DamageSource source, float amount) {
+        return this.attackEntityFrom(source, amount);
+    }
+
+    @Override
     public boolean isInRangeToRenderDist(double dist) {
         return true;
     }
@@ -117,10 +122,7 @@ public abstract class CarEntity extends Entity {
 
         if (this.seats.size() == 0) {
             if (!this.world.isRemote) {
-                this.addSeat(new SeatEntity(this.world, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
-                this.addSeat(new SeatEntity(this.world, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
-                this.addSeat(new SeatEntity(this.world, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
-                this.addSeat(new SeatEntity(this.world, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+                this.addSeats();
 
                 for (Map.Entry<Integer, SeatEntity> entry : this.seats.entrySet()) {
                     this.world.spawnEntity(entry.getValue());
@@ -200,6 +202,13 @@ public abstract class CarEntity extends Entity {
         }
     }
 
+    protected void addSeats() {
+        this.addSeat(new SeatEntity(this.world, this, 0, -0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+        this.addSeat(new SeatEntity(this.world, this, 1, 0.5F, 0.8F, 0.0F, 1.0F, 1.5F));
+        this.addSeat(new SeatEntity(this.world, this, 2, -0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+        this.addSeat(new SeatEntity(this.world, this, 3, 0.5F, 1.05F, 2.2F, 1.0F, 1.5F));
+    }
+
     private void updateKeyStates() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
@@ -214,7 +223,7 @@ public abstract class CarEntity extends Entity {
             this.backward(movementInput.backKeyDown);
 
             if (this.getState() != previous) {
-                JurassiCraft.NETWORK_WRAPPER.sendToServer(new UpdateCarControlMessage(this));
+                JurassiCraft.NETWORK_WRAPPER.sendToServer(new UpdateVehicleControlMessage(this));
             }
         }
     }
@@ -261,10 +270,12 @@ public abstract class CarEntity extends Entity {
         }
     }
 
+    @Override
     public byte getState() {
         return this.dataManager.get(WATCHER_STATE);
     }
 
+    @Override
     public void setState(byte state) {
         this.dataManager.set(WATCHER_STATE, state);
     }
@@ -358,11 +369,13 @@ public abstract class CarEntity extends Entity {
         return EnumActionResult.PASS;
     }
 
+    @Override
     public void addSeat(SeatEntity entity) {
         this.seats.put(entity.getId(), entity);
     }
 
-    public Entity getSeat(int id) {
+    @Override
+    public SeatEntity getSeat(int id) {
         return this.seats.get(id);
     }
 
@@ -390,4 +403,29 @@ public abstract class CarEntity extends Entity {
     }
 
     public abstract void dropItems();
+
+    @Override
+    public double getX() {
+        return this.posX;
+    }
+
+    @Override
+    public double getY() {
+        return this.posY;
+    }
+
+    @Override
+    public double getZ() {
+        return this.posZ;
+    }
+
+    @Override
+    public float getRotationYaw() {
+        return this.rotationYaw;
+    }
+
+    @Override
+    public float getPrevRotationYaw() {
+        return this.prevRotationYaw;
+    }
 }

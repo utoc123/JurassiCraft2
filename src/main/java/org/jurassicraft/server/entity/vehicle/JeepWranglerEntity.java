@@ -12,4 +12,9 @@ public class JeepWranglerEntity extends CarEntity {
     public void dropItems() {
         this.dropItem(ItemHandler.JEEP_WRANGLER, 1);
     }
+
+    @Override
+    public int getVehicleID() {
+        return this.getEntityId();
+    }
 }

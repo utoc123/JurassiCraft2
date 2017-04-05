@@ -41,6 +41,7 @@ import org.jurassicraft.client.render.block.FeederRenderer;
 import org.jurassicraft.client.render.block.IncubatorRenderer;
 import org.jurassicraft.client.render.entity.AttractionSignRenderer;
 import org.jurassicraft.client.render.entity.DinosaurEggRenderer;
+import org.jurassicraft.client.render.entity.FordExplorerRenderer;
 import org.jurassicraft.client.render.entity.GoatRenderer;
 import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.JeepWranglerRenderer;
@@ -73,6 +74,7 @@ import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.MuralEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
+import org.jurassicraft.server.entity.vehicle.FordExplorerEntity;
 import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
@@ -384,6 +386,7 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.CAR_WINDSCREEN, "car_windscreen");
         this.registerItemRenderer(ItemHandler.UNFINISHED_CAR, "unfinished_car");
         this.registerItemRenderer(ItemHandler.JEEP_WRANGLER, "jeep_wrangler");
+        this.registerItemRenderer(ItemHandler.FORD_EXPLORER, "ford_explorer");
 
         this.registerItemRenderer(ItemHandler.MURAL, "mural");
 
@@ -471,7 +474,8 @@ public enum RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(HelicopterBaseEntity.class, new HelicopterRenderer());
         RenderingRegistry.registerEntityRenderingHandler(DinosaurEggEntity.class, new DinosaurEggRenderer());
         RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, new JeepWranglerRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, JeepWranglerRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(FordExplorerEntity.class, FordExplorerRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SeatEntity.class, new SeatRenderer());
         RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, MuralRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(GoatEntity.class, GoatRenderer::new);

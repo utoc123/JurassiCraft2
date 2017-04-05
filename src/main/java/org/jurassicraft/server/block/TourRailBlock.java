@@ -17,6 +17,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import org.jurassicraft.server.entity.vehicle.FordExplorerEntity;
 import org.jurassicraft.server.tab.TabHandler;
 
 import java.util.Random;
@@ -29,7 +30,7 @@ public class TourRailBlock extends BlockRail {
     public TourRailBlock(boolean powered) {
         super();
         this.powered = powered;
-        if (this.isPowered()) {
+        if (!this.isPowered()) {
             this.setCreativeTab(TabHandler.BLOCKS);
         } else {
             this.setCreativeTab(null);
@@ -264,38 +265,45 @@ public class TourRailBlock extends BlockRail {
     public void onMinecartPass(World world, EntityMinecart cart, BlockPos pos) {
         super.onMinecartPass(world, cart, pos);
 
-        IBlockState state = world.getBlockState(pos);
+        if (cart instanceof FordExplorerEntity) {
+            FordExplorerEntity vehicle = (FordExplorerEntity) cart;
 
-        double movement = Math.sqrt(cart.motionX * cart.motionX + cart.motionZ * cart.motionZ);
+            IBlockState state = world.getBlockState(pos);
 
-        if (this.isPowered()) {
-            EnumRailDirection shape = state.getValue(this.getShapeProperty());
+            double speed = vehicle.speed();
+            double startSpeed = speed * 0.02;
+            double moveSpeed = speed * 0.06;
 
-            if (movement > 0.01D) {
-                cart.motionX += cart.motionX / movement * 0.06;
-                cart.motionZ += cart.motionZ / movement * 0.06;
-            } else if (shape == BlockRailBase.EnumRailDirection.EAST_WEST) {
-                if (world.getBlockState(pos.west()).isNormalCube()) {
-                    cart.motionX = 0.02;
-                } else if (world.getBlockState(pos.east()).isNormalCube()) {
-                    cart.motionX = -0.02;
+            double movement = Math.sqrt(cart.motionX * cart.motionX + cart.motionZ * cart.motionZ);
+
+            if (this.isPowered() && speed > 0) {
+                EnumRailDirection shape = state.getValue(this.getShapeProperty());
+
+                if (movement > startSpeed / 2.0) {
+                    cart.motionX += cart.motionX / movement * moveSpeed;
+                    cart.motionZ += cart.motionZ / movement * moveSpeed;
+                } else if (shape == BlockRailBase.EnumRailDirection.EAST_WEST) {
+                    if (world.getBlockState(pos.west()).isNormalCube()) {
+                        cart.motionX = startSpeed;
+                    } else if (world.getBlockState(pos.east()).isNormalCube()) {
+                        cart.motionX = -startSpeed;
+                    }
+                } else if (shape == BlockRailBase.EnumRailDirection.NORTH_SOUTH) {
+                    if (world.getBlockState(pos.north()).isNormalCube()) {
+                        cart.motionZ = startSpeed;
+                    } else if (world.getBlockState(pos.south()).isNormalCube()) {
+                        cart.motionZ = -startSpeed;
+                    }
                 }
-            } else if (shape == BlockRailBase.EnumRailDirection.NORTH_SOUTH) {
-                if (world.getBlockState(pos.north()).isNormalCube()) {
-                    cart.motionZ = 0.02;
-                } else if (world.getBlockState(pos.south()).isNormalCube()) {
-                    cart.motionZ = -0.02;
-                }
-            }
-        } else {
-            if (movement < 0.03) {
-                cart.motionX = 0.0;
-                cart.motionY = 0.0;
-                cart.motionZ = 0.0;
             } else {
-                cart.motionX *= 0.5;
-                cart.motionY *= 0.0;
-                cart.motionZ *= 0.5;
+                cart.motionY = 0.0;
+                if (movement < 0.03) {
+                    cart.motionX = 0.0;
+                    cart.motionZ = 0.0;
+                } else {
+                    cart.motionX *= 0.5;
+                    cart.motionZ *= 0.5;
+                }
             }
         }
     }
