@@ -658,20 +658,23 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             if (this.pregnantTime > 0) {
                 if (--this.pregnantTime <= 0) {
                     this.getNavigator().clearPathEntity();
-                    for (DinosaurEntity child : this.children) {
-                        Entity entity;
-                        if (this.dinosaur.givesDirectBirth()) {
-                            entity = child;
-                            child.setAge(0);
-                            this.family.addChild(entity.getUniqueID());
-                        } else {
-                            entity = new DinosaurEggEntity(this.world, child, this);
-                        }
-                        entity.setPosition(this.posX + (this.rand.nextFloat() - 0.5F), this.posY + 0.5F, this.posZ + (this.rand.nextFloat() - 0.5F));
-                        this.world.spawnEntity(entity);
-                    }
+                    this.setAnimation(this.dinosaur.givesDirectBirth() ? EntityAnimation.GIVING_BIRTH.get() : EntityAnimation.LAYING_EGG.get());
                     this.family.setHome(this.getPosition(), 6000);
                     this.children.clear();
+                }
+            }
+            if ((this.getAnimation() == EntityAnimation.LAYING_EGG.get() || this.getAnimation() == EntityAnimation.GIVING_BIRTH.get()) && this.animationTick == this.getAnimationLength() / 2) {
+                for (DinosaurEntity child : this.children) {
+                    Entity entity;
+                    if (this.dinosaur.givesDirectBirth()) {
+                        entity = child;
+                        child.setAge(0);
+                        this.family.addChild(entity.getUniqueID());
+                    } else {
+                        entity = new DinosaurEggEntity(this.world, child, this);
+                    }
+                    entity.setPosition(this.posX + (this.rand.nextFloat() - 0.5F), this.posY + 0.5F, this.posZ + (this.rand.nextFloat() - 0.5F));
+                    this.world.spawnEntity(entity);
                 }
             }
         }

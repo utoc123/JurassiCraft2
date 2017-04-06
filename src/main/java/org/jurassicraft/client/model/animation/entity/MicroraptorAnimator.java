@@ -1,9 +1,11 @@
 package org.jurassicraft.client.model.animation.entity;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.AnimatableModel;
+import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.server.entity.dinosaur.MicroraptorEntity;
 
@@ -11,6 +13,10 @@ import org.jurassicraft.server.entity.dinosaur.MicroraptorEntity;
 public class MicroraptorAnimator extends EntityAnimator<MicroraptorEntity> {
     @Override
     protected void performAnimations(AnimatableModel model, MicroraptorEntity entity, float limbSwing, float limbSwingAmount, float ticks, float rotationYaw, float rotationPitch, float scale) {
+        if (entity.getAnimation() == EntityAnimation.GLIDING.get()) {
+            GlStateManager.rotate(rotationPitch, 1.0F, 0.0F, 0.0F);
+        }
+
         AdvancedModelRenderer upperArmRight = model.getCube("RightArm1");
         AdvancedModelRenderer lowerArmRight = model.getCube("RightArm2");
         AdvancedModelRenderer rightHand = model.getCube("RightArm3");
