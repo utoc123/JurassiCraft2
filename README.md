@@ -3,25 +3,28 @@ JurassiCraft is a mod made to bring prehistoric creatures to the world of Minecr
 
 # Contributors
 ### Mod Leader
-TheToteMaster   
+TheToteMaster 
+Cody Rex
 
 ### Developers
-Gegy   
 Cody Rex
 Alexthe666   
-MrTrollNugNug(Cazsius)
+Paul Fulham
+GolgGamer
+Zeustorm
+
 
 ### Modelers / Texturers
 Cody Rex   
 TheToteMaster   
+Alpha_Hyperion
 TheJurassicAlien   
 FiskoToodles   
-Dariosaurio_GM5   
-Whalezilla   
+AlphaMaverick
 RaptorWhisper   
-BasiliskBoy   
 
 ### Special Mentions
+Gegy
 jabelar   
 WorldSEnder   
 TheDurpiDaedric   
@@ -32,6 +35,8 @@ CarrotJet
 amellinger
 iLexiconn
 JTGHawk137
+BasiliskBoy
+Cazsius
 
 # Contributing
 Feel free to speed up development and create pull requests. Here's a guide on how to setup your workspace.
