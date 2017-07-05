@@ -323,10 +323,10 @@ public class FordExplorerEntity extends EntityMinecart implements VehicleEntity 
             return 0.0;
         }
         if (this.slow()) {
-            return 0.5;
+            return 5.0;
         } else if (this.fast()) {
-            return 2.0;
+            return 5.0;
         }
-        return 1.0;
+        return 5.0;
     }
 }
