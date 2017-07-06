@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.dinosaur;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityJumpHelper;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -9,6 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -19,9 +22,12 @@ import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.LeapingMeleeEntityAI;
+import org.jurassicraft.server.entity.ai.RaptorGlideAI;
+import org.jurassicraft.server.entity.ai.RaptorHighGroundAI;
 import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.TailDisplayAnimationAI;
+import org.jurassicraft.server.entity.ai.navigation.DinosaurPathNavigateClimber;
 
 public class MicroraptorEntity extends DinosaurEntity {
     private int flyTime;
@@ -33,17 +39,20 @@ public class MicroraptorEntity extends DinosaurEntity {
         super(world);
         this.target(EntityPlayer.class, EntityChicken.class, EntityRabbit.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
+        //this.tasks.addTask(2, new RaptorGlideAI(this, 1.0f));
+        this.tasks.addTask(2, new RaptorHighGroundAI(this, 1.0f));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
         this.animationTasks.addTask(3, new TailDisplayAnimationAI<>(this));
+        this.navigator = new DinosaurPathNavigateClimber(this, world);
     }
 
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-
-        boolean landing = this.getAnimation() == EntityAnimation.LEAP_LAND.get();
-        boolean gliding = this.getAnimation() == EntityAnimation.GLIDING.get();
-        boolean leaping = this.getAnimation() == EntityAnimation.LEAP.get();
+        Animation curAni = this.getAnimation();
+        boolean landing = curAni == EntityAnimation.LEAP_LAND.get();
+        boolean gliding = curAni == EntityAnimation.GLIDING.get();
+        boolean leaping = curAni == EntityAnimation.LEAP.get();
 
         if (this.onGround || this.inWater() || this.inLava() || this.isSwimming()) {
             this.flyTime = 0;
@@ -118,6 +127,11 @@ public class MicroraptorEntity extends DinosaurEntity {
         if (this.getAnimation() != EntityAnimation.LEAP_LAND.get()) {
             super.fall(distance / 2.0F, damageMultiplier);
         }
+    }
+    @Override
+    protected PathNavigate createNavigator(World worldIn)
+    {
+        return new PathNavigateClimber(this, worldIn);
     }
 
     @Override
