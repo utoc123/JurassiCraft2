@@ -23,16 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.EntityAnimator;
-import org.jurassicraft.client.model.animation.entity.BrachiosaurusAnimator;
-import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
-import org.jurassicraft.client.model.animation.entity.DilophosaurusAnimator;
-import org.jurassicraft.client.model.animation.entity.GallimimusAnimator;
-import org.jurassicraft.client.model.animation.entity.MicroraptorAnimator;
-import org.jurassicraft.client.model.animation.entity.MussaurusAnimator;
-import org.jurassicraft.client.model.animation.entity.ParasaurolophusAnimator;
-import org.jurassicraft.client.model.animation.entity.TriceratopsAnimator;
-import org.jurassicraft.client.model.animation.entity.TyrannosaurusAnimator;
-import org.jurassicraft.client.model.animation.entity.VelociraptorAnimator;
+import org.jurassicraft.client.model.animation.entity.*;
 import org.jurassicraft.client.render.block.ActionFigureRenderer;
 import org.jurassicraft.client.render.block.CleaningStationRenderer;
 import org.jurassicraft.client.render.block.DNAExtractorRenderer;
@@ -475,6 +466,7 @@ public enum RenderingHandler {
         this.registerRenderInfo(EntityHandler.TRICERATOPS, new TriceratopsAnimator(), 0.65F);
         this.registerRenderInfo(EntityHandler.TYRANNOSAURUS, new TyrannosaurusAnimator(), 0.65F);
         this.registerRenderInfo(EntityHandler.VELOCIRAPTOR, new VelociraptorAnimator(), 0.45F);
+        //this.registerRenderInfo(EntityHandler.STEGOSAURUS, new StegosaurusAnimator(), 0.65F);
 
         RenderingRegistry.registerEntityRenderingHandler(PaddockSignEntity.class, new PaddockSignRenderer());
         RenderingRegistry.registerEntityRenderingHandler(AttractionSignEntity.class, new AttractionSignRenderer());

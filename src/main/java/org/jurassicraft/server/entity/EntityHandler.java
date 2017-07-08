@@ -7,17 +7,7 @@ import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.Hybrid;
-import org.jurassicraft.server.dinosaur.BrachiosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.CoelacanthDinosaur;
-import org.jurassicraft.server.dinosaur.DilophosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.dinosaur.GallimimusDinosaur;
-import org.jurassicraft.server.dinosaur.MicroraptorDinosaur;
-import org.jurassicraft.server.dinosaur.MussaurusDinosaur;
-import org.jurassicraft.server.dinosaur.ParasaurolophusDinosaur;
-import org.jurassicraft.server.dinosaur.TriceratopsDinosaur;
-import org.jurassicraft.server.dinosaur.TyrannosaurusDinosaur;
-import org.jurassicraft.server.dinosaur.VelociraptorDinosaur;
+import org.jurassicraft.server.dinosaur.*;
 import org.jurassicraft.server.entity.item.AttractionSignEntity;
 import org.jurassicraft.server.entity.item.DinosaurEggEntity;
 import org.jurassicraft.server.entity.item.MuralEntity;
@@ -45,6 +35,7 @@ public class EntityHandler {
     public static final Dinosaur TRICERATOPS = new TriceratopsDinosaur();
     public static final Dinosaur TYRANNOSAURUS = new TyrannosaurusDinosaur();
     public static final Dinosaur VELOCIRAPTOR = new VelociraptorDinosaur();
+    //public static final Dinosaur STEGOSAURUS = new StegosaurusDinosaur();
 
     private static final Map<Integer, Dinosaur> DINOSAURS = new HashMap<>();
     private static final Map<Dinosaur, Integer> DINOSAUR_IDS = new HashMap<>();
@@ -76,6 +67,7 @@ public class EntityHandler {
         registerDinosaur(13, PARASAUROLOPHUS);
         registerDinosaur(19, TRICERATOPS);
         registerDinosaur(20, TYRANNOSAURUS);
+        //registerDinosaur(21, STEGOSAURUS);
 
         dinosaurProgress = ProgressManager.push("Loading dinosaurs", DINOSAURS.size());
 

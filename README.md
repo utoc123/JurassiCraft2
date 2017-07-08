@@ -2,7 +2,7 @@
 JurassiCraft is a mod made to bring prehistoric creatures to the world of Minecraft. It is inspired by Jurassic Park, but is not limited to all JP canon: as many creatures and features as possible will be added! Creatures are made Jurassic Park style, by obtaining fossils or amber, using the fossils or amber to create DNA, inserting the DNA into eggs, and hatching the eggs. The mod recently merged with two other mods, entitled the Bygone Age Mod and the Fossil Hunting Mod, which will bring users a more complete modded-Minecraft experience.
 
 # Contributors
-### Mod Leader
+### Mod Leaders
 TheToteMaster 
 Cody Rex
 Alpha_Hyperion
@@ -14,16 +14,17 @@ Paul Fulham
 GoldGamer
 
 
+
 ### Modelers / Texturers
 Cody Rex   
-TheToteMaster
+TheToteMaster   
+Alpha_Hyperion
 TheJurassicAlien   
-FiskoToodles
+FiskoToodles   
 RaptorWhisper   
 
 ### Special Mentions
 Gegy
-AlphaMaverick
 jabelar   
 WorldSEnder   
 TheDurpiDaedric   
