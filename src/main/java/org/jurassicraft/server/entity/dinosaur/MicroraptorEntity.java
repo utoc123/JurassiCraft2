@@ -136,16 +136,16 @@ public class MicroraptorEntity extends DinosaurEntity {
     @Override
     public SoundEvent getSoundForAnimation(Animation animation) {
         switch (EntityAnimation.getAnimation(animation)) {
-        case SPEAK:
-            return SoundHandler.MICRORAPTOR_LIVING;
-        case DYING:
-            return SoundHandler.MICRORAPTOR_DEATH;
-        case INJURED:
-            return SoundHandler.MICRORAPTOR_HURT;
-        case ATTACKING:
-            return SoundHandler.MICRORAPTOR_ATTACK;
-        case CALLING:
-            return SoundHandler.MICRORAPTOR_LIVING;
+            case SPEAK:
+                return SoundHandler.MICRORAPTOR_LIVING;
+            case DYING:
+                return SoundHandler.MICRORAPTOR_DEATH;
+            case INJURED:
+                return SoundHandler.MICRORAPTOR_HURT;
+            case ATTACKING:
+                return SoundHandler.MICRORAPTOR_ATTACK;
+            case CALLING:
+                return SoundHandler.MICRORAPTOR_LIVING;
         }
 
         return null;
