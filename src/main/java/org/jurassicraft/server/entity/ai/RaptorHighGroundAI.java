@@ -24,7 +24,7 @@ public class RaptorHighGroundAI extends EntityAIBase
     private final World world;
     private boolean gliding;
     private boolean active;
-    private long lastActive;
+    private int lastActive = -900;
 
     public RaptorHighGroundAI(DinosaurEntity theCreatureIn, double movementSpeedIn)
     {
@@ -41,7 +41,7 @@ public class RaptorHighGroundAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-    	if(this.active == true || System.currentTimeMillis()/1000-this.lastActive<45){
+    	if(this.active == true || (this.theCreature.ticksExisted-this.lastActive)/20<45){
     		return false;
     	}
         Vec3d vec3d = this.findPossibleShelter();
@@ -74,12 +74,12 @@ public class RaptorHighGroundAI extends EntityAIBase
     		this.gliding = true;
     		
     	}
-    	if(this.theCreature.isCollidedVertically&&this.theCreature.posX==this.theCreature.prevPosX && this.theCreature.posY==this.theCreature.prevPosY && this.theCreature.posZ==this.theCreature.prevPosZ&& this.gliding==false){
+    	if(this.theCreature.isCollidedVertically && this.theCreature.motionX==0 && this.theCreature.motionX==0 && this.theCreature.motionX==0 && this.gliding==false){
     		this.theCreature.setPosition(this.theCreature.posX, this.theCreature.posY+0.14, this.theCreature.posZ);
     		
     	}
     	if(this.gliding&&this.theCreature.onGround){
-    		this.lastActive = System.currentTimeMillis()/1000;
+    		this.lastActive = this.theCreature.ticksExisted;
     		this.active = false;
     		this.gliding = false;
     		return false;
