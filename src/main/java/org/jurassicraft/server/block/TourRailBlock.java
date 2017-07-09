@@ -268,11 +268,17 @@ public class TourRailBlock extends BlockRail {
         if (cart instanceof FordExplorerEntity) {
             FordExplorerEntity vehicle = (FordExplorerEntity) cart;
 
+
+
             IBlockState state = world.getBlockState(pos);
 
-            double speed = vehicle.speed();
+
+
+            double speed = 0.1;
             double startSpeed = speed * 0.02;
-            double moveSpeed = speed * 0.06;
+            double moveSpeed = speed * 0.1;
+
+
 
             double movement = Math.sqrt(cart.motionX * cart.motionX + cart.motionZ * cart.motionZ);
 

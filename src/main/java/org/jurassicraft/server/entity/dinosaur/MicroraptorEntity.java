@@ -78,7 +78,7 @@ public class MicroraptorEntity extends DinosaurEntity {
         if (this.isElytraFlying()) {
             this.groundHeight = 0;
             BlockPos pos = this.getPosition();
-            while (this.groundHeight <= 30) {
+            while (this.groundHeight <= 10) {
                 if (this.world.isSideSolid(pos, EnumFacing.UP, true)) {
                     break;
                 }

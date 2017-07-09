@@ -318,15 +318,15 @@ public class FordExplorerEntity extends EntityMinecart implements VehicleEntity 
         return this.seats.get(id);
     }
 
-    public double speed() {
-        if (!this.forward()) {
-            return 0.0;
-        }
-        if (this.slow()) {
-            return 0.5;
-        } else if (this.fast()) {
-            return 2.0;
-        }
-        return 1.0;
-    }
+//    public double speed() {
+        //if (!this.forward()) {
+            //return 0.0;
+        //}
+        //if (this.slow()) {
+          //  return 5.0;
+        //} else if (this.fast()) {
+          //  return 5.0;
+        //}
+      //  return 5.0;
+    //}
 }
