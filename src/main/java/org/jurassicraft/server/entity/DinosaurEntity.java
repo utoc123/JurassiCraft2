@@ -139,7 +139,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private int stayAwakeTime;
     private boolean useInertialTweens;
     private List<Class<? extends EntityLivingBase>> attackTargets = new ArrayList<>();
-    
+
     private boolean deserializing;
 
     private int attackCooldown;
@@ -172,7 +172,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     private Set<DinosaurEntity> children = new HashSet<>();
     private int pregnantTime;
     private int jumpHeight;
-   
+
     private final LegSolver legSolver;
 
     private int climbHeight = 0;
@@ -1733,16 +1733,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public boolean isClimbing() {
         return false;
     }
+
     @Override
-    public boolean isOnLadder()
-    {
-    	World w = this.getEntityWorld();
-    	BlockPos p = this.getPosition();
-    	if(this.dinosaur.canClimb()){
-    		return this.isCollidedHorizontally;
-    	}
+    public boolean isOnLadder() {
+        if (this.dinosaur.canClimb()) {
+            return this.isCollidedHorizontally;
+        }
         return super.isOnLadder();
     }
+
     @Override
     public boolean isMoving() {
         float deltaX = (float) (this.posX - this.prevPosX);
@@ -1795,8 +1794,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     protected float getJumpUpwardsMotion() {
         return (float) Math.sqrt((this.jumpHeight + 0.2) * 0.27);
     }
-
-
 
 	public static class FieldGuideInfo {
         public int hunger;

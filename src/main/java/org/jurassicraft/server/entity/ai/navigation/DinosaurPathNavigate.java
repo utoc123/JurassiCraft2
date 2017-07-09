@@ -10,7 +10,6 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class DinosaurPathNavigate extends PathNavigateGround {
     private DinosaurEntity dinosaur;
-    private BlockPos targetPosition;
     public DinosaurPathNavigate(DinosaurEntity entity, World world) {
         super(entity, world);
         this.dinosaur = entity;

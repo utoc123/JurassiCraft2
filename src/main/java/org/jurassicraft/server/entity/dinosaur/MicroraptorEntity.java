@@ -38,7 +38,7 @@ public class MicroraptorEntity extends DinosaurEntity {
         super(world);
         this.target(EntityPlayer.class, EntityChicken.class, EntityRabbit.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
-        //this.tasks.addTask(2, new RaptorGlideAI(this, 1.0f));
+        // this.tasks.addTask(2, new RaptorGlideAI(this, 1.0f));
         this.tasks.addTask(3, new RaptorHighGroundAI(this, 1.0f));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
         this.animationTasks.addTask(3, new TailDisplayAnimationAI<>(this));
@@ -127,25 +127,25 @@ public class MicroraptorEntity extends DinosaurEntity {
             super.fall(distance / 2.0F, damageMultiplier);
         }
     }
+
     @Override
-    protected PathNavigate createNavigator(World worldIn)
-    {
+    protected PathNavigate createNavigator(World worldIn) {
         return new PathNavigateClimber(this, worldIn);
     }
 
     @Override
     public SoundEvent getSoundForAnimation(Animation animation) {
         switch (EntityAnimation.getAnimation(animation)) {
-            case SPEAK:
-                return SoundHandler.MICRORAPTOR_LIVING;
-            case DYING:
-                return SoundHandler.MICRORAPTOR_DEATH;
-            case INJURED:
-                return SoundHandler.MICRORAPTOR_HURT;
-            case ATTACKING:
-                return SoundHandler.MICRORAPTOR_ATTACK;
-            case CALLING:
-                return SoundHandler.MICRORAPTOR_LIVING;
+        case SPEAK:
+            return SoundHandler.MICRORAPTOR_LIVING;
+        case DYING:
+            return SoundHandler.MICRORAPTOR_DEATH;
+        case INJURED:
+            return SoundHandler.MICRORAPTOR_HURT;
+        case ATTACKING:
+            return SoundHandler.MICRORAPTOR_ATTACK;
+        case CALLING:
+            return SoundHandler.MICRORAPTOR_LIVING;
         }
 
         return null;
