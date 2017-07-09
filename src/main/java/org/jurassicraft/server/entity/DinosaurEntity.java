@@ -175,6 +175,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private final LegSolver legSolver;
 
+    private int climbHeight = 0;
     public DinosaurEntity(World world) {
         super(world);
         this.moveHelper = new DinosaurMoveHelper(this);
@@ -1734,6 +1735,14 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
+    public boolean isOnLadder() {
+        if (this.dinosaur.canClimb()) {
+            return this.isCollidedHorizontally;
+        }
+        return super.isOnLadder();
+    }
+
+    @Override
     public boolean isMoving() {
         float deltaX = (float) (this.posX - this.prevPosX);
         float deltaZ = (float) (this.posZ - this.prevPosZ);
@@ -1786,7 +1795,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return (float) Math.sqrt((this.jumpHeight + 0.2) * 0.27);
     }
 
-    public static class FieldGuideInfo {
+	public static class FieldGuideInfo {
         public int hunger;
         public int thirst;
         public boolean flocking;
