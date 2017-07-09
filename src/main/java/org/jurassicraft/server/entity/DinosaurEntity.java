@@ -175,8 +175,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
    
     private final LegSolver legSolver;
 
-    
-    private boolean isClimbing = false;
     private int climbHeight = 0;
     public DinosaurEntity(World world) {
         super(world);
@@ -1798,17 +1796,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return (float) Math.sqrt((this.jumpHeight + 0.2) * 0.27);
     }
 
-    public void setClimbing(boolean isClimbing) {
-		this.isClimbing = isClimbing;
-	}
 
-	public int getClimbHeight() {
-		return climbHeight;
-	}
-
-	public void setClimbHeight(int climbHeight) {
-		this.climbHeight = climbHeight;
-	}
 
 	public static class FieldGuideInfo {
         public int hunger;

@@ -8,9 +8,11 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
 
 public class RaptorHighGroundAI extends EntityAIBase
 {
@@ -20,13 +22,17 @@ public class RaptorHighGroundAI extends EntityAIBase
     private double shelterZ;
     private final double movementSpeed;
     private final World world;
+    private boolean gliding;
+    private boolean active;
+    private long lastActive;
 
     public RaptorHighGroundAI(DinosaurEntity theCreatureIn, double movementSpeedIn)
     {
         this.theCreature = theCreatureIn;
         this.movementSpeed = movementSpeedIn;
         this.world = theCreatureIn.world;
-        this.setMutexBits(1);
+        this.setMutexBits(7);
+        
     }
 
     /**
@@ -35,7 +41,7 @@ public class RaptorHighGroundAI extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-    	if(this.theCreature.isClimbing()){
+    	if(this.active == true || System.currentTimeMillis()/1000-this.lastActive<45){
     		return false;
     	}
         Vec3d vec3d = this.findPossibleShelter();
@@ -62,8 +68,28 @@ public class RaptorHighGroundAI extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-    	System.out.println(this.theCreature.getNavigator().noPath());
-        return !this.theCreature.getNavigator().noPath();
+    	//System.out.println();
+    	if(this.theCreature.onGround && this.active && this.theCreature.posY>=this.shelterY-1){
+    		this.theCreature.addVelocity(0.2,0.8,0.2);
+    		this.gliding = true;
+    		
+    	}
+    	if(this.theCreature.isCollidedVertically&&this.theCreature.posX==this.theCreature.prevPosX && this.theCreature.posY==this.theCreature.prevPosY && this.theCreature.posZ==this.theCreature.prevPosZ&& this.gliding==false){
+    		this.theCreature.setPosition(this.theCreature.posX, this.theCreature.posY+0.14, this.theCreature.posZ);
+    		
+    	}
+    	if(this.gliding&&this.theCreature.onGround){
+    		this.lastActive = System.currentTimeMillis()/1000;
+    		this.active = false;
+    		this.gliding = false;
+    		return false;
+    	}
+    	if(this.theCreature.getNavigator().getPath() == null){
+    		
+    		this.active = false;
+    	}
+    	
+    	return this.theCreature.getNavigator().getPath() != null;
     }
 
     /**
@@ -73,18 +99,19 @@ public class RaptorHighGroundAI extends EntityAIBase
     public void startExecuting()
     {
         this.theCreature.getNavigator().tryMoveToXYZ(this.shelterX, this.shelterY, this.shelterZ, this.movementSpeed);
-        this.theCreature.setClimbing(true);
-        this.theCreature.setClimbHeight((int) this.shelterY);
+        this.active = true;
+        this.gliding = false;
     }
 
     @Nullable
     private Vec3d findPossibleShelter()
     {
         BlockPos blockpos = new BlockPos(this.theCreature.posX, this.theCreature.getEntityBoundingBox().minY, this.theCreature.posZ);
-
-        for (int i = 0; i < 400; ++i)
+        Random rng = this.theCreature.getRNG();
+        for (int i = 0; i < 20; ++i)
         {
-            BlockPos blockpos1 = blockpos.add(i%20-10, 0, i/20-10);
+        	BlockPos blockpos1 = blockpos.add(rng.nextInt(20) - 10, 0, rng.nextInt(20) - 10);
+
 
             if (!this.world.isAirBlock(blockpos1))
             {	
@@ -93,7 +120,7 @@ public class RaptorHighGroundAI extends EntityAIBase
             		blockpos1 = blockpos1.add(0,1,0);
             		recur+=1;
             	}
-            	if(recur>8) return new Vec3d(((double)blockpos1.getX())+0.5f, (double)blockpos1.getY(), ((double)blockpos1.getZ())+0.5f);
+            	if(recur>5) return new Vec3d(((double)blockpos1.getX())+0.5f, (double)blockpos1.getY(), ((double)blockpos1.getZ())+0.5f);
                 
             }
         }
