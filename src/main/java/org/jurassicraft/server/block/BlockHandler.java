@@ -13,6 +13,7 @@ import org.jurassicraft.server.api.SubBlocksBlock;
 import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
 import org.jurassicraft.server.block.entity.BugCrateBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
+import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
 import org.jurassicraft.server.block.entity.DNACombinatorHybridizerBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
@@ -55,6 +56,7 @@ import org.jurassicraft.server.block.plant.LiriodendritesBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.OrontiumMackiiBlock;
 import org.jurassicraft.server.block.plant.RaphaeliaBlock;
+import org.jurassicraft.server.block.plant.Rhamnus_salicifoliusblock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
 import org.jurassicraft.server.block.plant.SmallChainFernBlock;
@@ -159,6 +161,7 @@ public class BlockHandler {
     public static final RaphaeliaBlock RAPHAELIA = new RaphaeliaBlock();
     public static final EncephalartosBlock ENCEPHALARTOS = new EncephalartosBlock();
     public static final WildPotatoBlock WILD_POTATO_PLANT = new WildPotatoBlock();
+    public static final Rhamnus_salicifoliusblock RHAMNUS_SALICIFOLIUS_PLANT = new Rhamnus_salicifoliusblock();
     public static final SmallPlantBlock CINNAMON_FERN = new SmallPlantBlock();
     public static final SmallPlantBlock BRISTLE_FERN = new SmallPlantBlock();
     public static final DoublePlantBlock TEMPSKYA = new DoublePlantBlock();
@@ -254,6 +257,7 @@ public class BlockHandler {
         registerBlock(RAPHAELIA, "Raphaelia");
         registerBlock(ENCEPHALARTOS, "Encephalartos");
         registerBlock(WILD_POTATO_PLANT, "Wild Potato Plant");
+        registerBlock(RHAMNUS_SALICIFOLIUS_PLANT, "Rhamnus Salicifolius Plant");
         registerBlock(BRISTLE_FERN, "Bristle Fern");
         registerBlock(CINNAMON_FERN, "Cinnamon Fern");
         registerBlock(TEMPSKYA, "Tempskya");
@@ -282,8 +286,8 @@ public class BlockHandler {
 
 //        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
 
-//        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
-//        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
+        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
+        registerBlock(CULTIVATOR_TOP, "Cultivate Top");
         registerBlock(CleaningStationBlockEntity.class, CLEANING_STATION, "Cleaning Station");
         registerBlock(FossilGrinderBlockEntity.class, FOSSIL_GRINDER, "Fossil Grinder");
         registerBlock(DNASequencerBlockEntity.class, DNA_SEQUENCER, "DNA Sequencer");
