@@ -50,8 +50,8 @@ public class ActionFigureItem extends Item {
         Map<Integer, ModelResourceLocation> standard = new HashMap<>();
         Map<Integer, ModelResourceLocation> fresh = new HashMap<>();
         Map<Integer, ModelResourceLocation> fossil = new HashMap<>();
-        int dex = 0;
         for (Dinosaur dino : dinos) {
+            int dex = EntityHandler.getDinosaurId(dino);
             String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
             standard.put(dex,
                     new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
@@ -59,7 +59,6 @@ public class ActionFigureItem extends Item {
                     new ModelResourceLocation("jurassicraft:skeleton/fresh/skeleton_fresh_" + dinoName, "inventory"));
             fossil.put(dex,
                     new ModelResourceLocation("jurassicraft:skeleton/fossil/skeleton_fossil_" + dinoName, "inventory"));
-            dex += 1;
         }
         for (ModelResourceLocation x : standard.values()) {
             ModelBakery.registerItemVariants(this, x);
