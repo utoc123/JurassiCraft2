@@ -3,7 +3,9 @@ package org.jurassicraft.server.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -28,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ActionFigureBlock extends OrientedBlock {
+    //public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 359);
     public ActionFigureBlock() {
         super(Material.WOOD);
         this.setSoundType(SoundType.WOOD);
@@ -51,8 +54,13 @@ public class ActionFigureBlock extends OrientedBlock {
         if (entity instanceof ActionFigureBlockEntity) {
             Dinosaur dinosaur = EntityHandler.getDinosaurById(((ActionFigureBlockEntity) entity).dinosaur);
             if (dinosaur != null) {
-                float width = dinosaur.getAdultSizeX() * 0.2F / 2.0F;
-                float height = dinosaur.getAdultSizeY() * 0.2F;
+                if(!((ActionFigureBlockEntity)entity).getEntity().isSkeleton()){
+                    float width = dinosaur.getAdultSizeX() * 0.2F / 2.0F;
+                    float height = dinosaur.getAdultSizeY() * 0.2F;
+                    return new AxisAlignedBB(0.5 - width, 0, 0.5 - width, width + 0.5, height, width + 0.5);
+                }
+                float width = dinosaur.getAdultSizeX();
+                float height = dinosaur.getAdultSizeY();
                 return new AxisAlignedBB(0.5 - width, 0, 0.5 - width, width + 0.5, height, width + 0.5);
             }
         }
@@ -94,6 +102,7 @@ public class ActionFigureBlock extends OrientedBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        //System.out.println(this.getTile(world,pos).getRotation());
         return new ItemStack(ItemHandler.ACTION_FIGURE);
     }
 
@@ -130,6 +139,8 @@ public class ActionFigureBlock extends OrientedBlock {
 
     @Override
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        System.out.print(this.getTile(world,pos).dinosaur);
+        System.out.print(this.getTile(world,pos).entity.getDinosaur().getName());
         if (!player.capabilities.isCreativeMode) {
             this.dropBlockAsItem(world, pos, state, 0);
         }
