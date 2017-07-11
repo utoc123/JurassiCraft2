@@ -182,7 +182,15 @@ public class AttractionSignEntity extends EntityHanging implements IEntityAdditi
         GENTLE_GIANTS,
         GENTLE_GIANTS_PLANTS,
         RAPTOR_PADDOCK,
-        RAPTOR_PADDOCK_PLANTS;
+        RAPTOR_PADDOCK_PLANTS,
+        SAFARI,
+        SAFARI_PLANTS,
+        TRICERATOPS_TERRITORIUM,
+        GARDEN,
+        GARDEN_PLANTS,
+        TRICERATOPS_TERRITORIUM_PLANTS,
+        TYRANNOSAURUS_KINGDOM,
+        TYRANNOSAURUS_KINGDOM_PLANTS;
 
         public final int sizeX;
         public final int sizeY;

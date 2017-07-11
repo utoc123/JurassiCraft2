@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
@@ -141,9 +142,9 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name, "inventory"));
         }
 
-//        for (EnumDyeColor color : EnumDyeColor.values()) {
-//            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ModelResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
-//        }
+        for (EnumDyeColor color : EnumDyeColor.values()) {
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ModelResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
+       }
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values()) {
             ModelBakery.registerItemVariants(ItemHandler.ATTRACTION_SIGN, new ModelResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH), "inventory"));
@@ -226,8 +227,8 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone");
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks");
 
-//        this.registerBlockRenderer(BlockHandler.CULTIVATOR_BOTTOM, "cultivate_bottom");
-//        this.registerBlockRenderer(BlockHandler.CULTIVATOR_TOP, "cultivate_bottom");
+        this.registerBlockRenderer(BlockHandler.CULTIVATOR_BOTTOM, "cultivate_bottom");
+        this.registerBlockRenderer(BlockHandler.CULTIVATOR_TOP, "cultivate_bottom");
 
         this.registerBlockRenderer(BlockHandler.AMBER_ORE, "amber_ore");
         this.registerBlockRenderer(BlockHandler.ICE_SHARD, "ice_shard");
@@ -290,6 +291,9 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_WIRE);
 
         this.registerBlockRenderer(BlockHandler.WILD_POTATO_PLANT);
+        
+        this.registerBlockRenderer(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT);
+        
         this.registerBlockRenderer(BlockHandler.TEMPSKYA);
         this.registerBlockRenderer(BlockHandler.CINNAMON_FERN);
         this.registerBlockRenderer(BlockHandler.BRISTLE_FERN);
@@ -445,7 +449,10 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.WILD_POTATO_SEEDS);
         this.registerItemRenderer(ItemHandler.WILD_POTATO);
         this.registerItemRenderer(ItemHandler.WILD_POTATO_COOKED);
-
+        
+        this.registerItemRenderer(ItemHandler.RHAMNUS_SALIFOCIFIUS_SEEDS);
+        this.registerItemRenderer(ItemHandler.RHAMNUS_SALIFOCIFIUS_BERRIES);
+        
         this.registerItemRenderer(ItemHandler.GOAT_RAW);
         this.registerItemRenderer(ItemHandler.GOAT_COOKED);
 
