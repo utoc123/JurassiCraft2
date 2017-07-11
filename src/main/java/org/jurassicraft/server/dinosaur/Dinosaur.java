@@ -66,6 +66,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private TabulaModelContainer modelInfant;
     private TabulaModelContainer modelJuvenile;
     private TabulaModelContainer modelAdolescent;
+    private TabulaModelContainer modelSkeleton;
 
     private PoseHandler poseHandler;
 
@@ -160,16 +161,14 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     public void init() {
         String formattedName = this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-        this.modelAdult = this.parseModel("adult");
+        //this.modelAdult = this.parseModel("adult");
 
         for (GrowthStage stage : GrowthStage.values()) {
-            if (stage != GrowthStage.ADULT) {
                 if (this.doesSupportGrowthStage(stage)) {
                     this.setModelContainer(stage, this.parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
                 } else {
                     this.setModelContainer(stage, this.modelAdult);
                 }
-            }
         }
 
         String baseTextures = "textures/entities/" + formattedName + "/";
@@ -565,6 +564,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
                 return this.modelJuvenile;
             case ADOLESCENT:
                 return this.modelAdolescent;
+            case SKELETON:
+                return this.modelSkeleton;
             default:
                 return this.modelAdult;
         }
@@ -578,6 +579,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
                 this.modelJuvenile = model;
             case ADOLESCENT:
                 this.modelAdolescent = model;
+            case SKELETON:
+                this.modelSkeleton = model;
             default:
                 this.modelAdult = model;
         }
@@ -627,7 +630,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     }
 
     public boolean doesSupportGrowthStage(GrowthStage stage) {
-        return stage == GrowthStage.ADULT;
+        return stage == GrowthStage.ADULT || stage == GrowthStage.SKELETON;
     }
 
     public boolean isImprintable() {
