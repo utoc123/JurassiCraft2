@@ -12,6 +12,7 @@ Cody Rex
 Alexthe666   
 Paul Fulham
 GoldGamer
+Twoninefour
 
 
 
@@ -37,6 +38,7 @@ iLexiconn
 JTGHawk137
 BasiliskBoy
 Cazsius
+AlphaMaverick
 
 # Contributing
 Feel free to speed up development and create pull requests. Here's a guide on how to setup your workspace.
