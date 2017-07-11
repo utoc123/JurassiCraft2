@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeColorHelper;
@@ -132,9 +131,9 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.DINOSAUR_STEAK, new ModelResourceLocation("jurassicraft:meat/steak_" + dinoName, "inventory"));
             ModelBakery.registerItemVariants(ItemHandler.SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/soft_tissue_" + dinoName, "inventory"));
             ModelBakery.registerItemVariants(ItemHandler.SYRINGE, new ModelResourceLocation("jurassicraft:syringe/syringe_" + dinoName, "inventory"));
-            ModelBakery.registerItemVariants(ItemHandler.ACTION_FIGURE, new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
+            //ModelBakery.registerItemVariants(ItemHandler.ACTION_FIGURE, new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
         }
-
+        ItemHandler.ACTION_FIGURE.initModels(EntityHandler.getDinosaurs().values());
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values()) {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ModelResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName(), "inventory"));
         }
@@ -151,9 +150,9 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name, "inventory"));
         }
 
-        for (EnumDyeColor color : EnumDyeColor.values()) {
-            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ModelResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
-       }
+//        for (EnumDyeColor color : EnumDyeColor.values()) {
+//            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ModelResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
+//        }
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values()) {
             ModelBakery.registerItemVariants(ItemHandler.ATTRACTION_SIGN, new ModelResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH), "inventory"));
@@ -236,8 +235,8 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.REINFORCED_STONE, "reinforced_stone");
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks");
 
-        this.registerBlockRenderer(BlockHandler.CULTIVATOR_BOTTOM, "cultivate_bottom");
-        this.registerBlockRenderer(BlockHandler.CULTIVATOR_TOP, "cultivate_bottom");
+//        this.registerBlockRenderer(BlockHandler.CULTIVATOR_BOTTOM, "cultivate_bottom");
+//        this.registerBlockRenderer(BlockHandler.CULTIVATOR_TOP, "cultivate_bottom");
 
         this.registerBlockRenderer(BlockHandler.AMBER_ORE, "amber_ore");
         this.registerBlockRenderer(BlockHandler.ICE_SHARD, "ice_shard");
@@ -300,9 +299,6 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_WIRE);
 
         this.registerBlockRenderer(BlockHandler.WILD_POTATO_PLANT);
-        
-        this.registerBlockRenderer(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT);
-        
         this.registerBlockRenderer(BlockHandler.TEMPSKYA);
         this.registerBlockRenderer(BlockHandler.CINNAMON_FERN);
         this.registerBlockRenderer(BlockHandler.BRISTLE_FERN);
@@ -418,7 +414,7 @@ public enum RenderingHandler {
             this.registerItemRenderer(ItemHandler.DINOSAUR_STEAK, meta, "meat/steak_" + formattedName);
             this.registerItemRenderer(ItemHandler.SOFT_TISSUE, meta, "soft_tissue/soft_tissue_" + formattedName);
             this.registerItemRenderer(ItemHandler.SYRINGE, meta, "syringe/syringe_" + formattedName);
-            this.registerItemRenderer(ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName);
+            //this.registerItemRenderer(ItemHandler.ACTION_FIGURE, meta, "action_figure/action_figure_" + formattedName);
 
             if (!dinosaur.givesDirectBirth()) {
                 this.registerItemRenderer(ItemHandler.EGG, meta, "egg/egg_" + formattedName);
@@ -458,10 +454,7 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.WILD_POTATO_SEEDS);
         this.registerItemRenderer(ItemHandler.WILD_POTATO);
         this.registerItemRenderer(ItemHandler.WILD_POTATO_COOKED);
-        
-        this.registerItemRenderer(ItemHandler.RHAMNUS_SALIFOCIFIUS_SEEDS);
-        this.registerItemRenderer(ItemHandler.RHAMNUS_SALIFOCIFIUS_BERRIES);
-        
+
         this.registerItemRenderer(ItemHandler.GOAT_RAW);
         this.registerItemRenderer(ItemHandler.GOAT_COOKED);
 
