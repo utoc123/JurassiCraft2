@@ -89,7 +89,10 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
         return this.eggTexture;
     }
 
-    public EntityAnimator<?> getModelAnimator() {
+    public EntityAnimator<?> getModelAnimator(GrowthStage stage) {
+        if(stage == GrowthStage.SKELETON){
+            return null;
+        }
         return this.animator;
     }
 
@@ -101,7 +104,7 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
         if (!this.dinosaur.doesSupportGrowthStage(stage)) {
             return this.getModelAdult();
         }
-        return new AnimatableModel(this.dinosaur.getModelContainer(stage), this.getModelAnimator());
+        return new AnimatableModel(this.dinosaur.getModelContainer(stage), this.getModelAnimator(stage));
     }
 
     public Dinosaur getDinosaur() {

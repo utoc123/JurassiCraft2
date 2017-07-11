@@ -141,8 +141,7 @@ public class ActionFigureItem extends Item {
                 subtypes.add(
                         this.establishNBT(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)), 0, false));
                 for (int gender = 1; gender < 3; gender++) {
-                    subtypes.add(this.establishNBT(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)),
-                            gender, true));
+                    subtypes.add(this.establishNBT(new ItemStack(item, 1, EntityHandler.getDinosaurId(dinosaur)), gender, true));
                 }
 
             }
@@ -151,7 +150,7 @@ public class ActionFigureItem extends Item {
 
     // Gender is 0 for random, 1 for male, 2 for female
 
-    private ItemStack establishNBT(ItemStack itemin, int gender, boolean isSkeleton) {
+    public ItemStack establishNBT(ItemStack itemin, int gender, boolean isSkeleton) {
         NBTTagCompound nbttagcompound = itemin.hasTagCompound() ? itemin.getTagCompound() : new NBTTagCompound();
         nbttagcompound.setInteger("GenderMode", gender % 3);
         nbttagcompound.setBoolean("IsSkeleton", isSkeleton);
@@ -200,7 +199,9 @@ public class ActionFigureItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
-        lore.add(TextFormatting.BLUE + I18n.format("lore.change_gender.name"));
+        if(!isSkeleton(stack)){
+            lore.add(TextFormatting.BLUE + I18n.format("lore.change_gender.name"));
+        }
     }
 
     @Override

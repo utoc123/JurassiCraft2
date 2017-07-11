@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Random;
 
 public class ActionFigureBlock extends OrientedBlock {
-    //public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 359);
     public ActionFigureBlock() {
         super(Material.WOOD);
         this.setSoundType(SoundType.WOOD);
@@ -39,15 +38,15 @@ public class ActionFigureBlock extends OrientedBlock {
         this.setResistance(0.0F);
     }
 
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
-        return this.getBounds(blockAccess, pos);
-    }
-
-    @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
-        return this.getBounds(world, pos).offset(pos);
-    }
+//    @Override
+//    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
+//        return this.getBounds(blockAccess, pos);
+//    }
+//
+//    @Override
+//    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
+//        return this.getBounds(world, pos).offset(pos);
+//    }
 
     private AxisAlignedBB getBounds(IBlockAccess world, BlockPos pos) {
         TileEntity entity = world.getTileEntity(pos);
@@ -102,8 +101,7 @@ public class ActionFigureBlock extends OrientedBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-        //System.out.println(this.getTile(world,pos).getRotation());
-        return new ItemStack(ItemHandler.ACTION_FIGURE);
+        return getItemFromTile(getTile(world, pos));
     }
 
     @Override
@@ -139,15 +137,15 @@ public class ActionFigureBlock extends OrientedBlock {
 
     @Override
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        System.out.print(this.getTile(world,pos).dinosaur);
-        System.out.print(this.getTile(world,pos).entity.getDinosaur().getName());
         if (!player.capabilities.isCreativeMode) {
             this.dropBlockAsItem(world, pos, state, 0);
         }
 
         super.onBlockHarvested(world, pos, state, player);
     }
-
+    public ItemStack getItemFromTile(ActionFigureBlockEntity tile){
+        return ItemHandler.ACTION_FIGURE.establishNBT(new ItemStack(ItemHandler.ACTION_FIGURE, 1, tile.dinosaur), tile.isMale?1:2, tile.isSkeleton); 
+    }
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         List<ItemStack> drops = new ArrayList<>(1);
@@ -155,7 +153,7 @@ public class ActionFigureBlock extends OrientedBlock {
         ActionFigureBlockEntity tile = this.getTile(world, pos);
 
         if (tile != null) {
-            drops.add(new ItemStack(ItemHandler.ACTION_FIGURE, 1, tile.dinosaur));
+            drops.add(getItemFromTile(tile));
         }
 
         return drops;
