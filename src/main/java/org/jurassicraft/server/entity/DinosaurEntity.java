@@ -175,7 +175,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private final LegSolver legSolver;
 
-    private int climbHeight = 0;
+    private boolean isSkeleton;
     public DinosaurEntity(World world) {
         super(world);
         this.moveHelper = new DinosaurMoveHelper(this);
@@ -256,6 +256,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.ignoreFrustumCheck = true;
+        this.setSkeleton(false);
     }
 
     protected LegSolver createLegSolver() {
@@ -1292,15 +1293,18 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @Override
     public GrowthStage getGrowthStage() {
+        
         int percent = this.getAgePercentage();
-
+        if(this.isSkeleton){
+            return GrowthStage.SKELETON;
+        }
         return percent > 75 ? GrowthStage.ADULT : percent > 50 ? GrowthStage.ADOLESCENT : percent > 25 ? GrowthStage.JUVENILE : GrowthStage.INFANT;
     }
 
     public void increaseGrowthSpeed() {
         this.growthSpeedOffset += 240;
     }
-
+    
     public int getBreedCooldown() {
         return this.breedCooldown;
     }
@@ -1795,7 +1799,15 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return (float) Math.sqrt((this.jumpHeight + 0.2) * 0.27);
     }
 
-	public static class FieldGuideInfo {
+	public boolean isSkeleton() {
+        return this.getGrowthStage()==GrowthStage.SKELETON;
+    }
+
+    public void setSkeleton(boolean isSkeleton) {
+        this.isSkeleton = isSkeleton;
+    }
+
+    public static class FieldGuideInfo {
         public int hunger;
         public int thirst;
         public boolean flocking;

@@ -36,12 +36,14 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     private final Dinosaur dinosaur;
     private final EntityAnimator<?> animator;
     private final AnimatableModel modelAdult;
-    private AnimatableModel modelInfant;
-    private AnimatableModel modelJuvenile;
-    private AnimatableModel modelAdolescent;
+    private final AnimatableModel modelInfant;
+    private final AnimatableModel modelJuvenile;
+    private final AnimatableModel modelAdolescent;
+    private final AnimatableModel modelSkeleton;
     private TabulaModel eggModel;
     private ResourceLocation eggTexture;
     private float shadowSize = 0.65F;
+
 
     public DinosaurRenderInfo(Dinosaur dinosaur, EntityAnimator<?> animator, float shadowSize) {
         this.dinosaur = dinosaur;
@@ -52,6 +54,7 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
         this.modelInfant = this.loadModel(GrowthStage.INFANT);
         this.modelJuvenile = this.loadModel(GrowthStage.JUVENILE);
         this.modelAdolescent = this.loadModel(GrowthStage.ADOLESCENT);
+        this.modelSkeleton = this.loadModel(GrowthStage.SKELETON);
 
         try {
             String name = dinosaur.getName().toLowerCase(Locale.ENGLISH);
@@ -71,6 +74,8 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
                 return this.modelJuvenile;
             case ADOLESCENT:
                 return this.modelAdolescent;
+            case SKELETON:
+                return this.modelSkeleton;
             default:
                 return this.modelAdult;
         }
@@ -94,7 +99,7 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
 
     public AnimatableModel loadModel(GrowthStage stage) {
         if (!this.dinosaur.doesSupportGrowthStage(stage)) {
-            return this.modelAdult;
+            return this.getModelAdult();
         }
         return new AnimatableModel(this.dinosaur.getModelContainer(stage), this.getModelAnimator());
     }
@@ -106,5 +111,9 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     @Override
     public Render<? super DinosaurEntity> createRenderFor(RenderManager manager) {
         return new DinosaurRenderer(this, manager);
+    }
+
+    public AnimatableModel getModelAdult() {
+        return modelAdult;
     }
 }

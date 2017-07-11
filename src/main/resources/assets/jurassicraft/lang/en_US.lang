@@ -43,14 +43,6 @@ attraction_sign.gentle_giants.name=Gentle Giants
 attraction_sign.gentle_giants_plants.name=Gentle Giants With Plants
 attraction_sign.raptor_paddock.name=Raptor Paddock
 attraction_sign.raptor_paddock_plants.name=Raptor Paddock With Plants
-attraction_sign.garden_plants.name=Botanical Garden With Plants
-attraction_sign.garden.name=Botanical Garden
-attraction_sign.safari.name=Safari
-attraction_sign.safari_plants.name=Safari With Plants
-attraction_sign.triceratops_territorium.name=Triceratops Territorium
-attraction_sign.triceratops_territorium_plants.name=Triceratops Territorium With Plants
-attraction_sign.tyrannosaurus_kingdom.name=Tyrannosaurus Kingdom
-attraction_sign.tyrannosaurus_kingdom_plants.name=Tyrannosaurus Kingdom With Plants
 
 item.goat_raw.name=Raw Goat
 item.goat_cooked.name=Cooked Goat

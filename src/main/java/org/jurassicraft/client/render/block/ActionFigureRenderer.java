@@ -29,20 +29,14 @@ public class ActionFigureRenderer extends TileEntitySpecialRenderer<ActionFigure
             GlStateManager.pushMatrix();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.translate(x + 0.5, y, z + 0.5);
+            
+            GlStateManager.rotate(tileEntity.getRot(), 0, 1, 0);
+            //System.out.println(tileEntity.dinosaur);
 
-            EnumFacing value = state.getValue(OrientedBlock.FACING);
-
-            if (value == EnumFacing.EAST) {
-                value = EnumFacing.WEST;
-            } else if (value == EnumFacing.WEST) {
-                value = EnumFacing.EAST;
-            }
-
-            GlStateManager.rotate(value.getHorizontalIndex() * 90, 0, 1, 0);
-
-            double scale = 0.15;
+            double scale = tileEntity.getEntity().isSkeleton() ? 1.0 : 0.15;
             GlStateManager.scale(scale, scale, scale);
 
+            @SuppressWarnings("unchecked")
             Render<DinosaurEntity> renderer = (Render<DinosaurEntity>) this.mc.getRenderManager().entityRenderMap.get(dino.getDinosaurClass());
 
             if (tileEntity.entity != null) {
