@@ -54,6 +54,7 @@ import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
+import org.jurassicraft.server.block.machine.SkeletonAssemblyBlock;
 import org.jurassicraft.server.block.plant.AncientCoralBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
@@ -241,6 +242,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.INCUBATOR, "incubator");
         this.registerBlockRenderer(BlockHandler.DNA_EXTRACTOR, "dna_extractor");
         this.registerBlockRenderer(BlockHandler.FEEDER, "feeder");
+        this.registerBlockRenderer(BlockHandler.SKELETON_ASSEMBLY, BlockHandler.SKELETON_ASSEMBLY.getUnlocalizedName());
         this.registerBlockRenderer(BlockHandler.GYPSUM_STONE, "gypsum_stone");
         this.registerBlockRenderer(BlockHandler.GYPSUM_COBBLESTONE, "gypsum_cobblestone");
         this.registerBlockRenderer(BlockHandler.GYPSUM_BRICKS, "gypsum_bricks");

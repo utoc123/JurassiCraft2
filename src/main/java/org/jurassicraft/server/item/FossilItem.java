@@ -115,7 +115,15 @@ public class FossilItem extends Item implements GrindableItem {
     public boolean isGrindable(ItemStack stack) {
         return true;
     }
-
+    
+    public boolean isFresh() {
+        return this.fresh;
+    }
+    
+    public String getBoneType(){
+        return type;
+    }
+    
     @Override
     public ItemStack getGroundItem(ItemStack stack, Random random) {
         NBTTagCompound tag = stack.getTagCompound();

@@ -40,6 +40,7 @@ import org.jurassicraft.server.container.EmbryonicMachineContainer;
 import org.jurassicraft.server.container.FeederContainer;
 import org.jurassicraft.server.container.FossilGrinderContainer;
 import org.jurassicraft.server.container.IncubatorContainer;
+import org.jurassicraft.server.container.SkeletonAssemblyContainer;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.DinosaurSerializers;
 import org.jurassicraft.server.entity.EntityHandler;
@@ -67,6 +68,7 @@ public class ServerProxy implements IGuiHandler {
     public static final int GUI_CULTIVATOR_ID = 9;
     public static final int GUI_FEEDER_ID = 10;
     public static final int GUI_BUG_CRATE = 11;
+    public static final int GUI_SKELETON_ASSEMBLER = 12;
 
     public void onPreInit(FMLPreInitializationEvent event) {
         EntityHandler.init();
@@ -114,33 +116,63 @@ public class ServerProxy implements IGuiHandler {
         BlockPos pos = new BlockPos(x, y, z);
         TileEntity tile = world.getTileEntity(pos);
         if (tile != null) {
-            if (tile instanceof CleaningStationBlockEntity && id == GUI_CLEANING_STATION_ID) {
-                return new CleaningStationContainer(player.inventory, (CleaningStationBlockEntity) tile);
-            } else if (tile instanceof FossilGrinderBlockEntity && id == GUI_FOSSIL_GRINDER_ID) {
-                return new FossilGrinderContainer(player.inventory, tile);
-            } else if (tile instanceof DNASequencerBlockEntity && id == GUI_DNA_SEQUENCER_ID) {
-                return new DNASequencerContainer(player.inventory, tile);
-            } else if (tile instanceof EmbryonicMachineBlockEntity && id == GUI_EMBRYONIC_MACHINE_ID) {
-                return new EmbryonicMachineContainer(player.inventory, tile);
-            } else if (tile instanceof EmbryoCalcificationMachineBlockEntity && id == GUI_EMBRYO_CALCIFICATION_MACHINE_ID) {
-                return new EmbryoCalcificationMachineContainer(player.inventory, tile);
-            } else if (tile instanceof DNASynthesizerBlockEntity && id == GUI_DNA_SYNTHESIZER_ID) {
-                return new DNASynthesizerContainer(player.inventory, tile);
-            } else if (tile instanceof IncubatorBlockEntity && id == GUI_INCUBATOR_ID) {
-                return new IncubatorContainer(player.inventory, tile);
-            } else if (tile instanceof DNACombinatorHybridizerBlockEntity && id == GUI_DNA_COMBINATOR_HYBRIDIZER_ID) {
-                return new DNACombinatorHybridizerContainer(player.inventory, tile);
-            } else if (tile instanceof DNAExtractorBlockEntity && id == GUI_DNA_EXTRACTOR_ID) {
-                return new DNAExtractorContainer(player.inventory, tile);
-            } else if (tile instanceof CultivatorBlockEntity && id == GUI_CULTIVATOR_ID) {
-                return new CultivateContainer(player.inventory, tile);
-            } else if (tile instanceof FeederBlockEntity && id == GUI_FEEDER_ID) {
-                return new FeederContainer(player.inventory, (FeederBlockEntity) tile);
-            } else if (tile instanceof BugCrateBlockEntity && id == GUI_BUG_CRATE) {
-                return ((BugCrateBlockEntity) tile).createContainer(player.inventory, player);
-            }
+            switch(id) {
+                case GUI_CLEANING_STATION_ID:
+                    if (tile instanceof CleaningStationBlockEntity)
+                        return new CleaningStationContainer(player.inventory, (CleaningStationBlockEntity) tile);
+                    break;
+                case GUI_FOSSIL_GRINDER_ID:
+                    if (tile instanceof FossilGrinderBlockEntity)
+                        return new FossilGrinderContainer(player.inventory, tile);
+                    break;
+                case GUI_DNA_SEQUENCER_ID:
+                    if (tile instanceof DNASequencerBlockEntity)
+                        return new DNASequencerContainer(player.inventory, tile);
+                    break;
+                case GUI_EMBRYONIC_MACHINE_ID:
+                    if (tile instanceof EmbryonicMachineBlockEntity)
+                        return new EmbryonicMachineContainer(player.inventory, tile);
+                    break;
+                case GUI_EMBRYO_CALCIFICATION_MACHINE_ID:
+                    if (tile instanceof EmbryoCalcificationMachineBlockEntity)
+                        return new EmbryoCalcificationMachineContainer(player.inventory, tile);
+                    break;
+                case GUI_DNA_SYNTHESIZER_ID:
+                    if (tile instanceof DNASynthesizerBlockEntity)
+                        return new DNASynthesizerContainer(player.inventory, tile);
+                    break;
+                case GUI_INCUBATOR_ID:
+                    if (tile instanceof IncubatorBlockEntity)
+                        return new IncubatorContainer(player.inventory, tile);
+                    break;
+                case GUI_DNA_COMBINATOR_HYBRIDIZER_ID:
+                    if (tile instanceof DNACombinatorHybridizerBlockEntity)
+                        return new DNACombinatorHybridizerContainer(player.inventory, tile);
+                    break;
+                case GUI_DNA_EXTRACTOR_ID:
+                    if (tile instanceof DNAExtractorBlockEntity)
+                        return new DNAExtractorContainer(player.inventory, tile);
+                    break;
+                case GUI_CULTIVATOR_ID:
+                    if (tile instanceof CultivatorBlockEntity)
+                        return new CultivateContainer(player.inventory, tile);
+                    break;
+                case GUI_FEEDER_ID:
+                    if (tile instanceof FeederBlockEntity)
+                        return new FeederContainer(player.inventory, (FeederBlockEntity) tile);
+                    break;
+                case GUI_BUG_CRATE:
+                    if (tile instanceof BugCrateBlockEntity)
+                        return ((BugCrateBlockEntity) tile).createContainer(player.inventory, player);
+                    break;
+                default:
+                    return null;
+                }
         }
-
+        switch(id){
+            case GUI_SKELETON_ASSEMBLER:
+                return new SkeletonAssemblyContainer(player.inventory, world, pos);
+        }
         return null;
     }
 

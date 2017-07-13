@@ -36,6 +36,7 @@ import org.jurassicraft.client.gui.FossilGrinderGui;
 import org.jurassicraft.client.gui.IncubatorGui;
 import org.jurassicraft.client.gui.OrderDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
+import org.jurassicraft.client.gui.SkeletonAssemblyGui;
 import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.server.block.entity.BugCrateBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
@@ -150,7 +151,9 @@ public class ClientProxy extends ServerProxy {
                 return new BugCrateGui(player.inventory, (BugCrateBlockEntity) tile);
             }
         }
-
+        if(id == GUI_SKELETON_ASSEMBLER){
+            return new SkeletonAssemblyGui(SkeletonAssemblyGui.createContainer(player.inventory, world, pos));
+        }
         return null;
     }
 

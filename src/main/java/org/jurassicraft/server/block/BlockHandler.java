@@ -40,6 +40,7 @@ import org.jurassicraft.server.block.machine.EmbryonicMachineBlock;
 import org.jurassicraft.server.block.machine.FeederBlock;
 import org.jurassicraft.server.block.machine.FossilGrinderBlock;
 import org.jurassicraft.server.block.machine.IncubatorBlock;
+import org.jurassicraft.server.block.machine.SkeletonAssemblyBlock;
 import org.jurassicraft.server.block.plant.AjuginuculaSmithiiBlock;
 import org.jurassicraft.server.block.plant.AncientCoralBlock;
 import org.jurassicraft.server.block.plant.AncientPlantBlock;
@@ -193,6 +194,9 @@ public class BlockHandler {
     public static final JPMainGateBlock JP_MAIN_GATE_BLOCK = new JPMainGateBlock();
     public static final TourRailBlock TOUR_RAIL = new TourRailBlock(false);
     public static final TourRailBlock TOUR_RAIL_POWERED = new TourRailBlock(true);
+    
+    public static final SkeletonAssemblyBlock SKELETON_ASSEMBLY = new SkeletonAssemblyBlock();
+    public static final SkeletonAssemblyBlock SKELETON_ASSEMBLY_DUMMY = new SkeletonAssemblyBlock.DummyBlock();
 
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
@@ -280,6 +284,8 @@ public class BlockHandler {
         registerBlock(TOUR_RAIL, "Tour Rail");
         registerBlock(TOUR_RAIL_POWERED, "Powered Tour Rail");
 
+        registerBlock(SKELETON_ASSEMBLY, "Skeleton Assembly");
+        registerBlock(SKELETON_ASSEMBLY_DUMMY, "Skeleton Assembly Dummy");
 //        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
 
 //        registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");

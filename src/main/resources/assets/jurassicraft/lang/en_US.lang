@@ -239,6 +239,7 @@ tile.embryo_calcification_machine.name=Embryo Calcification Machine
 tile.incubator.name=Incubator
 tile.dna_extractor.name=DNA Extractor
 tile.dna_combinator_hybridizer.name=DNA Combinator-Hybridizer
+tile.skeleton_assembly.name=Skeleton Assembly Table
 
 tile.tour_rail.name=Tour Vehicle Track
 
@@ -560,3 +561,7 @@ info.gallimimus.name=Gallimimus was a herbivorous theropod that lived in Mongoli
 
 death.attack.shock.1=%s is now extra crispy!
 death.attack.shock.2=%s was electrocuted!
+
+crafting.skeleton.needed=Need {bonename}
+crafting.skeleton.toomany=Need {bonename}
+crafting.skeleton.mismatched=Mismatched bones
