@@ -1,11 +1,16 @@
 package org.jurassicraft.server.container;
 
-import java.util.Locale;
-
-import javax.annotation.Nullable;
-
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
-import org.jurassicraft.server.container.slot.FossilSlot;
 import org.jurassicraft.server.container.slot.FossilSlotCrafting;
 import org.jurassicraft.server.container.slot.SkeletonCraftingSlot;
 import org.jurassicraft.server.entity.EntityHandler;
@@ -13,36 +18,20 @@ import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.util.LangHelper;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotCrafting;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import javax.annotation.Nullable;
+import java.util.Locale;
 
 public class SkeletonAssemblyContainer extends Container {
-    /** The crafting matrix inventory (3x3). */
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 5, 5);
     public IInventory craftResult = new InventoryCraftResult();
     private final World worldObj;
-    /** Position of the workbench */
     private final BlockPos pos;
     public String error;
 
     public SkeletonAssemblyContainer(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
         this.worldObj = worldIn;
         this.pos = posIn;
-        this.addSlotToContainer(
-                new SkeletonCraftingSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 135, 45));
+        this.addSlotToContainer(new SkeletonCraftingSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 135, 45));
 
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
@@ -63,11 +52,9 @@ public class SkeletonAssemblyContainer extends Container {
         this.onCraftMatrixChanged(this.craftMatrix);
     }
 
-    /**
-     * Callback for when the crafting matrix is changed.
-     */
-    public void onCraftMatrixChanged(IInventory inventoryIn) {
-        error = "";
+    @Override
+    public void onCraftMatrixChanged(IInventory inventory) {
+        this.error = "";
         boolean init = false;
         boolean fresh = false;
         int dino = 0;
@@ -91,10 +78,9 @@ public class SkeletonAssemblyContainer extends Container {
                         needWeights[x] = (needed[x].indexOf("leg") > -1) ? 2 : 1;
                         // System.out.println(needed[x]+" = "+needWeights[x]);
                     }
-
                 }
                 if (fresh != item.isFresh() || dino != is.getMetadata()) {
-                    error = new LangHelper("crafting.skeleton.mismatched").build();
+                    this.error = new LangHelper("crafting.skeleton.mismatched").build();
                     this.craftResult.setInventorySlotContents(0, null);
                     return;
                 } else {
@@ -108,12 +94,11 @@ public class SkeletonAssemblyContainer extends Container {
                         }
                     }
                 }
-
             }
         }
         for (int x = 0; x < needed.length; x++) {
             if (needWeights[x] > 0) {
-                error = new LangHelper("crafting.skeleton.needed")
+                this.error = new LangHelper("crafting.skeleton.needed")
                         .withProperty("bonename", "item." + needed[x] + (fresh ? "_fresh" : "") + ".name")
                         .withProperty("dino", "entity.jurassicraft." + EntityHandler.getDinosaurById(dino).getName()
                                 .replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name")
@@ -121,7 +106,7 @@ public class SkeletonAssemblyContainer extends Container {
                 this.craftResult.setInventorySlotContents(0, null);
                 return;
             } else if (needWeights[x] < 0) {
-                error = new LangHelper("crafting.skeleton.toomany")
+                this.error = new LangHelper("crafting.skeleton.toomany")
                         .withProperty("bonename", "item." + needed[x] + (fresh ? "_fresh" : "") + ".name")
                         .withProperty("dino", "entity.jurassicraft." + EntityHandler.getDinosaurById(dino).getName()
                                 .replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name")
@@ -131,104 +116,79 @@ public class SkeletonAssemblyContainer extends Container {
             }
         }
         if (init) {
-            this.craftResult.setInventorySlotContents(0, ItemHandler.ACTION_FIGURE
-                    .establishNBT(new ItemStack(ItemHandler.ACTION_FIGURE, 1, dino), fresh ? 2 : 1, true));
+            int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(dino, fresh ? 2 : 1, true);
+            this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
             return;
         }
         this.craftResult.setInventorySlotContents(0, null);
-        return;
     }
 
-    /**
-     * Called when the container is closed.
-     */
-    public void onContainerClosed(EntityPlayer playerIn) {
-        super.onContainerClosed(playerIn);
+    @Override
+    public void onContainerClosed(EntityPlayer player) {
+        super.onContainerClosed(player);
 
         if (!this.worldObj.isRemote) {
             for (int i = 0; i < 25; ++i) {
-                ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i);
+                ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
 
-                if (itemstack != null) {
-                    playerIn.dropItem(itemstack, false);
+                if (stack != null) {
+                    player.dropItem(stack, false);
                 }
             }
         }
     }
 
+    @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return this.worldObj.getBlockState(this.pos).getBlock() != BlockHandler.SKELETON_ASSEMBLY ? false
-                : playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-                        (double) this.pos.getZ() + 0.5D) <= 64.0D;
+        return this.worldObj.getBlockState(this.pos).getBlock() == BlockHandler.SKELETON_ASSEMBLY && playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
+                (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
-    /**
-     * Take a stack from the specified inventory slot.
-     */
+    @Override
     @Nullable
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
-    {
-        ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        ItemStack stack = null;
+        Slot slot = this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack())
-        {
+        if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+            stack = itemstack1.copy();
 
-            if (index == 0)
-            {
-                if (!this.mergeItemStack(itemstack1, 26, 62, true))
-                {
+            if (index == 0) {
+                if (!this.mergeItemStack(itemstack1, 26, 62, true)) {
                     return null;
                 }
 
-                slot.onSlotChange(itemstack1, itemstack);
-            }
-            else if (index >= 26 && index < 53)
-            {
-                if (!this.mergeItemStack(itemstack1, 53, 62, false))
-                {
+                slot.onSlotChange(itemstack1, stack);
+            } else if (index >= 26 && index < 53) {
+                if (!this.mergeItemStack(itemstack1, 53, 62, false)) {
                     return null;
                 }
-            }
-            else if (index >= 53 && index < 62)
-            {
-                if (!this.mergeItemStack(itemstack1, 26, 53, false))
-                {
+            } else if (index >= 53 && index < 62) {
+                if (!this.mergeItemStack(itemstack1, 26, 53, false)) {
                     return null;
                 }
-            }
-            else if (!this.mergeItemStack(itemstack1, 26, 53, false))
-            {
+            } else if (!this.mergeItemStack(itemstack1, 26, 53, false)) {
                 return null;
             }
 
-            if (itemstack1.stackSize == 0)
-            {
-                slot.putStack((ItemStack)null);
-            }
-            else
-            {
+            if (itemstack1.stackSize == 0) {
+                slot.putStack(null);
+            } else {
                 slot.onSlotChanged();
             }
 
-            if (itemstack1.stackSize == itemstack.stackSize)
-            {
+            if (itemstack1.stackSize == stack.stackSize) {
                 return null;
             }
 
             slot.onPickupFromSlot(playerIn, itemstack1);
         }
 
-        return itemstack;
+        return stack;
     }
 
-    /**
-     * Called to determine if the current slot is valid for the stack merging
-     * (double-click) code. The stack passed in is null for the initial slot
-     * that was double-clicked.
-     */
+    @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
     }

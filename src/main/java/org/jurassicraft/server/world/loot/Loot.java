@@ -84,7 +84,7 @@ public class Loot {
             LootEntry gracilaria = Loot.entry(ItemHandler.GRACILARIA).weight(25).build();
             table.addPool(Loot.pool("gracilaria").rolls(1, 1).chance(0.1F).entry(gracilaria).build());
         } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID || name == LootTableList.CHESTS_ABANDONED_MINESHAFT) {
-            LootEntry actionFigure = Loot.entry(ItemHandler.ACTION_FIGURE).function(DINOSAUR_DATA).weight(5).build();
+            LootEntry actionFigure = Loot.entry(ItemHandler.DISPLAY_BLOCK).function(DINOSAUR_DATA).weight(5).build();
 
             table.addPool(Loot.pool("action_figures").rolls(0, 1).entry(actionFigure).build());
 
@@ -134,7 +134,7 @@ public class Loot {
             LootEntry[] basicItems = Loot.entries(LootItems.BASIC_DINING_HALL);
             LootEntry amber = Loot.entry(ItemHandler.AMBER).weight(2).count(0, 1).data(0, 1).build();
             LootEntry teeth = Loot.entry(ItemHandler.FOSSILS.get("teeth")).weight(2).function(DINOSAUR_DATA).count(1, 2).build();
-            LootEntry actionFigure = Loot.entry(ItemHandler.ACTION_FIGURE).function(DINOSAUR_DATA).weight(1).build();
+            LootEntry actionFigure = Loot.entry(ItemHandler.DISPLAY_BLOCK).function(DINOSAUR_DATA).weight(1).build();
             table.addPool(Loot.pool("items").rolls(8, 11).entries(basicItems).entries(amber, teeth, actionFigure).build());
         }
     }

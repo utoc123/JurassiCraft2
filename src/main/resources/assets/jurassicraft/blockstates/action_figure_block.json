@@ -1,19 +1,7 @@
 {
   "variants": {
-    "facing=north": {
-      "model": "jurassicraft:action_figure_block",
-      "y": 180
-    },
-    "facing=south": {
+    "normal": {
       "model": "jurassicraft:action_figure_block"
-    },
-    "facing=west": {
-      "model": "jurassicraft:action_figure_block",
-      "y": 90
-    },
-    "facing=east": {
-      "model": "jurassicraft:action_figure_block",
-      "y": 270
     }
   }
 }
