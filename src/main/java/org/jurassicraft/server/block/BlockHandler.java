@@ -57,7 +57,7 @@ import org.jurassicraft.server.block.plant.LiriodendritesBlock;
 import org.jurassicraft.server.block.plant.MossBlock;
 import org.jurassicraft.server.block.plant.OrontiumMackiiBlock;
 import org.jurassicraft.server.block.plant.RaphaeliaBlock;
-import org.jurassicraft.server.block.plant.Rhamnus_salicifoliusblock;
+import org.jurassicraft.server.block.plant.RhamnusSalifocifusBlock;
 import org.jurassicraft.server.block.plant.ScalyTreeFernBlock;
 import org.jurassicraft.server.block.plant.SerennaVeriformansBlock;
 import org.jurassicraft.server.block.plant.SmallChainFernBlock;
@@ -162,7 +162,7 @@ public class BlockHandler {
     public static final RaphaeliaBlock RAPHAELIA = new RaphaeliaBlock();
     public static final EncephalartosBlock ENCEPHALARTOS = new EncephalartosBlock();
     public static final WildPotatoBlock WILD_POTATO_PLANT = new WildPotatoBlock();
-    public static final Rhamnus_salicifoliusblock RHAMNUS_SALICIFOLIUS_PLANT = new Rhamnus_salicifoliusblock();
+    public static final RhamnusSalifocifusBlock RHAMNUS_SALICIFOLIUS_PLANT = new RhamnusSalifocifusBlock();
     public static final SmallPlantBlock CINNAMON_FERN = new SmallPlantBlock();
     public static final SmallPlantBlock BRISTLE_FERN = new SmallPlantBlock();
     public static final DoublePlantBlock TEMPSKYA = new DoublePlantBlock();

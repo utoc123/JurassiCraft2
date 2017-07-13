@@ -4,8 +4,8 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import net.minecraft.item.Item;
 
-public class Rhamnus_salicifoliusblock extends JCBlockCrops8 {
-	public Rhamnus_salicifoliusblock() {
+public class RhamnusSalifocifusBlock extends JCBlockCrops8 {
+	public RhamnusSalifocifusBlock() {
         this.seedDropMin = 1;
         this.seedDropMax = 3;
         this.cropDropMin = 1;
