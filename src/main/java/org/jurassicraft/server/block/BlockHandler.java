@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.api.SubBlocksBlock;
-import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.block.entity.BugCrateBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
@@ -132,7 +132,7 @@ public class BlockHandler {
     public static final CultivatorTopBlock CULTIVATOR_TOP = new CultivatorTopBlock();
     public static final CultivatorBottomBlock CULTIVATOR_BOTTOM = new CultivatorBottomBlock();
 
-    public static final ActionFigureBlock ACTION_FIGURE = new ActionFigureBlock();
+    public static final DisplayBlock DISPLAY_BLOCK = new DisplayBlock();
 
     public static final ClearGlassBlock CLEAR_GLASS = new ClearGlassBlock();
 
@@ -303,7 +303,7 @@ public class BlockHandler {
         registerBlock(DNAExtractorBlockEntity.class, DNA_EXTRACTOR, "DNA Extractor");
         registerBlock(DNACombinatorHybridizerBlockEntity.class, DNA_COMBINATOR_HYBRIDIZER, "DNA Combinator Hybridizer");
         registerBlock(IncubatorBlockEntity.class, INCUBATOR, "Incubator");
-        registerBlock(ActionFigureBlockEntity.class, ACTION_FIGURE, "Action Figure Block");
+        registerBlock(DisplayBlockEntity.class, DISPLAY_BLOCK, "Action Figure Block");
         registerBlock(FeederBlockEntity.class, FEEDER, "Feeder");
         registerBlock(BugCrateBlockEntity.class, BUG_CRATE, "Bug Crate");
         registerBlock(ElectricFencePoleBlockEntity.class, LOW_SECURITY_FENCE_POLE, "Low Security Fence Pole");

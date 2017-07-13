@@ -38,6 +38,6 @@ public class JurassiCraftDecorationsTab extends CreativeTabs {
 
     @Override
     public Item getTabIconItem() {
-        return ItemHandler.ACTION_FIGURE;
+        return ItemHandler.DISPLAY_BLOCK;
     }
 }

@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.client.model.animation.entity.*;
-import org.jurassicraft.client.render.block.ActionFigureRenderer;
+import org.jurassicraft.client.render.block.DisplayBlockRenderer;
 import org.jurassicraft.client.render.block.CleaningStationRenderer;
 import org.jurassicraft.client.render.block.DNAExtractorRenderer;
 import org.jurassicraft.client.render.block.DNASequencerRenderer;
@@ -48,14 +48,13 @@ import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.NestFossilBlock;
-import org.jurassicraft.server.block.entity.ActionFigureBlockEntity;
+import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
-import org.jurassicraft.server.block.machine.SkeletonAssemblyBlock;
 import org.jurassicraft.server.block.plant.AncientCoralBlock;
 import org.jurassicraft.server.block.tree.AncientLeavesBlock;
 import org.jurassicraft.server.block.tree.TreeType;
@@ -126,7 +125,7 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.SYRINGE, new ModelResourceLocation("jurassicraft:syringe/syringe_" + dinoName, "inventory"));
             //ModelBakery.registerItemVariants(ItemHandler.ACTION_FIGURE, new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
         }
-        ItemHandler.ACTION_FIGURE.initModels(EntityHandler.getDinosaurs().values());
+        ItemHandler.DISPLAY_BLOCK.initModels(EntityHandler.getDinosaurs().values());
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values()) {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ModelResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName(), "inventory"));
         }
@@ -247,7 +246,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.GYPSUM_STONE, "gypsum_stone");
         this.registerBlockRenderer(BlockHandler.GYPSUM_COBBLESTONE, "gypsum_cobblestone");
         this.registerBlockRenderer(BlockHandler.GYPSUM_BRICKS, "gypsum_bricks");
-        this.registerBlockRenderer(BlockHandler.ACTION_FIGURE, "action_figure_block");
+        this.registerBlockRenderer(BlockHandler.DISPLAY_BLOCK, "action_figure_block");
 
         this.registerBlockRenderer(BlockHandler.MOSS, "moss");
         this.registerBlockRenderer(BlockHandler.CLEAR_GLASS, "clear_glass");
@@ -518,7 +517,7 @@ public enum RenderingHandler {
 
     public void postInit() {
         ClientRegistry.bindTileEntitySpecialRenderer(DNAExtractorBlockEntity.class, new DNAExtractorRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(ActionFigureBlockEntity.class, new ActionFigureRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(DisplayBlockEntity.class, new DisplayBlockRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(DNASequencerBlockEntity.class, new DNASequencerRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(IncubatorBlockEntity.class, new IncubatorRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(FeederBlockEntity.class, new FeederRenderer());
