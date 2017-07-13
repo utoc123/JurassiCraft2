@@ -69,6 +69,7 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INCUBATOR), "GIG", "RRR", "IKI", 'I', Items.IRON_INGOT, 'R', Items.COMPARATOR, 'G', Blocks.GLASS, 'K', ItemHandler.KEYBOARD);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.DISC_DRIVE, 'L', ItemHandler.KEYBOARD);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PLANT_CELLS_PETRI_DISH), ItemHandler.PLANT_CELLS, ItemHandler.PETRI_DISH_AGAR);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.SKELETON_ASSEMBLY), "BPP", "WCW", "FQF", 'B', "dyeBlue", 'P', Items.PAPER,'W',"slabWood",'C',Blocks.CRAFTING_TABLE,'F',Blocks.OAK_FENCE,'Q',BlockHandler.LOW_SECURITY_FENCE_WIRE));
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.IRON_NUGGET, 9), "i", 'i', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemHandler.BASIC_CIRCUIT, 2), "nuggetIron", "nuggetIron", "nuggetIron", "nuggetIron", Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.REDSTONE));
@@ -155,6 +156,7 @@ public class RecipeHandler {
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.ATTRACTION_SIGN), "III", "SSS", "III", 'I', Items.IRON_INGOT, 'S', Items.SIGN);
 
+        
         AttractionSignEntity.AttractionSignType[] types = AttractionSignEntity.AttractionSignType.values();
 
         for (int i = 0; i < types.length; i++) {
