@@ -18,7 +18,6 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -47,33 +46,6 @@ public class ServerEventHandler {
     public void onItemPickup(PlayerEvent.ItemPickupEvent event) {
         if (event.pickedUp.getEntityItem().getItem() == ItemHandler.AMBER) {
             event.player.addStat(AchievementHandler.AMBER, 1);
-        }
-    }
-
-    @SubscribeEvent
-    public void missingMap(FMLMissingMappingsEvent event) {
-        List<FMLMissingMappingsEvent.MissingMapping> missing = event.get();
-        for (FMLMissingMappingsEvent.MissingMapping miss : missing) {
-            switch (miss.type) {
-                case BLOCK:
-                    switch (miss.name) {
-                        case JurassiCraft.MODID + ":action_figure_block":
-                            miss.remap(BlockHandler.DISPLAY_BLOCK);
-                            break;
-                    }
-                    break;
-                case ITEM:
-                    switch (miss.name) {
-                        case JurassiCraft.MODID + ":action_figure_block":
-                        case JurassiCraft.MODID + ":action_figure":
-                            miss.remap(ItemHandler.DISPLAY_BLOCK);
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-
-            }
         }
     }
 

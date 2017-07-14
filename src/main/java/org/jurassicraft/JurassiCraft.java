@@ -3,17 +3,21 @@ package org.jurassicraft;
 import net.ilexiconn.llibrary.server.config.Config;
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
 import net.ilexiconn.llibrary.server.update.UpdateHandler;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.command.ForceAnimationCommand;
 import org.jurassicraft.server.conf.JurassiCraftConfig;
+import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.message.ChangeTemperatureMessage;
 import org.jurassicraft.server.message.HelicopterDirectionMessage;
 import org.jurassicraft.server.message.HelicopterEngineMessage;
@@ -70,6 +74,27 @@ public class JurassiCraft {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new ForceAnimationCommand());
+    }
+
+    @Mod.EventHandler
+    public void missingMap(FMLMissingMappingsEvent event) {
+        for (FMLMissingMappingsEvent.MissingMapping miss : event.get()) {
+            ResourceLocation identifier = miss.resourceLocation;
+            switch (miss.type) {
+                case BLOCK:
+                    if (identifier.equals(new ResourceLocation(JurassiCraft.MODID, "action_figure_block"))) {
+                        miss.remap(BlockHandler.DISPLAY_BLOCK);
+                    }
+                    break;
+                case ITEM:
+                    if (identifier.equals(new ResourceLocation(JurassiCraft.MODID, "action_figure"))) {
+                        miss.remap(ItemHandler.DISPLAY_BLOCK);
+                    } else if (identifier.equals(new ResourceLocation(JurassiCraft.MODID, "action_figure_block"))) {
+                        miss.remap(ItemHandler.DISPLAY_BLOCK);
+                    }
+                    break;
+            }
+        }
     }
 
     public Logger getLogger() {
