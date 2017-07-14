@@ -2,7 +2,7 @@
   "parent": "block/cube_all",
   "textures": {
     "layer0": "jurassicraft:blocks/skeleton_assembly",
-    "particle": "blocks/iron_block"
+    "particle": "blocks/planks_oak"
   },
   "tabula": "jurassicraft:models/block/skeleton_assembly"
 }

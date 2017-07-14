@@ -199,7 +199,6 @@ public class BlockHandler {
     public static final TourRailBlock TOUR_RAIL_POWERED = new TourRailBlock(true);
     
     public static final SkeletonAssemblyBlock SKELETON_ASSEMBLY = new SkeletonAssemblyBlock();
-    public static final SkeletonAssemblyBlock SKELETON_ASSEMBLY_DUMMY = new SkeletonAssemblyBlock.DummyBlock();
 
     public static PaleoBaleBlock PALEO_BALE_CYCADEOIDEA;
     public static PaleoBaleBlock PALEO_BALE_CYCAD;
@@ -289,7 +288,6 @@ public class BlockHandler {
         registerBlock(TOUR_RAIL_POWERED, "Powered Tour Rail");
 
         registerBlock(SKELETON_ASSEMBLY, "Skeleton Assembly");
-        registerBlock(SKELETON_ASSEMBLY_DUMMY, "Skeleton Assembly Dummy");
 //        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");
 
         registerBlock(CultivatorBlockEntity.class, CULTIVATOR_BOTTOM, "Cultivate Bottom");
