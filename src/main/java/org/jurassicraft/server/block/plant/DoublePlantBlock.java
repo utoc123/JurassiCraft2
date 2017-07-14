@@ -50,6 +50,37 @@ public class DoublePlantBlock extends AncientPlantBlock {
     }
 
     @Override
+    public int damageDropped(IBlockState state) {
+        return 0;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(HALF, BlockHalf.values()[meta]);
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return state;
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return ((BlockHalf) state.getValue(HALF)).ordinal();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, HALF);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, BlockHalf.LOWER), 2);
+        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, BlockHalf.UPPER), 2);
+    }
+
+    @Override
     protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state) {
         if (!this.canBlockStay(world, pos, state)) {
             boolean upperPart = state.getValue(HALF) == BlockHalf.UPPER;
@@ -95,17 +126,6 @@ public class DoublePlantBlock extends AncientPlantBlock {
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
-        return 0;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, BlockHalf.LOWER), 2);
-        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, BlockHalf.UPPER), 2);
-    }
-
-    @Override
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         if (state.getValue(HALF) == BlockHalf.UPPER) {
             if (world.getBlockState(pos.down()).getBlock() == this) {
@@ -124,26 +144,6 @@ public class DoublePlantBlock extends AncientPlantBlock {
         }
 
         super.onBlockHarvested(world, pos, state, player);
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(HALF, BlockHalf.values()[meta]);
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        return state;
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return ((BlockHalf) state.getValue(HALF)).ordinal();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, HALF);
     }
 
     @Override

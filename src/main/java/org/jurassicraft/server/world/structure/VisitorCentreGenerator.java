@@ -34,12 +34,11 @@ public class VisitorCentreGenerator extends StructureGenerator {
     }
 
     public VisitorCentreGenerator(Random rand) {
-        super(rand, 83, 35, 105); //TODO
+        super(rand, 83, 35, 105);
     }
 
     @Override
     protected void generateStructure(World world, Random random, BlockPos position) {
-        System.out.println("Generate at " + position);
         MinecraftServer server = world.getMinecraftServer();
         TemplateManager templateManager = world.getSaveHandler().getStructureTemplateManager();
         PlacementSettings settings = new PlacementSettings().setRotation(this.rotation).setMirror(this.mirror);
