@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.entity.GrowthStage;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class DisplayBlock extends BlockContainer {
     public DisplayBlock() {
         super(Material.WOOD);
         this.setSoundType(SoundType.WOOD);
-        this.setTickRandomly(true);
+        this.setTickRandomly(false);
         this.setHardness(0.0F);
         this.setResistance(0.0F);
     }
@@ -142,7 +143,7 @@ public class DisplayBlock extends BlockContainer {
     }
 
     public ItemStack getItemFromTile(DisplayBlockEntity tile) {
-        int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(tile.dinosaur, tile.isMale ? 1 : 2, tile.isSkeleton);
+        int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(EntityHandler.getDinosaurId(tile.entity.getDinosaur()), tile.entity.isMale() ? 1 : 2, tile.entity.getGrowthStage()==GrowthStage.SKELETON);
         return new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata);
     }
 

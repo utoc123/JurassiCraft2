@@ -20,6 +20,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -43,38 +45,15 @@ public class DisplayBlockItem extends Item {
     }
 
     @SideOnly(Side.CLIENT)
-    public void initModels(Collection<Dinosaur> dinos) {
-        Map<Integer, ModelResourceLocation> standard = new HashMap<>();
-        Map<Integer, ModelResourceLocation> fresh = new HashMap<>();
-        Map<Integer, ModelResourceLocation> fossil = new HashMap<>();
+    public void initModels(Collection<Dinosaur> dinos, RenderingHandler renderer) {
 
         for (Dinosaur dino : dinos) {
             int dex = EntityHandler.getDinosaurId(dino);
             String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-            standard.put(dex, new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
-            fresh.put(dex, new ModelResourceLocation("jurassicraft:skeleton/fresh/skeleton_fresh_" + dinoName, "inventory"));
-            fossil.put(dex, new ModelResourceLocation("jurassicraft:skeleton/fossil/skeleton_fossil_" + dinoName, "inventory"));
+            renderer.registerItemRenderer(this, this.getMetadata(dex, 0, false), "action_figure/action_figure_" + dinoName);
+            renderer.registerItemRenderer(this, this.getMetadata(dex, 1, true), "skeleton/fossil/skeleton_fossil_" + dinoName);
+            renderer.registerItemRenderer(this, this.getMetadata(dex, 2, true), "skeleton/fresh/skeleton_fresh_" + dinoName);
         }
-
-        for (ModelResourceLocation x : standard.values()) {
-            ModelBakery.registerItemVariants(this, x);
-        }
-        for (ModelResourceLocation x : fresh.values()) {
-            ModelBakery.registerItemVariants(this, x);
-        }
-        for (ModelResourceLocation x : fossil.values()) {
-            ModelBakery.registerItemVariants(this, x);
-        }
-
-        ModelLoader.setCustomMeshDefinition(this, stack -> {
-            int metadata = stack.getMetadata();
-            int dinosaur = this.getDinosaur(metadata);
-            if (!this.isSkeleton(metadata)) {
-                return standard.get(dinosaur);
-            } else {
-                return this.getVariant(metadata) == 1 ? fossil.get(dinosaur) : fresh.get(dinosaur);
-            }
-        });
     }
 
     @Override
@@ -89,14 +68,14 @@ public class DisplayBlockItem extends Item {
                 world.setBlockState(pos, block.getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player));
                 block.onBlockPlacedBy(world, pos, state, player, stack);
 
-                int mode = this.getVariant(stack.getMetadata());
+                int mode = this.getVariant(stack);
 
                 DisplayBlockEntity tile = (DisplayBlockEntity) world.getTileEntity(pos);
 
                 if (tile != null) {
-                    tile.setDinosaur(stack.getItemDamage(), mode > 0 ? mode == 1 : world.rand.nextBoolean());
+                    tile.setDinosaur(this.getDinosaurID(stack), mode > 0 ? mode == 1 : world.rand.nextBoolean());
                     tile.setRot(-(int) player.getRotationYawHead());
-                    tile.isSkeleton = this.isSkeleton(stack.getMetadata());
+                    tile.isSkeleton = this.isSkeleton(stack);
                     tile.markDirty();
                     if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;
@@ -113,16 +92,16 @@ public class DisplayBlockItem extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-        if (!this.isSkeleton(stack.getMetadata())) {
+        if (!this.isSkeleton(stack)) {
             return new LangHelper("item.action_figure.name")
                     .withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
         }
-        return new LangHelper("item.skeleton." + (this.getVariant(stack.getMetadata()) == 1 ? "fossil" : "fresh") + ".name")
+        return new LangHelper("item.skeleton." + (this.getVariant(stack) == 1 ? "fossil" : "fresh") + ".name")
                 .withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack) {
-        return EntityHandler.getDinosaurById(stack.getMetadata());
+        return EntityHandler.getDinosaurById(getDinosaurID(stack));
     }
 
     @Override
@@ -146,23 +125,23 @@ public class DisplayBlockItem extends Item {
         return dinosaur << 4 | variant << 1 | (isSkeleton ? 1 : 0);
     }
 
-    public int getDinosaur(int metadata) {
-        return metadata >> 4 & 0xFFFF;
+    public int getDinosaurID(ItemStack stack) {
+        return stack.getMetadata() >> 4 & 0xFFFF;
     }
 
-    public int getVariant(int metadata) {
-        return metadata >> 1 & 7;
+    public int getVariant(ItemStack stack) {
+        return stack.getMetadata() >> 1 & 7;
     }
 
-    public boolean isSkeleton(int metadata) {
-        return (metadata & 1) == 1;
+    public boolean isSkeleton(ItemStack stack) {
+        return (stack.getMetadata() & 1) == 1;
     }
 
     public int changeMode(ItemStack stack) {
-        int dinosaur = this.getDinosaur(stack.getMetadata());
-        boolean skeleton = this.isSkeleton(stack.getMetadata());
+        int dinosaur = this.getDinosaurID(stack);
+        boolean skeleton = this.isSkeleton(stack);
 
-        int mode = this.getVariant(stack.getMetadata()) + 1;
+        int mode = this.getVariant(stack) + 1;
         mode %= 3;
 
         stack.setItemDamage(this.getMetadata(dinosaur, mode, skeleton));
@@ -173,7 +152,7 @@ public class DisplayBlockItem extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> lore, boolean advanced) {
-        if (!this.isSkeleton(stack.getMetadata())) {
+        if (!this.isSkeleton(stack)) {
             lore.add(TextFormatting.BLUE + I18n.format("lore.change_gender.name"));
         }
     }
@@ -181,7 +160,7 @@ public class DisplayBlockItem extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        if (!this.isSkeleton(stack.getMetadata())) {
+        if (!this.isSkeleton(stack)) {
             int mode = this.changeMode(stack);
             if (world.isRemote) {
                 String modeString = "";

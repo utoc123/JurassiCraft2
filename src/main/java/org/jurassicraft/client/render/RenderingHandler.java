@@ -125,7 +125,7 @@ public enum RenderingHandler {
             ModelBakery.registerItemVariants(ItemHandler.SYRINGE, new ModelResourceLocation("jurassicraft:syringe/syringe_" + dinoName, "inventory"));
             //ModelBakery.registerItemVariants(ItemHandler.ACTION_FIGURE, new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
         }
-        ItemHandler.DISPLAY_BLOCK.initModels(EntityHandler.getDinosaurs().values());
+        ItemHandler.DISPLAY_BLOCK.initModels(EntityHandler.getDinosaurs().values(),this);
         for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values()) {
             ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ModelResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName(), "inventory"));
         }
@@ -143,7 +143,7 @@ public enum RenderingHandler {
         }
 
         for (EnumDyeColor color : EnumDyeColor.values()) {
-            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), new ModelResourceLocation("jurassicraft:cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH)));
+            this.registerItemRenderer(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), color.getMetadata(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH));
        }
 
         for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values()) {
@@ -163,7 +163,7 @@ public enum RenderingHandler {
         ModelLoader.setCustomStateMapper(BlockHandler.LITHOSTROTION, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.STYLOPHYLLOPSIS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.HIPPURITES_RADIOSUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-
+        
         int i = 0;
 
         for (EncasedFossilBlock fossil : BlockHandler.ENCASED_FOSSILS) {
@@ -228,7 +228,7 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.REINFORCED_BRICKS, "reinforced_bricks");
 
         this.registerBlockRenderer(BlockHandler.CULTIVATOR_BOTTOM, "cultivate_bottom");
-        this.registerBlockRenderer(BlockHandler.CULTIVATOR_TOP, "cultivate_bottom");
+        this.registerBlockRenderer(BlockHandler.CULTIVATOR_TOP, "cultivate_top");
 
         this.registerBlockRenderer(BlockHandler.AMBER_ORE, "amber_ore");
         this.registerBlockRenderer(BlockHandler.ICE_SHARD, "ice_shard");
@@ -242,11 +242,11 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.INCUBATOR, "incubator");
         this.registerBlockRenderer(BlockHandler.DNA_EXTRACTOR, "dna_extractor");
         this.registerBlockRenderer(BlockHandler.FEEDER, "feeder");
-        this.registerBlockRenderer(BlockHandler.SKELETON_ASSEMBLY, BlockHandler.SKELETON_ASSEMBLY.getUnlocalizedName());
+        this.registerBlockRenderer(BlockHandler.SKELETON_ASSEMBLY, "skeleton_assembly");
         this.registerBlockRenderer(BlockHandler.GYPSUM_STONE, "gypsum_stone");
         this.registerBlockRenderer(BlockHandler.GYPSUM_COBBLESTONE, "gypsum_cobblestone");
         this.registerBlockRenderer(BlockHandler.GYPSUM_BRICKS, "gypsum_bricks");
-        this.registerBlockRenderer(BlockHandler.DISPLAY_BLOCK, "action_figure_block");
+        this.registerBlockRenderer(BlockHandler.DISPLAY_BLOCK, "display_block");
 
         this.registerBlockRenderer(BlockHandler.MOSS, "moss");
         this.registerBlockRenderer(BlockHandler.CLEAR_GLASS, "clear_glass");

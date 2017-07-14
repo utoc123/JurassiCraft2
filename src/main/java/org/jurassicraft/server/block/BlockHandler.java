@@ -303,7 +303,7 @@ public class BlockHandler {
         registerBlock(DNAExtractorBlockEntity.class, DNA_EXTRACTOR, "DNA Extractor");
         registerBlock(DNACombinatorHybridizerBlockEntity.class, DNA_COMBINATOR_HYBRIDIZER, "DNA Combinator Hybridizer");
         registerBlock(IncubatorBlockEntity.class, INCUBATOR, "Incubator");
-        registerBlock(DisplayBlockEntity.class, DISPLAY_BLOCK, "Action Figure Block");
+        registerBlock(DisplayBlockEntity.class, DISPLAY_BLOCK, "Display Block");
         registerBlock(FeederBlockEntity.class, FEEDER, "Feeder");
         registerBlock(BugCrateBlockEntity.class, BUG_CRATE, "Bug Crate");
         registerBlock(ElectricFencePoleBlockEntity.class, LOW_SECURITY_FENCE_POLE, "Low Security Fence Pole");

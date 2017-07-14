@@ -54,7 +54,7 @@ public class DisplayBlockEntity extends TileEntity {
         if (this.world != null) {
             try {
                 this.entity = EntityHandler.getDinosaurById(this.dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(this.world);
-                this.entity.setupActionFigure(this.isMale);
+                this.entity.setupDisplay(this.isMale);
                 this.entity.setSkeleton(this.isSkeleton);
             } catch (Exception e) {
                 e.printStackTrace();

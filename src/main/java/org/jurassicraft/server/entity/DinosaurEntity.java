@@ -619,7 +619,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         return true;
     }
 
-    public void setupActionFigure(boolean isMale) {
+    public void setupDisplay(boolean isMale) {
         this.setFullyGrown();
         this.setMale(isMale);
         this.ticksExisted = 4;

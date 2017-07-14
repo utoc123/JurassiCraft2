@@ -1,6 +1,7 @@
 package org.jurassicraft.server.block.machine;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -9,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -86,6 +88,8 @@ public class SkeletonAssemblyBlock extends Block {
         }
         return pos;
     }
+    
+
     
     @Override
     public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state)
@@ -181,7 +185,9 @@ public class SkeletonAssemblyBlock extends Block {
         this.setDefaultFacing(worldIn, pos, state);
         state = worldIn.getBlockState(pos);
         pos = this.getSister(pos, state);
-        worldIn.setBlockState(pos, BlockHandler.SKELETON_ASSEMBLY_DUMMY.blockState.getBaseState().withProperty(FACING, state.getValue(FACING)));
+        if(worldIn.isAirBlock(pos)){
+            worldIn.setBlockState(pos, BlockHandler.SKELETON_ASSEMBLY_DUMMY.blockState.getBaseState().withProperty(FACING, state.getValue(FACING)));
+        }
     }
 
     private void setDefaultFacing(World world, BlockPos pos, IBlockState state) {
@@ -208,7 +214,11 @@ public class SkeletonAssemblyBlock extends Block {
 
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+        IBlockState state = this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+        if(!worldIn.isAirBlock(this.getSister(pos, state))){
+            return Blocks.AIR.getDefaultState();
+        }
+        return state;
     }
 
     @Override
@@ -260,6 +270,7 @@ public class SkeletonAssemblyBlock extends Block {
         @Override
         public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
         {
+            worldIn.setBlockToAir(pos);
             pos = getSister(pos,state);
             super.onBlockDestroyedByPlayer(worldIn, pos, state);
             worldIn.destroyBlock(pos, !player.capabilities.isCreativeMode);
@@ -300,9 +311,16 @@ public class SkeletonAssemblyBlock extends Block {
             }
             return pos;
         }
+        
         @Override
         public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
             return null;
+        }
+        
+        @Override
+        public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
+        {
+            return new ItemStack(BlockHandler.SKELETON_ASSEMBLY);
         }
     }
 }

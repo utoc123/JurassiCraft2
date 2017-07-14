@@ -18,6 +18,7 @@ import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.block.AncientDoorItem;
+import org.jurassicraft.server.item.block.CultivateItemBlock;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
@@ -138,7 +139,7 @@ public class ItemHandler {
 
     public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
     public static final FordExplorerItem FORD_EXPLORER = new FordExplorerItem();
-
+    
     public static final MuralItem MURAL = new MuralItem();
 
     public static final SaplingSeedItem PHOENIX_SEEDS = (SaplingSeedItem) new SaplingSeedItem(BlockHandler.ANCIENT_SAPLINGS.get(TreeType.PHOENIX));
@@ -284,14 +285,14 @@ public class ItemHandler {
         registerItem(PLANT_FOSSIL, "Plant Fossil");
         registerItem(TWIG_FOSSIL, "Twig Fossil");
 
-//        registerItem(HELICOPTER, "Helicopter Spawner");
+//        registerItem(HELICOPTER, "Helicopter Spawner");   
 //        registerItem(MINIGUN_MODULE, "Helicopter Minigun");
 
         registerItem(AMBER_CANE, "Amber Cane");
         registerItem(AMBER_KEYCHAIN, "Amber Keychain");
         registerItem(MR_DNA_KEYCHAIN, "Mr DNA Keychain");
 
-        registerItem(DISPLAY_BLOCK, "Action Figure");
+        registerItem(DISPLAY_BLOCK, "Display Block Item");
 
 //      registerItem(DINO_SCANNER, "Dino Scanner");
 
