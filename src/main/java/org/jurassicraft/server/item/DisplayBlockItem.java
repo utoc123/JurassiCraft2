@@ -51,6 +51,8 @@ public class DisplayBlockItem extends Item {
             int dex = EntityHandler.getDinosaurId(dino);
             String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
             renderer.registerItemRenderer(this, this.getMetadata(dex, 0, false), "action_figure/action_figure_" + dinoName);
+            renderer.registerItemRenderer(this, this.getMetadata(dex, 1, false), "action_figure/action_figure_" + dinoName);
+            renderer.registerItemRenderer(this, this.getMetadata(dex, 2, false), "action_figure/action_figure_" + dinoName);
             renderer.registerItemRenderer(this, this.getMetadata(dex, 1, true), "skeleton/fossil/skeleton_fossil_" + dinoName);
             renderer.registerItemRenderer(this, this.getMetadata(dex, 2, true), "skeleton/fresh/skeleton_fresh_" + dinoName);
         }

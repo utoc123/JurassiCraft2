@@ -1,3 +1,6 @@
 {
-  "parent": "jurassicraft:block/cultivator/top/cultivate_top_black"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "jurassicraft:items/cultivator_white"
+  }
 }
