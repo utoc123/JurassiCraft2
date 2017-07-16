@@ -38,5 +38,11 @@ public class VelociraptorDinosaur extends Dinosaur {
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DENSE));
         this.setBreeding(false,1, 7, 28, false, true);
         this.setJumpHeight(3);
+        String[][] recipe = {
+                {"", "","neck_vertebrae","skull"},
+                {"tail_vertebrae", "ribcage","shoulder_bone","tooth"},
+                {"leg_bones", "leg_bones", "arm_bones", "claw"},
+                {"foot_bones", "foot_bones", "", ""}};
+        this.setRecipe(recipe);
     }
 }

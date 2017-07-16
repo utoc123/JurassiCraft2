@@ -90,6 +90,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private boolean directBirth;
     private int jumpHeight;
 
+    private String[][] recipe;
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
 
@@ -738,6 +739,14 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public int getJumpHeight() {
         return this.jumpHeight;
+    }
+
+    public void setRecipe(String[][] recipe) {
+        this.recipe = recipe;
+    }
+
+    public String[][] getRecipe() {
+        return this.recipe;
     }
 
     public enum DinosaurType {

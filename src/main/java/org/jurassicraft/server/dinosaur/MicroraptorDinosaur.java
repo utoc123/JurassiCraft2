@@ -36,5 +36,11 @@ public class MicroraptorDinosaur extends Dinosaur {
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.DENSE));
         this.setBreeding(false, 1, 5, 15, false, true);
         this.setJumpHeight(2);
+        String[][] recipe =
+                {{"", "", "", "neck_vertebrae", "skull"},
+                {"tail_vertebrae", "pelvis", "ribcage","shoulder","tooth"},
+                {"", "leg_bones", "leg_bones", "arm_bones", ""},
+                {"", "foot_bones", "foot_bones", "", ""}};
+        this.setRecipe(recipe);
     }
 }

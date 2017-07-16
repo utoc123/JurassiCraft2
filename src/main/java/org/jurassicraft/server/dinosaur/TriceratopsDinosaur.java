@@ -35,5 +35,11 @@ public class TriceratopsDinosaur extends Dinosaur {
         this.setAttackBias(400.0);
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.SPARSE), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         this.setBreeding(false, 2, 6, 48, false, true);
+        String[][] recipe = {
+                {"", "", "","","horn"},
+                {"tail_vertebrae", "pelvis", "ribcage","neck_vertebrae","skull"},
+                {"hind_leg_bones", "hind_leg_bones", "", "shoulder_bone", "tooth"},
+                {"", "", "", "front_leg_bones", "front_leg_bones"}};
+        this.setRecipe(recipe);
     }
 }

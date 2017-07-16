@@ -31,28 +31,28 @@ public class SkeletonAssemblyContainer extends Container {
     public SkeletonAssemblyContainer(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
         this.worldObj = worldIn;
         this.pos = posIn;
-        this.addSlotToContainer(new SkeletonCraftingSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 135, 45));
+        this.addSlotToContainer(new SkeletonCraftingSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 140, 52));
 
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                this.addSlotToContainer(new FossilSlotCrafting(this.craftMatrix, j + i * 5, 27 + j * 18, 9 + i * 18));
+                this.addSlotToContainer(new FossilSlotCrafting(this.craftMatrix, j + i * 5, 16 + j * 18, 16 + i * 18));
             }
         }
 
         for (int k = 0; k < 3; ++k) {
             for (int i1 = 0; i1 < 9; ++i1) {
-                this.addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 112 + k * 18));
+                this.addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 119 + k * 18));
             }
         }
 
         for (int l = 0; l < 9; ++l) {
-            this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 170));
+            this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 177));
         }
 
         this.onCraftMatrixChanged(this.craftMatrix);
     }
 
-    @Override
+/*    @Override
     public void onCraftMatrixChanged(IInventory inventory) {
         this.error = "";
         boolean init = false;
@@ -116,10 +116,76 @@ public class SkeletonAssemblyContainer extends Container {
             }
         }
         if (init) {
+                int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(dino, fresh ? 2 : 1, true);
+                this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
+                return;
+        }
+        this.craftResult.setInventorySlotContents(0, null);
+    }*/
+
+    @Override
+    public void onCraftMatrixChanged(IInventory inventory) {
+        error = "";
+        boolean init = false;
+        boolean fresh = false;
+        int dino = 0;
+        String[][] recipe = {{}};
+        int maxX = -1;
+        int maxY = -1;
+        int minX = 25;
+        int minY = 25;
+
+        for (int i = 0; i < 25; i++) {
+            ItemStack is = this.craftMatrix.getStackInSlot(i);
+            if(is!= null){
+                if (!(is.getItem() instanceof FossilItem)) {
+                    this.craftResult.setInventorySlotContents(0, null);
+                    return;
+                }
+                maxX = Math.max(maxX,i%5);
+                maxY = Math.max(maxY,i/5);
+                minX = Math.min(minX,i%5);
+                minY = Math.min(minY,i/5);
+
+                FossilItem item = ((FossilItem) is.getItem());
+                if (!init) {
+                    init = true;
+                    dino = is.getMetadata();
+                    fresh = item.isFresh();
+                    recipe = item.getDinosaur(is).getRecipe();
+                }
+                if (fresh != item.isFresh() || dino != is.getMetadata()) {
+                    this.error = new LangHelper("crafting.skeleton.mismatched").build();
+                    this.craftResult.setInventorySlotContents(0, null);
+                    return;
+                }
+            }
+        }
+        if (!init) {
+            System.out.println("no INIT");
+            this.craftResult.setInventorySlotContents(0, null);
+            return;
+        }
+        if(maxX-minX == recipe[0].length-1 && maxY-minY == recipe.length-1){
+            for (int y = 0; y < recipe.length; y++) {
+                for (int x = 0; x < recipe.length; x++) {
+                    ItemStack is = this.craftMatrix.getStackInSlot(x+minX+(y+minY)*5);
+                    String name = "";
+                    if(is!=null){
+                        name = ((FossilItem)is.getItem()).getBoneType();
+                    }
+                    if(!recipe[y][x].equals(name)){
+                        System.out.println(recipe[y][x]+" isnt "+name);
+                        this.craftResult.setInventorySlotContents(0, null);
+                        return;
+                    }
+                }
+            }
             int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(dino, fresh ? 2 : 1, true);
             this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
             return;
         }
+        System.out.println((maxX-minX)+":"+recipe[0].length+"       "+(maxY-minY)+":"+recipe.length);
         this.craftResult.setInventorySlotContents(0, null);
     }
 

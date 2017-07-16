@@ -35,5 +35,9 @@ public class DilophosaurusDinosaur extends Dinosaur {
         this.setAttackBias(1200.0);
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         this.setBreeding(false, 2, 4, 24, false, true);
+        String[][] recipe =     {{"", "", "", "neck", "skull"},
+                                {"tail_vertebrae", "pelvis", "ribcage","shoulder","tooth"},
+                                 {"leg_bones", "leg_bones", "", "", "arm_bones"}};
+        this.setRecipe(recipe);
     }
 }

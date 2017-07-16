@@ -37,5 +37,9 @@ public class CoelacanthDinosaur extends Dinosaur {
         this.setMarineAnimal(true);
         this.setSpawn(10, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.OCEAN));
         this.setBreeding(true, 1, 3, 15, true, false);
+        String[][] recipe =     {{"", "second_dorsal_fin", "first_dorsal_fin", ""},
+                {"caudal_fin", "spine", "pectoral_fin_bones","skull"},
+                {"anal_fin","","pelvic_fin_bones","teeth"}};
+        this.setRecipe(recipe);
     }
 }
