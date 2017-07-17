@@ -32,5 +32,11 @@ public class ParasaurolophusDinosaur extends Dinosaur {
         this.setAttackBias(-100.0);
         this.setSpawn(15, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         this.setBreeding(false, 4, 6, 40, false, true);
+
+        String[][] recipe = {
+                {"tail_vertebrae", "pelvis", "ribcage","neck_vertebrae","skull"},
+                {"hind_leg_bones", "hind_leg_bones", "", "shoulder_bone", "teeth"},
+                {"", "", "", "front_leg_bones", "front_leg_bones"}};
+        this.setRecipe(recipe);
     }
 }

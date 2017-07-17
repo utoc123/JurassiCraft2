@@ -33,5 +33,10 @@ public class MussaurusDinosaur extends Dinosaur {
         this.setOffset(0.0F, 0.0F, 0.5F);
         this.setSpawn(15, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         this.setBreeding(false, 2, 8, 15, false, true);
+        String[][] recipe = {
+                        {"", "pelvis", "","",""},
+                        {"tail_vertebrae", "ribcage", "shoulder", "neck_vertebrae", "skull"},
+                        {"leg_bones", "leg_bones", "arm_bones", "arm_bones", "teeth"}};
+        this.setRecipe(recipe);
     }
 }

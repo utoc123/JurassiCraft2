@@ -440,10 +440,12 @@ container.cultivator.cultivating=Cultivating
 container.close.name=Close
 container.feeder=Feeder
 container.bug_crate=Bug Farming Crate
+container.skeletonassembly=Skeleton Assembly Table
 cultivator.proximates.name=Proximates
 cultivator.minerals.name=Minerals
 cultivator.vitamins.name=Vitamins
 cultivator.lipids.name=Lipids
+
 
 //Others ==================================================
 blue_print.blank.name=Blank

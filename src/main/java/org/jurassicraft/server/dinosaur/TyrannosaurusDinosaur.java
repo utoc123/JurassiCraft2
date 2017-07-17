@@ -32,5 +32,12 @@ public class TyrannosaurusDinosaur extends Dinosaur {
         this.setAttackBias(1000.0);
         this.setSpawn(5, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         this.setBreeding(false, 2, 4, 60, false, true);
+
+        String[][] recipe = {
+                {"", "", "","neck_vertebrae","skull"},
+                {"tail_vertebrae", "pelvis", "ribcage","shoulder_bone","tooth"},
+                {"", "leg_bones", "leg_bones", "arm_bones", ""},
+                {"", "foot_bones", "foot_bones", "", ""}};
+        this.setRecipe(recipe);
     }
 }

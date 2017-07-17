@@ -97,7 +97,6 @@ public class DisplayBlock extends BlockContainer {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return getItemFromTile(getTile(world, pos));
     }
@@ -143,7 +142,7 @@ public class DisplayBlock extends BlockContainer {
     }
 
     public ItemStack getItemFromTile(DisplayBlockEntity tile) {
-        int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(EntityHandler.getDinosaurId(tile.entity.getDinosaur()), tile.entity.isMale() ? 1 : 2, tile.entity.getGrowthStage()==GrowthStage.SKELETON);
+        int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(tile.dinosaur, tile.isMale ? 1 : 2, tile.isSkeleton);
         return new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata);
     }
 

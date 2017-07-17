@@ -73,6 +73,7 @@ public class DisplayBlockEntity extends TileEntity {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity packet) {
         this.readFromNBT(packet.getNbtCompound());
     }

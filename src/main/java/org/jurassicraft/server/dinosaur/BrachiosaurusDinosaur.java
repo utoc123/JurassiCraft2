@@ -32,5 +32,10 @@ public class BrachiosaurusDinosaur extends Dinosaur {
         this.setMaxHerdSize(4);
         this.setSpawn(5, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         this.setBreeding(false, 4, 8, 72, true, false);
+        String[][] recipe =     {{"", "", "", "", "skull"},
+                                 {"", "", "", "neck_vertebrae","tooth"},
+                                 {"tail_vertebrae","pelvis","ribcage","shoulder",""},
+                                 {"","hind_leg_bones","hind_leg_bones","front_leg_bones","front_leg_bones"}};
+        this.setRecipe(recipe);
     }
 }

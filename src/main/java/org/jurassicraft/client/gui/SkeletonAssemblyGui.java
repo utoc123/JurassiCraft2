@@ -24,7 +24,7 @@ public class SkeletonAssemblyGui extends GuiContainer {
         super(cont);
         this.cont = cont;
         this.xSize = 176;
-        this.ySize = 194;
+        this.ySize = 201;
 
     }
 
@@ -38,8 +38,10 @@ public class SkeletonAssemblyGui extends GuiContainer {
      * the items)
      */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        String name = I18n.format("container.skeletonassembly");
+        this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 4, 4210752);
         this.fontRendererObj.FONT_HEIGHT = 6;
-        this.fontRendererObj.drawString(this.cont.error, 7, 99, 4210752);
+        this.fontRendererObj.drawString(this.cont.error, 7, 108, 4210752);
         this.fontRendererObj.FONT_HEIGHT = 9;
     }
 
