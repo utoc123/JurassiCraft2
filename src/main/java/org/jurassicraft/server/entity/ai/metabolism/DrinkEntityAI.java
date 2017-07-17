@@ -30,32 +30,34 @@ public class DrinkEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.dinosaur.isDead && !this.dinosaur.isCarcass() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
-            if (this.dinosaur.getMetabolism().isThirsty()) {
-                World world = this.dinosaur.world;
-                BlockPos water = null;
-                OnionTraverser traverser = new OnionTraverser(this.dinosaur.getPosition(), 32);
-                for (BlockPos pos : traverser) {
-                    if (world.getBlockState(pos).getMaterial() == Material.WATER) {
-                        BlockPos surface = AIUtils.findSurface(world, pos);
-                        BlockPos shore = AIUtils.findShore(world, surface);
-                        if (shore != null) {
-                            IBlockState state = world.getBlockState(shore);
-                            if (state.isFullBlock()) {
-                                Path path = this.dinosaur.getNavigator().getPathToPos(shore);
-                                if (path != null && path.getCurrentPathLength() != 0) {
-                                    this.path = path;
-                                    water = shore;
-                                    break;
+        if (this.dinosaur.isAlive() && GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) {
+            if (this.dinosaur.getNavigator().noPath() || this.dinosaur.getMetabolism().isDehydrated()) {
+                if (this.dinosaur.getMetabolism().isThirsty()) {
+                    World world = this.dinosaur.world;
+                    BlockPos water = null;
+                    OnionTraverser traverser = new OnionTraverser(this.dinosaur.getPosition(), 32);
+                    for (BlockPos pos : traverser) {
+                        if (world.getBlockState(pos).getMaterial() == Material.WATER) {
+                            BlockPos surface = AIUtils.findSurface(world, pos);
+                            BlockPos shore = AIUtils.findShore(world, surface);
+                            if (shore != null) {
+                                IBlockState state = world.getBlockState(shore);
+                                if (state.isFullBlock()) {
+                                    Path path = this.dinosaur.getNavigator().getPathToPos(shore);
+                                    if (path != null && path.getCurrentPathLength() != 0) {
+                                        this.path = path;
+                                        water = shore;
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                if (water != null) {
-                    this.pos = water;
-                    this.giveUpTime = this.path.getCurrentPathLength() * 15;
-                    return this.dinosaur.getNavigator().setPath(this.path, 1.0);
+                    if (water != null) {
+                        this.pos = water;
+                        this.giveUpTime = this.path.getCurrentPathLength() * 20;
+                        return this.dinosaur.getNavigator().setPath(this.path, 1.0);
+                    }
                 }
             }
         }
@@ -69,7 +71,8 @@ public class DrinkEntityAI extends EntityAIBase {
         }
         if (this.path != null) {
             this.dinosaur.getNavigator().setPath(this.path, 1.0);
-            if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(1).isVecInside(new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5))) {
+            Vec3d center = new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+            if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(2).isVecInside(center)) {
                 this.dinosaur.setAnimation(EntityAnimation.DRINKING.get());
                 MetabolismContainer metabolism = this.dinosaur.getMetabolism();
                 metabolism.setWater(metabolism.getWater() + (metabolism.getMaxWater() / 8));
@@ -86,6 +89,6 @@ public class DrinkEntityAI extends EntityAIBase {
 
     @Override
     public boolean continueExecuting() {
-        return this.giveUpTime > 0 && this.dinosaur != null && !(this.dinosaur.isCarcass() || this.dinosaur.isDead) && this.path != null && this.dinosaur.getMetabolism().getWater() < this.dinosaur.getMetabolism().getMaxWater() * 0.9;
+        return this.giveUpTime > 0 && this.dinosaur != null && this.dinosaur.isAlive() && this.path != null && this.dinosaur.getMetabolism().getWater() < this.dinosaur.getMetabolism().getMaxWater() * 0.9;
     }
 }

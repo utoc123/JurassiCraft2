@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
@@ -37,6 +38,8 @@ public class Herd implements Iterable<DinosaurEntity> {
     public boolean fleeing;
 
     private Dinosaur herdType;
+
+    private int nextMemberCheck;
 
     public Herd(DinosaurEntity leader) {
         this.herdType = leader.getDinosaur();
@@ -74,13 +77,13 @@ public class Herd implements Iterable<DinosaurEntity> {
                     float angle = 0.0F;
 
                     for (EntityLivingBase attacker : this.enemies) {
-                        angle += Math.atan2(this.center.zCoord - attacker.posZ, this.center.xCoord - attacker.posX);
+                        angle += MathHelper.atan2(this.center.zCoord - attacker.posZ, this.center.xCoord - attacker.posX);
                     }
 
                     angle /= this.enemies.size();
 
-                    this.moveX = (float) -Math.cos(angle);
-                    this.moveZ = (float) Math.sin(angle);
+                    this.moveX = -MathHelper.cos(angle);
+                    this.moveZ = MathHelper.sin(angle);
 
                     this.normalizeMovement();
                 } else {
@@ -93,16 +96,13 @@ public class Herd implements Iterable<DinosaurEntity> {
             List<DinosaurEntity> remove = new LinkedList<>();
 
             for (DinosaurEntity entity : this) {
-                double distance = entity.getDistanceSq(this.center.xCoord, this.center.yCoord, this.center.zCoord);
-
-                if (distance > 2048) {
+                if (entity.getDistanceSq(this.center.xCoord, this.center.yCoord, this.center.zCoord) > 2048) {
                     remove.add(entity);
                 }
             }
 
             for (DinosaurEntity entity : remove) {
-                this.members.remove(entity);
-                entity.herd = null;
+                this.splitHerd(entity);
 
                 if (entity == this.leader) {
                     this.updateLeader();
@@ -216,6 +216,16 @@ public class Herd implements Iterable<DinosaurEntity> {
         }
     }
 
+    private void splitHerd(DinosaurEntity entity) {
+        this.members.remove(entity);
+
+        Herd newHerd = new Herd(entity);
+        newHerd.fleeing = this.fleeing;
+        newHerd.state = this.state;
+        newHerd.enemies = new HashSet<>(this.enemies);
+        entity.herd = newHerd;
+    }
+
     private void resetStateTicks() {
         this.stateTicks = this.random.nextInt(this.state == State.MOVING ? 2000 : 4000) + 1000;
     }
@@ -224,14 +234,16 @@ public class Herd implements Iterable<DinosaurEntity> {
         List<DinosaurEntity> remove = new LinkedList<>();
 
         for (DinosaurEntity entity : this) {
-            if (entity.isCarcass() || entity.isDead || entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated()) {
+            if (!entity.isAlive() || entity.getMetabolism().isStarving() || entity.getMetabolism().isDehydrated()) {
                 remove.add(entity);
             }
         }
 
         this.members.removeAll(remove);
 
-        if (this.leader.ticksExisted % 20 == 0) {
+        if (this.leader.ticksExisted > this.nextMemberCheck) {
+            this.nextMemberCheck = this.leader.ticksExisted + 20 + this.random.nextInt(20);
+
             AxisAlignedBB searchBounds = new AxisAlignedBB(this.center.xCoord - 16, this.center.yCoord - 5, this.center.zCoord - 16, this.center.xCoord + 16, this.center.yCoord + 5, this.center.zCoord + 16);
 
             List<Herd> otherHerds = new LinkedList<>();
@@ -261,6 +273,10 @@ public class Herd implements Iterable<DinosaurEntity> {
                         this.members.add(member);
                         member.herd = this;
                     }
+
+                    this.enemies.addAll(otherHerd.enemies);
+
+                    this.fleeing |= otherHerd.fleeing;
 
                     otherHerd.disband();
                 } else if (originalSize + 1 > this.herdType.getMaxHerdSize()) {
@@ -303,18 +319,27 @@ public class Herd implements Iterable<DinosaurEntity> {
             }
         }
 
-        x /= count;
-        z /= count;
+        if (count > 0) {
+            x /= count;
+            z /= count;
+        } else {
+            return this.leader.getPositionVector();
+        }
 
         return new Vec3d(x, this.leader.world.getHeight(new BlockPos(x, 0, z)).getY(), z);
     }
 
     public void addMember(DinosaurEntity entity) {
-        if (entity.herd != null) {
-            entity.herd.members.remove(entity);
+        Herd oldHerd = entity.herd;
 
-            if (entity.herd.leader == entity) {
-                entity.herd.updateLeader();
+        if (oldHerd != null) {
+            oldHerd.members.remove(entity);
+
+            this.enemies.addAll(oldHerd.enemies);
+            this.fleeing |= oldHerd.fleeing;
+
+            if (oldHerd.leader == entity) {
+                oldHerd.updateLeader();
             }
         }
 
