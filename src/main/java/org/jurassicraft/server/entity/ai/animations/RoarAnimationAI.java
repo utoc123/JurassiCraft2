@@ -17,7 +17,7 @@ public class RoarAnimationAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return !this.dinosaur.isDead && this.dinosaur.getAttackTarget() == null && this.dinosaur.getAgePercentage() > 75 && !this.dinosaur.isSleeping() && this.dinosaur.getRNG().nextDouble() < 0.002;
+        return !this.dinosaur.isBusy() && this.dinosaur.getAgePercentage() > 75 && this.dinosaur.getRNG().nextDouble() < 0.002;
     }
 
     @Override

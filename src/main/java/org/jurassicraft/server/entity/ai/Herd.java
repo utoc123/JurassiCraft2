@@ -358,6 +358,10 @@ public class Herd implements Iterable<DinosaurEntity> {
         return score;
     }
 
+    public boolean isBusy() {
+        return this.fleeing || this.state == State.MOVING || !this.enemies.isEmpty();
+    }
+
     public enum State {
         MOVING,
         STATIC

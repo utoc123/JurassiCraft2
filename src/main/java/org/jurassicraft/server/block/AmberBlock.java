@@ -31,7 +31,7 @@ public class AmberBlock extends Block {
 
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
-        int count = rand.nextInt(fortune + 2) - 1;
+        int count = rand.nextInt(fortune + 1) - 1;
 
         if (count < 0) {
             count = 0;

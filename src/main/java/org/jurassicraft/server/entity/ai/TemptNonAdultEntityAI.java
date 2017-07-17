@@ -17,6 +17,6 @@ public class TemptNonAdultEntityAI extends EntityAITempt {
 
     @Override
     public boolean shouldExecute() {
-        return super.shouldExecute() && this.dinosaur.getAgePercentage() < 50;
+        return super.shouldExecute() && !this.dinosaur.isBusy() && this.dinosaur.getAgePercentage() < 50;
     }
 }
