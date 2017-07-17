@@ -41,7 +41,6 @@ import org.jurassicraft.client.model.animation.PoseHandler;
 import org.jurassicraft.client.sound.SoundHandler;
 import org.jurassicraft.server.api.Animatable;
 import org.jurassicraft.server.entity.ai.SmartBodyHelper;
-import org.jurassicraft.server.entity.ai.animations.PeckGroundAnimationAI;
 import org.jurassicraft.server.food.FoodHelper;
 import org.jurassicraft.server.food.FoodType;
 import org.jurassicraft.server.item.ItemHandler;
@@ -86,7 +85,6 @@ public class GoatEntity extends EntityAnimal implements Animatable, IEntityAddit
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
         this.tasks.addTask(8, new EntityAIAvoidEntity<>(this, EntityWolf.class, 6.0F, 1.0F, 1.6F));
-        this.tasks.addTask(9, new PeckGroundAnimationAI<>(this));
     }
 
     @Override

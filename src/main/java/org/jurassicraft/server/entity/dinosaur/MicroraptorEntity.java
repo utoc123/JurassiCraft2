@@ -2,7 +2,6 @@ package org.jurassicraft.server.entity.dinosaur;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityJumpHelper;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -41,7 +40,7 @@ public class MicroraptorEntity extends DinosaurEntity {
         // this.tasks.addTask(2, new RaptorGlideAI(this, 1.0f));
         this.tasks.addTask(3, new RaptorHighGroundAI(this, 1.0f));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
-        this.animationTasks.addTask(3, new TailDisplayAnimationAI<>(this));
+        this.animationTasks.addTask(3, new TailDisplayAnimationAI(this));
         this.navigator = new DinosaurPathNavigateClimber(this, world);
     }
 

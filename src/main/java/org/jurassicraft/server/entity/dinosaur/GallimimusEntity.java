@@ -14,7 +14,7 @@ public class GallimimusEntity extends DinosaurEntity {
 
     public GallimimusEntity(World world) {
         super(world);
-        this.animationTasks.addTask(3, new PeckGroundAnimationAI<>(this));
+        this.animationTasks.addTask(3, new PeckGroundAnimationAI(this));
     }
 
     @Override

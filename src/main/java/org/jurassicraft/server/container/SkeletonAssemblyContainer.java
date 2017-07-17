@@ -13,13 +13,11 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.container.slot.FossilSlotCrafting;
 import org.jurassicraft.server.container.slot.SkeletonCraftingSlot;
-import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.util.LangHelper;
 
 import javax.annotation.Nullable;
-import java.util.Locale;
 
 public class SkeletonAssemblyContainer extends Container {
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 5, 5);
@@ -129,7 +127,7 @@ public class SkeletonAssemblyContainer extends Container {
         boolean init = false;
         boolean fresh = false;
         int dino = 0;
-        String[][] recipe = {{}};
+        String[][] recipe = { {} };
         int maxX = -1;
         int maxY = -1;
         int minX = 25;
@@ -137,15 +135,15 @@ public class SkeletonAssemblyContainer extends Container {
 
         for (int i = 0; i < 25; i++) {
             ItemStack is = this.craftMatrix.getStackInSlot(i);
-            if(is!= null){
+            if (is != null) {
                 if (!(is.getItem() instanceof FossilItem)) {
                     this.craftResult.setInventorySlotContents(0, null);
                     return;
                 }
-                maxX = Math.max(maxX,i%5);
-                maxY = Math.max(maxY,i/5);
-                minX = Math.min(minX,i%5);
-                minY = Math.min(minY,i/5);
+                maxX = Math.max(maxX, i % 5);
+                maxY = Math.max(maxY, i / 5);
+                minX = Math.min(minX, i % 5);
+                minY = Math.min(minY, i / 5);
 
                 FossilItem item = ((FossilItem) is.getItem());
                 if (!init) {
@@ -162,20 +160,18 @@ public class SkeletonAssemblyContainer extends Container {
             }
         }
         if (!init) {
-            System.out.println("no INIT");
             this.craftResult.setInventorySlotContents(0, null);
             return;
         }
-        if(maxX-minX == recipe[0].length-1 && maxY-minY == recipe.length-1){
+        if (maxX - minX == recipe[0].length - 1 && maxY - minY == recipe.length - 1) {
             for (int y = 0; y < recipe.length; y++) {
                 for (int x = 0; x < recipe.length; x++) {
-                    ItemStack is = this.craftMatrix.getStackInSlot(x+minX+(y+minY)*5);
+                    ItemStack is = this.craftMatrix.getStackInSlot(x + minX + (y + minY) * 5);
                     String name = "";
-                    if(is!=null){
-                        name = ((FossilItem)is.getItem()).getBoneType();
+                    if (is != null) {
+                        name = ((FossilItem) is.getItem()).getBoneType();
                     }
-                    if(!recipe[y][x].equals(name)){
-                        System.out.println(recipe[y][x]+" isnt "+name);
+                    if (!recipe[y][x].equals(name)) {
                         this.craftResult.setInventorySlotContents(0, null);
                         return;
                     }
@@ -185,7 +181,6 @@ public class SkeletonAssemblyContainer extends Container {
             this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
             return;
         }
-        System.out.println((maxX-minX)+":"+recipe[0].length+"       "+(maxY-minY)+":"+recipe.length);
         this.craftResult.setInventorySlotContents(0, null);
     }
 

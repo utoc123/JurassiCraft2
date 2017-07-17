@@ -12,8 +12,8 @@ import org.jurassicraft.server.entity.ai.animations.RearingUpAnimationAI;
 public class MussaurusEntity extends DinosaurEntity {
     public MussaurusEntity(World world){
         super(world);
-        this.animationTasks.addTask(3, new PeckGroundAnimationAI<>(this));
-        this.animationTasks.addTask(3, new RearingUpAnimationAI<>(this));
+        this.animationTasks.addTask(3, new PeckGroundAnimationAI(this));
+        this.animationTasks.addTask(3, new RearingUpAnimationAI(this));
     }
 
     @Override
