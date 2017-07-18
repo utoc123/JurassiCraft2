@@ -26,10 +26,13 @@ import org.jurassicraft.server.plugin.jei.category.EmbryonicRecipeCategory;
 import org.jurassicraft.server.plugin.jei.category.EmbryonicRecipeHandler;
 import org.jurassicraft.server.plugin.jei.category.FossilGrinderRecipeCategory;
 import org.jurassicraft.server.plugin.jei.category.FossilGrinderRecipeHandler;
+import org.jurassicraft.server.plugin.jei.category.SkeletonAssemblyRecipeCategory;
+import org.jurassicraft.server.plugin.jei.category.SkeletonAssemblyRecipeHandler;
 import org.jurassicraft.server.plugin.jei.category.ingredient.BoneInput;
 import org.jurassicraft.server.plugin.jei.category.ingredient.CalcificationInput;
 import org.jurassicraft.server.plugin.jei.category.ingredient.EmbryoInput;
 import org.jurassicraft.server.plugin.jei.category.ingredient.GrinderInput;
+import org.jurassicraft.server.plugin.jei.category.ingredient.SkeletonInput;
 import org.jurassicraft.server.plugin.jei.category.ingredient.SynthesizerInput;
 
 import java.util.Collection;
@@ -85,6 +88,10 @@ public class JurassiCraftJEIPlugin extends BlankModPlugin {
         registry.addRecipeHandlers(new CalcificationRecipeHandler());
         registry.addRecipeCategoryCraftingItem(new ItemStack(BlockHandler.EMBRYO_CALCIFICATION_MACHINE), "jurassicraft.embryo_calcification_machine");
 
+        registry.addRecipeCategories(new SkeletonAssemblyRecipeCategory(guiHelper));
+        registry.addRecipeHandlers(new SkeletonAssemblyRecipeHandler());
+        registry.addRecipeCategoryCraftingItem(new ItemStack(BlockHandler.SKELETON_ASSEMBLY), "jurassicraft.skeleton_assembly");
+
         List<Dinosaur> registeredDinosaurs = EntityHandler.getRegisteredDinosaurs();
         List<Plant> registeredPlants = PlantHandler.getPrehistoricPlantsAndTrees();
 
@@ -101,6 +108,7 @@ public class JurassiCraftJEIPlugin extends BlankModPlugin {
             for (String bone : dinosaur.getBones()) {
                 registry.addRecipes(Lists.newArrayList(new BoneInput(dinosaur, bone)));
             }
+            registry.addRecipes(Lists.newArrayList(new SkeletonInput(dinosaur, false), new SkeletonInput(dinosaur, true)));
         }
     }
 }
