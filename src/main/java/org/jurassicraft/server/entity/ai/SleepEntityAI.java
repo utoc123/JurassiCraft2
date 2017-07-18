@@ -1,7 +1,7 @@
 package org.jurassicraft.server.entity.ai;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -26,7 +26,7 @@ public class SleepEntityAI extends EntityAIBase {
 
         boolean marineAnimal = this.dinosaur.getDinosaur().isMarineCreature();
 
-        if ((this.dinosaur.onGround || this.dinosaur.isRiding() || marineAnimal) && !this.dinosaur.isDead && this.dinosaur.shouldSleep() && !this.dinosaur.isSleeping() && this.dinosaur.getStayAwakeTime() <= 0) {
+        if ((this.dinosaur.onGround || this.dinosaur.isRiding() || marineAnimal) && this.dinosaur.isAlive() && this.dinosaur.shouldSleep() && !this.dinosaur.isSleeping() && this.dinosaur.getStayAwakeTime() <= 0) {
             if (marineAnimal) {
                 return true;
             }
@@ -40,10 +40,10 @@ public class SleepEntityAI extends EntityAIBase {
                 for (int z = posZ - range; z < posZ + range; z++) {
                     BlockPos possiblePos = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
 
-                    if (world.isAirBlock(possiblePos) && world.getBlockState(possiblePos.add(0, -1, 0)).getBlock() != Blocks.WATER) {
+                    if (world.isAirBlock(possiblePos) && world.getBlockState(possiblePos.down()).getMaterial() != Material.WATER) {
                         if (this.canFit(possiblePos) && !world.canSeeSky(possiblePos) && this.dinosaur.setSleepLocation(possiblePos, true)) {
                             this.path = this.dinosaur.getNavigator().getPath();
-                            return true;
+                            break;
                         }
                     }
                 }
