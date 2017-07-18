@@ -8,6 +8,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jurassicraft.server.entity.DinosaurEntity;
+import org.jurassicraft.server.entity.ai.util.AIUtils;
 
 public class SleepEntityAI extends EntityAIBase {
     protected DinosaurEntity dinosaur;
@@ -45,6 +46,15 @@ public class SleepEntityAI extends EntityAIBase {
                             this.path = this.dinosaur.getNavigator().getPath();
                             break;
                         }
+                    }
+                }
+            }
+
+            if (this.dinosaur.inWater()) {
+                BlockPos shore = AIUtils.findShore(this.dinosaur.world, this.dinosaur.getPosition());
+                if (shore != null) {
+                    if (this.dinosaur.getNavigator().tryMoveToXYZ(shore.getX(), shore.getY(), shore.getZ(), 1.0)) {
+                        this.path = this.dinosaur.getNavigator().getPath();
                     }
                 }
             }
