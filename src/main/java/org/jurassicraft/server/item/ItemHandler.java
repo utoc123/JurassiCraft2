@@ -18,7 +18,6 @@ import org.jurassicraft.server.block.tree.TreeType;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.block.AncientDoorItem;
-import org.jurassicraft.server.item.block.CultivateItemBlock;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
@@ -126,7 +125,7 @@ public class ItemHandler {
     public static final BasicFoodItem OILED_POTATO_STRIPS = new BasicFoodItem(1, 0.0F, false, TabHandler.FOODS);
 
     public static final FieldGuideItem FIELD_GUIDE = new FieldGuideItem();
-    
+
     public static final BasicItem LUNCH_BOX = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem STAMP_SET = new BasicItem(TabHandler.ITEMS);
 
@@ -139,12 +138,12 @@ public class ItemHandler {
 
     public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
     public static final FordExplorerItem FORD_EXPLORER = new FordExplorerItem();
-    
+
     public static final MuralItem MURAL = new MuralItem();
 
     public static final SaplingSeedItem PHOENIX_SEEDS = (SaplingSeedItem) new SaplingSeedItem(BlockHandler.ANCIENT_SAPLINGS.get(TreeType.PHOENIX));
     public static final SeededFruitItem PHOENIX_FRUIT = (SeededFruitItem) new SeededFruitItem(PHOENIX_SEEDS, 4, 0.4F).setCreativeTab(TabHandler.FOODS);
-    
+
     public static final BugItem CRICKETS = new BugItem(stack -> {
         Item item = stack.getItem();
         Block block = Block.getBlockFromItem(item);
@@ -306,10 +305,9 @@ public class ItemHandler {
         registerItem(WILD_POTATO_SEEDS, "Wild Potato Seeds");
         registerItem(WILD_POTATO, "Wild Potato");
         registerItem(WILD_POTATO_COOKED, "Wild Potato Cooked");
-        
+
         registerItem(RHAMNUS_SALIFOCIFIUS_SEEDS, "Rhamnus Salicifolius Seeds");
         registerItem(RHAMNUS_SALIFOCIFIUS_BERRIES, "Rhamnus Salicifolius Berries");
-        
 
         registerItem(GRACILARIA, "Gracilaria");
         registerItem(LIQUID_AGAR, "Liquid Agar");
@@ -341,20 +339,19 @@ public class ItemHandler {
 
         registerItem(GOAT_RAW, "Goat Raw");
         registerItem(GOAT_COOKED, "Goat Cooked");
-        
+
         registerItem(FUN_FRIES, "Fun Fries");
         registerItem(OILED_POTATO_STRIPS, "Oiled Potato Strips");
-        
+
         registerItem(LUNCH_BOX, "Lunch Box");
         registerItem(STAMP_SET, "Stamp Set");
-
 
         for (TreeType type : TreeType.values()) {
             registerTreeType(type);
         }
-	}
+    }
 
-	public static void registerTreeType(TreeType type) {
+    public static void registerTreeType(TreeType type) {
         String typeName = type.name();
 
         AncientDoorItem door = new AncientDoorItem(BlockHandler.ANCIENT_DOORS.get(type));

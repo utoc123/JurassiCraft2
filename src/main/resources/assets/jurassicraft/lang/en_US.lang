@@ -219,6 +219,9 @@ item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
 item.ajuginucula_smithii_leaves.name=Ajuginucula Smithii Leaves
 item.ajuginucula_smithii_oil.name=Ajuginucula Smithii Oil
 item.wild_onion.name=Wild Onion
+item.rhamnus_salicifolius.name=Rhamnus Salicifolius
+item.rhamnus_salicifolius_seeds.name=Rhamnus Salicifolius Seeds
+item.rhamnus_salicifolius_berries.name=Rhamnus Salicifolius Berries
 item.gracilaria.name=Gracilaria
 item.liquid_agar.name=Liquid Agar
 item.wild_potato_seeds.name=Wild Potato Seeds
@@ -347,6 +350,7 @@ tile.lithostrotion.name=Lithostrotion
 tile.stylophyllopsis.name=Stylophyllopsis
 tile.hippurites_radiosus.name=Hippurites Radiosus
 tile.heliconia.name=Heliconia
+tile.rhamnus_salicifolius.name=Rhamnus Salicifolius
 
 tile.reinforced_stone.name=Reinforced Stone
 tile.reinforced_bricks.name=Reinforced Bricks
@@ -419,7 +423,6 @@ plants.lithostrotion.name=Lithostrotion
 plants.stylophyllopsis.name=Stylophyllopsis
 plants.hippurites_radiosus.name=Hippurites Radiosus
 plants.heliconia.name=Heliconia
-
 
 //Containers ==================================================
 container.cleaning_station=Cleaning Station

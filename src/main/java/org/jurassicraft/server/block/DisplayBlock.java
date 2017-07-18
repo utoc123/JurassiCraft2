@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
-import org.jurassicraft.server.entity.GrowthStage;
+import org.jurassicraft.server.item.DisplayBlockItem;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.ArrayList;
@@ -142,7 +142,7 @@ public class DisplayBlock extends BlockContainer {
     }
 
     public ItemStack getItemFromTile(DisplayBlockEntity tile) {
-        int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(tile.dinosaur, tile.isMale ? 1 : 2, tile.isSkeleton);
+        int metadata = DisplayBlockItem.getMetadata(tile.dinosaur, tile.isMale ? 1 : 2, tile.isSkeleton);
         return new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata);
     }
 

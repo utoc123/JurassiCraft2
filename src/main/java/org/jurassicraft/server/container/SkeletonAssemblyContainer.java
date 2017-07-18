@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.container.slot.FossilSlotCrafting;
 import org.jurassicraft.server.container.slot.SkeletonCraftingSlot;
+import org.jurassicraft.server.item.DisplayBlockItem;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.util.LangHelper;
@@ -177,7 +178,7 @@ public class SkeletonAssemblyContainer extends Container {
                     }
                 }
             }
-            int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(dino, fresh ? 2 : 1, true);
+            int metadata = DisplayBlockItem.getMetadata(dino, fresh ? 2 : 1, true);
             this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
             return;
         }

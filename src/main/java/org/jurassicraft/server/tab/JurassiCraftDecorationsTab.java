@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
+import org.jurassicraft.server.item.DisplayBlockItem;
 import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.List;
@@ -21,12 +22,8 @@ public class JurassiCraftDecorationsTab extends CreativeTabs {
         List<Dinosaur> registeredDinosaurs = EntityHandler.getRegisteredDinosaurs();
         this.metas = new int[registeredDinosaurs.size()];
 
-        int i = 0;
-
-        for (Dinosaur dino : registeredDinosaurs) {
-            this.metas[i] = EntityHandler.getDinosaurId(dino);
-
-            i++;
+        for (int i = 0; i < registeredDinosaurs.size(); i++) {
+            this.metas[i] = DisplayBlockItem.getMetadata(EntityHandler.getDinosaurId(registeredDinosaurs.get(i)), 0, false);
         }
     }
 

@@ -2,8 +2,6 @@ package org.jurassicraft.server.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,10 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.jurassicraft.client.render.RenderingHandler;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.entity.DisplayBlockEntity;
@@ -31,11 +27,9 @@ import org.jurassicraft.server.util.LangHelper;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class DisplayBlockItem extends Item {
     public DisplayBlockItem() {
@@ -46,15 +40,14 @@ public class DisplayBlockItem extends Item {
 
     @SideOnly(Side.CLIENT)
     public void initModels(Collection<Dinosaur> dinos, RenderingHandler renderer) {
-
         for (Dinosaur dino : dinos) {
             int dex = EntityHandler.getDinosaurId(dino);
             String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-            renderer.registerItemRenderer(this, this.getMetadata(dex, 0, false), "action_figure/action_figure_" + dinoName);
-            renderer.registerItemRenderer(this, this.getMetadata(dex, 1, false), "action_figure/action_figure_" + dinoName);
-            renderer.registerItemRenderer(this, this.getMetadata(dex, 2, false), "action_figure/action_figure_" + dinoName);
-            renderer.registerItemRenderer(this, this.getMetadata(dex, 1, true), "skeleton/fossil/skeleton_fossil_" + dinoName);
-            renderer.registerItemRenderer(this, this.getMetadata(dex, 2, true), "skeleton/fresh/skeleton_fresh_" + dinoName);
+            renderer.registerItemRenderer(this, getMetadata(dex, 0, false), "action_figure/action_figure_" + dinoName);
+            renderer.registerItemRenderer(this, getMetadata(dex, 1, false), "action_figure/action_figure_" + dinoName);
+            renderer.registerItemRenderer(this, getMetadata(dex, 2, false), "action_figure/action_figure_" + dinoName);
+            renderer.registerItemRenderer(this, getMetadata(dex, 1, true), "skeleton/fossil/skeleton_fossil_" + dinoName);
+            renderer.registerItemRenderer(this, getMetadata(dex, 2, true), "skeleton/fresh/skeleton_fresh_" + dinoName);
         }
     }
 
@@ -76,7 +69,7 @@ public class DisplayBlockItem extends Item {
 
                 if (tile != null) {
                     tile.setDinosaur(this.getDinosaurID(stack), mode > 0 ? mode == 1 : world.rand.nextBoolean());
-                    tile.setRot(-(int) player.getRotationYawHead());
+                    tile.setRot(180 - (int) player.getRotationYawHead());
                     tile.isSkeleton = this.isSkeleton(stack);
                     tile.markDirty();
                     if (!player.capabilities.isCreativeMode) {
@@ -95,11 +88,9 @@ public class DisplayBlockItem extends Item {
     public String getItemStackDisplayName(ItemStack stack) {
         String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
         if (!this.isSkeleton(stack)) {
-            return new LangHelper("item.action_figure.name")
-                    .withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+            return new LangHelper("item.action_figure.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
         }
-        return new LangHelper("item.skeleton." + (this.getVariant(stack) == 1 ? "fossil" : "fresh") + ".name")
-                .withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+        return new LangHelper("item.skeleton." + (this.getVariant(stack) == 1 ? "fossil" : "fresh") + ".name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack) {
@@ -115,15 +106,15 @@ public class DisplayBlockItem extends Item {
 
         for (Dinosaur dinosaur : dinosaurs) {
             if (dinosaur.shouldRegister()) {
-                subtypes.add(new ItemStack(item, 1, this.getMetadata(EntityHandler.getDinosaurId(dinosaur), 0, false)));
+                subtypes.add(new ItemStack(item, 1, getMetadata(EntityHandler.getDinosaurId(dinosaur), 0, false)));
                 for (int variant = 1; variant < 3; variant++) {
-                    subtypes.add(new ItemStack(item, 1, this.getMetadata(EntityHandler.getDinosaurId(dinosaur), variant, true)));
+                    subtypes.add(new ItemStack(item, 1, getMetadata(EntityHandler.getDinosaurId(dinosaur), variant, true)));
                 }
             }
         }
     }
 
-    public int getMetadata(int dinosaur, int variant, boolean isSkeleton) {
+    public static int getMetadata(int dinosaur, int variant, boolean isSkeleton) {
         return dinosaur << 4 | variant << 1 | (isSkeleton ? 1 : 0);
     }
 
@@ -146,7 +137,7 @@ public class DisplayBlockItem extends Item {
         int mode = this.getVariant(stack) + 1;
         mode %= 3;
 
-        stack.setItemDamage(this.getMetadata(dinosaur, mode, skeleton));
+        stack.setItemDamage(getMetadata(dinosaur, mode, skeleton));
 
         return mode;
     }
@@ -177,8 +168,7 @@ public class DisplayBlockItem extends Item {
                         modeString = "female";
                         break;
                 }
-                player.sendMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name")
-                        .withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
+                player.sendMessage(new TextComponentString(new LangHelper("actionfigure.genderchange.name").withProperty("mode", I18n.format("gender." + modeString + ".name")).build()));
             }
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }

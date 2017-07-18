@@ -260,7 +260,7 @@ public class BlockHandler {
         registerBlock(RAPHAELIA, "Raphaelia");
         registerBlock(ENCEPHALARTOS, "Encephalartos");
         registerBlock(WILD_POTATO_PLANT, "Wild Potato Plant");
-        registerBlock(RHAMNUS_SALICIFOLIUS_PLANT, "Rhamnus Salicifolius Plant");
+        registerBlock(RHAMNUS_SALICIFOLIUS_PLANT, "Rhamnus Salicifolius");
         registerBlock(BRISTLE_FERN, "Bristle Fern");
         registerBlock(CINNAMON_FERN, "Cinnamon Fern");
         registerBlock(TEMPSKYA, "Tempskya");

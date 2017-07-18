@@ -99,7 +99,8 @@ public class LootItems {
             Items.BREAD, 0, 64,
             Items.MELON, 0, 64,
             Items.POTATO, 0, 64,
-            Items.CARROT, 0, 64
+            Items.CARROT, 0, 64,
+            ItemHandler.FUN_FRIES, 0, 10
     };
 
     public static final Object[] BASIC_DORM_TOWER = new Object[] {
@@ -164,6 +165,7 @@ public class LootItems {
     public static final Object[] BASIC_DINING_HALL = new Object[] {
             ItemHandler.MR_DNA_KEYCHAIN, 0, 5,
             ItemHandler.AMBER_KEYCHAIN, 0, 5,
-            ItemHandler.AMBER_CANE, 0, 5
+            ItemHandler.AMBER_CANE, 0, 5,
+            ItemHandler.STAMP_SET, 0, 5
     };
 }
