@@ -223,6 +223,9 @@ public class ElectricFenceWireBlock extends BlockContainer {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) tile).isPowered()) {
                 entity.attackEntityFrom(DamageSources.SHOCK, 1.0F);
+                if (entity instanceof DinosaurEntity) {
+                    ((DinosaurEntity) entity).onWire = true;
+                }
                 if (entity.ticksExisted % 10 == 0) {
                     world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundHandler.FENCE_SHOCK, SoundCategory.BLOCKS, 0.25F, 1.0F);
                 }

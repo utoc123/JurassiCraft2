@@ -66,6 +66,7 @@ import org.jurassicraft.server.entity.ai.DefendOwnerEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurAttackMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.DinosaurLookHelper;
 import org.jurassicraft.server.entity.ai.DinosaurWanderEntityAI;
+import org.jurassicraft.server.entity.ai.EscapeWireEntityAI;
 import org.jurassicraft.server.entity.ai.Family;
 import org.jurassicraft.server.entity.ai.FleeEntityAI;
 import org.jurassicraft.server.entity.ai.FollowOwnerEntityAI;
@@ -151,6 +152,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public Family family;
     public Set<Relationship> relationships = new HashSet<>();
 
+    public boolean onWire;
+
     private boolean isSittingNaturally;
 
     private Animation animation;
@@ -208,6 +211,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.tasks.addTask(0, new AdvancedSwimEntityAI(this));
 //            this.setPathPriority(PathNodeType.WATER, 0.0F);
         }
+
+        this.tasks.addTask(0, new EscapeWireEntityAI(this));
 
         if (this.dinosaur.getDiet().canEat(this, FoodType.PLANT)) {
             this.tasks.addTask(1, new GrazeEntityAI(this));
@@ -1037,6 +1042,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.prevAge = this.dinosaurAge;
+        this.onWire = false;
     }
 
     private void updateTailBuffer() {
