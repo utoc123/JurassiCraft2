@@ -113,6 +113,8 @@ public class Herd implements Iterable<DinosaurEntity> {
                 return;
             }
 
+            int failedPaths = 0;
+
             for (DinosaurEntity entity : this) {
                 if (this.enemies.size() == 0 || this.fleeing) {
                     if (!(entity.getMetabolism().isHungry() || entity.getMetabolism().isThirsty()) && !entity.isMovementBlocked() && !entity.isInWater() && (this.fleeing || entity.getNavigator().noPath()) && (this.state == State.MOVING || this.random.nextInt(50) == 0)) {
@@ -156,7 +158,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                             }
                         }
 
-                        if (entity.getAttackTarget() == null && this.members.size() > 1) {
+                        if (entity.getAttackTarget() == null && (this.members.size() > 1 || this.fleeing)) {
                             BlockPos navigatePos = entity.world.getHeight(new BlockPos(navigateX, 0, navigateZ)).up();
                             if (entity.getNavigator().getPath() != null && !entity.getNavigator().getPath().isFinished()) {
                                 PathPoint finalPoint = entity.getNavigator().getPath().getFinalPathPoint();
@@ -167,10 +169,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                             if (entity.getDistanceSqToCenter(navigatePos) > 16 && !entity.isMovementBlocked()) {
                                 boolean canMove = entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
                                 if (!canMove) {
-                                    this.moveX = (this.random.nextFloat() - 0.5F) * 5.0F;
-                                    this.moveZ = (this.random.nextFloat() - 0.5F) * 5.0F;
-
-                                    this.normalizeMovement();
+                                    failedPaths++;
                                 }
                             }
                         }
@@ -185,6 +184,13 @@ public class Herd implements Iterable<DinosaurEntity> {
                         entity.setAttackTarget(enemyIterator.next());
                     }
                 }
+            }
+
+            if (failedPaths > this.members.size() / 3) {
+                this.moveX = -this.moveX + (this.random.nextFloat() - 0.5F) * 0.1F;
+                this.moveZ = -this.moveZ + (this.random.nextFloat() - 0.5F) * 0.1F;
+
+                this.normalizeMovement();
             }
 
             List<EntityLivingBase> invalidEnemies = new LinkedList<>();
