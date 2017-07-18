@@ -305,7 +305,6 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.TRACKER);
         this.registerItemRenderer(ItemHandler.PLANT_CELLS_PETRI_DISH);
         this.registerItemRenderer(ItemHandler.PLANT_CELLS);
-        this.registerItemRenderer(ItemHandler.PLANT_CALLUS);
         this.registerItemRenderer(ItemHandler.GROWTH_SERUM);
         this.registerItemRenderer(ItemHandler.IRON_ROD);
         this.registerItemRenderer(ItemHandler.IRON_BLADES);
@@ -425,6 +424,7 @@ public enum RenderingHandler {
 
             this.registerItemRenderer(ItemHandler.PLANT_DNA, meta, "dna/plants/dna_" + name);
             this.registerItemRenderer(ItemHandler.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name);
+            this.registerItemRenderer(ItemHandler.PLANT_CALLUS, meta, "plant_callus");
         }
 
         for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {

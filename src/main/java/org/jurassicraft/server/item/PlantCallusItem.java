@@ -2,6 +2,7 @@ package org.jurassicraft.server.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -17,6 +18,9 @@ import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.util.LangHelper;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 public class PlantCallusItem extends Item {
@@ -58,5 +62,17 @@ public class PlantCallusItem extends Item {
         }
 
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems) {
+        List<Plant> plants = new LinkedList<>(PlantHandler.getPrehistoricPlantsAndTrees());
+        Collections.sort(plants);
+
+        for (Plant plant : plants) {
+            if (plant.shouldRegister()) {
+                subItems.add(new ItemStack(item, 1, PlantHandler.getPlantId(plant)));
+            }
+        }
     }
 }
