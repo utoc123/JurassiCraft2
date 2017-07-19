@@ -1,6 +1,8 @@
 package org.jurassicraft.server.entity.dinosaur;
 
 import net.ilexiconn.llibrary.server.animation.Animation;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.entity.passive.EntityChicken;
@@ -9,16 +11,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.client.sound.SoundHandler;
+import org.jurassicraft.server.command.KeyBindingHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.ai.LeapingMeleeEntityAI;
 import org.jurassicraft.server.entity.ai.RaptorHighGroundAI;
@@ -26,11 +38,13 @@ import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.TailDisplayAnimationAI;
 import org.jurassicraft.server.entity.ai.navigation.DinosaurPathNavigateClimber;
+import org.jurassicraft.server.message.MicroraptorDismountMessage;
+import org.jurassicraft.server.message.SetOrderMessage;
 
 public class MicroraptorEntity extends DinosaurEntity {
     private int flyTime;
     private int groundHeight;
-
+    private static final DataParameter<Byte> CONTROL_STATE = EntityDataManager.createKey(MicroraptorEntity.class, DataSerializers.BYTE);
     private EntityLookHelper glideLookHelper = new GlideLookHelper(this);
 
     public MicroraptorEntity(World world) {
@@ -47,6 +61,9 @@ public class MicroraptorEntity extends DinosaurEntity {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+        if(world.isRemote){
+            this.updateClientControls();
+        }
         Animation curAni = this.getAnimation();
         boolean landing = curAni == EntityAnimation.LEAP_LAND.get();
         boolean gliding = curAni == EntityAnimation.GLIDING.get();
@@ -105,6 +122,16 @@ public class MicroraptorEntity extends DinosaurEntity {
             return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
         }
         return super.getLookVec();
+    }
+
+    @Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
+        if (player.isSneaking() && hand == EnumHand.MAIN_HAND) {
+            if (this.isOwner(player) && this.order == Order.SIT && player.getPassengers() != null && player.getPassengers().size() < 2) {
+                this.startRiding(player);
+            }
+        }
+        return super.processInteract(player, hand, stack);
     }
 
     @Override
@@ -180,6 +207,65 @@ public class MicroraptorEntity extends DinosaurEntity {
                 offset = -range;
             }
             return MathHelper.wrapDegrees(current + offset);
+        }
+    }
+
+    @Override
+    public void entityInit() {
+        super.entityInit();
+        this.dataManager.register(CONTROL_STATE, (byte) 0);
+    }
+
+    public boolean up() {
+        return (dataManager.get(CONTROL_STATE) >> 1) == 1;
+    }
+
+    private void setStateField(int i, boolean newState) {
+        byte prevState = dataManager.get(CONTROL_STATE);
+        if (newState) {
+            dataManager.set(CONTROL_STATE, (byte) (prevState | (1 << i)));
+        } else {
+            dataManager.set(CONTROL_STATE, (byte) (prevState & ~(1 << i)));
+        }
+    }
+
+    public byte getControlState() {
+        return dataManager.get(CONTROL_STATE);
+    }
+
+    public void setControlState(byte state) {
+        dataManager.set(CONTROL_STATE, state);
+    }
+
+    public void updateRiding(Entity riding) {
+        if (riding.isPassenger(this) && riding instanceof EntityPlayer) {
+            int i = riding.getPassengers().indexOf(this);
+            float radius = (i == 2 ? 0F : 0.4F) + (((EntityPlayer) riding).isElytraFlying() ? 2 : 0);
+            float angle = (0.01745329251F * ((EntityPlayer) riding).renderYawOffset) + (i == 1 ? -90 : i == 0 ? 90 : 0);
+            double extraX = (double) (radius * MathHelper.sin((float) (Math.PI + angle)));
+            double extraZ = (double) (radius * MathHelper.cos(angle));
+            double extraY = (riding.isSneaking() ? 1.2D : 1.4D) + (i == 2 ? 0.4D : 0D);
+            this.rotationYaw = ((EntityPlayer) riding).rotationYawHead;
+            this.rotationYawHead = ((EntityPlayer) riding).rotationYawHead;
+            this.prevRotationYaw = ((EntityPlayer) riding).rotationYawHead;
+            this.setPosition(riding.posX + extraX, riding.posY + extraY, riding.posZ + extraZ);
+            if (this.getControlState() == 1 << 1 || ((EntityPlayer) riding).isElytraFlying()) {
+                this.dismountRidingEntity();
+            }
+
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    protected void updateClientControls() {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (this.getRidingEntity() != null && this.getRidingEntity() == mc.player) {
+            byte previousState = getControlState();
+            setStateField(1, KeyBindingHandler.microraptor_off.isKeyDown());
+            byte controlState = getControlState();
+            if (controlState != previousState) {
+                JurassiCraft.NETWORK_WRAPPER.sendToServer(new MicroraptorDismountMessage(this.getEntityId(), controlState));
+            }
         }
     }
 }
