@@ -9,9 +9,9 @@ Alpha_Hyperion
 
 ### Developers
 Cody Rex
+Gegy
 Alexthe666   
 Paul Fulham
-GoldGamer
 Twoninefour
 
 
@@ -25,7 +25,7 @@ FiskoToodles
 RaptorWhisper   
 
 ### Special Mentions
-Gegy
+Kashmoney
 jabelar   
 WorldSEnder   
 TheDurpiDaedric   
@@ -39,6 +39,7 @@ JTGHawk137
 BasiliskBoy
 Cazsius
 AlphaMaverick
+Goldgamer
 
 # Contributing
 Feel free to speed up development and create pull requests. Here's a guide on how to setup your workspace.
