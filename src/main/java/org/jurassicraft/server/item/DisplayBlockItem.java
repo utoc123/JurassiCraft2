@@ -68,9 +68,8 @@ public class DisplayBlockItem extends Item {
                 DisplayBlockEntity tile = (DisplayBlockEntity) world.getTileEntity(pos);
 
                 if (tile != null) {
-                    tile.setDinosaur(this.getDinosaurID(stack), mode > 0 ? mode == 1 : world.rand.nextBoolean());
+                    tile.setDinosaur(this.getDinosaurID(stack), mode > 0 ? mode == 1 : world.rand.nextBoolean(), this.isSkeleton(stack));
                     tile.setRot(180 - (int) player.getRotationYawHead());
-                    tile.isSkeleton = this.isSkeleton(stack);
                     tile.markDirty();
                     if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;

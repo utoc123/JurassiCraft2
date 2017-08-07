@@ -28,7 +28,7 @@ minecraft {
 repositories {
 	mavenCentral()
 	maven {
-		url = "https://maven.mcmoddev.com/"
+		url = "https://maven.mcmoddev.com"
 	}
     maven {
         url = "http://dvs1.progwml6.com/files/maven"

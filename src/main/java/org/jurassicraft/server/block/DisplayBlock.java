@@ -53,8 +53,8 @@ public class DisplayBlock extends BlockContainer {
         TileEntity entity = world.getTileEntity(pos);
         if (entity instanceof DisplayBlockEntity) {
             DisplayBlockEntity displayEntity = (DisplayBlockEntity) entity;
-            Dinosaur dinosaur = EntityHandler.getDinosaurById(displayEntity.dinosaur);
-            if (dinosaur != null && !displayEntity.isSkeleton) {
+            Dinosaur dinosaur = displayEntity.getEntity().getDinosaur();
+            if (dinosaur != null && !displayEntity.isSkeleton()) {
                 float width = MathHelper.clamp(dinosaur.getAdultSizeX() * 0.25F, 0.1F, 1.0F);
                 float height = MathHelper.clamp(dinosaur.getAdultSizeY() * 0.25F, 0.1F, 1.0F);
                 float halfWidth = width / 2.0F;
@@ -142,7 +142,7 @@ public class DisplayBlock extends BlockContainer {
     }
 
     public ItemStack getItemFromTile(DisplayBlockEntity tile) {
-        int metadata = DisplayBlockItem.getMetadata(tile.dinosaur, tile.isMale ? 1 : 2, tile.isSkeleton);
+        int metadata = DisplayBlockItem.getMetadata(EntityHandler.getDinosaurId(tile.getEntity().getDinosaur()), tile.isMale() ? 1 : 2, tile.isSkeleton());
         return new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata);
     }
 

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import org.jurassicraft.server.block.entity.DisplayBlockEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class DisplayBlockRenderer extends TileEntitySpecialRenderer<DisplayBlockEntity> {
     private Minecraft mc = Minecraft.getMinecraft();
@@ -15,15 +16,13 @@ public class DisplayBlockRenderer extends TileEntitySpecialRenderer<DisplayBlock
         GlStateManager.translate(x + 0.5, y, z + 0.5);
 
         GlStateManager.rotate(tileEntity.getRot(), 0.0F, 1.0F, 0.0F);
-        //System.out.println(tileEntity.dinosaur);
 
         double scale = tileEntity.getEntity().isSkeleton() ? 1.0 : 0.15;
         GlStateManager.scale(scale, scale, scale);
 
-        if (tileEntity.entity != null) {
-            this.mc.getRenderManager().doRenderEntity(tileEntity.entity, 0, 0, 0, 0, 0, false);
-        } else {
-            tileEntity.updateEntity();
+        DinosaurEntity entity = tileEntity.getEntity();
+        if (entity != null) {
+            this.mc.getRenderManager().doRenderEntity(entity, 0, 0, 0, 0, 0, false);
         }
 
         GlStateManager.popMatrix();

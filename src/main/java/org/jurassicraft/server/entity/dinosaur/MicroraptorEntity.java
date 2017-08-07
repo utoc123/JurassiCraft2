@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -23,7 +22,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -39,7 +37,6 @@ import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.TailDisplayAnimationAI;
 import org.jurassicraft.server.entity.ai.navigation.DinosaurPathNavigateClimber;
 import org.jurassicraft.server.message.MicroraptorDismountMessage;
-import org.jurassicraft.server.message.SetOrderMessage;
 
 public class MicroraptorEntity extends DinosaurEntity {
     private int flyTime;
@@ -61,7 +58,7 @@ public class MicroraptorEntity extends DinosaurEntity {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        if(world.isRemote){
+        if (world.isRemote) {
             this.updateClientControls();
         }
         Animation curAni = this.getAnimation();
@@ -252,7 +249,6 @@ public class MicroraptorEntity extends DinosaurEntity {
             if (this.getControlState() == 1 << 1 || ((EntityPlayer) riding).isElytraFlying()) {
                 this.dismountRidingEntity();
             }
-
         }
     }
 

@@ -1,28 +1,37 @@
 package org.jurassicraft.server.block.entity;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.EntityHandler;
 
 public class DisplayBlockEntity extends TileEntity {
-    public int dinosaur;
-    public DinosaurEntity entity;
-    public boolean isMale;
-    public boolean isSkeleton;
+    private DinosaurEntity entity;
     private int rotation;
 
-    public void setDinosaur(int dinosaur, boolean isMale) {
-        this.dinosaur = dinosaur;
+    private boolean isMale;
+    private boolean isSkeleton;
+
+    private SerializedData serializedData = new InvalidData();
+
+    public void setDinosaur(int dinosaurId, boolean isMale, boolean isSkeleton) {
         this.isMale = isMale;
-        this.updateEntity();
+        this.isSkeleton = isSkeleton;
+        try {
+            Dinosaur dinosaur = EntityHandler.getDinosaurById(dinosaurId);
+            this.entity = dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(this.world);
+            this.initializeEntity(this.entity);
+        } catch (Exception e) {
+        }
         this.markDirty();
     }
 
@@ -30,36 +39,36 @@ public class DisplayBlockEntity extends TileEntity {
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
-        this.dinosaur = nbt.getInteger("DinosaurId");
+        if (nbt.hasKey("DinosaurId")) {
+            this.serializedData = new LegacyId();
+        } else if (nbt.hasKey("DinosaurTag")) {
+            this.serializedData = new TagData();
+        }
+
+        this.serializedData.deserialize(nbt);
+
         this.rotation = nbt.getInteger("Rotation");
         this.isMale = !nbt.hasKey("IsMale") || nbt.getBoolean("IsMale");
         this.isSkeleton = nbt.getBoolean("IsSkeleton");
-
-        this.updateEntity();
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt = super.writeToNBT(nbt);
 
-        nbt.setInteger("DinosaurId", this.dinosaur);
+        if (this.entity != null) {
+            NBTTagCompound tag = this.entity.serializeNBT();
+            nbt.setTag("DinosaurTag", tag);
+            System.out.println("Save: " + this.entity.getAttributes().getScaleModifier());
+        } else if (this.serializedData != null) {
+            this.serializedData.serialize(nbt);
+        }
+
         nbt.setInteger("Rotation", this.rotation);
         nbt.setBoolean("IsMale", this.isMale);
         nbt.setBoolean("IsSkeleton", this.isSkeleton);
 
         return nbt;
-    }
-
-    public void updateEntity() {
-        if (this.world != null) {
-            try {
-                this.entity = EntityHandler.getDinosaurById(this.dinosaur).getDinosaurClass().getDeclaredConstructor(World.class).newInstance(this.world);
-                this.entity.setupDisplay(this.isMale);
-                this.entity.setSkeleton(this.isSkeleton);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
@@ -87,6 +96,14 @@ public class DisplayBlockEntity extends TileEntity {
         return super.getRenderBoundingBox();
     }
 
+    public boolean isMale() {
+        return this.isMale;
+    }
+
+    public boolean isSkeleton() {
+        return this.isSkeleton;
+    }
+
     public int getRot() {
         return this.rotation;
     }
@@ -97,9 +114,88 @@ public class DisplayBlockEntity extends TileEntity {
     }
 
     public DinosaurEntity getEntity() {
-        if (this.entity == null) {
-            this.updateEntity();
+        if (this.entity == null && this.serializedData != null) {
+            return this.createEntity();
         }
         return this.entity;
+    }
+
+    private DinosaurEntity createEntity() {
+        DinosaurEntity entity = this.serializedData.create(this.world);
+        if (entity != null) {
+            this.serializedData = null;
+            this.initializeEntity(entity);
+            this.entity = entity;
+            return entity;
+        } else {
+            return new InvalidData().create(this.world);
+        }
+    }
+
+    private void initializeEntity(DinosaurEntity entity) {
+        entity.setupDisplay(this.isMale);
+        entity.setSkeleton(this.isSkeleton);
+    }
+
+    private interface SerializedData {
+        void serialize(NBTTagCompound compound);
+
+        void deserialize(NBTTagCompound compound);
+
+        DinosaurEntity create(World world);
+    }
+
+    private class LegacyId implements SerializedData {
+        protected int dinosaurId;
+
+        @Override
+        public void serialize(NBTTagCompound compound) {
+            compound.setInteger("DinosaurId", this.dinosaurId);
+        }
+
+        @Override
+        public void deserialize(NBTTagCompound compound) {
+            this.dinosaurId = compound.getInteger("DinosaurId");
+        }
+
+        @Override
+        public DinosaurEntity create(World world) {
+            try {
+                Dinosaur dinosaur = EntityHandler.getDinosaurById(this.dinosaurId);
+                return dinosaur.getDinosaurClass().getDeclaredConstructor(World.class).newInstance(world);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+    private class TagData implements SerializedData {
+        protected NBTTagCompound data;
+
+        @Override
+        public void serialize(NBTTagCompound compound) {
+            compound.setTag("DinosaurTag", this.data);
+        }
+
+        @Override
+        public void deserialize(NBTTagCompound compound) {
+            this.data = compound.getCompoundTag("DinosaurTag");
+        }
+
+        @Override
+        public DinosaurEntity create(World world) {
+            Entity entity = EntityList.createEntityFromNBT(this.data, world);
+            if (entity instanceof DinosaurEntity) {
+                return (DinosaurEntity) entity;
+            }
+            return null;
+        }
+    }
+
+    private class InvalidData extends LegacyId {
+        @Override
+        public void deserialize(NBTTagCompound compound) {
+            this.dinosaurId = EntityHandler.getDinosaurId(EntityHandler.VELOCIRAPTOR);
+        }
     }
 }
