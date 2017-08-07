@@ -342,10 +342,11 @@ public abstract class MachineBaseBlockEntity extends TileEntityLockable implemen
     protected void mergeStack(int slot, ItemStack stack) {
         ItemStack[] slots = this.getSlots();
 
-        if (slots[slot] == null) {
+        ItemStack previous = slots[slot];
+        if (previous == null) {
             slots[slot] = stack;
-        } else if (ItemStack.areItemStacksEqual(slots[slot], stack) && ItemStack.areItemStackTagsEqual(slots[slot], stack)) {
-            slots[slot].stackSize += stack.stackSize;
+        } else if (ItemStack.areItemsEqual(previous, stack) && ItemStack.areItemStackTagsEqual(previous, stack)) {
+            previous.stackSize += stack.stackSize;
         }
     }
 

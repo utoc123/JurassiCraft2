@@ -59,7 +59,6 @@ public class DisplayBlockEntity extends TileEntity {
         if (this.entity != null) {
             NBTTagCompound tag = this.entity.serializeNBT();
             nbt.setTag("DinosaurTag", tag);
-            System.out.println("Save: " + this.entity.getAttributes().getScaleModifier());
         } else if (this.serializedData != null) {
             this.serializedData.serialize(nbt);
         }
