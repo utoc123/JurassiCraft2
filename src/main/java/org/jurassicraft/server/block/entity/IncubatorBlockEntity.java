@@ -13,7 +13,7 @@ import org.jurassicraft.server.container.IncubatorContainer;
 import org.jurassicraft.server.item.DinosaurEggItem;
 import org.jurassicraft.server.item.ItemHandler;
 
-public class IncubatorBlockEntity extends MachineBaseBlockEntity {
+public class IncubatorBlockEntity extends MachineBaseBlockEntity implements TemperatureControl {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3, 4 };
     private static final int[] ENVIRONMENT = new int[] { 5 };
 
@@ -170,5 +170,20 @@ public class IncubatorBlockEntity extends MachineBaseBlockEntity {
     @Override
     protected boolean shouldResetProgress() {
         return false;
+    }
+
+    @Override
+    public void setTemperature(int index, int value) {
+        this.temperature[index] = value;
+    }
+
+    @Override
+    public int getTemperature(int index) {
+        return this.temperature[index];
+    }
+
+    @Override
+    public int getTemperatureCount() {
+        return this.temperature.length;
     }
 }

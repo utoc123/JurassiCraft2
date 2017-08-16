@@ -16,7 +16,7 @@ import org.jurassicraft.server.item.ItemHandler;
 
 import java.util.Random;
 
-public class CultivatorBlockEntity extends MachineBaseBlockEntity {
+public class CultivatorBlockEntity extends MachineBaseBlockEntity implements TemperatureControl {
     private static final int[] INPUTS = new int[] { 0, 1, 2, 3 };
     private static final int[] OUTPUTS = new int[] { 4 };
     private static final int MAX_NUTRIENTS = 3000;
@@ -26,6 +26,8 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     private int proximates;
     private int minerals;
     private int vitamins;
+
+    private int temperature;
 
     @Override
     protected int getProcess(int slot) {
@@ -60,7 +62,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             ItemStack hatchedEgg = new ItemStack(ItemHandler.HATCHED_EGG, 1, syringe.getItemDamage());
 
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setBoolean("Gender", this.world.rand.nextBoolean());
+            compound.setBoolean("Gender", this.temperature > 50);
 
             NBTTagCompound syringeTag = syringe.getTagCompound();
             if (syringeTag != null) {
@@ -169,6 +171,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
         this.minerals = compound.getInteger("Minerals");
         this.vitamins = compound.getInteger("Vitamins");
         this.proximates = compound.getInteger("Proximates");
+        this.temperature = compound.getInteger("Temperature");
     }
 
     @Override
@@ -180,6 +183,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
         compound.setInteger("Minerals", this.minerals);
         compound.setInteger("Vitamins", this.vitamins);
         compound.setInteger("Proximates", this.proximates);
+        compound.setInteger("Temperature", this.temperature);
 
         return compound;
     }
@@ -273,7 +277,6 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             return this.totalProcessTime[id - processCount];
         } else {
             int type = id - (processCount * 2);
-
             switch (type) {
                 case 0:
                     return this.waterLevel;
@@ -285,6 +288,8 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
                     return this.vitamins;
                 case 4:
                     return this.lipids;
+                case 5:
+                    return this.temperature;
             }
         }
 
@@ -301,7 +306,6 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
             this.totalProcessTime[id - processCount] = value;
         } else {
             int type = id - (processCount * 2);
-
             switch (type) {
                 case 0:
                     this.waterLevel = value;
@@ -318,13 +322,16 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
                 case 4:
                     this.lipids = value;
                     break;
+                case 5:
+                    this.temperature = value;
+                    break;
             }
         }
     }
 
     @Override
     public int getFieldCount() {
-        return this.getProcessCount() * 2 + 5;
+        return this.getProcessCount() * 2 + 6;
     }
 
     public Dinosaur getDinosaur() {
@@ -333,5 +340,20 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
         }
 
         return null;
+    }
+
+    @Override
+    public void setTemperature(int index, int value) {
+        this.temperature = value;
+    }
+
+    @Override
+    public int getTemperature(int index) {
+        return this.temperature;
+    }
+
+    @Override
+    public int getTemperatureCount() {
+        return 1;
     }
 }

@@ -29,18 +29,16 @@ public class IncubatorGui extends GuiContainer {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-
-        this.drawTemperature(mouseX, mouseY);
+        this.dragTemperatureSlider(mouseX, mouseY);
     }
 
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
-
-        this.drawTemperature(mouseX, mouseY);
+        this.dragTemperatureSlider(mouseX, mouseY);
     }
 
-    private void drawTemperature(int mouseX, int mouseY) {
+    private void dragTemperatureSlider(int mouseX, int mouseY) {
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
 

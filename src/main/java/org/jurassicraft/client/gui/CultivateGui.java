@@ -9,6 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
 import org.jurassicraft.server.container.CultivateContainer;
+import org.jurassicraft.server.message.ChangeTemperatureMessage;
+
+import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public class CultivateGui extends GuiContainer {
@@ -34,6 +37,18 @@ public class CultivateGui extends GuiContainer {
     }
 
     @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        this.dragTemperatureSlider(mouseX, mouseY);
+    }
+
+    @Override
+    protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
+        super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+        this.dragTemperatureSlider(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int i, int j) {
         String name = this.cultivator.getDisplayName().getUnformattedText();
         this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2 - 45, 10, 4210752);
@@ -52,6 +67,8 @@ public class CultivateGui extends GuiContainer {
 
         this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 18, 0, 188, 42, 67 - this.getScaled(this.cultivator.getWaterLevel(), 3, 67));
 
+        this.drawTemperatureSlider();
+
         this.mc.renderEngine.bindTexture(NUTRIENTS_TEXTURE);
         this.drawTexturedModalRect(this.width / 2 + 1, this.height / 2 - this.ySize / 2, 0, 0, 176, 166);
 
@@ -63,6 +80,34 @@ public class CultivateGui extends GuiContainer {
         this.drawTexturedModalRect(nutrientsX, this.guiTop + 82, 0, 175, this.getScaled(this.cultivator.getMinerals(), maxNutrients, 150), 9);
         this.drawTexturedModalRect(nutrientsX, this.guiTop + 108, 0, 184, this.getScaled(this.cultivator.getVitamins(), maxNutrients, 150), 9);
         this.drawTexturedModalRect(nutrientsX, this.guiTop + 134, 0, 193, this.getScaled(this.cultivator.getLipids(), maxNutrients, 150), 9);
+    }
+
+    private void drawTemperatureSlider() {
+        int screenX = (this.width - this.xSize) / 2;
+        int screenY = (this.height - this.ySize) / 2;
+
+        int x = screenX + 59;
+        int y = screenY + 88;
+
+        int temperature = this.cultivator.getTemperature(0) * 20 / 100;
+
+        this.drawTexturedModalRect(x + temperature, y, 176, 0, 3, 5);
+    }
+
+    private void dragTemperatureSlider(int mouseX, int mouseY) {
+        int screenX = (this.width - this.xSize) / 2;
+        int screenY = (this.height - this.ySize) / 2;
+
+        int x = screenX + 59;
+        int y = screenY + 88;
+
+        if (mouseX > x && mouseY > y && mouseX < x + 21 && mouseY < y + 5) {
+            int mouseTemperature = (mouseX - x + 1) * 4;
+            if (mouseTemperature != this.cultivator.getTemperature(0)) {
+                this.cultivator.setTemperature(0, mouseTemperature);
+                JurassiCraft.NETWORK_WRAPPER.sendToServer(new ChangeTemperatureMessage(this.cultivator.getPos(), 0, mouseTemperature));
+            }
+        }
     }
 
     private int getScaled(int value, int maxValue, int scale) {
