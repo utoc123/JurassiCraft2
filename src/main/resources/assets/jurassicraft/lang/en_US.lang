@@ -144,6 +144,7 @@ item.first_dorsal_fin.name={dino} First Dorsal Fin
 
 item.dino_egg.name={dino} Egg
 item.hatched_egg.name=Hatched {dino} Egg
+item.gestated.name=Gestated {dino}
 item.dino_spawn_egg.name=Spawn {dino}
 item.dinosaur_meat.name={dino} Meat
 item.dinosaur_steak.name=Cooked {dino} Meat

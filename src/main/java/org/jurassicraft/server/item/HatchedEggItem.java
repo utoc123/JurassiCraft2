@@ -8,6 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.EntityHandler;
@@ -24,9 +25,11 @@ public class HatchedEggItem extends DNAContainerItem {
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String dinoName = this.getDinosaur(stack).getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
+        Dinosaur dinosaur = this.getDinosaur(stack);
+        String dinoName = dinosaur.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-        return new LangHelper("item.hatched_egg.name").withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
+        return new LangHelper(dinosaur.givesDirectBirth() ? "item.gestated.name" :"item.hatched_egg.name")
+                .withProperty("dino", "entity.jurassicraft." + dinoName + ".name").build();
     }
 
     public Dinosaur getDinosaur(ItemStack stack) {
@@ -91,7 +94,7 @@ public class HatchedEggItem extends DNAContainerItem {
                         stack.stackSize--;
                     }
                 } catch (ReflectiveOperationException e) {
-                    e.printStackTrace();
+                    JurassiCraft.INSTANCE.getLogger().warn("Failed to spawn dinosaur from hatched egg", e);
                 }
             }
 

@@ -720,7 +720,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     }
 
     public boolean givesDirectBirth() {
-        return this.directBirth;
+        return this.directBirth || this.isMammal;
     }
 
     public List<GrowthStage> getSupportedStages() {

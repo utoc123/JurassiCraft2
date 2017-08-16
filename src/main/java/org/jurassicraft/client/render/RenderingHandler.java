@@ -7,7 +7,6 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -23,11 +22,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.client.model.animation.EntityAnimator;
-import org.jurassicraft.client.model.animation.entity.*;
-import org.jurassicraft.client.render.block.DisplayBlockRenderer;
+import org.jurassicraft.client.model.animation.entity.BrachiosaurusAnimator;
+import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
+import org.jurassicraft.client.model.animation.entity.DilophosaurusAnimator;
+import org.jurassicraft.client.model.animation.entity.GallimimusAnimator;
+import org.jurassicraft.client.model.animation.entity.MicroraptorAnimator;
+import org.jurassicraft.client.model.animation.entity.MussaurusAnimator;
+import org.jurassicraft.client.model.animation.entity.ParasaurolophusAnimator;
+import org.jurassicraft.client.model.animation.entity.TriceratopsAnimator;
+import org.jurassicraft.client.model.animation.entity.TyrannosaurusAnimator;
+import org.jurassicraft.client.model.animation.entity.VelociraptorAnimator;
 import org.jurassicraft.client.render.block.CleaningStationRenderer;
 import org.jurassicraft.client.render.block.DNAExtractorRenderer;
 import org.jurassicraft.client.render.block.DNASequencerRenderer;
+import org.jurassicraft.client.render.block.DisplayBlockRenderer;
 import org.jurassicraft.client.render.block.ElectricFencePoleRenderer;
 import org.jurassicraft.client.render.block.FeederRenderer;
 import org.jurassicraft.client.render.block.IncubatorRenderer;
@@ -42,16 +50,15 @@ import org.jurassicraft.client.render.entity.PaddockSignRenderer;
 import org.jurassicraft.client.render.entity.SeatRenderer;
 import org.jurassicraft.client.render.entity.VenomRenderer;
 import org.jurassicraft.client.render.entity.dinosaur.DinosaurRenderInfo;
-import org.jurassicraft.server.api.Hybrid;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.EncasedFossilBlock;
 import org.jurassicraft.server.block.FossilBlock;
 import org.jurassicraft.server.block.FossilizedTrackwayBlock;
 import org.jurassicraft.server.block.NestFossilBlock;
-import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.DNAExtractorBlockEntity;
 import org.jurassicraft.server.block.entity.DNASequencerBlockEntity;
+import org.jurassicraft.server.block.entity.DisplayBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFencePoleBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
@@ -91,66 +98,9 @@ public enum RenderingHandler {
     public void preInit() {
         TabulaModelHandler.INSTANCE.addDomain(JurassiCraft.MODID);
 
-        for (Dinosaur dino : EntityHandler.getDinosaurs().values()) {
-            String dinoName = dino.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-
-            if (!(dino instanceof Hybrid)) {
-                for (Map.Entry<String, FossilItem> entry : ItemHandler.FOSSILS.entrySet()) {
-                    List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
-
-                    if (dinosaursForType.contains(dino)) {
-                        ModelBakery.registerItemVariants(entry.getValue(), new ModelResourceLocation("jurassicraft:bones/" + dinoName + "_" + entry.getKey(), "inventory"));
-                    }
-                }
-            }
-
-            for (Map.Entry<String, FossilItem> entry : ItemHandler.FRESH_FOSSILS.entrySet()) {
-                List<Dinosaur> dinosaursForType = FossilItem.fossilDinosaurs.get(entry.getKey());
-
-                if (dinosaursForType.contains(dino)) {
-                    ModelBakery.registerItemVariants(entry.getValue(), new ModelResourceLocation("jurassicraft:fresh_bones/" + dinoName + "_" + entry.getKey(), "inventory"));
-                }
-            }
-
-            ModelBakery.registerItemVariants(ItemHandler.DNA, new ModelResourceLocation("jurassicraft:dna/dna_" + dinoName, "inventory"));
-
-            if (!dino.givesDirectBirth()) {
-                ModelBakery.registerItemVariants(ItemHandler.EGG, new ModelResourceLocation("jurassicraft:egg/egg_" + dinoName, "inventory"));
-                ModelBakery.registerItemVariants(ItemHandler.HATCHED_EGG, new ModelResourceLocation("jurassicraft:hatched_egg/egg_" + dinoName, "inventory"));
-            }
-
-            ModelBakery.registerItemVariants(ItemHandler.DINOSAUR_MEAT, new ModelResourceLocation("jurassicraft:meat/meat_" + dinoName, "inventory"));
-            ModelBakery.registerItemVariants(ItemHandler.DINOSAUR_STEAK, new ModelResourceLocation("jurassicraft:meat/steak_" + dinoName, "inventory"));
-            ModelBakery.registerItemVariants(ItemHandler.SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/soft_tissue_" + dinoName, "inventory"));
-            ModelBakery.registerItemVariants(ItemHandler.SYRINGE, new ModelResourceLocation("jurassicraft:syringe/syringe_" + dinoName, "inventory"));
-            //ModelBakery.registerItemVariants(ItemHandler.ACTION_FIGURE, new ModelResourceLocation("jurassicraft:action_figure/action_figure_" + dinoName, "inventory"));
-        }
-        ItemHandler.DISPLAY_BLOCK.initModels(EntityHandler.getDinosaurs().values(),this);
-        for (FossilizedTrackwayBlock.TrackwayType trackwayType : FossilizedTrackwayBlock.TrackwayType.values()) {
-            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.FOSSILIZED_TRACKWAY), new ModelResourceLocation("jurassicraft:fossilized_trackway_" + trackwayType.getName(), "inventory"));
-        }
-
-        for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {
-            ModelBakery.registerItemVariants(Item.getItemFromBlock(BlockHandler.NEST_FOSSIL), new ModelResourceLocation("jurassicraft:nest_fossil_" + (variant.ordinal() + 1), "inventory"));
-            ModelBakery.registerItemVariants(ItemHandler.FOSSILIZED_EGG, new ModelResourceLocation("jurassicraft:fossilized_egg_" + (variant.ordinal() + 1), "inventory"));
-        }
-
-        for (Plant plant : PlantHandler.getPrehistoricPlantsAndTrees()) {
-            String name = plant.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
-
-            ModelBakery.registerItemVariants(ItemHandler.PLANT_DNA, new ModelResourceLocation("jurassicraft:dna/plants/dna_" + name, "inventory"));
-            ModelBakery.registerItemVariants(ItemHandler.PLANT_SOFT_TISSUE, new ModelResourceLocation("jurassicraft:soft_tissue/plants/soft_tissue_" + name, "inventory"));
-        }
-
         for (EnumDyeColor color : EnumDyeColor.values()) {
             this.registerItemRenderer(Item.getItemFromBlock(BlockHandler.CULTIVATOR_BOTTOM), color.getMetadata(), "cultivate/cultivate_bottom_" + color.getName().toLowerCase(Locale.ENGLISH));
-       }
-
-        for (AttractionSignEntity.AttractionSignType type : AttractionSignEntity.AttractionSignType.values()) {
-            ModelBakery.registerItemVariants(ItemHandler.ATTRACTION_SIGN, new ModelResourceLocation("jurassicraft:attraction_sign_" + type.name().toLowerCase(Locale.ENGLISH), "inventory"));
         }
-
-        ModelBakery.registerItemVariants(ItemHandler.AMBER, new ModelResourceLocation("jurassicraft:amber_aphid", "inventory"), new ModelResourceLocation("jurassicraft:amber_mosquito", "inventory"));
 
         for (TreeType type : TreeType.values()) {
             ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockFenceGate.POWERED }).build());
@@ -163,7 +113,9 @@ public enum RenderingHandler {
         ModelLoader.setCustomStateMapper(BlockHandler.LITHOSTROTION, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.STYLOPHYLLOPSIS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
         ModelLoader.setCustomStateMapper(BlockHandler.HIPPURITES_RADIOSUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        
+
+        ItemHandler.DISPLAY_BLOCK.initModels(EntityHandler.getDinosaurs().values(), this);
+
         int i = 0;
 
         for (EncasedFossilBlock fossil : BlockHandler.ENCASED_FOSSILS) {
@@ -292,9 +244,9 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.LOW_SECURITY_FENCE_WIRE);
 
         this.registerBlockRenderer(BlockHandler.WILD_POTATO_PLANT);
-        
+
         this.registerBlockRenderer(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT);
-        
+
         this.registerBlockRenderer(BlockHandler.TEMPSKYA);
         this.registerBlockRenderer(BlockHandler.CINNAMON_FERN);
         this.registerBlockRenderer(BlockHandler.BRISTLE_FERN);
@@ -413,8 +365,9 @@ public enum RenderingHandler {
 
             if (!dinosaur.givesDirectBirth()) {
                 this.registerItemRenderer(ItemHandler.EGG, meta, "egg/egg_" + formattedName);
-                this.registerItemRenderer(ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName);
             }
+
+            this.registerItemRenderer(ItemHandler.HATCHED_EGG, meta, "hatched_egg/egg_" + formattedName);
         }
 
         for (Plant plant : PlantHandler.getPrehistoricPlantsAndTrees()) {
@@ -450,10 +403,10 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.WILD_POTATO_SEEDS);
         this.registerItemRenderer(ItemHandler.WILD_POTATO);
         this.registerItemRenderer(ItemHandler.WILD_POTATO_COOKED);
-        
+
         this.registerItemRenderer(ItemHandler.RHAMNUS_SEEDS);
         this.registerItemRenderer(ItemHandler.RHAMNUS_BERRIES);
-        
+
         this.registerItemRenderer(ItemHandler.GOAT_RAW);
         this.registerItemRenderer(ItemHandler.GOAT_COOKED);
 
