@@ -141,7 +141,7 @@ public class ClientProxy extends ServerProxy {
             } else if (tile instanceof CultivatorBlockEntity && id == GUI_CULTIVATOR_ID) {
                 CultivatorBlockEntity cultivator = (CultivatorBlockEntity) tile;
                 if (cultivator.isProcessing(0)) {
-                    return new CultivateProcessGui(cultivator);
+                    return new CultivateProcessGui(player.inventory, cultivator);
                 } else {
                     return new CultivateGui(player.inventory, cultivator);
                 }

@@ -14,12 +14,12 @@ public class RhamnusSalifocifusBlock extends JCBlockCrops8 {
 
 	@Override
 	protected Item getSeed() {
-		return ItemHandler.RHAMNUS_SALIFOCIFIUS_SEEDS;
+		return ItemHandler.RHAMNUS_SEEDS;
 	}
 
 	@Override
 	protected Item getCrop() {
-		return ItemHandler.RHAMNUS_SALIFOCIFIUS_BERRIES;
+		return ItemHandler.RHAMNUS_BERRIES;
 	}
 
 }

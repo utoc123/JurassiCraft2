@@ -33,10 +33,10 @@ public class CultivatorBottomBlock extends CultivatorBlock {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 
         if (stack.hasDisplayName()) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
+            TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof CultivatorBlockEntity) {
-                ((CultivatorBlockEntity) tileentity).setCustomInventoryName(stack.getDisplayName());
+            if (tile instanceof CultivatorBlockEntity) {
+                ((CultivatorBlockEntity) tile).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }

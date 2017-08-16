@@ -3,16 +3,20 @@ package org.jurassicraft.client.gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
+import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 
 @SideOnly(Side.CLIENT)
 public class CultivateProcessGui extends GuiScreen {
     private CultivatorBlockEntity cultivator;
+    private CultivateContainer container;
+
     private int xSize;
     private int ySize;
     private int guiLeft;
@@ -20,11 +24,26 @@ public class CultivateProcessGui extends GuiScreen {
 
     private ResourceLocation TEXTURE = new ResourceLocation(JurassiCraft.MODID, "textures/gui/cultivator_progress.png");
 
-    public CultivateProcessGui(CultivatorBlockEntity entity) {
+    public CultivateProcessGui(InventoryPlayer inventory, CultivatorBlockEntity entity) {
         super();
+        this.container = new CultivateContainer(inventory, entity);
         this.cultivator = entity;
         this.xSize = 176;
         this.ySize = 107;
+    }
+
+    @Override
+    public void initGui() {
+        super.initGui();
+
+        this.buttonList.clear();
+
+        this.guiLeft = (this.width - this.xSize) / 2;
+        this.guiTop = (this.height - this.ySize) / 2;
+
+        this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, I18n.format("container.close.name")));
+
+        this.mc.player.openContainer = this.container;
     }
 
     @Override
@@ -44,18 +63,6 @@ public class CultivateProcessGui extends GuiScreen {
         if (key == 1 || key == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
             this.mc.player.closeScreen();
         }
-    }
-
-    @Override
-    public void initGui() {
-        super.initGui();
-
-        this.buttonList.clear();
-
-        this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
-
-        this.buttonList.add(new GuiButton(0, this.guiLeft + (this.xSize - 100) / 2, this.guiTop + 70, 100, 20, I18n.format("container.close.name")));
     }
 
     @Override

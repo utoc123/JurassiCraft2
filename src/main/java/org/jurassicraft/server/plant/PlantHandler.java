@@ -27,6 +27,7 @@ public class PlantHandler {
     public static final Plant RAPHAELIA = new RaphaeliaPlant();
     public static final Plant ENCEPHALARTOS = new EncephalartosPlant();
     public static final Plant PSARONIUS = new PsaroniusPlant();
+
     public static final Plant PHOENIX = new PhoenixPlant();
     public static final Plant WILD_POTATO = new WildPotatoPlant();
     public static final Plant ARAUCARIA = new AraucariaPlant();

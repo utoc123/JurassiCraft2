@@ -95,10 +95,10 @@ public class ItemHandler {
 
     public static final Item WILD_ONION = new ItemSeedFood(3, 0.3F, BlockHandler.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.PLANTS);
     public static final Item WILD_POTATO_SEEDS = new ItemSeeds(BlockHandler.WILD_POTATO_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
-    public static final Item RHAMNUS_SALIFOCIFIUS_SEEDS = new ItemSeeds(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
+    public static final Item RHAMNUS_SEEDS = new ItemSeeds(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
     public static final Item WILD_POTATO = new ItemFood(2, 0.2F, false).setCreativeTab(TabHandler.FOODS);
     public static final Item WILD_POTATO_COOKED = new ItemFood(6, 0.6F, false).setCreativeTab(TabHandler.FOODS);
-    public static final Item RHAMNUS_SALIFOCIFIUS_BERRIES = new ItemFood(5, 0.5F, false).setCreativeTab(TabHandler.FOODS);
+    public static final Item RHAMNUS_BERRIES = new ItemFood(5, 0.5F, false).setCreativeTab(TabHandler.FOODS);
 
     public static final GracilariaItem GRACILARIA = (GracilariaItem) new GracilariaItem(BlockHandler.GRACILARIA).setCreativeTab(TabHandler.PLANTS);
     public static final BasicItem LIQUID_AGAR = new BasicItem(TabHandler.PLANTS);
@@ -306,8 +306,8 @@ public class ItemHandler {
         registerItem(WILD_POTATO, "Wild Potato");
         registerItem(WILD_POTATO_COOKED, "Wild Potato Cooked");
 
-        registerItem(RHAMNUS_SALIFOCIFIUS_SEEDS, "Rhamnus Salicifolius Seeds");
-        registerItem(RHAMNUS_SALIFOCIFIUS_BERRIES, "Rhamnus Salicifolius Berries");
+        registerItem(RHAMNUS_SEEDS, "Rhamnus Salicifolius Seeds");
+        registerItem(RHAMNUS_BERRIES, "Rhamnus Salicifolius Berries");
 
         registerItem(GRACILARIA, "Gracilaria");
         registerItem(LIQUID_AGAR, "Liquid Agar");

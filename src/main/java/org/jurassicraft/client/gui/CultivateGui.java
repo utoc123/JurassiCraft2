@@ -29,7 +29,7 @@ public class CultivateGui extends GuiContainer {
     public void updateScreen() {
         if (this.cultivator.isProcessing(0)) {
             this.mc.player.closeScreen();
-            this.mc.displayGuiScreen(new CultivateProcessGui(this.cultivator));
+            this.mc.displayGuiScreen(new CultivateProcessGui(this.playerInventory, this.cultivator));
         }
     }
 

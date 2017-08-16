@@ -3,6 +3,7 @@ package org.jurassicraft.server.recipe;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -35,7 +36,7 @@ public class RecipeHandler {
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_STAIRS.get(type), 4), "  w", " ww", "www", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_SLABS.get(type), 6), "www", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(ItemHandler.ANCIENT_DOORS.get(type), 3), "ww", "ww", "ww", 'w', planks);
-            GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCES.get(type), 3), "wsw", "wsw", 'w', planks, 's', Items.STICK);	
+            GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCES.get(type), 3), "wsw", "wsw", 'w', planks, 's', Items.STICK);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCE_GATES.get(type), 3), "sws", "sws", 'w', planks, 's', Items.STICK);
         }
 
@@ -59,9 +60,9 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SEQUENCER), "IAI", "SAI", "HAK", 'I', Items.IRON_INGOT, 'A', ItemHandler.DNA_ANALYZER, 'S', ItemHandler.COMPUTER_SCREEN, 'H', ItemHandler.DISC_DRIVE, 'K', ItemHandler.KEYBOARD);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_SYNTHESIZER), "IIS", "ICD", "IIC", 'I', Items.IRON_INGOT, 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.ADVANCED_CIRCUIT, 'D', ItemHandler.DISC_DRIVE);
 
-//        for (int i = 0; i < 16; i++) {
-//            GameRegistry.addRecipe(new ItemStack(BlockHandler.CULTIVATOR_BOTTOM, 1, i), "GGG", "GWG", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'W', Items.WATER_BUCKET, 'I', Items.IRON_INGOT, 'C', ItemHandler.ADVANCED_CIRCUIT);
-//        }
+        for (int i = 0; i < 16; i++) {
+            GameRegistry.addRecipe(new ItemStack(BlockHandler.CULTIVATOR_BOTTOM, 1, i), "GIG", "G G", "ICI", 'G', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, i), 'I', Items.IRON_INGOT, 'C', Items.COMPARATOR);
+        }
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.EMBRYONIC_MACHINE), "npb", "ngb", "iib", 'n', "nuggetIron", 'p', Blocks.PISTON, 'g', Items.GLOWSTONE_DUST, 'b', Blocks.STONE_BUTTON, 'i', Items.IRON_INGOT));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.EMBRYONIC_MACHINE), "npb", "ngb", "iib", 'n', "nuggetIron", 'p', Blocks.PISTON, 'g', Items.GLOWSTONE_DUST, 'b', Blocks.WOODEN_BUTTON, 'i', Items.IRON_INGOT));
@@ -69,7 +70,7 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(BlockHandler.INCUBATOR), "GIG", "RRR", "IKI", 'I', Items.IRON_INGOT, 'R', Items.COMPARATOR, 'G', Blocks.GLASS, 'K', ItemHandler.KEYBOARD);
         GameRegistry.addRecipe(new ItemStack(BlockHandler.DNA_COMBINATOR_HYBRIDIZER), "SCS", "IDI", " K ", 'S', ItemHandler.COMPUTER_SCREEN, 'C', ItemHandler.BASIC_CIRCUIT, 'I', Items.IRON_INGOT, 'D', ItemHandler.DISC_DRIVE, 'L', ItemHandler.KEYBOARD);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.PLANT_CELLS_PETRI_DISH), ItemHandler.PLANT_CELLS, ItemHandler.PETRI_DISH_AGAR);
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.SKELETON_ASSEMBLY), "BPP", "WCW", "FQF", 'B', "dyeBlue", 'P', Items.PAPER,'W',"slabWood",'C',Blocks.CRAFTING_TABLE,'F',Blocks.OAK_FENCE,'Q',BlockHandler.LOW_SECURITY_FENCE_WIRE));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockHandler.SKELETON_ASSEMBLY), "BPP", "WCW", "FQF", 'B', "dyeBlue", 'P', Items.PAPER, 'W', "slabWood", 'C', Blocks.CRAFTING_TABLE, 'F', Blocks.OAK_FENCE, 'Q', BlockHandler.LOW_SECURITY_FENCE_WIRE));
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.IRON_NUGGET, 9), "i", 'i', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemHandler.BASIC_CIRCUIT, 2), "nuggetIron", "nuggetIron", "nuggetIron", "nuggetIron", Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.REDSTONE));
@@ -98,8 +99,12 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(ItemHandler.CAR_TIRE, 2), "ISI", "SPS", "ISI", 'I', new ItemStack(Items.DYE, 1, 0), 'S', Items.SLIME_BALL, 'P', Blocks.PISTON);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.UNFINISHED_CAR), "SCW", "TEI", "TTT", 'I', Items.IRON_INGOT, 'C', ItemHandler.CAR_CHASSIS, 'W', ItemHandler.CAR_WINDSCREEN, 'T', ItemHandler.CAR_TIRE, 'E', ItemHandler.CAR_ENGINE_SYSTEM, 'S', ItemHandler.CAR_SEATS);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.UNFINISHED_CAR), "WCS", "IET", "TTT", 'I', Items.IRON_INGOT, 'C', ItemHandler.CAR_CHASSIS, 'W', ItemHandler.CAR_WINDSCREEN, 'T', ItemHandler.CAR_TIRE, 'E', ItemHandler.CAR_ENGINE_SYSTEM, 'S', ItemHandler.CAR_SEATS);
+
         GameRegistry.addRecipe(new ItemStack(ItemHandler.JEEP_WRANGLER), "LRL", "TCR", "LRL", 'L', new ItemStack(Items.DYE, 1, 7), 'R', new ItemStack(Items.DYE, 1, 1), 'C', ItemHandler.UNFINISHED_CAR, 'T', ItemHandler.CAR_TIRE);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.JEEP_WRANGLER), "LRL", "RCT", "LRL", 'L', new ItemStack(Items.DYE, 1, 7), 'R', new ItemStack(Items.DYE, 1, 1), 'C', ItemHandler.UNFINISHED_CAR, 'T', ItemHandler.CAR_TIRE);
+
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.FORD_EXPLORER), "RWG", "LCR", "YYY", 'R', new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), 'W', Blocks.GLASS_PANE, 'G', new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()), 'L', new ItemStack(Items.DYE, 1, EnumDyeColor.LIME.getDyeDamage()), 'C', ItemHandler.UNFINISHED_CAR, 'Y', new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
+        GameRegistry.addRecipe(new ItemStack(ItemHandler.FORD_EXPLORER), "GWR", "RCL", "YYY", 'R', new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), 'W', Blocks.GLASS_PANE, 'G', new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()), 'L', new ItemStack(Items.DYE, 1, EnumDyeColor.LIME.getDyeDamage()), 'C', ItemHandler.UNFINISHED_CAR, 'Y', new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
 
         GameRegistry.addRecipe(new ItemStack(BlockHandler.FEEDER), "TDT", "ICI", "SSS", 'T', Blocks.IRON_TRAPDOOR, 'D', Blocks.DISPENSER, 'I', Items.IRON_INGOT, 'C', Blocks.CHEST, 'S', Blocks.COBBLESTONE);
 
@@ -112,11 +117,11 @@ public class RecipeHandler {
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_CANE), "A", "|", "|", 'A', ItemHandler.AMBER, '|', Items.STICK);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.AMBER_KEYCHAIN), "A", "#", 'A', ItemHandler.AMBER, '#', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ItemStack(ItemHandler.MR_DNA_KEYCHAIN), "A", "#", 'A', ItemHandler.DNA_NUCLEOTIDES, '#', Items.IRON_INGOT);
-        
+
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.OILED_POTATO_STRIPS), ItemHandler.WILD_POTATO, ItemHandler.WILD_POTATO, ItemHandler.WILD_POTATO, ItemHandler.WILD_POTATO, ItemHandler.AJUGINUCULA_SMITHII_OIL);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemHandler.OILED_POTATO_STRIPS, 4), Items.POTATO, Items.POTATO, ItemHandler.AJUGINUCULA_SMITHII_OIL);
         GameRegistry.addSmelting(ItemHandler.OILED_POTATO_STRIPS, new ItemStack(ItemHandler.FUN_FRIES), 0.5F);
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemHandler.PADDOCK_SIGN), "III", "SSS", "III", 'I', "nuggetIron", 'S', Items.SIGN));
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.FIELD_GUIDE), "WBW", "PPP", "WBW", 'W', new ItemStack(Blocks.WOOL, 1, 3), 'B', Items.BONE, 'P', Items.PAPER);
@@ -156,7 +161,9 @@ public class RecipeHandler {
 
         GameRegistry.addRecipe(new ItemStack(ItemHandler.ATTRACTION_SIGN), "III", "SSS", "III", 'I', Items.IRON_INGOT, 'S', Items.SIGN);
 
-        
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.DYE, 2, EnumDyeColor.YELLOW.getDyeDamage()), ItemHandler.RHAMNUS_BERRIES, ItemHandler.RHAMNUS_BERRIES, ItemHandler.RHAMNUS_BERRIES, ItemHandler.RHAMNUS_BERRIES);
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), ItemHandler.RHAMNUS_SEEDS, ItemHandler.RHAMNUS_SEEDS, ItemHandler.RHAMNUS_SEEDS, ItemHandler.RHAMNUS_SEEDS);
+
         AttractionSignEntity.AttractionSignType[] types = AttractionSignEntity.AttractionSignType.values();
 
         for (int i = 0; i < types.length; i++) {

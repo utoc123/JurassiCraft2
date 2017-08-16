@@ -451,8 +451,8 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.WILD_POTATO);
         this.registerItemRenderer(ItemHandler.WILD_POTATO_COOKED);
         
-        this.registerItemRenderer(ItemHandler.RHAMNUS_SALIFOCIFIUS_SEEDS);
-        this.registerItemRenderer(ItemHandler.RHAMNUS_SALIFOCIFIUS_BERRIES);
+        this.registerItemRenderer(ItemHandler.RHAMNUS_SEEDS);
+        this.registerItemRenderer(ItemHandler.RHAMNUS_BERRIES);
         
         this.registerItemRenderer(ItemHandler.GOAT_RAW);
         this.registerItemRenderer(ItemHandler.GOAT_COOKED);

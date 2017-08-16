@@ -27,7 +27,7 @@ import org.jurassicraft.server.item.block.CultivateItemBlock;
 import java.util.List;
 
 public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
-    public static final PropertyEnum COLOR = PropertyEnum.create("color", EnumDyeColor.class);
+    public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.create("color", EnumDyeColor.class);
 
     public CultivatorBlock(String position) {
         super(Material.IRON);
@@ -39,7 +39,7 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
 
     @Override
     public int damageDropped(IBlockState state) {
-        return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
+        return state.getValue(COLOR).getMetadata();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
 
     @Override
     public MapColor getMapColor(IBlockState state) {
-        return ((EnumDyeColor) state.getValue(COLOR)).getMapColor();
+        return state.getValue(COLOR).getMapColor();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class CultivatorBlock extends BlockContainer implements SubBlocksBlock {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return ((EnumDyeColor) state.getValue(COLOR)).getMetadata();
+        return state.getValue(COLOR).getMetadata();
     }
 
     @Override

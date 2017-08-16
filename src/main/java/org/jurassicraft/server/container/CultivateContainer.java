@@ -6,7 +6,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
 import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
-import org.jurassicraft.server.container.slot.SyringeSlot;
+import org.jurassicraft.server.container.slot.CultivatorSyringeSlot;
+import org.jurassicraft.server.container.slot.NutrientSlot;
+import org.jurassicraft.server.container.slot.OutputSlot;
 import org.jurassicraft.server.container.slot.WaterBucketSlot;
 
 public class CultivateContainer extends MachineContainer {
@@ -15,20 +17,18 @@ public class CultivateContainer extends MachineContainer {
     public CultivateContainer(InventoryPlayer playerInventory, TileEntity tileEntity) {
         super((IInventory) tileEntity);
         this.cultivator = (CultivatorBlockEntity) tileEntity;
-        this.addSlotToContainer(new SyringeSlot(this.cultivator, 0, 122, 44));
-        this.addSlotToContainer(new Slot(this.cultivator, 1, 208, 20));
+        this.addSlotToContainer(new CultivatorSyringeSlot(this.cultivator, 0, 122, 44));
+        this.addSlotToContainer(new NutrientSlot(this.cultivator, 1, 208, 20));
         this.addSlotToContainer(new WaterBucketSlot(this.cultivator, 2, 12, 20));
-        this.addSlotToContainer(new Slot(this.cultivator, 3, 12, 68));
+        this.addSlotToContainer(new OutputSlot(this.cultivator, 3, 12, 68));
 
-        int i;
-
-        for (i = 0; i < 3; ++i) {
+        for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 106 + i * 18));
             }
         }
 
-        for (i = 0; i < 9; ++i) {
+        for (int i = 0; i < 9; ++i) {
             this.addSlotToContainer(new Slot(playerInventory, i, 8 + i * 18, 164));
         }
     }

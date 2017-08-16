@@ -7,12 +7,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.dinosaur.Dinosaur;
-import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.food.FoodNutrients;
 import org.jurassicraft.server.item.ItemHandler;
@@ -39,11 +36,8 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     protected boolean canProcess(int process) {
         if (this.slots[0] != null && this.slots[0].getItem() == ItemHandler.SYRINGE && this.waterLevel == 3) {
             Dinosaur dino = EntityHandler.getDinosaurById(this.slots[0].getItemDamage());
-
-            if (dino != null) {
-                if (dino.isMammal() && this.lipids >= dino.getLipids() && this.minerals >= dino.getMinerals() && this.proximates >= dino.getProximates() && this.vitamins >= dino.getVitamins()) {
-                    return true;
-                }
+            if (dino != null && (dino.isMammal() || dino.isMarineCreature())) {
+                return this.lipids >= dino.getLipids() && this.minerals >= dino.getMinerals() && this.proximates >= dino.getProximates() && this.vitamins >= dino.getVitamins();
             }
         }
 
@@ -52,44 +46,31 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
 
     @Override
     protected void processItem(int process) {
-        Dinosaur dinoInEgg = EntityHandler.getDinosaurById(this.slots[0].getItemDamage());
+        ItemStack syringe = this.slots[0];
+        Dinosaur dinosaur = EntityHandler.getDinosaurById(syringe.getItemDamage());
 
         this.waterLevel = 0;
 
-        if (dinoInEgg != null) {
-            this.lipids -= dinoInEgg.getLipids();
-            this.minerals -= dinoInEgg.getMinerals();
-            this.vitamins -= dinoInEgg.getVitamins();
-            this.proximates -= dinoInEgg.getProximates();
+        if (dinosaur != null) {
+            this.lipids -= dinosaur.getLipids();
+            this.minerals -= dinosaur.getMinerals();
+            this.vitamins -= dinosaur.getVitamins();
+            this.proximates -= dinosaur.getProximates();
 
-            Class<? extends DinosaurEntity> dinoClass = dinoInEgg.getDinosaurClass();
+            ItemStack hatchedEgg = new ItemStack(ItemHandler.HATCHED_EGG, 1, syringe.getItemDamage());
 
-            try {
-                DinosaurEntity dino = dinoClass.getConstructor(World.class).newInstance(this.world);
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setBoolean("Gender", this.world.rand.nextBoolean());
 
-                dino.setDNAQuality(this.slots[0].getTagCompound().getInteger("DNAQuality"));
-                dino.setGenetics((this.slots[0].getTagCompound().getString("Genetics")));
-
-                int blockX = this.pos.getX();
-                int blockY = this.pos.getY();
-                int blockZ = this.pos.getZ();
-
-                dino.setAge(0);
-
-                dino.setLocationAndAngles(blockX + 0.5, blockY + 1, blockZ + 0.5, MathHelper.wrapDegrees(this.world.rand.nextFloat() * 360.0F), 0.0F);
-                dino.rotationYawHead = dino.rotationYaw;
-                dino.renderYawOffset = dino.rotationYaw;
-
-                this.world.spawnEntity(dino);
-
-                this.slots[0].stackSize--;
-
-                if (this.slots[0].stackSize <= 0) {
-                    this.slots[0] = null;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            NBTTagCompound syringeTag = syringe.getTagCompound();
+            if (syringeTag != null) {
+                compound.setString("Genetics", syringeTag.getString("Genetics"));
+                compound.setInteger("DNAQuality", syringeTag.getInteger("DNAQuality"));
             }
+
+            hatchedEgg.setTagCompound(compound);
+
+            this.slots[0] = hatchedEgg;
         }
     }
 
@@ -120,7 +101,7 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
                 }
             }
 
-            if (this.slots[1] != null && FoodNutrients.FOOD_LIST.containsKey(this.slots[1].getItem())) {
+            if (this.slots[1] != null) {
                 if ((this.proximates < MAX_NUTRIENTS) || (this.minerals < MAX_NUTRIENTS) || (this.vitamins < MAX_NUTRIENTS) || (this.lipids < MAX_NUTRIENTS)) {
                     this.consumeNutrients();
                     sync = true;
@@ -134,50 +115,47 @@ public class CultivatorBlockEntity extends MachineBaseBlockEntity {
     }
 
     private void consumeNutrients() {
-        FoodNutrients nutrients = FoodNutrients.values()[FoodNutrients.FOOD_LIST.get(this.slots[1].getItem())];
+        ItemStack foodStack = this.slots[1];
+        FoodNutrients nutrients = FoodNutrients.get(foodStack.getItem());
 
-        if (this.slots[1].getItem() instanceof ItemBucketMilk) {
-            this.slots[1] = null;
-            this.slots[1] = new ItemStack(Items.BUCKET);
-        } else {
-            this.slots[1].stackSize--;
-
-            if (this.slots[1].stackSize <= 0) {
-                this.slots[1] = null;
+        if (nutrients != null) {
+            if (foodStack.getItem() instanceof ItemBucketMilk) {
+                this.slots[1] = new ItemStack(Items.BUCKET);
+            } else {
+                foodStack.stackSize--;
+                if (foodStack.stackSize <= 0) {
+                    this.slots[1] = null;
+                }
             }
-        }
 
-        Random random = new Random();
+            Random random = this.world.rand;
 
-        if (this.proximates < MAX_NUTRIENTS) {
-            this.proximates = (short) (this.proximates + (800 + random.nextInt(201)) * nutrients.getProximate());
-
-            if (this.proximates > MAX_NUTRIENTS) {
-                this.proximates = (short) MAX_NUTRIENTS;
+            if (this.proximates < MAX_NUTRIENTS) {
+                this.proximates = (short) (this.proximates + (800 + random.nextInt(201)) * nutrients.getProximate());
+                if (this.proximates > MAX_NUTRIENTS) {
+                    this.proximates = (short) MAX_NUTRIENTS;
+                }
             }
-        }
 
-        if (this.minerals < MAX_NUTRIENTS) {
-            this.minerals = (short) (this.minerals + (900 + random.nextInt(101)) * nutrients.getMinerals());
-
-            if (this.minerals > MAX_NUTRIENTS) {
-                this.minerals = (short) MAX_NUTRIENTS;
+            if (this.minerals < MAX_NUTRIENTS) {
+                this.minerals = (short) (this.minerals + (900 + random.nextInt(101)) * nutrients.getMinerals());
+                if (this.minerals > MAX_NUTRIENTS) {
+                    this.minerals = (short) MAX_NUTRIENTS;
+                }
             }
-        }
 
-        if (this.vitamins < MAX_NUTRIENTS) {
-            this.vitamins = (short) (this.vitamins + (900 + random.nextInt(101)) * nutrients.getVitamins());
-
-            if (this.vitamins > MAX_NUTRIENTS) {
-                this.vitamins = (short) MAX_NUTRIENTS;
+            if (this.vitamins < MAX_NUTRIENTS) {
+                this.vitamins = (short) (this.vitamins + (900 + random.nextInt(101)) * nutrients.getVitamins());
+                if (this.vitamins > MAX_NUTRIENTS) {
+                    this.vitamins = (short) MAX_NUTRIENTS;
+                }
             }
-        }
 
-        if (this.lipids < MAX_NUTRIENTS) {
-            this.lipids = (short) (this.lipids + (980 + random.nextInt(101)) * nutrients.getLipids());
-
-            if (this.lipids > MAX_NUTRIENTS) {
-                this.lipids = (short) MAX_NUTRIENTS;
+            if (this.lipids < MAX_NUTRIENTS) {
+                this.lipids = (short) (this.lipids + (980 + random.nextInt(101)) * nutrients.getLipids());
+                if (this.lipids > MAX_NUTRIENTS) {
+                    this.lipids = (short) MAX_NUTRIENTS;
+                }
             }
         }
     }

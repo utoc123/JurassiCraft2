@@ -48,6 +48,7 @@ import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.entity.villager.VillagerHandler;
 import org.jurassicraft.server.event.ServerEventHandler;
 import org.jurassicraft.server.food.FoodHelper;
+import org.jurassicraft.server.food.FoodNutrients;
 import org.jurassicraft.server.genetics.StorageTypeRegistry;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
@@ -85,6 +86,8 @@ public class ServerProxy implements IGuiHandler {
         StorageTypeRegistry.init();
         KeyBindingHandler.init();
         VillagerHandler.init();
+
+        FoodNutrients.register();
 
         StructureGenerationHandler.register();
 
