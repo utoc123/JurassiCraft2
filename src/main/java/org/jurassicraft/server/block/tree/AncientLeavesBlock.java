@@ -78,7 +78,7 @@ public class AncientLeavesBlock extends BlockLeaves {
 
         if (rand.nextInt(chance) == 0) {
             ItemStack drop = this.treeType.getDrop();
-            drops.add(new ItemStack(drop.getItem(), 1, drop.stackSize));
+            drops.add(new ItemStack(drop.getItem(), drop.stackSize));
         }
 
         this.captureDrops(true);
