@@ -1650,9 +1650,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     @SafeVarargs
     public final void target(Class<? extends EntityLivingBase>... targets) {
-        for (Class<? extends EntityLivingBase> target : targets) {
-            this.targetTasks.addTask(1, new SelectTargetEntityAI<>(this, target));
-        }
+        this.targetTasks.addTask(1, new SelectTargetEntityAI(this, targets));
 
         this.attackTargets.addAll(Lists.newArrayList(targets));
     }

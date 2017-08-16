@@ -50,8 +50,7 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
         try {
             entityResource = new URI("/assets/jurassicraft/models/entities/" + name + "/");
         } catch (URISyntaxException e) {
-            JurassiCraft.INSTANCE.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/",
-                    e);
+            JurassiCraft.INSTANCE.getLogger().fatal("Illegal URI /assets/jurassicraft/models/entities/" + name + "/", e);
             return;
         }
         for (GrowthStage growth : GrowthStage.values()) {
@@ -70,8 +69,7 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
                     }
                 }
             } catch (Exception e) {
-                JurassiCraft.INSTANCE.getLogger()
-                        .fatal("Failed to parse growth stage " + growth + " for dinosaur " + name, e);
+                JurassiCraft.INSTANCE.getLogger().fatal("Failed to parse growth stage " + growth + " for dinosaur " + name, e);
                 this.modelData.put(growth, new ModelData());
             }
         }
@@ -83,15 +81,13 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
         URI definitionFile = growthSensitiveDir.resolve(name + "_" + growthName + ".json");
         InputStream modelStream = TabulaModelHelper.class.getResourceAsStream(definitionFile.toString());
         if (modelStream == null) {
-            throw new IllegalArgumentException("No model definition for the dino " + name + " with grow-state " + growth
-                    + " exists. Expected at " + definitionFile);
+            throw new IllegalArgumentException("No model definition for the dino " + name + " with grow-state " + growth + " exists. Expected at " + definitionFile);
         }
         try {
             Reader reader = new InputStreamReader(modelStream);
             AnimationsDTO rawAnimations = GSON.fromJson(reader, AnimationsDTO.class);
             ModelData data = this.loadModelData(growthSensitiveDir, rawAnimations);
-            JurassiCraft.INSTANCE.getLogger()
-                    .debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);
+            JurassiCraft.INSTANCE.getLogger().debug("Successfully loaded " + name + "(" + growth + ") from " + definitionFile);
             reader.close();
             return data;
         } catch (IOException e) {
@@ -143,37 +139,42 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
         }
 
         if (FMLCommonHandler.instance().getSide().isClient()) {
-            PosedCuboid[][] posedCuboids = new PosedCuboid[posedModelResources.size()][];
-            AnimatableModel mainModel = JabelarAnimationHandler.loadModel(posedModelResources.get(0));
-            if (mainModel == null) {
-                throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
-            }
-            String[] identifiers = mainModel.getCubeIdentifierArray();
-            int partCount = identifiers.length;
-            for (int i = 0; i < posedModelResources.size(); i++) {
-                String resource = posedModelResources.get(i);
-                AnimatableModel model = JabelarAnimationHandler.loadModel(resource);
-                if (model == null) {
-                    throw new IllegalArgumentException("Couldn't load the model from " + resource);
-                }
-                PosedCuboid[] pose = new PosedCuboid[partCount];
-                for (int partIndex = 0; partIndex < partCount; partIndex++) {
-                    String identifier = identifiers[partIndex];
-                    AdvancedModelRenderer cube = model.getCubeByIdentifier(identifier);
-                    if (cube == null) {
-                        AdvancedModelRenderer mainCube = mainModel.getCubeByIdentifier(identifier);
-                        JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " ("
-                                + mainCube.boxName + ", " + partIndex + ") from the model " + resource);
-                        pose[partIndex] = new PosedCuboid(mainCube);
-                    } else {
-                        pose[partIndex] = new PosedCuboid(cube);
-                    }
-                }
-                posedCuboids[i] = pose;
-            }
-            return new ModelData(posedCuboids, animations);
+            return this.loadModelDataClient(posedModelResources, animations);
         }
+
         return new ModelData(animations);
+    }
+
+    @SideOnly(Side.CLIENT)
+    private ModelData loadModelDataClient(List<String> posedModelResources, Map<Animation, float[][]> animations) {
+        PosedCuboid[][] posedCuboids = new PosedCuboid[posedModelResources.size()][];
+        AnimatableModel mainModel = JabelarAnimationHandler.loadModel(posedModelResources.get(0));
+        if (mainModel == null) {
+            throw new IllegalArgumentException("Couldn't load the model from " + posedModelResources.get(0));
+        }
+        String[] identifiers = mainModel.getCubeIdentifierArray();
+        int partCount = identifiers.length;
+        for (int i = 0; i < posedModelResources.size(); i++) {
+            String resource = posedModelResources.get(i);
+            AnimatableModel model = JabelarAnimationHandler.loadModel(resource);
+            if (model == null) {
+                throw new IllegalArgumentException("Couldn't load the model from " + resource);
+            }
+            PosedCuboid[] pose = new PosedCuboid[partCount];
+            for (int partIndex = 0; partIndex < partCount; partIndex++) {
+                String identifier = identifiers[partIndex];
+                AdvancedModelRenderer cube = model.getCubeByIdentifier(identifier);
+                if (cube == null) {
+                    AdvancedModelRenderer mainCube = mainModel.getCubeByIdentifier(identifier);
+                    JurassiCraft.INSTANCE.getLogger().error("Could not retrieve cube " + identifier + " (" + mainCube.boxName + ", " + partIndex + ") from the model " + resource);
+                    pose[partIndex] = new PosedCuboid(mainCube);
+                } else {
+                    pose[partIndex] = new PosedCuboid(cube);
+                }
+            }
+            posedCuboids[i] = pose;
+        }
+        return new ModelData(posedCuboids, animations);
     }
 
     private String resolve(URI dinoDirURI, String posePath) {
@@ -181,14 +182,13 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
         return uri.toString();
     }
 
-    public JabelarAnimationHandler<ENTITY> createAnimationHandler(ENTITY entity, AnimatableModel model,
-            GrowthStage growthStage, boolean useInertialTweens) {
+    @SideOnly(Side.CLIENT)
+    public JabelarAnimationHandler<ENTITY> createAnimationHandler(ENTITY entity, AnimatableModel model, GrowthStage growthStage, boolean useInertialTweens) {
         ModelData growthModel = this.modelData.get(growthStage);
         if (!entity.canUseGrowthStage(growthStage)) {
             growthModel = this.modelData.get(growthStage);
         }
-        return new JabelarAnimationHandler<>(entity, model, growthModel.poses, growthModel.animations,
-                useInertialTweens);
+        return new JabelarAnimationHandler<>(entity, model, growthModel.poses, growthModel.animations, useInertialTweens);
     }
 
     public Map<Animation, float[][]> getAnimations(GrowthStage growthStage) {
@@ -227,6 +227,7 @@ public class PoseHandler<ENTITY extends EntityLivingBase & Animatable> {
             this(null);
         }
 
+        @SideOnly(Side.CLIENT)
         public ModelData(PosedCuboid[][] cuboids, Map<Animation, float[][]> animations) {
             this(animations);
 
