@@ -18,7 +18,16 @@ import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.command.ForceAnimationCommand;
 import org.jurassicraft.server.conf.JurassiCraftConfig;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.message.*;
+import org.jurassicraft.server.message.ChangeTemperatureMessage;
+import org.jurassicraft.server.message.HelicopterDirectionMessage;
+import org.jurassicraft.server.message.HelicopterEngineMessage;
+import org.jurassicraft.server.message.HelicopterModulesMessage;
+import org.jurassicraft.server.message.MicroraptorDismountMessage;
+import org.jurassicraft.server.message.OpenFieldGuideGuiMessage;
+import org.jurassicraft.server.message.PlacePaddockSignMessage;
+import org.jurassicraft.server.message.SetOrderMessage;
+import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
+import org.jurassicraft.server.message.UpdateVehicleControlMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 @Mod(modid = JurassiCraft.MODID, name = JurassiCraft.NAME, version = JurassiCraft.VERSION, guiFactory = "org.jurassicraft.client.gui.JurassiCraftGUIFactory", dependencies = "required-after:llibrary@[" + JurassiCraft.LLIBRARY_VERSION + ",)")
