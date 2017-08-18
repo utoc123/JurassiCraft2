@@ -1,76 +1,56 @@
 package org.jurassicraft.server.entity.ai.navigation;
 
-import org.jurassicraft.server.entity.DinosaurEntity;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class DinosaurPathNavigateClimber extends DinosaurPathNavigate {
-    /** Current path navigation target */
     private BlockPos targetPosition;
 
-    public DinosaurPathNavigateClimber(DinosaurEntity entityLivingIn, World worldIn) {
-        super(entityLivingIn, worldIn);
+    public DinosaurPathNavigateClimber(DinosaurEntity entity, World world) {
+        super(entity, world);
     }
 
-    /**
-     * Returns path to given BlockPos
-     */
     @Override
     public Path getPathToPos(BlockPos pos) {
         this.targetPosition = pos;
         return super.getPathToPos(pos);
     }
 
-    /**
-     * Returns the path to the given EntityLiving. Args : entity
-     */
     @Override
-    public Path getPathToEntityLiving(Entity entityIn) {
-        this.targetPosition = new BlockPos(entityIn);
-        return super.getPathToEntityLiving(entityIn);
+    public Path getPathToEntityLiving(Entity entity) {
+        this.targetPosition = new BlockPos(entity);
+        return super.getPathToEntityLiving(entity);
     }
 
-    /**
-     * Try to find and set a path to EntityLiving. Returns true if successful.
-     * Args : entity, speed
-     */
     @Override
-    public boolean tryMoveToEntityLiving(Entity entityIn, double speedIn) {
-        Path path = this.getPathToEntityLiving(entityIn);
-
+    public boolean tryMoveToEntityLiving(Entity entity, double speed) {
+        Path path = this.getPathToEntityLiving(entity);
         if (path != null) {
-            return this.setPath(path, speedIn);
+            return this.setPath(path, speed);
         } else {
-            this.targetPosition = new BlockPos(entityIn);
-            this.speed = speedIn;
+            this.targetPosition = new BlockPos(entity);
+            this.speed = speed;
             return true;
         }
     }
 
     @Override
     public void onUpdateNavigation() {
-        if (!this.noPath()) {
-            super.onUpdateNavigation();
-        } else {
+        if (this.noPath()) {
             if (this.targetPosition != null) {
-                double d0 = (double) (this.theEntity.width * this.theEntity.width);
-
-                if (this.theEntity.getDistanceSqToCenter(this.targetPosition) >= d0
-                        && (this.theEntity.posY <= (double) this.targetPosition.getY()
-                                || this.theEntity.getDistanceSqToCenter(new BlockPos(this.targetPosition.getX(),
-                                        MathHelper.floor(this.theEntity.posY), this.targetPosition.getZ())) >= d0)) {
-                    this.theEntity.getMoveHelper().setMoveTo((double) this.targetPosition.getX(),
-                            (double) this.targetPosition.getY(), (double) this.targetPosition.getZ(), this.speed);
+                double size = (this.theEntity.width * this.theEntity.width);
+                if (this.theEntity.getDistanceSqToCenter(this.targetPosition) >= size && (this.theEntity.posY <= this.targetPosition.getY() || this.theEntity.getDistanceSqToCenter(new BlockPos(this.targetPosition.getX(), MathHelper.floor(this.theEntity.posY), this.targetPosition.getZ())) >= size)) {
+                    this.theEntity.getMoveHelper().setMoveTo(this.targetPosition.getX(), this.targetPosition.getY(), this.targetPosition.getZ(), this.speed);
                 } else {
                     this.targetPosition = null;
                 }
             }
+        } else {
+            super.onUpdateNavigation();
         }
     }
 }

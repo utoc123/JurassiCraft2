@@ -5,6 +5,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -18,6 +20,7 @@ import net.minecraft.world.storage.loot.conditions.RandomChance;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraft.world.storage.loot.functions.SetMetadata;
+import net.minecraft.world.storage.loot.functions.SetNBT;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 import org.jurassicraft.server.entity.EntityHandler;
@@ -218,6 +221,10 @@ public class Loot {
             return this;
         }
 
+        public EntryBuilder tag(NBTTagCompound compound) {
+            return this.function(new SetNBT(new LootCondition[0], compound));
+        }
+
         public EntryBuilder function(LootFunction function) {
             this.functions.add(function);
             return this;
@@ -324,6 +331,38 @@ public class Loot {
             NBTTagCompound compound = new NBTTagCompound();
             dna.writeToNBT(compound);
             stack.setTagCompound(compound);
+            return stack;
+        }
+    }
+
+    public static class WrittenBook extends LootFunction {
+        private final String title;
+        private final String author;
+        private final String[] pages;
+
+        public WrittenBook(LootCondition[] conditions, String title, String author, String[] pages) {
+            super(conditions);
+            this.title = title;
+            this.author = author;
+            this.pages = pages;
+        }
+
+        @Override
+        public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+            NBTTagCompound compound = stack.getTagCompound();
+            if (compound == null) {
+                compound = new NBTTagCompound();
+                stack.setTagCompound(compound);
+            }
+            compound.setBoolean("resolved", false);
+            compound.setInteger("generation", 0);
+            compound.setString("title", this.title);
+            compound.setString("author", this.author);
+            NBTTagList pages = new NBTTagList();
+            for (String page : this.pages) {
+                pages.appendTag(new NBTTagString(page));
+            }
+            compound.setTag("pages", pages);
             return stack;
         }
     }

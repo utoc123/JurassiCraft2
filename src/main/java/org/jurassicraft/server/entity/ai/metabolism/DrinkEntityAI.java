@@ -91,4 +91,9 @@ public class DrinkEntityAI extends EntityAIBase {
     public boolean continueExecuting() {
         return this.giveUpTime > 0 && this.dinosaur != null && this.dinosaur.isAlive() && this.path != null && this.dinosaur.getMetabolism().getWater() < this.dinosaur.getMetabolism().getMaxWater() * 0.9;
     }
+
+    @Override
+    public boolean isInterruptible() {
+        return false;
+    }
 }

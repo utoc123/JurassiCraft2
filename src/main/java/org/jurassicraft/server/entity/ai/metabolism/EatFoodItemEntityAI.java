@@ -58,4 +58,9 @@ public class EatFoodItemEntityAI extends EntityAIBase {
     public boolean continueExecuting() {
         return this.dinosaur != null && !this.dinosaur.getNavigator().noPath() && this.item != null && !this.item.isDead;
     }
+
+    @Override
+    public boolean isInterruptible() {
+        return false;
+    }
 }

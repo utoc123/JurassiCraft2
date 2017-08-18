@@ -106,6 +106,7 @@ public class SelectTargetEntityAI extends EntityAIBase {
                     return true;
                 }
             }
+            return false;
         }
         return true;
     }
