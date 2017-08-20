@@ -63,9 +63,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
 
                     Dinosaur dino = possibleDinos.get(rand.nextInt(possibleDinos.size()));
 
-                    int dinosaurId = EntityHandler.getDinosaurId(dino);
-
-                    disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, dinosaurId);
+                    disc = new ItemStack(ItemHandler.STORAGE_DISC);
 
                     int quality = (rand.nextInt(10) + 1) * 5;
 
@@ -85,7 +83,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
 
                     int plantId = PlantHandler.getPlantId(plant);
 
-                    disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, plantId);
+                    disc = new ItemStack(ItemHandler.STORAGE_DISC);
 
                     int quality = (rand.nextInt(10) + 1) * 5;
 
@@ -101,8 +99,7 @@ public class DNAExtractorBlockEntity extends MachineBaseBlockEntity {
                     disc.setTagCompound(nbt);
                 }
             } else if (item == ItemHandler.DINOSAUR_MEAT) {
-                disc = new ItemStack(ItemHandler.STORAGE_DISC, 1, input.getItemDamage());
-
+                disc = new ItemStack(ItemHandler.STORAGE_DISC);
                 disc.setTagCompound(input.getTagCompound());
             }
 
