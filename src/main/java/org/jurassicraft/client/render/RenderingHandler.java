@@ -47,7 +47,6 @@ import org.jurassicraft.client.render.entity.HelicopterRenderer;
 import org.jurassicraft.client.render.entity.JeepWranglerRenderer;
 import org.jurassicraft.client.render.entity.MuralRenderer;
 import org.jurassicraft.client.render.entity.PaddockSignRenderer;
-import org.jurassicraft.client.render.entity.SeatRenderer;
 import org.jurassicraft.client.render.entity.VenomRenderer;
 import org.jurassicraft.client.render.entity.dinosaur.DinosaurRenderInfo;
 import org.jurassicraft.server.block.BlockHandler;
@@ -76,7 +75,6 @@ import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.entity.vehicle.FordExplorerEntity;
 import org.jurassicraft.server.entity.vehicle.HelicopterBaseEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
-import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.item.DinosaurSpawnEggItem;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
@@ -429,7 +427,6 @@ public enum RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(VenomEntity.class, new VenomRenderer());
         RenderingRegistry.registerEntityRenderingHandler(JeepWranglerEntity.class, JeepWranglerRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(FordExplorerEntity.class, FordExplorerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(SeatEntity.class, new SeatRenderer());
         RenderingRegistry.registerEntityRenderingHandler(MuralEntity.class, MuralRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(GoatEntity.class, GoatRenderer::new);
     }

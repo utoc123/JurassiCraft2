@@ -1,6 +1,7 @@
 package org.jurassicraft.server.entity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +15,11 @@ public class LegSolver {
     }
 
     public final void update(EntityLivingBase entity) {
-        double sideTheta = entity.renderYawOffset / (180 / Math.PI);
+        update(entity, entity.renderYawOffset);
+    }
+
+    public final void update(Entity entity, float yaw) {
+        double sideTheta = yaw / (180 / Math.PI);
         double sideX = Math.cos(sideTheta);
         double sideZ = Math.sin(sideTheta);
         double forwardTheta = sideTheta + Math.PI / 2;
@@ -25,7 +30,7 @@ public class LegSolver {
         }
     }
 
-    public static final class Leg {
+    public static class Leg {
         public final float forward;
 
         public final float side;
@@ -39,16 +44,16 @@ public class LegSolver {
             this.side = side;
         }
 
-        public float getHeight(float delta) {
+        public final float getHeight(float delta) {
             return this.prevHeight + (this.height - this.prevHeight) * delta;
         }
 
-        public void update(EntityLivingBase entity, double sideX, double sideZ, double forwardX, double forwardZ) {
+        public void update(Entity entity, double sideX, double sideZ, double forwardX, double forwardZ) {
             this.prevHeight = this.height;
             this.height = settle(entity, entity.posX + sideX * this.side + forwardX * this.forward, entity.posY, entity.posZ + sideZ * this.side + forwardZ * this.forward, this.height);
         }
 
-        private float settle(EntityLivingBase entity, double x, double y, double z, float height) {
+        private float settle(Entity entity, double x, double y, double z, float height) {
             BlockPos pos = new BlockPos(x, y + 1e-3, z);
             float dist = getDistance(entity.world, pos);
             if (1 - dist < 1e-3) {
@@ -57,9 +62,9 @@ public class LegSolver {
                 dist -= 1 - (y % 1);
             }
             if (entity.onGround && height <= dist) {
-                return height == dist ? height : Math.min(height + 0.3F, dist);
+                return height == dist ? height : Math.min(height + this.getFallSpeed(), dist);
             } else if (height > 0) {
-                return Math.max(height - 0.4F, dist);
+                return Math.max(height - this.getRiseSpeed(), dist);
             }
             return height;
         }
@@ -68,6 +73,14 @@ public class LegSolver {
             IBlockState state = world.getBlockState(pos);
             AxisAlignedBB aabb = state.getCollisionBoundingBox(world, pos);
             return aabb == null ? 1 : 1 - Math.min((float) aabb.maxY, 1);
+        }
+
+        protected float getFallSpeed() {
+            return 0.3F;
+        }
+
+        protected float getRiseSpeed() {
+            return 0.5F;
         }
     }
 }
