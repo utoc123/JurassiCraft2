@@ -11,9 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.EnumFacing;
@@ -41,14 +38,12 @@ import org.jurassicraft.server.message.MicroraptorDismountMessage;
 public class MicroraptorEntity extends DinosaurEntity {
     private int flyTime;
     private int groundHeight;
-    private static final DataParameter<Byte> CONTROL_STATE = EntityDataManager.createKey(MicroraptorEntity.class, DataSerializers.BYTE);
     private EntityLookHelper glideLookHelper = new GlideLookHelper(this);
 
     public MicroraptorEntity(World world) {
         super(world);
         this.target(EntityPlayer.class, EntityChicken.class, EntityRabbit.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
-        // this.tasks.addTask(2, new RaptorGlideAI(this, 1.0f));
         this.tasks.addTask(2, new RaptorClimbTreeAI(this, 1.0f));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
         this.animationTasks.addTask(3, new TailDisplayAnimationAI(this));
@@ -125,7 +120,7 @@ public class MicroraptorEntity extends DinosaurEntity {
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
         if (player.isSneaking() && hand == EnumHand.MAIN_HAND) {
             if (this.isOwner(player) && this.order == Order.SIT && player.getPassengers() != null && player.getPassengers().size() < 2) {
-                this.startRiding(player);
+                return this.startRiding(player, true);
             }
         }
         return super.processInteract(player, hand, stack);
@@ -179,6 +174,53 @@ public class MicroraptorEntity extends DinosaurEntity {
         return 100;
     }
 
+    @Override
+    public void updateRidden() {
+        Entity entity = this.getRidingEntity();
+        if (this.isRiding() && entity.isDead) {
+            this.dismountRidingEntity();
+        } else {
+            this.motionX = 0.0D;
+            this.motionY = 0.0D;
+            this.motionZ = 0.0D;
+            this.onUpdate();
+            if (this.isRiding()) {
+                this.updateRiding(entity);
+            }
+        }
+    }
+
+    private void updateRiding(Entity riding) {
+        if (riding.isPassenger(this) && riding instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) riding;
+            int ridingIndex = riding.getPassengers().indexOf(this);
+            float radius = (ridingIndex == 2 ? 0.0F : 0.35F) + (player.isElytraFlying() ? 2 : 0);
+            float renderYawOffset = player.renderYawOffset;
+            float angle = (float) Math.toRadians(renderYawOffset + (ridingIndex == 1 ? -90 : ridingIndex == 0 ? 90 : 0));
+            double offsetX = (double) (radius * MathHelper.sin((float) (Math.PI + angle)));
+            double offsetZ = (double) (radius * MathHelper.cos(angle));
+            double offsetY = (riding.isSneaking() ? 1.2 : 1.38) + (ridingIndex == 2 ? 0.4 : 0.0);
+            this.rotationYaw = player.rotationYawHead;
+            this.rotationYawHead = player.rotationYawHead;
+            this.prevRotationYaw = player.rotationYawHead;
+            this.setPosition(riding.posX + offsetX, riding.posY + offsetY, riding.posZ + offsetZ);
+            this.setAnimation(EntityAnimation.IDLE.get());
+            if (player.isElytraFlying()) {
+                this.dismountRidingEntity();
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    protected void updateClientControls() {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (this.getRidingEntity() != null && this.getRidingEntity() == mc.player) {
+            if (KeyBindingHandler.MICRORAPTOR_DISMOUNT.isKeyDown()) {
+                JurassiCraft.NETWORK_WRAPPER.sendToServer(new MicroraptorDismountMessage(this.getEntityId()));
+            }
+        }
+    }
+
     public class GlideLookHelper extends EntityLookHelper {
         private MicroraptorEntity entity;
 
@@ -193,75 +235,6 @@ public class MicroraptorEntity extends DinosaurEntity {
             float cos = MathHelper.cos(radians);
             float sin = MathHelper.sin(radians + 0.8F);
             this.entity.rotationPitch = (float) Math.toDegrees(((cos + 1) * sin - 1.6F) * 3.5F);
-        }
-
-        private float updateRotation(float current, float desired, float range) {
-            float offset = MathHelper.wrapDegrees(desired - current);
-            if (offset > range) {
-                offset = range;
-            }
-            if (offset < -range) {
-                offset = -range;
-            }
-            return MathHelper.wrapDegrees(current + offset);
-        }
-    }
-
-    @Override
-    public void entityInit() {
-        super.entityInit();
-        this.dataManager.register(CONTROL_STATE, (byte) 0);
-    }
-
-    public boolean up() {
-        return (dataManager.get(CONTROL_STATE) >> 1) == 1;
-    }
-
-    private void setStateField(int i, boolean newState) {
-        byte prevState = dataManager.get(CONTROL_STATE);
-        if (newState) {
-            dataManager.set(CONTROL_STATE, (byte) (prevState | (1 << i)));
-        } else {
-            dataManager.set(CONTROL_STATE, (byte) (prevState & ~(1 << i)));
-        }
-    }
-
-    public byte getControlState() {
-        return dataManager.get(CONTROL_STATE);
-    }
-
-    public void setControlState(byte state) {
-        dataManager.set(CONTROL_STATE, state);
-    }
-
-    public void updateRiding(Entity riding) {
-        if (riding.isPassenger(this) && riding instanceof EntityPlayer) {
-            int i = riding.getPassengers().indexOf(this);
-            float radius = (i == 2 ? 0F : 0.4F) + (((EntityPlayer) riding).isElytraFlying() ? 2 : 0);
-            float angle = (0.01745329251F * ((EntityPlayer) riding).renderYawOffset) + (i == 1 ? -90 : i == 0 ? 90 : 0);
-            double extraX = (double) (radius * MathHelper.sin((float) (Math.PI + angle)));
-            double extraZ = (double) (radius * MathHelper.cos(angle));
-            double extraY = (riding.isSneaking() ? 1.2D : 1.4D) + (i == 2 ? 0.4D : 0D);
-            this.rotationYaw = ((EntityPlayer) riding).rotationYawHead;
-            this.rotationYawHead = ((EntityPlayer) riding).rotationYawHead;
-            this.prevRotationYaw = ((EntityPlayer) riding).rotationYawHead;
-            this.setPosition(riding.posX + extraX, riding.posY + extraY, riding.posZ + extraZ);
-            if (this.getControlState() == 1 << 1 || ((EntityPlayer) riding).isElytraFlying()) {
-                this.dismountRidingEntity();
-            }
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    protected void updateClientControls() {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (this.getRidingEntity() != null && this.getRidingEntity() == mc.player) {
-            byte previousState = getControlState();
-            setStateField(1, KeyBindingHandler.microraptor_off.isKeyDown());
-            byte controlState = getControlState();
-            if (controlState != previousState) {
-                JurassiCraft.NETWORK_WRAPPER.sendToServer(new MicroraptorDismountMessage(this.getEntityId(), controlState));
-            }
         }
     }
 }

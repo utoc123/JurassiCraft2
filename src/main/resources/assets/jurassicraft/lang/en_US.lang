@@ -525,6 +525,9 @@ achievement.jurassicraft.fossilGrinder.desc=Craft a Fossil Grinder!
 achievement.jurassicraft.reinforcedStone=Safety First!
 achievement.jurassicraft.reinforcedStone.desc=Craft some reinforced stone blocks!
 
+//Keybinds ==============================================
+key.microraptor_dismount=Dismount Microraptor
+
 //Other =============
 message.tame.name=You have tamed a {dinosaur}
 message.not_owned.name=You do not own this dinosaur!

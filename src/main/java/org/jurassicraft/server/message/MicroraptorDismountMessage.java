@@ -5,20 +5,22 @@ import net.ilexiconn.llibrary.server.network.AbstractMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.entity.dinosaur.MicroraptorEntity;
 
+import java.util.Set;
+
 public class MicroraptorDismountMessage extends AbstractMessage<MicroraptorDismountMessage> {
+    private int entityId;
 
-    public int entityId;
-    public byte controlState;
-
-    public MicroraptorDismountMessage(int entityId, byte controlState) {
+    public MicroraptorDismountMessage(int entityId) {
         this.entityId = entityId;
-        this.controlState = controlState;
     }
 
     public MicroraptorDismountMessage() {
@@ -26,20 +28,21 @@ public class MicroraptorDismountMessage extends AbstractMessage<MicroraptorDismo
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        entityId = buf.readInt();
-        controlState = buf.readByte();
-
+        this.entityId = buf.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(entityId);
-        buf.writeByte(controlState);
+        buf.writeInt(this.entityId);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void onClientReceived(Minecraft client, MicroraptorDismountMessage message, EntityPlayer player, MessageContext messageContext) {
+        Entity entity = client.world.getEntityByID(message.entityId);
+        if (entity instanceof MicroraptorEntity) {
+            entity.dismountRidingEntity();
+        }
     }
 
     @Override
@@ -48,7 +51,14 @@ public class MicroraptorDismountMessage extends AbstractMessage<MicroraptorDismo
         if (entity instanceof MicroraptorEntity) {
             MicroraptorEntity microraptor = (MicroraptorEntity) entity;
             if (microraptor.isOwner(player)) {
-                microraptor.setControlState(message.controlState);
+                microraptor.dismountRidingEntity();
+                if (!player.world.isRemote) {
+                    WorldServer worldServer = (WorldServer) player.world;
+                    Set<? extends EntityPlayer> trackers = worldServer.getEntityTracker().getTrackingPlayers(microraptor);
+                    for (EntityPlayer tracker : trackers) {
+                        JurassiCraft.NETWORK_WRAPPER.sendTo(message, (EntityPlayerMP) tracker);
+                    }
+                }
             }
         }
     }
