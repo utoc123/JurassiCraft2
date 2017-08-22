@@ -78,7 +78,7 @@ public class PlantSoftTissueItem extends Item implements SequencableItem {
             dna.writeToNBT(nbt);
         }
 
-        ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC, 1, stack.getItemDamage());
+        ItemStack output = new ItemStack(ItemHandler.STORAGE_DISC);
         output.setTagCompound(nbt);
 
         return output;

@@ -14,7 +14,6 @@ import org.jurassicraft.server.entity.item.MuralEntity;
 import org.jurassicraft.server.entity.item.PaddockSignEntity;
 import org.jurassicraft.server.entity.vehicle.FordExplorerEntity;
 import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
-import org.jurassicraft.server.entity.vehicle.modules.SeatEntity;
 import org.jurassicraft.server.period.TimePeriod;
 
 import java.util.ArrayList;
@@ -82,7 +81,6 @@ public class EntityHandler {
 
         registerEntity(JeepWranglerEntity.class, "Jeep Wrangler");
         registerEntity(FordExplorerEntity.class, "Ford Explorer");
-        registerEntity(SeatEntity.class, "Vehicle Seat");
 
         registerEntity(GoatEntity.class, "Goat", 0xEFEDE7, 0x7B3E20);
 

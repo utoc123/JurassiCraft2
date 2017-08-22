@@ -25,14 +25,12 @@ public class StorageDiscItem extends Item implements SynthesizableItem {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-        NBTTagCompound nbt = stack.getTagCompound();
-
-        if (nbt != null) {
-            String storageId = nbt.getString("StorageId");
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag != null) {
+            String storageId = tag.getString("StorageId");
             StorageType type = StorageTypeRegistry.getStorageType(storageId);
-
             if (type != null) {
-                type.readFromNBT(nbt);
+                type.readFromNBT(tag);
                 type.addInformation(stack, tooltip);
             }
         } else {
@@ -48,16 +46,9 @@ public class StorageDiscItem extends Item implements SynthesizableItem {
 
     @Override
     public ItemStack getSynthesizedItem(ItemStack stack, Random random) {
-        ItemStack output;
-
-        if (!stack.getTagCompound().getString("StorageId").equalsIgnoreCase("PlantDNA")) {
-            output = new ItemStack(ItemHandler.DNA, 1, stack.getItemDamage());
-        } else {
-            output = new ItemStack(ItemHandler.PLANT_DNA, 1, stack.getItemDamage());
-        }
-
-        output.setTagCompound(stack.getTagCompound());
-
-        return output;
+        NBTTagCompound tag = stack.getTagCompound();
+        StorageType type = StorageTypeRegistry.getStorageType(tag.getString("StorageId"));
+        type.readFromNBT(tag);
+        return type.createItem();
     }
 }

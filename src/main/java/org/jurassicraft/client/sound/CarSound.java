@@ -32,8 +32,12 @@ public class CarSound extends MovingSound {
 
     @Override
     public void update() {
-        this.xPosF = (float) this.entity.posX;
-        this.yPosF = (float) this.entity.posY;
-        this.zPosF = (float) this.entity.posZ;
+        if (this.entity.isDead) {
+            this.donePlaying = true;
+        } else {
+            this.xPosF = (float) this.entity.posX;
+            this.yPosF = (float) this.entity.posY;
+            this.zPosF = (float) this.entity.posZ;
+        }
     }
 }

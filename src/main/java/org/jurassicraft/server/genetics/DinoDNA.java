@@ -66,4 +66,8 @@ public class/* Bingo! */ DinoDNA {
     public Dinosaur getDinosaur() {
         return this.dinosaur;
     }
+
+    public int getMetadata() {
+        return EntityHandler.getDinosaurId(this.dinosaur);
+    }
 }

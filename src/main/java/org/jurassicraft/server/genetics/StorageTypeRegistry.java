@@ -22,7 +22,6 @@ public class StorageTypeRegistry {
         if (id == null || id.isEmpty()) {
             id = "DinoDNA";
         }
-
         return STORAGE_TYPES.get(id).get();
     }
 }

@@ -57,4 +57,8 @@ public class PlantDNA {
 
         tooltip.add(formatting + new LangHelper("lore.dna_quality.name").withProperty("quality", this.quality + "").build());
     }
+
+    public int getMetadata() {
+        return this.plant;
+    }
 }

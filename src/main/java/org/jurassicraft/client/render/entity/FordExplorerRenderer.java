@@ -3,6 +3,7 @@ package org.jurassicraft.client.render.entity;
 import net.ilexiconn.llibrary.client.model.tabula.TabulaModel;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +15,6 @@ import org.jurassicraft.client.model.animation.entity.vehicle.FordExplorerAnimat
 import org.jurassicraft.server.entity.vehicle.CarEntity;
 import org.jurassicraft.server.entity.vehicle.FordExplorerEntity;
 import org.jurassicraft.server.tabula.TabulaModelHelper;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class FordExplorerRenderer extends Render<FordExplorerEntity> {
@@ -40,25 +40,25 @@ public class FordExplorerRenderer extends Render<FordExplorerEntity> {
     @Override
     public void doRender(FordExplorerEntity entity, double x, double y, double z, float yaw, float partialTicks) {
         GlStateManager.enableBlend();
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         this.bindEntityTexture(entity);
-
         float pitch = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-
         this.renderModel(entity, x, y, z, yaw, pitch);
-
-        int destroyStage = Math.min(10, (int) (10.0F - (entity.health / CarEntity.MAX_HEALTH) * 10.0F)) - 1;
-
+        int destroyStage = Math.min(10, (int) (10.0F - (entity.getHealth() / CarEntity.MAX_HEALTH) * 10.0F)) - 1;
         if (destroyStage >= 0) {
-            GlStateManager.color(0.4F, 0.4F, 0.4F, destroyStage / 10.0F / 2.0F + 0.1F);
+            GlStateManager.color(1, 1, 1, 0.5F);
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.DST_COLOR, GlStateManager.DestFactor.SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.doPolygonOffset(-3, -3);
+            GlStateManager.enablePolygonOffset();
+            RenderHelper.disableStandardItemLighting();
             this.bindTexture(DESTROY_STAGES[destroyStage]);
             this.renderModel(entity, x, y, z, yaw, pitch);
+            GlStateManager.doPolygonOffset(0, 0);
+            GlStateManager.disablePolygonOffset();
+            RenderHelper.enableStandardItemLighting();
         }
-
-        super.doRender(entity, x, y, z, yaw, partialTicks);
-
         GlStateManager.disableBlend();
+        super.doRender(entity, x, y, z, yaw, partialTicks);
     }
 
     private void renderModel(FordExplorerEntity entity, double x, double y, double z, float yaw, float pitch) {

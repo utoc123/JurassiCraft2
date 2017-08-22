@@ -53,7 +53,6 @@ import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.particle.VenomParticle;
-import org.jurassicraft.server.entity.vehicle.CarEntity;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 import java.util.ArrayList;
@@ -178,14 +177,6 @@ public class ClientProxy extends ServerProxy {
 
     public static void stopSound(ISound sound) {
         MC.getSoundHandler().stopSound(sound);
-    }
-
-    public static void playSound(CarEntity entity) {
-        playSound(entity.sound);
-    }
-
-    public static void stopSound(CarEntity entity) {
-        stopSound(entity.sound);
     }
 
     public static void spawnVenomParticles(VenomEntity entity) {
