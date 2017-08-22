@@ -29,6 +29,9 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
 
     @Override
     protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+        if (attackTarget.getEntityBoundingBox().intersectsWith(this.dinosaur.getEntityBoundingBox().expandXyz(1.0))) {
+            return 1024.0;
+        }
         return this.attacker.width * this.attacker.width + 1.0;
     }
 }
