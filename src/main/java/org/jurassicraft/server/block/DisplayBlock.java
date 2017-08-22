@@ -98,7 +98,7 @@ public class DisplayBlock extends BlockContainer {
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-        return getItemFromTile(getTile(world, pos));
+        return this.getItemFromTile(this.getTile(world, pos));
     }
 
     @Override
@@ -153,7 +153,7 @@ public class DisplayBlock extends BlockContainer {
         DisplayBlockEntity tile = this.getTile(world, pos);
 
         if (tile != null) {
-            drops.add(getItemFromTile(tile));
+            drops.add(this.getItemFromTile(tile));
         }
 
         return drops;

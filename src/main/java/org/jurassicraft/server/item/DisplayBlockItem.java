@@ -55,7 +55,7 @@ public class DisplayBlockItem extends Item {
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         pos = pos.offset(side);
 
-        if (player.canPlayerEdit(pos, side, stack)) {
+        if (!player.world.isRemote && player.canPlayerEdit(pos, side, stack)) {
             Block block = BlockHandler.DISPLAY_BLOCK;
 
             if (block.canPlaceBlockAt(world, pos)) {
@@ -70,6 +70,7 @@ public class DisplayBlockItem extends Item {
                 if (tile != null) {
                     tile.setDinosaur(this.getDinosaurID(stack), mode > 0 ? mode == 1 : world.rand.nextBoolean(), this.isSkeleton(stack));
                     tile.setRot(180 - (int) player.getRotationYawHead());
+                    world.notifyBlockUpdate(pos, state, state, 0);
                     tile.markDirty();
                     if (!player.capabilities.isCreativeMode) {
                         stack.stackSize--;

@@ -45,6 +45,8 @@ public class DisplayBlockEntity extends TileEntity {
             this.serializedData = new TagData();
         }
 
+        this.entity = null;
+
         this.serializedData.deserialize(nbt);
 
         this.rotation = nbt.getInteger("Rotation");
@@ -125,6 +127,7 @@ public class DisplayBlockEntity extends TileEntity {
             this.serializedData = null;
             this.initializeEntity(entity);
             this.entity = entity;
+            System.out.println(entity.getAttributes().getScaleModifier());
             return entity;
         } else {
             return new InvalidData().create(this.world);
