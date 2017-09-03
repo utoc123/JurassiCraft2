@@ -215,6 +215,8 @@ item.krill.name=Krill
 
 item.mural.name=Mural
 
+item.ingen_journal.name=InGen Journal
+
 // Crops ========================================
 item.ajuginucula_smithii_seeds.name=Ajuginucula Smithii Seeds
 item.ajuginucula_smithii_leaves.name=Ajuginucula Smithii Leaves
@@ -580,6 +582,15 @@ info.microraptor.name=One of the most famous feathered dinosaurs ever found, Mic
 info.coelacanth.name=Coelacanths are the last modern Coelocanthiform fish, an order dating back to the Devonian. The word "coelacanth" means "hollow spine". Using 8 different fins, the coelacanth can easily turn in almost any direction. Coelacanths are nocturnal, piscivorous drift-hunters found only in the depths of the Indian Ocean. Prehistoric coelacanths however were hugely diverse. Coelacanths are oviviviparous.
 info.mussaurus.name=Mussaurus is a small prosauropod dinosaur from Triassic Argentina. Its name means �mouse lizard", as for a long time it was known only from tiny baby skeletons. The proportions of the babies suggest the adults cared for them. Mussaurus are very small for sauropodomorphs, and are relatively easy herbivores to take care of. All they need is lush vegetation, some trees, and water.
 
+journal.chef_alejandro.name=Chef Alejandro
+journal.dennis_nedry.name=Dennis Nedry
+journal.dr_gerry_harding.name=Dr. Gerry Harding
+journal.dr_henry_wu.name=Dr. Henry Wu
+journal.dr_laura_sorkin.name=Dr. Laura Sorkin
+journal.ed_regis.name=Ed Regis
+journal.john_hammond.name=John Hammond
+journal.ray_arnold.name=Ray Arnold
+journal.robert_muldoon.name=Robert Muldoon
 
 death.attack.shock.1=%s is now extra crispy!
 death.attack.shock.2=%s was electrocuted!

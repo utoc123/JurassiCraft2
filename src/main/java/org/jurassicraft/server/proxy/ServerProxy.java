@@ -52,6 +52,7 @@ import org.jurassicraft.server.food.FoodNutrients;
 import org.jurassicraft.server.genetics.StorageTypeRegistry;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.item.JournalItem;
 import org.jurassicraft.server.plant.PlantHandler;
 import org.jurassicraft.server.recipe.RecipeHandler;
 import org.jurassicraft.server.world.WorldGenerator;
@@ -192,5 +193,8 @@ public class ServerProxy implements IGuiHandler {
     }
 
     public void openFieldGuide(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo fieldGuideInfo) {
+    }
+
+    public void openJournal(JournalItem.JournalType type) {
     }
 }

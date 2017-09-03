@@ -34,6 +34,7 @@ import org.jurassicraft.client.gui.FeederGui;
 import org.jurassicraft.client.gui.FieldGuideGui;
 import org.jurassicraft.client.gui.FossilGrinderGui;
 import org.jurassicraft.client.gui.IncubatorGui;
+import org.jurassicraft.client.gui.JournalGui;
 import org.jurassicraft.client.gui.OrderDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.client.gui.SkeletonAssemblyGui;
@@ -53,6 +54,7 @@ import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.particle.VenomParticle;
+import org.jurassicraft.server.item.JournalItem;
 import org.jurassicraft.server.proxy.ServerProxy;
 
 import java.util.ArrayList;
@@ -169,6 +171,11 @@ public class ClientProxy extends ServerProxy {
     @Override
     public void openFieldGuide(DinosaurEntity entity, DinosaurEntity.FieldGuideInfo fieldGuideInfo) {
         MC.displayGuiScreen(new FieldGuideGui(entity, fieldGuideInfo));
+    }
+
+    @Override
+    public void openJournal(JournalItem.JournalType type) {
+        MC.displayGuiScreen(new JournalGui(type));
     }
 
     public static void playSound(ISound sound) {

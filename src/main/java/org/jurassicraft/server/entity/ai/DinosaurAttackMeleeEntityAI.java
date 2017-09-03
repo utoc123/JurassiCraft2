@@ -32,6 +32,7 @@ public class DinosaurAttackMeleeEntityAI extends EntityAIAttackMelee {
         if (attackTarget.getEntityBoundingBox().intersectsWith(this.dinosaur.getEntityBoundingBox().expandXyz(1.0))) {
             return 1024.0;
         }
-        return this.attacker.width * this.attacker.width + 1.0;
+        double grownWidth = this.attacker.width + 1.0;
+        return grownWidth * grownWidth;
     }
 }

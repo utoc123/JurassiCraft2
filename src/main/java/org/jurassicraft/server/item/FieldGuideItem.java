@@ -23,10 +23,8 @@ public class FieldGuideItem extends Item {
             if (!player.world.isRemote) {
                 JurassiCraft.NETWORK_WRAPPER.sendTo(new OpenFieldGuideGuiMessage((DinosaurEntity) target), (EntityPlayerMP) player);
             }
-
             return true;
         }
-
         return false;
     }
 }

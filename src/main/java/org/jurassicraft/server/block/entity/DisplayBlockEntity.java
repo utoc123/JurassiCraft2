@@ -127,7 +127,6 @@ public class DisplayBlockEntity extends TileEntity {
             this.serializedData = null;
             this.initializeEntity(entity);
             this.entity = entity;
-            System.out.println(entity.getAttributes().getScaleModifier());
             return entity;
         } else {
             return new InvalidData().create(this.world);

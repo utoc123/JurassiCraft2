@@ -78,6 +78,7 @@ import org.jurassicraft.server.entity.vehicle.JeepWranglerEntity;
 import org.jurassicraft.server.item.DinosaurSpawnEggItem;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.item.JournalItem;
 import org.jurassicraft.server.plant.Plant;
 import org.jurassicraft.server.plant.PlantHandler;
 
@@ -376,6 +377,10 @@ public enum RenderingHandler {
             this.registerItemRenderer(ItemHandler.PLANT_DNA, meta, "dna/plants/dna_" + name);
             this.registerItemRenderer(ItemHandler.PLANT_SOFT_TISSUE, meta, "soft_tissue/plants/soft_tissue_" + name);
             this.registerItemRenderer(ItemHandler.PLANT_CALLUS, meta, "plant_callus");
+        }
+
+        for (JournalItem.JournalType type : JournalItem.JournalType.values()) {
+            this.registerItemRenderer(ItemHandler.INGEN_JOURNAL, type.getMetadata(), "ingen_journal");
         }
 
         for (NestFossilBlock.Variant variant : NestFossilBlock.Variant.values()) {

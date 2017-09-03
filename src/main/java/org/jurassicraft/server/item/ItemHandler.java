@@ -136,6 +136,8 @@ public class ItemHandler {
     public static final BasicItem CAR_WINDSCREEN = new BasicItem(TabHandler.ITEMS);
     public static final BasicItem UNFINISHED_CAR = new BasicItem(TabHandler.ITEMS);
 
+    public static final JournalItem INGEN_JOURNAL = new JournalItem();
+
     public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
     public static final FordExplorerItem FORD_EXPLORER = new FordExplorerItem();
 
@@ -345,6 +347,8 @@ public class ItemHandler {
 
         registerItem(LUNCH_BOX, "Lunch Box");
         registerItem(STAMP_SET, "Stamp Set");
+
+        registerItem(INGEN_JOURNAL, "InGen Journal");
 
         for (TreeType type : TreeType.values()) {
             registerTreeType(type);
