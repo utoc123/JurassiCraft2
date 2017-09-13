@@ -102,19 +102,19 @@ public abstract class CarEntity extends Entity {
     }
 
     private boolean getStateBit(int mask) {
-        return (this.getState() & mask) != 0;
+        return (this.getControlState() & mask) != 0;
     }
 
     private void setStateBit(int mask, boolean newState) {
-        byte state = this.getState();
-        this.setState(newState ? state | mask : state & ~mask);
+        byte state = this.getControlState();
+        this.setControlState(newState ? state | mask : state & ~mask);
     }
 
-    public byte getState() {
+    public byte getControlState() {
         return this.dataManager.get(WATCHER_STATE);
     }
 
-    public void setState(int state) {
+    public void setControlState(int state) {
         this.dataManager.set(WATCHER_STATE, (byte) state);
     }
 
@@ -186,11 +186,11 @@ public abstract class CarEntity extends Entity {
         this.tickInterp();
         if (this.canPassengerSteer()) {
             if (this.getPassengers().isEmpty() || !(this.getPassengers().get(0) instanceof EntityPlayer)) {
-                this.setState(0);
+                this.setControlState(0);
             }
             this.updateMotion();
             if (this.world.isRemote) {
-                this.drive();
+                this.handleControl();
             }
             this.move(this.motionX, this.motionY, this.motionZ);
         } else {
@@ -219,21 +219,28 @@ public abstract class CarEntity extends Entity {
         this.motionY *= resist;
         this.motionZ *= resist;
         this.rotationDelta *= resist;
-        this.motionY -= 0.02F;
+        this.motionY -= 0.15F;
     }
 
-    private void drive() {
+    private void handleControl() {
         Entity driver = this.getControllingPassenger();
         if (!(driver instanceof EntityPlayer) || !((EntityPlayer) driver).isUser()) {
             return;
         }
         EntityPlayerSP player = (EntityPlayerSP) driver;
         MovementInput movementInput = player.movementInput;
-        byte previous = this.getState();
+        byte previous = this.getControlState();
         this.left(movementInput.leftKeyDown);
         this.right(movementInput.rightKeyDown);
         this.forward(movementInput.forwardKeyDown);
         this.backward(movementInput.backKeyDown);
+        this.applyMovement();
+        if (this.getControlState() != previous) {
+            JurassiCraft.NETWORK_WRAPPER.sendToServer(new UpdateVehicleControlMessage(this));
+        }
+    }
+
+    protected void applyMovement() {
         if (!this.isInWater()) {
             float moveAmount = 0.0F;
             if ((this.left() || this.right()) && !(this.forward() || this.backward())) {
@@ -253,9 +260,6 @@ public abstract class CarEntity extends Entity {
             this.rotationYaw += this.rotationDelta;
             this.motionX += MathHelper.sin(-this.rotationYaw * 0.017453292F) * moveAmount;
             this.motionZ += MathHelper.cos(this.rotationYaw * 0.017453292F) * moveAmount;
-        }
-        if (this.getState() != previous) {
-            JurassiCraft.NETWORK_WRAPPER.sendToServer(new UpdateVehicleControlMessage(this));
         }
     }
 

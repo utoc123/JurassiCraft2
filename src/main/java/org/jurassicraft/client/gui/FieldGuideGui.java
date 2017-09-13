@@ -177,19 +177,19 @@ public class FieldGuideGui extends GuiScreen {
             List<String> lines = new ArrayList<>();
 
             int wrapX = 0;
-            String wrapLine = "";
+            StringBuilder wrapLine = new StringBuilder();
 
             for (String word : text.split(" ")) {
                 if (wrapX + (this.fontRendererObj.getStringWidth(word)) > 90) {
-                    lines.add(wrapLine);
-                    wrapLine = "";
+                    lines.add(wrapLine.toString());
+                    wrapLine = new StringBuilder();
                 }
 
-                wrapLine += word + " ";
-                wrapX = this.fontRendererObj.getStringWidth(wrapLine.trim());
+                wrapLine.append(word).append(" ");
+                wrapX = this.fontRendererObj.getStringWidth(wrapLine.toString().trim());
             }
 
-            lines.add(wrapLine);
+            lines.add(wrapLine.toString());
 
             int lineX = 0;
             int lineY = y + 25;

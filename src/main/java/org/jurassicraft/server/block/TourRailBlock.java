@@ -1,7 +1,5 @@
 package org.jurassicraft.server.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRail;
 import net.minecraft.block.BlockRailBase;
@@ -18,10 +16,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.jurassicraft.server.tab.TabHandler;
+
+import java.util.Random;
+
 import static net.minecraft.block.BlockRailBase.EnumRailDirection.*;
 
 public final class TourRailBlock extends BlockRail {
-    private final boolean isPowered;
+    public final boolean isPowered;
 
     public TourRailBlock(boolean isPowered) {
         this.isPowered = isPowered;

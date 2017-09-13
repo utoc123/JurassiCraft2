@@ -23,8 +23,10 @@ public final class FordExplorerItem extends Item {
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof TourRailBlock) {
             if (!world.isRemote) {
+                FordExplorerEntity.OrientatedRail orientatedRail = FordExplorerEntity.OrientatedRail.get(state);
                 FordExplorerEntity entity = new FordExplorerEntity(world);
                 entity.setHead(pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5);
+                entity.rotationYaw = orientatedRail.getOutputVector().getHorizontalAngle();
                 entity.pull();
                 world.spawnEntity(entity);
                 stack.stackSize--;

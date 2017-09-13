@@ -22,7 +22,7 @@ public class UpdateVehicleControlMessage extends AbstractMessage<UpdateVehicleCo
     public UpdateVehicleControlMessage(CarEntity entity)
     {
         this.entityId = entity.getEntityId();
-        this.state = entity.getState();
+        this.state = entity.getControlState();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class UpdateVehicleControlMessage extends AbstractMessage<UpdateVehicleCo
             CarEntity car = (CarEntity) entity;
             if (car.getControllingPassenger() == player)
             {
-                car.setState(message.state);
+                car.setControlState(message.state);
             }
         }
     }
