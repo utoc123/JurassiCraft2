@@ -96,7 +96,7 @@ public class ItemHandler {
     public static final Item WILD_ONION = new ItemSeedFood(3, 0.3F, BlockHandler.WILD_ONION, Blocks.FARMLAND).setUnlocalizedName("wild_onion").setCreativeTab(TabHandler.PLANTS);
     public static final Item WILD_POTATO_SEEDS = new ItemSeeds(BlockHandler.WILD_POTATO_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
     public static final Item RHAMNUS_SEEDS = new ItemSeeds(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT, Blocks.FARMLAND).setCreativeTab(TabHandler.PLANTS);
-    public static final Item WILD_POTATO = new ItemFood(2, 0.2F, false).setCreativeTab(TabHandler.FOODS);
+    public static final Item WILD_POTATO = new ItemFood(1, 0.1F, false).setCreativeTab(TabHandler.FOODS);
     public static final Item WILD_POTATO_COOKED = new ItemFood(6, 0.6F, false).setCreativeTab(TabHandler.FOODS);
     public static final Item RHAMNUS_BERRIES = new ItemFood(5, 0.5F, false).setCreativeTab(TabHandler.FOODS);
 
