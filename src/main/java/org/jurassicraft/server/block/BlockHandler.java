@@ -284,8 +284,8 @@ public class BlockHandler {
 
         registerBlock(PLANKTON_SWARM, "Plankton Swarm");
         registerBlock(KRILL_SWARM, "Krill Swarm");
-        registerBlock(TOUR_RAIL, "Tour Rail");
-        registerBlock(TOUR_RAIL_POWERED, "Powered Tour Rail");
+//        registerBlock(TOUR_RAIL, "Tour Rail");
+//        registerBlock(TOUR_RAIL_POWERED, "Powered Tour Rail");
 
         registerBlock(SKELETON_ASSEMBLY, "Skeleton Assembly");
 //        registerBlock(JP_MAIN_GATE_BLOCK, "Jurassic Park Gate");

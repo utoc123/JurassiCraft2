@@ -250,8 +250,8 @@ public enum RenderingHandler {
         this.registerBlockRenderer(BlockHandler.CINNAMON_FERN);
         this.registerBlockRenderer(BlockHandler.BRISTLE_FERN);
 
-        this.registerBlockRenderer(BlockHandler.TOUR_RAIL);
-        this.registerBlockRenderer(BlockHandler.TOUR_RAIL_POWERED);
+//        this.registerBlockRenderer(BlockHandler.TOUR_RAIL);
+//        this.registerBlockRenderer(BlockHandler.TOUR_RAIL_POWERED);
 
         this.registerItemRenderer(ItemHandler.TRACKER);
         this.registerItemRenderer(ItemHandler.PLANT_CELLS_PETRI_DISH);
@@ -332,7 +332,7 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.CAR_WINDSCREEN, "car_windscreen");
         this.registerItemRenderer(ItemHandler.UNFINISHED_CAR, "unfinished_car");
         this.registerItemRenderer(ItemHandler.JEEP_WRANGLER, "jeep_wrangler");
-        this.registerItemRenderer(ItemHandler.FORD_EXPLORER, "ford_explorer");
+//        this.registerItemRenderer(ItemHandler.FORD_EXPLORER, "ford_explorer");
 
         this.registerItemRenderer(ItemHandler.MURAL, "mural");
 

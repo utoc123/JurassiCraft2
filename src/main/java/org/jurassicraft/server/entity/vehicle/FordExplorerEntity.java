@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import org.jurassicraft.JurassiCraft;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.block.TourRailBlock;
-import org.jurassicraft.server.item.ItemHandler;
 import org.jurassicraft.server.message.UpdateFordExplorerStateMessage;
 
 import java.util.Locale;
@@ -169,7 +168,7 @@ public class FordExplorerEntity extends CarEntity implements IEntityAdditionalSp
 
     @Override
     public void dropItems() {
-        this.dropItem(ItemHandler.FORD_EXPLORER, 1);
+//        this.dropItem(ItemHandler.FORD_EXPLORER, 1); TODO
     }
 
     @Override

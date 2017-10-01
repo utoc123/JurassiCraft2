@@ -91,6 +91,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private int jumpHeight;
 
     private String[][] recipe;
+
     public static Matrix4d getParentRotationMatrix(TabulaModelContainer model, TabulaCubeContainer cube, boolean includeParents, boolean ignoreSelf, float rot) {
         List<TabulaCubeContainer> parentCubes = new ArrayList<>();
 
@@ -165,11 +166,11 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         //this.modelAdult = this.parseModel("adult");
 
         for (GrowthStage stage : GrowthStage.values()) {
-                if (this.doesSupportGrowthStage(stage)) {
-                    this.setModelContainer(stage, this.parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
-                } else {
-                    this.setModelContainer(stage, this.modelAdult);
-                }
+            if (this.doesSupportGrowthStage(stage)) {
+                this.setModelContainer(stage, this.parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
+            } else {
+                this.setModelContainer(stage, this.modelAdult);
+            }
         }
 
         String baseTextures = "textures/entities/" + formattedName + "/";

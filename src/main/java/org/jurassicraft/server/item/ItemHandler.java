@@ -21,14 +21,7 @@ import org.jurassicraft.server.item.block.AncientDoorItem;
 import org.jurassicraft.server.item.vehicles.HelicopterItem;
 import org.jurassicraft.server.item.vehicles.HelicopterModuleItem;
 import org.jurassicraft.server.tab.TabHandler;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -147,7 +140,7 @@ public class ItemHandler {
     public static final JournalItem INGEN_JOURNAL = new JournalItem();
 
     public static final JeepWranglerItem JEEP_WRANGLER = new JeepWranglerItem();
-    public static final FordExplorerItem FORD_EXPLORER = new FordExplorerItem();
+//    public static final FordExplorerItem FORD_EXPLORER = new FordExplorerItem();
 
     public static final MuralItem MURAL = new MuralItem();
 
@@ -341,7 +334,7 @@ public class ItemHandler {
         registerItem(CAR_WINDSCREEN, "Car Windscreen");
         registerItem(UNFINISHED_CAR, "Unfinished Car");
         registerItem(JEEP_WRANGLER, "Jeep Wrangler");
-        registerItem(FORD_EXPLORER, "Ford Explorer");
+//        registerItem(FORD_EXPLORER, "Ford Explorer");
 
         registerItem(JURASSICRAFT_THEME_DISC, "Disc JurassiCraft Theme");
         registerItem(TROODONS_AND_RAPTORS_DISC, "Disc Troodons And Raptors");
