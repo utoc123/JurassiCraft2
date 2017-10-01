@@ -27,6 +27,7 @@ import org.jurassicraft.server.message.OpenFieldGuideGuiMessage;
 import org.jurassicraft.server.message.PlacePaddockSignMessage;
 import org.jurassicraft.server.message.SetOrderMessage;
 import org.jurassicraft.server.message.SwitchHybridizerCombinatorMode;
+import org.jurassicraft.server.message.UpdateFordExplorerStateMessage;
 import org.jurassicraft.server.message.UpdateVehicleControlMessage;
 import org.jurassicraft.server.proxy.ServerProxy;
 
@@ -48,7 +49,7 @@ public class JurassiCraft {
 
     public static long timerTicks;
 
-    @NetworkWrapper({ PlacePaddockSignMessage.class, ChangeTemperatureMessage.class, HelicopterEngineMessage.class, HelicopterDirectionMessage.class, HelicopterModulesMessage.class, SwitchHybridizerCombinatorMode.class, SetOrderMessage.class, OpenFieldGuideGuiMessage.class, UpdateVehicleControlMessage.class, MicroraptorDismountMessage.class })
+    @NetworkWrapper({ PlacePaddockSignMessage.class, ChangeTemperatureMessage.class, HelicopterEngineMessage.class, HelicopterDirectionMessage.class, HelicopterModulesMessage.class, SwitchHybridizerCombinatorMode.class, SetOrderMessage.class, OpenFieldGuideGuiMessage.class, UpdateVehicleControlMessage.class, MicroraptorDismountMessage.class, UpdateFordExplorerStateMessage.class })
     public static SimpleNetworkWrapper NETWORK_WRAPPER;
 
     private Logger logger;

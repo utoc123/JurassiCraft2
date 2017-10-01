@@ -1,21 +1,34 @@
 package org.jurassicraft.server.entity.vehicle;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.TourRailBlock;
+import org.jurassicraft.server.item.ItemHandler;
+import org.jurassicraft.server.message.UpdateFordExplorerStateMessage;
 
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleFunction;
+import java.util.function.Function;
 
-import org.jurassicraft.server.block.TourRailBlock;
-
-public class FordExplorerEntity extends CarEntity {
+public class FordExplorerEntity extends CarEntity implements IEntityAdditionalSpawnData {
     private static final double SQRT_2 = Math.sqrt(2);
 
     private static final double SQRT_2_OVER_2 = SQRT_2 / 2;
@@ -24,20 +37,34 @@ public class FordExplorerEntity extends CarEntity {
 
     private static final float RAIL_HEIGHT = 0.15F;
 
-    private State state = new StateOffRail();
+    private State state = new StateOffRail(this);
 
     private double headX, headY, headZ;
 
     private double tailX, tailY, tailZ;
 
-    private final float speed = 0.3F;
+    private float speed = 0.0F;
 
     public FordExplorerEntity(World world) {
         super(world);
     }
 
-    private void setState(State state) {
-        this.state = state;
+    public void setState(State state) {
+        if (state.getType() != this.state.getType()) {
+            this.state = state;
+            if (!this.world.isRemote) {
+                WorldServer worldServer = (WorldServer) this.world;
+                Set<? extends EntityPlayer> trackers = worldServer.getEntityTracker().getTrackingPlayers(this);
+                UpdateFordExplorerStateMessage message = new UpdateFordExplorerStateMessage(this);
+                for (EntityPlayer player : trackers) {
+                    JurassiCraft.NETWORK_WRAPPER.sendTo(message, (EntityPlayerMP) player);
+                }
+            }
+        }
+    }
+
+    public State getState() {
+        return this.state;
     }
 
     @Override
@@ -45,9 +72,21 @@ public class FordExplorerEntity extends CarEntity {
         return this.state.getControllingPassenger();
     }
 
+    private Entity getActualControllingPassenger() {
+        return super.getControllingPassenger();
+    }
+
     @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
+
+        if (!this.isInWater()) {
+            if (this.forward()) {
+                this.speed += 0.3F;
+            }
+        }
+        this.speed *= 0.8F;
+
         if (!this.world.isRemote) {
             this.state.update();
         }
@@ -71,7 +110,7 @@ public class FordExplorerEntity extends CarEntity {
     }
 
     private void setBodyToPos() {
-        Vec3d v = getVectorForRotation(this.rotationPitch, this.rotationYaw);
+        Vec3d v = this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
         double dx = v.xCoord * (FordExplorerEntity.LENGTH / 2);
         double dy = v.yCoord * (FordExplorerEntity.LENGTH / 2);
         double dz = v.zCoord * (FordExplorerEntity.LENGTH / 2);
@@ -79,6 +118,20 @@ public class FordExplorerEntity extends CarEntity {
         this.tailX = this.posX - dx;
         this.tailY = this.posY - dy;
         this.tailZ = this.posZ - dz;
+        BlockPos.MutableBlockPos tail = new BlockPos.MutableBlockPos((int) this.tailX, (int) this.tailY, (int) this.tailZ);
+        if (this.world.isBlockLoaded(tail)) {
+            int offset = this.world.isSideSolid(tail, EnumFacing.UP) ? 1 : -1;
+            while (this.world.isSideSolid(tail.up(offset), EnumFacing.UP)) {
+                tail.setY(tail.getY() + offset);
+                this.tailY = tail.getY() + 1;
+            }
+            AxisAlignedBB bounds = this.world.getBlockState(tail).getCollisionBoundingBox(this.world, tail);
+            if (bounds != null) {
+                this.tailY = (this.tailY - 1) + bounds.maxY;
+            } else {
+                this.tailY--;
+            }
+        }
     }
 
     public void setHead(double headX, double headY, double headZ) {
@@ -95,9 +148,13 @@ public class FordExplorerEntity extends CarEntity {
                 }
             }
             if (!this.world.isRemote) {
-                this.state.onMove(new BlockPos(this.headX, this.headY, this.headZ));
+                this.state.onMove(this.getHeadPos());
             }
         }
+    }
+
+    private BlockPos getHeadPos() {
+        return new BlockPos(this.headX, this.headY, this.headZ);
     }
 
     private void setPosToBody() {
@@ -105,16 +162,17 @@ public class FordExplorerEntity extends CarEntity {
         double dy = this.tailY - this.headY;
         double dz = this.tailZ - this.headZ;
         float yaw = (float) Math.toDegrees(MathHelper.atan2(dz, dx)) + 90;
-        float pitch = (float) Math.toDegrees(MathHelper.atan2(dy, MathHelper.sqrt(dx * dx + dz * dz)));
+        float pitch = (float) (Math.toDegrees(MathHelper.atan2(dy, MathHelper.sqrt(dx * dx + dz * dz))));
         this.setRotation(yaw, pitch);
         super.setPosition((this.headX + this.tailX) / 2, (this.headY + this.tailY) / 2 - FordExplorerEntity.RAIL_HEIGHT, (this.headZ + this.tailZ) / 2);
     }
 
     @Override
     public void dropItems() {
-        //this.dropItem(ItemHandler.FORD_EXPLORER, 1);
+        this.dropItem(ItemHandler.FORD_EXPLORER, 1);
     }
 
+    @Override
     protected Seat[] createSeats() {
         Seat frontLeft = new Seat(0, 0.563F, 0.35F, 0.35F, 0.5F, 0.25F);
         Seat frontRight = new Seat(1, -0.563F, 0.35F, 0.35F, 0.5F, 0.25F);
@@ -123,18 +181,75 @@ public class FordExplorerEntity extends CarEntity {
         return new Seat[] { frontLeft, frontRight, backLeft, backRight };
     }
 
-    private abstract class State {
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        if (this.state != null) {
+            NBTTagCompound state = new NBTTagCompound();
+            state.setByte("state_type", (byte) this.state.getType().ordinal());
+            this.state.serialize(state);
+            compound.setTag("state", state);
+        }
+    }
+
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        if (compound.hasKey("state")) {
+            NBTTagCompound state = compound.getCompoundTag("state");
+            byte stateType = state.getByte("state_type");
+            if (stateType >= 0 && stateType < StateType.values().length) {
+                this.state = StateType.values()[stateType].create(this);
+                this.state.deserialize(compound);
+            }
+        }
+    }
+
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeByte(this.state.getType().ordinal());
+    }
+
+    @Override
+    public void readSpawnData(ByteBuf additionalData) {
+        int stateTypeIndex = additionalData.readUnsignedByte();
+        FordExplorerEntity.StateType[] stateTypes = FordExplorerEntity.StateType.values();
+        StateType type = stateTypeIndex >= 0 && stateTypeIndex < stateTypes.length ? stateTypes[stateTypeIndex] : StateType.OFF_RAIL;
+        this.state = type.create(this);
+    }
+
+    public enum StateType {
+        OFF_RAIL(StateOffRail::new),
+        ON_RAIL(StateOnRail::new);
+
+        private final Function<FordExplorerEntity, ? extends State> supplier;
+
+        StateType(Function<FordExplorerEntity, ? extends State> supplier) {
+            this.supplier = supplier;
+        }
+
+        public State create(FordExplorerEntity entity) {
+            return this.supplier.apply(entity);
+        }
+    }
+
+    public static abstract class State {
+        protected FordExplorerEntity entity;
         private BlockPos prevHead;
 
+        private State(FordExplorerEntity entity) {
+            this.entity = entity;
+        }
+
         private void onMove(BlockPos pos) {
-            if (FordExplorerEntity.this.world.isBlockLoaded(pos)) {
-                IBlockState state = FordExplorerEntity.this.world.getBlockState(pos);
-                if (this.applies(this.isRail(state))) {
+            if (this.entity.world.isBlockLoaded(pos)) {
+                IBlockState state = this.entity.world.getBlockState(pos);
+                if (this.applies(this.isRail(state) && this.isPowered(state))) {
                     if (!pos.equals(this.prevHead)) {
                         this.onMove(pos, state);
                     }
                 } else {
-                    FordExplorerEntity.this.setState(this.getNextState(pos, state));
+                    this.entity.setState(this.getNextState(pos, state));
                 }
                 this.prevHead = pos;
             } else {
@@ -146,58 +261,38 @@ public class FordExplorerEntity extends CarEntity {
             return state.getBlock() instanceof TourRailBlock;
         }
 
+        boolean isPowered(IBlockState state) {
+            Block block = state.getBlock();
+            return block instanceof TourRailBlock && ((TourRailBlock) block).isPowered;
+        }
+
+        public abstract StateType getType();
+
         protected abstract Entity getControllingPassenger();
 
         protected abstract boolean applies(boolean isRail);
 
         protected abstract State getNextState(BlockPos pos, IBlockState state);
 
-        protected void onMove(BlockPos pos, IBlockState state) {}
+        protected abstract void serialize(NBTTagCompound compound);
 
-        protected void update() {}
-    }
+        protected abstract void deserialize(NBTTagCompound compound);
 
-    private final class StateOffRail extends State {
-        @Override
-        protected Entity getControllingPassenger() {
-            return FordExplorerEntity.super.getControllingPassenger();
+        protected void onMove(BlockPos pos, IBlockState state) {
         }
 
-        @Override
-        protected boolean applies(boolean isRail) {
-            return !isRail;
-        }
-
-        @Override
-        protected State getNextState(BlockPos pos, IBlockState state) {
-            return new StateOnRail(pos, state);
-        }
-
-        @Override
         protected void update() {
-            FordExplorerEntity.this.noClip = false;
-            FordExplorerEntity.this.setBodyToPos();
         }
     }
 
-    private final class StateOnRail extends State {
-        private BlockPos pos;
-
-        private OrientatedRail rail;
-
-        private Direction direction;
-
-        private float position;
-
-        private StateOnRail(BlockPos pos, IBlockState state) {
-            this.setPosition(pos, state);
-            this.direction = Direction.FORWARD;
+    public static final class StateOffRail extends State {
+        private StateOffRail(FordExplorerEntity entity) {
+            super(entity);
         }
 
-        private OrientatedRail setPosition(BlockPos pos, IBlockState state) {
-            this.pos = pos;
-            this.rail = OrientatedRail.get(state);
-            return this.rail;
+        @Override
+        public StateType getType() {
+            return StateType.OFF_RAIL;
         }
 
         @Override
@@ -207,12 +302,91 @@ public class FordExplorerEntity extends CarEntity {
 
         @Override
         protected boolean applies(boolean isRail) {
+            return !isRail;
+        }
+
+        @Override
+        protected State getNextState(BlockPos pos, IBlockState state) {
+            return new StateOnRail(this.entity, pos, state);
+        }
+
+        @Override
+        protected void serialize(NBTTagCompound compound) {
+        }
+
+        @Override
+        protected void deserialize(NBTTagCompound compound) {
+        }
+
+        @Override
+        protected void update() {
+            this.entity.noClip = false;
+            this.entity.setBodyToPos();
+        }
+    }
+
+    public static final class StateOnRail extends State {
+        private BlockPos pos;
+
+        private OrientatedRail rail;
+
+        private Direction direction;
+
+        private float position;
+
+        private StateOnRail(FordExplorerEntity entity, BlockPos pos, IBlockState state) {
+            super(entity);
+            this.setPosition(pos, state);
+            this.direction = Direction.FORWARD;
+        }
+
+        private StateOnRail(FordExplorerEntity entity) {
+            this(entity, BlockPos.ORIGIN, BlockHandler.TOUR_RAIL.getDefaultState());
+        }
+
+        private OrientatedRail setPosition(BlockPos pos, IBlockState state) {
+            this.pos = pos;
+            this.rail = OrientatedRail.get(state);
+            return this.rail;
+        }
+
+        @Override
+        public StateType getType() {
+            return StateType.ON_RAIL;
+        }
+
+        @Override
+        protected Entity getControllingPassenger() {
+            return this.entity.getActualControllingPassenger();
+        }
+
+        @Override
+        protected boolean applies(boolean isRail) {
             return isRail;
         }
 
         @Override
         protected State getNextState(BlockPos pos, IBlockState state) {
-            return new StateOffRail();
+            return new StateOffRail(this.entity);
+        }
+
+        @Override
+        protected void serialize(NBTTagCompound compound) {
+            compound.setInteger("x", this.pos.getX());
+            compound.setInteger("y", this.pos.getY());
+            compound.setInteger("z", this.pos.getZ());
+            compound.setFloat("position", this.position);
+            compound.setByte("rail_rotation", (byte) this.rail.rotation.ordinal());
+            compound.setByte("rail_shape", (byte) this.rail.shape.ordinal());
+            compound.setByte("direction", (byte) this.direction.ordinal());
+        }
+
+        @Override
+        protected void deserialize(NBTTagCompound compound) {
+            this.pos = new BlockPos(compound.getInteger("x"), compound.getInteger("y"), compound.getInteger("z"));
+            this.position = compound.getFloat("position");
+            this.rail = new OrientatedRail(RailShape.get(compound.getByte("rail_shape")), AxisRotation.get(compound.getByte("rail_rotation")));
+            this.direction = Direction.get(compound.getByte("direction"));
         }
 
         @Override
@@ -231,14 +405,14 @@ public class FordExplorerEntity extends CarEntity {
 
         @Override
         protected void update() {
-            FordExplorerEntity.this.noClip = true;
+            this.entity.noClip = true;
             Vec3d point = this.rail.pointAt(this.direction, this.position);
-            this.position += FordExplorerEntity.this.speed;
+            this.position += this.entity.speed;
             double x = this.pos.getX() + point.xCoord;
             double y = this.pos.getY() + point.yCoord;
             double z = this.pos.getZ() + point.zCoord;
-            FordExplorerEntity.this.setHead(x, y + FordExplorerEntity.RAIL_HEIGHT, z);
-            FordExplorerEntity.this.pull();
+            this.entity.setHead(x, y + FordExplorerEntity.RAIL_HEIGHT, z);
+            this.entity.pull();
         }
     }
 
@@ -258,7 +432,7 @@ public class FordExplorerEntity extends CarEntity {
             return this.rotation.apply(this.shape.getInput());
         }
 
-        private EnumFacing getOutputVector() {
+        public EnumFacing getOutputVector() {
             return this.rotation.apply(this.shape.getOutput());
         }
 
@@ -353,6 +527,13 @@ public class FordExplorerEntity extends CarEntity {
         }
 
         public abstract Direction opposite();
+
+        public static Direction get(int index) {
+            if (index < 0 || index >= Direction.values().length) {
+                return Direction.FORWARD;
+            }
+            return Direction.values()[index];
+        }
     }
 
     private enum RailShape {
@@ -388,11 +569,18 @@ public class FordExplorerEntity extends CarEntity {
         }
 
         public final EnumFacing getInput() {
-            return input;
+            return this.input;
         }
 
         public final EnumFacing getOutput() {
-            return output;
+            return this.output;
+        }
+
+        public static RailShape get(int index) {
+            if (index < 0 || index >= RailShape.values().length) {
+                return RailShape.STRAIGHT;
+            }
+            return RailShape.values()[index];
         }
     }
 
@@ -425,6 +613,13 @@ public class FordExplorerEntity extends CarEntity {
 
         public final EnumFacing apply(EnumFacing facing) {
             return EnumFacing.getHorizontal(facing.getHorizontalIndex() + this.ordinal());
+        }
+
+        public static AxisRotation get(int index) {
+            if (index < 0 || index >= AxisRotation.values().length) {
+                return AxisRotation.NONE;
+            }
+            return AxisRotation.values()[index];
         }
     }
 }

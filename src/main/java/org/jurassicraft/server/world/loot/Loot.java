@@ -136,9 +136,9 @@ public class Loot {
         } else if (name == Loot.VISITOR_DINING_HALL) {
             LootEntry[] basicItems = Loot.entries(LootItems.BASIC_DINING_HALL);
             LootEntry amber = Loot.entry(ItemHandler.AMBER).weight(2).count(0, 1).data(0, 1).build();
-            LootEntry teeth = Loot.entry(ItemHandler.FOSSILS.get("teeth")).weight(2).function(DINOSAUR_DATA).count(1, 2).build();
+            LootEntry tooth = Loot.entry(ItemHandler.FOSSILS.get("tooth")).weight(2).function(DINOSAUR_DATA).count(1, 2).build();
             LootEntry actionFigure = Loot.entry(ItemHandler.DISPLAY_BLOCK).function(DINOSAUR_DATA).weight(1).build();
-            table.addPool(Loot.pool("items").rolls(8, 11).entries(basicItems).entries(amber, teeth, actionFigure).build());
+            table.addPool(Loot.pool("items").rolls(8, 11).entries(basicItems).entries(amber, tooth, actionFigure).build());
         }
     }
 
