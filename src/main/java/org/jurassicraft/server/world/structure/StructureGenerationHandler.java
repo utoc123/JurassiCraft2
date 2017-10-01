@@ -8,6 +8,7 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.jurassicraft.JurassiCraft;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class StructureGenerationHandler implements IWorldGenerator {
                                 StructureGenerator generator = generatorEntry.generator.getConstructor(Random.class).newInstance(random);
                                 generator.generate(world, random, pos);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                JurassiCraft.INSTANCE.getLogger().error("Failed to generate structure", e);
                             }
                         }
                     }

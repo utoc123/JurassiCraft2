@@ -113,6 +113,7 @@ public class RaptorClimbTreeAI extends EntityAIBase {
                         }
                     }
                 }
+                this.entity.onGround = true;
             }
         } else {
             if (this.path.isFinished()) {

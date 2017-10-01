@@ -50,6 +50,7 @@ public class VisitorCentreGenerator extends StructureGenerator {
             BlockPos dataPos = entry.getKey();
             ResourceLocation lootTable = LOOT_TABLES.get(type);
             if (lootTable != null) {
+                world.setBlockToAir(dataPos);
                 TileEntity tile = world.getTileEntity(dataPos.down());
                 if (tile instanceof TileEntityChest) {
                     ((TileEntityChest) tile).setLootTable(lootTable, random.nextLong());
