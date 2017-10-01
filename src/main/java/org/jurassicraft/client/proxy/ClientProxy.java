@@ -51,6 +51,7 @@ import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
+import org.jurassicraft.server.command.KeyBindingHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.particle.VenomParticle;
@@ -71,10 +72,12 @@ public class ClientProxy extends ServerProxy {
     public void onPreInit(FMLPreInitializationEvent event) {
         super.onPreInit(event);
 
+        KeyBindingHandler.init();
+
         try {
             LanguageHandler.INSTANCE.loadRemoteLocalization(JurassiCraft.MODID);
         } catch (Exception e) {
-            e.printStackTrace();
+            JurassiCraft.INSTANCE.getLogger().error("Failed to load remote localizations", e);
         }
 
         ClientEventHandler eventHandler = new ClientEventHandler();

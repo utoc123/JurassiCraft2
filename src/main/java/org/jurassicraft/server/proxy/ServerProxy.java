@@ -29,7 +29,6 @@ import org.jurassicraft.server.block.entity.EmbryonicMachineBlockEntity;
 import org.jurassicraft.server.block.entity.FeederBlockEntity;
 import org.jurassicraft.server.block.entity.FossilGrinderBlockEntity;
 import org.jurassicraft.server.block.entity.IncubatorBlockEntity;
-import org.jurassicraft.server.command.KeyBindingHandler;
 import org.jurassicraft.server.container.CleaningStationContainer;
 import org.jurassicraft.server.container.CultivateContainer;
 import org.jurassicraft.server.container.DNACombinatorHybridizerContainer;
@@ -85,7 +84,6 @@ public class ServerProxy implements IGuiHandler {
         RecipeHandler.init();
         AchievementHandler.init();
         StorageTypeRegistry.init();
-        KeyBindingHandler.init();
         VillagerHandler.init();
 
         FoodNutrients.register();
