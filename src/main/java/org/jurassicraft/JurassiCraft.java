@@ -91,8 +91,6 @@ public class JurassiCraft {
                 case ITEM:
                     if (identifier.equals(new ResourceLocation(JurassiCraft.MODID, "action_figure"))) {
                         miss.remap(ItemHandler.DISPLAY_BLOCK);
-                    } else if (identifier.equals(new ResourceLocation(JurassiCraft.MODID, "action_figure_block"))) {
-                        miss.remap(ItemHandler.DISPLAY_BLOCK);
                     }
                     break;
             }
