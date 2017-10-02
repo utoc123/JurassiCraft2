@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeGroupContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
+import org.jurassicraft.JurassiCraft;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,12 +42,16 @@ public class TabulaModelHelper {
     public static List<TabulaCubeContainer> getAllCubes(TabulaModelContainer model) {
         List<TabulaCubeContainer> cubes = new ArrayList<>();
 
-        for (TabulaCubeGroupContainer cubeGroup : model.getCubeGroups()) {
-            cubes.addAll(traverse(cubeGroup));
-        }
+        try {
+            for (TabulaCubeGroupContainer cubeGroup : model.getCubeGroups()) {
+                cubes.addAll(traverse(cubeGroup));
+            }
 
-        for (TabulaCubeContainer cube : model.getCubes()) {
-            cubes.addAll(traverse(cube));
+            for (TabulaCubeContainer cube : model.getCubes()) {
+                cubes.addAll(traverse(cube));
+            }
+        } catch (Exception e) {
+            JurassiCraft.INSTANCE.getLogger().error("Failed to load all cubes for model {} by {}", model.getName(), model.getAuthor(), e);
         }
 
         return cubes;

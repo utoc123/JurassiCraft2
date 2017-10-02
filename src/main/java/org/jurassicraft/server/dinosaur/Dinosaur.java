@@ -163,9 +163,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     public void init() {
         String formattedName = this.getName().toLowerCase(Locale.ENGLISH).replaceAll(" ", "_");
 
-        //this.modelAdult = this.parseModel("adult");
-
-        for (GrowthStage stage : GrowthStage.values()) {
+        for (GrowthStage stage : GrowthStage.VALUES) {
             if (this.doesSupportGrowthStage(stage)) {
                 this.setModelContainer(stage, this.parseModel(stage.name().toLowerCase(Locale.ENGLISH)));
             } else {
@@ -726,7 +724,7 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public List<GrowthStage> getSupportedStages() {
         List<GrowthStage> supportedStages = new ArrayList<>(4);
-        for (GrowthStage stage : GrowthStage.values) {
+        for (GrowthStage stage : GrowthStage.VALUES) {
             if (this.doesSupportGrowthStage(stage)) {
                 supportedStages.add(stage);
             }

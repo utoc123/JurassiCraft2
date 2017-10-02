@@ -38,6 +38,8 @@ public class RecipeHandler {
             GameRegistry.addRecipe(new ItemStack(ItemHandler.ANCIENT_DOORS.get(type), 3), "ww", "ww", "ww", 'w', planks);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCES.get(type), 3), "wsw", "wsw", 'w', planks, 's', Items.STICK);
             GameRegistry.addRecipe(new ItemStack(BlockHandler.ANCIENT_FENCE_GATES.get(type), 3), "sws", "sws", 'w', planks, 's', Items.STICK);
+
+            GameRegistry.addSmelting(BlockHandler.ANCIENT_LOGS.get(type), new ItemStack(Items.COAL, 1, 1), 0.15F);
         }
 
         GameRegistry.addSmelting(new ItemStack(BlockHandler.GYPSUM_COBBLESTONE), new ItemStack(BlockHandler.GYPSUM_STONE), 1.5F);

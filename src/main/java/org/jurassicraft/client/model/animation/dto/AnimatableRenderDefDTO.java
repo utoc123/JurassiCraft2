@@ -29,7 +29,7 @@ public class AnimatableRenderDefDTO {
             AnimatableRenderDefDTO built = new AnimatableRenderDefDTO();
             built.version = def.get("version") == null ? 0 : def.get("version").getAsInt();
             built.perStage = new EnumMap<>(GrowthStage.class);
-            for (GrowthStage g : GrowthStage.values) {
+            for (GrowthStage g : GrowthStage.VALUES) {
                 JsonElement perhaps = def.get(g.name());
                 GrowthRenderDef renderDef = perhaps == null ? new GrowthRenderDef() : context.deserialize(perhaps, GrowthRenderDef.class);
                 if (renderDef.directory == null || renderDef.directory.isEmpty()) {
