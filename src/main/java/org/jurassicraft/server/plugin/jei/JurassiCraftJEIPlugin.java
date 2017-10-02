@@ -54,7 +54,7 @@ public class JurassiCraftJEIPlugin extends BlankModPlugin {
         blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.DISPLAY_BLOCK));
         blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.KRILL_SWARM));
         blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.PLANKTON_SWARM));
-        blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.TOUR_RAIL_POWERED));
+//        blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.TOUR_RAIL_POWERED)); TODO
         blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.RHAMNUS_SALICIFOLIUS_PLANT));
         blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.AJUGINUCULA_SMITHII));
         blacklist.addIngredientToBlacklist(new ItemStack(BlockHandler.WILD_ONION));
