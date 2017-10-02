@@ -44,7 +44,6 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     private ResourceLocation eggTexture;
     private float shadowSize = 0.65F;
 
-
     public DinosaurRenderInfo(Dinosaur dinosaur, EntityAnimator<?> animator, float shadowSize) {
         this.dinosaur = dinosaur;
         this.animator = animator;
@@ -90,7 +89,7 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     }
 
     public EntityAnimator<?> getModelAnimator(GrowthStage stage) {
-        if(stage == GrowthStage.SKELETON){
+        if (stage == GrowthStage.SKELETON) {
             return null;
         }
         return this.animator;
@@ -117,6 +116,6 @@ public class DinosaurRenderInfo implements IRenderFactory<DinosaurEntity> {
     }
 
     public AnimatableModel getModelAdult() {
-        return modelAdult;
+        return this.modelAdult;
     }
 }

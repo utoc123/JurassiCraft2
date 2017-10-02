@@ -575,14 +575,19 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         switch (stage) {
             case INFANT:
                 this.modelInfant = model;
+                break;
             case JUVENILE:
                 this.modelJuvenile = model;
+                break;
             case ADOLESCENT:
                 this.modelAdolescent = model;
+                break;
             case SKELETON:
                 this.modelSkeleton = model;
+                break;
             default:
                 this.modelAdult = model;
+                break;
         }
     }
 
