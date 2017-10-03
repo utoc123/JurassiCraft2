@@ -190,7 +190,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.navigator = new DinosaurPathNavigate(this, this.world);
         this.lookHelper = new DinosaurLookHelper(this);
-        this.legSolver = this.world == null || !this.world.isRemote ? null : createLegSolver();
+        this.legSolver = this.world == null || !this.world.isRemote ? null : this.createLegSolver();
 
         this.metabolism = new MetabolismContainer(this);
         this.inventory = new InventoryDinosaur(this);

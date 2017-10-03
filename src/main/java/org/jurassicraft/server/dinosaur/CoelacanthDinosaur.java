@@ -1,5 +1,8 @@
 package org.jurassicraft.server.dinosaur;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.BiomeDictionary;
 import org.jurassicraft.server.entity.Diet;
 import org.jurassicraft.server.entity.SleepTime;
@@ -41,5 +44,13 @@ public class CoelacanthDinosaur extends Dinosaur {
                 {"caudal_fin", "spine", "pectoral_fin_bones","skull"},
                 {"anal_fin","","pelvic_fin_bones","teeth"}};
         this.setRecipe(recipe);
+    }
+
+    @Override
+    public void applyMeatEffect(EntityPlayer player, boolean cooked) {
+        if (!cooked) {
+            player.addPotionEffect(new PotionEffect(MobEffects.POISON, 400, 1));
+        }
+        player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 200, 1));
     }
 }

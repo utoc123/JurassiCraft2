@@ -1,9 +1,11 @@
 package org.jurassicraft.server.item;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -28,18 +30,18 @@ public class DinosaurSteakItem extends ItemFood {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         Dinosaur dinosaur = this.getDinosaur(stack);
-
         return new LangHelper("item.dinosaur_steak.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
     }
 
-    public Dinosaur getDinosaur(ItemStack stack) {
-        Dinosaur dinosaur = EntityHandler.getDinosaurById(stack.getItemDamage());
-
-        if (dinosaur == null) {
-            dinosaur = EntityHandler.VELOCIRAPTOR;
+    @Override
+    protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
+        if (!world.isRemote) {
+            this.getDinosaur(stack).applyMeatEffect(player, true);
         }
+    }
 
-        return dinosaur;
+    public Dinosaur getDinosaur(ItemStack stack) {
+        return EntityHandler.getDinosaurById(stack.getItemDamage());
     }
 
     @Override

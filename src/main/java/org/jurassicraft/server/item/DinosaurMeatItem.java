@@ -7,6 +7,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.server.dinosaur.Dinosaur;
@@ -31,8 +32,14 @@ public class DinosaurMeatItem extends ItemFood {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         Dinosaur dinosaur = this.getDinosaur(stack);
-
         return new LangHelper("item.dinosaur_meat.name").withProperty("dino", "entity.jurassicraft." + dinosaur.getName().replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name").build();
+    }
+
+    @Override
+    protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
+        if (!world.isRemote) {
+            this.getDinosaur(stack).applyMeatEffect(player, false);
+        }
     }
 
     public Dinosaur getDinosaur(ItemStack stack) {

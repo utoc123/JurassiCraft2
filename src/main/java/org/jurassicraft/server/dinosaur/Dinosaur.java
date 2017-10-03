@@ -2,6 +2,7 @@ package org.jurassicraft.server.dinosaur;
 
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeContainer;
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import org.jurassicraft.JurassiCraft;
@@ -751,6 +752,9 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public String[][] getRecipe() {
         return this.recipe;
+    }
+
+    public void applyMeatEffect(EntityPlayer player, boolean cooked) {
     }
 
     public enum DinosaurType {
