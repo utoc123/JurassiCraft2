@@ -1,6 +1,15 @@
 package org.jurassicraft.server.entity.ai.navigation;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockFence;
+import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.BlockRailBase;
+import net.minecraft.block.BlockWall;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.pathfinding.WalkNodeProcessor;
@@ -8,6 +17,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
+import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 
 import javax.annotation.Nullable;
@@ -18,7 +29,6 @@ public class DinosaurWalkNodeProcessor extends WalkNodeProcessor {
     public DinosaurWalkNodeProcessor(Dinosaur dinosaur) {
         this.dinosaur = dinosaur;
     }
-
 
     @Override
     public int findPathOptions(PathPoint[] pathOptions, PathPoint currentPoint, PathPoint targetPoint, float maxDistance) {
@@ -185,7 +195,86 @@ public class DinosaurWalkNodeProcessor extends WalkNodeProcessor {
         }
     }
 
+    @Override
+    public PathNodeType getPathNodeType(IBlockAccess world, int x, int y, int z) {
+        PathNodeType nodeType = this.getPathNodeTypeRaw(world, x, y, z);
+
+        if (nodeType == PathNodeType.OPEN && y >= 1) {
+            Block block = world.getBlockState(new BlockPos(x, y - 1, z)).getBlock();
+            PathNodeType groundNodeType = this.getPathNodeTypeRaw(world, x, y - 1, z);
+            nodeType = groundNodeType != PathNodeType.WALKABLE && groundNodeType != PathNodeType.OPEN && groundNodeType != PathNodeType.WATER && groundNodeType != PathNodeType.LAVA ? PathNodeType.WALKABLE : PathNodeType.OPEN;
+
+            if (groundNodeType == PathNodeType.DAMAGE_FIRE || block == Blocks.MAGMA) {
+                nodeType = PathNodeType.DAMAGE_FIRE;
+            }
+
+            if (groundNodeType == PathNodeType.DAMAGE_CACTUS) {
+                nodeType = PathNodeType.DAMAGE_CACTUS;
+            }
+        }
+
+        BlockPos.PooledMutableBlockPos pool = BlockPos.PooledMutableBlockPos.retain();
+
+        if (nodeType == PathNodeType.WALKABLE) {
+            for (int offsetX = -1; offsetX <= 1; ++offsetX) {
+                for (int offsetZ = -1; offsetZ <= 1; ++offsetZ) {
+                    if (offsetX != 0 || offsetZ != 0) {
+                        Block block = world.getBlockState(pool.setPos(x + offsetX, y, z + offsetZ)).getBlock();
+                        if (block == Blocks.CACTUS || block == BlockHandler.LOW_SECURITY_FENCE_WIRE) {
+                            nodeType = PathNodeType.DANGER_CACTUS;
+                        } else if (block == Blocks.FIRE) {
+                            nodeType = PathNodeType.DANGER_FIRE;
+                        }
+                    }
+                }
+            }
+        }
+
+        pool.release();
+        return nodeType;
+    }
+
     private PathNodeType getPathNodeType(EntityLiving entity, int x, int y, int z) {
         return this.getPathNodeType(this.blockaccess, x, y, z, entity, this.entitySizeX, this.entitySizeY, this.entitySizeZ, this.getCanBreakDoors(), this.getCanEnterDoors());
+    }
+
+    private PathNodeType getPathNodeTypeRaw(IBlockAccess access, int x, int y, int z) {
+        BlockPos pos = new BlockPos(x, y, z);
+        IBlockState state = access.getBlockState(pos);
+        Block block = state.getBlock();
+        Material material = state.getMaterial();
+
+        if (material == Material.AIR) {
+            return PathNodeType.OPEN;
+        }
+
+        if (block == Blocks.TRAPDOOR || block == Blocks.IRON_TRAPDOOR || block == Blocks.WATERLILY) {
+            return PathNodeType.TRAPDOOR;
+        }
+        if (block == Blocks.FIRE) {
+            return PathNodeType.DAMAGE_FIRE;
+        }
+        if (block == Blocks.CACTUS || block == BlockHandler.LOW_SECURITY_FENCE_WIRE) {
+            return PathNodeType.DAMAGE_CACTUS;
+        }
+
+        if (block instanceof BlockDoor) {
+            if (!state.getValue(BlockDoor.OPEN)) {
+                return material == Material.WOOD ? PathNodeType.DOOR_WOOD_CLOSED : PathNodeType.DOOR_IRON_CLOSED;
+            }
+            return PathNodeType.DOOR_OPEN;
+        }
+        if (block instanceof BlockRailBase) {
+            return PathNodeType.RAIL;
+        }
+        if (block instanceof BlockFence || block instanceof BlockWall || (block instanceof BlockFenceGate && !state.getValue(BlockFenceGate.OPEN))) {
+            return PathNodeType.FENCE;
+        }
+
+        if (material.isLiquid()) {
+            return material == Material.LAVA ? PathNodeType.LAVA : PathNodeType.WATER;
+        }
+
+        return block.isPassable(access, pos) ? PathNodeType.OPEN : PathNodeType.BLOCKED;
     }
 }

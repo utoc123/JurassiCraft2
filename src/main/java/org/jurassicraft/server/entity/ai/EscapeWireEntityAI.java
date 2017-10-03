@@ -17,7 +17,7 @@ public class EscapeWireEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return this.entity.onWire;
+        return this.entity.wireTicks > 0;
     }
 
     @Override

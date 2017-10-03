@@ -2,7 +2,6 @@ package org.jurassicraft.server.entity.ai.navigation;
 
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.PathNavigateGround;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -10,6 +9,7 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 
 public class DinosaurPathNavigate extends PathNavigateGround {
     private DinosaurEntity dinosaur;
+
     public DinosaurPathNavigate(DinosaurEntity entity, World world) {
         super(entity, world);
         this.dinosaur = entity;
@@ -62,5 +62,4 @@ public class DinosaurPathNavigate extends PathNavigateGround {
     protected boolean canNavigate() {
         return !this.dinosaur.isMovementBlocked() && super.canNavigate();
     }
-    
 }

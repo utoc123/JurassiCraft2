@@ -2,6 +2,7 @@ package org.jurassicraft.server.entity.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.math.RayTraceResult;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
 
@@ -34,9 +35,11 @@ public class RaptorLeapEntityAI extends EntityAIBase {
             float distance = this.entity.getDistanceToEntity(target);
 
             if (distance >= 5 && distance <= 6 && this.entity.onGround) {
-                this.target = target;
-
-                return true;
+                RayTraceResult result = this.entity.world.rayTraceBlocks(this.entity.getPositionVector(), target.getPositionVector(), false);
+                if (result == null || result.typeOfHit != RayTraceResult.Type.BLOCK) {
+                    this.target = target;
+                    return true;
+                }
             }
         }
 

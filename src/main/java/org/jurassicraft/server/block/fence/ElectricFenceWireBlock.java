@@ -10,6 +10,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntitySenses;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -73,6 +74,18 @@ public class ElectricFenceWireBlock extends BlockContainer {
             maxX = 1.0;
         }
         return new AxisAlignedBB(minX, 0.0, minZ, maxX, 1.0, maxZ);
+    }
+
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (int i = 4; i < stackTrace.length; i++) {
+            StackTraceElement element = stackTrace[i];
+            if (element.getClassName().equals(EntitySenses.class.getName())) {
+                return NULL_AABB;
+            }
+        }
+        return super.getCollisionBoundingBox(state, world, pos);
     }
 
     @Override
@@ -224,7 +237,10 @@ public class ElectricFenceWireBlock extends BlockContainer {
             if (tile instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) tile).isPowered()) {
                 entity.attackEntityFrom(DamageSources.SHOCK, 1.0F);
                 if (entity instanceof DinosaurEntity) {
-                    ((DinosaurEntity) entity).onWire = true;
+                    DinosaurEntity dinosaur = (DinosaurEntity) entity;
+                    if (dinosaur.wireTicks < 2) {
+                        dinosaur.wireTicks++;
+                    }
                 }
                 if (entity.ticksExisted % 10 == 0) {
                     world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundHandler.FENCE_SHOCK, SoundCategory.BLOCKS, 0.25F, 1.0F);

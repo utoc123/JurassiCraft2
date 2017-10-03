@@ -152,7 +152,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public Family family;
     public Set<Relationship> relationships = new HashSet<>();
 
-    public boolean onWire;
+    public int wireTicks;
 
     private boolean isSittingNaturally;
 
@@ -1042,7 +1042,9 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.prevAge = this.dinosaurAge;
-        this.onWire = false;
+        if (this.wireTicks > 0) {
+            this.wireTicks--;
+        }
     }
 
     private void updateTailBuffer() {
