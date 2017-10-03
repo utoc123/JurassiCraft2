@@ -18,7 +18,7 @@ public class TriceratopsEntity extends DinosaurEntity {
 
     @Override
     protected LegSolver createLegSolver() {
-        return this.legSolver = new LegSolverQuadruped(0.2F, 1.2F, 1.0F);
+        return this.legSolver = new LegSolverQuadruped(0.2F, 1.2F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override

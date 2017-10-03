@@ -19,7 +19,7 @@ public class GallimimusEntity extends DinosaurEntity {
 
     @Override
     protected LegSolverBiped createLegSolver() {
-        return this.legSolver = new LegSolverBiped(-0.05F, 0.25F);
+        return this.legSolver = new LegSolverBiped(-0.05F, 0.25F, 0.5F);
     }
 
     @Override

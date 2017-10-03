@@ -9,9 +9,6 @@ import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.LegSolver;
 import org.jurassicraft.server.entity.LegSolverQuadruped;
 
-/**
- * Created by Codyr on 08/07/2017.
- */
 public class StegosaurusEntity extends DinosaurEntity {
     public LegSolverQuadruped legSolver;
 
@@ -21,7 +18,7 @@ public class StegosaurusEntity extends DinosaurEntity {
 
     @Override
     protected LegSolver createLegSolver() {
-        return this.legSolver = new LegSolverQuadruped(0.2F, 1.2F, 1.0F);
+        return this.legSolver = new LegSolverQuadruped(0.2F, 1.2F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override

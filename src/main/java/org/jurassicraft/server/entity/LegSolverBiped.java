@@ -3,8 +3,8 @@ package org.jurassicraft.server.entity;
 public final class LegSolverBiped extends LegSolver {
     public final Leg left, right;
 
-    public LegSolverBiped(float forward, float side) {
-        super(new Leg(forward, side), new Leg(forward, -side));
+    public LegSolverBiped(float forward, float side, float range) {
+        super(new Leg(forward, side, range), new Leg(forward, -side, range));
         this.left = this.legs[0];
         this.right = this.legs[1];
     }

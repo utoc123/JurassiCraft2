@@ -25,7 +25,7 @@ public class TyrannosaurusEntity extends DinosaurEntity {
 
     @Override
     protected LegSolverBiped createLegSolver() {
-        return this.legSolver = new LegSolverBiped(-0.5F, 1);
+        return this.legSolver = new LegSolverBiped(-0.5F, 1.0F, 1.0F);
     }
 
     @Override

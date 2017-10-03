@@ -1038,7 +1038,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         if (this.legSolver != null) {
-            this.legSolver.update(this);
+            double msc = this.dinosaur.getScaleInfant() / this.dinosaur.getScaleAdult();
+            this.legSolver.update(this, (float) this.interpolate(msc, 1.0) * this.getAttributes().getScaleModifier());
         }
 
         this.prevAge = this.dinosaurAge;

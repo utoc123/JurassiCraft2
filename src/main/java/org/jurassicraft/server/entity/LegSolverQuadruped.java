@@ -3,16 +3,16 @@ package org.jurassicraft.server.entity;
 public final class LegSolverQuadruped extends LegSolver {
     public final Leg backLeft, backRight, frontLeft, frontRight;
 
-    public LegSolverQuadruped(float forward, float side) {
-        this(0, forward, side);
+    public LegSolverQuadruped(float forward, float side, float frontRange, float backRange) {
+        this(0.0F, forward, side, frontRange, backRange);
     }
 
-    public LegSolverQuadruped(float forwardCenter, float forward, float side) {
+    public LegSolverQuadruped(float forwardCenter, float forward, float side, float frontRange, float backRange) {
         super(
-            new Leg(forwardCenter - forward, side),
-            new Leg(forwardCenter - forward, -side),
-            new Leg(forwardCenter + forward, side),
-            new Leg(forwardCenter + forward, -side)
+            new Leg(forwardCenter - forward, side, backRange),
+            new Leg(forwardCenter - forward, -side, backRange),
+            new Leg(forwardCenter + forward, side, frontRange),
+            new Leg(forwardCenter + forward, -side, frontRange)
         );
         this.backLeft = this.legs[0];
         this.backRight = this.legs[1];

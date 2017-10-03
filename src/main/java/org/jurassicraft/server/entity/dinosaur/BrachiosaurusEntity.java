@@ -20,7 +20,7 @@ public class BrachiosaurusEntity extends DinosaurEntity {
 
     @Override
     protected LegSolver createLegSolver() {
-        return legSolver = new LegSolverQuadruped(2.5F, 2);
+        return this.legSolver = new LegSolverQuadruped(2.5F, 2.0F, 1.0F, 1.0F);
     }
 
     @Override

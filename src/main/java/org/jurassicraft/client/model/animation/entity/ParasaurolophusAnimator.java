@@ -1,6 +1,7 @@
 package org.jurassicraft.client.model.animation.entity;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.client.model.AnimatableModel;
@@ -39,6 +40,9 @@ public class ParasaurolophusAnimator extends EntityAnimator<ParasaurolophusEntit
         AdvancedModelRenderer leftThigh = model.getCube("Thigh Left");
         AdvancedModelRenderer rightThigh = model.getCube("Thigh Right");
 
+        AdvancedModelRenderer leftCalf = model.getCube("Left Calf 1");
+        AdvancedModelRenderer rightCalf = model.getCube("Right Calf 1");
+
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { tail6, tail5, tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { head, neck3, neck2, neck1, waist, body2, body3 };
 
@@ -62,6 +66,13 @@ public class ParasaurolophusAnimator extends EntityAnimator<ParasaurolophusEntit
         model.walk(lowerArmLeft, 0.1F, 0.1F, true, -1.5F, 0F, ticks, 0.25F);
         model.walk(rightHand, 0.1F, 0.1F, false, -2F, 0F, ticks, 0.25F);
         model.walk(leftHand, 0.1F, 0.1F, false, -2F, 0F, ticks, 0.25F);
+
+        float delta = Minecraft.getMinecraft().getRenderPartialTicks();
+        LegArticulator.articulateQuadruped(entity, entity.legSolver, waist, neck1,
+                leftThigh, leftCalf, rightThigh, rightCalf, upperArmLeft, lowerArmLeft, upperArmRight, lowerArmRight,
+                0.5F, 0.5F, -1.4F, -1.4F,
+                delta
+        );
 
         model.chainWave(tail, 0.1F, -0.02F, 2, ticks, 1F);
 
