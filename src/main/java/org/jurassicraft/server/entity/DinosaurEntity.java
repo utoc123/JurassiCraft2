@@ -1760,14 +1760,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     @Override
-    public boolean isOnLadder() {
-        if (this.dinosaur.canClimb()) {
-            return this.isCollidedHorizontally;
-        }
-        return super.isOnLadder();
-    }
-
-    @Override
     public boolean isMoving() {
         float deltaX = (float) (this.posX - this.prevPosX);
         float deltaZ = (float) (this.posZ - this.prevPosZ);
