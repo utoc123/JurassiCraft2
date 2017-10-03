@@ -14,6 +14,7 @@ import java.util.Random;
 
 public class RaptorClimbTreeAI extends EntityAIBase {
     private static final int CLIMB_INTERVAL = 1200;
+    private static final int MAX_TREE_HEIGHT = 8;
 
     private final DinosaurEntity entity;
     private final double movementSpeed;
@@ -55,16 +56,30 @@ public class RaptorClimbTreeAI extends EntityAIBase {
                 IBlockState state = this.world.getBlockState(target);
                 if (state.getBlock().isWood(this.world, target)) {
                     for (EnumFacing direction : EnumFacing.HORIZONTALS) {
-                        if (!this.world.isSideSolid(target.offset(direction), EnumFacing.DOWN)) {
-                            float offsetX = direction.getFrontOffsetX() * (this.entity.width + 0.25F);
-                            float offsetZ = direction.getFrontOffsetZ() * (this.entity.width + 0.25F);
-                            this.targetTrunk = target;
-                            this.targetX = target.getX() + 0.5F + offsetX;
-                            this.targetY = target.getY();
-                            this.targetZ = target.getZ() + 0.5F + offsetZ;
-                            this.approachSide = direction;
-                            this.path = this.entity.getNavigator().getPathToXYZ(this.targetX, this.targetY, this.targetZ);
-                            return this.path != null;
+                        BlockPos offsetTarget = target.offset(direction);
+                        if (!this.world.isSideSolid(offsetTarget, EnumFacing.DOWN)) {
+                            boolean canTravel = true;
+                            for (int y = 0; y < MAX_TREE_HEIGHT; y++) {
+                                BlockPos climbPos = offsetTarget.up(y);
+                                IBlockState climbState = this.world.getBlockState(climbPos);
+                                if (!climbState.getBlock().isAir(climbState, this.world, climbPos) && !climbState.getBlock().isLeaves(climbState, this.world, climbPos)) {
+                                    canTravel = false;
+                                    break;
+                                }
+                            }
+                            if (canTravel) {
+                                float offsetX = direction.getFrontOffsetX() * (this.entity.width + 0.25F);
+                                float offsetZ = direction.getFrontOffsetZ() * (this.entity.width + 0.25F);
+                                this.targetTrunk = target;
+                                this.targetX = target.getX() + 0.5F + offsetX;
+                                this.targetY = target.getY();
+                                this.targetZ = target.getZ() + 0.5F + offsetZ;
+                                this.approachSide = direction;
+                                this.path = this.entity.getNavigator().getPathToXYZ(this.targetX, this.targetY, this.targetZ);
+                                if (this.path != null) {
+                                    return true;
+                                }
+                            }
                         }
                     }
                 } else if (state.getBlock().isAir(state, this.world, target)) {
