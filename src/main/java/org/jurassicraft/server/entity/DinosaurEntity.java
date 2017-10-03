@@ -1681,7 +1681,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public void resetAttackCooldown() {
-        this.attackCooldown = 100 + this.getRNG().nextInt(20);
+        this.attackCooldown = 50 + this.getRNG().nextInt(20);
     }
 
     public void respondToAttack(EntityLivingBase attacker) {

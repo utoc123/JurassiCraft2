@@ -116,10 +116,10 @@ public class Herd implements Iterable<DinosaurEntity> {
             int failedPaths = 0;
 
             for (DinosaurEntity entity : this) {
-                if (this.enemies.size() == 0 || this.fleeing) {
+                if (this.enemies.isEmpty() || this.fleeing) {
                     if (!(entity.getMetabolism().isHungry() || entity.getMetabolism().isThirsty()) && !entity.isMovementBlocked() && !entity.isInWater() && (this.fleeing || entity.getNavigator().noPath()) && (this.state == State.MOVING || this.random.nextInt(50) == 0)) {
-                        float entityMoveX = this.moveX * 2.0F;
-                        float entityMoveZ = this.moveZ * 2.0F;
+                        float entityMoveX = this.moveX * 8.0F;
+                        float entityMoveZ = this.moveZ * 8.0F;
 
                         float centerDistance = (float) Math.abs(entity.getDistance(this.center.xCoord, entity.posY, this.center.zCoord));
 
@@ -134,7 +134,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                         for (DinosaurEntity other : this) {
                             if (other != entity) {
-                                float distance = Math.abs(entity.getDistanceToEntity(other));
+                                float distance = entity.getDistanceToEntity(other);
 
                                 float separation = (entity.width * 1.5F) + 1.5F;
 
