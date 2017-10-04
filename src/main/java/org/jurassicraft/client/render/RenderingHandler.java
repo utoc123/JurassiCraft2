@@ -5,7 +5,6 @@ import net.ilexiconn.llibrary.client.model.tabula.TabulaModelHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -21,6 +20,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.client.model.MultipartStateMap;
 import org.jurassicraft.client.model.animation.EntityAnimator;
 import org.jurassicraft.client.model.animation.entity.BrachiosaurusAnimator;
 import org.jurassicraft.client.model.animation.entity.CoelacanthAnimator;
@@ -102,16 +102,21 @@ public enum RenderingHandler {
         }
 
         for (TreeType type : TreeType.values()) {
-            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockFenceGate.POWERED }).build());
-            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_DOORS.get(type), (new StateMap.Builder()).ignore(new IProperty[] { BlockDoor.POWERED }).build());
+            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCES.get(type), new MultipartStateMap());
+            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_FENCE_GATES.get(type), new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
+            ModelLoader.setCustomStateMapper(BlockHandler.ANCIENT_DOORS.get(type), new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         }
 
-        ModelLoader.setCustomStateMapper(BlockHandler.ENALLHELIA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.AULOPORA, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.CLADOCHONUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.LITHOSTROTION, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.STYLOPHYLLOPSIS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
-        ModelLoader.setCustomStateMapper(BlockHandler.HIPPURITES_RADIOSUS, (new StateMap.Builder().ignore(new IProperty[] { AncientCoralBlock.LEVEL })).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.ENALLHELIA, new StateMap.Builder().ignore(AncientCoralBlock.LEVEL).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.AULOPORA, new StateMap.Builder().ignore(AncientCoralBlock.LEVEL).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.CLADOCHONUS, new StateMap.Builder().ignore(AncientCoralBlock.LEVEL).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.LITHOSTROTION, new StateMap.Builder().ignore(AncientCoralBlock.LEVEL).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.STYLOPHYLLOPSIS, new StateMap.Builder().ignore(AncientCoralBlock.LEVEL).build());
+        ModelLoader.setCustomStateMapper(BlockHandler.HIPPURITES_RADIOSUS, new StateMap.Builder().ignore(AncientCoralBlock.LEVEL).build());
+
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_BASE, new MultipartStateMap());
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_POLE, new MultipartStateMap());
+        ModelLoader.setCustomStateMapper(BlockHandler.LOW_SECURITY_FENCE_WIRE, new MultipartStateMap());
 
         ItemHandler.DISPLAY_BLOCK.initModels(EntityHandler.getDinosaurs().values(), this);
 
