@@ -35,7 +35,7 @@ public class RaptorLeapEntityAI extends EntityAIBase {
             float distance = this.entity.getDistanceToEntity(target);
 
             if (distance >= 5 && distance <= 6 && this.entity.onGround) {
-                RayTraceResult result = this.entity.world.rayTraceBlocks(this.entity.getPositionVector(), target.getPositionVector(), false);
+                RayTraceResult result = this.entity.world.rayTraceBlocks(this.entity.getPositionVector().addVector(0.0, 1.0, 0.0), target.getPositionVector(), false, true, false);
                 if (result == null || result.typeOfHit != RayTraceResult.Type.BLOCK) {
                     this.target = target;
                     return true;

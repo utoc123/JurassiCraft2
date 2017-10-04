@@ -263,7 +263,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.ignoreFrustumCheck = true;
         this.setSkeleton(false);
-        this.updateBounds();
     }
 
     protected LegSolver createLegSolver() {
