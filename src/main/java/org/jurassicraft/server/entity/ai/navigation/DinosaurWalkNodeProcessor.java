@@ -13,12 +13,16 @@ import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.pathfinding.WalkNodeProcessor;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
-import org.jurassicraft.server.block.BlockHandler;
+import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
+import org.jurassicraft.server.block.fence.ElectricFenceBaseBlock;
+import org.jurassicraft.server.block.fence.ElectricFencePoleBlock;
+import org.jurassicraft.server.block.fence.ElectricFenceWireBlock;
 import org.jurassicraft.server.dinosaur.Dinosaur;
 
 import javax.annotation.Nullable;
@@ -219,11 +223,17 @@ public class DinosaurWalkNodeProcessor extends WalkNodeProcessor {
             for (int offsetX = -1; offsetX <= 1; ++offsetX) {
                 for (int offsetZ = -1; offsetZ <= 1; ++offsetZ) {
                     if (offsetX != 0 || offsetZ != 0) {
-                        Block block = world.getBlockState(pool.setPos(x + offsetX, y, z + offsetZ)).getBlock();
-                        if (block == Blocks.CACTUS || block == BlockHandler.LOW_SECURITY_FENCE_WIRE) {
+                        IBlockState state = world.getBlockState(pool.setPos(x + offsetX, y, z + offsetZ));
+                        Block block = state.getBlock();
+                        if (block == Blocks.CACTUS || block instanceof ElectricFenceBaseBlock || block instanceof ElectricFencePoleBlock) {
                             nodeType = PathNodeType.DANGER_CACTUS;
                         } else if (block == Blocks.FIRE) {
                             nodeType = PathNodeType.DANGER_FIRE;
+                        } else if (block instanceof ElectricFenceWireBlock) {
+                            TileEntity entity = world.getTileEntity(pool);
+                            if (entity instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) entity).isPowered()) {
+                                nodeType = PathNodeType.DAMAGE_CACTUS;
+                            }
                         }
                     }
                 }
@@ -254,8 +264,14 @@ public class DinosaurWalkNodeProcessor extends WalkNodeProcessor {
         if (block == Blocks.FIRE) {
             return PathNodeType.DAMAGE_FIRE;
         }
-        if (block == Blocks.CACTUS || block == BlockHandler.LOW_SECURITY_FENCE_WIRE) {
+
+        if (block == Blocks.CACTUS || block instanceof ElectricFenceBaseBlock || block instanceof ElectricFencePoleBlock) {
             return PathNodeType.DAMAGE_CACTUS;
+        } else if (block instanceof ElectricFenceWireBlock) {
+            TileEntity entity = access.getTileEntity(pos);
+            if (entity instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) entity).isPowered()) {
+                return PathNodeType.DAMAGE_CACTUS;
+            }
         }
 
         if (block instanceof BlockDoor) {

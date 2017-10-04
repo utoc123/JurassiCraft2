@@ -42,12 +42,11 @@ public class MicroraptorEntity extends DinosaurEntity {
 
     public MicroraptorEntity(World world) {
         super(world);
-        this.target(EntityPlayer.class, EntityChicken.class, EntityRabbit.class);
+        this.target(EntityChicken.class, EntityRabbit.class);
         this.tasks.addTask(1, new LeapingMeleeEntityAI(this, this.dinosaur.getAttackSpeed()));
         this.tasks.addTask(2, new RaptorClimbTreeAI(this, 1.0f));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
         this.animationTasks.addTask(3, new TailDisplayAnimationAI(this));
-        this.navigator = new DinosaurPathNavigateClimber(this, world);
     }
 
     @Override

@@ -263,6 +263,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
         this.ignoreFrustumCheck = true;
         this.setSkeleton(false);
+        this.updateBounds();
     }
 
     protected LegSolver createLegSolver() {
@@ -284,7 +285,11 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public boolean shouldSleep() {
-        return this.getDinosaurTime() > this.getDinosaur().getSleepTime().getAwakeTime() && !this.hasPredators() && !this.metabolism.isDehydrated() && !this.metabolism.isStarving() && !(this.herd != null && this.herd.enemies.size() > 0);
+        if (!this.metabolism.isDehydrated() && !this.metabolism.isStarving()) {
+            return false;
+        }
+        SleepTime sleepTime = this.getDinosaur().getSleepTime();
+        return sleepTime.shouldSleep() && this.getDinosaurTime() > sleepTime.getAwakeTime() && !this.hasPredators() && (this.herd == null || this.herd.enemies.isEmpty());
     }
 
     private boolean hasPredators() {
@@ -580,7 +585,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     public void updateAttributes() {
         double prevHealth = this.getMaxHealth();
-        double newHealth = this.interpolate(this.dinosaur.getBabyHealth(), this.dinosaur.getAdultHealth()) * this.attributes.getHealthModifier();
+        double newHealth = Math.max(1.0F, this.interpolate(this.dinosaur.getBabyHealth(), this.dinosaur.getAdultHealth()) * this.attributes.getHealthModifier());
         double speed = this.interpolate(this.dinosaur.getBabySpeed(), this.dinosaur.getAdultSpeed()) * this.attributes.getSpeedModifier();
         double strength = this.interpolate(this.dinosaur.getBabyStrength(), this.dinosaur.getAdultStrength()) * this.attributes.getDamageModifier();
 
@@ -598,8 +603,8 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
     private void updateBounds() {
         float scale = this.attributes.getScaleModifier();
-        float width = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()) * scale);
-        float height = Math.min(4.0F, (float) this.interpolate(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY()) * scale);
+        float width = MathHelper.clamp((float) this.interpolate(this.dinosaur.getBabySizeX(), this.dinosaur.getAdultSizeX()) * scale, 0.2F, 4.0F);
+        float height = MathHelper.clamp((float) this.interpolate(this.dinosaur.getBabySizeY(), this.dinosaur.getAdultSizeY()) * scale, 0.2F, 4.0F);
 
         this.stepHeight = Math.max(1.0F, (float) (Math.ceil(height / 2.0F) / 2.0F));
 

@@ -20,6 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
+import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
+import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.tab.TabHandler;
 
 public class ElectricFenceBaseBlock extends BlockContainer {
@@ -47,6 +49,20 @@ public class ElectricFenceBaseBlock extends BlockContainer {
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
+    }
+
+    @Override
+    public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
+        TileEntity wireEntity = world.getTileEntity(pos.up());
+        if (wireEntity instanceof ElectricFenceWireBlockEntity && ((ElectricFenceWireBlockEntity) wireEntity).isPowered()) {
+            if (entity instanceof DinosaurEntity) {
+                DinosaurEntity dinosaur = (DinosaurEntity) entity;
+                if (dinosaur.getDinosaur().canClimb()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
