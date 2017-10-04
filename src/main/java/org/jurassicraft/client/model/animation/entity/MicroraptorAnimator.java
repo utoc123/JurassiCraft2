@@ -24,6 +24,9 @@ public class MicroraptorAnimator extends EntityAnimator<MicroraptorEntity> {
         AdvancedModelRenderer lowerArmLeft = model.getCube("LeftArm2");
         AdvancedModelRenderer leftHand = model.getCube("LeftArm3");
 
+        AdvancedModelRenderer rightThigh = model.getCube("RightLeg1");
+        AdvancedModelRenderer leftThigh = model.getCube("LeftLeg1");
+
         AdvancedModelRenderer tail1 = model.getCube("Tail1");
         AdvancedModelRenderer tail2 = model.getCube("Tail1");
         AdvancedModelRenderer tail3 = model.getCube("Tail1");
@@ -40,6 +43,13 @@ public class MicroraptorAnimator extends EntityAnimator<MicroraptorEntity> {
         AdvancedModelRenderer[] leftArmParts = new AdvancedModelRenderer[] { leftHand, lowerArmLeft, upperArmLeft };
         AdvancedModelRenderer[] tailParts = new AdvancedModelRenderer[] { tail4, tail3, tail2, tail1 };
         AdvancedModelRenderer[] bodyParts = new AdvancedModelRenderer[] { waist, shoulders, neck1, neck2, head };
+
+        float globalSpeed = 1.0F;
+        float globalDegree = 3.0F;
+
+        model.bob(shoulders, globalSpeed * 1.0F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+        model.bob(rightThigh, globalSpeed * 1.0F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
+        model.bob(leftThigh, globalSpeed * 1.0F, globalDegree * 1.0F, false, limbSwing, limbSwingAmount);
 
         model.chainWave(tailParts, 0.1F, 0.05F, 2, ticks, 0.5F);
         model.chainWave(bodyParts, 0.1F, -0.03F, 5, ticks, 0.5F);

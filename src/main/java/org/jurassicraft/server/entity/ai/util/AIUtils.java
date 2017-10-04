@@ -5,6 +5,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,7 +64,7 @@ public class AIUtils {
         }
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getPosition();
-        return findSurface(world, pos);
+        return findSurface(world, pos.down(MathHelper.floor(entity.height / 2.0F)));
     }
 
     public static BlockPos findSurface(World world, BlockPos pos) {
@@ -110,7 +111,7 @@ public class AIUtils {
         while (radius < 32) {
             RingXZTraverser traverser = new RingXZTraverser(center, radius);
             for (BlockPos pos : traverser) {
-                IBlockState state = world.getBlockState(center);
+                IBlockState state = world.getBlockState(pos);
                 Block block = state.getBlock();
                 if (!(block instanceof BlockLiquid)) {
                     return pos;

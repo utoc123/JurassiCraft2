@@ -20,7 +20,7 @@ public class AdvancedSwimEntityAI extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return (this.entity.isInLava() || this.entity.isInWater()) && this.entity.getNavigator().noPath() && (this.entity.getAttackTarget() == null || this.entity.getAttackTarget().isDead);
+        return this.entity.isSwimming() && this.entity.getNavigator().noPath() && (this.entity.getAttackTarget() == null || this.entity.getAttackTarget().isDead);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AdvancedSwimEntityAI extends EntityAIBase {
         BlockPos surface = AIUtils.findSurface(this.entity);
 
         if (surface != null) {
-            this.shore = AIUtils.findShore(this.entity.getEntityWorld(), surface);
+            this.shore = AIUtils.findShore(this.entity.getEntityWorld(), surface.down());
 
             if (this.shore != null) {
                 this.path = this.entity.getNavigator().getPathToPos(this.shore.up());
@@ -41,20 +41,19 @@ public class AdvancedSwimEntityAI extends EntityAIBase {
 
     @Override
     public boolean continueExecuting() {
-        return this.shore != null;
+        Path currentPath = this.entity.getNavigator().getPath();
+        return this.shore != null && this.path != null && (currentPath == null || !currentPath.isFinished());
     }
 
     @Override
     public void updateTask() {
-        if (this.shore != null && this.entity.getNavigator().noPath()) {
-            if (this.path.isFinished() || !this.entity.getNavigator().setPath(this.path, 1.5)) {
-                this.shore = null;
+        Path currentPath = this.entity.getNavigator().getPath();
+        if (this.shore != null && !this.path.isSamePath(currentPath)) {
+            Path path = this.entity.getNavigator().getPathToPos(this.shore);
+            if (path != null && !path.isSamePath(currentPath)) {
+                this.path = path;
+                this.entity.getNavigator().setPath(path, 1.5);
             }
         }
     }
 }
-
-/*
-    - Wade if water isn't too deep
-    - Swim toward land
- */
