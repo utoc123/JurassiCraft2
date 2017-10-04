@@ -39,6 +39,7 @@ import org.jurassicraft.client.gui.OrderDinosaurGui;
 import org.jurassicraft.client.gui.SelectDinoGui;
 import org.jurassicraft.client.gui.SkeletonAssemblyGui;
 import org.jurassicraft.client.render.RenderingHandler;
+import org.jurassicraft.client.sound.CarSound;
 import org.jurassicraft.server.block.entity.BugCrateBlockEntity;
 import org.jurassicraft.server.block.entity.CleaningStationBlockEntity;
 import org.jurassicraft.server.block.entity.CultivatorBlockEntity;
@@ -55,6 +56,7 @@ import org.jurassicraft.server.command.KeyBindingHandler;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.entity.VenomEntity;
 import org.jurassicraft.server.entity.particle.VenomParticle;
+import org.jurassicraft.server.entity.vehicle.CarEntity;
 import org.jurassicraft.server.item.JournalItem;
 import org.jurassicraft.server.proxy.ServerProxy;
 
@@ -181,8 +183,8 @@ public class ClientProxy extends ServerProxy {
         MC.displayGuiScreen(new JournalGui(type));
     }
 
-    public static void playSound(ISound sound) {
-        MC.getSoundHandler().playSound(sound);
+    public static void playCarSound(CarEntity entity) {
+        MC.getSoundHandler().playSound(new CarSound(entity));
     }
 
     public static void stopSound(ISound sound) {

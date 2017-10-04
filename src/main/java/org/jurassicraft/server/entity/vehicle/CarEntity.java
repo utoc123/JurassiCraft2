@@ -379,7 +379,7 @@ public abstract class CarEntity extends Entity {
     }
 
     private void startSound() {
-        ClientProxy.playSound(new CarSound(this));
+        ClientProxy.playCarSound(this);
     }
 
     protected final class Seat {
