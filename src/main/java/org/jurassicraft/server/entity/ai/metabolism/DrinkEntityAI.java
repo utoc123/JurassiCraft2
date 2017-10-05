@@ -39,7 +39,7 @@ public class DrinkEntityAI extends EntityAIBase {
                     for (BlockPos pos : traverser) {
                         if (world.getBlockState(pos).getMaterial() == Material.WATER) {
                             BlockPos surface = AIUtils.findSurface(world, pos);
-                            BlockPos shore = AIUtils.findShore(world, surface);
+                            BlockPos shore = AIUtils.findShore(world, surface.down());
                             if (shore != null) {
                                 IBlockState state = world.getBlockState(shore);
                                 if (state.isFullBlock()) {
@@ -72,7 +72,7 @@ public class DrinkEntityAI extends EntityAIBase {
         if (this.path != null) {
             this.dinosaur.getNavigator().setPath(this.path, 1.0);
             Vec3d center = new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-            if (this.path.isFinished() || this.dinosaur.getEntityBoundingBox().expandXyz(2).isVecInside(center)) {
+            if (this.path.isFinished() || (this.dinosaur.getEntityBoundingBox().expandXyz(2).isVecInside(center) && this.giveUpTime < 10)) {
                 this.dinosaur.setAnimation(EntityAnimation.DRINKING.get());
                 MetabolismContainer metabolism = this.dinosaur.getMetabolism();
                 metabolism.setWater(metabolism.getWater() + (metabolism.getMaxWater() / 8));
