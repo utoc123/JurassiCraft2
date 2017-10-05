@@ -4,8 +4,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jurassicraft.client.model.animation.EntityAnimation;
 import org.jurassicraft.server.entity.DinosaurEntity;
@@ -14,7 +17,7 @@ import java.util.Random;
 
 public class RaptorClimbTreeAI extends EntityAIBase {
     private static final int CLIMB_INTERVAL = 1200;
-    private static final int MAX_TREE_HEIGHT = 8;
+    private static final int MAX_TREE_HEIGHT = 14;
 
     private final DinosaurEntity entity;
     private final double movementSpeed;
@@ -54,16 +57,23 @@ public class RaptorClimbTreeAI extends EntityAIBase {
             for (int iteration = 0; iteration <= 15; iteration++) {
                 target = target.up();
                 IBlockState state = this.world.getBlockState(target);
-                if (state.getBlock().isWood(this.world, target)) {
+                IBlockState ground = this.world.getBlockState(target.down());
+                if (state.getBlock().isWood(this.world, target) && !ground.getBlock().isWood(this.world, target.down())) {
                     for (EnumFacing direction : EnumFacing.HORIZONTALS) {
                         BlockPos offsetTarget = target.offset(direction);
                         if (!this.world.isSideSolid(offsetTarget, EnumFacing.DOWN)) {
                             boolean canTravel = true;
-                            for (int y = 0; y < MAX_TREE_HEIGHT; y++) {
-                                BlockPos climbPos = offsetTarget.up(y);
+                            int height = 0;
+                            for (; height < MAX_TREE_HEIGHT; height++) {
+                                BlockPos trunkPos = target.up(height);
+                                BlockPos climbPos = offsetTarget.up(height);
                                 IBlockState climbState = this.world.getBlockState(climbPos);
                                 if (!climbState.getBlock().isAir(climbState, this.world, climbPos) && !climbState.getBlock().isLeaves(climbState, this.world, climbPos)) {
                                     canTravel = false;
+                                    break;
+                                }
+                                IBlockState trunkState = this.world.getBlockState(trunkPos);
+                                if (!trunkState.getBlock().isWood(this.world, trunkPos)) {
                                     break;
                                 }
                             }
@@ -75,9 +85,12 @@ public class RaptorClimbTreeAI extends EntityAIBase {
                                 this.targetY = target.getY();
                                 this.targetZ = target.getZ() + 0.5F + offsetZ;
                                 this.approachSide = direction;
-                                this.path = this.entity.getNavigator().getPathToXYZ(this.targetX, this.targetY, this.targetZ);
-                                if (this.path != null) {
-                                    return true;
+                                AxisAlignedBB bounds = this.getBoundsAtPos(this.targetX, this.targetY, this.targetZ);
+                                if (!this.entity.world.collidesWithAnyBlock(bounds)) {
+                                    this.path = this.entity.getNavigator().getPathToXYZ(this.targetX, this.targetY, this.targetZ);
+                                    if (this.path != null) {
+                                        return true;
+                                    }
                                 }
                             }
                         }
@@ -88,6 +101,11 @@ public class RaptorClimbTreeAI extends EntityAIBase {
             }
         }
         return false;
+    }
+
+    private AxisAlignedBB getBoundsAtPos(double targetX, double targetY, double targetZ) {
+        float widthOffset = this.entity.width / 2.0F;
+        return new AxisAlignedBB(targetX - widthOffset, targetY, targetZ - widthOffset, targetX + widthOffset, targetY + this.entity.height, targetZ + widthOffset);
     }
 
     @Override
@@ -134,6 +152,11 @@ public class RaptorClimbTreeAI extends EntityAIBase {
             if (this.path.isFinished()) {
                 this.entity.setAnimation(EntityAnimation.START_CLIMBING.get());
                 this.reachedTarget = true;
+                Vec3d origin = this.entity.getPositionVector().addVector(0.0, this.entity.getEyeHeight(), 0.0);
+                RayTraceResult traceResult = this.world.rayTraceBlocks(origin, new Vec3d(this.targetX, this.targetY, this.targetZ), false, true, false);
+                if (traceResult != null && traceResult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                    this.path = null;
+                }
             }
         }
     }

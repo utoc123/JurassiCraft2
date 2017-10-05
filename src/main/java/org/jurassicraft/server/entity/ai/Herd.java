@@ -40,6 +40,7 @@ public class Herd implements Iterable<DinosaurEntity> {
     private Dinosaur herdType;
 
     private int nextMemberCheck;
+    private int failedPathTicks;
 
     public Herd(DinosaurEntity leader) {
         this.herdType = leader.getDinosaur();
@@ -53,7 +54,7 @@ public class Herd implements Iterable<DinosaurEntity> {
             this.updateLeader();
         }
 
-        if (this.stateTicks > 0) {
+        if (this.stateTicks > 0 && this.failedPathTicks < this.members.size() * 2) {
             this.stateTicks--;
         } else {
             this.state = this.state == State.MOVING ? State.STATIC : State.MOVING;
@@ -113,6 +114,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                 return;
             }
 
+            boolean attemptedPath = false;
             int failedPaths = 0;
 
             for (DinosaurEntity entity : this) {
@@ -166,6 +168,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                                     continue;
                                 }
                             }
+                            attemptedPath = true;
                             if (entity.getDistanceSqToCenter(navigatePos) > 16 && !entity.isMovementBlocked()) {
                                 boolean canMove = entity.getNavigator().tryMoveToXYZ(navigatePos.getX(), navigatePos.getY(), navigatePos.getZ(), speed);
                                 if (!canMove) {
@@ -186,11 +189,15 @@ public class Herd implements Iterable<DinosaurEntity> {
                 }
             }
 
-            if (failedPaths > this.members.size() / 3) {
-                this.moveX = -this.moveX + (this.random.nextFloat() - 0.5F) * 0.1F;
-                this.moveZ = -this.moveZ + (this.random.nextFloat() - 0.5F) * 0.1F;
-
-                this.normalizeMovement();
+            if (attemptedPath) {
+                if (failedPaths > this.members.size() / 4) {
+                    this.moveX = -this.moveX + (this.random.nextFloat() - 0.5F) * 0.1F;
+                    this.moveZ = -this.moveZ + (this.random.nextFloat() - 0.5F) * 0.1F;
+                    this.failedPathTicks++;
+                    this.normalizeMovement();
+                } else if (this.failedPathTicks > 0) {
+                    this.failedPathTicks--;
+                }
             }
 
             List<EntityLivingBase> invalidEnemies = new LinkedList<>();
@@ -234,6 +241,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
     private void resetStateTicks() {
         this.stateTicks = this.random.nextInt(this.state == State.MOVING ? 2000 : 4000) + 1000;
+        this.failedPathTicks = 0;
     }
 
     public void refreshMembers() {

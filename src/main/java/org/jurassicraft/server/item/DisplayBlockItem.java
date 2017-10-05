@@ -76,12 +76,10 @@ public class DisplayBlockItem extends Item {
                         stack.stackSize--;
                     }
                 }
-
-                return EnumActionResult.SUCCESS;
             }
         }
 
-        return EnumActionResult.PASS;
+        return EnumActionResult.SUCCESS;
     }
 
     @Override
