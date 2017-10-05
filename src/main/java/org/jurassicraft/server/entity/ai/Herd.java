@@ -28,7 +28,7 @@ public class Herd implements Iterable<DinosaurEntity> {
     private float moveX;
     private float moveZ;
 
-    public State state = State.STATIC;
+    public State state = State.IDLE;
     public int stateTicks;
 
     private Random random = new Random();
@@ -57,7 +57,12 @@ public class Herd implements Iterable<DinosaurEntity> {
         if (this.stateTicks > 0 && this.failedPathTicks < this.members.size() * 2) {
             this.stateTicks--;
         } else {
-            this.state = this.state == State.MOVING ? State.STATIC : State.MOVING;
+            if (this.herdType.shouldRandomlyFlock()) {
+                this.state = this.state == State.MOVING ? State.IDLE : State.MOVING;
+            } else {
+                this.state = State.IDLE;
+            }
+
             this.resetStateTicks();
             this.enemies.clear();
             this.fleeing = false;
@@ -65,7 +70,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
         if (this.leader != null) {
             if (this.leader.shouldSleep()) {
-                this.state = State.STATIC;
+                this.state = State.IDLE;
                 this.resetStateTicks();
             }
 
@@ -88,7 +93,7 @@ public class Herd implements Iterable<DinosaurEntity> {
 
                     this.normalizeMovement();
                 } else {
-                    this.state = State.STATIC;
+                    this.state = State.IDLE;
                 }
             } else {
                 this.fleeing = false;
@@ -152,7 +157,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                         double navigateZ = entity.posZ + entityMoveZ;
 
                         Dinosaur dinosaur = entity.getDinosaur();
-                        double speed = this.state == State.STATIC ? 0.8 : dinosaur.getFlockSpeed();
+                        double speed = this.state == State.IDLE ? 0.8 : dinosaur.getFlockSpeed();
 
                         if (this.fleeing) {
                             if (dinosaur.getAttackSpeed() > speed) {
@@ -212,10 +217,10 @@ public class Herd implements Iterable<DinosaurEntity> {
 
             if (this.fleeing && this.enemies.size() == 0) {
                 this.fleeing = false;
-                this.state = State.STATIC;
+                this.state = State.IDLE;
             }
 
-            if (this.state == State.STATIC) {
+            if (this.state == State.IDLE) {
                 this.moveX = 0.0F;
                 this.moveZ = 0.0F;
             } else {
@@ -403,6 +408,6 @@ public class Herd implements Iterable<DinosaurEntity> {
 
     public enum State {
         MOVING,
-        STATIC
+        IDLE
     }
 }

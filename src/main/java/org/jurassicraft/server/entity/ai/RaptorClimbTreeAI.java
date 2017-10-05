@@ -163,7 +163,7 @@ public class RaptorClimbTreeAI extends EntityAIBase {
 
     @Override
     public boolean continueExecuting() {
-        if (this.path == null) {
+        if (this.path == null || this.world.collidesWithAnyBlock(this.entity.getEntityBoundingBox())) {
             return false;
         }
         if (!this.reachedTarget) {

@@ -56,6 +56,8 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
     private String headCubeName;
     private boolean isImprintable;
 
+    private boolean randomFlock = true;
+
     private float scaleInfant;
     private float scaleAdult;
 
@@ -284,6 +286,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
         this.maxHerdSize = herdSize;
     }
 
+    public void setRandomFlock(boolean randomFlock) {
+        this.randomFlock = randomFlock;
+    }
+
     public void disableRegistry() {
         this.shouldRegister = false;
     }
@@ -379,6 +385,10 @@ public abstract class Dinosaur implements Comparable<Dinosaur> {
 
     public float getAdultEyeHeight() {
         return this.adultEyeHeight;
+    }
+
+    public boolean shouldRandomlyFlock() {
+        return this.randomFlock;
     }
 
     public int getMaximumAge() {

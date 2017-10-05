@@ -13,6 +13,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -32,7 +33,6 @@ import org.jurassicraft.server.entity.ai.RaptorClimbTreeAI;
 import org.jurassicraft.server.entity.ai.RaptorLeapEntityAI;
 import org.jurassicraft.server.entity.ai.animations.BirdPreenAnimationAI;
 import org.jurassicraft.server.entity.ai.animations.TailDisplayAnimationAI;
-import org.jurassicraft.server.entity.ai.navigation.DinosaurPathNavigateClimber;
 import org.jurassicraft.server.message.MicroraptorDismountMessage;
 
 public class MicroraptorEntity extends DinosaurEntity {
@@ -47,6 +47,11 @@ public class MicroraptorEntity extends DinosaurEntity {
         this.tasks.addTask(2, new RaptorClimbTreeAI(this, 1.0f));
         this.animationTasks.addTask(3, new BirdPreenAnimationAI(this));
         this.animationTasks.addTask(3, new TailDisplayAnimationAI(this));
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource damageSource, float amount) {
+        return damageSource != DamageSource.flyIntoWall && super.attackEntityFrom(damageSource, amount);
     }
 
     @Override

@@ -381,7 +381,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
                             member.setAttackTarget(null);
                         }
                     }
-                    this.herd.state = Herd.State.STATIC;
+                    this.herd.state = Herd.State.IDLE;
                 }
             }
             return true;
@@ -814,7 +814,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
 
             if (!this.world.isRemote) {
                 if (this.order == Order.WANDER) {
-                    if (this.herd.state == Herd.State.STATIC && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry() && this.getNavigator().noPath()) {
+                    if (this.herd.state == Herd.State.IDLE && this.getAttackTarget() == null && !this.metabolism.isThirsty() && !this.metabolism.isHungry() && this.getNavigator().noPath()) {
                         if (!this.isSleeping && this.onGround && !this.isInWater() && this.getAnimation() == EntityAnimation.IDLE.get() && this.rand.nextInt(800) == 0) {
                             this.setAnimation(EntityAnimation.RESTING.get());
                             this.isSittingNaturally = true;
@@ -1624,9 +1624,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
             this.height = height;
             if (!this.deserializing) {
                 AxisAlignedBB bounds = this.getEntityBoundingBox();
-                this.setEntityBoundingBox(new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + this.width, bounds.minY + this.height, bounds.minZ + this.width));
-                if (this.width > prevWidth && !this.firstUpdate && !this.world.isRemote) {
-                    this.move(prevWidth - this.width, 0.0F, prevWidth - this.width);
+                AxisAlignedBB newBounds = new AxisAlignedBB(bounds.minX, bounds.minY, bounds.minZ, bounds.minX + this.width, bounds.minY + this.height, bounds.minZ + this.width);
+                if (!this.world.collidesWithAnyBlock(newBounds)) {
+                    this.setEntityBoundingBox(newBounds);
+                    if (this.width > prevWidth && !this.firstUpdate && !this.world.isRemote) {
+                        this.move(prevWidth - this.width, 0.0F, prevWidth - this.width);
+                    }
                 }
             } else {
                 float halfWidth = this.width / 2.0F;

@@ -73,6 +73,7 @@ public class DrinkEntityAI extends EntityAIBase {
             this.dinosaur.getNavigator().setPath(this.path, 1.0);
             Vec3d center = new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
             if (this.path.isFinished() || (this.dinosaur.getEntityBoundingBox().expandXyz(2).isVecInside(center) && this.giveUpTime < 10)) {
+                this.dinosaur.getLookHelper().setLookPosition(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, 10.0F, 10.0F);
                 this.dinosaur.setAnimation(EntityAnimation.DRINKING.get());
                 MetabolismContainer metabolism = this.dinosaur.getMetabolism();
                 metabolism.setWater(metabolism.getWater() + (metabolism.getMaxWater() / 8));
