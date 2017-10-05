@@ -32,7 +32,7 @@ public enum EntityAnimation {
     LAYING_EGG,
     GIVING_BIRTH,
     GLIDING(true, false, true),
-    ON_LAND(false, false, false),
+    ON_LAND(false, true, false),
     WALKING(false, false, false), RUNNING(false, false, false), SWIMMING(false, false, false), FLYING(false, false, false), CLIMBING(false, false, false),
     PREPARE_LEAP(false, false), LEAP(true, false), LEAP_LAND(true, false, false),
     START_CLIMBING(false, false),

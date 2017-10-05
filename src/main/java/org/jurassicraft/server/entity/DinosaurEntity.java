@@ -153,6 +153,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     public Set<Relationship> relationships = new HashSet<>();
 
     public int wireTicks;
+    public int disableHerdingTicks;
 
     private boolean isSittingNaturally;
 
@@ -284,7 +285,7 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
     }
 
     public boolean shouldSleep() {
-        if (!this.metabolism.isDehydrated() && !this.metabolism.isStarving()) {
+        if (this.metabolism.isDehydrated() || this.metabolism.isStarving()) {
             return false;
         }
         SleepTime sleepTime = this.getDinosaur().getSleepTime();
@@ -1040,6 +1041,12 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         if (this.stayAwakeTime > 0) {
             this.stayAwakeTime--;
         }
+        if (this.wireTicks > 0) {
+            this.wireTicks--;
+        }
+        if (this.disableHerdingTicks > 0) {
+            this.disableHerdingTicks--;
+        }
 
         if (this.legSolver != null) {
             double msc = this.dinosaur.getScaleInfant() / this.dinosaur.getScaleAdult();
@@ -1047,9 +1054,6 @@ public abstract class DinosaurEntity extends EntityCreature implements IEntityAd
         }
 
         this.prevAge = this.dinosaurAge;
-        if (this.wireTicks > 0) {
-            this.wireTicks--;
-        }
     }
 
     private void updateTailBuffer() {

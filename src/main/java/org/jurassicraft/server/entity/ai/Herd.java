@@ -165,7 +165,7 @@ public class Herd implements Iterable<DinosaurEntity> {
                             }
                         }
 
-                        if (entity.getAttackTarget() == null && (this.members.size() > 1 || this.fleeing)) {
+                        if (entity.disableHerdingTicks <= 0 && entity.getAttackTarget() == null && (this.members.size() > 1 || this.fleeing)) {
                             BlockPos navigatePos = entity.world.getHeight(new BlockPos(navigateX, 0, navigateZ)).up();
                             if (entity.getNavigator().getPath() != null && !entity.getNavigator().getPath().isFinished()) {
                                 PathPoint finalPoint = entity.getNavigator().getPath().getFinalPathPoint();

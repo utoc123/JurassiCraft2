@@ -240,6 +240,7 @@ public class ElectricFenceWireBlock extends BlockContainer {
                     DinosaurEntity dinosaur = (DinosaurEntity) entity;
                     if (dinosaur.wireTicks < 2) {
                         dinosaur.wireTicks++;
+                        dinosaur.disableHerdingTicks = 200;
                     }
                 }
                 if (entity.ticksExisted % 10 == 0) {

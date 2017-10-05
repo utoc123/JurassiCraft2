@@ -10,12 +10,14 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -23,6 +25,9 @@ import org.jurassicraft.server.block.entity.ElectricFenceBaseBlockEntity;
 import org.jurassicraft.server.block.entity.ElectricFenceWireBlockEntity;
 import org.jurassicraft.server.entity.DinosaurEntity;
 import org.jurassicraft.server.tab.TabHandler;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ElectricFenceBaseBlock extends BlockContainer {
     public static final PropertyDirection FACING_BIAS = BlockHorizontal.FACING;
@@ -33,12 +38,23 @@ public class ElectricFenceBaseBlock extends BlockContainer {
     public static final PropertyBool EAST = PropertyBool.create("east");
     public static final PropertyInteger CONNECTIONS = PropertyInteger.create("connections", 0, 4);
 
+    private static final AxisAlignedBB EXTENDED_BOUNDS = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.5, 1.0);
+
     public ElectricFenceBaseBlock() {
         super(Material.IRON);
         this.setHardness(3.5F);
         this.setCreativeTab(TabHandler.BLOCKS);
         this.setSoundType(SoundType.METAL);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING_BIAS, EnumFacing.NORTH).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(WEST, false).withProperty(EAST, false));
+    }
+
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity) {
+        if (entity instanceof DinosaurEntity && !world.isAirBlock(pos.up())) {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, EXTENDED_BOUNDS);
+        } else {
+            super.addCollisionBoxToList(state, world, pos, entityBox, collidingBoxes, entity);
+        }
     }
 
     @Override
