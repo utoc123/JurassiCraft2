@@ -1,6 +1,7 @@
 package org.jurassicraft.server.entity.ai.metabolism;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +22,8 @@ public class GrazeEntityAI extends EntityAIBase {
 
     protected DinosaurEntity dinosaur;
     protected BlockPos target;
+    protected BlockPos moveTarget;
+
     private int counter;
     private World world;
     private BlockPos previousTarget;
@@ -34,7 +37,7 @@ public class GrazeEntityAI extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         if (!(this.dinosaur.isDead || this.dinosaur.isCarcass() || !GameRuleHandler.DINO_METABOLISM.getBoolean(this.dinosaur.world)) && this.dinosaur.getMetabolism().isHungry()) {
-            if (!this.dinosaur.getMetabolism().isStarving() && this.dinosaur.getClosestFeeder() == null) {
+            if (!this.dinosaur.getMetabolism().isStarving() && this.dinosaur.getClosestFeeder() != null) {
                 return false;
             }
 
@@ -56,16 +59,24 @@ public class GrazeEntityAI extends EntityAIBase {
                 Block block = this.world.getBlockState(pos).getBlock();
                 if (FoodHelper.isEdible(this.dinosaur, this.dinosaur.getDinosaur().getDiet(), block) && pos != this.previousTarget) {
                     this.target = pos;
+                    for (int i = 0; i < 16; i++) {
+                        IBlockState state = this.world.getBlockState(pos);
+                        if (!state.getBlock().isLeaves(state, this.world, pos) && !state.getBlock().isAir(state, this.world, pos)) {
+                            break;
+                        }
+                        pos = pos.down();
+                    }
+                    this.moveTarget = pos;
                     this.targetVec = new Vec3d(this.target.getX(), this.target.getY(), this.target.getZ());
                     break;
                 }
             }
 
-            if (this.target != null) {
+            if (this.moveTarget != null) {
                 if (metabolism.isStarving()) {
-                    this.dinosaur.getNavigator().tryMoveToXYZ(this.target.getX(), this.target.getY(), this.target.getZ(), 1.2);
+                    this.dinosaur.getNavigator().tryMoveToXYZ(this.moveTarget.getX(), this.moveTarget.getY(), this.moveTarget.getZ(), 1.2);
                 } else {
-                    this.dinosaur.getNavigator().tryMoveToXYZ(this.target.getX(), this.target.getY(), this.target.getZ(), 0.7);
+                    this.dinosaur.getNavigator().tryMoveToXYZ(this.moveTarget.getX(), this.moveTarget.getY(), this.moveTarget.getZ(), 0.7);
                 }
                 return true;
             }
