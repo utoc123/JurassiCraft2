@@ -31,8 +31,9 @@ public class SkeletonAssemblyRecipeWrapper implements IRecipeWrapper {
 
         List<ItemStack> inputs = new ArrayList<>(recipe.length);
         for (String[] row : recipe) {
-            for (String column : row) {
-                if (column != null && !column.isEmpty()) {
+            for (int i = 0; i < 5; i++) {
+                String column = i < row.length ? row[i] : "";
+                if (!column.isEmpty()) {
                     inputs.add(new ItemStack(fossils.get(column), 1, id));
                 } else {
                     inputs.add(null);

@@ -31,10 +31,8 @@ public class SmartBodyHelper extends EntityBodyHelper {
     @Override
     public void updateRenderAngles() {
         if (!this.entity.isDead && !(this.entity instanceof DinosaurEntity && ((DinosaurEntity) this.entity).isCarcass())) {
-            for (int i = this.histPosX.length - 1; i > 0; i--) {
-                this.histPosX[i] = this.histPosX[i - 1];
-                this.histPosZ[i] = this.histPosZ[i - 1];
-            }
+            System.arraycopy(this.histPosX, 0, this.histPosX, 1, this.histPosX.length - 1);
+            System.arraycopy(this.histPosZ, 0, this.histPosZ, 1, this.histPosZ.length - 1);
             this.histPosX[0] = this.entity.posX;
             this.histPosZ[0] = this.entity.posZ;
             double dx = this.delta(this.histPosX);

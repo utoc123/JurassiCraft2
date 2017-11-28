@@ -13,176 +13,136 @@ import net.minecraft.world.World;
 import org.jurassicraft.server.block.BlockHandler;
 import org.jurassicraft.server.container.slot.FossilSlotCrafting;
 import org.jurassicraft.server.container.slot.SkeletonCraftingSlot;
+import org.jurassicraft.server.dinosaur.Dinosaur;
+import org.jurassicraft.server.entity.EntityHandler;
 import org.jurassicraft.server.item.DisplayBlockItem;
 import org.jurassicraft.server.item.FossilItem;
 import org.jurassicraft.server.item.ItemHandler;
-import org.jurassicraft.server.util.LangHelper;
 
 import javax.annotation.Nullable;
 
 public class SkeletonAssemblyContainer extends Container {
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 5, 5);
+    private static final int WIDTH = 5;
+    private static final int HEIGHT = 5;
+
+    public InventoryCrafting craftMatrix = new InventoryCrafting(this, WIDTH, HEIGHT);
     public IInventory craftResult = new InventoryCraftResult();
     private final World worldObj;
     private final BlockPos pos;
-    public String error;
 
-    public SkeletonAssemblyContainer(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
-        this.worldObj = worldIn;
-        this.pos = posIn;
-        this.addSlotToContainer(new SkeletonCraftingSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 140, 52));
+    public SkeletonAssemblyContainer(InventoryPlayer inventory, World world, BlockPos pos) {
+        this.worldObj = world;
+        this.pos = pos;
+        this.addSlotToContainer(new SkeletonCraftingSlot(inventory.player, this.craftMatrix, this.craftResult, 0, 140, 52));
 
-        for (int i = 0; i < 5; ++i) {
-            for (int j = 0; j < 5; ++j) {
-                this.addSlotToContainer(new FossilSlotCrafting(this.craftMatrix, j + i * 5, 16 + j * 18, 16 + i * 18));
+        for (int y = 0; y < HEIGHT; ++y) {
+            for (int x = 0; x < WIDTH; ++x) {
+                this.addSlotToContainer(new FossilSlotCrafting(this.craftMatrix, x + y * WIDTH, 16 + x * 18, 16 + y * 18));
             }
         }
 
-        for (int k = 0; k < 3; ++k) {
-            for (int i1 = 0; i1 < 9; ++i1) {
-                this.addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 119 + k * 18));
+        for (int y = 0; y < 3; ++y) {
+            for (int x = 0; x < 9; ++x) {
+                this.addSlotToContainer(new Slot(inventory, x + y * 9 + 9, 8 + x * 18, 119 + y * 18));
             }
         }
 
-        for (int l = 0; l < 9; ++l) {
-            this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 177));
+        for (int x = 0; x < 9; ++x) {
+            this.addSlotToContainer(new Slot(inventory, x, 8 + x * 18, 177));
         }
 
         this.onCraftMatrixChanged(this.craftMatrix);
     }
 
-/*    @Override
+    @Override
     public void onCraftMatrixChanged(IInventory inventory) {
-        this.error = "";
-        boolean init = false;
-        boolean fresh = false;
-        int dino = 0;
-        String[] needed = new String[0];
-        int[] needWeights = new int[0];
-        for (int i = 0; i < 25; i++) {
-            ItemStack is = this.craftMatrix.getStackInSlot(i);
-            if (is != null) {
-                if (!(is.getItem() instanceof FossilItem)) {
-                    this.craftResult.setInventorySlotContents(0, null);
-                    return;
-                }
-                FossilItem item = ((FossilItem) is.getItem());
-                if (!init) {
-                    init = true;
-                    dino = is.getMetadata();
-                    fresh = item.isFresh();
-                    needed = item.getDinosaur(is).getBones();
-                    needWeights = new int[needed.length];
-                    for (int x = 0; x < needed.length; x++) {
-                        needWeights[x] = (needed[x].indexOf("leg") > -1) ? 2 : 1;
-                        // System.out.println(needed[x]+" = "+needWeights[x]);
-                    }
-                }
-                if (fresh != item.isFresh() || dino != is.getMetadata()) {
-                    this.error = new LangHelper("crafting.skeleton.mismatched").build();
-                    this.craftResult.setInventorySlotContents(0, null);
-                    return;
-                } else {
-                    String bone = item.getBoneType();
-                    for (int x = 0; x < needed.length; x++) {
-                        if (bone.equals(needed[x])) {
-                            needWeights[x] = needWeights[x] - 1;
-                            // System.out.println(needed[x]+" now =
-                            // "+needWeights[x]);
-                            break;
+        this.craftResult.setInventorySlotContents(0, this.getResult());
+    }
+
+    private ItemStack getResult() {
+        AssemblyData data = this.getAssemblyData();
+        if (data != null) {
+            String[][] recipe = data.dinosaur.getRecipe();
+            int targetWidth = recipe[0].length;
+            int targetHeight = recipe.length;
+
+            Bounds bounds = this.calculateAssemblyBounds();
+            if (bounds.getWidth() + 1 == targetWidth && bounds.getHeight() + 1 == targetHeight) {
+                for (int y = 0; y < targetHeight; y++) {
+                    for (int x = 0; x < targetWidth; x++) {
+                        ItemStack stack = this.craftMatrix.getStackInSlot(x + bounds.minX + (y + bounds.minY) * WIDTH);
+                        String targetBone = recipe[y][x];
+                        if (!targetBone.equals(this.identify(stack))) {
+                            this.craftResult.setInventorySlotContents(0, null);
+                            return null;
                         }
                     }
                 }
+                return data.getResult();
             }
         }
-        for (int x = 0; x < needed.length; x++) {
-            if (needWeights[x] > 0) {
-                this.error = new LangHelper("crafting.skeleton.needed")
-                        .withProperty("bonename", "item." + needed[x] + (fresh ? "_fresh" : "") + ".name")
-                        .withProperty("dino", "entity.jurassicraft." + EntityHandler.getDinosaurById(dino).getName()
-                                .replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name")
-                        .build();
-                this.craftResult.setInventorySlotContents(0, null);
-                return;
-            } else if (needWeights[x] < 0) {
-                this.error = new LangHelper("crafting.skeleton.toomany")
-                        .withProperty("bonename", "item." + needed[x] + (fresh ? "_fresh" : "") + ".name")
-                        .withProperty("dino", "entity.jurassicraft." + EntityHandler.getDinosaurById(dino).getName()
-                                .replace(" ", "_").toLowerCase(Locale.ENGLISH) + ".name")
-                        .build();
-                this.craftResult.setInventorySlotContents(0, null);
-                return;
-            }
-        }
-        if (init) {
-                int metadata = ItemHandler.DISPLAY_BLOCK.getMetadata(dino, fresh ? 2 : 1, true);
-                this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
-                return;
-        }
-        this.craftResult.setInventorySlotContents(0, null);
-    }*/
 
-    @Override
-    public void onCraftMatrixChanged(IInventory inventory) {
-        error = "";
-        boolean init = false;
-        boolean fresh = false;
-        int dino = 0;
-        String[][] recipe = { {} };
-        int maxX = -1;
-        int maxY = -1;
-        int minX = 25;
-        int minY = 25;
+        return null;
+    }
 
-        for (int i = 0; i < 25; i++) {
-            ItemStack is = this.craftMatrix.getStackInSlot(i);
-            if (is != null) {
-                if (!(is.getItem() instanceof FossilItem)) {
-                    this.craftResult.setInventorySlotContents(0, null);
-                    return;
-                }
-                maxX = Math.max(maxX, i % 5);
-                maxY = Math.max(maxY, i / 5);
-                minX = Math.min(minX, i % 5);
-                minY = Math.min(minY, i / 5);
+    private String identify(ItemStack stack) {
+        if (stack != null && stack.getItem() instanceof FossilItem) {
+            return ((FossilItem) stack.getItem()).getBoneType();
+        }
+        return "";
+    }
 
-                FossilItem item = ((FossilItem) is.getItem());
-                if (!init) {
-                    init = true;
-                    dino = is.getMetadata();
-                    fresh = item.isFresh();
-                    recipe = item.getDinosaur(is).getRecipe();
-                }
-                if (fresh != item.isFresh() || dino != is.getMetadata()) {
-                    this.error = new LangHelper("crafting.skeleton.mismatched").build();
-                    this.craftResult.setInventorySlotContents(0, null);
-                    return;
-                }
-            }
-        }
-        if (!init) {
-            this.craftResult.setInventorySlotContents(0, null);
-            return;
-        }
-        if (maxX - minX == recipe[0].length - 1 && maxY - minY == recipe.length - 1) {
-            for (int y = 0; y < recipe.length; y++) {
-                for (int x = 0; x < recipe.length; x++) {
-                    ItemStack is = this.craftMatrix.getStackInSlot(x + minX + (y + minY) * 5);
-                    String name = "";
-                    if (is != null) {
-                        name = ((FossilItem) is.getItem()).getBoneType();
+    private AssemblyData getAssemblyData() {
+        AssemblyData data = null;
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                int id = x + y * WIDTH;
+                ItemStack stack = this.craftMatrix.getStackInSlot(id);
+                AssemblyData stackData = this.getAssemblyData(stack);
+                if (stackData != null) {
+                    if (data != null && !data.equals(stackData)) {
+                        return null;
                     }
-                    if (!recipe[y][x].equals(name)) {
-                        this.craftResult.setInventorySlotContents(0, null);
-                        return;
+                    data = stackData;
+                }
+            }
+        }
+        return data;
+    }
+
+    private AssemblyData getAssemblyData(ItemStack stack) {
+        if (stack != null && stack.getItem() instanceof FossilItem) {
+            FossilItem item = (FossilItem) stack.getItem();
+            return new AssemblyData(item.getDinosaur(stack), item.isFresh());
+        }
+        return null;
+    }
+
+    private Bounds calculateAssemblyBounds() {
+        int minX = 5;
+        int minY = 5;
+        int maxX = 0;
+        int maxY = 0;
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                int id = x + y * WIDTH;
+                if (this.getAssemblyData(this.craftMatrix.getStackInSlot(id)) != null) {
+                    if (x < minX) {
+                        minX = x;
+                    }
+                    if (x > maxX) {
+                        maxX = x;
+                    }
+                    if (y < minY) {
+                        minY = y;
+                    }
+                    if (y > maxY) {
+                        maxY = y;
                     }
                 }
             }
-            int metadata = DisplayBlockItem.getMetadata(dino, fresh ? 2 : 1, true);
-            this.craftResult.setInventorySlotContents(0, new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata));
-            return;
         }
-        this.craftResult.setInventorySlotContents(0, null);
+        return new Bounds(minX, minY, maxX, maxY);
     }
 
     @Override
@@ -253,5 +213,51 @@ public class SkeletonAssemblyContainer extends Container {
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
+    }
+
+    private class Bounds {
+        private final int minX;
+        private final int minY;
+        private final int maxX;
+        private final int maxY;
+
+        private Bounds(int minX, int minY, int maxX, int maxY) {
+            this.minX = minX;
+            this.minY = minY;
+            this.maxX = maxX;
+            this.maxY = maxY;
+        }
+
+        public int getWidth() {
+            return this.maxX - this.minX;
+        }
+
+        public int getHeight() {
+            return this.maxY - this.minY;
+        }
+    }
+
+    private class AssemblyData {
+        private final Dinosaur dinosaur;
+        private final boolean fresh;
+
+        private AssemblyData(Dinosaur dinosaur, boolean fresh) {
+            this.dinosaur = dinosaur;
+            this.fresh = fresh;
+        }
+
+        public ItemStack getResult() {
+            int metadata = DisplayBlockItem.getMetadata(EntityHandler.getDinosaurId(this.dinosaur), this.fresh ? 2 : 1, true);
+            return new ItemStack(ItemHandler.DISPLAY_BLOCK, 1, metadata);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof AssemblyData) {
+                AssemblyData data = (AssemblyData) obj;
+                return data.dinosaur == this.dinosaur && data.fresh == this.fresh;
+            }
+            return false;
+        }
     }
 }
