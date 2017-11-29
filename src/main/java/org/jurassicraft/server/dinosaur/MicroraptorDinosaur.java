@@ -15,7 +15,7 @@ public class MicroraptorDinosaur extends Dinosaur {
         this.setTimePeriod(TimePeriod.CRETACEOUS);
         this.setEggColorMale(0x142146, 0x101625);
         this.setEggColorFemale(0x0E1423, 0x121827);
-        this.setSpeed(0.25, 0.30);
+        this.setSpeed(0.15, 0.20);
         this.setAttackSpeed(1.3);
         this.setHealth(4, 10);
         this.setStrength(0.5, 2);
