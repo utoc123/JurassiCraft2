@@ -88,7 +88,6 @@ public class Loot {
             table.addPool(Loot.pool("gracilaria").rolls(1, 1).chance(0.1F).entry(gracilaria).build());
         } else if (name == LootTableList.CHESTS_VILLAGE_BLACKSMITH || name == LootTableList.CHESTS_NETHER_BRIDGE || name == LootTableList.CHESTS_SIMPLE_DUNGEON || name == LootTableList.CHESTS_STRONGHOLD_CORRIDOR || name == LootTableList.CHESTS_DESERT_PYRAMID || name == LootTableList.CHESTS_ABANDONED_MINESHAFT) {
             LootEntry actionFigure = Loot.entry(ItemHandler.DISPLAY_BLOCK).function(DINOSAUR_DATA).weight(5).build();
-
             table.addPool(Loot.pool("action_figures").rolls(0, 1).entry(actionFigure).build());
 
             LootEntry plantFossil = Loot.entry(ItemHandler.PLANT_FOSSIL).weight(5).count(1, 3).build();
@@ -101,40 +100,40 @@ public class Loot {
             LootEntry[] records = Loot.entries(ItemHandler.JURASSICRAFT_THEME_DISC, ItemHandler.DONT_MOVE_A_MUSCLE_DISC, ItemHandler.TROODONS_AND_RAPTORS_DISC).buildEntries();
             table.addPool(Loot.pool("records").rolls(0, 2).entries(records).build());
         } else if (name == Loot.VISITOR_GROUND_STORAGE) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_STORAGE);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_GROUND_STORAGE);
             LootEntry amber = Loot.entry(ItemHandler.AMBER).data(0, 1).count(0, 3).build();
             LootEntry wool = Loot.entry(Blocks.WOOL).data(0, 15).count(0, 64).build();
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).entries(amber, wool).build());
         } else if (name == Loot.VISITOR_CONTROL_ROOM) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_CONTROL);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_CONTROL_ROOM);
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
         } else if (name == Loot.VISITOR_LABORATORY) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_LABORATORY);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_LABORATORY);
             LootEntry softTissue = Loot.entry(ItemHandler.SOFT_TISSUE).count(0, 3).function(DINOSAUR_DATA).build();
             LootEntry plantSoftTissue = Loot.entry(ItemHandler.PLANT_SOFT_TISSUE).count(0, 3).function(PLANT_DATA).build();
             LootEntry amber = Loot.entry(ItemHandler.AMBER).data(0, 1).count(0, 5).build();
             LootEntry dna = Loot.entry(ItemHandler.DNA).function(DINOSAUR_DATA).function(RANDOM_DNA).build();
             table.addPool(Loot.pool("items").rolls(3, 4).entries(basicItems).entries(dna, softTissue, plantSoftTissue, amber).build());
         } else if (name == Loot.VISITOR_KITCHEN) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_KITCHEN);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_KITCHEN);
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
         } else if (name == Loot.VISITOR_DORM_TOWER) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_DORM_TOWER);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_DORM_TOWER);
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
         } else if (name == Loot.VISITOR_INFIRMARY) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_INFIRMARY);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_INFIRMARY);
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
         } else if (name == Loot.VISITOR_GARAGE) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_GARAGE);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_GARAGE);
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
         } else if (name == Loot.VISITOR_STAFF_DORMS) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_STAFF_DORMS);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_STAFF_DORMS);
             table.addPool(Loot.pool("items").rolls(5, 6).entries(basicItems).build());
         } else if (name == Loot.VISITOR_CRYONICS) {
             LootEntry dna = Loot.entry(ItemHandler.DNA).function(DINOSAUR_DATA).function(FULL_DNA).build();
             table.addPool(Loot.pool("items").rolls(1, 2).entries(dna).build());
         } else if (name == Loot.VISITOR_DINING_HALL) {
-            LootEntry[] basicItems = Loot.entries(LootItems.BASIC_DINING_HALL);
+            LootEntry[] basicItems = Loot.entries(Loot.VISITOR_DINING_HALL);
             LootEntry amber = Loot.entry(ItemHandler.AMBER).weight(2).count(0, 1).data(0, 1).build();
             LootEntry tooth = Loot.entry(ItemHandler.FOSSILS.get("tooth")).weight(2).function(DINOSAUR_DATA).count(1, 2).build();
             LootEntry actionFigure = Loot.entry(ItemHandler.DISPLAY_BLOCK).function(DINOSAUR_DATA).weight(1).build();
