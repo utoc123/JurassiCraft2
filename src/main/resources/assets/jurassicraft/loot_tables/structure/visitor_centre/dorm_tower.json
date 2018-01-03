@@ -87,7 +87,7 @@
         },
         {
           "type": "item",
-          "name": "jurassicraft:iron_boots",
+          "name": "minecraft:iron_boots",
           "weight": 5,
           "functions": [
             {"function": "set_count", "count": {"min": 0, "max": 2}}
@@ -95,7 +95,7 @@
         },
         {
           "type": "item",
-          "name": "minecraft:iron_nugget",
+          "name": "jurassicraft:iron_nugget",
           "weight": 5,
           "functions": [
             {"function": "set_count", "count": {"min": 0, "max": 26}}
