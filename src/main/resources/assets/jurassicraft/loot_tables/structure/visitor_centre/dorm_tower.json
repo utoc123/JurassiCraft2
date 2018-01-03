@@ -79,7 +79,7 @@
         },
         {
           "type": "item",
-          "name": "jurassicraft:leather_leggings",
+          "name": "minecraft:leather_leggings",
           "weight": 4,
           "functions": [
             {"function": "set_count", "count": {"min": 0, "max": 2}}
