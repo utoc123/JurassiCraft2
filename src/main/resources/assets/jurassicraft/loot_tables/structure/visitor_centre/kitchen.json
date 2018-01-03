@@ -2,7 +2,7 @@
   "pools": [
     {
       "name": "food",
-      "rolls": {"min": 0, "max": 1},
+      "rolls": {"min": 0, "max": 2},
       "conditions": [{"condition": "random_chance", "chance": 1}],
       "entries": [
         {

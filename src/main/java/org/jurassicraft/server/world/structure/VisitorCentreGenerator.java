@@ -34,7 +34,7 @@ public class VisitorCentreGenerator extends StructureGenerator {
     }
 
     public VisitorCentreGenerator(Random rand) {
-        super(rand, 83, 35, 105);
+        super(rand, 85, 35, 105);
     }
 
     @Override

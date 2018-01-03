@@ -273,6 +273,8 @@ public enum RenderingHandler {
         this.registerItemRenderer(ItemHandler.LUNCH_BOX);
         this.registerItemRenderer(ItemHandler.STAMP_SET);
 
+        this.registerItemRenderer(ItemHandler.INGEN_JOURNAL);
+
         for (Entry<Integer, Dinosaur> entry : EntityHandler.getDinosaurs().entrySet()) {
             this.registerItemRenderer(ItemHandler.SPAWN_EGG, entry.getKey(), "dino_spawn_egg");
         }
