@@ -18,7 +18,7 @@ public class FleeEntityAI extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         if (this.dinosaur.ticksExisted % 10 == 0) {
-            List<DinosaurEntity> entities = this.dinosaur.world.getEntitiesWithinAABB(DinosaurEntity.class, this.dinosaur.getEntityBoundingBox().expand(10, 5, 10));
+            List<DinosaurEntity> entities = this.dinosaur.world.getEntitiesWithinAABB(DinosaurEntity.class, this.dinosaur.getEntityBoundingBox().expand(10, 10, 10));
 
             this.attackers = new LinkedList<>();
 
