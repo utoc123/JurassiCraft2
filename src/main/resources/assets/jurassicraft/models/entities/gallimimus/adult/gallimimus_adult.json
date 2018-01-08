@@ -89,6 +89,40 @@
         "time": 10
       }
     ],
+    "PREPARE_LEAP": [
+      {
+        "pose": "gallimimus_adult_prepare_pounce_1",
+        "time": 10
+      },
+      {
+        "pose": "gallimimus_adult_prepare_pounce_1",
+        "time": 5
+      }
+    ],
+    "LEAP": [
+      {
+        "pose": "gallimimus_adult_leap_1",
+        "time": 5
+      },
+      {
+        "pose": "gallimimus_adult_leap_1",
+        "time": 2
+      },
+      {
+        "pose": "gallimimus_adult_leap_2",
+        "time": 5
+      }
+    ],
+    "LEAP_LAND": [
+      {
+        "pose": "gallimimus_adult_landing_1",
+        "time": 4
+      },
+      {
+        "pose": "gallimimus_adult_landing_2",
+        "time": 2
+      }
+    ],
     "DRINKING": [
       {
         "pose": "gallimimus_adult_drinking_1",
