@@ -41,7 +41,7 @@ public class VisitorCentreGenerator extends StructureGenerator {
     protected void generateStructure(World world, Random random, BlockPos position) {
         MinecraftServer server = world.getMinecraftServer();
         TemplateManager templateManager = world.getSaveHandler().getStructureTemplateManager();
-        PlacementSettings settings = new PlacementSettings().setRotation(this.rotation).setMirror(this.mirror);
+        PlacementSettings settings = new PlacementSettings();
         Template template = templateManager.getTemplate(server, STRUCTURE);
         template.addBlocksToWorldChunk(world, position, settings);
         Map<BlockPos, String> dataBlocks = template.getDataBlocks(position, settings);
