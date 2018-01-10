@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jurassicraft.JurassiCraft;
+import org.jurassicraft.server.tab.TabHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ public class JournalItem extends Item {
     public JournalItem() {
         super();
         this.setHasSubtypes(true);
+        this.setCreativeTab(TabHandler.ITEMS);
     }
 
     @Override
