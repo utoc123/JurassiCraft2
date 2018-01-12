@@ -1,0 +1,600 @@
+//Tabs ==================================================
+itemGroup.jurassicraft.items = jurassicraft 아이템
+itemGroup.jurassicraft.blocks = jurassicraft 블록
+itemGroup.jurassicraft.dna = jurassicraft DNA
+itemGroup.jurassicraft.foods = jurassicraft 식료품
+itemGroup.jurassicraft.plants = jurassicraft 식물
+itemGroup.jurassicraft.fossils = jurassicraft 화석
+itemGroup.jurassicraft.decorations = jurassicraft 장식
+
+//Entities ==================================================
+entity.jurassicraft.velociraptor.name = 벨로시랩터
+entity.jurassicraft.tyrannosaurus.name = 티라노사우루스
+entity.jurassicraft.dilophosaurus.name = 딜로포사우루스
+entity.jurassicraft.gallimimus.name = 갈리미무스
+entity.jurassicraft.parasaurolophus.name = 파라사우롤로푸스
+entity.jurassicraft.triceratops.name = 트리케라톱스
+entity.jurassicraft.brachiosaurus.name = 브라키오사우루스
+entity.jurassicraft.coelacanth.name = 실러캔스
+entity.jurassicraft.microraptor.name = 마이크로랩터
+entity.jurassicraft.mussaurus.name = 무사사우루스
+
+entity.jurassicraft.goat.name = 염소
+
+entity.jeep_wrangler.name = 지프 랭글러
+entity.ford_explorer.name = 포드 탐색기
+entity.mural.name = 벽화
+entity.attraction_sign.name = 매력 신호
+entity.paddock_sign.name = 표지
+
+entity.Villager.jurassicraft:geneticist=유전학자
+
+//Items ==================================================
+item.plaster_and_bandage.name = 석고 및 붕대
+
+item.attraction_sign.name = {type} 명소 기호
+attraction_sign.aquarium.name = 수족관
+attraction_sign.aquarium_coral.name = 산호초 수족관
+attraction_sign.aviary.name = Aviary
+attraction_sign.aviary_plants.name = 식물 사육장
+attraction_sign.gallimimus_valley.name = 갈리미무스 협곡
+attraction_sign.gallimimus_valley_plants.name = 갈리미무스 협곡
+attraction_sign.gentle_giants.name = 거대한 젠틀
+attraction_sign.gentle_giants_plants.name = 거대한 젠틀
+attraction_sign.raptor_paddock.name = 랩터 목장
+attraction_sign.raptor_paddock_plants.name = 랩터 목장
+attraction_sign.garden_plants.name = 식물원의 식물원
+attraction_sign.garden.name = 식물원
+attraction_sign.safari.name = 사파리
+attraction_sign.safari_plants.name = 식물원의 사파리
+attraction_sign.triceratops_territorium.name = 트리케라톱스 영역
+attraction_sign.triceratops_territorium_plants.name = 트리케라톱스 영역
+attraction_sign.tyrannosaurus_kingdom.name = 티라노사우루스 왕국
+attraction_sign.tyrannosaurus_kingdom_plants.name = 티라노사우루스 왕국
+
+item.goat_raw.name = 생 염소 고기
+item.goat_cooked.name = 염소 요리
+
+item.skull_fresh.name = 양호한 상태의 {dino} 해골
+item.tooth_fresh.name = 양호한 상태의 {dino} 치아
+item.anal_fin_fresh.name = 양호한 상태의 {dino} 지느러미
+item.shoulders_fresh.name = 양호한 상태의 {dino} 어깨
+item.ribcage_fresh.name = 양호한 상태의 {dino} 나무 상자
+item.foot_bones_fresh.name = 양호한 상태의 {dino} 발뼈
+item.tail_fluke_fresh.name = 양호한 상태의 {dino} 꼬리뼈
+item.armor_plating_fresh.name = 양호한 상태의 {dino} 방어구 도금
+item.ribs_and_spine_fresh.name = 양호한 상태의 {dino} 갈비뼈와 등뼈
+item.neck_vertebrae_fresh.name = 양호한 상태의 {dino} 목 척추
+item.pelvis_fresh.name = 양호한 상태의 {dino} 골반
+item.shoulder_blade_fresh.name = 양호한 상태의 {dino} 어깨날
+item.cheek_teeth_fresh.name = 양호한 상태의 {dino} 뺨 치아
+item.tail_vertebrae_fresh.name = 양호한 상태의 {dino} 꼬리 척추
+item.second_dorsal_fin_fresh.name = 양호한 상태의 {dino} 두 번째 등 지느러미
+item.pectral_fin_bones_fresh.name = 양호한 상태의 {dino} 가슴 지느러미 뼈
+item.inner_teeth_fresh.name = 양호한 상태의 {dino} 내부 이빨
+item.teeth_fresh.name = 양호한 상태의 {dino} 이빨
+item.shoulder_fresh.name = 양호한 상태의 {dino} 숄더
+item.mouth_plates_fresh.name = 양호한 상태의 {dino} 입판
+item.hind_flipper_fresh.name = 양호한 상태의 {dino} 뒷다리 플리퍼
+item.shoulder_bone_fresh.name = 양호한 상태의 {dino} 숄더 본즈
+item.hind_leg_bones_fresh.name = 양호한 상태의 {dino} 뒷 다리 본뼈
+item.tail_fresh.name = 양호한 상태의 {dino} 꼬리
+item.front_flipper_fresh.name = 양호한 상태의 {dino} 프론트 플리퍼
+item.spine_fresh.name = 양호한 상태의 {dino} 척추
+item.front_leg_bones_fresh.name = 양호한 상태의 {dino} 앞 다리 뼈
+item.neck_fresh.name = 양호한 상태의 {dino} 목
+item.body_fins_fresh.name = 양호한 상태의 {dino} 몸체 지느러미
+item.dorsal_fin_fresh.name = 양호한 상태의 {dino} 등 지느러미
+item.claw_fresh.name = 양호한 상태의 {dino} 갈퀴
+item.tail_club_fresh.name = 양호한 상태의 {dino} 꼬리 클럽
+item.leg_bones_fresh.name = 신선한 {dino} 다리 뼈
+item.horn_fresh.name = 양호한 상태의 {dino} 뿔
+item.thagomizer_fresh.name = 양호한 상태의 {dino} 꼬리갈퀴
+item.caudal_fin_fresh.name = 양호한 상태의 {dino} 꼬리 지느러미
+item.wing_bones_fresh.name = 양호한 상태의 {dino} 윙 본즈
+item.arm_bones_fresh.name = 양호한 상태의 {dino} 팔뼈
+item.first_dorsal_fin_fresh.name = 신선한 {dino} 첫번째 등 지느러미
+
+item.fossilized_egg.name = 화석화된 달걀
+
+item.lunch_box.name = 도시락
+item.stamp_set.name = 스탬프 세트
+item.fun_fries.name = 재미있는 튀김
+item.oiled_potato_strips.name = 고구마 감자 스트립
+item.skull.name = {dino} 해골
+item.tooth.name = {치아} 치아
+item.anal_fin.name = {dino} 항문 지느러미
+item.shoulders.name = {dino} 어깨
+item.ribcage.name = {dino} Ribcage
+item.foot_bones.name = {dino} 발뼈
+item.tail_fluke.name = {dino} 꼬리 플루크
+item.armor_plating.name = {dino} 방어구 도금
+item.ribs_and_spine.name = {dino} 갈비뼈와 척추
+item.neck_vertebrae.name = {dino} 목 척추
+item.pelvis.name = {dino} 골반
+item.shoulder_blade.name = {dino} 어깨 날
+item.cheek_teeth.name = {dino} 뺨쪽 치아
+item.tail_vertebrae.name = {dino} 꼬리 척추
+item.second_dorsal_fin.name = {dino} 두 번째 등 지느러미
+item.pectral_fin_bones.name = {dino} 가슴 지느러미 뼈
+item.inner_teeth.name = {dino} 내부 이빨
+item.teeth.name = {dino} 이빨
+item.shoulder.name = {dino} 어깨
+item.mouth_plates.name = {dino} 입판
+item.hind_flipper.name = {dino} 뒷다리 플리퍼
+item.shoulder_bone.name = {dino} 어깨 뼈
+item.hind_leg_bones.name = {dino} 뒷다리 뼈
+item.tail.name = {dino} 꼬리
+item.front_flipper.name = {dino} 프론트 플리퍼
+item.spine.name = {dino} 척추
+item.front_leg_bones.name = {dino} 앞 다리 뼈
+item.neck.name = {dino} 목
+item.body_fins.name = {dino} 본문 지느러미
+item.dorsal_fin.name = {dino} 등 지느러미
+item.claw.name = {디노} 갈퀴
+item.tail_club.name = {dino} 테일 클럽
+item.leg_bones.name = {dino} 다리 골격
+item.horn.name = {디노} 뿔
+item.pelvic_fin_bones.name = {dino} 골반 골격 뼈
+item.thagomizer.name = {디노} 꼬리갈퀴
+item.caudal_fin.name = {dino} 꼬리 지느러미
+item.wing_bones.name = {dino} 날개뼈
+item.arm_bones.name = {dino} 팔뼈
+item.first_dorsal_fin.name = {dino} 첫 번째 등 지느러미
+
+item.dino_egg.name = {디노} 알
+item.hatched_egg.name = 부화한 {dino} 알
+item.gestated.name = 준비 완료된 {dino}
+item.dino_spawn_egg.name = 스폰합니다. {dino}
+item.dinosaur_meat.name = {dino} 고기
+item.dinosaur_steak.name = 요리 된 {dino} 고기
+item.dna.name = {dino} DNA
+item.blue_print.name = {type} 청사진
+item.paddock_sign.name = 방목장 서명
+item.soft_tissue.name = {dino} 연조직
+item.amber.name = 호박 {stored}
+item.petri_dish.name = 샬레
+item.petri_dish_agar.name = 한천 포함한 페트리 접시
+item.empty_test_tube.name = 테스트 튜브 비우기
+item.syringe.name = {주사위} 주사기
+item.empty_syringe.name = 빈 주사기
+item.storage_disc.name = 저장 디스크
+item.dna_base_material.name = DNA 핵산염기
+item.cage_small.name = 작은 케이지
+item.plant_dna.name = {식물} DNA
+item.sea_lamprey.name = 바다 Lamprey
+item.iron_blades.name = 철 날
+item.iron_rod.name = 철 막대
+item.growth_serum.name = 성장 촉진 혈청
+item.needle.name = 바늘
+item.plant_cells.name = 식물 세포
+item.plant_cells_petri_dish.name = 샬레의 식물 세포
+item.plant_callus.name = {plant} 식물 캘러스
+item.tracker.name = 트래커
+item.helicopter_spawner.name = 헬리콥터
+item.disc_reader.name = 디스크 드라이브
+item.laser.name = 레이저
+item.disc_jurassicraft_theme.name = jurassicraft 레코드
+item.disc_troodons_and_raptors.name = jurassicraft 레코드
+item.disc_dont_move_a_muscle.name = jurassicraft 레코드
+item.action_figure.name = {dino} 액션 피규어
+item.skeleton.fresh.name = {dino} 양호한 상태의 해골
+item.skeleton.fossil.name = {dino} 화석화 된 연료
+item.amber_cane.name = 호박 지팡이
+item.amber_keychain.name = 호박 체인
+item.mr_dna_keychain.name = DNA 키 체인
+item.dino_scanner.name = 공룡 스캐너 디버그
+item.basic_circuit.name = 기본 회로
+item.advanced_circuit.name = 고급 회로
+item.iron_nugget.name = 철 가루
+item.gypsum_powder.name = 석고 가루
+item.plant_soft_tissue.name = {식물} 연조직
+item.plant_fossil.name = 식물 화석
+item.twig_fossil.name = Twig 화석
+item.keyboard.name = 키보드
+item.computer_screen.name = 컴퓨터 화면
+item.dna_analyzer.name = DNA 분석기
+item.chilean_sea_bass.name = 칠레산 농어
+item.field_guide.name = InGen 필드 가이드
+item.car_chassis.name = 자동차 섀시
+item.car_engine_system.name = 자동차 엔진 시스템
+item.car_seats.name = 자동차 시트
+item.car_tire.name = 자동차 타이어
+item.car_windscreen.name = 자동차 윈드 스크린
+item.jeep_wrangler.name = 지프 랭글러
+item.ford_explorer.name = 포드 탐색기
+item.unfinished_car.name = 완성되지 않은 자동차
+item.phoenix_fruit.name = 피닉스 과일
+item.phoenix_seeds.name = 피닉스 씨앗
+item.crickets.name = 귀뚜라미
+item.cockroaches.name = 바퀴벌레
+item.mealworm_beetles.name = 밀웜 에벌레
+item.fine_net.name = 좋은 인터넷
+item.plankton.name = 플랭크톤
+item.krill.name = 크릴새우
+
+item.mural.name = 벽화
+
+item.ingen_journal.name = InGen 저널
+
+// Crops ========================================
+item.ajuginucula_smithii_seeds.name = Ajuginucula Smithii 씨앗
+item.ajuginucula_smithii_leaves.name = Ajuginucula Smithii 잎
+item.ajuginucula_smithii_oil.name = Ajuginucula Smithii Oil
+item.wild_onion.name = 야생 양파
+item.rhamnus_salicifolius.name = Rhamnus Salicifolius
+item.rhamnus_salicifolius_seeds.name = Rhamnus Salicifolius 씨앗
+item.rhamnus_salicifolius_berries.name = Rhamnus Salicifolius 딸기
+item.gracilaria.name = 꼬시래기
+item.liquid_agar.name = 액상 한천
+item.wild_potato_seeds.name = 야생 감자 씨앗
+item.wild_potato.name = 야생 감자
+item.wild_potato_cooked.name = 야생 감자 요리
+
+//Blocks ==================================================
+tile.fossil_block.name = {dinosaur} 화석
+tile.encased_fossil.name = encased {dinosaur} 화석
+tile.plant_fossil_block.name = 식물 화석
+tile.fossilized_trackway.name = 화석화 된 {variant} 길
+tile.nest_fossil.name = 화석화 된 둥지
+tile.encased_nest_fossil.name = 포장된 화석화 된 둥지
+tile.amber_ore.name = 호박 광석
+tile.ice_shard.name = 얼음 파편 광석
+tile.moss.name = 이끼
+tile.peat.name = 이끼
+tile.peat_moss.name = 물이끼
+
+tile.cleaning_station.name = 여과기
+tile.fossil_grinder.name = 화석 분쇄기
+tile.dna_sequencer.name = DNA 시퀀서
+tile.dna_synthesizer.name = DNA 합성기
+tile.embryonic_machine.name = 배아 기계
+tile.embryo_calcification_machine.name = 태아 석회화 기계
+tile.incubator.name = 인큐베이터
+tile.dna_extractor.name = DNA 추출기
+tile.dna_combinator_hybridizer.name = DNA 결합기
+tile.skeleton_assembly.name = 화석 조립 탁자
+
+tile.tour_rail.name = 투어 차량 레일
+
+tile.gypsum_stone.name = 석고 돌
+tile.gypsum_cobblestone.name = 석고 조약돌
+tile.gypsum_bricks.name = 석고 벽돌
+
+tile.ginkgo_sapling.name = 은행 나무 묘목
+tile.ginkgo_planks.name = 은행 나무 널빤지
+tile.ginkgo_log.name = 은행 나무 로그
+tile.ginkgo_leaves.name = 은행 나무 잎
+tile.ginkgo_stairs.name = 은행 나무 계단
+tile.ginkgo_slab.name = 은행 나무 기둥
+tile.ginkgo_log_petrified.name = 석화된 은행 나무
+tile.ginkgo_fence.name = 은행 나무 울타리
+tile.ginkgo_fence_gate.name = 은행 나무 울타리
+tile.ginkgo_door.name = 은행 나무 문
+item.ginkgo_door_item.name = 은행 나무 문
+
+tile.araucaria_sapling.name = 남양삼나무 묘목
+tile.araucaria_planks.name = 남양삼나무 목재
+tile.araucaria_log.name = 남양삼나무 통나무
+tile.araucaria_leaves.name = 남양삼나무 잎
+tile.araucaria_stairs.name = 남양삼나무 계단
+tile.araucaria_slab.name = 남양삼나무 반블록
+tile.araucaria_log_petrified.name = 남양삼나무 통나무
+tile.araucaria_fence.name = 남양삼나무 울타리
+tile.araucaria_fence_gate.name = 남양삼나무 울타리 문
+tile.araucaria_door.name = 남양삼나무 문
+item.araucaria_door_item.name = 남양삼나무 문
+
+tile.calamites_sapling.name = 칼라미테스 묘목
+tile.calamites_leaves.name = 칼라미테스 잎
+tile.calamites_log.name = 칼라미테스 통나무
+tile.calamites_planks.name = 칼라미테스 목재
+tile.calamites_stairs.name = 칼라미테스 계단
+tile.calamites_slab.name = 칼라미테스 반블록
+tile.calamites_log_petrified.name = 석화된 칼라미테스
+tile.calamites_fence.name = 칼라미테스 울타리
+tile.calamites_fence_gate.name = 칼라미테스 울타리 문
+tile.calamites_door.name = 칼라미테스 문
+item.calamites_door_item.name = 칼라미테스 문
+
+tile.psaronius_sapling.name = Psaronius 묘목
+tile.psaronius_planks.name = Psaronius 목재
+tile.psaronius_log.name = Psaronius 나무
+tile.psaronius_leaves.name = Psaronius 잎
+tile.psaronius_stairs.name = Psaronius 계단
+tile.psaronius_slab.name = Psaronius 반블록
+tile.psaronius_log_petrified.name = 석화된 Psaronius 나무
+tile.psaronius_fence.name = Psaronius 울타리
+tile.psaronius_fence_gate.name = Psaronius 울타리 문
+tile.psaronius_door.name = Psaronius 문
+item.psaronius_door_item.name = Psaronius 문
+
+tile.phoenix_sapling.name = Phoenix 묘목
+tile.phoenix_planks.name = Phoenix 목재
+tile.phoenix_log.name = Phoenix 나무
+tile.phoenix_leaves.name = Phoenix 잎
+tile.phoenix_stairs.name = Phoenix 계단
+tile.phoenix_slab.name = Phoenix S반블록
+tile.phoenix_log_petrified.name = 석화된 Phoenix 나무
+tile.phoenix_fence.name = Phoenix 울타리
+tile.phoenix_fence_gate.name = Phoenix 울타리 문
+tile.phoenix_door.name = Phoenix 문
+item.phoenix_door_item.name = Phoenix 문
+
+tile.small_royal_fern.name = 로얄 펀
+tile.small_chain_fern.name = 작은 사슬
+tile.small_cycad.name = 소철
+tile.bennettitalean_cycadeoidea.name = Cycadeoidea
+tile.cry_pansy.name = 크라이 팬지
+tile.scaly_tree_fern.name = Scaly Tree Fern
+tile.cycad_zamites.name = 자 미트
+tile.dicksonia.name = Dicksonia
+tile.dicroidium_zuberi.name = Dicroidium Zuberi
+tile.west_indian_lilac.name = 서인종 라일락
+tile.dictyophyllum.name = Dictyophyllum
+tile.serenna_veriformans.name = 세레나 베르디 모스
+tile.ladinia_simplex.name = 라디니아 심플 렉스
+tile.orontium_mackii.name = 오 론티 움 맥키
+tile.umaltolepis.name = 움 말토 피피
+tile.liriodendrites.name = Liriodendrites
+tile.raphaelia.name = 라파엘리아
+tile.encephalartos.name = Encephalartos
+tile.cinnamon_fern.name = 계피 고사리
+tile.bristle_fern.name = 브리스톨 펀
+tile.tempskya.name = 템프키아
+tile.woolly_stalked_begonia.name = 맬리 스토킹 베고니아
+tile.largestipule_leather_root.name = Largestipule Leather-root
+tile.rhacophyton.name = Rhacophyton
+tile.graminidites_bambusoides.name = 그라 미나이 트 Bambusoides
+tile.enallhelia.name = Enallhelia
+tile.aulopora.name = Aulopora
+tile.cladochonus.name = 클라 도코 누스
+tile.lithostrotion.name = 리석 스태 리온
+tile.stylophyllopsis.name = stylophyllopsis
+tile.hippurites_radiosus.name = 히프 투 라디 오스
+tile.heliconia.name = Heliconia
+tile.rhamnus_salicifolius.name = Rhamnus Salicifolius
+
+tile.reinforced_stone.name = 강화석
+tile.reinforced_bricks.name = 강화된 벽돌
+
+tile.cultivate.name = {컬러} Cultivator
+
+tile.clear_glass.name = 투명 유리
+
+tile.feeder.name = 피더
+tile.bug_crate.name = 버그 경작 상자
+
+tile.paleo_bale_cycadeoidea.name = Bennettitalean 선사 시대 식물 베일
+tile.paleo_bale_cycad.name = 소철 선사 시대 식물 베일
+tile.paleo_bale_fern.name = 선사 시대 식물 베일
+tile.paleo_bale_leaves.name = 선사 시대 식물 베일 남기기
+tile.paleo_bale_other.name = 선사 시대 식물 베일
+
+tile.low_security_fence_pole.name = 낮은 보안 울타리 폴
+tile.low_security_fence_base.name = 낮은 보안 울타리베이스
+tile.low_security_fence_wire.name = 낮은 보안 울타리 와이어
+
+trackway.biped_medium.name = Biped
+trackway.biped_small.name = 작은 바이패드
+trackway.raptor.name = 맹금류
+
+// Crops ========================================
+tile.ajuginucula_smithii.name = Ajuginucula Smithii
+tile.wild_onion_plant.name = 야생 양파 공장
+tile.gracilaria_seaweed.name = 그라 치아 리아 공장
+tile.wild_potato_plant.name = 야생 감자 식물
+
+//Plants =========================================
+plants.small_royal_fern.name = 로얄 펀
+plants.calamites.name = Calamites
+plants.small_chain_fern.name = 사슬 고비
+plants.small_cycad.name = 소철
+plants.ginkgo.name = 은행 나무
+plants.psaronius.name = Psaronius
+plants.phoenix.name = Phoenix
+plants.bennettitalean_cycadeoidea.name = Cycadeoidea
+plants.cry_pansy.name = 크라이 팬지
+plants.scaly_tree_fern.name = Scaly Tree Fern
+plants.cycad_zamites.name = 자밋
+plants.dicksonia.name = Dicksonia
+plants.ajuginucula_smithii.name = Ajuginucula Smithii
+plants.wild_onion.name = 야생 양파
+plants.dicroidium_zuberi.name = Dicroidium Zuberi
+plants.west_indian_lilac.name = 서인종 라일락
+plants.dictyophyllum.name = Dictyophyllum
+plants.serenna_veriformans.name = Serenna Veriformans
+plants.ladinia_simplex.name = 라디니아 심플 렉스
+plants.orontium_mackii.name = 오 론티 움 맥키
+plants.umaltolepis.name = Umaltolepis
+plants.liriodendrites.name = Liriodendrites
+plants.raphaelia.name = 라파엘리아
+plants.encephalartos.name = Encephalartos
+plants.wild_potato.name = 야생 감자
+plants.araucaria.name = 아라우 카 리아
+plants.cinnamon_fern.name = 계피 고사리
+plants.bristle_fern.name = Bristle Fern
+plants.tempskya.name = Tempskya
+plants.woolly_stalked_begonia.name = 맬리 스토킹 베고니아
+plants.largestipule_leather_root.name = Largestipule Leather-root
+plants.rhacophyton.name = Rhacophyton
+plants.graminidites_bambusoides.name = Graminidites Bambusoides
+plants.enallhelia.name = Enallhelia
+plants.aulopora.name = Aulopora
+plants.cladochonus.name = 클라 도코 누스
+plants.lithostrotion.name = Lithostrotion
+plants.stylophyllopsis.name = stylophyllopsis
+plants.hippurites_radiosus.name = 히 뿌리 야스 Radiosus
+plants.heliconia.name = Heliconia
+plants.rhamnus_salifocifus.name = Rhamnus Salifocifus
+
+//Containers ==================================================
+container.cleaning_station = 클리닝 스테이션
+container.cleaning_station.cleanFossilButton = 화석 청소
+container.fossil_grinder = 화석 분쇄기
+container.dna_sequencer = DNA 시퀀서
+container.dna_synthesizer = DNA 합성기
+container.embryonic_machine = 배아 기계
+container.embryo_calcification_machine = 태아 석회화 기계
+container.incubator = 인큐베이터
+container.dna_extractor = DNA 추출기
+container.dna_combinator_hybridizer = DNA 결합 자 - 혼성화 기
+container.dna_combinator = DNA 결합 자
+container.dna_hybridizer = DNA 혼성화 기
+container.cultivator = 경작자
+container.cultivator.progress = 진행
+container.cultivator.cultivating = 재배
+container.close.name = 닫기
+container.feeder = 공급 장치
+container.bug_crate = 버그 경작 상자
+container.skeletonassembly = 스켈레톤 어셈블리 테이블
+cultivator.proximates.name = 근사치
+cultivator.minerals.name = 미네랄
+cultivator.vitamins.name = 비타민
+cultivator.lipids.name = 지질
+
+
+//Others ==================================================
+blue_print.blank.name = 공란
+lore.dna_quality.name = DNA 품질 : {품질} %
+lore.baby_dino.name = Sneak + 마우스 오른쪽 버튼을 클릭하면 아기 공룡을 스폰합니다.
+lore.genetic_code.name = 유전학 코드 : {code}
+lore.dinosaur.name = 공룡 : {dino}
+lore.plant.name = 식물 : {식물}
+lore.change_gender.name = 오른쪽을 클릭하면 성별을 변경할 수 있습니다.
+item.record.jurassicraft_theme.desc = PigeonAce - JurassiCraft Theme
+item.record.troodons_and_raptors.desc = PigeonAce - 트로돈즈와 랩터스
+item.record.dont_move_a_muscle.desc = PigeonAce - 눈썹도 움직이지마라
+
+cage.empty.name = 비움
+gender.male.name = 수컷
+gender.female.name = 암컷
+gender.random.name = 랜덤
+spawnegg.genderchange.name =이 달걀은 이제 {mode} 성 (gender)을 생성합니다.
+actionfigure.genderchange.name =이 액션 피겨는 이제 {mode} 성 (gender)을 생성합니다.
+amber.mosquito.name = 모기
+amber.aphid.name = 진딧물
+
+color.red.name = 빨강색
+color.orange.name = 오렌지색
+color.yellow.name = 노랑색
+color.green.name = 녹색
+color.lime.name = 라임색
+color.blue.name = 파란색
+color.light_blue.name = 하늘색
+color.purple.name = 보라색
+color.pink.name = 핑크색
+color.magenta.name = 마젠타색
+color.white.name = 흰색
+color.black.name = 검은색
+color.brown.name = 브라운
+color.gray.name = 회색
+color.silver.name = 밝은회색
+color.cyan.name = 시안색
+
+period.quaternary.name = 제 4 기
+period.neogene.name = 신종
+period.paleogene.name = Paleogene
+period.cretaceous.name = 백악기
+period.jurassic.name = 쥬라기
+period.triassic.name = 트라이아스기
+period.permian.name = 페름기
+period.carboniferous.name = 석탄기
+period.devonian.name = 데본기
+period.silurian.name = Silurian
+period.ordovician.name = 오르도비스기
+period.cambrian.name = 캄브리아기
+
+//Achievements ==============================================
+achievement.jurassicraft.mod = jurassicraft!
+achievement.jurassicraft.mod.desc = jurassicraft를 플레이!
+
+achievement.jurassicraft.paleontology = 고생물학
+achievement.jurassicraft.paleontology.desc = 회반죽과 붕대만들기.
+
+achievement.jurassicraft.amber = 고대 곤충
+achievement.jurassicraft.amber.desc = 호박 광산을 채굴하고 호박 얻기.
+
+achievement.jurassicraft.fossils = 가둬진
+achievement.jurassicraft.fossils.desc = 화석을 석고와 붕대로 보관하기.
+
+achievement.jurassicraft.cleaningStation = 청결하게!
+achievement.jurassicraft.cleaningStation.desc = 세척기 제작!
+
+achievement.jurassicraft.fossilGrinder = 분쇄기
+achievement.jurassicraft.fossilGrinder.desc = 화석 분쇄기를 만들기!
+
+achievement.jurassicraft.reinforcedStone = 안전 제일!
+achievement.jurassicraft.reinforcedStone.desc = 강화된 돌 블록 제작!
+
+//Keybinds ==============================================
+key.microraptor_dismount = Microraptor 마운트 해제
+
+// 기타 =============
+message.tame.name = 당신은 {dinosaur}
+message.not_owned.name = 당신은 이 공룡을 소유하지 않았습니다!
+message.too_young.name =이 공룡은 너무 젊어서 물건을 넣을 수 없습니다!
+message.set_order.name = 공룡에게 {주문}에게 명령했습니다.
+
+growth_stage.infant.name = 새끼
+growth_stage.juvenile.name = 성장기
+growth_stage.adolescent.name = 성장기
+growth_stage.adult.name = 성인
+
+order.wander.name = 원더
+order.sit.name = 앉기
+order.follow.name = 따라다니기
+
+gui.select_order.name = 명령 선택
+
+gui.dinosaur_statistics.name = 공룡 통계 :
+gui.health.name = 건강 :
+gui.hunger.name = 허기 :
+gui.thirst.name = 갈증 :
+gui.age.name = 나이 :
+gui.days_old.name = {가치} 일
+
+status.drowning.name = 익사
+status.hungry.name = 배고픈
+status.low_health.name = 낮은 체력
+status.poisoned.name = 중독됨
+status.sleepy.name = 졸림
+status.tamed.name = 길들여진
+status.thirsty.name = 목 말라.
+status.flocking.name = 몰려 들기
+status.scared.name = 무서워
+status.carnivorous.name = 육식 동물
+status.herbivorous.name = 초식 동물
+status.diurnal.name = 주간
+status.nocturnal.name = 야행성
+status.crepuscular.name = 어두 컴컴한
+status.piscivorous.name = 육식주의
+status.insectivorous.name = 살충제
+
+info.triceratops.name = 트리 케라톱스는 늦은 백악기 동안 북아메리카에 살았습니다. 그들은 주로 초식, 소철과 양치 식물을 먹는 초식 동물이었습니다. 완전히 자라면 트리케라톱스는 길이 8-9 미터, 무게 6-12 톤입니다. 헤드 프릴은 디스플레이 용이었고 뿔은 공격과 방어에 사용되었습니다. 트리 케라톱스 (Triceratops)는 성인 여성 여주인이 이끄는 5-15 명의 가족으로 구성됩니다.
+info.dilophosaurus.name = 6-7 미터 길이의이 초기 쥬라기 수각류는 애리조나 출신으로 최초의 큰 약탈자 공룡 중 하나였습니다. 그것은 성적인 전시를 위해 있었을지도 모르는 머리에 두 개의 볏을 가지고있었습니다. 딜로 포 사우루스 (Dilophosaurus)는 실제로 독이 있으며 독을 먹이로 뱉어내는 것을 선호합니다. 독이 눈에 부딪히면 실명과 고통스럽고 궁극적 인 마비를 일으 킵니다. 딜로 포 사우루스 (Dilophosaurus)는 남성과 여성 모두의 조그마한 무질서한 갱단 (약 3 ~ 10 명)에서 삽니다.
+info.brachiosaurus.name = 브라 키 오 사우루스 (Brachiosaurus)는 북아메리카에 거대한 사로 포드 (Sorropod)였습니다. 그것은 길이 25m 또는 26m, 높이 9m 이상으로 자랄 수 있으며 최대 40 톤까지 나갈 수 있습니다. 그것은 은행 나무 잎, 침엽수, 나무 고비와 큰 소철을 먹는 나무 꼭대기에서 찾아낸 것으로 생각됩니다. 브라 치오 사우르스 (Brachiosaurs)는 알파 남성 또는 여성이 이끄는 2 ~ 15 명의 무리로 산다. 그들은 서로 의사 소통하기 위해 나팔 소리를 내며 "노래하는"소리를냅니다.
+info.parasaurolophus.name = Parasaurolophus는 늦은 백악기 동안 북아메리카에 사는 하로로 사우루스 (hadrosaur)였습니다. 길이 10 미터, 무게 2.5 톤. 그것의 크고, 구부러진, 그것의 머리에 관모리 볏은 중공, 소리를 일으키기 위하여 이용되었다. Parasaurolophus는 초식 동물이었고, 다른 해로로 사우루스와 마찬가지로 뺨 치아를 사용하여 음식을 갈아 치웠습니다. Parasaurolophus는 남성과 여성이 혼합 된 약 5 - 50 마리의 무리의 무리에서 살고 있습니다. Parasaur 호출은 수 마일을 여행 할 수 있으며 매우 시끄 럽습니다.
+info.tyrannosaurus.name = 티라노 사우루스 렉스는 북아메리카의 후기 백악기에 살았던 거대한 수각류이었다. 그것은 약 12-13 미터 길이, 그리고 6 톤 무게 증가했다. 초식 동물의 뼈에서 발견 된 T. rex의 치유 된 상처는 그것이 실제로 육식 동물 이었음을 암시합니다. 그러나, 그것은 또한 청소했다. 그들은 폭력적인 생활 방식을 이끌었고 치열한 영토를 가졌습니다. T. rex는 훌륭하지만 가볍게 생각하지 않아야합니다!
+info.velociraptor.name = Velociraptor는 후기 백악기의 동아시아에 살았던 작은 수각류 공룡이었다. 기회 주의자, 그것은 작은 포유류와 도마뱀부터 중형 공룡에 이르기까지 다양한 먹이를 사냥했다. 빠르고, 매우 지능적이며, 매우 공격적인 Velociraptor는 유지하기가 매우 어렵습니다. 그들은 탈출 아티스트를 성취하고 좋은 기억을 가지고 있습니다. 그들은 치타의 스피드에 필적하며 최대 4m까지 수직으로 도약 할 수 있습니다.
+info.gallimimus.name = 갈리 마무스 (Gallimimus)는 백악기 후기에 몽골에 살았던 초식 동물이었다. 완전히 자라면 6 - 8m를 측정했다. 그것은 물 근처에 살면서 식물에 방목하고 조류를 체질하는 것이 더 좋았습니다. Gallimimus는 최고 속도가 현재 알려지지 않았지만 빠른 주자였습니다. 개리스 (Gallis)는 10 ~ 100 명 (보통 남성과 여성이 혼합 된 무리)에 사는 동물을 집단 짓고 있습니다. 그들은 매우 당황스럽고 잠재적 인 위협으로 인해 훔쳐 갈 수 있습니다.
+info.microraptor.name = 가장 유명한 깃털 공룡 중 하나 인 Microraptor는 초기 백악기 동안 중국 북동부에 살았습니다. Microraptor의 깃털은 무지개 빛깔의 검은 색으로 알려져 있습니다. Microraptor는 곤충 및 다른 작은 동물을 먹는 지능형 팩 사냥 육식 동물입니다.
+info.coelacanth.name = Coelacanths는 마지막 현대 Coelocanthiform 물고기, 다시 Devonian에 거슬러 올라간 주문입니다. "실러캔스"라는 단어는 "중공의 척추"를 의미합니다. 실리카 깡은 8 개의 다른 지느러미를 사용하여 거의 모든 방향으로 쉽게 돌 수 있습니다. 실러캔스 (Coelacanths)는 야만적 인 탐욕스런 표류하는 사냥꾼으로 인도양의 깊은 곳에서만 발견됩니다. 그러나 선사 시대의 실러캔스는 엄청나게 다양했다. 실러캔스는 난생 식물입니다.
+info.mussaurus.name = Mussaurus는 Triassic 아르헨티나 출신의 작은 육식 공룡이다. 그것의 이름은 도마뱀을 의미합니다. 오랫동안 작은 아기 뼈대에서만 알려 졌기 때문에 아기의 비율에 따라 어른들이 돌보는 것을 알 수 있습니다 .Mussaurus는 사우로 도모프 (suropodomorphs)의 경우 매우 작고 육식 동물은 비교적 쉽게 먹을 수 있습니다 그들이 필요로하는 것은 울창한 초목, 일부 나무 및 물입니다.
+
+journal.chef_alejandro.name = 요리사 알레한드로
+journal.dennis_nedry.name = 데니스 네드리
+journal.dr_gerry_harding.name = Dr. 제리 하딩
+journal.dr_henry_wu.name = Dr. 헨리 우
+journal.dr_laura_sorkin.name = Dr. 로라 소킨
+journal.ed_regis.name = Ed Regis
+journal.john_hammond.name = John Hammond
+journal.ray_arnold.name = 레이 아놀드
+journal.robert_muldoon.name = Robert Muldoon
+
+death.attack.shock.1 = % s이 (가) 이제 바삭바삭해 져버렸엉!
+death.attack.shock.2 = % s이 (가) 감전되었습니다!
+
+crafting.skeleton.needed = {bonename}이 필요합니다.
+crafting.skeleton.toomany = {bonename}이 필요합니다.
+crafting.skeleton.mismatched = 일치하지 않는 뼈
